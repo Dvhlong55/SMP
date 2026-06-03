@@ -168,11 +168,11 @@
                 </a>
             </div>
             <nav class="sidebar-nav">
-                <a href="/index.html">&#x2302; Home page</a>
-                <a href="/Math/toanhoc.html">&#x2211; Math</a>
-                <a href="/Non-Math/nonmath.html">&#x2734; Non Math</a>
-                <a href="/My-Life/cuocsong.html">&#x2726; My Life</a>
-                <a href="/About-Me/vetoi.html">&#x25CE; About Me</a>
+                <a href="index.html">&#x2302; Home page</a>
+                <a href="Math/toanhoc.html">&#x2211; Math</a>
+                <a href="Non-Math/nonmath.html">&#x2734; Non Math</a>
+                <a href="My-Life/cuocsong.html">&#x2726; My Life</a>
+                <a href="About-Me/vetoi.html">&#x25CE; About Me</a>
             </nav>
         </div>
         <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle sidebar" aria-label="Toggle sidebar">
