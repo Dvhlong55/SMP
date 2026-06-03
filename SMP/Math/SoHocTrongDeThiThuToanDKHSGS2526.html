@@ -13,7 +13,7 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link class="theme-link" rel="stylesheet" href="../css/shared.css">
+    <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
     <style>
         body { overflow-x: hidden; }
 
@@ -289,101 +289,200 @@
                         <span class="exam-tag">HSG Toán 9</span>
                         <span class="exam-tag">Toán Chuyên</span>
                         <span class="exam-tag">08 / 03 / 2026</span>
-                        <span class="exam-tag">THPT Chuyên KHTN</span>
                     </div>
 
                     <div class="exam-paper fade-up">
 
-                        <h2 style="text-align: center;">
-                        A Number Theory Problem <br />
-                        from the Poland TST
-                        </h2>
+                      <h2>TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN</h2>
+                      <h2>TRƯỜNG THPT CHUYÊN KHTN</h2>
 
-                        <p style="text-align: center;">
-                        Long Do<br />
-                        Mar. 07, 2026
-                        </p>
+                      <h1>Số Học trong đề thi khảo sát năng lực Lớp 9</h1>
+                      <h2>Năm học 2025 – 2026</h2>
 
-                        <h3>Problem</h3>
+                      <p style="text-align:center">
+                      <b>Môn: TOÁN (Toán chung – Đợt 2, 07/3/2026)</b><br>
+                      </p>
+                        
+                      <p style="text-align:center;">
+                      <a href="https://smp0907.blogspot.com/2026/03/hsgs-e-thi-thu-lan-2-mon-toan-chung-nam.html"
+                      style="background:#222;color:white;padding:8px 16px;text-decoration:none;border-radius:6px;">
+                      View Full Post
+                      </a>
+                      </p>
 
-                        <p>
-                        Let \( (p_i) \) be a sequence of prime numbers such that \(p_n\) is the largest
-                        prime divisor of
-                        </p>
+                      <h3>
+                          Đề bài.
 
-                        $$
-                        p_{n-1}+p_{n-2}+2000, \quad \forall n.
-                        $$
+                          Tìm tất cả số nguyên thỏa mãn \(x^3 - y^3 = 2xy + 1\).
+                      </h3>
 
-                        <p>
-                        Prove that the sequence \( (p_n) \) is bounded.
-                        </p>
+                      <div class="method">
+                      <b>Cách 1.</b> Biến đổi hằng đẳng thức để đơn giản hóa bài toán
 
-                        <h3>Solution</h3>
+                      \[
+                      x^3 - y^3 = (x - y) (x^2 + xy + y^2 ) = (x-y)\cdot [(x-y)^2 + 3 xy ]
+                      \]
 
-                        <p>Let</p>
+                      Đặt \((x - y) = z\) và \(xy = t\), ta được phương trình
 
-                        $$
-                        P_n = \max\{p_1,p_2,\ldots,p_n\}.
-                        $$
+                      \[
+                      z \cdot (z^2 + 3t) = 2t + 1
+                      \]
 
-                        <p>
-                        Since \(p_{n-1}\) and \(p_{n-2}\) are odd primes, we have
-                        </p>
+                      Ta đưa \(z\) và \(t\) về từng vế, hay
 
-                        $$
-                        p_n \le \frac{p_{n-1}+p_{n-2}+2000}{2}
-                        \le \max\{p_{n-1},p_{n-2}\}+1000
-                        = P_{n-1}+1000.
-                        $$
+                      \[
+                      \frac{z^3 - 1 }{2-3z} = t \in \mathbb{Z}
+                      \]
 
-                        <p>
-                        Moreover, if the prime \(2\) appears, then
-                        </p>
+                      Ta cố gắng giản ước
 
-                        $$
-                        p_n \le P_{n-1}+2002. \tag{1}
-                        $$
+                      \[
+                      \begin{aligned}
+                      & 3z-2 \mid z^3 - 1 = (z - 1)(z^2 + z + 1) \mid (3z - 3)(3z^2 + 3z + 3) \\
+                      \Longrightarrow\;& 3z - 2 \mid 3z^2 +5 \\
+                      \Longrightarrow\;& 3z-2 \mid 3z^2 +5 - z(3z-2) \\
+                      \Longrightarrow\;& 3z - 2 \mid 2z+5 \\
+                      \Longrightarrow\;& 3z - 2 \mid 3(2z+5) - 2(3z+2) = 11 \\
+                      \Longrightarrow\;& 3z - 2 \in \{\pm 1, \pm 11\}
+                      \end{aligned}
+                      \]
 
-                        <p>
-                        From the two estimates above, we deduce that
-                        </p>
+                      Suy ra \(3z - 2 \in \{\pm 1, \pm 11\}\) hay \(z \in \{1, -3\}\) suy ra \(t \in \{0\}\).
 
-                        $$
-                        p_n \le P_{n-1}+2002.
-                        $$
+                      Ta thu được hệ phương trình
 
-                        <p><b>Lemma.</b> For every \(n\in\mathbb{N}\), there exist \(n\) consecutive composite numbers.</p>
+                      \[
+                      xy = 0, \quad x-y=1
+                      \]
 
-                        <p>
-                        Choose \(k&gt;2026\). Then there exist \(k\) consecutive composite numbers
-                        </p>
+                      \[
+                      x = 1, y = 0 \quad \text{hoặc} \quad x=0, y=-1
+                      \]
 
-                        $$
-                        t+1,t+2,\ldots,t+k.
-                        $$
+                      </div>
 
-                        <p>
-                        Suppose that \(n\) is the smallest index such that \(p_n&gt;t+k\). Then
-                        </p>
+                      <hr>
 
-                        $$
-                        p_n \ge t+k
-                        \quad\text{and}\quad
-                        p_{n-1},\ldots,p_1 \le t.
-                        $$
+                      <div class="method">
 
-                        <p>Hence</p>
+                      <b>Cách 2.</b> Dùng đại số để đánh giá, theo đó ta có
 
-                        $$
-                        p_n \ge t+k \ge k+P_{n-1} \ge 2026+P_{n-1}. \tag{2}
-                        $$
+                      \[
+                      2xy + 1 \;\vdots \; x^2 + xy + y^2
+                      \]
 
-                        <p>
-                        From (1) and (2) we obtain a contradiction. Therefore the sequence \( (p_n) \) must be bounded.
-                        </p>
+                      Rõ ràng \(2xy + 1 \neq 0\) nên
 
-                        <p class="exam-end"><b>─── HẾT ───</b></p>
+                      \[
+                      2xy + 1 \ge x^2 + xy + y^2 \ge xy  + 2|xy|
+                      \]
+
+                      Như vậy
+
+                      \[
+                      xy + 1 \ge 2|xy| \ge 0
+                      \]
+
+                      \[
+                      \Longrightarrow xy \ge -1
+                      \]
+
+                      Nếu \(xy = -1\) thì ta có \(0 > 1\), vô lý. Suy ra \(xy \ge 0\) nên
+
+                      \[
+                      1 \ge xy
+                      \]
+
+                      Vậy
+
+                      \[
+                      xy \in \{1,0\}
+                      \]
+
+                      </div>
+
+                      <hr>
+
+                      <div class="method">
+
+                      <b>Cách 3.</b> Đặt \(x = y+a\), ta có
+
+                      \[
+                      \begin{aligned}
+                      & (y+a)^3 - y^3 = 2(y+a)y + 1 \\
+                      \Longrightarrow\;& a^3 + 3ya^2 + 3y^2a = 2y^2 + 2ay + 1 \\
+                      \Longrightarrow\;& (3a - 2)y^2 + (3a^2 - 2a)y + (a^3 -1) = 0
+                      \end{aligned}
+                      \]
+
+                      Khi đó
+
+                      \[
+                      \Delta = (3a^2 - 2a)^2 - 4(a^3 - 1)(3a - 2)
+                      \]
+
+                      \(
+                      = -3a^4 - 4a^3 + 4a^2 + 12a - 8 \ge 0
+                      \)
+                      suy ra
+                      \(
+                      (a - 1)(-3a^3 - 7a^2 -3a + 9) + 1 \ge 0
+                      \)
+
+                      <ul>
+
+                      <li>Nếu \(a = 1\) thì thỏa mãn.</li>
+
+                      <li>
+                      Ta có
+                      \[
+                      -3a^3 - 7a^2 -3a + 9
+                      = (a-1)(-3a^2 -10a -13) - 4
+                      \]
+                      </li>
+
+                      <li>
+                      Nếu \(a < 1\) thì chứng minh
+                      \[
+                      -3a^3 - 7a^2 -3a + 9 > 0
+                      \]
+
+                      Ta có
+
+                      \[
+                      \Delta_{(-3a^2 -10a -13)} < 0
+                      \]
+
+                      suy ra
+
+                      \[
+                      -3a^2 -10a -13 < 0
+                      \]
+
+                      và
+
+                      \[
+                      -3a^2 -10a -13 \le 1
+                      \]
+
+                      Từ đó
+
+                      \[
+                      (a-1)(-3a^2 -10a -13) > 4
+                      \]
+
+                      </li>
+
+                      <li>Nếu \(a > 1\) thì xử lý tương tự.</li>
+
+                      </ul>
+
+                      <p>Nhìn chung cách này nếu có máy tính thì sẽ nhẹ nhàng hơn, nếu không chúng khá phức tạp.</p>
+
+                      </div>
+
+                      <p class="exam-end"><b>─── HẾT ───</b></p>
 
                     </div></div></div><div class="stats-strip fade-up">
                 <div class="stat-item"><div class="stat-number">09</div><div class="stat-label">Bài Viết</div></div>
@@ -399,8 +498,8 @@
                 </div>
             </footer>
         </main>
-    </div><script src="../js/layout.js"></script>
-    <script src="../js/shared.js"></script>
+    </div><script src="/SMP/js/layout.js"></script>
+    <script src="/SMP/js/shared.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof Comments !== 'undefined') {

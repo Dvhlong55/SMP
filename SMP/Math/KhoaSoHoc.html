@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Đề Thi Thử Lần 2 HSGS 2025–2026</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
+    <style>
+        body { overflow-x: hidden; }
+
+        /* ========================================================
+           HỆ THỐNG BIẾN MÀU CHUYỂN ĐỔI SÁNG / TỐI (DARK MODE)
+           ======================================================== */
+        :root {
+            --body-bg: #0b1111; /* Màu nền tối nguyên bản của bạn */
+            --widget-title-color: #fff;
+            --widget-link-color: #888;
+            --widget-badge-bg: rgba(255,255,255,0.05);
+            --widget-badge-color: #aaa;
+            --exam-paper-bg: rgba(255,255,255,0.025);
+            --exam-paper-border: rgba(92,225,230,0.09);
+            --exam-text-color: #ddd;
+            --exam-bold-color: #f4f4f4;
+            --exam-title-color: #f0f0f0;
+            --exam-divider-color: rgba(92,225,230,0.1);
+        }
+
+        /* Khi ở chế độ nền sáng (nếu class dark-mode không được active hoặc theo cấu hình ngược lại) */
+        body:not(.dark-mode) {
+            --body-bg: #f8fafc;
+            --widget-title-color: #1e293b;
+            --widget-link-color: #64748b;
+            --widget-badge-bg: rgba(0,0,0,0.05);
+            --widget-badge-color: #475569;
+            --exam-paper-bg: #ffffff;
+            --exam-paper-border: rgba(15,23,42,0.08);
+            --exam-text-color: #334155;
+            --exam-bold-color: #0f172a;
+            --exam-title-color: #1e293b;
+            --exam-divider-color: rgba(15,23,42,0.08);
+        }
+
+        /* Áp dụng các biến màu động vào đúng các Class nguyên bản */
+        body {
+            background-color: var(--body-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        .main-wrapper {
+            position: relative;
+            max-width: 2000px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            transform: none !important;
+            left: 0 !important;
+            transition: transform 0s !important;
+        }
+
+        .main-content-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 100px;
+            margin-top: 20px;
+        }
+
+        .tags-comment-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            z-index: 1;
+        }
+
+        .side-widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--widget-title-color);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s ease;
+        }
+
+        body.light-mode .side-widget-title {
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .side-widget-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .side-widget-list a {
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--widget-link-color); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+        }
+
+        .side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(4px); }
+
+        .side-widget-list a span {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            background: var(--widget-badge-bg); padding: 2px 8px;
+            border-radius: 12px; color: var(--widget-badge-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @media (max-width: 1100px) {
+            .main-content-layout { grid-template-columns: 1fr; }
+            .tags-comment-sidebar { position: static; }
+        }
+
+        /* Stats strip */
+        .stats-strip {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 36px;
+            margin-top: 50px;
+        }
+        .stat-item {
+            flex: 1; padding: 18px 20px; text-align: center;
+            border-right: 1px solid var(--border-light);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.6rem;
+            font-weight: 700; color: var(--accent-cyan); line-height: 1; margin-bottom: 6px;
+        }
+        .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+        /* ── Exam-specific styles ── */
+        .exam-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan, #5ce1e6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            opacity: 0.65;
+            transition: opacity 0.2s;
+        }
+        .exam-back-btn:hover { opacity: 1; }
+
+        .exam-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .exam-tag {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 4px 13px;
+            border-radius: 20px;
+            border: 1px solid rgba(92,225,230,0.35);
+            color: var(--accent-cyan, #5ce1e6);
+        }
+
+        .exam-paper {
+            background: var(--exam-paper-bg);
+            border: 1px solid var(--exam-paper-border);
+            border-radius: 12px;
+            padding: 46px 54px;
+            font-family: "Times New Roman", Times, serif;
+            color: var(--exam-text-color);
+            line-height: 1.85;
+            font-size: 1.01rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .exam-paper h1,
+        .exam-paper h2 {
+            text-align: center;
+            color: var(--exam-title-color);
+            font-family: "Times New Roman", Times, serif;
+            margin: 7px 0;
+            transition: color 0.3s ease;
+        }
+        .exam-paper h1 { font-size: 1.5rem; letter-spacing: 0.5px; }
+        .exam-paper h2 { font-size: 1.1rem; font-weight: normal; }
+
+        .exam-paper h3 {
+            font-size: 1.1rem;
+            color: var(--accent-cyan, #5ce1e6);
+            margin-top: 34px;
+            margin-bottom: 10px;
+            font-family: "Times New Roman", Times, serif;
+            border-left: 3px solid var(--accent-cyan, #5ce1e6);
+            padding-left: 12px;
+        }
+
+        .exam-paper p   { margin: 10px 0; }
+        .exam-paper ol,
+        .exam-paper ul  { margin: 10px 0; padding-left: 28px; }
+        .exam-paper li  { margin: 8px 0; }
+        .exam-paper b   { color: var(--exam-bold-color); transition: color 0.3s ease; }
+
+        .exam-divider {
+            border: none;
+            border-top: 1px solid var(--exam-divider-color);
+            margin: 18px 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .exam-end {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            margin-top: 44px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        body.light-mode .exam-end {
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+
+        /* Đổi màu tất cả các đường link thành màu hồng */
+        a {
+            color: #ff69b4; /* Màu hồng Hot Pink (hoặc dùng màu #ff66b2, #e91e63 tùy bạn chọn) */
+            text-decoration: none; /* Bỏ gạch chân mặc định nếu muốn */
+            transition: color 0.2s ease;
+        }
+
+        /* Hiệu ứng khi di chuột qua link (Hover) */
+        a:hover {
+            color: #ff1493; /* Màu hồng đậm hơn khi hover */
+            text-decoration: underline; /* Hiện gạch chân khi hover */
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="main-content-layout">
+
+                <aside class="tags-comment-sidebar">
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Categories</div>
+                        <ul class="side-widget-list">
+                            <li><a href="../Math/toanhoc.html">Chuyên Toán <span>10</span></a></li>
+                            <li><a href="../Math/toanhoc.html">HSG Toán 9 <span>8</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Math Olympiad <span>4</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Number Theory <span>5</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Algebra <span>3</span></a></li>
+                            <li><a href="../My%20Life/cuocsong.html">Cuộc Sống <span>1</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Archives</div>
+                        <ul class="side-widget-list">
+                            <li><a href="#">Tháng 4, 2026 <span>12</span></a></li>
+                            <li><a href="#">Tháng 3, 2026 <span>8</span></a></li>
+                            <li><a href="#">Tháng 2, 2026 <span>5</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="comment-section fade-up">
+                        <h3>Thảo Luận & Góp Ý</h3>
+                        <div class="comment-form">
+                            <div class="comment-form-row">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                            </div>
+                            <div style="margin-bottom:14px">
+                                <textarea id="comment-text-input" class="comment-textarea"
+                                    placeholder="Nhập bình luận hoặc lời nhắn của bạn tại đây..."></textarea>
+                            </div>
+                            <button id="comment-submit" class="comment-submit">Gửi Bình Luận</button>
+                        </div>
+                        <div id="comment-list" class="comment-list"></div>
+                    </div>
+
+                </aside>
+
+                <div class="main-articles-body">
+
+                    <a href="/SMP/index.html" class="exam-back-btn fade-up">← Quay Lại Trang Chủ</a>
+
+                    <div class="exam-meta fade-up">
+                        <span class="exam-tag">VMO</span>
+                        <span class="exam-tag">Olympic Toán</span>
+                        <span class="exam-tag">Số Học</span>
+                        <span class="exam-tag"> 04 / 2026</span>
+                    </div>
+
+                    <div class="exam-paper fade-up">
+  
+                        <div class="header-box">
+                            <div class="header-top">
+                                <div>SMP – Số học Olympic</div>
+                                <div><b>Đỗ Viết Hoàng Long</b></div>
+                            </div>
+                            
+                            <h1>
+                            <div class="header-center">
+                                $\S$ Tổng Quan về Khóa học
+                            </div>
+                            </h1>
+
+                            <div class="header-bottom">
+                                <div>Tháng 4 năm 2026</div>
+                                <div><i>Collab: Nguyễn Khắc Duy</i></div>
+                            </div>
+                        </div>
+
+                        <p>
+                        Khóa học Số học chuyên sâu được thiết kế dành cho học sinh định hướng thi học sinh giỏi và Olympic Toán, tập trung vào các kỹ thuật quan trọng và tư duy giải toán thường xuất hiện trong các kỳ thi cấp tỉnh và quốc gia.
+                        </p>
+
+                        <h3>Về người dạy</h3>
+
+                        <p>Đội ngũ giảng dạy gồm các cựu học sinh chuyên Toán với thành tích cao trong các kỳ thi học sinh giỏi quốc gia, đảm bảo chất lượng chuyên môn và định hướng bài bản.</p>
+
+                        <ol>
+                            <li>
+                                Dạy lý thuyết -- <code>Đỗ Viết Hoàng Long</code>
+                                <ul>
+                                    <li>Admin page Toán SMP.</li>
+                                    <li>Giải Nhì kì thi chọn HSG Quốc Gia môn Toán.</li>
+                                    <li>Đạt hạng thứ 2 trong <a href="https://www.facebook.com/share/p/1E1xUKmagf/"><i>Bài giảng và bài viết về Toán học, mang tên Hoàng Tụy</i></a>.</li>
+                                    <li>Đạt thành tích xuất sắc trong phong trào giải toán tạp chí Pi.</li>
+                                    <li>Đạt giải Nhất môn Toán cấp tỉnh.</li>
+                                    <li>Đạt 2 huy chương vàng Olympic 30-4.</li>
+                                    <li>Giám khảo kì thi <a href="https://www.facebook.com/share/p/1AySrKXPaU/"><i>hình học IGO</i></a>.</li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                Luyện bài tập -- <code>Nguyễn Khắc Duy</code>
+                                <ul>
+                                    <li>Đạt giải Nhì HSG Quốc gia môn Toán.</li>
+                                    <li>Đạt giải khuyến khích HSG Quốc Gia từ năm lớp 11.</li>
+                                    <li>Đạt huy chương bạc kì thi Olympic chuyên Khoa học Tự Nhiên.</li>
+                                </ul>
+                            </li>
+                        </ol>
+
+                        <h3>Về nội dung khóa học</h3>
+
+                        <p>Học viên được cung cấp bộ tài liệu nền tảng gồm 5 chuyên đề số học cơ bản, bao gồm:</p>
+
+                        <ul>
+                            <li>Phép chia hai số nguyên.</li>
+                            <li>Ước chung và bội chung.</li>
+                            <li>Số nguyên tố.</li>
+                            <li>Số chính phương.</li>
+                            <li>Phương trình tuyến tính bậc nhất.</li>
+                        </ul>
+
+                        <div class="two-columns">
+                        <ol>
+
+                        <li><b>Nhắc lại phép chia và hệ thặng dư đầy đủ (thu gọn)</b>
+                            <ol>
+                                <li>Định nghĩa về hệ thặng dư</li>
+                                <li>Tính bất biến và ứng dụng vào bài tập</li>
+                                <li>Ứng dụng trong định Euler và Fermat nhỏ</li>
+                            </ol>
+                        </li>
+
+                        <li><b>Phương trình đồng dư</b>
+                            <ol>
+                                <li>Phần tử nghịch đảo và định lý Wilson</li>
+                                <li>Phương trình đồng dư</li>
+                                <li>Phương trình đồng dư tuyến tính bậc nhất</li>
+                                <li>Một cách tiếp cận phương trình đồng dư bậc hai đơn giản</li>
+                            </ol>
+                        </li>
+
+                        <li><b>Định lý thặng dư Trung hoa</b>
+                            <ol>
+                                <li>Ứng dụng trong bài toán tồn tại</li>
+                                <li>Ứng dụng giải hệ phương trình đồng dư</li>
+                                <li>Kết hợp với số Fermat</li>
+                                <li>Ứng dụng trong tổ hợp</li>
+                                <li>Ứng dụng trong đa thức hệ số nguyên</li>
+                            </ol>
+                        </li>
+
+                        <li><b>Cấp của số nguyên</b>
+                            <ol>
+                                <li>Định nghĩa tính chất</li>
+                                <li>Biểu thức chứa lũy thừa là số nguyên tố</li>
+                                <li>Ứng dụng trong phương trình nghiệm nguyên</li>
+                                <li>Kết hợp với hệ thặng dư thu gọn</li>
+                            </ol>
+                        </li>
+
+                        <li><b>Số mũ đúng</b>
+                            <ol>
+                                <li>Định nghĩa và định lý LTE</li>
+                                <li>Dùng v_p để đánh giá</li>
+                                <li>Định lý Legendre và công thức</li>
+                                <li>Ứng dụng trong phương trình nghiệm nguyên</li>
+                            </ol>
+                        </li>
+
+                        <li><b>Phương trình nghiệm nguyên</b>
+                            <ol>
+                                <li>Các phương pháp cơ bản</li>
+                                <li>Một số bổ đề số học</li>
+                                <li>Bài toán chứa lũy thừa</li>
+                                <li>Phương trình Pythagore</li>
+                            </ol>
+                        </li>
+
+                        <li><b>Phương trình tuyến tính bậc nhất</b>
+                            <ol>
+                                <li>Phương pháp giải và đặc điểm</li>
+                                <li>Định lý Sylvester và biến thể</li>
+                            </ol>
+                        </li>
+
+                        <li><b>Hàm số học</b>
+                            <ol>
+                                <li>Hàm thương Euler</li>
+                                <li>Hàm tổng các chữ số</li>
+                                <li>Hàm tổng các ước</li>
+                                <li>Hàm đếm số các ước</li>
+                            </ol>
+                        </li>
+
+                        <li><b>Số đặc biệt</b>
+                            <ol>
+                                <li>Số Fermat</li>
+                                <li>Số Mersenne</li>
+                                <li>Số hoàn hảo</li>
+                            </ol>
+                        </li>
+
+                        <li><b>Số học nhị thức</b>
+                            <ol>
+                                <li>Một số tính chất số học cơ bản của C(n,k)</li>
+                                <li>Định lý Wolstenholme và Lucas</li>
+                                <li>Liên hệ với đa thức -- đa thức Lagrange</li>
+                                <li>Các kỹ thuật đồng dư nâng cao</li>
+                            </ol>
+                        </li>
+
+                        <li><b>Thặng dư chính phương</b></li>
+
+                        <li><b>Tính chất số học của dãy số</b>
+                            <ol>
+                                <li>Dãy sai phân truy hồi tuyến tính</li>
+                                <li>Kết hợp với phần nguyên</li>
+                                <li>Kết hợp với nhị thức Newton và số học nhị thức</li>
+                                <li>Các kĩ thuật và Phương pháp sai phân</li>
+                            </ol>
+                        </li>
+
+                        <li><b>Phương trình Markov -- Bước nhảy Viète</b></li>
+                        <li><b>Phương trình Pell</b></li>
+
+                        </ol>
+                        </div>
+
+                        <h3>Thông tin khác</h3>
+
+                        <ul>
+                            <li><b>Mục tiêu khóa học</b>
+                                <ul>
+                                    <li>Nắm vững các kỹ thuật số học nền tảng và nâng cao</li>
+                                    <li>Giải được các bài toán HSG, TST cấp tỉnh và hướng tới HSG quốc gia</li>
+                                    <li>Làm quen với tư duy Olympic</li>
+                                </ul>
+                            </li>
+
+                            <li><b>Đối tượng</b>
+                                <ul>
+                                    <li>Học sinh THPT định hướng thi HSG Toán và Olympic</li>
+                                    <li>Học sinh muốn nâng cao tư duy số học chuyên sâu</li>
+                                </ul>
+                            </li>
+
+                            <li>Thời gian khai giảng: Sau lễ 30/4 -- 1/5</li>
+
+                            <li><b>Lịch học</b>
+                                <ul>
+                                    <li>Thứ 2: 19h30 → 22h30 -- lý thuyết</li>
+                                    <li>Thứ 4: 13h → 16h -- thực hành</li>
+                                </ul>
+                            </li>
+
+                            <li>Học phí: 200k/buổi (3 tiếng)</li>
+
+                            <li>Dự kiến có 20 buổi học hoặc hơn tùy theo</li>
+
+                            <li>Tài liệu: video record và lecture note sau mỗi buổi học</li>
+
+                            <li>Về buổi luyện tập: trên tinh thần, các bạn sẽ được cung cấp bài tập và buổi này nhằm gợi ý và giải quyết các bài Toán đó -- do đó buổi này không bắt buộc đăng kí.</li>
+                        </ul>
+                        
+                        <h1>
+                            Thông tin liên hệ:
+                            <br>
+                            <span style="font-size: 16px; font-weight: normal;">
+                                Gmail: <a href="mailto:smp.cqt0907@gmail.com">smp.cqt0907@gmail.com</a> |
+                                Facebook: <a href="https://www.facebook.com/Secrets.of.Mathematical.Principles" target="_blank">
+                                    Secrets of Mathematical Principles
+                                </a>
+                            </span>
+                        </h1>
+
+                        <p class="exam-end"><b>─── HẾT ───</b></p>
+
+                    </div></div></div><div class="stats-strip fade-up">
+                <div class="stat-item"><div class="stat-number">09</div><div class="stat-label">Bài Viết</div></div>
+                <div class="stat-item"><div class="stat-number">07</div><div class="stat-label">Chủ Đề</div></div>
+                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
+                <div class="stat-item"><div class="stat-number">∞</div><div class="stat-label">Đam Mê</div></div>
+            </div>
+
+            <footer class="site-footer fade-up">
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 <span class="footer-brand">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
+                </div>
+            </footer>
+        </main>
+    </div><script src="/SMP/js/layout.js"></script>
+    <script src="/SMP/js/shared.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof Comments !== 'undefined') {
+            Comments.init('ThiThuLan2HSGS2526');
+        }
+    });
+</script>
+</body>
+</html>
+

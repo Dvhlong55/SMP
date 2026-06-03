@@ -13,7 +13,7 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link class="theme-link" rel="stylesheet" href="../css/shared.css">
+    <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
     <style>
         body { overflow-x: hidden; }
 
@@ -286,179 +286,181 @@
                     <a href="../index.html" class="exam-back-btn fade-up">← Quay Lại Trang Chủ</a>
 
                     <div class="exam-meta fade-up">
-                        <span class="exam-tag">HSG Toán 9</span>
-                        <span class="exam-tag">Toán Chuyên</span>
-                        <span class="exam-tag">08 / 03 / 2026</span>
-                        <span class="exam-tag">THPT Chuyên KHTN</span>
+                        <span class="exam-tag">VMO</span>
+                        <span class="exam-tag">Olympic Toán</span>
+                        <span class="exam-tag">Tổ Hợp-Combination</span>
+                        <span class="exam-tag">10 / 01 / 2026</span>
                     </div>
 
                     <div class="exam-paper fade-up">
 
-                      <h1>HCMUS Olympic Team Selection Test</h1>
-                      <h2>Algebra Section</h2>
+                        <h1 style="text-align: center;"><b>On a Counting Problem</b></h1>
+                        <h1 style="text-align: center;"><b>From a Student Olympiad Team Selection Exam</b></h1>
 
-                      <p style="text-align: center;">
-                      $\LaTeX$ by Long Do <br />
-                      January 11, 2026
-                      </p>
+                        <h2 style="text-align: center;"><b>Long Do<br />
+                        January 10, 2026
+                        </h2>
 
-                      <div class="problem">
-                      <b>Problem 1.</b>
+                        <p style="text-align:center;">
+                        <a href="/SMP/Math/HCMUS_Olympic_Team_Selection_Test_Algebra.html"
+                        style="background:#222;color:white;padding:8px 16px;text-decoration:none;border-radius:6px;">
+                        View Full Post
+                        </a>
+                        </p>
 
-                      Find $a,b$ such that the following system of equations has a solution
+                        <h3>Problem.
+                        Let \(S=\{1,2,\ldots,100\}\). Let \(\mathcal F\) be the set of functions \(f:S\to S\) satisfying
+                        $$
+                        f(k)\le f(k+1)\le f(k)+1,\qquad k=1,2,\ldots,99.
+                        $$
+                        <ol>
+                            <li>Find \(|\mathcal F|\).</li>
+                            <li>For each \(f\in\mathcal F\), let \(n(f)\) be the number of solutions of \(f(x)=x\). Compute
+                            $$
+                            \sum_{f\in\mathcal F} n(f).
+                            $$
+                            </li>
+                        </ol>
+                        </h3>
 
-                      $$
-                      \begin{cases}
-                      (a+1)x_1+x_2+x_3+x_4=1\\
-                      x_1+(a+1)x_2+x_3+x_4=1\\
-                      x_1+x_2+(a+1)x_3+x_4=1\\
-                      x_1+x_2+x_3+(a+1)x_4=b
-                      \end{cases}
-                      $$
+                        <h4>Solution</h4>
 
-                      </div>
+                        <p>
+                        We first solve the problem using the classical “stars and bars” (Euler candy distribution) method.
+                        </p>
 
+                        <p>
+                        Suppose the distinct values taken by \(f(x)\) are
+                        </p>
 
-                      <div class="problem">
-                      <b>Problem 2.</b>
+                        $$
+                        f_1<f_2 .="" cdots="" f_m="" p="">
+                        Because \(f(k)\le f(k+1)\le f(k)+1\), we must have
+                        </f_2>
 
-                      <p>Consider the equation</p>
+                        $$
+                        f_{i+1}=f_i+1.
+                        $$
 
-                      $$
-                      x^3-2026x+1=0
-                      $$
+                        <p>
+                        Hence the values are
+                        </p>
 
-                      <ol>
+                        $$
+                        f_1,f_1+1,\ldots,f_1+m-1.
+                        $$
 
-                      <li>
-                      Prove that the equation has three real roots $ a < b < c$ .
-                      </li>
+                        <p>
+                        Let \(k_i\) be the number of indices \(x\) such that \(f(x)=f_i\). Then
+                        </p>
 
-                      <li>
+                        $$
+                        k_1+k_2+\cdots+k_m=100, \qquad k_i\ge1.
+                        $$
 
-                      Let
+                        <p>
+                        Thus the number of such choices equals
+                        </p>
 
-                      $$
-                      \mathcal A=
-                      \begin{pmatrix}
-                      a & b & c\\
-                      c & a & b\\
-                      b & c & a
-                      \end{pmatrix}
-                      $$
+                        $$
+                        \binom{99}{m-1}.
+                        $$
 
-                      Compute $r(\mathcal A)$.
+                        <p>
+                        For each \(m\), the first value \(f_1\) can be chosen in
+                        </p>
 
-                      </li>
+                        $$
+                        1\le f_1\le 101-m
+                        $$
 
-                      <li>
+                        <p>
+                        ways. Therefore
+                        </p>
 
-                      Is the matrix $\mathcal A$ diagonalizable over $\mathbb R$?  
-                      What about over $\mathbb C$? Justify your answer.
+                        $$
+                        |\mathcal F|=\sum_{m=1}^{101}(101-m)\binom{99}{m-1}=101\cdot2^{98}.
+                        $$
 
-                      </li>
+                        <h4>Part (2)</h4>
 
-                      </ol>
+                        <p>
+                        Let
+                        </p>
 
-                      </div>
+                        $$
+                        T=\sum_{f\in\mathcal F}n(f).
+                        $$
 
+                        <p>
+                        We rewrite
+                        </p>
 
+                        $$
+                        T=\sum_{x=1}^{100} N_x
+                        $$
 
-                      <div class="problem">
-                      <b>Problem 3.</b>
+                        <p>
+                        where \(N_x\) is the number of functions satisfying \(f(x)=x\).
+                        </p>
 
-                      Let $n$ be a positive integer.
+                        <p>
+                        Fix \(x\). The condition \(f(x)=x\) splits the sequence into two independent parts.
+                        </p>
 
-                      Consider tuples $(b_1,b_2,\ldots,b_n)\in\mathbb R^n$.
+                        <p>
+                        For the left part \(1,\ldots,x\), the sequence is non-decreasing and each step increases by at most 1. The number of possibilities is
+                        </p>
 
-                      Denote by $V_n$ the set of tuples $(b_1,b_2,\ldots,b_n)$ such that there exist
-                      pairwise distinct real numbers $a_1,a_2,\ldots,a_n$ satisfying
+                        $$
+                        2^{x-1}.
+                        $$
 
-                      $$
-                      \sum_{i=1}^n b_iP(x+a_i)=0,
-                      \qquad \deg P < n
-                      $$
-                        
-                      Find $\dim V_n$.
-                                      
-                      </b></li></ol>
+                        <p>
+                        For the right part \(x,\ldots,100\), we have \(100-x\) steps each increasing by 0 or 1. Hence the number of possibilities is
+                        </p>
 
-                      </div>
+                        $$
+                        2^{100-x}.
+                        $$
 
-                      <div class="problem">
-                      <b>Problem 4.</b>
+                        <p>
+                        Thus
+                        </p>
 
-                      Let $A\in M_n(\mathbb R)$.
+                        $$
+                        N_x=2^{x-1}\cdot2^{100-x}=2^{99}.
+                        $$
 
-                      Prove that there exists $B\in M_n(\mathbb R)$ such that
+                        <p>
+                        Therefore
+                        </p>
 
-                      $$
-                      (AB)^2=AB
-                      $$
+                        $$
+                        T=\sum_{x=1}^{100}2^{99}=100\cdot2^{99}.
+                        $$
 
-                      and
+                        <h3>Remark</h3>
+                        <h4>
+                        <p>This problem admits several elegant approaches:</p>
 
-                      $$
-                      r(AB)=r(A)=r(B).
-                      $$
+                        <ul>
+                        <li><b>Lattice path interpretation.</b>  
+                        View \((k,f(k))\) as lattice points. The condition means each step moves right by 1 and up by at most 1.</li>
 
-                      </div>
+                        <li><b>Recurrence method.</b>  
+                        Define \(g(n,a,b)\) as the number of valid functions with \(f(1)=a\) and \(f(n)=b\). One obtains
+                        $$
+                        g(n,a,b)=g(n-1,a,b)+g(n-1,a,b-1).
+                        $$
+                        </li>
 
+                        <li><b>Generating functions.</b>  
+                        Each step contributes a factor \((1+x)\), corresponding to whether the value increases or not.</li>
+                        </ul>
+                        </h4>
 
-
-                      <div class="problem">
-                      <b>Problem 5.</b>
-
-                      Let
-
-                      $$
-                      S=\{1,2,\ldots,100\}
-                      $$
-
-                      and let $\mathcal F$ be the set of functions $f:S\to S$ satisfying
-
-                      $$
-                      f(k)\le f(k+1)\le f(k)+1,
-                      \qquad k=1,\ldots,99.
-                      $$
-
-                      <ol>
-
-                      <li>Determine the number of elements in $\mathcal F$.</li>
-
-                      <li>
-                      For each $f\in\mathcal F$, let $n(f)$ be the number of solutions of $f(x)=x$.
-
-                      Compute
-
-                      $$
-                      \sum_{f\in\mathcal F} n(f).
-                      $$
-
-                      </li>
-
-                      </ol>
-
-                      </div>
-
-
-
-                      <div class="problem">
-                      <b>Problem 6.</b>
-
-                      Let $M\in M_n(\mathbb R)$ be a square matrix whose entries all have absolute value $1$.
-
-                      Compute
-
-                      $$
-                      \sum \det(M)
-                      \qquad\text{and}\qquad
-                      \sum \det(M^2).
-                      $$
-
-                      </div>
-
-                      <p class="exam-end"><b>─── HẾT ───</b></p>
+                        <p class="exam-end"><b>─── END ───</b></p>
 
                     </div></div></div><div class="stats-strip fade-up">
                 <div class="stat-item"><div class="stat-number">09</div><div class="stat-label">Bài Viết</div></div>
@@ -474,8 +476,8 @@
                 </div>
             </footer>
         </main>
-    </div><script src="../js/layout.js"></script>
-    <script src="../js/shared.js"></script>
+    </div><script src="/SMP/js/layout.js"></script>
+    <script src="/SMP/js/shared.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof Comments !== 'undefined') {
@@ -485,4 +487,3 @@
 </script>
 </body>
 </html>
-

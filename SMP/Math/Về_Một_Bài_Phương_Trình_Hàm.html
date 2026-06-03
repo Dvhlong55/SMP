@@ -13,7 +13,7 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link class="theme-link" rel="stylesheet" href="../css/shared.css">
+    <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
     <style>
         body { overflow-x: hidden; }
 
@@ -68,7 +68,7 @@
         .main-content-layout {
             display: grid;
             grid-template-columns: 200px 1fr;
-            gap: 100px;
+            gap: 30px;
             margin-top: 20px;
         }
 
@@ -286,123 +286,235 @@
                     <a href="../index.html" class="exam-back-btn fade-up">← Quay Lại Trang Chủ</a>
 
                     <div class="exam-meta fade-up">
-                        <span class="exam-tag">HSG Toán 9</span>
-                        <span class="exam-tag">Toán Chuyên</span>
-                        <span class="exam-tag">08 / 03 / 2026</span>
-                        <span class="exam-tag">THPT Chuyên KHTN</span>
+                        <span class="exam-tag">VMO</span>
+                        <span class="exam-tag">Olympic Toán</span>
+                        <span class="exam-tag">Phương Trình Hàm</span>
+                        <span class="exam-tag">20 / 01 / 2026</span>
                     </div>
 
                     <div class="exam-paper fade-up">
 
-                      <h2>TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN</h2>
-                      <h2>TRƯỜNG THPT CHUYÊN KHTN</h2>
+                        <h1 style="text-align: center;">
+                        Về Một Bài Phương Trình Hàm
+                        </h1>
 
-                      <h1>ĐỀ THI KHẢO SÁT NĂNG LỰC LỚP 9</h1>
-                      <h2>NĂM HỌC 2025 – 2026</h2>
+                        <h2 style="text-align: center;">Long Do</h2>
 
-                      <p style="text-align:center">
-                      <b>Môn: TOÁN (Toán chung – Đợt 2, 07/3/2026)</b><br>
-                      <i>(Thời gian làm bài: 120 phút, không kể thời gian phát đề)</i>
-                      </p>
+                        <p style="text-align: center;"><b>20/1/2026</b></p>
 
-                      <div class="problem">
-                      <b>Câu I.</b>
+                        <h3>
+                        Bài toán:
 
-                      <ol>
+                        Tìm tất cả hàm số \(f:\mathbb{R}\to\mathbb{R}\) thỏa mãn
+                        $$
+                        f(x^2+y+f(y)) = xf(x) + f(2y), \quad \forall x,y\in\mathbb{R}
+                        \tag{1}
+                        $$
+                        </h3>
 
-                      <li>
+                        <h4>Lời giải</h4>
 
-                      Giải phương trình
+                        <p>
+                        Giả sử hàm số \(f\) thỏa mãn đề bài. Đặt \(\mathcal{P}(u,v)\) là phép thế \(x=u\), \(y=v\) trong (1).
+                        </p>
 
-                      $$
-                      \frac{x^2+6x+5}{\sqrt{x^2+3}}=3\sqrt{3x+1}
-                      $$
+                        <p>
+                        Trước hết xét \(f\) là hàm hằng. Khi đó \(xf(x)\equiv0\Rightarrow f(x)\equiv0\).
+                        </p>
 
-                      </li>
+                        <p>
+                        Xét \(f\) khác hằng. Nếu \(f(x)\equiv x\) thì thay vào thấy thỏa mãn. Do đó chỉ cần xét \(f(x)\not\equiv x\).
+                        Ta chứng minh \(f(0)=0\).
+                        </p>
 
-                      <li>
+                        <p>
+                        Giả sử \(f(0)\neq0\). Thế \(x\) bởi \(-x\) trong (1) ta được
+                        </p>
 
-                      Giải hệ phương trình
+                        $$
+                        f(x^2+y+f(y)) = -xf(-x)+f(2y),\quad \forall x,y\in\mathbb{R}
+                        \tag{2}
+                        $$
 
-                      $$
-                      \begin{cases}
-                      x^3+x^2y+x+y=20\\
-                      xy(x^2+1)+4x^2=36
-                      \end{cases}
-                      $$
+                        <p>Từ (1) và (2) suy ra</p>
 
-                      </li>
+                        $$
+                        xf(x)=-xf(-x),\quad \forall x\in\mathbb{R}
+                        $$
 
-                      </ol>
+                        $$
+                        \Rightarrow f(x)=-f(-x),\quad \forall x\neq0
+                        \tag{3}
+                        $$
 
-                      </div>
+                        <p>
+                        Ta chứng minh tồn tại \(t\) sao cho \(t-f(t)&gt;0\).
+                        </p>
 
-                      <div class="problem">
+                        <p>
+                        Vì \(f(x)\not\equiv x\) nên tồn tại \(x_1\) sao cho \(f(x_1)\ne x_1\).
+                        </p>
 
-                      <b>Câu II.</b>
+                        <p>
+                        Nếu \(x_1&gt;f(x_1)\) thì chọn \(t=x_1\).
+                        Nếu \(x_1<f p="" t="" th="" x_1="">
 
-                      <ol>
+                        $$
+                        -x_1&gt;-f(x_1)=f(-x_1)
+                        $$
 
-                      <li>
+                        </f></p><p>
+                        chọn \(t=-x_1\).
+                        </p>
 
-                      Tìm các cặp số nguyên $(x;y)$ thỏa mãn
+                        <p>
+                        Xét phép thế \(\mathcal{P}(\sqrt{t-f(t)},t)\)
+                        </p>
 
-                      $$
-                      x^3-y^3=2xy+1
-                      $$
+                        $$
+                        f(2t)=\sqrt{t-f(t)}\,f(\sqrt{t-f(t)})+f(2t)
+                        $$
 
-                      </li>
+                        $$
+                        \Rightarrow \sqrt{t-f(t)}\,f(\sqrt{t-f(t)})=0
+                        $$
 
-                      <li>
+                        $$
+                        \Rightarrow f(\sqrt{t-f(t)})=0
+                        $$
 
-                      Với các số thực dương $a,b$ có tổng bằng $2$, tìm giá trị nhỏ nhất của
+                        <p>Đặt \(u=t-f(t)\Rightarrow f(u)=0\).</p>
 
-                      $$
-                      P=\frac{a^3}{b(a^3+b)}+\frac{b^3}{a(b^3+a)}
-                      $$
+                        <p>Xét tiếp \(\mathcal{P}(0,u)\)</p>
 
-                      </li>
+                        $$
+                        f(u+f(u))=f(u)=0=f(2u)
+                        $$
 
-                      </ol>
+                        $$
+                        \Rightarrow f(u)=f(-u)=f(-2u)=f(2u)=0
+                        \tag{4}
+                        $$
 
-                      </div>
+                        <p>
+                        Thế lần lượt \(\mathcal{P}(x,u)\) và \(\mathcal{P}(x,-u)\)
+                        </p>
 
-                      <div class="problem">
+                        $$
+                        f(x^2+u)=xf(x)=f(x^2-u)
+                        $$
 
-                      <b>Câu III.</b>
+                        $$
+                        \Rightarrow f(x+u)=f(x-u),\quad x\ge0
+                        $$
 
-                      Cho tam giác nhọn $ABC$ nội tiếp $(O)$ với đường kính $AX$.  
-                      $M$ là trung điểm $BC$.  
+                        <ul>
+                        <li>Nếu \(u&gt;0\) thì \(f(0)=f(2u)=0\)</li>
+                        <li>Nếu \(u<0 f="" li="" th="" u="">
+                        </0></li></ul>
 
-                      Trên đoạn $AM$ lấy điểm $P$ sao cho $\angle BPC=90^\circ$.  
+                        <p>
+                        Mâu thuẫn với giả sử nên \(f(0)=0\). Từ (3) suy ra \(f\) là hàm lẻ.
+                        </p>
 
-                      Đường thẳng qua $P$ vuông góc $AP$ cắt $XB,XC$ theo thứ tự tại $E,F$.  
+                        <p>Xét \(\mathcal{P}(x,0)\) và \(\mathcal{P}(0,x)\)</p>
 
-                      Gọi $N$ là trung điểm $EF$, $D$ là điểm đối xứng của $A$ qua $M$.
+                        $$
+                        f(x^2)=xf(x),\quad \forall x\in\mathbb{R}
+                        \tag{5}
+                        $$
 
-                      <ol>
+                        $$
+                        f(y+f(y))=f(2y),\quad \forall y\in\mathbb{R}
+                        \tag{6}
+                        $$
 
-                      <li>Chứng minh rằng $\angle EAB+\angle FAC=90^\circ$.</li>
+                        <p>
+                        Từ (5) viết lại (1)
+                        </p>
 
-                      <li>Chứng minh rằng $XN\perp BC$.</li>
+                        $$
+                        f(x^2+y+f(y))=f(x^2)+f(2y)
+                        $$
 
-                      <li>Chứng minh rằng $\angle EDF=90^\circ$.</li>
+                        $$
+                        \Rightarrow f(x+y+f(y))=f(x)+f(2y),\quad x\ge0
+                        \tag{7}
+                        $$
 
-                      </ol>
+                        <p>Tương tự suy ra</p>
 
-                      </div>
+                        $$
+                        f(x+y+f(y))=f(x)+f(2y),\quad x\le0
+                        \tag{8}
+                        $$
 
-                      <div class="problem">
+                        <p>Kết hợp (7),(8)</p>
 
-                      <b>Câu IV.</b>
+                        $$
+                        f(x+y+f(y))=f(x)+f(2y),\quad \forall x,y
+                        \tag{9}
+                        $$
 
-                      Một chiếc bánh sinh nhật được cắt thành $9$ phần (khối lượng mỗi phần có thể khác nhau).  
+                        <p>Thế \(x=y-f(y)\)</p>
 
-                      Chứng minh rằng ta luôn có thể chọn một phần và cắt nó thành $2$ phần mới sao cho $10$ phần bánh có thể chia thành hai nhóm, mỗi nhóm gồm $5$ phần, và tổng khối lượng hai nhóm bằng nhau.
+                        $$
+                        f(y-f(y))=0
+                        \tag{10}
+                        $$
 
-                      </div>
+                        <p>
+                        Thế tiếp vào (9)
+                        </p>
 
-                      <p class="exam-end"><b>─── HẾT ───</b></p>
+                        $$
+                        f(x+y-f(y))=f(x)
+                        \tag{11}
+                        $$
+
+                        <p>
+                        Cho \(x=-y\)
+                        </p>
+
+                        $$
+                        f(f(y))=f(y)
+                        $$
+
+                        <p>Kết hợp với (5)</p>
+
+                        $$
+                        f(f^2(x))=f(x)\,f(f(x))=f(x)^2
+                        \tag{12}
+                        $$
+
+                        <p>
+                        Giả sử tồn tại \(a,b\) sao cho \(f(a)=f(b)\ne0\)
+                        </p>
+
+                        $$
+                        a f(a)=b f(b)\Rightarrow a=b
+                        $$
+
+                        <p>
+                        Vì \(f\not\equiv0\) nên tồn tại \(v\) sao cho \(f(v)\ne0\).
+                        Thế \(x=v\) vào (11)
+                        </p>
+
+                        $$
+                        v+y-f(y)=v
+                        $$
+
+                        $$
+                        \Rightarrow f(y)=y
+                        $$
+
+                        <p>Kết luận</p>
+
+                        $$
+                        f(x)\equiv0,\qquad f(x)\equiv x
+                        $$<p></p>
+
+                        <p class="exam-end"><b>─── HẾT ───</b></p>
 
                     </div></div></div><div class="stats-strip fade-up">
                 <div class="stat-item"><div class="stat-number">09</div><div class="stat-label">Bài Viết</div></div>
@@ -418,8 +530,8 @@
                 </div>
             </footer>
         </main>
-    </div><script src="../js/layout.js"></script>
-    <script src="../js/shared.js"></script>
+    </div><script src="/SMP/js/layout.js"></script>
+    <script src="/SMP/js/shared.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof Comments !== 'undefined') {
@@ -429,4 +541,3 @@
 </script>
 </body>
 </html>
-

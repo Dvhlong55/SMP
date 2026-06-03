@@ -811,3 +811,46 @@ body.dark-mode .modal-expand-btn {
     border-color: rgba(92, 225, 230, 0.4);
     color: #5ce1e6;
 }
+
+/* ── Sửa lỗi vỡ hộp và định dạng Header Box ── */
+.header-box {
+    border: 2px solid var(--accent-cyan, #5ce1e6);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    background: rgba(92, 225, 230, 0.03); /* Tạo nền nhẹ cho hộp */
+}
+
+.header-top, .header-bottom {
+    display: flex;
+    justify-content: space-between; /* Đẩy tên/môn sang 2 bên */
+    align-items: center;
+    font-size: 0.9rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.header-top {
+    border-bottom: 1px dashed var(--exam-divider-color);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+.header-bottom {
+    border-top: 1px dashed var(--exam-divider-color);
+    padding-top: 8px;
+    margin-top: 12px;
+}
+
+.header-center {
+    font-weight: bold;
+    text-align: center;
+    color: var(--exam-title-color);
+}
+
+/* ── Chia danh sách thành 2 cột (Two Columns) ── */
+.two-columns > ol {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding-left: 20px;
+}

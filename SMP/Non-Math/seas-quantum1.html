@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Quantum.Seas.note1</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
+    <style>
+        body { overflow-x: hidden; }
+
+        /* ========================================================
+           HỆ THỐNG BIẾN MÀU CHUYỂN ĐỔI SÁNG / TỐI (DARK MODE)
+           ======================================================== */
+        :root {
+            --body-bg: #0b1111; 
+            --widget-title-color: #fff;
+            --widget-link-color: #888;
+            --widget-badge-bg: rgba(255,255,255,0.05);
+            --widget-badge-color: #aaa;
+            --exam-paper-bg: rgba(255,255,255,0.025);
+            --exam-paper-border: rgba(92,225,230,0.09);
+            --exam-text-color: #ddd;
+            --exam-bold-color: #f4f4f4;
+            --exam-title-color: #f0f0f0;
+            --exam-divider-color: rgba(92,225,230,0.1);
+        }
+
+        body:not(.dark-mode) {
+            --body-bg: #f8fafc;
+            --widget-title-color: #1e293b;
+            --widget-link-color: #64748b;
+            --widget-badge-bg: rgba(0,0,0,0.05);
+            --widget-badge-color: #475569;
+            --exam-paper-bg: #ffffff;
+            --exam-paper-border: rgba(15,23,42,0.08);
+            --exam-text-color: #334155;
+            --exam-bold-color: #0f172a;
+            --exam-title-color: #1e293b;
+            --exam-divider-color: rgba(15,23,42,0.08);
+        }
+
+        body {
+            background-color: var(--body-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        .main-wrapper {
+            position: relative;
+            max-width: 2000px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            transform: none !important;
+            left: 0 !important;
+            transition: transform 0s !important;
+        }
+
+        .main-content-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 100px;
+            margin-top: 20px;
+        }
+
+        .tags-comment-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            z-index: 1;
+        }
+
+        .side-widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--widget-title-color);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s ease;
+        }
+
+        body.light-mode .side-widget-title {
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .side-widget-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .side-widget-list a {
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--widget-link-color); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+        }
+
+        .side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(4px); }
+
+        .side-widget-list a span {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            background: var(--widget-badge-bg); padding: 2px 8px;
+            border-radius: 12px; color: var(--widget-badge-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @media (max-width: 1100px) {
+            .main-content-layout { grid-template-columns: 1fr; }
+            .tags-comment-sidebar { position: static; }
+        }
+
+        .stats-strip {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 36px;
+            margin-top: 50px;
+        }
+        .stat-item {
+            flex: 1; padding: 18px 20px; text-align: center;
+            border-right: 1px solid var(--border-light);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.6rem;
+            font-weight: 700; color: var(--accent-cyan); line-height: 1; margin-bottom: 6px;
+        }
+        .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+        .exam-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan, #5ce1e6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            opacity: 0.65;
+            transition: opacity 0.2s;
+        }
+        .exam-back-btn:hover { opacity: 1; }
+
+        .exam-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .exam-tag {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 4px 13px;
+            border-radius: 20px;
+            border: 1px solid rgba(92,225,230,0.35);
+            color: var(--accent-cyan, #5ce1e6);
+        }
+
+        .exam-paper {
+            background: var(--exam-paper-bg);
+            border: 1px solid var(--exam-paper-border);
+            border-radius: 12px;
+            padding: 46px 54px;
+            font-family: "Times New Roman", Times, serif;
+            color: var(--exam-text-color);
+            line-height: 1.85;
+            font-size: 1.01rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .exam-paper h1,
+        .exam-paper h2 {
+            text-align: center;
+            color: var(--exam-title-color);
+            font-family: "Times New Roman", Times, serif;
+            margin: 7px 0;
+            transition: color 0.3s ease;
+        }
+        .exam-paper h1 { font-size: 1.5rem; letter-spacing: 0.5px; }
+        .exam-paper h2 { font-size: 1.3rem; font-weight: bold; margin-top: 30px;}
+
+        .exam-paper h3 {
+            font-size: 1.1rem;
+            color: var(--accent-cyan, #5ce1e6);
+            margin-top: 34px;
+            margin-bottom: 10px;
+            font-family: "Times New Roman", Times, serif;
+            border-left: 3px solid var(--accent-cyan, #5ce1e6);
+            padding-left: 12px;
+        }
+
+        .exam-paper p   { margin: 10px 0; }
+        .exam-paper ol,
+        .exam-paper ul  { margin: 10px 0; padding-left: 28px; }
+        .exam-paper li  { margin: 8px 0; }
+        .exam-paper b   { color: var(--exam-bold-color); transition: color 0.3s ease; }
+
+        .exam-divider {
+            border: none;
+            border-top: 1px solid var(--exam-divider-color);
+            margin: 24px 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .exam-end {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            margin-top: 44px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        body.light-mode .exam-end {
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+
+        a {
+            color: #ff69b4; 
+            text-decoration: none; 
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #ff1493; 
+            text-decoration: underline; 
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="main-content-layout">
+
+                <aside class="tags-comment-sidebar">
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Categories</div>
+                        <ul class="side-widget-list">
+                            <li><a href="../Math/toanhoc.html">Chuyên Toán <span>10</span></a></li>
+                            <li><a href="../Math/toanhoc.html">HSG Toán 9 <span>8</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Math Olympiad <span>4</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Number Theory <span>5</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Algebra <span>3</span></a></li>
+                            <li><a href="../My%20Life/cuocsong.html">Cuộc Sống <span>1</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Archives</div>
+                        <ul class="side-widget-list">
+                            <li><a href="#">Tháng 7, 2025 <span>12</span></a></li>
+                            <li><a href="#">Tháng 6, 2025 <span>8</span></a></li>
+                            <li><a href="#">Tháng 5, 2025 <span>5</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="comment-section fade-up">
+                        <h3>Thảo Luận & Góp Ý</h3>
+                        <div class="comment-form">
+                            <div class="comment-form-row">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                            </div>
+                            <div style="margin-bottom:14px">
+                                <textarea id="comment-text-input" class="comment-textarea"
+                                    placeholder="Nhập bình luận hoặc lời nhắn của bạn tại đây..."></textarea>
+                            </div>
+                            <button id="comment-submit" class="comment-submit">Gửi Bình Luận</button>
+                        </div>
+                        <div id="comment-list" class="comment-list"></div>
+                    </div>
+
+                </aside>
+
+                <div class="main-articles-body">
+
+                    <a href="/SMP/index.html" class="exam-back-btn fade-up">← Quay Lại Trang Chủ</a>
+
+                    <div class="exam-meta fade-up">
+                        <span class="exam-tag">Vật lý Lượng tử</span>
+                        <span class="exam-tag">SEAS Note</span>
+                        <span class="exam-tag">Quantum Physics</span>
+                        <span class="exam-tag"> 07 / 2025</span>
+                    </div>
+
+                    <div class="exam-paper fade-up">
+  
+                        <div class="header-box">
+                            <div class="header-top">
+                                <div>Note Vật lý Lượng tử</div>
+                                <div><b><a href="https://web.facebook.com/h.long.55" target="_blank" style="color: inherit;">Long Do</a></b></div>
+                            </div>
+                            
+                            <h1>
+                            <div class="header-center">
+                                $\S$ Quantum.Seas.note1
+                            </div>
+                            </h1>
+
+                            <div class="header-bottom">
+                                <div>Ngày 29 tháng 7 năm 2025</div>
+                            </div>
+                        </div>
+
+                        <h3>Bài toán 1</h3>
+                        <p>Show that the matrix $$A = \frac{1}{\sqrt{2}}\begin{pmatrix}1 & -i \\ 1 & i\end{pmatrix}$$ is unitary.</p>
+                        
+                        <b>Lời giải:</b>
+                        <p>Trước tiên $$A^\dagger = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1\\ i & -i \end{pmatrix}$$</p>
+                        <p>Suy ra $$AA^\dagger = \frac{1}{2} \begin{pmatrix} 1 & -i \\ 1 & i \end{pmatrix} \begin{pmatrix} 1 & 1 \\ i & -i \end{pmatrix} = \frac{1}{2} \begin{pmatrix} 2 & 0\\ 0 & 2 \end{pmatrix} = \begin{pmatrix} 1 & 0\\ 0 & 1 \end{pmatrix}$$</p>
+                        <p>Tương tự cho hoán vị còn lại.</p>
+
+                        <hr class="exam-divider">
+
+                        <h2>Trực chuẩn và xác suất trong cơ học lượng tử</h2>
+                        <p><b>1. Cơ sở trực chuẩn.</b></p>
+                        <p>Tập các vector $\{ |\phi_i\rangle \}$ là <b>cơ sở trực chuẩn</b> nếu:</p>
+                        <p>Ta có: $\langle \phi_i | \phi_j \rangle = \delta_{ij}$, tức các vector trực giao và chuẩn hóa.</p>
+                        <p>Mọi trạng thái $|\psi\rangle$ trong không gian đều có thể viết thành tổ hợp tuyến tính: $$|\psi\rangle = \sum_i c_i |\phi_i\rangle, \quad \text{với } c_i = \langle \phi_i | \psi \rangle$$</p>
+                        
+                        <p><b>2. Liên hệ với xác suất đo.</b></p>
+                        <p>Trong cơ học lượng tử, nếu đo trạng thái $|\psi\rangle$ theo cơ sở $\{ |\phi_i\rangle \}$, thì xác suất thu được kết quả $i$ là: $$P(i) = |\langle \phi_i | \psi \rangle|^2$$</p>
+                        <p>Vì tập $\{ |\phi_i\rangle \}$ là cơ sở trực chuẩn đầy đủ, nên tổng các xác suất luôn bằng 1: $$\sum_i |\langle \phi_i | \psi \rangle|^2 = 1$$</p>
+                        <p>Điều này giống với nguyên lý trong xác suất cổ điển: <b>tổng tất cả các khả năng xảy ra luôn bằng 1</b>.</p>
+
+                        <p><b>3. Kết luận</b></p>
+                        <ul>
+                            <li>Trực chuẩn đảm bảo các trạng thái đo được là <b>khác nhau, vuông góc</b> và <b>có chuẩn bằng 1</b>.</li>
+                            <li>Đầy đủ đảm bảo không bỏ sót bất kỳ trạng thái nào trong hệ.</li>
+                            <li>Tổng xác suất thu được từ một phép đo theo cơ sở trực chuẩn sẽ luôn là 1: $$\sum_i P(i) = 1$$</li>
+                        </ul>
+                        <p>Do đó, <i>tính trực chuẩn đầy đủ của một cơ sở trong cơ học lượng tử đảm bảo tính đúng đắn và đầy đủ của xác suất lượng tử</i>.</p>
+
+                        <hr class="exam-divider">
+
+                        <h2>Ket và Bra trong cơ học lượng tử</h2>
+                        <p><b>Ket:</b> trạng thái lượng tử được biểu diễn dưới dạng vector cột: $$|s\rangle = a|0\rangle + b|1\rangle$$</p>
+                        <p><b>Bra:</b> là liên hợp phức và chuyển vị (vector dòng) của ket: $$\langle s| = a^* \langle 0| + b^* \langle 1|$$</p>
+                        
+                        <p><b>Ví dụ:</b></p>
+                        <p>Nếu: $|s\rangle = (3+i)|0\rangle + 2i|1\rangle$<br>
+                        thì: $$\langle s| = (3+i)^* \langle 0| + (2i)^* \langle 1| = (3 - i)\langle 0| - 2i \langle 1|$$</p>
+                        
+                        <p><b>Tóm lại:</b> Khi chuyển giữa ket và bra:</p>
+                        <ul>
+                            <li>Ket $\rightarrow$ Bra: liên hợp phức hệ số và chuyển vị</li>
+                            <li>Bra $\rightarrow$ Ket: liên hợp phức hệ số và chuyển vị lại</li>
+                        </ul>
+
+                        <hr class="exam-divider">
+
+                        <h3>Bài toán 2</h3>
+                        <p>What does it do to the quantum states:</p>
+                        <p>$$|0\rangle, \quad |1\rangle,$$</p>
+                        <p>$$|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle),$$</p>
+                        <p>$$|-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle),$$</p>
+                        <p>$$|{\rm in}\rangle = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle),$$</p>
+                        <p>$$|{\rm out}\rangle = \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle)?$$</p>
+                        <p>Suppose a qubit is in the state $$|\psi\rangle = \frac{1}{\sqrt{3}}|0\rangle + \frac{1+i}{\sqrt{3}}|1\rangle.$$</p>
+                        <p>If a von Neumann measurement is applied using the basis $\{|{\rm in}\rangle, |{\rm out}\rangle\}$, what are the probabilities of the various outcomes?</p>
+                        
+                        <b>Lời giải:</b>
+                        <p>Ta có các vector: $$|\text{in}\rangle = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle), \quad |\text{out}\rangle = \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle)$$</p>
+                        <ol>
+                            <li><b>Chuẩn hóa:</b><br>
+                            Tính tích vô hướng:
+                            $$\langle \text{in}|\text{in}\rangle = \left( \frac{1}{\sqrt{2}} (\langle 0| - i \langle 1|) \right) \left( \frac{1}{\sqrt{2}} (|0\rangle + i|1\rangle) \right) = \frac{1}{2} \left( \langle 0|0\rangle + i\langle 0|1\rangle - i\langle 1|0\rangle - i^2 \langle 1|1\rangle \right)$$
+                            $$= \frac{1}{2} (1 + 0 - 0 + 1) = 1$$
+                            Tương tự:
+                            $$\langle \text{out}|\text{out}\rangle = \left( \frac{1}{\sqrt{2}} (\langle 0| + i \langle 1|) \right) \left( \frac{1}{\sqrt{2}} (|0\rangle - i|1\rangle) \right) = \frac{1}{2} (1 + 0 - 0 + 1) = 1$$
+                            </li>
+                            <li><b>Trực giao:</b>
+                            $$\langle \text{in}|\text{out}\rangle = \left( \frac{1}{\sqrt{2}} (\langle 0| - i \langle 1|) \right) \left( \frac{1}{\sqrt{2}} (|0\rangle - i|1\rangle) \right)$$
+                            $$= \frac{1}{2} \left( \langle 0|0\rangle - i \langle 0|1\rangle - i \langle 1|0\rangle + i^2 \langle 1|1\rangle \right) = \frac{1}{2} (1 - 0 - 0 -1) = 0$$
+                            </li>
+                        </ol>
+                        <p>Nói cách khác hai vector trên là cơ sở trực chuẩn. Do đó tổng hai xác suất bằng $1$. Bây giờ ta đi tính nó. Xác suất đo được một trạng thái $|\phi\rangle$ là: $P = |\langle \phi | \psi \rangle|^2$. Tính: $\langle \text{in}|\psi\rangle$</p>
+                        <p>$$\langle \text{in}| = \frac{1}{\sqrt{2}}(\langle 0| - i\langle 1|) \quad \text{(vì liên hợp phức của } i \text{ là } -i)$$</p>
+                        <p>$$\Rightarrow \langle \text{in}|\psi\rangle = \frac{1}{\sqrt{2}}(\langle 0| - i\langle 1|) \left( \frac{1}{\sqrt{3}}|0\rangle + \frac{1+i}{\sqrt{3}}|1\rangle \right)$$</p>
+                        <p>$$= \frac{1}{\sqrt{2}} \left( \frac{1}{\sqrt{3}}\langle 0|0\rangle + \frac{1+i}{\sqrt{3}}(-i)\langle 1|1\rangle \right) = \frac{1}{\sqrt{2}} \left( \frac{1}{\sqrt{3}} - \frac{(1+i)i}{\sqrt{3}} \right)$$</p>
+                        <p>$$(1+i)i = i + i^2 = i - 1 \Rightarrow -(1+i)i = 1 - i$$</p>
+                        <p>$$\Rightarrow \langle \text{in}|\psi\rangle = \frac{1}{\sqrt{2}} \cdot \frac{1 + (1 - i)}{\sqrt{3}} = \frac{1}{\sqrt{2}} \cdot \frac{2 - i}{\sqrt{3}} = \frac{2 - i}{\sqrt{6}}$$</p>
+                        <p>$$P_{\text{in}} = \left| \frac{2 - i}{\sqrt{6}} \right|^2 = \frac{|2 - i|^2}{6} = \frac{2^2 + (-1)^2}{6} = \frac{4 + 1}{6} = \frac{5}{6}$$</p>
+
+                        <hr class="exam-divider">
+
+                        <h3>Bài toán 3</h3>
+                        <p>A qutrit is a three-state quantum system.</p>
+                        <ol style="list-style-type: lower-alpha;">
+                            <li>Show that
+                            $$|a\rangle = \frac{1}{2}|0\rangle + \frac{1}{\sqrt{2}}|1\rangle + \frac{1}{2}|2\rangle,$$
+                            $$|b\rangle = \frac{1}{2}|0\rangle - \frac{1}{\sqrt{2}}|1\rangle + \frac{1}{2}|2\rangle,$$
+                            $$|c\rangle = \frac{1}{\sqrt{2}}|0\rangle - \frac{1}{\sqrt{2}}|2\rangle$$
+                            is an orthonormal basis for a qutrit.</li>
+                            <li>Now, suppose a qutrit is in the state
+                            $$\frac{1}{2}|0\rangle + \frac{1}{\sqrt{2}}|1\rangle - \frac{1}{2}|2\rangle,$$
+                            and is measured with a von Neumann measurement using the basis $\{|a\rangle, |b\rangle, |c\rangle\}$. What are probabilities of the various possible outcomes?</li>
+                        </ol>
+                        
+                        <b>Lời giải:</b>
+                        <ul>
+                            <li><b>a)</b> Ta proof từng cái:
+                                <ul>
+                                    <li>Chuẩn hóa (normalized): $$\langle a|a \rangle = 1, \quad \langle b|b \rangle = 1, \quad \langle c|c \rangle = 1$$</li>
+                                    <li>Trực giao (orthogonal) từng đôi một: $$\langle a|b \rangle = 0, \quad \langle a|c \rangle = 0, \quad \langle b|c \rangle = 0$$</li>
+                                </ul>
+                            </li>
+                            <li><b>b)</b> Ở đây chỉ đơn giản là tích tích vô hướng các vector $$\langle a| \psi \rangle, \quad \langle b| \psi \rangle, \quad \langle c| \psi \rangle$$ và các xác suất của nó đơn giản là các bình phương các modulo $\rightarrow \left(\frac{1}{2}, \frac{1}{2}, \frac{1}{4}\right)$.</li>
+                        </ul>
+
+                        <hr class="exam-divider">
+
+                        <h2>Cổng C-NOT (Controlled-NOT)</h2>
+                        <p>Cổng C-NOT là một cổng hai qubit, thực hiện phép đảo (NOT) trên qubit mục tiêu nếu và chỉ nếu qubit điều khiển là $|1\rangle$. Nó còn được gọi là cổng <b>CX</b> (Controlled-X). Cổng CNOT là một phép biến đổi tuyến tính, vì nó là một phép toán lượng tử hợp lệ.</p>
+                        
+                        <p><b>1. Tác động lên cơ sở tính toán</b></p>
+                        <p>$$\begin{aligned} \text{CNOT} |00\rangle &= |00\rangle \\ \text{CNOT} |01\rangle &= |01\rangle \\ \text{CNOT} |10\rangle &= |11\rangle \\ \text{CNOT} |11\rangle &= |10\rangle \end{aligned}$$</p>
+                        
+                        <p><b>2. Ma trận biểu diễn</b></p>
+                        <p>Cổng C-NOT có thể được biểu diễn bằng ma trận $4 \times 4$ như sau:</p>
+                        <p>$$\text{CNOT} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{bmatrix}$$</p>
+
+                        <p><b>3. Mạch lượng tử</b></p>
+                        <p>(chưa tìm hiểu) <br>
+                        <a href="https://vi.wikipedia.org/wiki/M%E1%BA%A1ch_l%C6%B0%E1%BB%A3ng_t%E1%BB%AD" target="_blank">Wikipedia: Mạch lượng tử</a></p>
+                        <p>Trong đó:</p>
+                        <ul>
+                            <li>Qubit $q_0$ là qubit điều khiển.</li>
+                            <li>Qubit $q_1$ là qubit mục tiêu.</li>
+                        </ul>
+
+                        <p><b>4. Ứng dụng</b></p>
+                        <p>Cổng C-NOT được dùng để:</p>
+                        <ul>
+                            <li>Tạo trạng thái rối Bell. (chưa tìm hiểu)</li>
+                            <li>Mô phỏng các cổng logic cổ điển. (chưa tìm hiểu)</li>
+                            <li>Là thành phần không thể thiếu trong các thuật toán lượng tử như Grover, Shor, v.v. (chưa tìm hiểu)</li>
+                        </ul>
+
+                        <hr class="exam-divider">
+
+                        <h3>Bài toán 4</h3>
+                        <p>The phase gate is $$S = \begin{pmatrix} 1 & 0 \\ 0 & i \end{pmatrix}.$$</p>
+                        <p>This is one of the more useful gates for quantum algorithms. Denote by $\mathrm{CNOT}(i,j)$ a control NOT gate with the $i$-th qubit as control and the $j$-th qubit as target. Let $S_k$ denote a phase gate on the $k$-th qubit. Write down the $8 \times 8$ matrix corresponding to the following three quantum gates (you don’t need to write all the $0$’s, but make it clear which columns your non-zero entries are in).</p>
+                        <ol style="list-style-type: lower-alpha;">
+                            <li>$\mathrm{CNOT}(1,2) \otimes S_3$,</li>
+                            <li>$\mathrm{CNOT}(3,2) \otimes S_1$,</li>
+                            <li>$\mathrm{CNOT}(1,3) \otimes S_2$.</li>
+                        </ol>
+                        
+                        <b>Lời giải:</b>
+                        <p>Ta có hai cách tính, chẳng hạn xét câu (a).</p>
+                        <ul>
+                            <li><b>Cách 1:</b> ta tính ra CNOT theo định nghĩa, sau đó lấy tích của $\mathrm{CNOT}(1, 2)$, sau đó lấy tích tensor là xong.</li>
+                            <li><b>Cách 2:</b> mô tả trực quan hơn như sau. $\mathrm{CNOT}(1, 2)$ tức qubit control nằm trên và target nằm dưới, hơn nữa cổng $S$ nằm ở hàng thứ ba sau cùng. Chẳng hạn với $|101 \rangle$ thì $|10 \rangle$ đầu tiên chính là $|11 \rangle$, còn lại $|1 \rangle$ ở vị trí thứ ba thì ta xét tích
+                            $$S |1\rangle = \begin{pmatrix} 1 & 0\\ 0 & i \end{pmatrix} \begin{pmatrix} 0\\ 1 \end{pmatrix} = \begin{pmatrix} 0 \\ i \end{pmatrix} = i|1\rangle$$
+                            Nên nôm na ta được $$\mathrm{CNOT}(1, 2) \otimes S_3: \quad |101\rangle \rightarrow i|111\rangle$$</li>
+                        </ul>
+
+                        <hr class="exam-divider">
+
+                        <h3>Bài toán 5</h3>
+                        <p>Write the matrix form of SWAP. Find eigenvalues and vectors.</p>
+                        
+                        <b>Lời giải:</b>
+                        <p>The SWAP gate is a 2-qubit quantum gate that swaps the states of the two qubits. Tức có:</p>
+                        <p>$$| 00 \rangle \rightarrow |00 \rangle; \quad | 01 \rangle \rightarrow |10 \rangle; \quad | 10 \rangle \rightarrow |01 \rangle; \quad | 11 \rangle \rightarrow |11 \rangle$$</p>
+                        <p>Vậy ma trận SWAP là:
+                        $$S = \begin{pmatrix} 1 & 0 & 0 & 0\\ 0 & 0 & 1 & 0\\ 0 & 1 & 0 & 0\\ 0 & 0 & 0 & 1 \end{pmatrix}$$</p>
+                        <p>Ta có $\det(S - \lambda I_4)$</p>
+                        <p>$$= \begin{vmatrix} 1 -\lambda & 0 & 0 & 0\\ 0 & -\lambda & 1 & 0\\ 0 & 1 & -\lambda & 0\\ 0 & 0 & 0 & 1 - \lambda \end{vmatrix} = \frac{1}{\lambda} \begin{vmatrix} 1 -\lambda & 0 & 0 & 0\\ 0 & -\lambda^2 & \lambda & 0\\ 0 & 1 & -\lambda & 0\\ 0 & 0 & 0 & 1 - \lambda \end{vmatrix} = \frac{1}{\lambda} \begin{vmatrix} 1 -\lambda & 0 & 0 & 0\\ 0 & 1-\lambda^2 & 0 & 0\\ 0 & 1 & -\lambda & 0\\ 0 & 0 & 0 & 1 - \lambda \end{vmatrix}$$</p>
+                        <p>Đây là $\det$ có hình thức matrix tam giác trên, nên:</p>
+                        <p>$$\det(S - \lambda I_4) = -\lambda(1 - \lambda)^3(1 + \lambda) = 0 \Rightarrow \lambda \in \{1;-1\}$$</p>
+                        <p>Từ đây để tìm Eigenvectors thì theo định nghĩa $S$. Cụ thể với $\lambda = 1$</p>
+                        <p>$$S - \lambda I_4 = \begin{pmatrix} 0 & 0 & 0 & 0\\ 0 & -1 & 1 & 0\\ 0 & 1 & -1 & 0\\ 0 & 0 & 0 & 0 \end{pmatrix}$$</p>
+                        <p>Xét vector $\boldsymbol{v} = \begin{pmatrix} a\\ b\\ c\\ d \end{pmatrix} \in \mathbb{R}^4 \Rightarrow (S - \lambda I_4) \boldsymbol{v} = 0 \Rightarrow \begin{cases} -b + c &= 0\\ b - c &= 0 \end{cases}$ (luôn đúng).</p>
+                        <p>Tương tự với $\lambda = -1$</p>
+
+                        <hr class="exam-divider">
+
+                        <h3>Bài toán 6</h3>
+                        <p>Cho matrix $H$ là matrix Hermitian thỏa $H^{\dagger} = H$ và $U$ là toán tử đơn vị (unitary operator) thỏa $U^{\dagger} U = I$. Khi đó ta sẽ có $$U = e^{iH}$$</p>
+                        
+                        <b>Lời giải:</b>
+                        <p>Một số kiến thức cần dùng:</p>
+                        <ul>
+                            <li>Cho matrix $A$, khi đó ta có: (Maclaurin) $$e^A = \sum_{k = 0}^{\infty}\frac{A^k}{k!}$$
+                            Khi đó ta chỉ ra được $$Ve^{i \Theta} V^\dagger = e^{i\; V\Theta V^{\dagger}}$$</li>
+                            <li>Đúng cho cả complex matrices: $$(ABC)^\dagger = C^\dagger B^\dagger A^\dagger$$</li>
+                        </ul>
+                        <p>Do $U$ là unitary nên tồn tại matrix $V$ là unitary và matrix chéo $D = \text{diag}(\lambda_1, \lambda_2, \ldots , \lambda_n)$ sao cho $U = VDV^\dagger$. Hơn nữa $|\lambda_j| = 1, \forall j$ nên tồn tại $\theta_j: \lambda_j = e^{i\theta_j}$. Khi đó định nghĩa $\Theta = \text{diag}(\theta_1, \theta_2, \ldots, \theta_n)$. Nhân $i$ và lấy logarit thì: $e^{i\Theta} = D$.</p>
+                        <p>Khi đó $U = VDV^\dagger = Ve^{i\Theta}V^\dagger = e^{i\; V\Theta V^\dagger} = e^{iH}$, tức ta định nghĩa luôn $H = V\Theta V^\dagger$. Bây giờ chứng minh $H$ là matrix Hermitian (tức $H = H^\dagger$). Thật vậy:</p>
+                        <p>$$H^\dagger = (V\Theta V^\dagger)^\dagger = V \Theta^\dagger V^\dagger$$</p>
+                        <p>Chú ý $\overline{e^{iO}} = e^{-iO} = \frac{1}{e^{iO}}$ (Do chuyển hóa dưới dạng Euler thì có $\sin^2 + \cos^2 = 1$), nói cách khác $\Theta^\dagger = \Theta$. Cũng tức ta có điều phải chứng minh.</p>
+
+                        <hr class="exam-divider">
+
+                        <h3>Bài toán 7</h3>
+                        <p>Prove that the product of 3 alternating C-NOTs is SWAP.</p>
+                        
+                        <b>Lời giải:</b>
+                        <p>Tức ta chứng minh $$SWAP = \mathrm{CNOT}(0, 1) \cdot \mathrm{CNOT}(1, 0) \cdot \mathrm{CNOT}(0, 1)$$</p>
+                        <p>Tức $|01 \rangle |11\rangle |01 \rangle = SWAP \;\;?$, đến đây tính cụ thể từng số là xong.</p>
+                        <ul>
+                            <li>$\mathrm{CNOT}(0, 1) = | 00 \rangle \rightarrow |00 \rangle; \quad | 01 \rangle \rightarrow |01 \rangle; \quad | 10 \rangle \rightarrow |11 \rangle; \quad | 11 \rangle \rightarrow |10 \rangle$.</li>
+                            <li>$\mathrm{CNOT}(1, 0) = | 00 \rangle \rightarrow |00 \rangle; \quad | 01 \rangle \rightarrow |11 \rangle; \quad | 10 \rangle \rightarrow |10 \rangle; \quad | 11 \rangle \rightarrow |01 \rangle$.</li>
+                        </ul>
+                        <p>Như vậy vế phải sẽ là $$(|00 \rangle, |01 \rangle, |11 \rangle, |10 \rangle) \cdot (|00 \rangle, |11 \rangle, |10 \rangle, |01 \rangle) \cdot (|00 \rangle, |01 \rangle, |11 \rangle, |10 \rangle)$$</p>
+                        <p>Đến đây tính cụ thể ra nữa là xong :)).</p>
+
+                        <p class="exam-end"><b>─── HẾT ───</b></p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-strip fade-up">
+                <div class="stat-item"><div class="stat-number">09</div><div class="stat-label">Bài Viết</div></div>
+                <div class="stat-item"><div class="stat-number">07</div><div class="stat-label">Chủ Đề</div></div>
+                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
+                <div class="stat-item"><div class="stat-number">∞</div><div class="stat-label">Đam Mê</div></div>
+            </div>
+
+            <footer class="site-footer fade-up">
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 <span class="footer-brand">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+    <script src="/SMP/js/layout.js"></script>
+    <script src="/SMP/js/shared.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof Comments !== 'undefined') {
+            Comments.init('QuantumSeasNote1');
+        }
+    });
+</script>
+</body>
+</html>

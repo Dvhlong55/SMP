@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Quantum.Seas.note2</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
+    <style>
+        body { overflow-x: hidden; }
+
+        /* ========================================================
+           HỆ THỐNG BIẾN MÀU CHUYỂN ĐỔI SÁNG / TỐI (DARK MODE)
+           ======================================================== */
+        :root {
+            --body-bg: #0b1111; 
+            --widget-title-color: #fff;
+            --widget-link-color: #888;
+            --widget-badge-bg: rgba(255,255,255,0.05);
+            --widget-badge-color: #aaa;
+            --exam-paper-bg: rgba(255,255,255,0.025);
+            --exam-paper-border: rgba(92,225,230,0.09);
+            --exam-text-color: #ddd;
+            --exam-bold-color: #f4f4f4;
+            --exam-title-color: #f0f0f0;
+            --exam-divider-color: rgba(92,225,230,0.1);
+        }
+
+        body:not(.dark-mode) {
+            --body-bg: #f8fafc;
+            --widget-title-color: #1e293b;
+            --widget-link-color: #64748b;
+            --widget-badge-bg: rgba(0,0,0,0.05);
+            --widget-badge-color: #475569;
+            --exam-paper-bg: #ffffff;
+            --exam-paper-border: rgba(15,23,42,0.08);
+            --exam-text-color: #334155;
+            --exam-bold-color: #0f172a;
+            --exam-title-color: #1e293b;
+            --exam-divider-color: rgba(15,23,42,0.08);
+        }
+
+        body {
+            background-color: var(--body-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        .main-wrapper {
+            position: relative;
+            max-width: 2000px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            transform: none !important;
+            left: 0 !important;
+            transition: transform 0s !important;
+        }
+
+        .main-content-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 100px;
+            margin-top: 20px;
+        }
+
+        .tags-comment-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            z-index: 1;
+        }
+
+        .side-widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--widget-title-color);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s ease;
+        }
+
+        body.light-mode .side-widget-title {
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .side-widget-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .side-widget-list a {
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--widget-link-color); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+        }
+
+        .side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(4px); }
+
+        .side-widget-list a span {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            background: var(--widget-badge-bg); padding: 2px 8px;
+            border-radius: 12px; color: var(--widget-badge-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @media (max-width: 1100px) {
+            .main-content-layout { grid-template-columns: 1fr; }
+            .tags-comment-sidebar { position: static; }
+        }
+
+        .stats-strip {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 36px;
+            margin-top: 50px;
+        }
+        .stat-item {
+            flex: 1; padding: 18px 20px; text-align: center;
+            border-right: 1px solid var(--border-light);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.6rem;
+            font-weight: 700; color: var(--accent-cyan); line-height: 1; margin-bottom: 6px;
+        }
+        .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+        .exam-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan, #5ce1e6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            opacity: 0.65;
+            transition: opacity 0.2s;
+        }
+        .exam-back-btn:hover { opacity: 1; }
+
+        .exam-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .exam-tag {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 4px 13px;
+            border-radius: 20px;
+            border: 1px solid rgba(92,225,230,0.35);
+            color: var(--accent-cyan, #5ce1e6);
+        }
+
+        .exam-paper {
+            background: var(--exam-paper-bg);
+            border: 1px solid var(--exam-paper-border);
+            border-radius: 12px;
+            padding: 46px 54px;
+            font-family: "Times New Roman", Times, serif;
+            color: var(--exam-text-color);
+            line-height: 1.85;
+            font-size: 1.01rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .exam-paper h1,
+        .exam-paper h2 {
+            text-align: center;
+            color: var(--exam-title-color);
+            font-family: "Times New Roman", Times, serif;
+            margin: 7px 0;
+            transition: color 0.3s ease;
+        }
+        .exam-paper h1 { font-size: 1.5rem; letter-spacing: 0.5px; }
+        .exam-paper h2 { font-size: 1.3rem; font-weight: bold; margin-top: 30px;}
+
+        .exam-paper h3 {
+            font-size: 1.1rem;
+            color: var(--accent-cyan, #5ce1e6);
+            margin-top: 34px;
+            margin-bottom: 10px;
+            font-family: "Times New Roman", Times, serif;
+            border-left: 3px solid var(--accent-cyan, #5ce1e6);
+            padding-left: 12px;
+        }
+
+        .exam-paper p   { margin: 10px 0; }
+        .exam-paper ol,
+        .exam-paper ul  { margin: 10px 0; padding-left: 28px; }
+        .exam-paper li  { margin: 8px 0; }
+        .exam-paper b   { color: var(--exam-bold-color); transition: color 0.3s ease; }
+
+        .exam-divider {
+            border: none;
+            border-top: 1px solid var(--exam-divider-color);
+            margin: 24px 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .exam-end {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            margin-top: 44px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        body.light-mode .exam-end {
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+
+        a {
+            color: #ff69b4; 
+            text-decoration: none; 
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #ff1493; 
+            text-decoration: underline; 
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="main-content-layout">
+
+                <aside class="tags-comment-sidebar">
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Categories</div>
+                        <ul class="side-widget-list">
+                            <li><a href="../Math/toanhoc.html">Chuyên Toán <span>10</span></a></li>
+                            <li><a href="../Math/toanhoc.html">HSG Toán 9 <span>8</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Math Olympiad <span>4</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Number Theory <span>5</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Algebra <span>3</span></a></li>
+                            <li><a href="../My%20Life/cuocsong.html">Cuộc Sống <span>1</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Archives</div>
+                        <ul class="side-widget-list">
+                            <li><a href="#">Tháng 7, 2025 <span>12</span></a></li>
+                            <li><a href="#">Tháng 6, 2025 <span>8</span></a></li>
+                            <li><a href="#">Tháng 5, 2025 <span>5</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="comment-section fade-up">
+                        <h3>Thảo Luận & Góp Ý</h3>
+                        <div class="comment-form">
+                            <div class="comment-form-row">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                            </div>
+                            <div style="margin-bottom:14px">
+                                <textarea id="comment-text-input" class="comment-textarea"
+                                    placeholder="Nhập bình luận hoặc lời nhắn của bạn tại đây..."></textarea>
+                            </div>
+                            <button id="comment-submit" class="comment-submit">Gửi Bình Luận</button>
+                        </div>
+                        <div id="comment-list" class="comment-list"></div>
+                    </div>
+
+                </aside>
+
+                <div class="main-articles-body">
+
+                    <a href="/SMP/index.html" class="exam-back-btn fade-up">← Quay Lại Trang Chủ</a>
+
+                    <div class="exam-meta fade-up">
+                        <span class="exam-tag">Vật lý Lượng tử</span>
+                        <span class="exam-tag">SEAS Note</span>
+                        <span class="exam-tag">Quantum Physics</span>
+                        <span class="exam-tag"> 07 / 2025</span>
+                    </div>
+
+                    <div class="exam-paper fade-up">
+  
+                        <div class="header-box">
+                            <div class="header-top">
+                                <div>SMP – Note Vật lý Lượng tử</div>
+                                <div><b><a href="https://web.facebook.com/h.long.55" target="_blank" style="color: inherit;">Long Do</a></b></div>
+                            </div>
+                            
+                            <h1>
+                            <div class="header-center">
+                                $\S$ Quantum.Seas.note2
+                            </div>
+                            </h1>
+
+                            <div class="header-bottom">
+                                <div>Ngày 29 tháng 7 năm 2025</div>
+                            </div>
+                        </div>
+
+                        <p>Trước tiên review một số problem từ bài trước:</p>
+
+                        <hr class="exam-divider">
+
+                        <h2>Observable</h2>
+                        <p>Một observable là một toán tử tự liên hợp (Hermitian), ánh xạ trạng thái lượng tử vào một đại lượng thực (real scalar). Cho một observable $O$, nếu nó có phổ riêng (spectral decomposition) là:</p>
+                        <p>$$O = E |\varphi\rangle \langle\varphi| + E^\perp |\varphi^\perp\rangle \langle\varphi^\perp|$$</p>
+                        <p>Trong đó:</p>
+                        <ul>
+                            <li>$|\varphi\rangle$ là một eigenvector ứng với eigenvalue $E$.</li>
+                            <li>$|\varphi^\perp\rangle$ là trạng thái trực giao ứng với eigenvalue $E^\perp$.</li>
+                        </ul>
+                        <p>Một trạng thái bất kỳ $|\psi\rangle$ có thể được biểu diễn dưới dạng tổ hợp tuyến tính (là trạng thái lượng tử tổng quát):</p>
+                        <p>$$|\psi\rangle = a |\varphi\rangle + b |\varphi^\perp\rangle$$</p>
+                        <p>Với điều kiện chuẩn hóa: $|a|^2 + |b|^2 = 1$</p>
+
+                        <h3>Giá trị trung bình của Observable</h3>
+                        <p>Giá trị trung bình (kỳ vọng) của observable $O$ trên trạng thái $|\psi\rangle$ là: $\langle O \rangle = \langle\psi| O |\psi\rangle$. Thay biểu thức của $O$, ta có:</p>
+                        <p>$$\langle\psi| O |\psi\rangle = E\langle\psi|\varphi\rangle \langle\varphi|\psi\rangle + E^\perp\langle\psi|\varphi^\perp\rangle \langle\varphi^\perp|\psi\rangle = E|\langle \psi|\varphi\rangle |^2 + E^\perp |\langle\psi|\varphi^\perp\rangle|^2 = E \cdot P_{\varphi} + E^\perp \cdot P_{\varphi^\perp}$$</p>
+                        <p>Do đó, giá trị kỳ vọng của observable là trung bình trọng số của các giá trị riêng theo xác suất xuất hiện.</p>
+
+                        <hr class="exam-divider">
+
+                        <h2>Deutsch Algorithm</h2>
+                        <p>Là một trong những bài toán lượng tử đơn giản nhất, nhưng quan trọng, vì nó là ví dụ đầu tiên cho thấy máy tính lượng tử có thể giải quyết một số bài toán nhanh hơn máy tính cổ điển.</p>
+                        <p>Cho hàm nhị phân $f: \{0, 1\} \to \{0, 1\}$, nói cách khác $f$ nhận vào một bit và xuất ra một bit. Bài toán là Determine $f(0) = \text{ hay } \ne f(1)$? - Yêu cầu: Xác định liệu hàm $f$ là constant hay balanced (Hàm $f$ là balanced nếu một nửa số đầu vào cho giá trị $0$, và nửa còn lại cho giá trị $1$.)</p>
+
+                        <p>Ta nhắc lại một số cổng lượng tử sau:</p>
+                        <ol>
+                            <li>Cổng Hadamand: $\frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1\\ 1 & -1 \end{pmatrix}$.</li>
+                            <li>Cổng Pauli-X: $\begin{pmatrix} 0 & 1\\ 1 & 0 \end{pmatrix}$.</li>
+                        </ol>
+                        <p>Ta xét phép biến đổi tuyến tính:</p>
+                        <p>$$U_f : |x\rangle |y \rangle \longrightarrow |x \rangle |x + f(y) \pmod{2} \rangle$$</p>
+                        <p>Ta sẽ chứng minh thuật toán này hoạt động.</p>
+
+                        <h3>Mô hình trực quan cho thuật toán Deutsch (1985).</h3>
+                        
+
+                        <p><b>Chứng minh:</b></p>
+                        <p>Bắt đầu với $|0\rangle |0\rangle$, qua $X$ gate ta có:</p>
+                        <p>$$X |0\rangle = \begin{pmatrix} 0 & 1\\ 1 & 0 \end{pmatrix} \begin{pmatrix} 1 \\ 0 \end{pmatrix} = \begin{pmatrix} 0 \\ 1 \end{pmatrix} = |1\rangle$$</p>
+                        <p>Lúc này hệ thống là $|0\rangle |1\rangle$, ta tác động từng qubit lên cổng $H$ sẽ được:</p>
+                        <p>$$|\psi_2\rangle = H|0\rangle \otimes H|1\rangle = \frac{1}{2} (|0\rangle + |1\rangle)(|0\rangle - |1\rangle) = \frac{1}{2} (|0\rangle|0\rangle + |1\rangle|0\rangle - |0\rangle|1\rangle - |1\rangle|1\rangle)$$</p>
+                        <p>Tác dụng cổng $H$, ta xem xét hai khả năng:</p>
+                        <ul>
+                            <li>$f(1) = f(0)$, theo ánh xạ $U_f$ thì:
+                            $$|0\rangle|0\rangle \to |0\rangle|f(0)\rangle, \quad |0\rangle|1\rangle \to |0\rangle|f(0) + 1\rangle, \quad |1\rangle|0\rangle \to |1\rangle|f(0)\rangle, \quad |1\rangle|1\rangle \to |1\rangle|f(0) + 1\rangle$$
+                            Vậy ta phải có
+                            $$|\psi_3\rangle = \frac{1}{2}(\;|f(0)\rangle (|0\rangle + |1\rangle) - |f(0) + 1\rangle (|0\rangle + |1\rangle) \;)$$
+                            $$= \frac{1}{\sqrt{2}}(\; |0\rangle + |1\rangle \;) \otimes \frac{1}{\sqrt{2}} (\; |f(0)\rangle - |f(0) + 1\rangle \;)$$
+                            Tiếp tục cho qua cổng $H$, có ngay
+                            $$H \frac{1}{2}(\; |0\rangle + |1\rangle \;) = |0\rangle$$
+                            Vậy trường hợp này kiểm tra thấy đúng.
+                            </li>
+                            <li>Nếu $f(1) \ne f(0)$, xét trong modulo $2$, ta được:
+                            $$f(0) = f(1) + 1 \pmod{2}, \quad f(1) = f(0) + 1 \pmod{2}$$
+                            Biến đổi hoàn toàn tương tự, ta được:
+                            $$|\psi_3\rangle = \frac{1}{\sqrt{2}}(\;|0\rangle - |1\rangle\;) \otimes \frac{1}{\sqrt{2}}(\;|f(0)\rangle - |f(1)\rangle\;)$$
+                            Kiểm tra với cổng $H = |1\rangle$. OKEEE !!
+                            </li>
+                        </ul>
+
+                        <hr class="exam-divider">
+
+                        <h2>Quantum Advantage</h2>
+                        <p>Xảy ra khi một máy tính lượng tử có thể thực hiện một tác vụ mà không máy tính cổ điển nào có thể làm được trong thời gian hợp lý.</p>
+                        <p>Năm $1991$, David Deutsch và Richard Jozsa đã công bố thuật toán nổi tiếng <b>Deutsch–Jozsa Algorithm</b> — một trong những thuật toán lượng tử đầu tiên chứng minh lý thuyết về lợi thế lượng tử (quantum advantage) so với máy tính cổ điển. Với mục tiêu là determine $f$ là constant hay balanced.</p>
+
+                        <h3>So sánh cổ điển và lượng tử</h3>
+                        <ul>
+                            <li>Cổ điển: cần tối đa $2^{n-1} + 1$ lần gọi hàm để chắc chắn.</li>
+                            <li>Lượng tử (Deutsch–Jozsa): chỉ cần <b>1 lần</b> gọi oracle $U_f$ để xác định chính xác.</li>
+                        </ul>
+
+                        <h3>Ý tưởng thuật toán lượng tử</h3>
+                        <ol>
+                            <li>Chuẩn bị trạng thái đầu: $|0\rangle^{\otimes n} \otimes |1\rangle$</li>
+                            <li>Áp dụng cổng Hadamard lên tất cả các qubit.</li>
+                            <li>Gọi oracle lượng tử $U_f$: mã hóa thông tin hàm $f$ vào <b>phase</b>.</li>
+                            <li>Áp dụng Hadamard một lần nữa lên $n$ qubit đầu.</li>
+                            <li>Đo:
+                                <ul>
+                                    <li>Nếu kết quả đo là $|0\rangle^{\otimes n} \Rightarrow f$ là constant.</li>
+                                    <li>Nếu kết quả khác $|0\rangle^{\otimes n} \Rightarrow f$ là balanced.</li>
+                                </ul>
+                            </li>
+                        </ol>
+
+                        <h3>Đóng góp</h3>
+                        <ul>
+                            <li>Là thuật toán đầu tiên cho thấy lợi thế lượng tử (<i>quantum advantage</i>).</li>
+                            <li>Minh họa sức mạnh của tính chồng chập và giao thoa lượng tử.</li>
+                            <li>Là tiền đề cho các thuật toán lớn hơn như: Shor, Grover, Simon.</li>
+                        </ul>
+                        <p>(Read Page 34 of Nielsen & Chuang)</p>
+
+                        <hr class="exam-divider">
+
+                        <h2>Heisenberg model</h2>
+                        <p>Ta có $n$ qubit, biểu diễn cho các spin lượng tử. Chúng được xếp thành một chuỗi, và mỗi qubit chỉ tương tác với qubit kế bên (tương tác gần nhất).</p>
+                        
+                        
+                        
+                        <p>Khi tổng quát mô hình Heisenberg từ chuỗi (1D) sang trường hợp tổng quát hơn, ta thu được một mạng qubit (quantum spin network) hoặc đồ thị tương tác (interaction graph), trong đó:</p>
+                        <ul>
+                            <li>Mỗi đỉnh (node) biểu diễn một qubit (hay spin).</li>
+                            <li>Mỗi cạnh (edge) biểu diễn một tương tác Heisenberg giữa hai qubit.</li>
+                        </ul>
+
+                        <h3>1. Hamiltonian tổng của hệ</h3>
+                        <p>Hamiltonian tổng của hệ được định nghĩa như sau (Hamiltonian là một toán tử trong cơ học lượng tử, biểu diễn năng lượng toàn phần, tức là tổng thế năng + động năng của một hệ lượng tử):</p>
+                        <p>$$H = \sum_{i=1}^{n-1} h_{i,i+1}$$</p>
+                        <p>trong đó:</p>
+                        <ul>
+                            <li>$H$: Hamiltonian tổng, mô tả toàn bộ năng lượng của hệ.</li>
+                            <li>$h_{i,i+1}$: Hamiltonian cục bộ, mô tả tương tác giữa qubit $i$ và qubit $i+1$.</li>
+                        </ul>
+                        <p>Toàn hệ có $n$ qubit nên không gian Hilbert có kích thước $2^n$. Do đó Ma trận $H \in \mathbb{C}^{2^n \times 2^n}$.</p>
+                        <p>Mỗi $h_{i,i+1} \in \mathbb{C}^{4 \times 4}$ (vì chỉ tác động lên 2 qubit). Mà do mỗi $h_{i,i+1}$ chỉ tác động lên $2$ qubit, cần nhúng nó vào hệ đầy đủ bằng cách lấy tích tensor của các Identity matrix (được dùng để giữ nguyên các qubit không liên quan.)</p>
+                        <p>$$H_i = I \otimes \cdots \otimes h_{i,i+1} \otimes \cdots \otimes I$$</p>
+                        <p>Hamiltonian cục bộ trong mô hình Heisenberg có dạng:</p>
+                        <p>$$h_{i,i+1} = X_i \otimes X_{i+1} + Y_i \otimes Y_{i+1} + Z_i \otimes Z_{i+1}$$</p>
+                        <p>trong đó $X, Y, Z$ là các ma trận Pauli.</p>
+
+                        <h3>Bài toán 1</h3>
+                        <p>Chứng minh dạng biểu diễn này ??</p>
+
+                        <h3>2. Bài toán trạng thái nền (Ground state)</h3>
+                        <p>Hệ lượng tử luôn tiến hóa tự nhiên về trạng thái có năng lượng thấp nhất, gọi là trạng thái nền (tức ta không làm gì với hệ, để yên $\rightarrow$ nó sẽ rơi về ground state - vì đó là trạng thái ổn định nhất, không thể hạ thấp năng lượng thêm nữa).</p>
+                        <p>(từ định lý Rayleigh-Ritz (phiên bản lượng tử))</p>
+                        <p>Mục tiêu là tìm trạng thái $|\psi_{\text{gs}}\rangle \in \mathbb{C}^{2^n}$ sao cho:</p>
+                        <p>$$E_0 = \min_{\|\psi_{\text{gs}}\| = 1} \langle\psi_{\text{gs}}| H |\psi_{\text{gs}}\rangle$$</p>
+                        <p>với:</p>
+                        <ul>
+                            <li>$|\psi_{\text{gs}}\rangle$: trạng thái nền (ground state),</li>
+                            <li>$E_0$: giá trị riêng nhỏ nhất (năng lượng thấp nhất),</li>
+                            <li>$\|\psi_{\text{gs}}\| = 1$: điều kiện chuẩn hoá (đảm bảo rằng tổng xác suất khi đo là 1. Nếu không có, energy sẽ không có ý nghĩa vật lý, còn về mặt toán học thì giá trị Average sẽ bị tiến thẳng về âm vô cùng).</li>
+                        </ul>
+
+                        <p><b>Chút lý giải khá hay ho từ Internet:</b> Mọi trạng thái $|\psi\rangle$ đều có thể viết dưới dạng tổ hợp tuyến tính của các eigenvector $|\phi_i\rangle$ của $H$:</p>
+                        <p>$$|\psi\rangle = \sum_i c_i |\phi_i\rangle, \quad \text{với } \sum_i |c_i|^2 = 1$$</p>
+                        <p>Do $H |\phi_i\rangle = \lambda_i |\phi_i\rangle$, ta có:</p>
+                        <p>$$\langle\psi| H |\psi\rangle = \sum_i |c_i|^2 \lambda_i$$</p>
+                        <p>Biểu thức này là trung bình có trọng số của các eigenvalue $\lambda_i$ với trọng số là $|c_i|^2$. Do đó:</p>
+                        <ul>
+                            <li>Năng lượng kỳ vọng $\langle\psi| H |\psi\rangle$ luôn nằm giữa các eigenvalue của $H$.</li>
+                            <li>Giá trị nhỏ nhất xảy ra khi toàn bộ trọng số $|c_i|^2$ dồn vào eigenvalue nhỏ nhất $\lambda_{\min}$.</li>
+                        </ul>
+                        <p>Khi đó:</p>
+                        <p>$$\min_{\|\psi\| = 1} \langle\psi| H |\psi\rangle = \lambda_{\min}$$</p>
+                        <p>Trạng thái $|\psi\rangle$ đạt được giá trị này chính là eigenvector tương ứng với $\lambda_{\min}$ — được gọi là <i>trạng thái cơ bản (ground state)</i> của hệ.</p>
+
+                        <hr class="exam-divider">
+
+                        <h3>Bài toán 2</h3>
+                        <p>Prove that $$h_{i, i+1} = a \cdot \text{SWAP}_{i, i+1} + b \cdot I_{i,i+1}$$ where $a, b$ are scalars.</p>
+                        <b>Lời giải:</b>
+                        <p>Mọi $h_{i, i+1}$ luôn represented dưới dạng các matrix Pauli $X, Y, Z$ và hơn nữa matrix $h_{i,i+1} \in \mathbb{R}^{4 \times 4}$, ta tính cụ thể là</p>
+                        <p>$$h_{i,i+1} = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & -1 & 2 & 0 \\ 0 & 2 & -1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}$$</p>
+                        <p>Sau đó thực hiện giải hệ phương trình.</p>
+
+                        <h3>Bài toán 3</h3>
+                        <p>Prove that $h_{i,i+1}$ is Hermitian.</p>
+                        <b>Lời giải:</b>
+                        <p>Ta có nhận xét khá đơn giản rằng nếu một ma trận là một tổ hợp tuyến tính của các matrix Hermitian khác với các hệ số là các số thực thì nó cũng sẽ là Hermitian.</p>
+
+                        <h3>Bài toán 4</h3>
+                        <p>Find the ground state of $h_{i,i+1}$.</p>
+                        <b>Lời giải:</b>
+                        <p></p>
+
+                        <h3>Bài toán 5</h3>
+                        <p>Prove that the full Hamiltonian $H$ is Hermitian.</p>
+                        <b>Lời giải:</b>
+                        <p>Tương tự như câu 3.</p>
+
+                        <h3>Bài toán 6</h3>
+                        <p>Prove that $H$ is sparse (i.e., mỗi hàng/cột có $\leq 3$ phần tử khác 0).</p>
+                        <b>Lời giải:</b>
+                        <p>Để nhúng $h_{i, i+1}$ vào hệ thì ta cần dùng tích tensor,</p>
+                        <p>$$H_i = I \otimes \cdots \otimes h_{i,i+1} \otimes \cdots \otimes I$$</p>
+                        <p>Thì $H_i$ là một matrix kích thước $2^n \times 2^n$ có dạng:</p>
+                        <p>$$\begin{pmatrix} \end{pmatrix}$$</p>
+
+                        <p class="exam-end"><b>─── HẾT ───</b></p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-strip fade-up">
+                <div class="stat-item"><div class="stat-number">09</div><div class="stat-label">Bài Viết</div></div>
+                <div class="stat-item"><div class="stat-number">07</div><div class="stat-label">Chủ Đề</div></div>
+                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
+                <div class="stat-item"><div class="stat-number">∞</div><div class="stat-label">Đam Mê</div></div>
+            </div>
+
+            <footer class="site-footer fade-up">
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 <span class="footer-brand">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+    <script src="/SMP/js/layout.js"></script>
+    <script src="/SMP/js/shared.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof Comments !== 'undefined') {
+            Comments.init('QuantumSeasNote2');
+        }
+    });
+</script>
+</body>
+</html>

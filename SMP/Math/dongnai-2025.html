@@ -13,7 +13,7 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link class="theme-link" rel="stylesheet" href="../css/shared.css">
+    <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
     <style>
         body { overflow-x: hidden; }
 
@@ -230,6 +230,19 @@
         body.light-mode .exam-end {
             border-top: 1px solid rgba(0,0,0,0.06);
         }
+
+        /* Đổi màu tất cả các đường link thành màu hồng */
+        a {
+            color: #ff69b4; /* Màu hồng Hot Pink (hoặc dùng màu #ff66b2, #e91e63 tùy bạn chọn) */
+            text-decoration: none; /* Bỏ gạch chân mặc định nếu muốn */
+            transition: color 0.2s ease;
+        }
+
+        /* Hiệu ứng khi di chuột qua link (Hover) */
+        a:hover {
+            color: #ff1493; /* Màu hồng đậm hơn khi hover */
+            text-decoration: underline; /* Hiện gạch chân khi hover */
+        }
     </style>
 </head>
 <body>
@@ -288,8 +301,7 @@
                     <div class="exam-meta fade-up">
                         <span class="exam-tag">HSG Toán 9</span>
                         <span class="exam-tag">Toán Chuyên</span>
-                        <span class="exam-tag">08 / 03 / 2026</span>
-                        <span class="exam-tag">THPT Chuyên KHTN</span>
+                        <span class="exam-tag">30 / 06 / 2025</span>
                     </div>
 
                         <div class="exam-paper fade-up">
@@ -298,9 +310,9 @@
                         <h1>ĐỀ THI TUYỂN SINH VÀO LỚP 10 MÔN TOÁN (CHUYÊN)</h1>
                         <h2>NĂM HỌC 2025 – 2026</h2>
 
-                        <p style="text-align:center">
+                        <h2 style="text-align:center">
                             <b>Long Do</b>
-                        </p>
+                        </h2>
 
                         <div class="video-section"> 
                             <a class="video-button" href="https://www.youtube.com/watch?v=zZwWzIB8Bcw&amp;t=1182s" target="_blank"> 
@@ -308,13 +320,13 @@
                             </a>
                         </div>
 
-                        <div class="problem">
-                            <b>Câu I.</b>
+                        <h3>
+                        Câu I.
                             <ol>
                                 <li>Rút gọn biểu thức \(P = \left( \dfrac{x + 5}{x + \sqrt{x} - 2} - \dfrac{2}{\sqrt{x} - 1}\right): \dfrac{1}{\sqrt{x} + 2} \) (với \( x \geq 0, x \neq 1 \)).</li>
                                 <li>Tìm tất cả các giá trị của tham số \( m \) để phương trình \( x^2 - 2x + 3m + 1 = 0 \) có hai nghiệm phân biệt \( x_1, x_2 \) thỏa mãn \( x_1^3 + x_2^3 = 20 \).</li>
                             </ol>
-                        </div>
+                        </h3>
 
                         <div class="soln">
                             <b>Lời giải.</b>
@@ -347,8 +359,7 @@
                             </ol>
                         </div>
 
-                        <div class="problem">
-                            <b>Câu II.</b>
+                        <h3>Câu II.</b>
                             <ol>
                                 <li>Giải hệ phương trình \( \begin{cases}
                                     xy + y^2 - 2x - 2y = 0 \quad &(1) \\
@@ -356,7 +367,7 @@
                                 \end{cases} \)</li>
                                 <li>Cho \( P(x) \) là đa thức bậc ba thỏa mãn \( (x + 2)P(x + 1) = (x - 1)P(x + 2) \), với mọi số thực \( x \) và \( P(3) = 6 \). Chứng tỏ \( P(2) = 0 \) và xác định đa thức \( P(x) \).</li>
                             </ol>
-                        </div>
+                        </h3>
 
                         <div class="soln">
                             <b>Lời giải.</b>
@@ -386,13 +397,12 @@
                             </ol>
                         </div>
 
-                        <div class="problem">
-                            <b>Câu III.</b>
-                            <ol>
-                                <li>Chứng minh trong 37 số nguyên dương bất kỳ, luôn tìm được 7 số có tổng chia hết cho 7.</li>
-                                <li>Tìm tất cả các số nguyên tố \( p \) sao cho với mọi số nguyên dương \( a, b \) thì hai số \( a + 8b \) và \( 6a + 43b \) hoặc cùng chia hết cho \( p \) hoặc cùng không chia hết cho \( p \).</li>
-                            </ol>
-                        </div>
+                        <h3>Câu III.
+                        <ol>
+                            <li>Chứng minh trong 37 số nguyên dương bất kỳ, luôn tìm được 7 số có tổng chia hết cho 7.</li>
+                            <li>Tìm tất cả các số nguyên tố \( p \) sao cho với mọi số nguyên dương \( a, b \) thì hai số \( a + 8b \) và \( 6a + 43b \) hoặc cùng chia hết cho \( p \) hoặc cùng không chia hết cho \( p \).</li>
+                        </ol>
+                        </h3>
 
                         <div class="soln">
                             <b>Lời giải.</b>
@@ -417,15 +427,14 @@
                             </ol>
                         </div>
 
-                        <div class="problem">
-                            <b>Câu IV.</b>
-                            <ol>
-                                <li>Cho các số thực dương \( a, b \). Chứng minh \( a^3 + b^3 \geq a^2b + b^2a \).</li>
-                                <li>Cho các số thực dương \( a, b, c \) thỏa mãn \( ab + bc + ca \geq 3 \). Chứng minh 
-                                    <div class="math-block">\[ 2(a^3 + b^3 + c^3) + 3abc \geq 9. \]</div>
-                                </li>
-                            </ol>
-                        </div>
+                        <h3>Câu IV.
+                        <ol>
+                            <li>Cho các số thực dương \( a, b \). Chứng minh \( a^3 + b^3 \geq a^2b + b^2a \).</li>
+                            <li>Cho các số thực dương \( a, b, c \) thỏa mãn \( ab + bc + ca \geq 3 \). Chứng minh 
+                                <div class="math-block">\[ 2(a^3 + b^3 + c^3) + 3abc \geq 9. \]</div>
+                            </li>
+                        </ol>
+                        </h3>
 
                         <div class="soln">
                             <b>Lời giải.</b>
@@ -456,15 +465,13 @@
                             </ol>
                         </div>
 
-                        <div class="problem">
-                            <b>Câu V.</b>
-                            Cho tam giác nhọn \( ABC \) (với \( AB < BC < AC \)) có \( I, J, M \) lần lượt là trung điểm của các cạnh \( AB, AC, BC \). Gọi \( D \) là giao điểm của hai đường tròn \((I; IA)\) và \((J; JA)\), với \( D \) khác \( A \).
-                            <ol>
-                                <li>Chứng minh tứ giác \( AIMJ \) là hình bình hành và ba điểm \( B, D, C \) thẳng hàng.</li>
-                                <li>Tiếp tuyến của \((I; IA)\) tại \( A \) cắt đường thẳng \( MJ \) tại điểm \( K \) và cắt \((J; JA)\) tại điểm \( P \), với \( P \) khác \( A \). Tiếp tuyến của \((J; JA)\) tại \( A \) cắt \((I; IA)\) tại điểm \( Q \), với \( Q \) khác \( A \). Gọi \( E \) là điểm đối xứng với \( A \) qua \( D \). Chứng minh tứ giác \( ADMK \) nội tiếp đường tròn và  \(\widehat{PAQ} + \widehat{PEQ} = 180^\circ. \)</li>
-                                <li>Gọi \( S \) và \( T \) lần lượt là giao điểm của đường thẳng \( PQ \) với hai đường thẳng \( BC \) và \( AD \). Chứng minh \(TP \cdot SQ = TQ \cdot SP. \)</li>
-                            </ol>
-                        </div>
+                        <h3>Câu V.
+                        Cho tam giác nhọn \( ABC \) (với \( AB < BC < AC \)) có \( I, J, M \) lần lượt là trung điểm của các cạnh \( AB, AC, BC \). Gọi \( D \) là giao điểm của hai đường tròn \((I; IA)\) và \((J; JA)\), với \( D \) khác \( A \).
+                        <ol>
+                            <li>Chứng minh tứ giác \( AIMJ \) là hình bình hành và ba điểm \( B, D, C \) thẳng hàng.</li>
+                            <li>Tiếp tuyến của \((I; IA)\) tại \( A \) cắt đường thẳng \( MJ \) tại điểm \( K \) và cắt \((J; JA)\) tại điểm \( P \), với \( P \) khác \( A \). Tiếp tuyến của \((J; JA)\) tại \( A \) cắt \((I; IA)\) tại điểm \( Q \), với \( Q \) khác \( A \). Gọi \( E \) là điểm đối xứng với \( A \) qua \( D \). Chứng minh tứ giác \( ADMK \) nội tiếp đường tròn và  \(\widehat{PAQ} + \widehat{PEQ} = 180^\circ. \)</li>
+                            <li>Gọi \( S \) và \( T \) lần lượt là giao điểm của đường thẳng \( PQ \) với hai đường thẳng \( BC \) và \( AD \). Chứng minh \(TP \cdot SQ = TQ \cdot SP. \)</li>
+                        </h3>
 
                         <div class="center-img" style="text-align: center; margin: 20px 0;">
                             <iframe 
@@ -514,8 +521,8 @@
                 </div>
             </footer>
         </main>
-    </div><script src="../js/layout.js"></script>
-    <script src="../js/shared.js"></script>
+    </div><script src="/SMP/js/layout.js"></script>
+    <script src="/SMP/js/shared.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof Comments !== 'undefined') {
