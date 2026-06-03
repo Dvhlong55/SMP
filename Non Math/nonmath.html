@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Tài Liệu</title>
+    <link rel="stylesheet" href="/css/shared.css">
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="hero-header fade-up">
+                <h1>Kho Tài Liệu Học Tập</h1>
+                <p class="quote">"Tổng hợp file PDF chuyên đề nâng cao, giáo trình bồi dưỡng học sinh giỏi và sơ đồ cấu trúc dữ liệu."</p>
+            </div>
+
+            <div class="section-label">Tài Liệu Lưu Hành Nội Bộ</div>
+            <div class="grid-container">
+                
+                <div class="card fade-up">
+                    <div class="card-date">April 19, 2026</div>
+                    <span class="card-tag">Number Theory</span>
+                    <h3>Khóa học Số học Olympic 2026</h3>
+                    <p>Hệ thống bài giảng đầy đủ về Lý thuyết chia hết, Hàm số học và Phương trình nghiệm nguyên kèm lời giải chi tiết phục vụ các kỳ thi HSG.</p>
+                    <a href="https://smp0907.blogspot.com/2026/04/khoa-hoc-so-hoc-olympic-2026.html" target="_blank" class="card-link">DOWNLOAD PDF</a>
+                </div>
+
+            </div>
+
+            <div class="comment-section fade-up">
+                <h3>Yêu Cầu Tài Liệu & Đóng Góp</h3>
+                <div class="comment-form">
+                    <div class="comment-form-row">
+                        <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                    </div>
+                    <div style="margin-bottom: 14px;">
+                        <textarea id="comment-text-input" class="comment-textarea" placeholder="Bạn cần thêm tài liệu về chủ đề nào? Hãy để lại lời nhắn nhé..."></textarea>
+                    </div>
+                    <button id="comment-submit" class="comment-submit">Gửi Lời Nhắn</button>
+                </div>
+                <div id="comment-list" class="comment-list"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/shared.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Comments.init('tailieu');
+        });
+    </script>
+</body>
+</html>

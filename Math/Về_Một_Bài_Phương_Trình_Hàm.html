@@ -1,0 +1,222 @@
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<h2 style="text-align: center;">
+<b>Về Một Bài Phương Trình Hàm</b>
+</h2>
+
+<h3 style="text-align: center;">Long Do</h3>
+
+<p style="text-align: center;"><b>20.1.2026</b></p>
+
+<h3>Bài toán</h3>
+
+<p>
+Tìm tất cả hàm số \(f:\mathbb{R}\to\mathbb{R}\) thỏa mãn
+</p>
+
+$$
+f(x^2+y+f(y)) = xf(x) + f(2y), \quad \forall x,y\in\mathbb{R}
+\tag{1}
+$$
+
+<h3>Lời giải</h3>
+
+<p>
+Giả sử hàm số \(f\) thỏa mãn đề bài. Đặt \(\mathcal{P}(u,v)\) là phép thế \(x=u\), \(y=v\) trong (1).
+</p>
+
+<p>
+Trước hết xét \(f\) là hàm hằng. Khi đó \(xf(x)\equiv0\Rightarrow f(x)\equiv0\).
+</p>
+
+<p>
+Xét \(f\) khác hằng. Nếu \(f(x)\equiv x\) thì thay vào thấy thỏa mãn. Do đó chỉ cần xét \(f(x)\not\equiv x\).
+Ta chứng minh \(f(0)=0\).
+</p>
+
+<p>
+Giả sử \(f(0)\neq0\). Thế \(x\) bởi \(-x\) trong (1) ta được
+</p>
+
+$$
+f(x^2+y+f(y)) = -xf(-x)+f(2y),\quad \forall x,y\in\mathbb{R}
+\tag{2}
+$$
+
+<p>Từ (1) và (2) suy ra</p>
+
+$$
+xf(x)=-xf(-x),\quad \forall x\in\mathbb{R}
+$$
+
+$$
+\Rightarrow f(x)=-f(-x),\quad \forall x\neq0
+\tag{3}
+$$
+
+<p>
+Ta chứng minh tồn tại \(t\) sao cho \(t-f(t)&gt;0\).
+</p>
+
+<p>
+Vì \(f(x)\not\equiv x\) nên tồn tại \(x_1\) sao cho \(f(x_1)\ne x_1\).
+</p>
+
+<p>
+Nếu \(x_1&gt;f(x_1)\) thì chọn \(t=x_1\).
+Nếu \(x_1<f p="" t="" th="" x_1="">
+
+$$
+-x_1&gt;-f(x_1)=f(-x_1)
+$$
+
+</f></p><p>
+chọn \(t=-x_1\).
+</p>
+
+<p>
+Xét phép thế \(\mathcal{P}(\sqrt{t-f(t)},t)\)
+</p>
+
+$$
+f(2t)=\sqrt{t-f(t)}\,f(\sqrt{t-f(t)})+f(2t)
+$$
+
+$$
+\Rightarrow \sqrt{t-f(t)}\,f(\sqrt{t-f(t)})=0
+$$
+
+$$
+\Rightarrow f(\sqrt{t-f(t)})=0
+$$
+
+<p>Đặt \(u=t-f(t)\Rightarrow f(u)=0\).</p>
+
+<p>Xét tiếp \(\mathcal{P}(0,u)\)</p>
+
+$$
+f(u+f(u))=f(u)=0=f(2u)
+$$
+
+$$
+\Rightarrow f(u)=f(-u)=f(-2u)=f(2u)=0
+\tag{4}
+$$
+
+<p>
+Thế lần lượt \(\mathcal{P}(x,u)\) và \(\mathcal{P}(x,-u)\)
+</p>
+
+$$
+f(x^2+u)=xf(x)=f(x^2-u)
+$$
+
+$$
+\Rightarrow f(x+u)=f(x-u),\quad x\ge0
+$$
+
+<ul>
+<li>Nếu \(u&gt;0\) thì \(f(0)=f(2u)=0\)</li>
+<li>Nếu \(u<0 f="" li="" th="" u="">
+</0></li></ul>
+
+<p>
+Mâu thuẫn với giả sử nên \(f(0)=0\). Từ (3) suy ra \(f\) là hàm lẻ.
+</p>
+
+<p>Xét \(\mathcal{P}(x,0)\) và \(\mathcal{P}(0,x)\)</p>
+
+$$
+f(x^2)=xf(x),\quad \forall x\in\mathbb{R}
+\tag{5}
+$$
+
+$$
+f(y+f(y))=f(2y),\quad \forall y\in\mathbb{R}
+\tag{6}
+$$
+
+<p>
+Từ (5) viết lại (1)
+</p>
+
+$$
+f(x^2+y+f(y))=f(x^2)+f(2y)
+$$
+
+$$
+\Rightarrow f(x+y+f(y))=f(x)+f(2y),\quad x\ge0
+\tag{7}
+$$
+
+<p>Tương tự suy ra</p>
+
+$$
+f(x+y+f(y))=f(x)+f(2y),\quad x\le0
+\tag{8}
+$$
+
+<p>Kết hợp (7),(8)</p>
+
+$$
+f(x+y+f(y))=f(x)+f(2y),\quad \forall x,y
+\tag{9}
+$$
+
+<p>Thế \(x=y-f(y)\)</p>
+
+$$
+f(y-f(y))=0
+\tag{10}
+$$
+
+<p>
+Thế tiếp vào (9)
+</p>
+
+$$
+f(x+y-f(y))=f(x)
+\tag{11}
+$$
+
+<p>
+Cho \(x=-y\)
+</p>
+
+$$
+f(f(y))=f(y)
+$$
+
+<p>Kết hợp với (5)</p>
+
+$$
+f(f^2(x))=f(x)\,f(f(x))=f(x)^2
+\tag{12}
+$$
+
+<p>
+Giả sử tồn tại \(a,b\) sao cho \(f(a)=f(b)\ne0\)
+</p>
+
+$$
+a f(a)=b f(b)\Rightarrow a=b
+$$
+
+<p>
+Vì \(f\not\equiv0\) nên tồn tại \(v\) sao cho \(f(v)\ne0\).
+Thế \(x=v\) vào (11)
+</p>
+
+$$
+v+y-f(y)=v
+$$
+
+$$
+\Rightarrow f(y)=y
+$$
+
+<p>Kết luận</p>
+
+$$
+f(x)\equiv0,\qquad f(x)\equiv x
+$$<p></p>

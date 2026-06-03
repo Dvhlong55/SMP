@@ -1,0 +1,90 @@
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<h2 style="text-align: center;">
+A Number Theory Problem <br />
+from the Poland TST
+</h2>
+
+<p style="text-align: center;">
+Long Do<br />
+Mar. 07, 2026
+</p>
+
+<h3>Problem</h3>
+
+<p>
+Let \( (p_i) \) be a sequence of prime numbers such that \(p_n\) is the largest
+prime divisor of
+</p>
+
+$$
+p_{n-1}+p_{n-2}+2000, \quad \forall n.
+$$
+
+<p>
+Prove that the sequence \( (p_n) \) is bounded.
+</p>
+
+<h3>Solution</h3>
+
+<p>Let</p>
+
+$$
+P_n = \max\{p_1,p_2,\ldots,p_n\}.
+$$
+
+<p>
+Since \(p_{n-1}\) and \(p_{n-2}\) are odd primes, we have
+</p>
+
+$$
+p_n \le \frac{p_{n-1}+p_{n-2}+2000}{2}
+\le \max\{p_{n-1},p_{n-2}\}+1000
+= P_{n-1}+1000.
+$$
+
+<p>
+Moreover, if the prime \(2\) appears, then
+</p>
+
+$$
+p_n \le P_{n-1}+2002. \tag{1}
+$$
+
+<p>
+From the two estimates above, we deduce that
+</p>
+
+$$
+p_n \le P_{n-1}+2002.
+$$
+
+<p><b>Lemma.</b> For every \(n\in\mathbb{N}\), there exist \(n\) consecutive composite numbers.</p>
+
+<p>
+Choose \(k&gt;2026\). Then there exist \(k\) consecutive composite numbers
+</p>
+
+$$
+t+1,t+2,\ldots,t+k.
+$$
+
+<p>
+Suppose that \(n\) is the smallest index such that \(p_n&gt;t+k\). Then
+</p>
+
+$$
+p_n \ge t+k
+\quad\text{and}\quad
+p_{n-1},\ldots,p_1 \le t.
+$$
+
+<p>Hence</p>
+
+$$
+p_n \ge t+k \ge k+P_{n-1} \ge 2026+P_{n-1}. \tag{2}
+$$
+
+<p>
+From (1) and (2) we obtain a contradiction. Therefore the sequence \( (p_n) \) must be bounded.
+</p>

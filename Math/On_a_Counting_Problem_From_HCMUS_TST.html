@@ -1,0 +1,170 @@
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<h2 style="text-align: center;"><b>On a Counting Problem</b></h2>
+<h3 style="text-align: center;"><b>From a Student Olympiad Team Selection Exam</b></h3>
+
+<p style="text-align: center;"><b>Long Do</b><br />
+January 10, 2026
+</p>
+
+<p style="text-align:center;">
+<a href="https://smp0907.blogspot.com/2026/03/hcmus-olympic-team-selection-test.html"
+style="background:#222;color:white;padding:8px 16px;text-decoration:none;border-radius:6px;">
+View Full Post
+</a>
+</p>
+
+<h3>Problem</h3>
+
+<p>
+Let \(S=\{1,2,\ldots,100\}\). Let \(\mathcal F\) be the set of functions \(f:S\to S\) satisfying
+</p>
+
+$$
+f(k)\le f(k+1)\le f(k)+1,\qquad k=1,2,\ldots,99.
+$$
+
+<ol>
+<li>Find \(|\mathcal F|\).</li>
+<li>For each \(f\in\mathcal F\), let \(n(f)\) be the number of solutions of \(f(x)=x\). Compute
+$$
+\sum_{f\in\mathcal F} n(f).
+$$
+</li>
+</ol>
+
+<h3>Solution</h3>
+
+<p>
+We first solve the problem using the classical “stars and bars” (Euler candy distribution) method.
+</p>
+
+<p>
+Suppose the distinct values taken by \(f(x)\) are
+</p>
+
+$$
+f_1<f_2 .="" cdots="" f_m="" p="">
+Because \(f(k)\le f(k+1)\le f(k)+1\), we must have
+</f_2>
+
+$$
+f_{i+1}=f_i+1.
+$$
+
+<p>
+Hence the values are
+</p>
+
+$$
+f_1,f_1+1,\ldots,f_1+m-1.
+$$
+
+<p>
+Let \(k_i\) be the number of indices \(x\) such that \(f(x)=f_i\). Then
+</p>
+
+$$
+k_1+k_2+\cdots+k_m=100, \qquad k_i\ge1.
+$$
+
+<p>
+Thus the number of such choices equals
+</p>
+
+$$
+\binom{99}{m-1}.
+$$
+
+<p>
+For each \(m\), the first value \(f_1\) can be chosen in
+</p>
+
+$$
+1\le f_1\le 101-m
+$$
+
+<p>
+ways. Therefore
+</p>
+
+$$
+|\mathcal F|=\sum_{m=1}^{101}(101-m)\binom{99}{m-1}=101\cdot2^{98}.
+$$
+
+<h4>Part (2)</h4>
+
+<p>
+Let
+</p>
+
+$$
+T=\sum_{f\in\mathcal F}n(f).
+$$
+
+<p>
+We rewrite
+</p>
+
+$$
+T=\sum_{x=1}^{100} N_x
+$$
+
+<p>
+where \(N_x\) is the number of functions satisfying \(f(x)=x\).
+</p>
+
+<p>
+Fix \(x\). The condition \(f(x)=x\) splits the sequence into two independent parts.
+</p>
+
+<p>
+For the left part \(1,\ldots,x\), the sequence is non-decreasing and each step increases by at most 1. The number of possibilities is
+</p>
+
+$$
+2^{x-1}.
+$$
+
+<p>
+For the right part \(x,\ldots,100\), we have \(100-x\) steps each increasing by 0 or 1. Hence the number of possibilities is
+</p>
+
+$$
+2^{100-x}.
+$$
+
+<p>
+Thus
+</p>
+
+$$
+N_x=2^{x-1}\cdot2^{100-x}=2^{99}.
+$$
+
+<p>
+Therefore
+</p>
+
+$$
+T=\sum_{x=1}^{100}2^{99}=100\cdot2^{99}.
+$$
+
+<h3>Remark</h3>
+
+<p>This problem admits several elegant approaches:</p>
+
+<ul>
+<li><b>Lattice path interpretation.</b>  
+View \((k,f(k))\) as lattice points. The condition means each step moves right by 1 and up by at most 1.</li>
+
+<li><b>Recurrence method.</b>  
+Define \(g(n,a,b)\) as the number of valid functions with \(f(1)=a\) and \(f(n)=b\). One obtains
+$$
+g(n,a,b)=g(n-1,a,b)+g(n-1,a,b-1).
+$$
+</li>
+
+<li><b>Generating functions.</b>  
+Each step contributes a factor \((1+x)\), corresponding to whether the value increases or not.</li>
+</ul>

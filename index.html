@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Trang Chủ</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="/css/shared.css">
+    <style>
+        /* Featured post hero */
+        .featured-hero {
+            background: linear-gradient(135deg, #0f1a1a 0%, #1a1a0f 100%);
+            border: 1px solid rgba(92,225,230,0.15);
+            border-radius: 10px;
+            padding: 36px 40px;
+            margin-bottom: 36px;
+            position: relative;
+            overflow: hidden;
+        }
+        .featured-hero::after {
+            content: '✦';
+            position: absolute;
+            right: 32px; top: 24px;
+            font-size: 4rem;
+            color: rgba(201,169,110,0.08);
+            line-height: 1;
+        }
+        .featured-label {
+            font-size: 0.7rem;
+            color: var(--accent-gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 12px;
+        }
+        .featured-hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 14px;
+            line-height: 1.4;
+            max-width: 600px;
+        }
+        .featured-hero p { color: #888; font-size: 0.9rem; line-height: 1.7; margin-bottom: 20px; max-width: 520px; }
+        .featured-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-cyan);
+            color: #111;
+            text-decoration: none;
+            padding: 9px 20px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        .featured-link:hover { background: var(--accent-gold); transform: translateX(3px); }
+
+        /* Daily Challenge on home */
+        .home-challenge-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+        @media (max-width: 900px) { .home-challenge-row { grid-template-columns: 1fr; } }
+
+        /* Stats strip */
+        .stats-strip {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 36px;
+            margin-top: 50px;
+        }
+        .stat-item {
+            flex: 1;
+            padding: 18px 20px;
+            text-align: center;
+            border-right: 1px solid var(--border-light);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+        /* Label tags */
+        .label-cloud {
+            display: flex;
+            flex-direction: column; 
+            gap: 8px;
+        }
+        .label-tag {
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: left;
+        }
+        .label-tag:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); background: var(--accent-cyan-dim); }
+        
+        
+        
+        body { overflow-x: hidden; }
+        
+        .main-wrapper {
+            position: relative;
+            
+            max-width: 2000px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            
+            transform: none !important; 
+            left: 0 !important;
+            transition: transform 0s !important;
+        }
+        
+        .sidebar-open .main-wrapper,
+        .menu-open .main-wrapper {
+            margin-left: auto !important;
+            transform: none !important;
+        }
+
+        .main-content-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 100px;
+            margin-top: 20px;
+        }
+        
+        .tags-comment-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            
+            z-index: 1; 
+        }
+        
+        .side-widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .side-widget-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .side-widget-list a {
+            display: flex; justify-content: space-between; align-items: center;
+            color: #888; text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+        }
+        .side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(4px); }
+        .side-widget-list a span {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 12px; color: #aaa;
+        }
+        
+        /* Cột phải: Tự động chiếm phần không gian còn lại (minmax 1fr) */
+        
+        /* Responsive: Gộp thành 1 cột khi màn hình nhỏ */
+        @media (max-width: 1100px) {
+            .main-content-layout {
+                grid-template-columns: 1fr;
+            }
+            .tags-comment-sidebar {
+                position: static;
+            }
+            .label-cloud {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .label-tag {
+                width: auto;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="main-content-layout">
+                
+                <aside class="tags-comment-sidebar">
+                    
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Categories</div>
+                        <ul class="side-widget-list">
+                            <li><a href="/Math/toanhoc.html">Chuyên Toán <span>10</span></a></li>
+                            <li><a href="/Math/toanhoc.html">HSG Toán 9 <span>8</span></a></li>
+                            <li><a href="/Math/toanhoc.html">Math Olympiad <span>4</span></a></li>
+                            <li><a href="/Math/toanhoc.html">Number Theory <span>5</span></a></li>
+                            <li><a href="/Math/toanhoc.html">Algebra <span>3</span></a></li>
+                            <li><a href="/My%20Life/cuocsong.html">Cuộc Sống <span>1</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Archives</div>
+                        <ul class="side-widget-list">
+                            <li><a href="#">Tháng 4, 2026 <span>12</span></a></li>
+                            <li><a href="#">Tháng 3, 2026 <span>8</span></a></li>
+                            <li><a href="#">Tháng 2, 2026 <span>5</span></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="comment-section fade-up">
+                        <h3>Thảo Luận & Góp Ý</h3>
+                        <div class="comment-form">
+                            <div class="comment-form-row">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                            </div>
+                            <div style="margin-bottom: 14px;">
+                                <textarea id="comment-text-input" class="comment-textarea" placeholder="Nhập bình luận hoặc lời nhắn của bạn tại đây..."></textarea>
+                            </div>
+                            <button id="comment-submit" class="comment-submit">Gửi Bình Luận</button>
+                        </div>
+                        <div id="comment-list" class="comment-list"></div>
+                    </div>
+
+                </aside>
+
+                <div class="main-articles-body">
+                    <div class="hero-header fade-up">
+                        <h1>Secrets of Mathematical Principles</h1>
+                        <p class="quote">"Pure mathematics is, in its way, the poetry of logical ideas." ~ Albert Einstein</p>
+                    </div>
+
+                    <div class="featured-hero fade-up">
+                        <div class="featured-label">✦ Bài Viết Nổi Bật</div>
+                        <h2>Khóa Học Số Học Olympic 2026</h2>
+                        <p>Tài liệu lưu hành nội bộ và hệ thống bài tập tự luyện dành cho học sinh luyện thi Olympic Toán học. Được cập nhật liên tục với nội dung chọn lọc từ các kỳ thi quốc gia và quốc tế.</p>
+                        <a href="Math\KhoaSoHoc.html" target="_blank" class="featured-link">Xem Bài Viết →</a>
+                    </div>
+
+                    <div class="section-label">Bài Đăng Mới Nhất</div>
+                    <div class="home-challenge-row">
+                        <div class="grid-container" style="grid-template-columns: 1fr; gap: 16px;">
+                            <div class="card fade-up">
+                                <div class="card-date">March 08, 2026</div>
+                                <h3>[HSGS] Đề Thi Thử Lần 2 Môn Toán (Chuyên) Năm 2026</h3>
+                                <p>Phân tích chi tiết các bài toán trong đề thi thử lần 2 của trường THPT Chuyên KHTN. Bao gồm hướng dẫn giải và nhận xét từng câu.</p>
+                                <a href="Math\ThiThuLan2HSGS2526.html" target="_blank" class="card-link">READ MORE</a>
+                            </div>
+                            <div class="card fade-up">
+                                <div class="card-date">March 07, 2026</div>
+                                <h3>[HSGS] Số Học Trong Đề Thi Thử (Toán Điều Kiện) Năm 2026</h3>
+                                <p>Khai thác các yếu tố Số học tinh tế được lồng ghép trong đề toán điều kiện đợt 2. Các bài toán liên quan đến chia hết, đồng dư và số nguyên tố.</p>
+                                <a href="Math\SoHocTrongDeThiThuToanDKHSGS2526.html"" target="_blank" class="card-link">READ MORE</a>
+                            </div>
+                            <div class="card fade-up">
+                                <div class="card-date">March 07, 2026</div>
+                                <h3>HCMUS Olympic Team Selection Test (Algebra)</h3>
+                                <p>Tuyển tập bài toán Đại số từ kỳ thi chọn đội tuyển Olympic ĐHKHTN. Phân tích phương pháp và lời giải đầy đủ.</p>
+                                <a href="Math\HCMUS_Olympic_Team_Selection_Test_Algebra.html" target="_blank" class="card-link">READ MORE</a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="challenge-card">
+                                <div class="challenge-badge">Câu Đố Trong Ngày</div>
+                                <h3>Bài Toán Số Học</h3>
+                                <div class="challenge-problem" id="challenge-problem">
+                                    Đang tải câu đố...
+                                </div>
+                                <button class="challenge-btn" id="show-answer-btn" onclick="toggleAnswer()">Xem Đáp Án</button>
+                                <div class="challenge-answer" id="challenge-answer"></div>
+                                <button class="challenge-btn" style="margin-top: 10px; border-color: var(--accent-gold); color: var(--accent-gold);" onclick="loadChallenge()">Câu Khác ↻</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+
+            <div class="stats-strip fade-up">
+                <div class="stat-item"><div class="stat-number">09</div><div class="stat-label">Bài Viết</div></div>
+                <div class="stat-item"><div class="stat-number">07</div><div class="stat-label">Chủ Đề</div></div>
+                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
+                <div class="stat-item"><div class="stat-number">∞</div><div class="stat-label">Đam Mê</div></div>
+            </div>
+
+            <footer class="site-footer fade-up">
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 <span class="footer-brand">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/shared.js"></script>
+    <script>
+        // === DAILY CHALLENGE DATA ===
+        const CHALLENGES = [
+            {
+                problem: 'Tìm tất cả các số nguyên dương $n$ sao cho $n^2 + 3n + 2$ chia hết cho $n + 1$.',
+                answer: 'Vì $n^2 + 3n + 2 = (n+1)(n+2)$, biểu thức này luôn chia hết cho $(n+1)$ với mọi $n \\in \\mathbb{Z}^+$. Vậy đáp án là mọi số nguyên dương $n$.'
+            },
+            {
+                problem: 'Cho $p$ là số nguyên tố. Chứng minh rằng $p^2 - 1$ chia hết cho 24 với mọi $p > 3$.',
+                answer: '$p^2 - 1 = (p-1)(p+1)$. Vì $p > 3$ là số nguyên tố, $p$ lẻ và không chia hết cho 3. Khi đó $(p-1), p, (p+1)$ là 3 số liên tiếp nên $(p-1)(p+1)$ chia hết cho 8 (hai số chẵn liên tiếp) và chia hết cho 3. Do đó chia hết cho 24.'
+            },
+            {
+                problem: 'Tìm tất cả số nguyên tố $p$ sao cho $p^2 + 2$ cũng là số nguyên tố.',
+                answer: 'Thử $p = 3$: $3^2 + 2 = 11$ là số nguyên tố ✓. Với $p \\neq 3$, $p \\equiv 1$ hoặc $2 \\pmod{3}$, suy ra $p^2 \\equiv 1 \\pmod{3}$, nên $p^2 + 2 \\equiv 0 \\pmod{3}$. Vậy $p^2 + 2$ chia hết cho 3 và lớn hơn 3, không là số nguyên tố. Đáp án duy nhất: $p = 3$.'
+            },
+            {
+                problem: 'Có bao nhiêu cặp số nguyên $(x, y)$ thỏa mãn $x^2 - y^2 = 2026$?',
+                answer: '$x^2 - y^2 = (x+y)(x-y) = 2026 = 2 \\times 1013$. Vì $1013$ là số nguyên tố, $2026 = 1 \\times 2026 = 2 \\times 1013$. Hai nhân tử cùng tính chẵn lẻ. Trường hợp $2 \\times 1013$: $x+y = 1013, x-y = 2$ cho $x = 507.5$ (loại). Không có nghiệm nguyên. Đáp án: $\\mathbf{0}$ cặp.'
+            },
+            {
+                problem: 'Cho dãy số Fibonacci: $F_1=1, F_2=1, F_{n+2}=F_n+F_{n+1}$. Chứng minh $\\gcd(F_m, F_n) = F_{\\gcd(m,n)}$.',
+                answer: 'Bổ đề: $\\gcd(F_m, F_n) = F_{\\gcd(m,n)}$. Dùng tính chất: $F_{m+n} = F_m F_{n+1} + F_{m-1} F_n$. Từ đó suy ra $\\gcd(F_m, F_n) = \\gcd(F_m, F_{n-m}) = \\ldots = \\gcd(F_{\\gcd(m,n)}, F_0) = F_{\\gcd(m,n)}$.'
+            }
+        ];
+
+        let currentChallenge = 0;
+        let answerVisible = false;
+
+        function loadChallenge() {
+            currentChallenge = Math.floor(Math.random() * CHALLENGES.length);
+            const ch = CHALLENGES[currentChallenge];
+            document.getElementById('challenge-problem').innerHTML = ch.problem;
+            document.getElementById('challenge-answer').innerHTML = '';
+            document.getElementById('challenge-answer').classList.remove('show');
+            document.getElementById('show-answer-btn').textContent = 'Xem Đáp Án';
+            answerVisible = false;
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        function toggleAnswer() {
+            const ans = document.getElementById('challenge-answer');
+            const btn = document.getElementById('show-answer-btn');
+            if (answerVisible) {
+                ans.classList.remove('show');
+                btn.textContent = 'Xem Đáp Án';
+            } else {
+                ans.innerHTML = CHALLENGES[currentChallenge].answer;
+                ans.classList.add('show');
+                btn.textContent = 'Ẩn Đáp Án';
+                if (window.MathJax) MathJax.typesetPromise([ans]);
+            }
+            answerVisible = !answerVisible;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadChallenge();
+            Comments.init('home');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Về Tôi</title>
+    <link rel="stylesheet" href="/css/shared.css">
+    <style>
+        .profile-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 40px;
+            margin-bottom: 36px;
+        }
+        .profile-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+        .profile-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .highlight-text {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="hero-header fade-up">
+                <h1>Về Tác Giả</h1>
+                <p class="quote">"Not the best. Not perfect. But happy :>"</p>
+            </div>
+
+            <div class="profile-container fade-up">
+                <h2 class="profile-title">Xin chào, tôi là Hoàng Long</h2>
+                <div class="profile-content">
+                    <p>Chào mừng bạn đã ghé thăm <span class="highlight-text">Secret of Mathematical Principles (SMP)</span> — không gian lưu trữ và chia sẻ nhỏ của tôi trên con đường học thuật.</p>
+                    <p>Hiện tại tôi đang theo học tại trường Đại học Khoa Học Tự Nhiên, ngành Khoa Học Máy Tính (chương trình tiên tiến) hay còn được gọi quen mồm là APCS</p>
+                    <p>Tôi có niềm đam mê sâu sắc với Toán học thuần túy (Đặc biệt là Số học, Hình học phẳng và Tổ hợp). Với tôi, mỗi bài toán đẹp hay một thuật toán tối ưu đều mang một nét thơ rất riêng, đúng như tinh thần tinh hoa tư duy mà Albert Einstein từng ca ngợi.</p>
+                    <p>Blog này ra đời với mục đích ghi lại những bài toán hay, những phân tích đề thi học sinh giỏi chi tiết nhằm giúp các bạn có cùng đam mê có thêm nguồn tài liệu tự học tin cậy. Đôi khi nó còn có những Lecture Note trong quá trình tôi dạy đội tuyển và cả Note của tôi khi học trên giảng đường đại học.</p>
+                    <p>Nếu bạn muốn trao đổi học thuật, đóng góp lời giải mới hoặc hợp tác, hãy liên hệ với tôi qua các kênh liên kết ở thanh điều hướng phụ bên cạnh (Email, Facebook, YouTube). Cảm ơn bạn rất nhiều!</p>
+                </div>
+            </div>
+
+            <div class="comment-section fade-up">
+                <h3>Sổ Lưu Niệm (Guestbook)</h3>
+                <div class="comment-form">
+                    <div class="comment-form-row">
+                        <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                    </div>
+                    <div style="margin-bottom: 14px;">
+                        <textarea id="comment-text-input" class="comment-textarea" placeholder="Để lại một lời chúc hoặc suy nghĩ của bạn về blog nhé..."></textarea>
+                    </div>
+                    <button id="comment-submit" class="comment-submit">Ký Tên</button>
+                </div>
+                <div id="comment-list" class="comment-list"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/shared.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Comments.init('vetoi');
+        });
+    </script>
+</body>
+</html>

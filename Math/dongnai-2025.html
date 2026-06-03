@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) - Đồng Nai</title>
+    
+    <script>
+    window.MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        svg: { fontCache: 'global' }
+    };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            margin: auto;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            text-align: center;
+            font-family: "Times New Roman", Times, serif;
+        }
+        .problem {
+            margin-top: 25px;
+            font-weight: Arial, sans-serif;
+        }
+        .soln {
+            margin-top: 10px;
+            background: rgba(0, 0, 0, 0.02);
+            padding: 15px;
+            border-left: 3px solid #5ce1e6;
+            margin-bottom: 20px;
+        }
+        .video-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .video-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #cc0000;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .video-button:hover {
+            background: #990000;
+        }
+        .math-block {
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+    </style>
+
+    <h2>SỞ GD và ĐT tỉnh Đồng Nai</h2>
+    <h1>ĐỀ THI TUYỂN SINH VÀO LỚP 10 MÔN TOÁN (CHUYÊN)</h1>
+    <h2>NĂM HỌC 2025 – 2026</h2>
+
+    <p style="text-align:center">
+        <b>Long Do</b>
+    </p>
+
+    <div class="video-section"> 
+        <a class="video-button" href="https://www.youtube.com/watch?v=zZwWzIB8Bcw&amp;t=1182s" target="_blank"> 
+            Xem thêm Hướng Dẫn Chi Tiết bằng video
+        </a>
+    </div>
+
+    <div class="problem">
+        <b>Câu I.</b>
+        <ol>
+            <li>Rút gọn biểu thức \(P = \left( \dfrac{x + 5}{x + \sqrt{x} - 2} - \dfrac{2}{\sqrt{x} - 1}\right): \dfrac{1}{\sqrt{x} + 2} \) (với \( x \geq 0, x \neq 1 \)).</li>
+            <li>Tìm tất cả các giá trị của tham số \( m \) để phương trình \( x^2 - 2x + 3m + 1 = 0 \) có hai nghiệm phân biệt \( x_1, x_2 \) thỏa mãn \( x_1^3 + x_2^3 = 20 \).</li>
+        </ol>
+    </div>
+
+    <div class="soln">
+        <b>Lời giải.</b>
+        <ol>
+            <li>Ta có 
+                <div class="math-block">
+                    $$P = \left( \dfrac{x + 5}{x + \sqrt{x} - 2} - \dfrac{2}{\sqrt{x} - 1}\right): \dfrac{1}{\sqrt{x} + 2}  = \left( \dfrac{x + 5}{(\sqrt{x} - 1)(\sqrt{x}+2)} - \dfrac{2}{\sqrt{x} - 1}\right) \cdot (\sqrt{x} + 2)$$
+                </div>
+                <div class="math-block">
+                    $$= \dfrac{x + 5 - 2\cdot(\sqrt{x} + 2)}{(\sqrt{x} - 1)(\sqrt{x}+2)} \cdot (\sqrt{x} + 2) = \dfrac{x - 2\sqrt{x} + 1}{\sqrt{x} - 1} = \dfrac{(\sqrt{x} - 1)^2}{\sqrt{x} - 1} = \sqrt{x} - 1$$
+                </div>
+            </li>
+            <li>Trước tiên để phương trình có hai nghiệm thì $\Delta > 0 \Rightarrow 1 - (3m + 1) > 0 \Rightarrow 0 > m$. Theo định lý Vièta thì 
+                <div class="math-block">
+                    $$\begin{cases}
+                    x_1 + x_2 = 2 \\
+                    x_1\cdot x_2 = 3m + 1
+                    \end{cases}$$
+                </div>
+                Khi đó ta có thể viết lại thành 
+                <div class="math-block">
+                    $$x_1^3 + x_2^3 = (x_1 + x_2) \cdot (x_1^2 - x_1x_2 + x_2^2) = (x_1 + x_2) \cdot [(x_1 + x_2)^2 - 3x_1 \cdot x_2] = 2\cdot (4 - 3\cdot(3m + 1))$$
+                </div>
+                Như vậy ta chỉ cần tìm $m$ thỏa 
+                <div class="math-block">
+                    $$2\cdot (4 - 3\cdot(3m + 1)) = 20 \Rightarrow 4 - 3\cdot(3m + 1) = 10 \Rightarrow 3m+ 1 = -2 \Rightarrow m = -1$$
+                </div>
+                Thử lại ta thấy thỏa mãn. 
+            </li>
+        </ol>
+    </div>
+
+    <div class="problem">
+        <b>Câu II.</b>
+        <ol>
+            <li>Giải hệ phương trình \( \begin{cases}
+                xy + y^2 - 2x - 2y = 0 \quad &(1) \\
+                x^2 + 2xy - 3 = \sqrt{x + y + 1} \quad& (2)
+            \end{cases} \)</li>
+            <li>Cho \( P(x) \) là đa thức bậc ba thỏa mãn \( (x + 2)P(x + 1) = (x - 1)P(x + 2) \), với mọi số thực \( x \) và \( P(3) = 6 \). Chứng tỏ \( P(2) = 0 \) và xác định đa thức \( P(x) \).</li>
+        </ol>
+    </div>
+
+    <div class="soln">
+        <b>Lời giải.</b>
+        <ol>
+            <li>Trước tiên cần có $x + y + 1 \ge 0$. Từ phương trình $(1)$, ta có biến đổi sau: 
+                <div class="math-block">
+                    $$xy + y^2 - 2x - 2y = 0 \Rightarrow y\cdot(x + y) - 2\cdot(x + y) = 0 \Rightarrow (x + y)\cdot (y - 2) = 0$$
+                </div>
+                Đến đây ta xem xét hai khả năng: 
+                <ul>
+                    <li>Trường hợp 1: Nếu $y = 2$ thì phương trình $(2)$ trở thành
+                        <div class="math-block">$$x^2 + 4x - 3 = \sqrt{x + 3} \Leftrightarrow x^2 + 4x - 5 = \sqrt{x + 3} - 2$$</div>
+                        <div class="math-block">$$\Rightarrow (x - 1)\cdot (x + 5) = \dfrac{x - 1}{\sqrt{x + 3} + 2} \Rightarrow (x - 1) \cdot \left(x + 5 - \dfrac{1}{\sqrt{x + 3} + 2}\right) = 0$$</div>
+                        Với $x = 1, y = 2$, thỏa mãn. Theo điều kiện $x + y + 2 \ge 0 \Rightarrow x + 2 + 2 \ge 0 \Rightarrow x \ge -4 \Rightarrow x + 5 \ge 1$. Lại có $$\sqrt{x + 3} + 2 \ge 2 \Rightarrow  \dfrac{1}{\sqrt{x + 3} + 2} \le \dfrac{1}{2} \Rightarrow x + 5 - \dfrac{1}{\sqrt{x + 3} + 2} \ge 1 - \dfrac{1}{2} > 0$$
+                        Vậy nên trường hợp này loại.
+                    </li>
+                    <li>Trường hợp 2: Nếu $x = -y$ thì $x^2 - 2x^2 - 3 = 1 \Rightarrow -4 = x^2$, rõ ràng đây là điều vô lý nên loại. </li>
+                </ul>
+                Vậy $(x; y) = (1; 2)$ thỏa đề. 
+            </li>
+            <li>Giả sử tồn tại đa thức $P(x)$ thỏa mãn $$(x + 2)P(x + 1) = (x - 1)P(x + 2) \; , \text{với mọi số thực}\; x$$
+                Thế $x = 1$, ta có ngay $P(2) = 0$, lại thế $x = -2$, ta có $-3\cdot P(0) = 0$ hay $P(0) = 0$ và cuối cùng thế $x = 0$, ta được $P(1) = 0$. Do $P(x)$ là đa thức bậc ba nên theo định lý Bezout nó có dạng 
+                <div class="math-block">$$P(x) = a \cdot x \cdot (x - 1) \cdot (x - 2)$$</div>
+                Kết hợp thêm $P(3) = 6$ nên $6a = 6$ tức $a = 1$. Kiểm tra lại thỏa mãn. <br />
+                Vậy $P(x) = x \cdot (x - 1) \cdot (x - 2)$, với mọi số thực $x$. 
+            </li>
+        </ol>
+    </div>
+
+    <div class="problem">
+        <b>Câu III.</b>
+        <ol>
+            <li>Chứng minh trong 37 số nguyên dương bất kỳ, luôn tìm được 7 số có tổng chia hết cho 7.</li>
+            <li>Tìm tất cả các số nguyên tố \( p \) sao cho với mọi số nguyên dương \( a, b \) thì hai số \( a + 8b \) và \( 6a + 43b \) hoặc cùng chia hết cho \( p \) hoặc cùng không chia hết cho \( p \).</li>
+        </ol>
+    </div>
+
+    <div class="soln">
+        <b>Lời giải.</b>
+        <ol>
+            <li>Đặt $A = \{0;1;2 ; \ldots ; 6\}$, ta có nhận xét rằng một số nguyên khi chia cho $7$ chỉ có thể nhận các số dư thuộc tập $A$. Để giải quyết bài toán này ta xét hai khả năng: 
+                <ul>
+                    <li>Nếu tập hợp số dư của $37$ số đã cho khi chia cho $7$ trùng với $A$ thì lấy $7$ số và mỗi số dư $0, 1, \ldots , 6$. Khi đó lấy tổng $7$ số này lại thì chia hết cho $7$. </li>
+                    <li>Nếu có số $j \in A$ mà trong $37$ số không có số nào chia $7$ dư $j$ thì tức các số chỉ nhận tối đa $6$ trường hợp số dư khi chia cho $7$ (vì ngoại trừ $j$). Theo Dirichlet thì có ít nhất 
+                        <div class="math-block">$$\left[ \dfrac{37}{6} \right] + 1 = 7$$</div>
+                        số có cùng số dư khi chia cho $7$, rõ ràng tổng $7$ số này là chia hết cho $7$. 
+                    </li>
+                </ul>
+            </li>
+            <li>Giả sử số nguyên tố $p$ thỏa đề. Để ý rằng 
+                <div class="math-block">$$6a + 43b = 6 \cdot (a + 8b) - 5b \quad (1)$$</div>
+                Chọn $a = 2025p \cdot (p-1) - 8(p - 1)$ and $b = p-1$. Suy ra 
+                <div class="math-block">$$a + 8b = 2025p \cdot (p-1) - 8(p - 1) + 8(p-1) = 2025p \cdot (p-1) \;\vdots \; p$$</div>
+                Theo giả thiết thì $6a + 43b \;\vdots \; p \Rightarrow 5b\;\vdots \;p$ hay $5\cdot (p-1) \;\vdots \; p$. Nhưng rõ ràng $(p, p-1) = 1$ nên $5 \;\vdots \; p$, vậy $p = 5$. Bây giờ ta kiểm tra lại, thật vậy:
+                <div class="math-block">$$a + 8b \equiv a + 3b \equiv 6a + 43b \pmod{5}$$</div>
+                Điều này tức là $a + 8b \;\vdots \; 5$ khi và chỉ khi $6a + 43b \;\vdots \;5$. Vậy $ p = 5$ là giá trị cần tìm. 
+            </li>
+        </ol>
+    </div>
+
+    <div class="problem">
+        <b>Câu IV.</b>
+        <ol>
+            <li>Cho các số thực dương \( a, b \). Chứng minh \( a^3 + b^3 \geq a^2b + b^2a \).</li>
+            <li>Cho các số thực dương \( a, b, c \) thỏa mãn \( ab + bc + ca \geq 3 \). Chứng minh 
+                <div class="math-block">\[ 2(a^3 + b^3 + c^3) + 3abc \geq 9. \]</div>
+            </li>
+        </ol>
+    </div>
+
+    <div class="soln">
+        <b>Lời giải.</b>
+        <ol>
+            <li>Ở đây có khá nhiều cách chứng minh, mình xin trình bày hai cách đơn giản nhất. 
+                <ul>
+                    <li>Áp dụng AM - GM, ta có 
+                        <div class="math-block">$$a^3 + a^3 + b^3 \ge 3\cdot \sqrt[3]{(a^2\cdot b)^3} = 3\cdot a^2 \cdot b \;\text{và} \; a^3 + b^3 + b^3 \ge 3 \cdot  \sqrt[3]{(a\cdot b^2)^3} = 3 \cdot a \cdot b^2$$</div>
+                        Cộng hai đánh giá trên vế theo vế ta được ngay $a^3 + b^3 \ge ab \cdot (a + b)$. 
+                    </li>
+                    <li>Bất đẳng thức được viết lại thành 
+                        <div class="math-block">$$(a + b)\cdot (a^2 - ab + b^2) \ge ab \cdot (a + b)$$</div>
+                        Hay 
+                        <div class="math-block">$$(a + b)\cdot (a^2 - ab + b^2 - ab) \ge 0$$</div>
+                        <div class="math-block">$$(a + b) \cdot (a - b)^2 \ge 0$$</div>
+                        Điều này hiển nhiên đúng nên ta có điều phải chứng minh. 
+                    </li>
+                </ul>
+            </li>
+            <li>Áp dụng liên tục đánh giá ở ý $1)$, ta được $2\cdot (a^3 + b^3+c^3) \ge ab(a + b) + bc(c+b) + ca (c + a)$. Như vậy ta chỉ cần chứng minh: 
+                <div class="math-block">$$ab(a + b) + bc(c+b) + ca (c + a) + 3abc \ge 9$$</div>
+                <div class="math-block">$$ab(a + b) + abc + bc(c+b) +abc + ca (c + a) + abc \ge 9$$</div>
+                <div class="math-block">$$(ab + bc + ca) \cdot (a+b+c) \ge 9$$</div>
+                Do $ab + bc + ca \ge 3$ nên ta chỉ ra $a + b + c \ge 3$ là đủ. Thật vậy để ý rằng 
+                <div class="math-block">$$(a -b)^2 + (b - c)^2 + (c -a)^2 \ge 0$$</div>
+                Khai triển và nhóm lại ta được $(a + b+c)^2 \ge 3 \cdot (ab + bc + ca)$. Suy ra $a + b + c \ge 3$. Như vậy bài toán chứng minh hoàn tất. 
+            </li>
+        </ol>
+    </div>
+
+    <div class="problem">
+        <b>Câu V.</b>
+        Cho tam giác nhọn \( ABC \) (với \( AB < BC < AC \)) có \( I, J, M \) lần lượt là trung điểm của các cạnh \( AB, AC, BC \). Gọi \( D \) là giao điểm của hai đường tròn \((I; IA)\) và \((J; JA)\), với \( D \) khác \( A \).
+        <ol>
+            <li>Chứng minh tứ giác \( AIMJ \) là hình bình hành và ba điểm \( B, D, C \) thẳng hàng.</li>
+            <li>Tiếp tuyến của \((I; IA)\) tại \( A \) cắt đường thẳng \( MJ \) tại điểm \( K \) và cắt \((J; JA)\) tại điểm \( P \), với \( P \) khác \( A \). Tiếp tuyến của \((J; JA)\) tại \( A \) cắt \((I; IA)\) tại điểm \( Q \), với \( Q \) khác \( A \). Gọi \( E \) là điểm đối xứng với \( A \) qua \( D \). Chứng minh tứ giác \( ADMK \) nội tiếp đường tròn và  \(\widehat{PAQ} + \widehat{PEQ} = 180^\circ. \)</li>
+            <li>Gọi \( S \) và \( T \) lần lượt là giao điểm của đường thẳng \( PQ \) với hai đường thẳng \( BC \) và \( AD \). Chứng minh \(TP \cdot SQ = TQ \cdot SP. \)</li>
+        </ol>
+    </div>
+
+    <div class="center-img" style="text-align: center; margin: 20px 0;">
+        <iframe 
+            src="https://drive.google.com/file/d/1P9PdwfbpfGPKsqmxkADmBLIt7G3fib7g/preview"
+            width="700"
+            height="500"
+            style="border: none;">
+        </iframe>
+    </div>
+
+    <div class="soln">
+        <b>Lời giải.</b>
+        <ol>
+            <li>Ta có $IM, JM$ lần lượt là đường trung bình của $\triangle ABC$ ứng với cạnh $AC, AB$ nên $MI \;||\; AC$ và $MJ \;||\;AB$ nên $AIMJ$ là hình bình hành.<br />
+                Lại có $\widehat{ADB}  + \widehat{ADC} = 90^{\circ} + 90^{\circ} = 180^{\circ}$ nên $B, D, C$ thẳng hàng. 
+            </li>
+            <li>Để ý rằng $MJ \;||\; AB$ và $AB \bot AK$ nên $MJ \bot AK$. Súy ra $\widehat{MKA} + \widehat{MDA} = 180^{\circ}$<br />
+                $\Rightarrow AKMD$ là tứ giác nội tiếp. <br /><br />
+                Gọi $F$ là điểm đối xứng của $A$ qua $M$ thì $MJ \;||\; FC$. Hơn nữa $JA = JP$ nên $MJ$ là trung trực $AP \Rightarrow KA =KP$ nên $MK \;||\; FP$. Vậy $F, C, P$ thẳng hàng. Tương tự dựng điểm $L$ là giao $MI$ với $AQ$ và ta cũng có $F, Q, B$ thẳng hàng.<br />
+                Mà $\widehat{FQA} = \widehat{FPA} = 90^{\circ} \Rightarrow A, Q, F, P$ đồng viên. <br /><br />
+                Cuối cùng $\widehat{QFP} = \widehat{LMK}$. Do $DL \;||\; QE, DK \;||\; EP \Rightarrow \widehat{QEP} = \widehat{LDK}$. Dẫn đến $\widehat{QEP} = \widehat{QFP} \Rightarrow QPFE$ là tứ giác nội tiếp hay điều phải chứng minh. 
+            </li>
+            <li>Ta sẽ chứng minh $DT$ là phân giác trong của góc $QDP$. Thật vậy 
+                <div class="math-block">$$\widehat{QDT} = \widehat{QBA} = 180^{\circ} - \widehat{ABF} \;\text{và} \; \widehat{TDP} = \widehat{ACP} = 180^{\circ} - \widehat{ACF}$$</div>
+                Nhưng $\widehat{ABF} = \widehat{ACF}$ do $ABFC$ là hình bình hành. Sử dụng tính chất của phân giác trong ta được 
+                <div class="math-block">$$\dfrac{TQ}{TP} = \dfrac{DQ}{DP}$$</div>
+                Chú ý $\widehat{TDS} = 90^{\circ}$ nên $DS$ là phân giác ngoài góc $\widehat{QDP}$, áp dụng tính chất phân giác ngoài cũng có 
+                <div class="math-block">$$\dfrac{SQ}{SP} = \dfrac{DQ}{DP}$$</div>
+                Kết hợp lại ta có điều phải chứng minh. 
+            </li>
+        </ol>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Cuộc Sống</title>
+    <link rel="stylesheet" href="/css/shared.css">
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="hero-header fade-up">
+                <h1>Cuộc Sống & Góc Nhìn</h1>
+                <p class="quote">"Những câu chuyện tản mạn bên lề bảng đen và những suy ngẫm trong hành trình trưởng thành."</p>
+            </div>
+
+            <div class="section-label">Nhật Ký Học Thuật</div>
+            <div class="grid-container">
+                
+                <div class="card fade-up">
+                    <div class="card-date">May 25, 2026</div>
+                    <span class="card-tag">Tản Mạn</span>
+                    <h3>Hành trình từ Toán Chuyên đến Khoa học máy tính</h3>
+                    <p>Chia sẻ về trải nghiệm khi bước đầu tiếp cận các cấu trúc dữ liệu đồ thị, thuật toán Prim, Kruskal và sự tương đồng kỳ diệu giữa tư duy chứng minh Toán học với lập trình logic...</p>
+                    <a href="#" class="card-link">ĐANG BIÊN SOẠN</a>
+                </div>
+
+            </div>
+
+            <div class="comment-section fade-up">
+                <h3>Góc Trò Chuyện</h3>
+                <div class="comment-form">
+                    <div class="comment-form-row">
+                        <input type="text" id="comment-name" class="comment-input" placeholder="Tên bạn...">
+                    </div>
+                    <div style="margin-bottom: 14px;">
+                        <textarea id="comment-text-input" class="comment-textarea" placeholder="Để lại một lời chào hoặc chia sẻ câu chuyện của bạn tại đây nhé..."></textarea>
+                    </div>
+                    <button id="comment-submit" class="comment-submit">Gửi Tin Nhắn</button>
+                </div>
+                <div id="comment-list" class="comment-list"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/shared.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Comments.init('cuocsong');
+        });
+    </script>
+</body>
+</html>
