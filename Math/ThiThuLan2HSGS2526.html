@@ -1,121 +1,399 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Đề Thi Thử Lần 2 HSGS 2025–2026</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link class="theme-link" rel="stylesheet" href="../css/shared.css">
+    <style>
+        body { overflow-x: hidden; }
 
-<script>
-MathJax = {
-  tex: {inlineMath: [['$','$'],['\\(','\\)']]},
-  svg: {fontCache: 'global'}
-};
-</script>
+        /* ========================================================
+           HỆ THỐNG BIẾN MÀU CHUYỂN ĐỔI SÁNG / TỐI (DARK MODE)
+           ======================================================== */
+        :root {
+            --body-bg: #0b1111; /* Màu nền tối nguyên bản của bạn */
+            --widget-title-color: #fff;
+            --widget-link-color: #888;
+            --widget-badge-bg: rgba(255,255,255,0.05);
+            --widget-badge-color: #aaa;
+            --exam-paper-bg: rgba(255,255,255,0.025);
+            --exam-paper-border: rgba(92,225,230,0.09);
+            --exam-text-color: #ddd;
+            --exam-bold-color: #f4f4f4;
+            --exam-title-color: #f0f0f0;
+            --exam-divider-color: rgba(92,225,230,0.1);
+        }
 
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+        /* Khi ở chế độ nền sáng (nếu class dark-mode không được active hoặc theo cấu hình ngược lại) */
+        body:not(.dark-mode) {
+            --body-bg: #f8fafc;
+            --widget-title-color: #1e293b;
+            --widget-link-color: #64748b;
+            --widget-badge-bg: rgba(0,0,0,0.05);
+            --widget-badge-color: #475569;
+            --exam-paper-bg: #ffffff;
+            --exam-paper-border: rgba(15,23,42,0.08);
+            --exam-text-color: #334155;
+            --exam-bold-color: #0f172a;
+            --exam-title-color: #1e293b;
+            --exam-divider-color: rgba(15,23,42,0.08);
+        }
 
-<style>
+        /* Áp dụng các biến màu động vào đúng các Class nguyên bản */
+        body {
+            background-color: var(--body-bg);
+            transition: background-color 0.3s ease;
+        }
 
-body{
-  font-family:"Times New Roman",serif;
-  margin:auto;
-  padding:40px;
-  line-height:1.6;
-}
+        .main-wrapper {
+            position: relative;
+            max-width: 2000px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            transform: none !important;
+            left: 0 !important;
+            transition: transform 0s !important;
+        }
 
-h1,h2{
-text-align:center;
-}
+        .main-content-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 100px;
+            margin-top: 20px;
+        }
 
-.problem{
-margin-top:25px;
-}
+        .tags-comment-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            z-index: 1;
+        }
 
-</style>
+        .side-widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--widget-title-color);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s ease;
+        }
+
+        body.light-mode .side-widget-title {
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .side-widget-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .side-widget-list a {
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--widget-link-color); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+        }
+
+        .side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(4px); }
+
+        .side-widget-list a span {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            background: var(--widget-badge-bg); padding: 2px 8px;
+            border-radius: 12px; color: var(--widget-badge-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @media (max-width: 1100px) {
+            .main-content-layout { grid-template-columns: 1fr; }
+            .tags-comment-sidebar { position: static; }
+        }
+
+        /* Stats strip */
+        .stats-strip {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 36px;
+            margin-top: 50px;
+        }
+        .stat-item {
+            flex: 1; padding: 18px 20px; text-align: center;
+            border-right: 1px solid var(--border-light);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.6rem;
+            font-weight: 700; color: var(--accent-cyan); line-height: 1; margin-bottom: 6px;
+        }
+        .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+        /* ── Exam-specific styles ── */
+        .exam-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan, #5ce1e6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            opacity: 0.65;
+            transition: opacity 0.2s;
+        }
+        .exam-back-btn:hover { opacity: 1; }
+
+        .exam-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .exam-tag {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 4px 13px;
+            border-radius: 20px;
+            border: 1px solid rgba(92,225,230,0.35);
+            color: var(--accent-cyan, #5ce1e6);
+        }
+
+        .exam-paper {
+            background: var(--exam-paper-bg);
+            border: 1px solid var(--exam-paper-border);
+            border-radius: 12px;
+            padding: 46px 54px;
+            font-family: "Times New Roman", Times, serif;
+            color: var(--exam-text-color);
+            line-height: 1.85;
+            font-size: 1.01rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .exam-paper h1,
+        .exam-paper h2 {
+            text-align: center;
+            color: var(--exam-title-color);
+            font-family: "Times New Roman", Times, serif;
+            margin: 7px 0;
+            transition: color 0.3s ease;
+        }
+        .exam-paper h1 { font-size: 1.5rem; letter-spacing: 0.5px; }
+        .exam-paper h2 { font-size: 1.1rem; font-weight: normal; }
+
+        .exam-paper h3 {
+            font-size: 1.1rem;
+            color: var(--accent-cyan, #5ce1e6);
+            margin-top: 34px;
+            margin-bottom: 10px;
+            font-family: "Times New Roman", Times, serif;
+            border-left: 3px solid var(--accent-cyan, #5ce1e6);
+            padding-left: 12px;
+        }
+
+        .exam-paper p   { margin: 10px 0; }
+        .exam-paper ol,
+        .exam-paper ul  { margin: 10px 0; padding-left: 28px; }
+        .exam-paper li  { margin: 8px 0; }
+        .exam-paper b   { color: var(--exam-bold-color); transition: color 0.3s ease; }
+
+        .exam-divider {
+            border: none;
+            border-top: 1px solid var(--exam-divider-color);
+            margin: 18px 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .exam-end {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            margin-top: 44px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        body.light-mode .exam-end {
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+    </style>
 </head>
-
 <body>
+    <div id="sidebar-placeholder"></div>
 
-<h2>TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN</h2>
-<h2>TRƯỜNG THPT CHUYÊN KHTN</h2>
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
 
-<h1>ĐỀ THI KHẢO SÁT NĂNG LỰC LỚP 9</h1>
-<h2>NĂM HỌC 2025 – 2026</h2>
+        <main>
+            <div class="main-content-layout">
 
-<p style="text-align:center">
-<b>Môn: TOÁN (Toán chuyên – Đợt 2, 08/3/2026)</b><br>
-<i>(Thời gian làm bài: 150 phút, không kể thời gian phát đề)</i>
-</p>
-  
-<h3>Câu I.</h3>
+                <aside class="tags-comment-sidebar">
 
-<p>1) Giải hệ phương trình</p>
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Categories</div>
+                        <ul class="side-widget-list">
+                            <li><a href="../Math/toanhoc.html">Chuyên Toán <span>10</span></a></li>
+                            <li><a href="../Math/toanhoc.html">HSG Toán 9 <span>8</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Math Olympiad <span>4</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Number Theory <span>5</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Algebra <span>3</span></a></li>
+                            <li><a href="../My%20Life/cuocsong.html">Cuộc Sống <span>1</span></a></li>
+                        </ul>
+                    </div>
 
-\[
-\begin{cases}
-3x^2 + 2xy + 3y^2 = \frac{16}{x} + \frac{11}{y} \\
-x^2 - y^2 = \frac{11}{y} - \frac{16}{x}
-\end{cases}
-\]
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Archives</div>
+                        <ul class="side-widget-list">
+                            <li><a href="#">Tháng 4, 2026 <span>12</span></a></li>
+                            <li><a href="#">Tháng 3, 2026 <span>8</span></a></li>
+                            <li><a href="#">Tháng 2, 2026 <span>5</span></a></li>
+                        </ul>
+                    </div>
 
-<p>2) Giải phương trình</p>
+                    <div class="comment-section fade-up">
+                        <h3>Thảo Luận & Góp Ý</h3>
+                        <div class="comment-form">
+                            <div class="comment-form-row">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                            </div>
+                            <div style="margin-bottom:14px">
+                                <textarea id="comment-text-input" class="comment-textarea"
+                                    placeholder="Nhập bình luận hoặc lời nhắn của bạn tại đây..."></textarea>
+                            </div>
+                            <button id="comment-submit" class="comment-submit">Gửi Bình Luận</button>
+                        </div>
+                        <div id="comment-list" class="comment-list"></div>
+                    </div>
 
-\[
-(x^2+x+1)(\sqrt[3]{(2x-1)^2}+\sqrt[3]{2x-1}+1)=4
-\]
+                </aside>
 
-<h3>Câu II.</h3>
+                <div class="main-articles-body">
 
-<p>1) Tìm tất cả các cặp số nguyên \((x,y)\) thỏa mãn</p>
+                    <a href="../index.html" class="exam-back-btn fade-up">← Quay Lại Trang Chủ</a>
 
-\[
-x^4 + 4x + 1 = 5^y
-\]
+                    <div class="exam-meta fade-up">
+                        <span class="exam-tag">HSG Toán 9</span>
+                        <span class="exam-tag">Toán Chuyên</span>
+                        <span class="exam-tag">08 / 03 / 2026</span>
+                        <span class="exam-tag">THPT Chuyên KHTN</span>
+                    </div>
 
-<p>2) Với \(a,b,c>0\) và \(a+b+c=3\). Tìm GTLN của</p>
+                    <div class="exam-paper fade-up">
 
-\[
-Q =
-\frac{ab^2}{a^2 + 2b^2 + c^2}
-+
-\frac{bc^2}{b^2 + 2c^2 + a^2}
-+
-\frac{ca^2}{c^2 + 2a^2 + b^2}
-\]
+                        <h2>TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN</h2>
+                        <h2>TRƯỜNG THPT CHUYÊN KHTN</h2>
+                        <h1>ĐỀ THI KHẢO SÁT NĂNG LỰC LỚP 9</h1>
+                        <h2>NĂM HỌC 2025 – 2026</h2>
 
-<h3>Câu III.</h3>
+                        <p style="text-align:center; margin-top:14px;">
+                            <b>Môn: TOÁN (Toán chuyên – Đợt 2, 08/3/2026)</b><br>
+                            <i>(Thời gian làm bài: 150 phút, không kể thời gian phát đề)</i>
+                        </p>
 
-<p>
-Cho tam giác nhọn \(ABC\) ( \( AB &lt; AC \) ) nội tiếp \((O)\), trực tâm \(H\), đường cao \(AD\).
-\(M,N,P\) lần lượt là trung điểm của \(BC,CA,AB\).
-Qua \(A\) kẻ đường thẳng song song với \(HM\) cắt \(BC\) tại \(X\).
-\(AO\) cắt lại đường tròn ngoại tiếp tam giác \(ADN, ADP\) lần lượt tại \(T,Z\).
-</p>
+                        <hr class="exam-divider">
 
-<ol>
-<li>Chứng minh \(T\) nằm trên \(MN\) và \(Z\) nằm trên \(MP\).</li>
-<li>Chứng minh tiếp tuyến tại \(T\) của đường tròn ngoại tiếp \(ADN\) và tiếp tuyến tại \(Z\) của đường tròn ngoại tiếp \(ADP\) cắt nhau tại một điểm nằm trên \(AD\).</li>
-<li>Chứng minh đường tròn đường kính \(MX\) tiếp xúc với các đường tròn ngoại tiếp \(ADN\) và \(ADP\).</li>
-</ol>
+                        <h3>Câu I.</h3>
 
-<h3>Câu IV.</h3>
+                        <p>1) Giải hệ phương trình</p>
+                        \[
+                        \begin{cases}
+                            3x^2 + 2xy + 3y^2 = \dfrac{16}{x} + \dfrac{11}{y} \\[6pt]
+                            x^2 - y^2 = \dfrac{11}{y} - \dfrac{16}{x}
+                        \end{cases}
+                        \]
 
-<p>
-Trong mỗi ô của bảng \(2\times200\) có đặt một đồng xu. Hai bạn An và Bình chơi một trò chơi,
-luân phiên thực hiện nước đi, An đi trước.
-</p>
+                        <p>2) Giải phương trình</p>
+                        \[
+                        (x^2+x+1)\!\left(\sqrt[3]{(2x-1)^2}+\sqrt[3]{2x-1}+1\right)=4
+                        \]
 
-<ul>
-<li>An di chuyển xu sang ô chung đỉnh (đường chéo).</li>
-<li>Bình di chuyển sang ô chung cạnh.</li>
-</ul>
+                        <h3>Câu II.</h3>
 
-<p>
-Nếu hai đồng xu nằm cùng một ô thì một đồng xu được lấy khỏi bảng và thuộc về Bình.
-Bình có thể dừng trò chơi bất cứ lúc nào và lấy tất cả số xu đã thu được.
-</p>
+                        <p>1) Tìm tất cả các cặp số nguyên \((x,\,y)\) thỏa mãn</p>
+                        \[
+                        x^4 + 4x + 1 = 5^y
+                        \]
 
-<p><b>Hỏi số xu tối đa Bình có thể nhận được là bao nhiêu, bất kể An chơi như thế nào?</b></p>
+                        <p>2) Với \(a,b,c>0\) và \(a+b+c=3\). Tìm GTLN của</p>
+                        \[
+                        Q =
+                        \frac{ab^2}{a^2+2b^2+c^2}
+                        +\frac{bc^2}{b^2+2c^2+a^2}
+                        +\frac{ca^2}{c^2+2a^2+b^2}
+                        \]
 
-<p style="text-align:center"><b>--- HẾT ---</b></p>
+                        <h3>Câu III.</h3>
 
+                        <p>
+                            Cho tam giác nhọn \(ABC\) (\(AB < AC\)) nội tiếp \((O)\), trực tâm \(H\),
+                            đường cao \(AD\). \(M,N,P\) lần lượt là trung điểm của \(BC,CA,AB\).
+                            Qua \(A\) kẻ đường thẳng song song với \(HM\) cắt \(BC\) tại \(X\).
+                            \(AO\) cắt lại đường tròn ngoại tiếp tam giác \(ADN,\,ADP\) lần lượt tại \(T,Z\).
+                        </p>
+                        <ol>
+                            <li>Chứng minh \(T\) nằm trên \(MN\) và \(Z\) nằm trên \(MP\).</li>
+                            <li>Chứng minh tiếp tuyến tại \(T\) của đường tròn ngoại tiếp \(\triangle ADN\) và
+                                tiếp tuyến tại \(Z\) của đường tròn ngoại tiếp \(\triangle ADP\) cắt nhau
+                                tại một điểm nằm trên \(AD\).</li>
+                            <li>Chứng minh đường tròn đường kính \(MX\) tiếp xúc với các đường tròn
+                                ngoại tiếp \(\triangle ADN\) và \(\triangle ADP\).</li>
+                        </ol>
+
+                        <h3>Câu IV.</h3>
+
+                        <p>
+                            Trong mỗi ô của bảng \(2\times200\) có đặt một đồng xu. Hai bạn An và Bình
+                            chơi một trò chơi, luân phiên thực hiện nước đi, An đi trước.
+                        </p>
+                        <ul>
+                            <li>An di chuyển xu sang ô chung đỉnh (đường chéo).</li>
+                            <li>Bình di chuyển sang ô chung cạnh.</li>
+                        </ul>
+                        <p>
+                            Nếu hai đồng xu nằm cùng một ô thì một đồng xu được lấy khỏi bảng và thuộc
+                            về Bình. Bình có thể dừng trò chơi bất cứ lúc nào và lấy tất cả số xu
+                            đã thu được.
+                        </p>
+                        <p><b>Hỏi số xu tối đa Bình có thể nhận được là bao nhiêu, bất kể An chơi như thế nào?</b></p>
+
+                        <p class="exam-end"><b>─── HẾT ───</b></p>
+
+                    </div></div></div><div class="stats-strip fade-up">
+                <div class="stat-item"><div class="stat-number">09</div><div class="stat-label">Bài Viết</div></div>
+                <div class="stat-item"><div class="stat-number">07</div><div class="stat-label">Chủ Đề</div></div>
+                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
+                <div class="stat-item"><div class="stat-number">∞</div><div class="stat-label">Đam Mê</div></div>
+            </div>
+
+            <footer class="site-footer fade-up">
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 <span class="footer-brand">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
+                </div>
+            </footer>
+        </main>
+    </div><script src="../js/layout.js"></script>
+    <script src="../js/shared.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof Comments !== 'undefined') {
+            Comments.init('ThiThuLan2HSGS2526');
+        }
+    });
+</script>
 </body>
 </html>

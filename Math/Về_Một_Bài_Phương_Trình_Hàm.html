@@ -1,222 +1,544 @@
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Đề Thi Thử Lần 2 HSGS 2025–2026</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link class="theme-link" rel="stylesheet" href="../css/shared.css">
+    <style>
+        body { overflow-x: hidden; }
 
-<h2 style="text-align: center;">
-<b>Về Một Bài Phương Trình Hàm</b>
-</h2>
+        /* ========================================================
+           HỆ THỐNG BIẾN MÀU CHUYỂN ĐỔI SÁNG / TỐI (DARK MODE)
+           ======================================================== */
+        :root {
+            --body-bg: #0b1111; /* Màu nền tối nguyên bản của bạn */
+            --widget-title-color: #fff;
+            --widget-link-color: #888;
+            --widget-badge-bg: rgba(255,255,255,0.05);
+            --widget-badge-color: #aaa;
+            --exam-paper-bg: rgba(255,255,255,0.025);
+            --exam-paper-border: rgba(92,225,230,0.09);
+            --exam-text-color: #ddd;
+            --exam-bold-color: #f4f4f4;
+            --exam-title-color: #f0f0f0;
+            --exam-divider-color: rgba(92,225,230,0.1);
+        }
 
-<h3 style="text-align: center;">Long Do</h3>
+        /* Khi ở chế độ nền sáng (nếu class dark-mode không được active hoặc theo cấu hình ngược lại) */
+        body:not(.dark-mode) {
+            --body-bg: #f8fafc;
+            --widget-title-color: #1e293b;
+            --widget-link-color: #64748b;
+            --widget-badge-bg: rgba(0,0,0,0.05);
+            --widget-badge-color: #475569;
+            --exam-paper-bg: #ffffff;
+            --exam-paper-border: rgba(15,23,42,0.08);
+            --exam-text-color: #334155;
+            --exam-bold-color: #0f172a;
+            --exam-title-color: #1e293b;
+            --exam-divider-color: rgba(15,23,42,0.08);
+        }
 
-<p style="text-align: center;"><b>20.1.2026</b></p>
+        /* Áp dụng các biến màu động vào đúng các Class nguyên bản */
+        body {
+            background-color: var(--body-bg);
+            transition: background-color 0.3s ease;
+        }
 
-<h3>Bài toán</h3>
+        .main-wrapper {
+            position: relative;
+            max-width: 2000px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            transform: none !important;
+            left: 0 !important;
+            transition: transform 0s !important;
+        }
 
-<p>
-Tìm tất cả hàm số \(f:\mathbb{R}\to\mathbb{R}\) thỏa mãn
-</p>
+        .main-content-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
 
-$$
-f(x^2+y+f(y)) = xf(x) + f(2y), \quad \forall x,y\in\mathbb{R}
-\tag{1}
-$$
+        .tags-comment-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            z-index: 1;
+        }
 
-<h3>Lời giải</h3>
+        .side-widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--widget-title-color);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s ease;
+        }
 
-<p>
-Giả sử hàm số \(f\) thỏa mãn đề bài. Đặt \(\mathcal{P}(u,v)\) là phép thế \(x=u\), \(y=v\) trong (1).
-</p>
+        body.light-mode .side-widget-title {
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
 
-<p>
-Trước hết xét \(f\) là hàm hằng. Khi đó \(xf(x)\equiv0\Rightarrow f(x)\equiv0\).
-</p>
+        .side-widget-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
 
-<p>
-Xét \(f\) khác hằng. Nếu \(f(x)\equiv x\) thì thay vào thấy thỏa mãn. Do đó chỉ cần xét \(f(x)\not\equiv x\).
-Ta chứng minh \(f(0)=0\).
-</p>
+        .side-widget-list a {
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--widget-link-color); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+        }
 
-<p>
-Giả sử \(f(0)\neq0\). Thế \(x\) bởi \(-x\) trong (1) ta được
-</p>
+        .side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(4px); }
 
-$$
-f(x^2+y+f(y)) = -xf(-x)+f(2y),\quad \forall x,y\in\mathbb{R}
-\tag{2}
-$$
+        .side-widget-list a span {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            background: var(--widget-badge-bg); padding: 2px 8px;
+            border-radius: 12px; color: var(--widget-badge-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-<p>Từ (1) và (2) suy ra</p>
+        @media (max-width: 1100px) {
+            .main-content-layout { grid-template-columns: 1fr; }
+            .tags-comment-sidebar { position: static; }
+        }
 
-$$
-xf(x)=-xf(-x),\quad \forall x\in\mathbb{R}
-$$
+        /* Stats strip */
+        .stats-strip {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 36px;
+            margin-top: 50px;
+        }
+        .stat-item {
+            flex: 1; padding: 18px 20px; text-align: center;
+            border-right: 1px solid var(--border-light);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.6rem;
+            font-weight: 700; color: var(--accent-cyan); line-height: 1; margin-bottom: 6px;
+        }
+        .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
 
-$$
-\Rightarrow f(x)=-f(-x),\quad \forall x\neq0
-\tag{3}
-$$
+        /* ── Exam-specific styles ── */
+        .exam-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan, #5ce1e6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            opacity: 0.65;
+            transition: opacity 0.2s;
+        }
+        .exam-back-btn:hover { opacity: 1; }
 
-<p>
-Ta chứng minh tồn tại \(t\) sao cho \(t-f(t)&gt;0\).
-</p>
+        .exam-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .exam-tag {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 4px 13px;
+            border-radius: 20px;
+            border: 1px solid rgba(92,225,230,0.35);
+            color: var(--accent-cyan, #5ce1e6);
+        }
 
-<p>
-Vì \(f(x)\not\equiv x\) nên tồn tại \(x_1\) sao cho \(f(x_1)\ne x_1\).
-</p>
+        .exam-paper {
+            background: var(--exam-paper-bg);
+            border: 1px solid var(--exam-paper-border);
+            border-radius: 12px;
+            padding: 46px 54px;
+            font-family: "Times New Roman", Times, serif;
+            color: var(--exam-text-color);
+            line-height: 1.85;
+            font-size: 1.01rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
 
-<p>
-Nếu \(x_1&gt;f(x_1)\) thì chọn \(t=x_1\).
-Nếu \(x_1<f p="" t="" th="" x_1="">
+        .exam-paper h1,
+        .exam-paper h2 {
+            text-align: center;
+            color: var(--exam-title-color);
+            font-family: "Times New Roman", Times, serif;
+            margin: 7px 0;
+            transition: color 0.3s ease;
+        }
+        .exam-paper h1 { font-size: 1.5rem; letter-spacing: 0.5px; }
+        .exam-paper h2 { font-size: 1.1rem; font-weight: normal; }
 
-$$
--x_1&gt;-f(x_1)=f(-x_1)
-$$
+        .exam-paper h3 {
+            font-size: 1.1rem;
+            color: var(--accent-cyan, #5ce1e6);
+            margin-top: 34px;
+            margin-bottom: 10px;
+            font-family: "Times New Roman", Times, serif;
+            border-left: 3px solid var(--accent-cyan, #5ce1e6);
+            padding-left: 12px;
+        }
 
-</f></p><p>
-chọn \(t=-x_1\).
-</p>
+        .exam-paper p   { margin: 10px 0; }
+        .exam-paper ol,
+        .exam-paper ul  { margin: 10px 0; padding-left: 28px; }
+        .exam-paper li  { margin: 8px 0; }
+        .exam-paper b   { color: var(--exam-bold-color); transition: color 0.3s ease; }
 
-<p>
-Xét phép thế \(\mathcal{P}(\sqrt{t-f(t)},t)\)
-</p>
+        .exam-divider {
+            border: none;
+            border-top: 1px solid var(--exam-divider-color);
+            margin: 18px 0;
+            transition: border-color 0.3s ease;
+        }
 
-$$
-f(2t)=\sqrt{t-f(t)}\,f(\sqrt{t-f(t)})+f(2t)
-$$
+        .exam-end {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            margin-top: 44px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        body.light-mode .exam-end {
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
 
-$$
-\Rightarrow \sqrt{t-f(t)}\,f(\sqrt{t-f(t)})=0
-$$
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
 
-$$
-\Rightarrow f(\sqrt{t-f(t)})=0
-$$
+        <main>
+            <div class="main-content-layout">
 
-<p>Đặt \(u=t-f(t)\Rightarrow f(u)=0\).</p>
+                <aside class="tags-comment-sidebar">
 
-<p>Xét tiếp \(\mathcal{P}(0,u)\)</p>
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Categories</div>
+                        <ul class="side-widget-list">
+                            <li><a href="../Math/toanhoc.html">Chuyên Toán <span>10</span></a></li>
+                            <li><a href="../Math/toanhoc.html">HSG Toán 9 <span>8</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Math Olympiad <span>4</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Number Theory <span>5</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Algebra <span>3</span></a></li>
+                            <li><a href="../My%20Life/cuocsong.html">Cuộc Sống <span>1</span></a></li>
+                        </ul>
+                    </div>
 
-$$
-f(u+f(u))=f(u)=0=f(2u)
-$$
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Archives</div>
+                        <ul class="side-widget-list">
+                            <li><a href="#">Tháng 4, 2026 <span>12</span></a></li>
+                            <li><a href="#">Tháng 3, 2026 <span>8</span></a></li>
+                            <li><a href="#">Tháng 2, 2026 <span>5</span></a></li>
+                        </ul>
+                    </div>
 
-$$
-\Rightarrow f(u)=f(-u)=f(-2u)=f(2u)=0
-\tag{4}
-$$
+                    <div class="comment-section fade-up">
+                        <h3>Thảo Luận & Góp Ý</h3>
+                        <div class="comment-form">
+                            <div class="comment-form-row">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                            </div>
+                            <div style="margin-bottom:14px">
+                                <textarea id="comment-text-input" class="comment-textarea"
+                                    placeholder="Nhập bình luận hoặc lời nhắn của bạn tại đây..."></textarea>
+                            </div>
+                            <button id="comment-submit" class="comment-submit">Gửi Bình Luận</button>
+                        </div>
+                        <div id="comment-list" class="comment-list"></div>
+                    </div>
 
-<p>
-Thế lần lượt \(\mathcal{P}(x,u)\) và \(\mathcal{P}(x,-u)\)
-</p>
+                </aside>
 
-$$
-f(x^2+u)=xf(x)=f(x^2-u)
-$$
+                <div class="main-articles-body">
 
-$$
-\Rightarrow f(x+u)=f(x-u),\quad x\ge0
-$$
+                    <a href="../index.html" class="exam-back-btn fade-up">← Quay Lại Trang Chủ</a>
 
-<ul>
-<li>Nếu \(u&gt;0\) thì \(f(0)=f(2u)=0\)</li>
-<li>Nếu \(u<0 f="" li="" th="" u="">
-</0></li></ul>
+                    <div class="exam-meta fade-up">
+                        <span class="exam-tag">HSG Toán 9</span>
+                        <span class="exam-tag">Toán Chuyên</span>
+                        <span class="exam-tag">08 / 03 / 2026</span>
+                        <span class="exam-tag">THPT Chuyên KHTN</span>
+                    </div>
 
-<p>
-Mâu thuẫn với giả sử nên \(f(0)=0\). Từ (3) suy ra \(f\) là hàm lẻ.
-</p>
+                    <div class="exam-paper fade-up">
 
-<p>Xét \(\mathcal{P}(x,0)\) và \(\mathcal{P}(0,x)\)</p>
+                        <h2 style="text-align: center;">
+                        <b>Về Một Bài Phương Trình Hàm</b>
+                        </h2>
 
-$$
-f(x^2)=xf(x),\quad \forall x\in\mathbb{R}
-\tag{5}
-$$
+                        <h3 style="text-align: center;">Long Do</h3>
 
-$$
-f(y+f(y))=f(2y),\quad \forall y\in\mathbb{R}
-\tag{6}
-$$
+                        <p style="text-align: center;"><b>20.1.2026</b></p>
 
-<p>
-Từ (5) viết lại (1)
-</p>
+                        <h3>Bài toán</h3>
 
-$$
-f(x^2+y+f(y))=f(x^2)+f(2y)
-$$
+                        <p>
+                        Tìm tất cả hàm số \(f:\mathbb{R}\to\mathbb{R}\) thỏa mãn
+                        </p>
 
-$$
-\Rightarrow f(x+y+f(y))=f(x)+f(2y),\quad x\ge0
-\tag{7}
-$$
+                        $$
+                        f(x^2+y+f(y)) = xf(x) + f(2y), \quad \forall x,y\in\mathbb{R}
+                        \tag{1}
+                        $$
 
-<p>Tương tự suy ra</p>
+                        <h3>Lời giải</h3>
 
-$$
-f(x+y+f(y))=f(x)+f(2y),\quad x\le0
-\tag{8}
-$$
+                        <p>
+                        Giả sử hàm số \(f\) thỏa mãn đề bài. Đặt \(\mathcal{P}(u,v)\) là phép thế \(x=u\), \(y=v\) trong (1).
+                        </p>
 
-<p>Kết hợp (7),(8)</p>
+                        <p>
+                        Trước hết xét \(f\) là hàm hằng. Khi đó \(xf(x)\equiv0\Rightarrow f(x)\equiv0\).
+                        </p>
 
-$$
-f(x+y+f(y))=f(x)+f(2y),\quad \forall x,y
-\tag{9}
-$$
+                        <p>
+                        Xét \(f\) khác hằng. Nếu \(f(x)\equiv x\) thì thay vào thấy thỏa mãn. Do đó chỉ cần xét \(f(x)\not\equiv x\).
+                        Ta chứng minh \(f(0)=0\).
+                        </p>
 
-<p>Thế \(x=y-f(y)\)</p>
+                        <p>
+                        Giả sử \(f(0)\neq0\). Thế \(x\) bởi \(-x\) trong (1) ta được
+                        </p>
 
-$$
-f(y-f(y))=0
-\tag{10}
-$$
+                        $$
+                        f(x^2+y+f(y)) = -xf(-x)+f(2y),\quad \forall x,y\in\mathbb{R}
+                        \tag{2}
+                        $$
 
-<p>
-Thế tiếp vào (9)
-</p>
+                        <p>Từ (1) và (2) suy ra</p>
 
-$$
-f(x+y-f(y))=f(x)
-\tag{11}
-$$
+                        $$
+                        xf(x)=-xf(-x),\quad \forall x\in\mathbb{R}
+                        $$
 
-<p>
-Cho \(x=-y\)
-</p>
+                        $$
+                        \Rightarrow f(x)=-f(-x),\quad \forall x\neq0
+                        \tag{3}
+                        $$
 
-$$
-f(f(y))=f(y)
-$$
+                        <p>
+                        Ta chứng minh tồn tại \(t\) sao cho \(t-f(t)&gt;0\).
+                        </p>
 
-<p>Kết hợp với (5)</p>
+                        <p>
+                        Vì \(f(x)\not\equiv x\) nên tồn tại \(x_1\) sao cho \(f(x_1)\ne x_1\).
+                        </p>
 
-$$
-f(f^2(x))=f(x)\,f(f(x))=f(x)^2
-\tag{12}
-$$
+                        <p>
+                        Nếu \(x_1&gt;f(x_1)\) thì chọn \(t=x_1\).
+                        Nếu \(x_1<f p="" t="" th="" x_1="">
 
-<p>
-Giả sử tồn tại \(a,b\) sao cho \(f(a)=f(b)\ne0\)
-</p>
+                        $$
+                        -x_1&gt;-f(x_1)=f(-x_1)
+                        $$
 
-$$
-a f(a)=b f(b)\Rightarrow a=b
-$$
+                        </f></p><p>
+                        chọn \(t=-x_1\).
+                        </p>
 
-<p>
-Vì \(f\not\equiv0\) nên tồn tại \(v\) sao cho \(f(v)\ne0\).
-Thế \(x=v\) vào (11)
-</p>
+                        <p>
+                        Xét phép thế \(\mathcal{P}(\sqrt{t-f(t)},t)\)
+                        </p>
 
-$$
-v+y-f(y)=v
-$$
+                        $$
+                        f(2t)=\sqrt{t-f(t)}\,f(\sqrt{t-f(t)})+f(2t)
+                        $$
 
-$$
-\Rightarrow f(y)=y
-$$
+                        $$
+                        \Rightarrow \sqrt{t-f(t)}\,f(\sqrt{t-f(t)})=0
+                        $$
 
-<p>Kết luận</p>
+                        $$
+                        \Rightarrow f(\sqrt{t-f(t)})=0
+                        $$
 
-$$
-f(x)\equiv0,\qquad f(x)\equiv x
-$$<p></p>
+                        <p>Đặt \(u=t-f(t)\Rightarrow f(u)=0\).</p>
+
+                        <p>Xét tiếp \(\mathcal{P}(0,u)\)</p>
+
+                        $$
+                        f(u+f(u))=f(u)=0=f(2u)
+                        $$
+
+                        $$
+                        \Rightarrow f(u)=f(-u)=f(-2u)=f(2u)=0
+                        \tag{4}
+                        $$
+
+                        <p>
+                        Thế lần lượt \(\mathcal{P}(x,u)\) và \(\mathcal{P}(x,-u)\)
+                        </p>
+
+                        $$
+                        f(x^2+u)=xf(x)=f(x^2-u)
+                        $$
+
+                        $$
+                        \Rightarrow f(x+u)=f(x-u),\quad x\ge0
+                        $$
+
+                        <ul>
+                        <li>Nếu \(u&gt;0\) thì \(f(0)=f(2u)=0\)</li>
+                        <li>Nếu \(u<0 f="" li="" th="" u="">
+                        </0></li></ul>
+
+                        <p>
+                        Mâu thuẫn với giả sử nên \(f(0)=0\). Từ (3) suy ra \(f\) là hàm lẻ.
+                        </p>
+
+                        <p>Xét \(\mathcal{P}(x,0)\) và \(\mathcal{P}(0,x)\)</p>
+
+                        $$
+                        f(x^2)=xf(x),\quad \forall x\in\mathbb{R}
+                        \tag{5}
+                        $$
+
+                        $$
+                        f(y+f(y))=f(2y),\quad \forall y\in\mathbb{R}
+                        \tag{6}
+                        $$
+
+                        <p>
+                        Từ (5) viết lại (1)
+                        </p>
+
+                        $$
+                        f(x^2+y+f(y))=f(x^2)+f(2y)
+                        $$
+
+                        $$
+                        \Rightarrow f(x+y+f(y))=f(x)+f(2y),\quad x\ge0
+                        \tag{7}
+                        $$
+
+                        <p>Tương tự suy ra</p>
+
+                        $$
+                        f(x+y+f(y))=f(x)+f(2y),\quad x\le0
+                        \tag{8}
+                        $$
+
+                        <p>Kết hợp (7),(8)</p>
+
+                        $$
+                        f(x+y+f(y))=f(x)+f(2y),\quad \forall x,y
+                        \tag{9}
+                        $$
+
+                        <p>Thế \(x=y-f(y)\)</p>
+
+                        $$
+                        f(y-f(y))=0
+                        \tag{10}
+                        $$
+
+                        <p>
+                        Thế tiếp vào (9)
+                        </p>
+
+                        $$
+                        f(x+y-f(y))=f(x)
+                        \tag{11}
+                        $$
+
+                        <p>
+                        Cho \(x=-y\)
+                        </p>
+
+                        $$
+                        f(f(y))=f(y)
+                        $$
+
+                        <p>Kết hợp với (5)</p>
+
+                        $$
+                        f(f^2(x))=f(x)\,f(f(x))=f(x)^2
+                        \tag{12}
+                        $$
+
+                        <p>
+                        Giả sử tồn tại \(a,b\) sao cho \(f(a)=f(b)\ne0\)
+                        </p>
+
+                        $$
+                        a f(a)=b f(b)\Rightarrow a=b
+                        $$
+
+                        <p>
+                        Vì \(f\not\equiv0\) nên tồn tại \(v\) sao cho \(f(v)\ne0\).
+                        Thế \(x=v\) vào (11)
+                        </p>
+
+                        $$
+                        v+y-f(y)=v
+                        $$
+
+                        $$
+                        \Rightarrow f(y)=y
+                        $$
+
+                        <p>Kết luận</p>
+
+                        $$
+                        f(x)\equiv0,\qquad f(x)\equiv x
+                        $$<p></p>
+
+                        <p class="exam-end"><b>─── HẾT ───</b></p>
+
+                    </div></div></div><div class="stats-strip fade-up">
+                <div class="stat-item"><div class="stat-number">09</div><div class="stat-label">Bài Viết</div></div>
+                <div class="stat-item"><div class="stat-number">07</div><div class="stat-label">Chủ Đề</div></div>
+                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
+                <div class="stat-item"><div class="stat-number">∞</div><div class="stat-label">Đam Mê</div></div>
+            </div>
+
+            <footer class="site-footer fade-up">
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 <span class="footer-brand">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
+                </div>
+            </footer>
+        </main>
+    </div><script src="../js/layout.js"></script>
+    <script src="../js/shared.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof Comments !== 'undefined') {
+            Comments.init('ThiThuLan2HSGS2526');
+        }
+    });
+</script>
+</body>
+</html>

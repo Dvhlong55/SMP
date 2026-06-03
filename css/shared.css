@@ -786,3 +786,28 @@ main {
         text-align: center;
     }
 }
+
+.modal-expand-btn {
+    background: transparent;
+    border: 1px solid rgba(92, 225, 230, 0.3);
+    color: #5ce1e6;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    margin-right: 15px; /* Tạo khoảng cách vừa phải với nút tắt X */
+    transition: all 0.2s ease;
+}
+
+.modal-expand-btn:hover {
+    background: rgba(92, 225, 230, 0.1);
+    border-color: #5ce1e6;
+    transform: translateY(-1px);
+}
+
+/* Tự động đổi màu khi ở chế độ Dark Mode nếu cần */
+body.dark-mode .modal-expand-btn {
+    border-color: rgba(92, 225, 230, 0.4);
+    color: #5ce1e6;
+}

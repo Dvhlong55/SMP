@@ -206,6 +206,66 @@
                 text-align: center;
             }
         }
+
+        /* === CONTENT SWAP === */
+        .main-articles-body {
+            transition: opacity 0.2s ease;
+        }
+        .main-articles-body.fading {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .back-to-list-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            color: var(--accent-cyan, #5ce1e6);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            padding: 0;
+            margin-bottom: 24px;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        .back-to-list-btn:hover { opacity: 1; }
+
+        .content-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            height: 260px;
+            color: #444;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 2px;
+        }
+        .content-loading-ring {
+            width: 34px; height: 34px;
+            border: 2px solid #1e1e1e;
+            border-top-color: var(--accent-cyan, #5ce1e6);
+            border-radius: 50%;
+            animation: spin360 0.75s linear infinite;
+        }
+        @keyframes spin360 { to { transform: rotate(360deg); } }
+
+        .content-error {
+            padding: 20px 24px;
+            color: #ff7070;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            border: 1px solid rgba(255,80,80,0.2);
+            border-radius: 8px;
+            background: rgba(255,80,80,0.04);
+        }
+        .content-error a { color: var(--accent-cyan, #5ce1e6); }
     </style>
 </head>
 <body>
@@ -266,7 +326,7 @@
                         <div class="featured-label">✦ Bài Viết Nổi Bật</div>
                         <h2>Khóa Học Số Học Olympic 2026</h2>
                         <p>Tài liệu lưu hành nội bộ và hệ thống bài tập tự luyện dành cho học sinh luyện thi Olympic Toán học. Được cập nhật liên tục với nội dung chọn lọc từ các kỳ thi quốc gia và quốc tế.</p>
-                        <a href="Math\KhoaSoHoc.html" target="_blank" class="featured-link">Xem Bài Viết →</a>
+                        <a href="Math/KhoaSoHoc.html" class="featured-link">Xem Bài Viết →</a>
                     </div>
 
                     <div class="section-label">Bài Đăng Mới Nhất</div>
@@ -276,19 +336,19 @@
                                 <div class="card-date">March 08, 2026</div>
                                 <h3>[HSGS] Đề Thi Thử Lần 2 Môn Toán (Chuyên) Năm 2026</h3>
                                 <p>Phân tích chi tiết các bài toán trong đề thi thử lần 2 của trường THPT Chuyên KHTN. Bao gồm hướng dẫn giải và nhận xét từng câu.</p>
-                                <a href="Math\ThiThuLan2HSGS2526.html" target="_blank" class="card-link">READ MORE</a>
+                                <a href="Math/ThiThuLan2HSGS2526.html" class="card-link">READ MORE</a>
                             </div>
                             <div class="card fade-up">
                                 <div class="card-date">March 07, 2026</div>
                                 <h3>[HSGS] Số Học Trong Đề Thi Thử (Toán Điều Kiện) Năm 2026</h3>
                                 <p>Khai thác các yếu tố Số học tinh tế được lồng ghép trong đề toán điều kiện đợt 2. Các bài toán liên quan đến chia hết, đồng dư và số nguyên tố.</p>
-                                <a href="Math\SoHocTrongDeThiThuToanDKHSGS2526.html"" target="_blank" class="card-link">READ MORE</a>
+                                <a href="Math/SoHocTrongDeThiThuToanDKHSGS2526.html" class="card-link">READ MORE</a>
                             </div>
                             <div class="card fade-up">
                                 <div class="card-date">March 07, 2026</div>
                                 <h3>HCMUS Olympic Team Selection Test (Algebra)</h3>
                                 <p>Tuyển tập bài toán Đại số từ kỳ thi chọn đội tuyển Olympic ĐHKHTN. Phân tích phương pháp và lời giải đầy đủ.</p>
-                                <a href="Math\HCMUS_Olympic_Team_Selection_Test_Algebra.html" target="_blank" class="card-link">READ MORE</a>
+                                <a href="Math/HCMUS_Olympic_Team_Selection_Test_Algebra.html" class="card-link" onclick="openPost(this.href, 'HCMUS Olympic Team Selection Test (Algebra)'); return false;">READ MORE</a>
                             </div>
                         </div>
 
@@ -357,12 +417,15 @@
         let answerVisible = false;
 
         function loadChallenge() {
+            const el = document.getElementById('challenge-problem');
+            if (!el) return;
             currentChallenge = Math.floor(Math.random() * CHALLENGES.length);
             const ch = CHALLENGES[currentChallenge];
-            document.getElementById('challenge-problem').innerHTML = ch.problem;
-            document.getElementById('challenge-answer').innerHTML = '';
-            document.getElementById('challenge-answer').classList.remove('show');
-            document.getElementById('show-answer-btn').textContent = 'Xem Đáp Án';
+            el.innerHTML = ch.problem;
+            const ans = document.getElementById('challenge-answer');
+            if (ans) { ans.innerHTML = ''; ans.classList.remove('show'); }
+            const btn = document.getElementById('show-answer-btn');
+            if (btn) btn.textContent = 'Xem Đáp Án';
             answerVisible = false;
             if (window.MathJax) MathJax.typesetPromise();
         }
@@ -370,6 +433,7 @@
         function toggleAnswer() {
             const ans = document.getElementById('challenge-answer');
             const btn = document.getElementById('show-answer-btn');
+            if (!ans || !btn) return;
             if (answerVisible) {
                 ans.classList.remove('show');
                 btn.textContent = 'Xem Đáp Án';
@@ -384,7 +448,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             loadChallenge();
-            Comments.init('home');
+            if (typeof Comments !== 'undefined') Comments.init('home');
         });
     </script>
 </body>

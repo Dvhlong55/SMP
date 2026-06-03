@@ -1,229 +1,514 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Đề Thi Thử Lần 2 HSGS 2025–2026</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link class="theme-link" rel="stylesheet" href="../css/shared.css">
+    <style>
+        body { overflow-x: hidden; }
 
-<script>
-MathJax = {
-  tex: {inlineMath: [['$','$'],['\\(','\\)']]},
-  svg: {fontCache: 'global'}
-};
-</script>
+        /* ========================================================
+           HỆ THỐNG BIẾN MÀU CHUYỂN ĐỔI SÁNG / TỐI (DARK MODE)
+           ======================================================== */
+        :root {
+            --body-bg: #0b1111; /* Màu nền tối nguyên bản của bạn */
+            --widget-title-color: #fff;
+            --widget-link-color: #888;
+            --widget-badge-bg: rgba(255,255,255,0.05);
+            --widget-badge-color: #aaa;
+            --exam-paper-bg: rgba(255,255,255,0.025);
+            --exam-paper-border: rgba(92,225,230,0.09);
+            --exam-text-color: #ddd;
+            --exam-bold-color: #f4f4f4;
+            --exam-title-color: #f0f0f0;
+            --exam-divider-color: rgba(92,225,230,0.1);
+        }
 
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+        /* Khi ở chế độ nền sáng (nếu class dark-mode không được active hoặc theo cấu hình ngược lại) */
+        body:not(.dark-mode) {
+            --body-bg: #f8fafc;
+            --widget-title-color: #1e293b;
+            --widget-link-color: #64748b;
+            --widget-badge-bg: rgba(0,0,0,0.05);
+            --widget-badge-color: #475569;
+            --exam-paper-bg: #ffffff;
+            --exam-paper-border: rgba(15,23,42,0.08);
+            --exam-text-color: #334155;
+            --exam-bold-color: #0f172a;
+            --exam-title-color: #1e293b;
+            --exam-divider-color: rgba(15,23,42,0.08);
+        }
 
-<style>
+        /* Áp dụng các biến màu động vào đúng các Class nguyên bản */
+        body {
+            background-color: var(--body-bg);
+            transition: background-color 0.3s ease;
+        }
 
-body{
-  font-family:"Times New Roman",serif;
-  margin:auto;
-  padding:40px;
-  line-height:1.6;
-}
+        .main-wrapper {
+            position: relative;
+            max-width: 2000px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            transform: none !important;
+            left: 0 !important;
+            transition: transform 0s !important;
+        }
 
-h1,h2{
-text-align:center;
-}
+        .main-content-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 100px;
+            margin-top: 20px;
+        }
 
-.problem{
-margin-top:25px;
-}
+        .tags-comment-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            z-index: 1;
+        }
 
-</style>
+        .side-widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--widget-title-color);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s ease;
+        }
+
+        body.light-mode .side-widget-title {
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .side-widget-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .side-widget-list a {
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--widget-link-color); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+        }
+
+        .side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(4px); }
+
+        .side-widget-list a span {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            background: var(--widget-badge-bg); padding: 2px 8px;
+            border-radius: 12px; color: var(--widget-badge-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @media (max-width: 1100px) {
+            .main-content-layout { grid-template-columns: 1fr; }
+            .tags-comment-sidebar { position: static; }
+        }
+
+        /* Stats strip */
+        .stats-strip {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 36px;
+            margin-top: 50px;
+        }
+        .stat-item {
+            flex: 1; padding: 18px 20px; text-align: center;
+            border-right: 1px solid var(--border-light);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.6rem;
+            font-weight: 700; color: var(--accent-cyan); line-height: 1; margin-bottom: 6px;
+        }
+        .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+        /* ── Exam-specific styles ── */
+        .exam-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan, #5ce1e6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            opacity: 0.65;
+            transition: opacity 0.2s;
+        }
+        .exam-back-btn:hover { opacity: 1; }
+
+        .exam-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .exam-tag {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 4px 13px;
+            border-radius: 20px;
+            border: 1px solid rgba(92,225,230,0.35);
+            color: var(--accent-cyan, #5ce1e6);
+        }
+
+        .exam-paper {
+            background: var(--exam-paper-bg);
+            border: 1px solid var(--exam-paper-border);
+            border-radius: 12px;
+            padding: 46px 54px;
+            font-family: "Times New Roman", Times, serif;
+            color: var(--exam-text-color);
+            line-height: 1.85;
+            font-size: 1.01rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .exam-paper h1,
+        .exam-paper h2 {
+            text-align: center;
+            color: var(--exam-title-color);
+            font-family: "Times New Roman", Times, serif;
+            margin: 7px 0;
+            transition: color 0.3s ease;
+        }
+        .exam-paper h1 { font-size: 1.5rem; letter-spacing: 0.5px; }
+        .exam-paper h2 { font-size: 1.1rem; font-weight: normal; }
+
+        .exam-paper h3 {
+            font-size: 1.1rem;
+            color: var(--accent-cyan, #5ce1e6);
+            margin-top: 34px;
+            margin-bottom: 10px;
+            font-family: "Times New Roman", Times, serif;
+            border-left: 3px solid var(--accent-cyan, #5ce1e6);
+            padding-left: 12px;
+        }
+
+        .exam-paper p   { margin: 10px 0; }
+        .exam-paper ol,
+        .exam-paper ul  { margin: 10px 0; padding-left: 28px; }
+        .exam-paper li  { margin: 8px 0; }
+        .exam-paper b   { color: var(--exam-bold-color); transition: color 0.3s ease; }
+
+        .exam-divider {
+            border: none;
+            border-top: 1px solid var(--exam-divider-color);
+            margin: 18px 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .exam-end {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            margin-top: 44px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        body.light-mode .exam-end {
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+    </style>
 </head>
-
 <body>
+    <div id="sidebar-placeholder"></div>
 
-<h2>TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN</h2>
-<h2>TRƯỜNG THPT CHUYÊN KHTN</h2>
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
 
-<h1>Số Học trong đề thi khảo sát năng lực Lớp 9</h1>
-<h2>Năm học 2025 – 2026</h2>
+        <main>
+            <div class="main-content-layout">
 
-<p style="text-align:center">
-<b>Môn: TOÁN (Toán chung – Đợt 2, 07/3/2026)</b><br>
-</p>
-  
-<p style="text-align:center;">
-<a href="https://smp0907.blogspot.com/2026/03/hsgs-e-thi-thu-lan-2-mon-toan-chung-nam.html"
-style="background:#222;color:white;padding:8px 16px;text-decoration:none;border-radius:6px;">
-View Full Post
-</a>
-</p>
+                <aside class="tags-comment-sidebar">
 
-<b>
-    Đề bài.
-</b>
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Categories</div>
+                        <ul class="side-widget-list">
+                            <li><a href="../Math/toanhoc.html">Chuyên Toán <span>10</span></a></li>
+                            <li><a href="../Math/toanhoc.html">HSG Toán 9 <span>8</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Math Olympiad <span>4</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Number Theory <span>5</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Algebra <span>3</span></a></li>
+                            <li><a href="../My%20Life/cuocsong.html">Cuộc Sống <span>1</span></a></li>
+                        </ul>
+                    </div>
 
-<p>
-Tìm tất cả số nguyên thỏa mãn \(x^3 - y^3 = 2xy + 1\).
-<p>
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Archives</div>
+                        <ul class="side-widget-list">
+                            <li><a href="#">Tháng 4, 2026 <span>12</span></a></li>
+                            <li><a href="#">Tháng 3, 2026 <span>8</span></a></li>
+                            <li><a href="#">Tháng 2, 2026 <span>5</span></a></li>
+                        </ul>
+                    </div>
 
-<div class="method">
-<b>Cách 1.</b> Biến đổi hằng đẳng thức để đơn giản hóa bài toán
+                    <div class="comment-section fade-up">
+                        <h3>Thảo Luận & Góp Ý</h3>
+                        <div class="comment-form">
+                            <div class="comment-form-row">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                            </div>
+                            <div style="margin-bottom:14px">
+                                <textarea id="comment-text-input" class="comment-textarea"
+                                    placeholder="Nhập bình luận hoặc lời nhắn của bạn tại đây..."></textarea>
+                            </div>
+                            <button id="comment-submit" class="comment-submit">Gửi Bình Luận</button>
+                        </div>
+                        <div id="comment-list" class="comment-list"></div>
+                    </div>
 
-\[
-x^3 - y^3 = (x - y) (x^2 + xy + y^2 ) = (x-y)\cdot [(x-y)^2 + 3 xy ]
-\]
+                </aside>
 
-Đặt \((x - y) = z\) và \(xy = t\), ta được phương trình
+                <div class="main-articles-body">
 
-\[
-z \cdot (z^2 + 3t) = 2t + 1
-\]
+                    <a href="../index.html" class="exam-back-btn fade-up">← Quay Lại Trang Chủ</a>
 
-Ta đưa \(z\) và \(t\) về từng vế, hay
+                    <div class="exam-meta fade-up">
+                        <span class="exam-tag">HSG Toán 9</span>
+                        <span class="exam-tag">Toán Chuyên</span>
+                        <span class="exam-tag">08 / 03 / 2026</span>
+                        <span class="exam-tag">THPT Chuyên KHTN</span>
+                    </div>
 
-\[
-\frac{z^3 - 1 }{2-3z} = t \in \mathbb{Z}
-\]
+                    <div class="exam-paper fade-up">
 
-Ta cố gắng giản ước
+                      <h2>TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN</h2>
+                      <h2>TRƯỜNG THPT CHUYÊN KHTN</h2>
 
-\[
-\begin{aligned}
-& 3z-2 \mid z^3 - 1 = (z - 1)(z^2 + z + 1) \mid (3z - 3)(3z^2 + 3z + 3) \\
-\Longrightarrow\;& 3z - 2 \mid 3z^2 +5 \\
-\Longrightarrow\;& 3z-2 \mid 3z^2 +5 - z(3z-2) \\
-\Longrightarrow\;& 3z - 2 \mid 2z+5 \\
-\Longrightarrow\;& 3z - 2 \mid 3(2z+5) - 2(3z+2) = 11 \\
-\Longrightarrow\;& 3z - 2 \in \{\pm 1, \pm 11\}
-\end{aligned}
-\]
+                      <h1>Số Học trong đề thi khảo sát năng lực Lớp 9</h1>
+                      <h2>Năm học 2025 – 2026</h2>
 
-Suy ra \(3z - 2 \in \{\pm 1, \pm 11\}\) hay \(z \in \{1, -3\}\) suy ra \(t \in \{0\}\).
+                      <p style="text-align:center">
+                      <b>Môn: TOÁN (Toán chung – Đợt 2, 07/3/2026)</b><br>
+                      </p>
+                        
+                      <p style="text-align:center;">
+                      <a href="https://smp0907.blogspot.com/2026/03/hsgs-e-thi-thu-lan-2-mon-toan-chung-nam.html"
+                      style="background:#222;color:white;padding:8px 16px;text-decoration:none;border-radius:6px;">
+                      View Full Post
+                      </a>
+                      </p>
 
-Ta thu được hệ phương trình
+                      <b>
+                          Đề bài.
+                      </b>
 
-\[
-xy = 0, \quad x-y=1
-\]
+                      <p>
+                      Tìm tất cả số nguyên thỏa mãn \(x^3 - y^3 = 2xy + 1\).
+                      <p>
 
-\[
-x = 1, y = 0 \quad \text{hoặc} \quad x=0, y=-1
-\]
+                      <div class="method">
+                      <b>Cách 1.</b> Biến đổi hằng đẳng thức để đơn giản hóa bài toán
 
-</div>
+                      \[
+                      x^3 - y^3 = (x - y) (x^2 + xy + y^2 ) = (x-y)\cdot [(x-y)^2 + 3 xy ]
+                      \]
 
-<hr>
+                      Đặt \((x - y) = z\) và \(xy = t\), ta được phương trình
 
-<div class="method">
+                      \[
+                      z \cdot (z^2 + 3t) = 2t + 1
+                      \]
 
-<b>Cách 2.</b> Dùng đại số để đánh giá, theo đó ta có
+                      Ta đưa \(z\) và \(t\) về từng vế, hay
 
-\[
-2xy + 1 \;\vdots \; x^2 + xy + y^2
-\]
+                      \[
+                      \frac{z^3 - 1 }{2-3z} = t \in \mathbb{Z}
+                      \]
 
-Rõ ràng \(2xy + 1 \neq 0\) nên
+                      Ta cố gắng giản ước
 
-\[
-2xy + 1 \ge x^2 + xy + y^2 \ge xy  + 2|xy|
-\]
+                      \[
+                      \begin{aligned}
+                      & 3z-2 \mid z^3 - 1 = (z - 1)(z^2 + z + 1) \mid (3z - 3)(3z^2 + 3z + 3) \\
+                      \Longrightarrow\;& 3z - 2 \mid 3z^2 +5 \\
+                      \Longrightarrow\;& 3z-2 \mid 3z^2 +5 - z(3z-2) \\
+                      \Longrightarrow\;& 3z - 2 \mid 2z+5 \\
+                      \Longrightarrow\;& 3z - 2 \mid 3(2z+5) - 2(3z+2) = 11 \\
+                      \Longrightarrow\;& 3z - 2 \in \{\pm 1, \pm 11\}
+                      \end{aligned}
+                      \]
 
-Như vậy
+                      Suy ra \(3z - 2 \in \{\pm 1, \pm 11\}\) hay \(z \in \{1, -3\}\) suy ra \(t \in \{0\}\).
 
-\[
-xy + 1 \ge 2|xy| \ge 0
-\]
+                      Ta thu được hệ phương trình
 
-\[
-\Longrightarrow xy \ge -1
-\]
+                      \[
+                      xy = 0, \quad x-y=1
+                      \]
 
-Nếu \(xy = -1\) thì ta có \(0 > 1\), vô lý. Suy ra \(xy \ge 0\) nên
+                      \[
+                      x = 1, y = 0 \quad \text{hoặc} \quad x=0, y=-1
+                      \]
 
-\[
-1 \ge xy
-\]
+                      </div>
 
-Vậy
+                      <hr>
 
-\[
-xy \in \{1,0\}
-\]
+                      <div class="method">
 
-</div>
+                      <b>Cách 2.</b> Dùng đại số để đánh giá, theo đó ta có
 
-<hr>
+                      \[
+                      2xy + 1 \;\vdots \; x^2 + xy + y^2
+                      \]
 
-<div class="method">
+                      Rõ ràng \(2xy + 1 \neq 0\) nên
 
-<b>Cách 3.</b> Đặt \(x = y+a\), ta có
+                      \[
+                      2xy + 1 \ge x^2 + xy + y^2 \ge xy  + 2|xy|
+                      \]
 
-\[
-\begin{aligned}
-& (y+a)^3 - y^3 = 2(y+a)y + 1 \\
-\Longrightarrow\;& a^3 + 3ya^2 + 3y^2a = 2y^2 + 2ay + 1 \\
-\Longrightarrow\;& (3a - 2)y^2 + (3a^2 - 2a)y + (a^3 -1) = 0
-\end{aligned}
-\]
+                      Như vậy
 
-Khi đó
+                      \[
+                      xy + 1 \ge 2|xy| \ge 0
+                      \]
 
-\[
-\Delta = (3a^2 - 2a)^2 - 4(a^3 - 1)(3a - 2)
-\]
+                      \[
+                      \Longrightarrow xy \ge -1
+                      \]
 
-\(
-= -3a^4 - 4a^3 + 4a^2 + 12a - 8 \ge 0
-\)
-suy ra
-\(
-(a - 1)(-3a^3 - 7a^2 -3a + 9) + 1 \ge 0
-\)
+                      Nếu \(xy = -1\) thì ta có \(0 > 1\), vô lý. Suy ra \(xy \ge 0\) nên
 
-<ul>
+                      \[
+                      1 \ge xy
+                      \]
 
-<li>Nếu \(a = 1\) thì thỏa mãn.</li>
+                      Vậy
 
-<li>
-Ta có
-\[
--3a^3 - 7a^2 -3a + 9
-= (a-1)(-3a^2 -10a -13) - 4
-\]
-</li>
+                      \[
+                      xy \in \{1,0\}
+                      \]
 
-<li>
-Nếu \(a < 1\) thì chứng minh
-\[
--3a^3 - 7a^2 -3a + 9 > 0
-\]
+                      </div>
 
-Ta có
+                      <hr>
 
-\[
-\Delta_{(-3a^2 -10a -13)} < 0
-\]
+                      <div class="method">
 
-suy ra
+                      <b>Cách 3.</b> Đặt \(x = y+a\), ta có
 
-\[
--3a^2 -10a -13 < 0
-\]
+                      \[
+                      \begin{aligned}
+                      & (y+a)^3 - y^3 = 2(y+a)y + 1 \\
+                      \Longrightarrow\;& a^3 + 3ya^2 + 3y^2a = 2y^2 + 2ay + 1 \\
+                      \Longrightarrow\;& (3a - 2)y^2 + (3a^2 - 2a)y + (a^3 -1) = 0
+                      \end{aligned}
+                      \]
 
-và
+                      Khi đó
 
-\[
--3a^2 -10a -13 \le 1
-\]
+                      \[
+                      \Delta = (3a^2 - 2a)^2 - 4(a^3 - 1)(3a - 2)
+                      \]
 
-Từ đó
+                      \(
+                      = -3a^4 - 4a^3 + 4a^2 + 12a - 8 \ge 0
+                      \)
+                      suy ra
+                      \(
+                      (a - 1)(-3a^3 - 7a^2 -3a + 9) + 1 \ge 0
+                      \)
 
-\[
-(a-1)(-3a^2 -10a -13) > 4
-\]
+                      <ul>
 
-</li>
+                      <li>Nếu \(a = 1\) thì thỏa mãn.</li>
 
-<li>Nếu \(a > 1\) thì xử lý tương tự.</li>
+                      <li>
+                      Ta có
+                      \[
+                      -3a^3 - 7a^2 -3a + 9
+                      = (a-1)(-3a^2 -10a -13) - 4
+                      \]
+                      </li>
 
-</ul>
+                      <li>
+                      Nếu \(a < 1\) thì chứng minh
+                      \[
+                      -3a^3 - 7a^2 -3a + 9 > 0
+                      \]
 
-<p>Nhìn chung cách này nếu có máy tính thì sẽ nhẹ nhàng hơn, nếu không chúng khá phức tạp.</p>
+                      Ta có
 
-</div>
+                      \[
+                      \Delta_{(-3a^2 -10a -13)} < 0
+                      \]
 
+                      suy ra
+
+                      \[
+                      -3a^2 -10a -13 < 0
+                      \]
+
+                      và
+
+                      \[
+                      -3a^2 -10a -13 \le 1
+                      \]
+
+                      Từ đó
+
+                      \[
+                      (a-1)(-3a^2 -10a -13) > 4
+                      \]
+
+                      </li>
+
+                      <li>Nếu \(a > 1\) thì xử lý tương tự.</li>
+
+                      </ul>
+
+                      <p>Nhìn chung cách này nếu có máy tính thì sẽ nhẹ nhàng hơn, nếu không chúng khá phức tạp.</p>
+
+                      </div>
+
+                      <p class="exam-end"><b>─── HẾT ───</b></p>
+
+                    </div></div></div><div class="stats-strip fade-up">
+                <div class="stat-item"><div class="stat-number">09</div><div class="stat-label">Bài Viết</div></div>
+                <div class="stat-item"><div class="stat-number">07</div><div class="stat-label">Chủ Đề</div></div>
+                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
+                <div class="stat-item"><div class="stat-number">∞</div><div class="stat-label">Đam Mê</div></div>
+            </div>
+
+            <footer class="site-footer fade-up">
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 <span class="footer-brand">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
+                </div>
+            </footer>
+        </main>
+    </div><script src="../js/layout.js"></script>
+    <script src="../js/shared.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof Comments !== 'undefined') {
+            Comments.init('ThiThuLan2HSGS2526');
+        }
+    });
+</script>
 </body>
 </html>

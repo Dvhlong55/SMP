@@ -38,8 +38,6 @@ const DarkMode = {
 };
 
 // === ALL POSTS DATABASE ===
-// MẸO: Bài nào viết thành file HTML riêng thì bạn điền tên file vào 'url' (Ví dụ bài Đồng Nai)
-// Bài nào chưa kịp chuyển sang file riêng thì cứ giữ nguyên link Blogspot cũ.
 const ALL_POSTS = [
     {
         title: '[HSGS] Đề thi thử lần 2 môn Toán (Chuyên) năm 2026',
@@ -126,7 +124,6 @@ const LiveSearch = {
                 dropdown.innerHTML = '<div class="search-no-results">Không tìm thấy bài viết phù hợp</div>';
             } else {
                 dropdown.innerHTML = hits.slice(0, 6).map(p => {
-                    // Nếu là link ngoài thì mở tab mới, nếu là file html riêng thì để PostViewer xử lý công nghệ cao
                     const isExternal = p.url.startsWith('http');
                     return `
                         <a class="search-result-item" href="${p.url}" ${isExternal ? 'target="_blank"' : ''}>
@@ -227,26 +224,46 @@ function setActiveNav() {
     });
 }
 
-// === NEW FEATURE: POST VIEWER (DYNAMIC FETCH HTML FILES) ===
+// === NEW FEATURE: POST VIEWER & CONTENT SWAP (CỘT TRÁI CỐ ĐỊNH) ===
 const PostViewer = {
-    _currentUrl: null, // Lưu URL bài viết đang mở để nút "mở trang mới" dùng
+    _currentUrl: null,
+    _savedContent: null,
 
     init() {
-        // 1. Tự động tạo Khung chứa bài viết (Modal) ở cuối trang nếu chưa có
+        // 1. Tạo Khung Màn Hình Nhỏ (Tự bọc CSS xịn để không bao giờ vỡ form)
         if (!document.getElementById('post-viewer-modal')) {
             const modalHTML = `
-            <div id="post-viewer-modal" class="modal-overlay">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 id="modal-title">SMP Reader</h3>
-                        <div style="display:flex; align-items:center; gap:10px; flex-shrink:0;">
-                            <button id="modal-open-new" class="modal-close-btn" title="Mở ra trang mới" style="display:flex; align-items:center; gap:6px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-                            </button>
-                            <button id="modal-close" class="modal-close-btn">✕</button>
-                        </div>
+            <style>
+                /* CSS độc lập cho Modal để luôn căn giữa và hiển thị đẹp */
+                .smp-modal-overlay {
+                    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+                    display: flex; align-items: center; justify-content: center;
+                    z-index: 99999; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+                }
+                .smp-modal-overlay.show { opacity: 1; pointer-events: auto; }
+                .smp-modal-content {
+                    position: relative; width: 92%; max-width: 1050px; max-height: 88vh;
+                    background: var(--body-bg, #0b1111); border-radius: 12px;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+                    display: flex; flex-direction: column; overflow: hidden;
+                    transform: translateY(20px); transition: transform 0.25s ease;
+                }
+                .smp-modal-overlay.show .smp-modal-content { transform: translateY(0); }
+                .smp-modal-body { flex: 1; overflow-y: auto; padding: 50px 40px 30px; }
+            </style>
+            
+            <div id="post-viewer-modal" class="smp-modal-overlay">
+                <div class="smp-modal-content">
+                    
+                    <div style="position: absolute; top: 16px; right: 20px; display: flex; gap: 12px; z-index: 100000;">
+                        <button id="modal-open-new" title="Đọc trực tiếp tại cột phải" style="width: 34px; height: 34px; border-radius: 6px; border: 1px solid rgba(92,225,230,0.3); background: rgba(92,225,230,0.1); color: #5ce1e6; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                        </button>
+                        <button id="modal-close" title="Đóng" style="width: 34px; height: 34px; border-radius: 6px; border: none; background: rgb(255, 60, 0); color: var(--text-main, #fff); cursor: pointer; font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">✕</button>
                     </div>
-                    <div id="modal-body" class="modal-body"></div>
+
+                    <div id="modal-body" class="smp-modal-body"></div>
                 </div>
             </div>`;
             document.body.insertAdjacentHTML('beforeend', modalHTML);
@@ -254,69 +271,159 @@ const PostViewer = {
 
         const modal = document.getElementById('post-viewer-modal');
 
-        // Nút Đóng — giữ nguyên logic cũ
+        // Hành động: Nút X tắt màn hình nhỏ
         document.getElementById('modal-close').addEventListener('click', () => {
             modal.classList.remove('show');
-            document.getElementById('modal-body').innerHTML = '';
+            setTimeout(() => { document.getElementById('modal-body').innerHTML = ''; }, 250);
             this._currentUrl = null;
         });
 
-        // Nút Mở Trang Mới — điều hướng thẳng đến file HTML trong tab mới
+        // HÀNH ĐỘNG QUAN TRỌNG: Bấm nút ô vuông mũi tên
         document.getElementById('modal-open-new').addEventListener('click', () => {
             if (this._currentUrl) {
-                window.open(this._currentUrl, '_blank');
+                const targetUrl = this._currentUrl;
+                
+                // Tắt màn hình nhỏ mượt mà
+                modal.classList.remove('show');
+                setTimeout(() => { document.getElementById('modal-body').innerHTML = ''; }, 250);
+                this._currentUrl = null;
+
+                // Chọn chính xác cột phải thật (Không bao giờ nhầm với màn hình nhỏ)
+                const rightCol = document.querySelector('.main-content-layout .main-articles-body');
+                if (rightCol) {
+                    this.loadIntoRightColumn(targetUrl, rightCol);
+                } else {
+                    window.location.href = targetUrl;
+                }
             }
         });
 
-        // 2. Dùng Event Delegation: Lắng nghe hành vi click toàn trang
-        // Kỹ thuật này giúp bắt được cả các link sinh ra từ Live Search
+        // 2. Lắng nghe click link bài viết ngoài trang chủ
         document.addEventListener('click', async (e) => {
+            // Xử lý khi ấn nút "Quay lại" bên trong bài viết
+            const backBtn = e.target.closest('.exam-back-btn, .back-to-list-btn');
+            if (backBtn) {
+                if (this._savedContent) {
+                    e.preventDefault();
+                    this.restoreRightColumn();
+                    return;
+                }
+            }
+
             const link = e.target.closest('.card-link, .featured-link, .search-result-item');
             if (!link) return;
 
             const url = link.getAttribute('href');
-            // Nếu không có link, hoặc là link ngoài (http), hoặc link neo (#) thì bỏ qua
             if (!url || url.startsWith('http') || url.startsWith('#')) return;
 
-            // Chặn chuyển hướng trang mặc định của thẻ <a>
             e.preventDefault();
-
-            // Lưu lại URL để nút "Mở Trang Mới" dùng
             this._currentUrl = url;
 
             try {
-                // Đọc ngầm file HTML riêng biệt
                 const response = await fetch(url);
-                if (!response.ok) throw new Error("Không thể tải file bài viết.");
-                
                 const htmlText = await response.text();
+                const doc = new DOMParser().parseFromString(htmlText, 'text/html');
+                
+                // BƯỚC QUAN TRỌNG: Rút trích cả thẻ <style> từ bài viết để giữ CSS bản đẹp
+                let extractedStyles = '';
+                doc.querySelectorAll('style').forEach(s => extractedStyles += s.outerHTML);
 
-                // Bóc tách lấy nội dung bên trong thẻ body của file đó
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlText, 'text/html');
-                const bodyContent = doc.body.innerHTML;
-                const pageTitle = doc.querySelector('h1')?.innerText || "Chi Tiết Bài Viết";
+                // Lấy nội dung cột phải của bài viết gốc
+                let realContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
 
-                // Hiển thị lên giao diện
-                this.openHTML(pageTitle, bodyContent);
-
+                // Gói gọn lại trong class .main-articles-body để CSS nhận diện chuẩn xác
+                const finalHTML = extractedStyles + '<div class="main-articles-body" style="padding:0; margin:0;">' + realContent + '</div>';
+                
+                this.openHTML(finalHTML);
             } catch (error) {
                 console.error(error);
-                alert("Lỗi: Không thể mở bài viết. Hãy chắc chắn bạn đang chạy trang web bằng Live Server chứ không phải click đúp mở trực tiếp từ folder máy tính!");
             }
         });
     },
 
-    openHTML(title, htmlContent) {
-        document.getElementById('modal-title').innerText = title;
+    // Hàm xử lý: Cột phải biến mất -> Hiện đang tải -> Bài viết trượt từ phải sang
+    loadIntoRightColumn(url, col) {
+        if (!this._savedContent) this._savedContent = col.innerHTML;
+
+        // Hiệu ứng mờ dần và trượt sang trái
+        col.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+        col.style.opacity = '0';
+        col.style.transform = 'translateX(-20px)';
+        
+        setTimeout(async () => {
+            col.innerHTML = `
+                <div class="content-loading" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height: 350px;">
+                    <div style="width:40px; height:40px; border:3px solid rgba(92,225,230,0.2); border-top-color:#5ce1e6; border-radius:50%; animation:spin 0.8s linear infinite;"></div>
+                    <span style="margin-top:20px; color:var(--text-muted, #888); font-family:monospace; font-size: 0.9rem;">Đang tải bản đẹp bài viết...</span>
+                </div>
+                <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+            `;
+            col.style.opacity = '1';
+            col.style.transform = 'translateX(0)';
+            
+            try {
+                const response = await fetch(url);
+                const htmlText = await response.text();
+                const doc = new DOMParser().parseFromString(htmlText, 'text/html');
+                
+                // Nhúng cả CSS và Nội dung vào cột phải trang chủ
+                let extractedStyles = '';
+                doc.querySelectorAll('style').forEach(s => extractedStyles += s.outerHTML);
+                let fullRealContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
+
+                col.style.opacity = '0';
+                col.style.transform = 'translateX(40px)'; 
+                
+                setTimeout(() => {
+                    col.innerHTML = extractedStyles + fullRealContent;
+                    col.style.transition = 'opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+                    col.style.opacity = '1';
+                    col.style.transform = 'translateX(0)';
+                    
+                    col.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                    if (window.MathJax) {
+                        MathJax.typesetClear([col]);
+                        MathJax.typesetPromise([col]).catch(() => {});
+                    }
+                }, 200);
+            } catch(e) {
+                col.innerHTML = `<div style="text-align:center; padding:40px; color:#ff6b6b;">⚠ Lỗi tải bài viết.</div><button class="back-to-list-btn">← Quay Lại Danh Sách</button>`;
+            }
+        }, 250);
+    },
+
+    // Khôi phục mượt mà danh sách bài viết ban đầu
+    restoreRightColumn() {
+        const col = document.querySelector('.main-content-layout .main-articles-body');
+        if (col && this._savedContent) {
+            col.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+            col.style.opacity = '0';
+            col.style.transform = 'translateX(20px)';
+            
+            setTimeout(() => {
+                col.innerHTML = this._savedContent;
+                col.style.opacity = '1';
+                col.style.transform = 'translateX(0)';
+                this._savedContent = null;
+                
+                if (typeof loadChallenge === 'function') loadChallenge();
+                if (window.MathJax) {
+                    MathJax.typesetClear([col]);
+                    MathJax.typesetPromise([col]).catch(() => {});
+                }
+            }, 200);
+        }
+    },
+
+    openHTML(htmlContent) {
         const body = document.getElementById('modal-body');
         body.innerHTML = htmlContent;
         document.getElementById('post-viewer-modal').classList.add('show');
         
-        // Ép MathJax biên dịch lại các công thức toán vừa nạp động vào
         if (window.MathJax) {
             MathJax.typesetClear([body]);
-            MathJax.typesetPromise([body]).catch(err => console.error("MathJax Error: ", err.message));
+            MathJax.typesetPromise([body]).catch(err => console.error(err));
         }
     }
 };
@@ -326,5 +433,5 @@ document.addEventListener('DOMContentLoaded', () => {
     DarkMode.init();
     LiveSearch.init();
     setActiveNav();
-    PostViewer.init(); // <-- Đã kích hoạt chạy trình xem bài viết
+    PostViewer.init(); 
 });
