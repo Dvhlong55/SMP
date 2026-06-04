@@ -14,6 +14,48 @@
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="/SMP/css/shared.css">
+    
+    <style>
+        .math-nav-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 16px;
+            overflow-x: auto; /* Hỗ trợ trượt ngang trên điện thoại */
+            scrollbar-width: none; /* Ẩn thanh cuộn Firefox */
+        }
+        .math-nav-bar::-webkit-scrollbar {
+            display: none; /* Ẩn thanh cuộn Chrome/Safari */
+        }
+        .math-nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            white-space: nowrap;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .math-nav-btn:hover {
+            color: var(--accent-cyan);
+            background: var(--accent-cyan-dim);
+        }
+        .math-nav-btn.active {
+            color: var(--accent-cyan);
+            background: var(--accent-cyan-dim);
+            border: 1px solid var(--accent-cyan);
+            font-weight: 700;
+        }
+        .card.hidden {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
     <div id="sidebar-placeholder"></div>
@@ -27,10 +69,22 @@
                 <p class="quote">"Nơi chia sẻ các bài toán hình học, đại số, số học chuyên sâu và các bộ đề thi thử chất lượng."</p>
             </div>
 
-            <div class="section-label">Tất Cả Bài Viết Toán Học</div>
+            <div class="math-nav-bar fade-up">
+                <button class="math-nav-btn active" data-filter="all">Tất Cả</button>
+                <button class="math-nav-btn" data-filter="vmo">VMO</button>
+                <button class="math-nav-btn" data-filter="hsg">HSG & Chuyên Toán 9</button>
+                <button class="math-nav-btn" data-filter="thpt">THPT</button>
+                <button class="math-nav-btn" data-filter="uni">Đại Học</button>
+                <button class="math-nav-btn" data-filter="challenge">Thách Thức Kì Này</button>
+                <button class="math-nav-btn" data-filter="misc">Tản Mạn</button>
+                <button class="math-nav-btn" data-filter="tools">$\LaTeX$</button>
+            </div>
+
+            <div class="section-label" id="dynamic-section-label">Tất Cả Bài Viết Toán Học</div>
             
-            <div class="grid-container">
-                <div class="card fade-up">
+            <div class="grid-container" id="math-grid-container">
+
+                <div class="card fade-up" data-category="vmo">
                     <div class="card-date">April 19, 2026</div>
                     <span class="card-tag">Number Theory</span>
                     <h3>Khóa học Số học Olympic 2026</h3>
@@ -38,7 +92,7 @@
                     <a href="KhoaSoHoc.html" target="_blank" class="card-link">READ MORE</a>
                 </div>
                 
-                <div class="card fade-up">
+                <div class="card fade-up" data-category="hsg">
                     <div class="card-date">March 08, 2026</div>
                     <span class="card-tag">Chuyên Toán</span>
                     <h3>[HSGS] Đề thi thử lần 2 môn Toán (Chuyên) năm 2026</h3>
@@ -46,7 +100,7 @@
                     <a href="ThiThuLan2HSGS2526.html" target="_blank" class="card-link">READ MORE</a>
                 </div>
 
-                <div class="card fade-up">
+                <div class="card fade-up" data-category="hsg">
                     <div class="card-date">March 07, 2026</div>
                     <span class="card-tag">Số Học</span>
                     <h3>[HSGS] Số Học trong đề thi thử (Toán điều kiện) năm 2026 (Đợt 2)</h3>
@@ -54,7 +108,7 @@
                     <a href="SoHocTrongDeThiThuToanDKHSGS2526.html" target="_blank" class="card-link">READ MORE</a>
                 </div>
 
-                <div class="card fade-up">
+                <div class="card fade-up" data-category="hsg">
                     <div class="card-date">March 07, 2026</div>
                     <span class="card-tag">Đề Thi</span>
                     <h3>[HSGS] Đề thi thử lần 2 môn Toán (Chung) năm 2026</h3>
@@ -62,7 +116,15 @@
                     <a href="DeThiThuLan2ToanDKHSGS.html" target="_blank" class="card-link">READ MORE</a>
                 </div>
 
-                <div class="card fade-up">
+                <div class="card fade-up" data-category="thpt">
+                    <div class="card-date">May 06, 2026</div>
+                    <span class="card-tag">THPT</span>
+                    <h3>Tọa Độ Cực và Ứng Dụng</h3>
+                    <p> Mặc dù hệ tọa độ chữ nhật có vai trò rất quan trọng, song vẫn còn những phương pháp khác để xác định vị trí điểm trong mặt phẳng. Một trong số đó chính là hệ tọa độ cực, được trình bày trong mục này. .</p>
+                    <a href="toa_do_cuc.html" target="_blank" class="card-link">READ MORE</a>
+                </div>
+
+                <div class="card fade-up" data-category="uni">
                     <div class="card-date">March 07, 2026</div>
                     <span class="card-tag">Algebra</span>
                     <h3>HCMUS Olympic Team Selection Test (Algebra)</h3>
@@ -70,7 +132,7 @@
                     <a href="HCMUS_Olympic_Team_Selection_Test_Algebra.html" target="_blank" class="card-link">READ MORE</a>
                 </div>
 
-                <div class="card fade-up">
+                <div class="card fade-up" data-category="uni">
                     <div class="card-date">March 07, 2026</div>
                     <span class="card-tag">Combinatorics</span>
                     <h3>On a Counting Problem, From HCMUS TST</h3>
@@ -78,7 +140,7 @@
                     <a href="On_a_Counting_Problem_From_HCMUS_TST.html" target="_blank" class="card-link">READ MORE</a>
                 </div>
 
-                <div class="card fade-up">
+                <div class="card fade-up" data-category="uni">
                     <div class="card-date">March 07, 2026</div>
                     <span class="card-tag">Giải Tích</span>
                     <h3>Về Một Bài Phương Trình Hàm</h3>
@@ -86,7 +148,7 @@
                     <a href="Về_Một_Bài_Phương_Trình_Hàm.html" target="_blank" class="card-link">READ MORE</a>
                 </div>
 
-                <div class="card fade-up">
+                <div class="card fade-up" data-category="vmo">
                     <div class="card-date">March 07, 2026</div>
                     <span class="card-tag">Number Theory</span>
                     <h3>A Number Theory Problem from the Poland TST</h3>
@@ -94,7 +156,7 @@
                     <a href="polandNumber.html" class="card-link">READ MORE</a>
                 </div>
 
-                <div class="card fade-up">
+                <div class="card fade-up" data-category="hsg">
                     <div class="card-date">February 23, 2026</div>
                     <span class="card-tag">Chuyên Toán</span>
                     <h3>[Đồng Nai] Đề tuyển sinh lớp 10 môn Toán (chuyên) năm 2025</h3>
@@ -102,6 +164,21 @@
                     <a href="dongnai-2025.html" class="card-link">READ MORE</a>
                 </div>
 
+                <div class="card fade-up" data-category="challenge">
+                    <div class="card-date">June 04, 2026</div>
+                    <span class="card-tag">Thách Thức</span>
+                    <h3>🏆 Thách Thức Kì Này Số 4 — 2026</h3>
+                    <p>Một số bài Toán thách thức dành cho học sinh chuyên Toán. Thử sức và chinh phục những bài toán đòi hỏi tư duy sáng tạo và kiến thức chuyên sâu!</p>
+                    <a href="ThachThucKiNaySo42026.html" class="card-link">CHINH PHỤC NGAY</a>
+                </div>
+
+                <div class="card fade-up" data-category="tools">
+                    <div class="card-date">June 04, 2026</div>
+                    <span class="card-tag">Công Cụ</span>
+                    <h3>📝 Trình Soạn Thảo LaTeX Trực Tuyến</h3>
+                    <p>Công cụ gõ LaTeX trực tiếp trên trình duyệt: preview realtime, xuất PDF, có sẵn các snippet toán học thường dùng.</p>
+                    <a href="LaTeX.html" target="_blank" class="card-link">MỞ CÔNG CỤ</a>
+                </div>
             </div>
 
             <div class="comment-section fade-up">
@@ -122,9 +199,50 @@
 
     <script src="/SMP/js/layout.js"></script>
     <script src="/SMP/js/shared.js"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            Comments.init('toanhoc'); // Kích hoạt bộ nhớ bình luận riêng cho trang Toán
+            // Kích hoạt bình luận
+            if (typeof Comments !== 'undefined') Comments.init('toanhoc');
+
+            // Logic thanh Tab Phân Loại
+            const navBtns = document.querySelectorAll('.math-nav-btn');
+            const cards = document.querySelectorAll('#math-grid-container .card');
+            const sectionLabel = document.getElementById('dynamic-section-label');
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 1. Xóa trạng thái active của các nút khác và bật cho nút được click
+                    navBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // 2. Lấy bộ lọc từ thuộc tính data-filter
+                    const filter = btn.getAttribute('data-filter');
+                    
+                    // 3. Đổi tiêu đề dải nhãn
+                    if (filter === 'all') {
+                        sectionLabel.textContent = 'Tất Cả Bài Viết Toán Học';
+                    } else {
+                        sectionLabel.textContent = `Chuyên Mục: ${btn.textContent}`;
+                    }
+
+                    // 4. Lọc hiển thị Card
+                    cards.forEach(card => {
+                        const category = card.getAttribute('data-category');
+                        
+                        if (filter === 'all' || category === filter) {
+                            card.classList.remove('hidden');
+                            
+                            // Mẹo để trigger lại hiệu ứng fade-up mỗi khi chuyển tab
+                            card.style.animation = 'none';
+                            card.offsetHeight; // Kích hoạt reflow trình duyệt
+                            card.style.animation = null; 
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
         });
     </script>
 </body>

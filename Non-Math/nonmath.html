@@ -5,6 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMP — Tài Liệu</title>
     <link rel="stylesheet" href="/SMP/css/shared.css">
+    
+    <style>
+        .nav-filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 16px;
+            overflow-x: auto; /* Hỗ trợ trượt ngang trên điện thoại */
+            scrollbar-width: none; /* Ẩn thanh cuộn Firefox */
+        }
+        .nav-filter-bar::-webkit-scrollbar {
+            display: none; /* Ẩn thanh cuộn Chrome/Safari */
+        }
+        .nav-filter-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            white-space: nowrap;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-filter-btn:hover {
+            color: var(--accent-cyan);
+            background: var(--accent-cyan-dim);
+        }
+        .nav-filter-btn.active {
+            color: var(--accent-cyan);
+            background: var(--accent-cyan-dim);
+            border: 1px solid var(--accent-cyan);
+            font-weight: 700;
+        }
+        .card.hidden {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
     <div id="sidebar-placeholder"></div>
@@ -15,13 +57,21 @@
         <main>
             <div class="hero-header fade-up">
                 <h1>Kho Tài Liệu Học Tập</h1>
-                <p class="quote">"Tổng hợp file PDF chuyên đề nâng cao, giáo trình bồi dưỡng học sinh giỏi và sơ đồ cấu trúc dữ liệu."</p>
+                <p class="quote">"Tổng hợp tài liệu các môn khoa học ngoài Toán."</p>
             </div>
 
-            <div class="section-label">Tài Liệu Lưu Hành Nội Bộ</div>
-            <div class="grid-container">
+            <div class="nav-filter-bar fade-up">
+                <button class="nav-filter-btn active" data-filter="all">Tất Cả</button>
+                <button class="nav-filter-btn" data-filter="cs">Khoa Học Máy Tính</button>
+                <button class="nav-filter-btn" data-filter="physics">Vật Lý</button>
+                <button class="nav-filter-btn" data-filter="other">Khác</button>
+            </div>
+
+            <div class="section-label" id="dynamic-section-label">Tài Liệu Khác</div>
+            
+            <div class="grid-container" id="doc-grid-container">
                 
-                <div class="card fade-up">
+                <div class="card fade-up" data-category="physics">
                     <div class="card-date">July, 29 2025</div>
                     <span class="card-tag">Physics</span>
                     <h3>Lecture Note Quantum tại SEAS (Phần 1)</h3>
@@ -29,7 +79,7 @@
                     <a href="/SMP/Non-Math/seas-quantum1.html" target="_blank" class="card-link">READ MORE</a>
                 </div>
 
-                <div class="card fade-up">
+                <div class="card fade-up" data-category="physics">
                     <div class="card-date">July, 29 2026</div>
                     <span class="card-tag">Physics</span>
                     <h3>Lecture Note Quantum tại SEAS (Phần 2)</h3>
@@ -57,9 +107,51 @@
 
     <script src="/SMP/js/layout.js"></script>
     <script src="/SMP/js/shared.js"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            Comments.init('tailieu');
+            // Khởi tạo bình luận
+            if (typeof Comments !== 'undefined') Comments.init('tailieu');
+
+            // Logic thanh Tab Phân Loại
+            const navBtns = document.querySelectorAll('.nav-filter-btn');
+            const cards = document.querySelectorAll('#doc-grid-container .card');
+            const sectionLabel = document.getElementById('dynamic-section-label');
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 1. Xóa trạng thái active của các nút khác
+                    navBtns.forEach(b => b.classList.remove('active'));
+                    // Bật trạng thái active cho nút hiện tại
+                    btn.classList.add('active');
+
+                    // 2. Lấy bộ lọc từ thuộc tính data-filter
+                    const filter = btn.getAttribute('data-filter');
+                    
+                    // 3. Đổi tiêu đề dải nhãn
+                    if (filter === 'all') {
+                        sectionLabel.textContent = 'Tài Liệu Lưu Hành Nội Bộ';
+                    } else {
+                        sectionLabel.textContent = `Chuyên Mục: ${btn.textContent}`;
+                    }
+
+                    // 4. Lọc hiển thị Card
+                    cards.forEach(card => {
+                        const category = card.getAttribute('data-category');
+                        
+                        if (filter === 'all' || category === filter) {
+                            card.classList.remove('hidden');
+                            
+                            // Mẹo để trigger lại hiệu ứng fade-up mỗi khi chuyển tab
+                            card.style.animation = 'none';
+                            card.offsetHeight; // Kích hoạt reflow trình duyệt
+                            card.style.animation = null; 
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
         });
     </script>
 </body>

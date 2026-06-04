@@ -5,6 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMP — Cuộc Sống</title>
     <link rel="stylesheet" href="/SMP/css/shared.css">
+    
+    <style>
+        .life-nav-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 16px;
+            overflow-x: auto; /* Hỗ trợ trượt ngang trên điện thoại */
+            scrollbar-width: none; /* Ẩn thanh cuộn Firefox */
+        }
+        .life-nav-bar::-webkit-scrollbar {
+            display: none; /* Ẩn thanh cuộn Chrome/Safari */
+        }
+        .life-nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            white-space: nowrap;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .life-nav-btn:hover {
+            color: var(--accent-cyan);
+            background: var(--accent-cyan-dim);
+        }
+        .life-nav-btn.active {
+            color: var(--accent-cyan);
+            background: var(--accent-cyan-dim);
+            border: 1px solid var(--accent-cyan);
+            font-weight: 700;
+        }
+        .card.hidden {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
     <div id="sidebar-placeholder"></div>
@@ -18,10 +60,17 @@
                 <p class="quote">"Những câu chuyện tản mạn bên lề bảng đen và những suy ngẫm trong hành trình trưởng thành."</p>
             </div>
 
-            <div class="section-label">Nhật Ký Học Thuật</div>
-            <div class="grid-container">
+            <div class="life-nav-bar fade-up">
+                <button class="life-nav-btn active" data-filter="all">Tất Cả</button>
+                <button class="life-nav-btn" data-filter="2026">2026</button>
+                <button class="life-nav-btn" data-filter="2025">2025</button>
+                <button class="life-nav-btn" data-filter="2024">2024</button>
+            </div>
 
-                <div class="card fade-up">
+            <div class="section-label" id="dynamic-section-label">Nhật Ký Học Thuật</div>
+            <div class="grid-container" id="life-grid-container">
+
+                <div class="card fade-up" data-category="2026">
                     <div class="card-date">May 25, 2026</div>
                     <span class="card-tag">Tản Mạn</span>
                     <h3>Một mùa hè rực rỡ</h3>
@@ -29,15 +78,13 @@
                     <a href="seas.html" class="card-link">READ MORE</a>
                 </div>
                 
-                <div class="card fade-up">
+                <div class="card fade-up" data-category="2026">
                     <div class="card-date">May 25, 2026</div>
                     <span class="card-tag">Tản Mạn</span>
                     <h3>Hành trình từ Chuyên Toán đến Khoa học máy tính</h3>
                     <p>Chia sẻ về trải nghiệm khi bước đầu tiếp cận các cấu trúc dữ liệu đồ thị, thuật toán Prim, Kruskal và sự tương đồng kỳ diệu giữa tư duy chứng minh Toán học với lập trình logic...</p>
                     <a href="#" class="card-link">ĐANG BIÊN SOẠN</a>
                 </div>
-
-
 
             </div>
 
@@ -59,9 +106,50 @@
 
     <script src="/SMP/js/layout.js"></script>
     <script src="/SMP/js/shared.js"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            Comments.init('cuocsong');
+            // Khởi tạo bình luận
+            if (typeof Comments !== 'undefined') Comments.init('cuocsong');
+
+            // Logic thanh Tab Phân Loại theo Năm
+            const navBtns = document.querySelectorAll('.life-nav-btn');
+            const cards = document.querySelectorAll('#life-grid-container .card');
+            const sectionLabel = document.getElementById('dynamic-section-label');
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 1. Cập nhật trạng thái active
+                    navBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // 2. Lấy năm từ data-filter
+                    const filter = btn.getAttribute('data-filter');
+                    
+                    // 3. Đổi tiêu đề dải nhãn cho phù hợp
+                    if (filter === 'all') {
+                        sectionLabel.textContent = 'Nhật Ký Học Thuật';
+                    } else {
+                        sectionLabel.textContent = `Hành Trình Năm ${filter}`;
+                    }
+
+                    // 4. Ẩn/Hiện Card dựa vào năm
+                    cards.forEach(card => {
+                        const category = card.getAttribute('data-category');
+                        
+                        if (filter === 'all' || category === filter) {
+                            card.classList.remove('hidden');
+                            
+                            // Kích hoạt lại hiệu ứng fade-up
+                            card.style.animation = 'none';
+                            card.offsetHeight; 
+                            card.style.animation = null; 
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
         });
     </script>
 </body>

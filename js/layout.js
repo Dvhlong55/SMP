@@ -254,3 +254,200 @@
     }
 
 })();
+
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('smp-logo-canvas');
+    if (!container) return;
+
+    // Thiết lập Intersection Observer (Chỉ chạy animation khi cuộn chuột tới logo)
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            runManimLogic();
+            observer.unobserve(container);
+        }
+    }, { threshold: 0.5 });
+    
+    observer.observe(container);
+});
+
+function runManimLogic() {
+    const center = document.getElementById('smp-logo-center');
+    if (!center) return;
+    center.innerHTML = ''; // Xóa nội dung cũ nếu chạy lại
+
+    // ============================================================
+    //  BẢN DỊCH KHÁNG LỖI CSS (CHỐT CỨNG TỌA ĐỘ DOM)
+    // ============================================================
+    const UNIT = 30; // 1 Đơn vị Manim = 55px trên Web
+    const CR = 0.15;
+    const U  = 0.60;
+    const GAP = U * 0.55;
+
+    const CYAN_COLOR   = "#4DE8D0";
+    const SHADOW_COLOR = "#1E6B9A";
+    const dx = 0.13;
+    const dy = -0.13;
+
+    // Trục Y của Web bị ngược so với Manim (+Y là đi xuống)
+    const webX = (x) => x * UNIT;
+    const webY = (y) => -y * UNIT; 
+
+    const col_gap = U * 1.15;
+    const c1x = -2.30 * U;
+    const c2x = c1x + col_gap;
+    const c3x = c2x + col_gap;
+    const c4x = c3x + col_gap * 1;
+    const c5x = c4x + col_gap;
+
+    const h1t = U * 2.6, h1b = U * 1.1;
+    const h2t = U * 1.1, h2b = U * 2.6;
+    const h3  = U * 2.2;
+    const h4  = U * 4.2, h5  = U * 3.0;
+    const top_y = 1.60 * U;
+
+    const c1_top_cy = top_y - h1t / 2;
+    const c1_bot_cy = c1_top_cy - h1t / 2 - GAP - h1b / 2;
+    const c2_top_cy = top_y - h2t / 2;
+    const c2_bot_cy = c2_top_cy - h2t / 2 - GAP - h2b / 2;
+    const c3_cy = c2_bot_cy + 0.15 * U;
+    const c4_cy = top_y - h4 / 2 - h2t * 0.1 - U * 0.3;
+    const c5_cy = (c4_cy + h4/2) - h5/2;
+
+    const specs = [
+        {w: U, h: h1t, cx: c1x, cy: c1_top_cy},
+        {w: U, h: h1b, cx: c1x, cy: c1_bot_cy},
+        {w: U, h: h2t, cx: c2x, cy: c2_top_cy},
+        {w: U, h: h2b, cx: c2x, cy: c2_bot_cy},
+        {w: U, h: h3,  cx: c3x, cy: c3_cy},
+        {w: U, h: h4, cx: c4x, cy: c4_cy},
+        {w: U, h: h5, cx: c5x, cy: c5_cy}
+    ];
+
+    // Tìm tâm của toàn bộ hệ thống
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    specs.forEach(s => {
+        minX = Math.min(minX, s.cx - s.w/2, s.cx + dx - s.w/2);
+        maxX = Math.max(maxX, s.cx + s.w/2, s.cx + dx + s.w/2);
+        minY = Math.min(minY, s.cy - s.h/2, s.cy + dy - s.h/2);
+        maxY = Math.max(maxY, s.cy + s.h/2, s.cy + dy + s.h/2);
+    });
+    const offsetX = (minX + maxX) / 2;
+    const offsetY = (minY + maxY) / 2;
+
+    const shadowGroup = document.createElement('div');
+    const logoGroup = document.createElement('div');
+    [shadowGroup, logoGroup].forEach(g => {
+        g.style.position = 'absolute';
+        g.style.left = '0'; g.style.top = '0';
+    });
+    
+    center.appendChild(shadowGroup);
+    center.appendChild(logoGroup);
+
+    const orbit = 6.2;
+    const N = specs.length;
+    const shadows = [];
+    const blocks = [];
+
+    // Khởi tạo các khối với toạ độ ĐÃ CHỐT CỨNG
+    specs.forEach((s) => {
+        s.cx -= offsetX; 
+        s.cy -= offsetY;
+
+        // Tính toạ độ top-left tuyệt đối (tính bằng pixel)
+        const finalLeft = webX(s.cx) - (s.w * UNIT) / 2;
+        const finalTop = webY(s.cy) - (s.h * UNIT) / 2;
+
+        // Vẽ Bóng (Shadow)
+        const shadow = document.createElement('div');
+        shadow.style.position = 'absolute';
+        shadow.style.width = `${s.w * UNIT}px`;
+        shadow.style.height = `${s.h * UNIT}px`;
+        shadow.style.backgroundColor = SHADOW_COLOR;
+        shadow.style.borderRadius = `${CR * UNIT}px`; 
+        shadow.style.left = `${finalLeft + webX(dx)}px`; 
+        shadow.style.top = `${finalTop + webY(dy)}px`;
+        shadow.style.opacity = '0';
+        shadowGroup.appendChild(shadow);
+        shadows.push(shadow);
+
+        // Vẽ Khối Logo (Block)
+        const block = document.createElement('div');
+        block.style.position = 'absolute';
+        block.style.width = `${s.w * UNIT}px`;
+        block.style.height = `${s.h * UNIT}px`;
+        block.style.backgroundColor = CYAN_COLOR;
+        block.style.borderRadius = `${CR * UNIT}px`;
+        block.style.left = `${finalLeft}px`;
+        block.style.top = `${finalTop}px`;
+        block.style.opacity = '0';
+        logoGroup.appendChild(block);
+        blocks.push(block);
+    });
+
+    // ============================================================
+    // THỰC THI ANIMATION (Các pha 1, 2, 3)
+    // ============================================================
+    
+    // Phase 1 – Bay vào stagger
+    const stagger = 0.10 * 1000;
+    const fly_time = 0.65 * 1000;
+    const easeOutBack = 'cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    const easeOutExpo = 'cubic-bezier(0.19, 1, 0.22, 1)';
+
+    blocks.forEach((block, i) => {
+        const s = specs[i];
+        const shadow = shadows[i];
+
+        const angle = (i / N) * (Math.PI * 2) - Math.PI / 2;
+        const ox = orbit * Math.cos(angle);
+        const oy = orbit * Math.sin(angle);
+
+        // Vector tính toán khoảng cách từ vòng ngoài bay vào đúng vị trí 0,0
+        const startX = webX(ox) - webX(s.cx);
+        const startY = webY(oy) - webY(s.cy);
+
+        // Block animate
+        block.animate([
+            { opacity: 0, transform: `translate(${startX}px, ${startY}px)` },
+            { opacity: 1, transform: `translate(0px, 0px)` }
+        ], { duration: fly_time, delay: i * stagger, easing: easeOutBack, fill: 'forwards' });
+
+        // Shadow animate
+        shadow.animate([
+            { opacity: 0, transform: `translate(${startX}px, ${startY}px)` },
+            { opacity: 0.75, transform: `translate(0px, 0px)` }
+        ], { duration: fly_time, delay: i * stagger, easing: easeOutExpo, fill: 'forwards' });
+    });
+
+    // Phase 2 – Pulse (Tác động lên toàn bộ VGroup)
+    const pulseDelay = (N - 1) * stagger + fly_time + 80; 
+    const pulseTime = 0.42 * 1000;
+    const pulseKeyframes = [
+        { transform: 'scale(1)' },
+        { transform: 'scale(1.055)', offset: 0.5 },
+        { transform: 'scale(1)' }
+    ];
+
+    logoGroup.animate(pulseKeyframes, { duration: pulseTime, delay: pulseDelay, easing: 'ease-in-out', fill: 'forwards' });
+    shadowGroup.animate(pulseKeyframes, { duration: pulseTime, delay: pulseDelay, easing: 'ease-in-out', fill: 'forwards' });
+
+    // Phase 3 – Glow ring
+    const glowDelay = pulseDelay + pulseTime;
+    const glow = document.createElement('div');
+    glow.style.position = 'absolute';
+    glow.style.width = `${1.6 * UNIT}px`;  // Tương đương radius=0.8 trong Manim
+    glow.style.height = `${1.6 * UNIT}px`;
+    glow.style.left = `${-0.8 * UNIT}px`;
+    glow.style.top = `${-0.8 * UNIT}px`;
+    glow.style.borderRadius = '50%';
+    glow.style.border = `4px solid ${CYAN_COLOR}`;
+    glow.style.opacity = '0';
+    center.appendChild(glow);
+
+    glow.animate([
+        { transform: 'scale(1)', opacity: 0 },
+        { transform: 'scale(2.2)', opacity: 0.35, offset: 0.35 }, 
+        { transform: 'scale(3.2)', opacity: 0, offset: 1 } 
+    ], { duration: 650, delay: glowDelay, easing: 'ease-out', fill: 'forwards' });
+}

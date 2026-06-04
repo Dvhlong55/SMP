@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Thách Thức Kì Này</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
+    <style>
+        body { overflow-x: hidden; }
+
+        /* ========================================================
+           HỆ THỐNG BIẾN MÀU CHUYỂN ĐỔI SÁNG / TỐI (DARK MODE)
+           ======================================================== */
+        :root {
+            --body-bg: #0b1111; /* Màu nền tối nguyên bản của bạn */
+            --widget-title-color: #fff;
+            --widget-link-color: #888;
+            --widget-badge-bg: rgba(255,255,255,0.05);
+            --widget-badge-color: #aaa;
+            --exam-paper-bg: rgba(255,255,255,0.025);
+            --exam-paper-border: rgba(92,225,230,0.09);
+            --exam-text-color: #ddd;
+            --exam-bold-color: #f4f4f4;
+            --exam-title-color: #f0f0f0;
+            --exam-divider-color: rgba(92,225,230,0.1);
+        }
+
+        /* Khi ở chế độ nền sáng (nếu class dark-mode không được active hoặc theo cấu hình ngược lại) */
+        body:not(.dark-mode) {
+            --body-bg: #f8fafc;
+            --widget-title-color: #1e293b;
+            --widget-link-color: #64748b;
+            --widget-badge-bg: rgba(0,0,0,0.05);
+            --widget-badge-color: #475569;
+            --exam-paper-bg: #ffffff;
+            --exam-paper-border: rgba(15,23,42,0.08);
+            --exam-text-color: #334155;
+            --exam-bold-color: #0f172a;
+            --exam-title-color: #1e293b;
+            --exam-divider-color: rgba(15,23,42,0.08);
+        }
+
+        /* Áp dụng các biến màu động vào đúng các Class nguyên bản */
+        body {
+            background-color: var(--body-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        .main-wrapper {
+            position: relative;
+            max-width: 2000px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            transform: none !important;
+            left: 0 !important;
+            transition: transform 0s !important;
+        }
+
+        .main-content-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 100px;
+            margin-top: 20px;
+        }
+
+        .tags-comment-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            z-index: 1;
+        }
+
+        .side-widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--widget-title-color);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s ease;
+        }
+
+        body.light-mode .side-widget-title {
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .side-widget-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .side-widget-list a {
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--widget-link-color); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+        }
+
+        .side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(4px); }
+
+        .side-widget-list a span {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            background: var(--widget-badge-bg); padding: 2px 8px;
+            border-radius: 12px; color: var(--widget-badge-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @media (max-width: 1100px) {
+            .main-content-layout { grid-template-columns: 1fr; }
+            .tags-comment-sidebar { position: static; }
+        }
+
+        /* Stats strip */
+        .stats-strip {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 36px;
+            margin-top: 50px;
+        }
+        .stat-item {
+            flex: 1; padding: 18px 20px; text-align: center;
+            border-right: 1px solid var(--border-light);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.6rem;
+            font-weight: 700; color: var(--accent-cyan); line-height: 1; margin-bottom: 6px;
+        }
+        .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+        /* ── Exam-specific styles ── */
+        .exam-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan, #5ce1e6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            opacity: 0.65;
+            transition: opacity 0.2s;
+        }
+        .exam-back-btn:hover { opacity: 1; }
+
+        .exam-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .exam-tag {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 4px 13px;
+            border-radius: 20px;
+            border: 1px solid rgba(92,225,230,0.35);
+            color: var(--accent-cyan, #5ce1e6);
+        }
+
+        .exam-paper {
+            background: var(--exam-paper-bg);
+            border: 1px solid var(--exam-paper-border);
+            border-radius: 12px;
+            padding: 46px 54px;
+            font-family: "Times New Roman", Times, serif;
+            color: var(--exam-text-color);
+            line-height: 1.85;
+            font-size: 1.01rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .exam-paper h1,
+        .exam-paper h2 {
+            text-align: center;
+            color: var(--exam-title-color);
+            font-family: "Times New Roman", Times, serif;
+            margin: 7px 0;
+            transition: color 0.3s ease;
+        }
+        .exam-paper h1 { font-size: 1.5rem; letter-spacing: 0.5px; }
+        .exam-paper h2 { font-size: 1.1rem; font-weight: normal; }
+
+        .exam-paper h3 {
+            font-size: 1.1rem;
+            color: var(--accent-cyan, #5ce1e6);
+            margin-top: 34px;
+            margin-bottom: 10px;
+            font-family: "Times New Roman", Times, serif;
+            border-left: 3px solid var(--accent-cyan, #5ce1e6);
+            padding-left: 12px;
+        }
+
+        .exam-paper p   { margin: 10px 0; }
+        .exam-paper ol,
+        .exam-paper ul  { margin: 10px 0; padding-left: 28px; }
+        .exam-paper li  { margin: 8px 0; }
+        .exam-paper b   { color: var(--exam-bold-color); transition: color 0.3s ease; }
+
+        .exam-divider {
+            border: none;
+            border-top: 1px solid var(--exam-divider-color);
+            margin: 18px 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .exam-end {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            margin-top: 44px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        body.light-mode .exam-end {
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+
+        /* LaTeX preview box */
+        .latex-preview-wrap {
+            margin-top: 10px;
+        }
+        .latex-preview-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.72rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent-cyan, #5ce1e6);
+            padding: 0;
+            opacity: 0.75;
+            transition: opacity 0.2s;
+        }
+        .latex-preview-toggle:hover { opacity: 1; }
+        .latex-preview-box {
+            display: none;
+            margin-top: 10px;
+            background: rgba(92,225,230,0.04);
+            border: 1px solid rgba(92,225,230,0.15);
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1rem;
+            color: var(--exam-text-color);
+            line-height: 1.85;
+            min-height: 60px;
+            transition: background 0.3s;
+        }
+        .latex-preview-box.active { display: block; }
+        .latex-preview-empty {
+            font-style: italic;
+            opacity: 0.35;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        /* File reminder overlay */
+        .file-reminder-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .file-reminder-overlay.active { display: flex; }
+        .file-reminder-box {
+            background: #0f1e1e;
+            border: 1px solid rgba(92,225,230,0.3);
+            border-radius: 16px;
+            padding: 40px 44px;
+            max-width: 460px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        body:not(.dark-mode) .file-reminder-box {
+            background: #fff;
+            border-color: rgba(15,23,42,0.12);
+        }
+        .file-reminder-icon { font-size: 2.2rem; margin-bottom: 14px; display: block; }
+        .file-reminder-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--exam-title-color);
+            margin-bottom: 10px;
+        }
+        .file-reminder-desc {
+            font-size: 0.875rem;
+            color: var(--exam-text-color);
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+        .file-reminder-list {
+            list-style: none;
+            padding: 0; margin: 0 0 22px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .file-reminder-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(92,225,230,0.06);
+            border: 1px solid rgba(92,225,230,0.15);
+            border-radius: 8px;
+            padding: 9px 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-cyan, #5ce1e6);
+        }
+        .file-reminder-close {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(92,225,230,0.18), rgba(167,139,250,0.18));
+            border: 1px solid rgba(92,225,230,0.4);
+            border-radius: 10px;
+            padding: 12px 28px;
+            color: var(--accent-cyan, #5ce1e6);
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .file-reminder-close:hover {
+            background: linear-gradient(135deg, rgba(92,225,230,0.28), rgba(167,139,250,0.28));
+        }
+
+        /* ── Solution Mailbox ── */
+        .solution-mailbox {
+            margin-top: 40px;
+            background: var(--exam-paper-bg);
+            border: 1px solid rgba(92,225,230,0.18);
+            border-radius: 16px;
+            padding: 42px 50px;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .solution-mailbox::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #5ce1e6, #a78bfa, #5ce1e6);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .mailbox-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+        .mailbox-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, rgba(92,225,230,0.15), rgba(167,139,250,0.15));
+            border: 1px solid rgba(92,225,230,0.3);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        .mailbox-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--exam-title-color);
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .mailbox-subtitle {
+            font-size: 0.88rem;
+            color: var(--exam-text-color);
+            margin-bottom: 28px;
+            line-height: 1.6;
+            opacity: 0.85;
+            padding-left: 58px;
+        }
+        .mailbox-subtitle em {
+            color: var(--accent-cyan, #5ce1e6);
+            font-style: normal;
+            font-weight: 600;
+        }
+        .mailbox-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .mailbox-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .mailbox-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .mailbox-label {
+            font-size: 0.72rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--accent-cyan, #5ce1e6);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .mailbox-input,
+        .mailbox-select {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(92,225,230,0.18);
+            border-radius: 8px;
+            padding: 11px 14px;
+            color: var(--exam-text-color);
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        body:not(.dark-mode) .mailbox-input,
+        body:not(.dark-mode) .mailbox-select {
+            background: rgba(0,0,0,0.03);
+            border-color: rgba(15,23,42,0.12);
+        }
+        .mailbox-input:focus,
+        .mailbox-select:focus {
+            border-color: rgba(92,225,230,0.55);
+            box-shadow: 0 0 0 3px rgba(92,225,230,0.08);
+        }
+        .mailbox-select option {
+            background: #0b1111;
+            color: #ddd;
+        }
+        .mailbox-textarea {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(92,225,230,0.18);
+            border-radius: 8px;
+            padding: 14px;
+            color: var(--exam-text-color);
+            font-size: 0.9rem;
+            font-family: "Times New Roman", Times, serif;
+            outline: none;
+            resize: vertical;
+            min-height: 160px;
+            line-height: 1.7;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        body:not(.dark-mode) .mailbox-textarea {
+            background: rgba(0,0,0,0.03);
+            border-color: rgba(15,23,42,0.12);
+        }
+        .mailbox-textarea:focus {
+            border-color: rgba(92,225,230,0.55);
+            box-shadow: 0 0 0 3px rgba(92,225,230,0.08);
+        }
+        .mailbox-textarea::placeholder {
+            color: rgba(180,180,180,0.45);
+            font-style: italic;
+        }
+        .mailbox-file-zone {
+            border: 1.5px dashed rgba(92,225,230,0.28);
+            border-radius: 10px;
+            padding: 22px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            position: relative;
+        }
+        .mailbox-file-zone:hover {
+            border-color: rgba(92,225,230,0.6);
+            background: rgba(92,225,230,0.04);
+        }
+        .mailbox-file-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+        }
+        .mailbox-file-icon { font-size: 1.6rem; margin-bottom: 6px; display: block; }
+        .mailbox-file-label {
+            font-size: 0.82rem;
+            color: var(--exam-text-color);
+            opacity: 0.7;
+        }
+        .mailbox-file-label strong { color: var(--accent-cyan, #5ce1e6); }
+        .mailbox-file-names {
+            margin-top: 10px;
+            font-size: 0.78rem;
+            color: var(--accent-cyan, #5ce1e6);
+            font-family: 'JetBrains Mono', monospace;
+            min-height: 16px;
+        }
+        .mailbox-hint {
+            font-size: 0.75rem;
+            color: var(--exam-text-color);
+            opacity: 0.5;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.3px;
+        }
+        .mailbox-hint code {
+            background: rgba(92,225,230,0.08);
+            padding: 1px 5px;
+            border-radius: 4px;
+            color: var(--accent-cyan, #5ce1e6);
+        }
+        .mailbox-send-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(92,225,230,0.18), rgba(167,139,250,0.18));
+            border: 1px solid rgba(92,225,230,0.4);
+            border-radius: 10px;
+            padding: 14px 32px;
+            color: var(--accent-cyan, #5ce1e6);
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s;
+            align-self: flex-start;
+        }
+        .mailbox-send-btn:hover {
+            background: linear-gradient(135deg, rgba(92,225,230,0.28), rgba(167,139,250,0.28));
+            border-color: rgba(92,225,230,0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(92,225,230,0.15);
+        }
+        .mailbox-send-btn:active { transform: translateY(0); }
+        .mailbox-note {
+            font-size: 0.75rem;
+            color: var(--exam-text-color);
+            opacity: 0.45;
+            font-style: italic;
+            margin-top: 4px;
+        }
+        @media (max-width: 700px) {
+            .mailbox-row { grid-template-columns: 1fr; }
+            .solution-mailbox { padding: 28px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="main-content-layout">
+
+                <aside class="tags-comment-sidebar">
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Categories</div>
+                        <ul class="side-widget-list">
+                            <li><a href="../Math/toanhoc.html">Chuyên Toán <span>10</span></a></li>
+                            <li><a href="../Math/toanhoc.html">HSG Toán 9 <span>8</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Math Olympiad <span>4</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Number Theory <span>5</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Algebra <span>3</span></a></li>
+                            <li><a href="../My%20Life/cuocsong.html">Cuộc Sống <span>1</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Archives</div>
+                        <ul class="side-widget-list">
+                            <li><a href="#">Tháng 4, 2026 <span>12</span></a></li>
+                            <li><a href="#">Tháng 3, 2026 <span>8</span></a></li>
+                            <li><a href="#">Tháng 2, 2026 <span>5</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="comment-section fade-up">
+                        <h3>Thảo Luận & Góp Ý</h3>
+                        <div class="comment-form">
+                            <div class="comment-form-row">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                            </div>
+                            <div style="margin-bottom:14px">
+                                <textarea id="comment-text-input" class="comment-textarea"
+                                    placeholder="Nhập bình luận hoặc lời nhắn của bạn tại đây..."></textarea>
+                            </div>
+                            <button id="comment-submit" class="comment-submit">Gửi Bình Luận</button>
+                        </div>
+                        <div id="comment-list" class="comment-list"></div>
+                    </div>
+
+                </aside>
+
+                <div class="main-articles-body">
+
+                    <a href="../index.html" class="exam-back-btn fade-up">← Quay Lại Trang Chủ</a>
+
+                    <div class="exam-meta fade-up">
+                        <span class="exam-tag">Thách Thức Kì Này</span>
+                        <span class="exam-tag">Toán Học</span>
+                        <span class="exam-tag">04 / 06 / 2026</span>
+                    </div>
+
+                    <div class="exam-paper fade-up">
+
+                        <h1 style="text-align: center;">
+                        § Thách Thức Kì Này (Số 4)
+                        </h1>
+
+                        <h2 style="text-align: center;">
+                        Secrets of Mathematical Principles<br />
+                        Jun, 04 2026
+                        </h2>
+
+                        <h3>Bài 1</h3>
+                        <p>Ban đầu trên bảng có $100$ số $1$. Mỗi bước bạn An chọn một số $a$ bất kỳ trên bảng sau đó xóa đi và thay thế bởi bốn số $\frac{a}{4}, \frac{a}{4}, \frac{a}{4}, \frac{a}{4}$. Chẳng hạn, nếu chọn số $1$ thì An sẽ thay thế bởi bốn số $\frac{1}{4}, \frac{1}{4}, \frac{1}{4}, \frac{1}{4}$.</p>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li>a) Hãy chỉ ra một cách thực hiện để sau hữu hạn bước, trên bảng không có $77$ số giống nhau.</li>
+                            <li>b) Tìm số nguyên dương $k$ lớn nhất sao cho bất kể bạn An chọn số như thế nào thì sau mỗi bước, trên bảng luôn tồn tại ít nhất $k$ số giống nhau.</li>
+                        </ul>
+
+                        <h3>Bài 2</h3>
+                        <p>Bên trong một đường tròn có bán kính bằng $11$, cho $7$ điểm phân biệt. Chứng minh rằng có ít nhất $2$ điểm trong $7$ điểm đó có khoảng cách nhỏ hơn $11$.</p>
+
+                        <h3>Bài 3</h3>
+                        <p>Cho ba số thực dương $x, y, z$ thỏa mãn $x \cdot y \cdot z = 1$. Tìm giá trị nhỏ nhất của biểu thức sau:
+                        \[
+                        P = \frac{x^3}{(1 + y)(1 + z)} + \frac{y^3}{(1 + x)(1 + z)} + \frac{z^3}{(1 + x)(1 + y)}
+                        \]
+                        <i>(Lưu ý: Mẫu số của phân số thứ ba đã được sửa lại thành $(1+x)(1+y)$ cho đúng tính đối xứng đối với bài toán này).</i>
+                        </p>
+
+                        <h3>Bài 4</h3>
+                        <p>Cho $\langle a_n \rangle_{n \ge 1}$ và $\langle b_n \rangle_{n \ge 0}$ là hai dãy số được xác định bởi:</p>
+                        <ul>
+                            <li>$a_1 = 1$ và $a_n = a_{n-1} + 2n - 1, \quad (n \ge 2)$</li>
+                            <li>$b_0 = 2, b_1 = 3$ và $b_n = 3b_{n-1} - 2b_{n-2}, \quad (n \ge 2)$</li>
+                        </ul>
+                        <p>Tìm tất cả các số nguyên dương $n$ sao cho $a_n$ chia hết cho $b_n$.</p>
+
+                        <h3>Bài 5</h3>
+                        <p>Giả sử tồn tại số tự nhiên $a$ thỏa mãn $\varphi\left(a^4 + 1\right) = 8a$.</p>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li>a) Chứng minh $a$ là số chẵn.</li>
+                            <li>b) Chứng minh rằng $a^4 + 1$ là số square-free (số không có ước chính phương).</li>
+                            <li>c) Tìm tất cả các giá trị của $a$ thỏa mãn.</li>
+                        </ul>
+
+                        <h3>Bài 6</h3>
+                        <p>Cho $p$ là một số nguyên tố lẻ và $n$ là một số nguyên dương đủ lớn. Xét đa thức $P(x_1, x_2, \dots, x_p)$ gồm $p$ biến với hệ số nguyên, không chứa hạng tử tự do và không chia hết cho đa thức tổng $(x_1 + x_2 + \dots + x_p)$. Biết rằng với mọi bộ $p$ số nguyên $(a_1, a_2, \dots, a_p)$ đôi một phân biệt thỏa mãn:
+                        \[
+                        \sum_{i=1}^{p} a_i \equiv 0 \pmod{p^n}
+                        \]
+                        ta luôn có:
+                        \[
+                        P(a_1, a_2, \dots, a_p) \equiv 0 \pmod{p^n}
+                        \]
+                        </p>
+                        <p>Chứng minh rằng bậc của đa thức $P$ phải thỏa mãn: $\deg P \ge p - 1$.</p>
+
+                        <p class="exam-end"><b>─── END ───</b></p>
+
+                    </div>
+
+                    <!-- ═══ SOLUTION SUBMISSION MAILBOX ═══ -->
+                    <div class="solution-mailbox fade-up">
+                        <div class="mailbox-header">
+                            <div class="mailbox-icon">✉️</div>
+                            <div class="mailbox-title">Gửi Lời Giải Của Bạn</div>
+                        </div>
+                        <p class="mailbox-subtitle">
+                            Nếu bạn có lời giải cho bất kì bài toán nào, hãy gửi nó cho tôi —
+                            tôi sẽ <em>đăng lên hệ thống</em> và ghi nhận đóng góp của bạn!
+                        </p>
+
+                        <div class="mailbox-form" id="solution-form">
+                            <div class="mailbox-row">
+                                <div class="mailbox-field">
+                                    <label class="mailbox-label" for="sol-name">Họ &amp; Tên</label>
+                                    <input type="text" id="sol-name" class="mailbox-input" placeholder="Nguyễn Văn A...">
+                                </div>
+                                <div class="mailbox-field">
+                                    <label class="mailbox-label" for="sol-problem">Bài toán</label>
+                                    <select id="sol-problem" class="mailbox-input mailbox-select">
+                                        <option value="">-- Chọn bài --</option>
+                                        <option value="Bài 1">Bài 1 — Dãy số trên bảng</option>
+                                        <option value="Bài 2">Bài 2 — Đường tròn &amp; 7 điểm</option>
+                                        <option value="Bài 3">Bài 3 — Bất đẳng thức xyz = 1</option>
+                                        <option value="Bài 4">Bài 4 — Dãy số &amp; chia hết</option>
+                                        <option value="Bài 5">Bài 5 — Euler totient φ(a⁴+1)</option>
+                                        <option value="Bài 6">Bài 6 — Đa thức p biến</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mailbox-field">
+                                <label class="mailbox-label" for="sol-content">Nội dung lời giải</label>
+                                <textarea id="sol-content" class="mailbox-textarea"
+                                    placeholder="Viết lời giải của bạn tại đây. Bạn có thể dùng LaTeX thông thường, ví dụ: $x^2 + y^2 = z^2$ hoặc \[ \sum_{k=1}^{n} k = \frac{n(n+1)}{2} \]"></textarea>
+                                <span class="mailbox-hint">Hỗ trợ LaTeX inline <code>$ ... $</code> và display <code>\[ ... \]</code></span>
+                                <div class="latex-preview-wrap">
+                                    <button class="latex-preview-toggle" id="preview-toggle" onclick="togglePreview()">▶ Xem preview LaTeX</button>
+                                    <div class="latex-preview-box" id="latex-preview">
+                                        <span class="latex-preview-empty">Bắt đầu gõ để xem preview...</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mailbox-field">
+                                <label class="mailbox-label">Đính kèm ảnh (tuỳ chọn)</label>
+                                <div class="mailbox-file-zone" id="file-drop-zone">
+                                    <input type="file" id="sol-images" accept="image/*,.pdf" multiple>
+                                    <span class="mailbox-file-icon">📎</span>
+                                    <p class="mailbox-file-label"><strong>Nhấn để chọn file</strong> hoặc kéo &amp; thả vào đây</p>
+                                    <p class="mailbox-file-label" style="margin-top:4px; font-size:0.75rem;">Hỗ trợ ảnh (PNG, JPG...) và PDF</p>
+                                    <div class="mailbox-file-names" id="file-names"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <button class="mailbox-send-btn" id="sol-send-btn" onclick="sendSolution()">
+                                    <span>📨</span> Gửi Lời Giải
+                                </button>
+                                <p class="mailbox-note">Gmail sẽ mở trong tab mới với nội dung đã điền sẵn — bạn chỉ cần đính kèm ảnh / PDF rồi nhấn Gửi.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div></div><div class="stats-strip fade-up">
+                <div class="stat-item"><div class="stat-number">$\Sigma$</div><div class="stat-label">Bài Viết</div></div>
+                <div class="stat-item"><div class="stat-number">$\Phi$</div><div class="stat-label">Chủ Đề</div></div>
+                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
+                <div class="stat-item"><div class="stat-number">$\infty$</div><div class="stat-label">Đam Mê</div></div>
+            </div>
+                
+
+            <footer class="site-footer fade-up">
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 <span class="footer-brand">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- File attachment reminder overlay -->
+    <div class="file-reminder-overlay" id="file-reminder-overlay">
+        <div class="file-reminder-box">
+            <span class="file-reminder-icon">📎</span>
+            <div class="file-reminder-title">Gmail đã mở! Còn một bước nữa...</div>
+            <p class="file-reminder-desc">
+                Trình duyệt không thể tự đính kèm file vào Gmail vì lý do bảo mật.<br>
+                Vui lòng <strong>kéo các file sau vào cửa sổ Gmail</strong> vừa mở:
+            </p>
+            <ul class="file-reminder-list" id="reminder-file-list"></ul>
+            <button class="file-reminder-close" onclick="document.getElementById('file-reminder-overlay').classList.remove('active')">✓ Đã hiểu, đi đính kèm</button>
+        </div>
+    </div>
+        <script src="/SMP/js/layout.js"></script>
+    <script src="/SMP/js/shared.js"></script>
+    <script>
+    // ── Comments init ──
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof Comments !== 'undefined') {
+            Comments.init('ThachThucKiNay');
+        }
+
+        // ── File input: show names ──
+        const imgInput = document.getElementById('sol-images');
+        if (imgInput) {
+            imgInput.addEventListener('change', function () {
+                updateFileNames(Array.from(this.files));
+            });
+        }
+
+        // ── Drag & drop on file zone ──
+        const dropZone = document.getElementById('file-drop-zone');
+        if (dropZone && imgInput) {
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = 'rgba(92,225,230,0.8)';
+                dropZone.style.background  = 'rgba(92,225,230,0.06)';
+            });
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.style.borderColor = '';
+                dropZone.style.background  = '';
+            });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = '';
+                dropZone.style.background  = '';
+                if (e.dataTransfer.files.length > 0) {
+                    const dt = new DataTransfer();
+                    Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+                    imgInput.files = dt.files;
+                    updateFileNames(Array.from(dt.files));
+                }
+            });
+        }
+
+        // ── LaTeX preview: listen to textarea ──
+        const textarea = document.getElementById('sol-content');
+        if (textarea) {
+            textarea.addEventListener('input', debounce(updatePreview, 600));
+        }
+    });
+
+    // Helper: display file names with icons
+    function updateFileNames(files) {
+        const el = document.getElementById('file-names');
+        if (!el) return;
+        if (files.length === 0) {
+            el.textContent = '';
+        } else {
+            el.innerHTML = files.map(f => {
+                const icon = f.type === 'application/pdf' ? '📄' : '🖼️';
+                return `<span style="margin-right:12px">${icon} ${f.name}</span>`;
+            }).join('');
+        }
+    }
+
+    // ── Preview toggle ──
+    let previewOpen = false;
+    function togglePreview() {
+        previewOpen = !previewOpen;
+        const box = document.getElementById('latex-preview');
+        const btn = document.getElementById('preview-toggle');
+        if (previewOpen) {
+            box.classList.add('active');
+            btn.textContent = '▼ Ẩn preview LaTeX';
+            updatePreview();
+        } else {
+            box.classList.remove('active');
+            btn.textContent = '▶ Xem preview LaTeX';
+        }
+    }
+
+    // ── Debounce helper ──
+    function debounce(fn, delay) {
+        let timer;
+        return function(...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+    }
+
+    // ── Update MathJax preview ──
+    function updatePreview() {
+        if (!previewOpen) return;
+        const box  = document.getElementById('latex-preview');
+        const text = document.getElementById('sol-content').value.trim();
+        if (!text) {
+            box.innerHTML = '<span class="latex-preview-empty">Bắt đầu gõ để xem preview...</span>';
+            return;
+        }
+        // Escape HTML but keep LaTeX delimiters intact
+        const escaped = text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/\n/g, '<br>');
+        box.innerHTML = escaped;
+        if (window.MathJax && MathJax.typesetPromise) {
+            MathJax.typesetPromise([box]).catch(err => console.warn('MathJax:', err));
+        }
+    }
+
+    // ── Send solution via Gmail ──
+    function sendSolution() {
+        const name     = document.getElementById('sol-name').value.trim();
+        const problem  = document.getElementById('sol-problem').value;
+        const content  = document.getElementById('sol-content').value.trim();
+        const imgInput = document.getElementById('sol-images');
+        const files    = imgInput ? Array.from(imgInput.files) : [];
+
+        if (!problem) { alert('Bạn chưa chọn bài toán!'); return; }
+        if (!content)  { alert('Bạn chưa nhập nội dung lời giải!'); return; }
+
+        const sender = name || 'Ẩn danh';
+
+        let body  = `Người gửi: ${sender}\n`;
+        body += `Bài toán: ${problem}\n`;
+        body += `\n─────────────────────────────\n`;
+        body += `Lời giải:\n\n${content}\n`;
+        body += `\n─────────────────────────────\n`;
+        if (files.length > 0) {
+            body += `\n[File đính kèm: ${files.map(f => f.name).join(', ')}]\n`;
+        }
+        body += `\nGửi từ trang: § Thách Thức Kì Này — SMP`;
+
+        const subject     = encodeURIComponent(`[SMP Lời Giải] ${problem} — ${sender}`);
+        const bodyEncoded = encodeURIComponent(body);
+        const gmailLink   = `https://mail.google.com/mail/?view=cm&to=smp.cqt0907%40gmail.com&su=${subject}&body=${bodyEncoded}`;
+
+        window.open(gmailLink, '_blank');
+
+        // If files selected → show reminder overlay
+        if (files.length > 0) {
+            const list = document.getElementById('reminder-file-list');
+            list.innerHTML = files.map(f => {
+                const icon = f.type === 'application/pdf' ? '📄' : '🖼️';
+                return `<li>${icon} ${f.name}</li>`;
+            }).join('');
+            document.getElementById('file-reminder-overlay').classList.add('active');
+        }
+    }
+    </script>
+</body>
+</html>
+
+</body>
+</html>
