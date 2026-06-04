@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Hệ Tọa Độ Cực & Ứng dụng</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
+    <style>
+        body { overflow-x: hidden; }
+
+        /* ========================================================
+           HỆ THỐNG BIẾN MÀU CHUYỂN ĐỔI SÁNG / TỐI (DARK MODE)
+           ======================================================== */
+        :root {
+            --body-bg: #0b1111; /* Màu nền tối nguyên bản của bạn */
+            --widget-title-color: #fff;
+            --widget-link-color: #888;
+            --widget-badge-bg: rgba(255,255,255,0.05);
+            --widget-badge-color: #aaa;
+            --exam-paper-bg: rgba(255,255,255,0.025);
+            --exam-paper-border: rgba(92,225,230,0.09);
+            --exam-text-color: #ddd;
+            --exam-bold-color: #f4f4f4;
+            --exam-title-color: #f0f0f0;
+            --exam-divider-color: rgba(92,225,230,0.1);
+        }
+
+        /* Khi ở chế độ nền sáng (nếu class dark-mode không được active hoặc theo cấu hình ngược lại) */
+        body:not(.dark-mode) {
+            --body-bg: #f8fafc;
+            --widget-title-color: #1e293b;
+            --widget-link-color: #64748b;
+            --widget-badge-bg: rgba(0,0,0,0.05);
+            --widget-badge-color: #475569;
+            --exam-paper-bg: #ffffff;
+            --exam-paper-border: rgba(15,23,42,0.08);
+            --exam-text-color: #334155;
+            --exam-bold-color: #0f172a;
+            --exam-title-color: #1e293b;
+            --exam-divider-color: rgba(15,23,42,0.08);
+        }
+
+        /* Áp dụng các biến màu động vào đúng các Class nguyên bản */
+        body {
+            background-color: var(--body-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        .main-wrapper {
+            position: relative;
+            max-width: 2000px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            transform: none !important;
+            left: 0 !important;
+            transition: transform 0s !important;
+        }
+
+        .main-content-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 100px;
+            margin-top: 20px;
+        }
+
+        .tags-comment-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            z-index: 1;
+        }
+
+        .side-widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--widget-title-color);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s ease;
+        }
+
+        body.light-mode .side-widget-title {
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .side-widget-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .side-widget-list a {
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--widget-link-color); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+        }
+
+        .side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(4px); }
+
+        .side-widget-list a span {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            background: var(--widget-badge-bg); padding: 2px 8px;
+            border-radius: 12px; color: var(--widget-badge-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @media (max-width: 1100px) {
+            .main-content-layout { grid-template-columns: 1fr; }
+            .tags-comment-sidebar { position: static; }
+        }
+
+        /* Stats strip */
+        .stats-strip {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 36px;
+            margin-top: 50px;
+        }
+        .stat-item {
+            flex: 1; padding: 18px 20px; text-align: center;
+            border-right: 1px solid var(--border-light);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.6rem;
+            font-weight: 700; color: var(--accent-cyan); line-height: 1; margin-bottom: 6px;
+        }
+        .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+        /* ── Exam-specific styles ── */
+        .exam-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan, #5ce1e6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            opacity: 0.65;
+            transition: opacity 0.2s;
+        }
+        .exam-back-btn:hover { opacity: 1; }
+
+        .exam-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .exam-tag {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 4px 13px;
+            border-radius: 20px;
+            border: 1px solid rgba(92,225,230,0.35);
+            color: var(--accent-cyan, #5ce1e6);
+        }
+
+        .exam-paper {
+            background: var(--exam-paper-bg);
+            border: 1px solid var(--exam-paper-border);
+            border-radius: 12px;
+            padding: 46px 54px;
+            font-family: "Times New Roman", Times, serif;
+            color: var(--exam-text-color);
+            line-height: 1.85;
+            font-size: 1.01rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .exam-paper h1,
+        .exam-paper h2 {
+            text-align: center;
+            color: var(--exam-title-color);
+            font-family: "Times New Roman", Times, serif;
+            margin: 7px 0;
+            transition: color 0.3s ease;
+        }
+        .exam-paper h1 { font-size: 1.5rem; letter-spacing: 0.5px; }
+        .exam-paper h2 { font-size: 1.1rem; font-weight: normal; }
+
+        .exam-paper h3 {
+            font-size: 1.1rem;
+            color: var(--accent-cyan, #5ce1e6);
+            margin-top: 34px;
+            margin-bottom: 10px;
+            font-family: "Times New Roman", Times, serif;
+            border-left: 3px solid var(--accent-cyan, #5ce1e6);
+            padding-left: 12px;
+        }
+
+        .exam-paper p   { margin: 10px 0; }
+        .exam-paper ol,
+        .exam-paper ul  { margin: 10px 0; padding-left: 28px; }
+        .exam-paper li  { margin: 8px 0; }
+        .exam-paper b   { color: var(--exam-bold-color); transition: color 0.3s ease; }
+
+        .exam-divider {
+            border: none;
+            border-top: 1px solid var(--exam-divider-color);
+            margin: 18px 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .exam-end {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            margin-top: 44px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        body.light-mode .exam-end {
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+
+        /* Đổi màu tất cả các đường link thành màu hồng */
+        a {
+            color: #ff69b4; /* Màu hồng Hot Pink (hoặc dùng màu #ff66b2, #e91e63 tùy bạn chọn) */
+            text-decoration: none; /* Bỏ gạch chân mặc định nếu muốn */
+            transition: color 0.2s ease;
+        }
+
+        /* Hiệu ứng khi di chuột qua link (Hover) */
+        a:hover {
+            color: #ff1493; /* Màu hồng đậm hơn khi hover */
+            text-decoration: underline; /* Hiện gạch chân khi hover */
+        }
+        
+        /* CÁC CLASS PHỤ TRỢ CHO BÀI HỌC NÀY */
+        .longnote {
+            background: rgba(92,225,230,0.05);
+            padding: 15px 20px;
+            border-left: 3px solid var(--accent-cyan, #5ce1e6);
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .image-container img {
+            max-width: 80%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="main-content-layout">
+
+                <aside class="tags-comment-sidebar">
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Categories</div>
+                        <ul class="side-widget-list">
+                            <li><a href="../Math/toanhoc.html">Chuyên Toán <span>10</span></a></li>
+                            <li><a href="../Math/toanhoc.html">HSG Toán 9 <span>8</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Math Olympiad <span>4</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Number Theory <span>5</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Algebra <span>3</span></a></li>
+                            <li><a href="../My%20Life/cuocsong.html">Cuộc Sống <span>1</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Archives</div>
+                        <ul class="side-widget-list">
+                            <li><a href="#">Tháng 4, 2026 <span>12</span></a></li>
+                            <li><a href="#">Tháng 3, 2026 <span>8</span></a></li>
+                            <li><a href="#">Tháng 2, 2026 <span>5</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="comment-section fade-up">
+                        <h3>Thảo Luận & Góp Ý</h3>
+                        <div class="comment-form">
+                            <div class="comment-form-row">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                            </div>
+                            <div style="margin-bottom:14px">
+                                <textarea id="comment-text-input" class="comment-textarea"
+                                    placeholder="Nhập bình luận hoặc lời nhắn của bạn tại đây..."></textarea>
+                            </div>
+                            <button id="comment-submit" class="comment-submit">Gửi Bình Luận</button>
+                        </div>
+                        <div id="comment-list" class="comment-list"></div>
+                    </div>
+
+                </aside>
+
+                <div class="main-articles-body">
+
+                    <a href="../index.html" class="exam-back-btn fade-up">← Quay Lại Trang Chủ</a>
+
+                    <div class="exam-meta fade-up">
+                        <span class="exam-tag">Giải Tích</span>
+                        <span class="exam-tag">Hệ Tọa Độ Cực</span>
+                        <span class="exam-tag">Toán Học</span>
+                    </div>
+
+                    <div class="exam-paper fade-up">
+
+                        <h2>SECRETS OF MATHEMATICAL PRINCIPLES</h2>
+                        <h1>§ Hệ Tọa Độ Cực & Ứng dụng</h1>
+
+                        <h2 style="text-align:center">
+                            <b>Tác giả: Secrets of Mathematical Principles</b>
+                        </h2>
+                        
+                        <p style="text-align:center"><small>Mail: smp.cqt0907@gmail.com</small></p>
+
+                        <hr class="exam-divider">
+
+                        <p><b style="color:#ff4d4d">GOAL:</b></p>
+                        <ul>
+                            <li>Làm thế nào để xác định tọa độ cực của một điểm trên mặt phẳng?</li>
+                            <li>Làm thế nào để chuyển đổi từ tọa độ cực sang tọa độ chữ nhật (hoặc Descartes)?</li>
+                            <li>Làm thế nào để chuyển đổi ngược lại, từ tọa độ chữ nhật sang tọa độ cực?</li>
+                            <li>Làm thế nào để vẽ đúng đồ thị của một phương trình cực, cả bằng tay và bằng máy tính?</li>
+                        </ul>
+
+                        <div class="longnote">
+                            Trong các phần trước của hình học và lượng giác, khi biểu diễn đồ thị hoặc xác định vị trí của một điểm trên mặt phẳng, ta thường sử dụng hệ tọa độ chữ nhật (hay còn gọi là hệ tọa độ Descartes).<br><br>
+                            Việc sử dụng hệ tọa độ này đã tạo nên một bước tiến mang tính cách mạng trong toán học, vì nó là cầu nối đầu tiên giữa hình học và đại số.<br><br>
+                            Mặc dù hệ tọa độ chữ nhật có vai trò rất quan trọng, song vẫn còn những phương pháp khác để xác định vị trí điểm trong mặt phẳng. Một trong số đó chính là hệ tọa độ cực, được trình bày trong mục này.
+                        </div>
+
+                        <h3>1. Nhắc lại một số kiến thức</h3>
+
+                        <p><b>Định nghĩa.</b> Xét hệ tọa độ $Oxy$, đường tròn tâm $O(a; b)$, bán kính $R$ là tập hợp của tất cả các điểm $M(x_0; y_0)$ sao cho $OM = R$. Nói cách khác, là các điểm thỏa mãn phương trình:</p>
+                        <div class="math-block">
+                            $$R^2 = (x_0 - a)^2 + (y_0 - b)^2$$
+                        </div>
+
+                        <div class="method">
+                            <b>Định lý.</b> Một số công thức chuyển đổi cơ bản:
+                            <ul>
+                                <li>$\sin^2 \theta + \cos^2 \theta = 1$</li>
+                                <li>$\sin 2 \theta = 2 \cdot \cos \theta \cdot \sin \theta$</li>
+                                <li>$\cos 2\theta = 2\cdot \cos^2 \theta - 1$</li>
+                                <li>$\tan \theta = \frac{\sin \theta}{\cos \theta}, \ \cot \theta = \frac{\cos \theta}{\sin \theta}$</li>
+                                <li>$1 + \tan^2 \theta = \frac{1}{\cos^2 \theta}$</li>
+                                <li>$1 + \cot^2 \theta = \frac{1}{\sin^2 \theta}$</li>
+                            </ul>
+                        </div>
+
+                        <h3>2. Động lực</h3>
+
+                        <p><b>Ví dụ.</b> Trong hệ tọa độ Descartes (tọa độ Descartes $(x,y)$), ta đo vị trí bằng độ dài theo hai phương vuông góc. Nhưng rất nhiều đối tượng trong tự nhiên không <i>vuông vức</i> mà đối xứng tròn, ví dụ:</p>
+                        <ul>
+                            <li>Quỹ đạo hành tinh, giọt nước, sóng tròn, anten, bánh xe, radar...</li>
+                            <li>Các bài toán vật lí có tâm đối xứng (như lực hấp dẫn, điện trường, trường từ).</li>
+                        </ul>
+                        <p>Với những tình huống như này việc biểu diễn $(x, y)$ sẽ rất cồng kềnh. Ngược lại, nếu ta mô tả bằng góc quay và khoảng cách tới tâm, mọi thứ trở nên đơn giản, tự nhiên và ngắn gọn. Chẳng hạn đường tròn tâm $O(0; 0)$ bán kính $a$:</p>
+                        <ol>
+                            <li>Trong Descartes: $x^2 + y^2 = a$.</li>
+                            <li>Trong tọa độ cực: $r = a$.</li>
+                        </ol>
+
+                        <p><b>Ví dụ.</b> Khi ta giải tích phân, đạo hàm, hay phương trình vi phân, nhiều bài <i>khó nhằn</i> trong tọa độ $x; \ y$ trở nên dễ hơn hẳn nếu đổi sang tọa độ cực. Bởi khi công thức đơn giản hơn vì việc lấy đạo hàm cũng dễ hơn.</p>
+
+                        <p><b>Ví dụ.</b> Một số ứng dụng trong khoa học kĩ thuật là:</p>
+                        <ul>
+                            <li>Vật lý: bài toán điện trường, từ trường, sóng âm, cơ học chất lưu ... đều đối xứng tròn.</li>
+                            <li>Kỹ thuật: thiết kế radar, ăng-ten, robot quay quanh tâm, các đồ thị hình hoa.</li>
+                            <li>Máy học & xử lý ảnh: khi nhận diện mẫu tròn (như con mắt, bánh xe), tọa độ cực giúp tách phần <i>xoay</i> ra khỏi phần <i>xa gần</i>.</li>
+                        </ul>
+
+                        <h3>3. Định nghĩa</h3>
+
+                        <p><b>3.1. Giới thiệu</b></p>
+                        <p>Trong cuốn On Spirals, Archimedes mô tả đường xoắn ốc Archimedes, một hàm số có bán kính phụ thuộc vào góc. Tuy nhiên, công trình của người Hy Lạp này không mở rộng đến một hệ tọa độ đầy đủ.</p>
+                        <p>Trong cuốn Method of Fluxions (viết năm 1671, xuất bản năm 1736), Sir Isaac Newton đã nghiên cứu các phép biến đổi giữa tọa độ cực, mà ông gọi là <i>Seventh Manner; For Spirals</i>, và chín hệ tọa độ khác. Trong tạp chí Acta Eruditorum (1691), Jacob Bernoulli đã sử dụng một hệ tọa độ với một điểm trên một đường thẳng, lần lượt được gọi là cực và trục cực. Tọa độ được xác định bởi khoảng cách từ cực và góc từ trục cực. Công trình của Bernoulli đã mở rộng sang việc tìm bán kính cong của các đường cong được biểu thị trong các tọa độ này.</p>
+                        <p>Alexis Clairaut là người đầu tiên nghĩ đến tọa độ cực trong ba chiều, và Leonhard Euler là người đầu tiên thực sự phát triển chúng.</p>
+                        
+                        <p style="text-align:center; margin: 25px 0;">
+                            <a href="https://en.wikipedia.org/wiki/Polar_coordinate_system" style="background:#222; color:white; padding:8px 16px; text-decoration:none; border-radius:6px; font-weight:bold;">More info</a>
+                        </p>
+
+                        <p><b>3.2. Định nghĩa</b></p>
+                        <div class="longnote">
+                            Ngoài cách sử dụng hệ tọa độ Descartes để mô tả vị trí của một điểm $P$ trong mặt phẳng, ta vẫn còn cách khác để xác định. Ý tưởng cơ bản là xác định vị trí điểm bằng khoảng cách cần di chuyển và hướng góc di chuyển.
+                        </div>
+
+                        <p><b>Định nghĩa.</b> Trong hệ tọa độ cực, ta chọn một điểm gốc (hay còn gọi là cực) ký hiệu là $O$, và một tia làm chuẩn cố định $OA$. Một điểm $P$ được mô tả bằng cách xác định hai đại lượng:</p>
+                        <ul>
+                            <li>$r$: bán kính cực (radial distance) — khoảng cách có hướng từ cực $O$ đến điểm $P$.</li>
+                            <li>$\theta$: góc cực (polar angle) — góc giữa trục cực và đoạn thẳng $OP$ (đơn vị có thể là radian hoặc độ).</li>
+                        </ul>
+                        <p>Khi đó điểm $P$ có tọa độ cực là $(r\ ; \theta)$</p>
+
+                        <div class="image-container">
+                            <img src="toa_do_cuc/1.png" alt="Định nghĩa hệ tọa độ cực">
+                        </div>
+
+                        <p>Tương tự như trong hệ tọa độ Descartes, <i>hệ tọa độ cực</i> cũng có những <i>quy ước</i> liên quan đến <i>hướng đo góc</i>. Các quy ước này được nêu như sau:</p>
+                        <ol>
+                            <li>Góc $\theta$ được đo bằng radian;</li>
+                            <li>Góc $\theta$ được đo kể từ tia chuẩn ban đầu, và được xem là dương khi đo ngược chiều kim đồng hồ từ tia chuẩn, hoặc âm khi đo theo chiều kim đồng hồ từ tia chuẩn.
+                                <div class="image-container">
+                                    <img src="toa_do_cuc/2.png" alt="Quy ước đo góc">
+                                </div>
+                            </li>
+                            <li>Giá trị của $\theta$ bị giới hạn trong khoảng: $-\pi &lt; \theta \le \pi$;</li>
+                            <li>Giá trị của $r$ không nhất thiết dương. 
+                                <ul>
+                                    <li>Nếu $r &gt; 0$, điểm $P$ nằm trên tia tạo với trục cực góc $\theta$.</li>
+                                    <li>Nếu $r &lt; 0$, điểm $P$ nằm trên tia đối diện, tức là tia tạo góc $\theta + \pi$ với trục cực.</li>
+                                    <li>Nếu $r = 0$, điểm $P$ chính là cực $O$.</li>
+                                </ul>
+                            </li>
+                        </ol>
+
+                        <div class="longnote">
+                            Tuy nhiên, khác với hệ tọa độ chữ nhật - nơi mỗi điểm có biểu diễn duy nhất thì trong hệ tọa độ cực, một điểm có thể có nhiều cách biểu diễn khác nhau. Chẳng hạn cùng một điểm $P$, ta có thể biểu diễn:
+                            <div class="math-block">
+                                $$P(r, \theta) , \quad P(r, \theta  + 2 \pi ), \quad P(-r, \theta + \pi)$$
+                            </div>
+                        </div>
+
+                        <p><b>Nhận xét.</b> Tọa độ cực của một điểm $P$ đối với cực $O$ và tia chuẩn $OA$ được biểu diễn bởi cặp số $(r, \theta)$, trong đó $|r|$ là độ dài đoạn thẳng $OP$ và $\theta$ là góc tạo bởi hai tia $OA$ và $OP$.<br>
+                        Ta luôn giả sử $r &gt; 0$ và $-\pi &lt; \theta \le \pi$. <i>Hãy thử giải thích vì sao ta có thể giả sử như vậy ?. Đó là một điểm quan trọng để chuyển đổi các hệ tọa độ đơn giản hơn.</i></p>
+                        
+                        <p><b>Chứng minh.</b> Dùng ý tưởng của nhận xét một điểm $P$ được biểu diễn dưới nhiều cách.</p>
+
+                        <p><b>3.3. Chuyển đổi giữa hai hệ tọa độ</b></p>
+                        <p>Xét một điểm $P$ có tọa độ Descartes $(x, y)$ và tọa độ cực $(r, \theta)$. Ta quy ước rằng cực trùng với gốc tọa độ của hệ Descartes, và tia chuẩn ban đầu trùng với trục hoành ($x$-axis).</p>
+
+                        <div class="image-container">
+                            <img src="toa_do_cuc/3.png" alt="Chuyển đổi giữa hai hệ tọa độ">
+                        </div>
+
+                        <p>Từ hình vẽ, ta nhận thấy có hai cặp phương trình có thể dùng để chuyển đổi giữa hai hệ tọa độ:</p>
+                        <div class="math-block">
+                            $$x = r\cos\theta, \ y = r\sin\theta$$
+                        </div>
+                        <p>dùng để <i>chuyển từ tọa độ cực sang tọa độ Descartes</i>, và</p>
+                        <div class="math-block">
+                            $$r^2 = x^2 + y^2, \ \tan\theta = \frac{y}{x}$$
+                        </div>
+                        <p>dùng để <i>chuyển từ tọa độ Descartes sang tọa độ cực</i>.</p>
+
+                        <p><b>Nhận xét.</b> Cả hai bộ công thức này đều hữu ích, nhưng cần được sử dụng cẩn thận, vì rất dễ thu được giá trị sai của góc $\theta$ khi điểm không nằm trong góc phần tư thứ nhất. Do đó, việc vẽ điểm lên mặt phẳng trước khi tính toán luôn là một thói quen tốt.</p>
+
+                        <div class="soln">
+                            <p><b>Ví dụ.</b> Trong hình, điểm có tọa độ $(\sqrt{3}, 1)$ được biểu diễn trên mặt phẳng tọa độ. Hãy xác định giá trị của $r$ và góc $\theta$ (theo radian và độ).</p>
+                            <p><b>Lời giải.</b> Ta có điểm $(x, y) = (\sqrt{3}, 1)$.</p>
+                            
+                            <div class="image-container">
+                                <img src="toa_do_cuc/4.png" alt="Ví dụ chuyển tọa độ">
+                            </div>
+
+                            <ol>
+                                <li>Bán kính cực:
+                                    <div class="math-block">
+                                        $$r = \sqrt{x^2 + y^2} = \sqrt{(\sqrt{3})^2 + 1^2} = \sqrt{3 + 1} = 2.$$
+                                    </div>
+                                </li>
+                                <li>Góc $\theta$ thỏa mãn
+                                    <div class="math-block">
+                                        $$\tan \theta = \frac{y}{x} = \frac{1}{\sqrt{3}}.$$
+                                    </div>
+                                    Do đó
+                                    <div class="math-block">
+                                        $$\theta = \tan^{-1}\left(\frac{1}{\sqrt{3}}\right) = \frac{\pi}{6} \text{ radians} = 30^\circ.$$
+                                    </div>
+                                </li>
+                            </ol>
+
+                            <p><b>Kết luận:</b></p>
+                            <div class="math-block">
+                                $$r = 2, \quad \theta = \frac{\pi}{6} \text{ radians } = 30^\circ.$$
+                            </div>
+                        </div>
+
+                        <p><b>Nhận xét.</b> Như vậy, thay vì nói điểm $(\sqrt{3}, 1)$, ta có thể nói:<br>
+                        <i>“Hãy đi $2$ đơn vị theo hướng tạo góc $\frac{\pi}{6}$ radian (hay $30^\circ$) so với trục $x$ dương.”</i></p>
+
+                        <div class="longnote">
+                            Khi chuyển từ $(x, y)$ sang $(r, \theta)$, ta phải xác định đúng góc theo tọa độ của điểm:
+                            <ul>
+                                <li>Nếu $x &gt; 0$ và $y &gt; 0$ → góc $\theta$ nằm trong góc phần tư I.</li>
+                                <li>Nếu $x &lt; 0$ và $y &gt; 0$ → góc $\theta$ nằm trong góc phần tư II.</li>
+                                <li>Nếu $x &lt; 0$ và $y &lt; 0$ → góc $\theta$ nằm trong góc phần tư III.</li>
+                                <li>Nếu $x &gt; 0$ và $y &lt; 0$ → góc $\theta$ nằm trong góc phần tư IV.</li>
+                            </ul>
+                        </div>
+
+                        <h3>4. Một số phương trình đường cong trong tọa độ cực</h3>
+
+                        <p>Trong hệ tọa độ chữ nhật, đồ thị của một phương trình là tập hợp các điểm $(x, y)$ thỏa mãn một quan hệ nào đó, thường viết dưới dạng hàm $y = f(x)$. Tương tự,</p>
+
+                        <p><b>Định nghĩa.</b> Trong hệ tọa độ cực, phương trình cực là một quan hệ giữa hai biến $r$ và $\theta$, thường viết dưới dạng: $r = f(\theta)$. Khi đó, đồ thị cực là tập hợp tất cả các điểm $P(r, \theta)$ sao cho cặp $(r, \theta)$ thỏa mãn phương trình này.</p>
+
+                        <p><b>Cách vẽ.</b> Để vẽ đồ thị của phương trình $r = f(\theta)$, ta tiến hành theo các bước:</p>
+                        <ol>
+                            <li>Lập bảng giá trị: chọn một số giá trị $\theta$, tính giá trị tương ứng $r = f(\theta)$.</li>
+                            <li>Vẽ điểm: biểu diễn từng điểm $(r, \theta)$ trên mặt phẳng cực (dạng các vòng tròn đồng tâm và các tia).</li>
+                            <li>Nối điểm: dùng một đường cong trơn (smooth curve) để nối các điểm lại.</li>
+                        </ol>
+
+                        <div class="soln">
+                            <p><b>Ví dụ.</b> Xét phương trình cực: $r = 4\sin\theta.$</p>
+
+                            <p><b>Lời giải.</b> Lập bảng giá trị sau:</p>
+                            <div class="image-container">
+                                <img src="toa_do_cuc/6.png" alt="Bảng giá trị">
+                            </div>
+                            <p>Vẽ các điểm này trên giấy đồ thị cực và vẽ một đường cong qua các điểm để biểu diễn phương trình:</p>
+                            <div class="image-container">
+                                <img src="toa_do_cuc/5.png" alt="Đồ thị hàm số cực">
+                            </div>
+
+                            <p><b>Kết luận:</b> Đồ thị của phương trình cực $r = 4\sin\theta$ là một <i>đường cong</i> có tâm tại $(0, 2)$ và bán kính bằng $2$.</p>
+                        </div>
+
+                        <p><i>Nó có vẻ giống một hình tròn. Hãy xem phép biến đổi sang hệ tọa độ Descartes như sau:</i></p>
+
+                        <div class="longnote">
+                            Ta có: $r = 4\sin\theta.$ Nhân cả hai vế với $r$: $r^2 = 4r\sin\theta$. Thay $r^2 = x^2 + y^2$ và $r\sin\theta = y$, ta được: $x^2 + y^2 = 4y$.<br>
+                            Chuyển vế và hoàn thiện bình phương theo $y$:
+                            <div class="math-block">
+                                $$x^2 + (y - 2)^2 = 4.$$
+                            </div>
+                            Đây là phương trình của một đường tròn có: Tâm: $(0;\,2)$, bán kính: $2$.
+                        </div>
+
+                        <p>Trong phần này, chúng ta đã khảo sát một số đồ thị của các phương trình cực. Có rất nhiều dạng đồ thị thú vị có thể được mô tả bằng phương trình cực, mà trong hệ tọa độ chữ nhật thì việc biểu diễn trở nên phức tạp hơn nhiều.</p>
+                        <p>Vì hệ tọa độ cực dựa trên các vòng tròn đồng tâm, nên không có gì đáng ngạc nhiên khi các đường tròn có tâm tại cực lại có dạng phương trình rất “đơn giản”, chẳng hạn: $r = a$</p>
+                        <p>Trong các bài tập vừa rồi, ta đã gặp các phương trình cực có đồ thị là những đường tròn với tâm <i>không</i> nằm tại cực. Những trường hợp đó chính là các ví dụ đặc biệt của kết quả tổng quát sau.</p>
+
+                        <div class="method">
+                            <b>Định lý.</b> Giả sử $a$ là một số thực dương. Khi đó:
+                            <ol>
+                                <li>Đồ thị của phương trình $r = 2a\sin\theta$ là một đường tròn bán kính $a$, có tâm tại điểm $(0, a)$ trong hệ tọa độ chữ nhật, hoặc tại điểm $(a, \frac{\pi}{2})$ trong hệ tọa độ cực.</li>
+                                <li>Đồ thị của phương trình $r = 2a\cos\theta$ là một đường tròn bán kính $a$, có tâm tại điểm $(a, 0)$ trong hệ tọa độ chữ nhật, hoặc tại điểm $(a, 0)$ trong hệ tọa độ cực.</li>
+                            </ol>
+                        </div>
+
+                        <p><b>Chứng minh.</b> Các bạn có thể tự chứng minh lại xem như một bài tập biến đổi lượng giác.</p>
+
+                        <p>Hãy xem thử một số hình ảnh cũng <i>hay ho</i> của phương trình cực:</p>
+                        <div class="image-container">
+                            <img src="toa_do_cuc/7.png" alt="Một số đồ thị cực">
+                        </div>
+
+                        <p>Hoặc bạn có biết hình ảnh này?</p>
+                        <div class="image-container">
+                            <img src="toa_do_cuc/8.png" alt="Vỏ ốc nautilus">
+                        </div>
+                        <p>Đây là hình dạng của loài <i>chambered nautilus</i>, là 1 loại ốc. Cũng chính là hình ảnh mô tả trực quan cho <i>tỉ lệ vàng</i> nổi tiếng.</p>
+
+                        <h3>5. Giải tích về cực đối cực</h3>
+                        
+                        <p><b>Ví dụ.</b> Hãy xét việc tính tích phân trên một hình tròn. Giả sử ta muốn tính tích phân của một hàm $f(x,y)$ trên một đĩa tròn $D$ bán kính $R$, có tâm tại gốc tọa độ.</p>
+                        <p>Trong tọa độ Descartes $(x, y)$, miền $D$ được mô tả bởi: $x^2 + y^2 \le R^2$. Việc thiết lập tích phân $\iint_D f(x,y)\,dx\,dy$ (tích phân hai lớp - double integral) trong tọa độ Descartes có thể trở nên phức tạp do biên là một đường tròn.</p>
+                        <p>Đây là lúc <b>tọa độ cực</b> $(r, \theta)$ tỏ ra rất hữu ích. Chúng mô tả cùng các điểm $(x,y)$ thông qua <i>bán kính</i> $r$ và <i>góc</i> $\theta$. Phép biến đổi giữa hai hệ tọa độ được cho bởi:</p>
+                        <div class="math-block">
+                            $$
+                            \begin{cases}
+                                x = r\cos\theta, \\
+                                y = r\sin\theta.
+                            \end{cases}
+                            $$
+                        </div>
+                        <p>Khi đó, đĩa tròn $D$ trở nên đơn giản hơn nhiều trong tọa độ cực:</p>
+                        <div class="math-block">
+                            $$0 \le r \le R, \ \  0 \le \theta \le 2\pi.$$
+                        </div>
+
+                        <div class="method">
+                            <b>Định lý.</b> Giả sử $R$ là miền phẳng được giới hạn bởi một đường cong $r(\varphi)$ và hai tia $\varphi = a$ và $\varphi = b$, với điều kiện:
+                            <div class="math-block">
+                                $$0 &lt; b - a \le 2\pi.$$
+                            </div>
+                            Khi đó, diện tích của miền $R$ được xác định bởi:
+                            <div class="math-block">
+                                $$A = \frac{1}{2} \int_a^b \bigl[r(\varphi)\bigr]^2\, d\varphi.$$
+                            </div>
+                            <div class="image-container">
+                                <img src="toa_do_cuc/9.png" alt="Diện tích miền R">
+                            </div>
+                        </div>
+
+                        <p><b>Chứng minh.</b> Ta chia khoảng $[a, b]$ thành $n$ khoảng con bằng nhau, mỗi khoảng có độ rộng:</p>
+                        <div class="math-block">
+                            $$\Delta \varphi = \frac{b - a}{n}.$$
+                        </div>
+                        <p><i>Chẳng hạn với $n = 5$.</i></p>
+                        <div class="image-container">
+                            <img src="toa_do_cuc/10.png" alt="Chia nhỏ hình quạt">
+                        </div>
+                        <p>Với mỗi khoảng con thứ $i = 1, 2, \ldots, n$, lấy $\varphi_i$ là trung điểm của khoảng đó. Tại góc $\varphi_i$, ta dựng một <i>hình quạt tròn</i> (sector) có:</p>
+                        <ul>
+                            <li>Tâm tại cực,</li>
+                            <li>Bán kính $r(\varphi_i)$,</li>
+                            <li>Góc ở tâm bằng $\Delta \varphi$.</li>
+                        </ul>
+                        <p>Diện tích của hình quạt tròn nhỏ này là:</p>
+                        <div class="math-block">
+                            $$\bigl[r(\varphi_i)\bigr]^2 \pi \cdot \frac{\Delta\varphi}{2 \pi} = \frac{1}{2}\bigl[r(\varphi_i)\bigr]^2 \Delta\varphi.$$
+                        </div>
+                        <p>Tổng diện tích của tất cả các quạt là:</p>
+                        <div class="math-block">
+                            $$\sum_{i=1}^{n} \frac{1}{2}\bigl[r(\varphi_i)\bigr]^2 \Delta\varphi.$$
+                        </div>
+                        <p>Khi số lượng khoảng con $n$ tăng lên vô hạn, phép cộng này tiến dần đến tích phân Riemann, và ta thu được công thức giới hạn:</p>
+                        <div class="math-block">
+                            $$A = \frac{1}{2} \int_a^b \bigl[r(\varphi)\bigr]^2\, d\varphi.$$
+                        </div>
+
+                        <p><b>Nhận xét.</b> Đây cũng là ý tưởng khi xây dựng tích phân Riemann ta vẫn hay biết.</p>
+
+                        <h3>6. Một số ví dụ</h3>
+                        <p>Từ công thức diện tích trong tọa độ cực, ta thử xét một bài toán cụ thể để thấy sự đơn giản của phương pháp này.</p>
+
+                        <div class="soln">
+                            <p><b>Ví dụ (Sưu tầm).</b> Người nghệ sĩ vẽ một bông hoa không màu trên một miếng bìa hình vuông $ABCD$ tâm $O$ bằng một đường cong khép kín $(L)$ rồi tô màu đen phần bên ngoài đường cong này của hình vuông (tham khảo hình trên). Nếu điểm $M$ thuộc cạnh của hình vuông $ABCD$ và tia $OM$ cắt $(L)$ tại điểm $N$ thì $MN=2$ dm. Biết rằng $AB=8$ dm. Phần được nghệ sĩ tô màu đen có diện tích bằng bao nhiêu centimet vuông ?</p>
+                            <div class="image-container">
+                                <img src="toa_do_cuc/Screenshot_2.png" alt="Ví dụ hình vuông 1">
+                            </div>
+                            
+                            <p><b>Lời giải.</b><br>
+                            Ta chỉ cần xét góc $\varphi \in [0; \frac{\pi}{4}]$, và cũng dễ nhận thấy rằng các phần diện tích ở miền khác từ $[\frac{\pi}{4}; \frac{\pi}{2}], [\frac{\pi}{2}; \frac{3\pi}{4}], [\frac{3\pi}{4}; \pi], \ldots , [\frac{7\pi}{4};2\pi]$ gồm $7$ miền cũng đều có diện tích bằng nhau.<br>
+                            Xét điểm $N \in (L)$, $(Ox, ON) = \varphi$ và $ON$ cắt $DC$ tại $M$ thì $MN = 2$, ta tìm $ON$, ta xác định $M', N'$ lần lượt là hình chiếu $M, N$ lên $Ox$.</p>
+                            <div class="math-block">
+                                $$ON = OM - MN = OM' \cdot \frac{1}{\cos \varphi} - 2 =  \frac{4}{\cos \varphi} - 2 \tag{6.1.2}$$
+                            </div>
+                            <p>Vậy đường cong khép kín $(L)$ trong đoạn $[0; \frac{\pi}{4}]$ là</p>
+                            <div class="math-block">
+                                $$f(\varphi) = \frac{4}{\cos \varphi} - 2, \forall \varphi \in  \left[0; \frac{\pi}{4} \right]$$
+                            </div>
+                            <p>Áp dụng công thức ta có diện tích phủ bởi đường cong $(L)$ và hai tia $Ox, OC$ là:</p>
+                            <div class="math-block">
+                                $$S = \frac{1}{2} \int_0^{\frac{\pi}{4}} \left[\frac{4}{\cos \varphi} - 2\right]^2\, d\varphi \approx 2,5198$$
+                            </div>
+                            <p>(Phần còn lại đơn giản, bạn đọc tự hoàn thiện).</p>
+                        </div>
+
+                        <hr class="exam-divider">
+
+                        <div class="soln">
+                            <p><b>Ví dụ (Sưu tầm).</b> Hình vẽ dưới đây cho một miền $D$ (được tô đậm) nằm trong hình vuông cạnh bằng $4$. Miền $D$ này gồm những điểm có khoảng cách tới tâm hình vuông nhỏ hơn hoặc bằng khoảng cách tới cạnh gần nhất của hình vuông. Tính diện tích miền $D$ ?</p>
+                            <div class="image-container">
+                                <img src="toa_do_cuc/Screenshot_1.png" alt="Ví dụ hình vuông 2">
+                            </div>
+
+                            <p><b>Lời giải.</b><br>
+                            Từ đề bài, ta cần xác định được đường viền của miền $D$ (đặt là $\mathcal{L}$), đó cũng chính là tập những điểm xảy ra dấu bằng giữa khoảng cách đến tâm và đến cạnh hình vuông.<br>
+                            Ta vẫn đặt hệ tọa độ với tâm $O$ trùng với tâm hình vuông, $Ox$ song song với cạnh hình vuông. Một cách tương tự ta vẫn xét $\theta \in [0; \frac{\pi}{4}]$ và điểm $S \in \mathcal{L}$ thỏa $(Ox, Ox) =\theta$. Gọi $S'$ là hình chiếu của $S$ lên $Ox$, tia $Ox$ cắt cạnh hình vuông tại $H$, ta tìm cách biểu diễn $SO$ theo $\theta$. Đặt :</p>
+                            <div class="math-block">
+                                $$OS = S'H = OH - OS' = 2 - OS' \tag{6.2.1}$$
+                            </div>
+                            <div class="image-container">
+                                <img src="toa_do_cuc/12.png" alt="Lời giải ví dụ 2">
+                            </div>
+                            <p>Mặt khác:</p>
+                            <div class="math-block">
+                                $$\cos \theta = \frac{OS'}{OS} \Rightarrow OS' = OS \cdot \cos \theta \tag{6.2.2}$$
+                            </div>
+                            <p>Kết hợp $(6.2.1)$ và $(6.2.2)$ nên</p>
+                            <div class="math-block">
+                                $$OS = 2 -OS \cdot \cos \theta \Rightarrow OS = \frac{2}{1 + \cos \theta} =  f(r)$$
+                            </div>
+                            <p>Vậy diện tích $D$ từ $0$ đến $\frac{\pi}{4}$ là</p>
+                            <div class="math-block">
+                                $$S = \frac{1}{2} \int_0^{\frac{\pi}{4}} \left[\frac{2}{1 + \cos \theta}\right]^2\, d\varphi \approx 0,393 \Rightarrow S_D =8 \times S \approx  3,142$$
+                            </div>
+                        </div>
+
+                        <hr class="exam-divider">
+
+                        <div class="soln">
+                            <p><b>Ví dụ (Đề thi thử TN THPT LTT - NK).</b> Trong một cuộc thi sáng tạo các chủ đề liên quan đến Kỷ niệm 50 năm ngày miền Nam hoàn toàn giải phóng, tại hệ thống trường Nguyễn Khuyến-Lê Thánh Tông, một em học sinh đến từ lớp 12B1 đã đạt giải đặc biệt với một thiết kế vô cùng độc đáo. Em học sinh này đã thiết kế bề mặt của một chiếc đồng hồ treo tường bằng sự kết hợp giữa lịch sử, mỹ thuật và toán học.</p>
+                            <ul>
+                                <li>Phần trong của mặt đồng hồ là hình vuông có cạnh bằng $2 \ dm$, nơi đây lưu giữ hình ảnh của chiếc xe tăng $390$ của bộ đội Việt Nam tiến vào dinh độc lập.</li>
+                                <li>Phần ngoài của mặt đồng hồ là đường tròn có bán kính bằng $2 \ dm$.</li>
+                                <li>Đường cong trung gian có tên $(L)$ là tập hợp tất cả điểm $P$ sao cho nếu kẻ tia Ot bất kỳ cắt hình vuông và đường tròn lần lượt tại $M, N$ thì $P$ là trung điểm $MN$ ($O$ là tâm đường tròn). Tìm diện tích hình phẳng giới hạn bởi đường cong $(L)$ theo đơn vị $dm^2$ và làm tròn đến hàng phần trăm.</li>
+                            </ul>
+                            <div class="image-container">
+                                <img src="toa_do_cuc/11.png" alt="Đồng hồ lịch sử">
+                            </div>
+
+                            <p><b>Lời giải.</b></p>
+                            <div class="image-container">
+                                <img src="toa_do_cuc/13.png" alt="Lời giải đồng hồ">
+                            </div>
+                            <p>Xét hình vẽ sau với $O$ là tâm hình vuông và tia $Ox$ đi qua trung điểm $H$ của một cạnh hình vuông, gọi $\varphi$ là góc hợp bởi tia $Ox$ và tia $Ot$ với $\varphi \in \left[0; \dfrac{\pi}{4}\right]$.</p>
+                            <p>Ta có:</p>
+                            <div class="math-block">
+                                $$r({\varphi}) = OP = \dfrac{OM + ON}{2} = \dfrac{\dfrac{1}{\cos\varphi} + 2}{2} = \dfrac{1 + 2\cos\varphi}{2\cos\varphi}.$$
+                            </div>
+                            <p>Diện tích của đường cong $(L)$ là:</p>
+                            <div class="math-block">
+                                $$S = 8 \cdot \dfrac{1}{2} \int_{0}^{\pi/4} (r({\varphi})^{2}\, d\varphi = 4 \int_{0}^{\pi/4} \left(\dfrac{1 + 2\cos\varphi}{2\cos\varphi}\right)^{2} d\varphi \approx 7{,}67\, \text{dm}^{2}.$$
+                            </div>
+                        </div>
+
+                        <hr class="exam-divider">
+
+                        <div class="soln">
+                            <p><b>Ví dụ (Sưu tầm).</b> Hình phẳng $(H)$ tô màu bên dưới được tạo ra bởi một tam giác đều $ABC$ (có cạnh bằng $20$ cm và có tâm $O$) và một "tam giác cong" $A'B'C'$. Các điểm trên các đoạn cong được tạo ra bằng cách cho một điểm $M$ chạy trên các cạnh của tam giác $ABC$, với mỗi điểm $M$ ta lấy trên tia đối của tia $MO$ một điểm $N$ sao cho $MN = 20$ cm. Tính diện tích hình phẳng $(H)$ ?</p>
+                            <div class="image-container">
+                                <img src="toa_do_cuc/Screenshot_9.png" alt="Tam giác cong">
+                            </div>
+
+                            <p><b>Lời giải.</b> Bài toán này hoàn toàn tương tự bài $1$ nhưng là tam giác, xin nhường lại bạn đọc.</p>
+                        </div>
+
+                        <div class="longnote">
+                            Như vậy ta thấy khi đã chuyển từ tọa độ Descartes sang tọa độ cực và thiết lập được phương trình cực thì mọi bước tính toán vô cùng đơn giản. Như vậy vấn đề của ta khi làm các bài toán tính diện tích hình cong chỉ là chuyển đổi sao cho khéo và gọn.<br><br>
+                            Đây không phải là kiến thức dễ, nó cũng không được dạy ở chương trình THPT nhưng lại là một công cụ vô cùng hữu dụng với các đường cong, hàm phức tạp khi biểu diễn theo phương pháp truyền thống.<br><br>
+                            Do đó lưu ý rằng đây cũng chỉ là một <i>trick</i> để tính toán nhanh chóng hơn hoặc cũng có thể dùng để kiểm tra lại đáp án. Không nên lạm dụng, vẫn nên ưu tiên với hệ tọa độ Descartes.
+                        </div>
+
+                        <h3>Tài liệu tham khảo</h3>
+                        <ul>
+                            <li><a href="https://en.wikipedia.org/wiki/Polar_coordinate_system">Wikipedia: Polar coordinate system</a></li>
+                            <li><a href="https://math.libretexts.org/Bookshelves/Precalculus/Book%3A_Trigonometry_(Sundstrom_and_Schlicker)/05%3A_Complex_Numbers_and_Polar_Coordinates/5.04%3A_The_Polar_Coordinate_System">LibreTexts: The Polar Coordinate System</a></li>
+                            <li><a href="https://mathworld.wolfram.com/PolarCoordinates.html">MathWorld: Polar Coordinates</a></li>
+                            <li><a href="https://www.iitg.ac.in/physics/fac/saurabh/ph101/Lecture2-SBasu.pdf">IITG: Physics Lecture on Polar Coordinates</a></li>
+                            <li><a href="https://www.mathcentre.ac.uk/resources/uploaded/mc-ty-polar-2009-1.pdf">MathCentre: Polar Coordinates</a></li>
+                            <li><a href="https://math.libretexts.org/Bookshelves/Calculus/Calculus_(OpenStax)/11%3A_Parametric_Equations_and_Polar_Coordinates/11.04%3A_Area_and_Arc_Length_in_Polar_Coordinates">LibreTexts: Area and Arc Length in Polar Coordinates</a></li>
+                            <li><a href="https://www.youtube.com/watch?v=WX-50e0ZhAw">YouTube Reference 1</a></li>
+                            <li><a href="https://www.tiktok.com/@mot_chut_toan/video/7517675978647162129">TikTok Reference 1</a></li>
+                            <li><a href="https://www.tiktok.com/@mot_chut_toan/video/7517671293358066945">TikTok Reference 2</a></li>
+                            <li><a href="https://www.youtube.com/watch?v=rGZLWIXtyEA">YouTube Reference 2</a></li>
+                        </ul>
+
+                        <p class="exam-end"><b>─── HẾT ───</b></p>
+
+                    </div></div></div><div class="stats-strip fade-up">
+                <div class="stat-item"><div class="stat-number">$\Sigma$</div><div class="stat-label">Bài Viết</div></div>
+                <div class="stat-item"><div class="stat-number">$\Phi$</div><div class="stat-label">Chủ Đề</div></div>
+                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
+                <div class="stat-item"><div class="stat-number">$\infty$</div><div class="stat-label">Đam Mê</div></div>
+            </div>
+                
+
+            <footer class="site-footer fade-up">
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 <span class="footer-brand">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
+                </div>
+            </footer>
+        </main>
+    </div><script src="/SMP/js/layout.js"></script>
+    <script src="/SMP/js/shared.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof Comments !== 'undefined') {
+            Comments.init('HeToaDoCuc2026');
+        }
+    });
+</script>
+</body>
+</html>
