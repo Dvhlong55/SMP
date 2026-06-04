@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -386,7 +386,7 @@
                         <h3>Thảo Luận &amp; Góp Ý</h3>
                         <div class="comment-form">
                             <div class="comment-form-row">
-                                <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Gmail c&#7911;a b&#7841;n...">
                             </div>
                             <div style="margin-bottom:14px">
                                 <textarea id="comment-text-input" class="comment-textarea"
@@ -401,7 +401,7 @@
 
                 <div class="main-articles-body">
 
-                    <a href="../Math/toanhoc.html" class="exam-back-btn fade-up">← Quay Lại Toán Học</a>
+                    <a href="../Math/toanhoc.html" class="exam-back-btn fade-up">&#8592; Quay L&#7841;i</a>
 
                     <div class="exam-meta fade-up">
                         <span class="exam-tag">Công Cụ</span>
@@ -409,7 +409,6 @@
                         <span class="exam-tag">04 / 06 / 2026</span>
                     </div>
 
-                    <!-- Hero -->
                     <div class="latex-hero fade-up">
                         <h1 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--exam-title-color);margin:0 0 5px 0;">
                             📝 Trình Soạn Thảo $\LaTeX$
@@ -419,7 +418,6 @@
                         </p>
                     </div>
 
-                    <!-- Snippet toolbar -->
                     <div class="snippet-toolbar fade-up" style="display:flex;flex-direction:column;gap:8px;">
 
                         <div class="snip-group-row">
@@ -508,16 +506,25 @@
                                 <button class="snip-btn" onclick="insertSnip('\\gcd(a,b)')">gcd</button>
                                 <button class="snip-btn" onclick="insertSnip('\\lfloor x \\rfloor')">$\lfloor x \rfloor$</button>
                                 <button class="snip-btn" onclick="insertSnip('\\lceil x \\rceil')">$\lceil x \rceil$</button>
-                                <button class="snip-btn" onclick="insertSnip('\\textbf{}')"><b>B</b></button>
-                                <button class="snip-btn" onclick="insertSnip('\\textit{}')"><i>I</i></button>
+                            </div>
+                        </div>
+
+                                                <div class="snip-group-row">
+                            <span class="snip-group-label">Định dạng</span>
+                            <div class="snip-group-btns">
                                 <button class="snip-btn" onclick="insertSnip('\\Rightarrow')"><i>$\Rightarrow$</i></button>
                                 <button class="snip-btn" onclick="insertSnip('\\Leftarrow')"><i>$\Leftarrow$</i></button>
+                                <button class="snip-btn" onclick="insertSnip('\\textbf{}')"><b>B</b></button>
+                                <button class="snip-btn" onclick="insertSnip('\\textit{}')"><i>I</i></button>
+                                <button class="snip-btn" onclick="insertSnip('\\textbf{Bài toán.} ')">Bài Toán</button>
+                                <button class="snip-btn" onclick="insertSnip('\\textbf{Lời giải.} ')">Lời Giải</button>
+                                <button class="snip-btn" onclick="insertSnip('\\textbf{Bổ đề.} ')">Bổ Đề</button>
+                                <button class="snip-btn" onclick="insertSnip('\\textbf{Định lý.} ')">Định Lý</button>
                             </div>
                         </div>
 
                     </div>
 
-                    <!-- Editor + Preview workspace -->
                     <div class="latex-workspace fade-up">
 
                         <div class="editor-pane">
@@ -546,7 +553,6 @@
                         </div>
                     </div>
 
-                    <!-- Export bar -->
                     <div class="export-bar fade-up">
                         <button class="export-btn" onclick="printPreview()">🖨️ In / Xuất PDF</button>
                         <button class="export-btn purple" onclick="copyRendered()">📋 Copy Preview</button>
@@ -573,8 +579,6 @@
         </main>
     </div>
 
-
-
     <script src="../js/layout.js"></script>
     <script src="../js/shared.js"></script>
     <script>
@@ -600,8 +604,6 @@
                 editor.selectionStart = editor.selectionEnd = s + 2;
             }
         });
-
-
     });
 
     // ── Render ──
@@ -611,8 +613,9 @@
         renderTimer = setTimeout(doRender, 500);
     }
 
+    // ── Hàm chuyển đổi thô (Render các định dạng LaTeX thông thường sang HTML) ──
     function latexToHtml(src) {
-        return src
+        var tempSrc = src
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
@@ -626,20 +629,26 @@
             .replace(/\\subsection\{([^}]*)\}/g, '<h3>$1</h3>')
             .replace(/\\item\s/g, '• ')
             .replace(/\\noindent\s*/g, '')
-            .replace(/\\(medskip|bigskip|smallskip)/g, '<br>')
+            .replace(/\\(medskip|bigskip|smallskip)/g, '<br>');
+
+        return tempSrc;
     }
 
+    // ── Hàm Render chính (MathJax render realtime) ──
     function doRender() {
         var preview = document.getElementById('latex-preview');
         var src = document.getElementById('latex-editor').value.trim();
         if (!src) {
             preview.className = 'empty-state';
-            preview.textContent = 'Kết quả render sẽ hiện ở đây...';
+            preview.innerHTML = 'Kết quả render sẽ hiện ở đây...';
             return;
         }
         preview.className = '';
+        
+        // Render text và công thức thô
         preview.innerHTML = latexToHtml(src);
         
+        // Gọi MathJax xử lý các công thức toán $...$ và \[\...\]
         if (window.MathJax && MathJax.typesetPromise) {
             MathJax.typesetClear([preview]);
             MathJax.typesetPromise([preview]).catch(function (e) { console.warn('MathJax:', e); });
@@ -703,7 +712,7 @@
             + '\x3Cmeta charset="UTF-8"\x3E\x3Ctitle\x3ESMP LaTeX Export\x3C/title\x3E'
             + '\x3Cscript\x3Ewindow.MathJax={tex:{inlineMath:[["$","$"],["\\\\(","\\\\)"]],displayMath:[["$$","$$"],["\\\\[","\\\\]"]]}};\x3C/script\x3E'
             + '\x3Cscript src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"\x3E\x3C/script\x3E'
-            + '\x3Cstyle\x3Ebody{font-family:"Times New Roman",serif;margin:40px 60px;font-size:12pt;line-height:1.8;color:#000}h1,h2{text-align:center}h3{text-align:left}@media print{body{margin:20mm 25mm}}\x3C/style\x3E'
+            + '\x3Cstyle\x3Ebody{font-family:"Times New Roman",serif;margin:40px 60px;font-size:12pt;line-height:1.8;color:#000;white-space:pre-wrap;}h1,h2{text-align:center}h3{text-align:left}@media print{body{margin:20mm 25mm}}\x3C/style\x3E'
             + '\x3C/head\x3E\x3Cbody\x3E' + content + '\x3C/body\x3E\x3C/html\x3E';
         win.document.write(head);
         win.document.close();
@@ -711,8 +720,6 @@
             setTimeout(function () { win.print(); }, 1800);
         };
     }
-
-
 
     // ── Toast ──
     function showToast(msg) {

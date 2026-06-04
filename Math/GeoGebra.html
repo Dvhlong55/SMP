@@ -1,0 +1,710 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — GeoGebra → TikZ Extractor</title>
+    <meta name="description" content="Công cụ trích xuất mã TikZ từ link GeoGebra trực tiếp trên trình duyệt. Dán link, nhận code TikZ ngay lập tức.">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
+    <style>
+        body { overflow-x: hidden; }
+
+        :root {
+            --body-bg: #0b1111;
+            --widget-title-color: #fff;
+            --widget-link-color: #888;
+            --widget-badge-bg: rgba(255,255,255,0.05);
+            --widget-badge-color: #aaa;
+            --exam-paper-bg: rgba(255,255,255,0.025);
+            --exam-paper-border: rgba(92,225,230,0.09);
+            --exam-text-color: #ddd;
+            --exam-bold-color: #f4f4f4;
+            --exam-title-color: #f0f0f0;
+            --exam-divider-color: rgba(92,225,230,0.1);
+        }
+
+        body:not(.dark-mode) {
+            --body-bg: #f8fafc;
+            --widget-title-color: #1e293b;
+            --widget-link-color: #64748b;
+            --widget-badge-bg: rgba(0,0,0,0.05);
+            --widget-badge-color: #475569;
+            --exam-paper-bg: #ffffff;
+            --exam-paper-border: rgba(15,23,42,0.08);
+            --exam-text-color: #334155;
+            --exam-bold-color: #0f172a;
+            --exam-title-color: #1e293b;
+            --exam-divider-color: rgba(15,23,42,0.08);
+            --accent-cyan: #009eb3;
+        }
+
+        body {
+            background-color: var(--body-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        .main-wrapper {
+            position: relative;
+            max-width: 2000px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            transform: none !important;
+            left: 0 !important;
+            transition: transform 0s !important;
+        }
+
+        .main-content-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 36px;
+            margin-top: 20px;
+            min-width: 0;
+        }
+
+        .tags-comment-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            z-index: 1;
+        }
+
+        .side-widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--widget-title-color);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s ease;
+        }
+
+        body:not(.dark-mode) .side-widget-title {
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .side-widget-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .side-widget-list a {
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--widget-link-color); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+        }
+
+        .side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(4px); }
+
+        .side-widget-list a span {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            background: var(--widget-badge-bg); padding: 2px 8px;
+            border-radius: 12px; color: var(--widget-badge-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @media (max-width: 1100px) {
+            .main-content-layout { grid-template-columns: 1fr; }
+            .tags-comment-sidebar { position: static; }
+        }
+
+        .main-articles-body {
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        /* ── Hero ── */
+        .latex-hero { margin-bottom: 22px; }
+        .latex-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--exam-title-color);
+            margin: 0 0 5px 0;
+        }
+        .latex-hero p { font-size: 0.85rem; color: var(--exam-text-color); opacity: 0.7; margin: 0; }
+
+        .exam-back-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: var(--accent-cyan, #5ce1e6); text-decoration: none;
+            font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px; text-transform: uppercase;
+            margin-bottom: 22px; opacity: 0.65; transition: opacity 0.2s;
+        }
+        .exam-back-btn:hover { opacity: 1; }
+
+        .exam-meta { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+        .exam-tag {
+            font-size: 0.7rem; font-family: 'JetBrains Mono', monospace;
+            padding: 4px 13px; border-radius: 20px;
+            border: 1px solid rgba(92,225,230,0.35);
+            color: var(--accent-cyan, #5ce1e6);
+        }
+
+        /* ── Input Panel ── */
+        .ggb-panel {
+            background: var(--exam-paper-bg);
+            border: 1px solid var(--exam-paper-border);
+            border-radius: 12px;
+            padding: 28px 32px;
+            margin-bottom: 20px;
+        }
+
+        .ggb-panel-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent-cyan, #5ce1e6);
+            margin-bottom: 14px;
+        }
+
+        .ggb-input-row {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        #ggb-link-input {
+            flex: 1;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(92,225,230,0.15);
+            border-radius: 8px;
+            padding: 11px 16px;
+            color: var(--exam-text-color);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.84rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        body:not(.dark-mode) #ggb-link-input { background: #f1f5f9; border-color: rgba(15,23,42,0.1); }
+        #ggb-link-input:focus { border-color: rgba(92,225,230,0.45); }
+        #ggb-link-input::placeholder { color: rgba(150,150,150,0.4); font-style: italic; }
+
+        .ggb-extract-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(92,225,230,0.10);
+            border: 1px solid rgba(92,225,230,0.35);
+            border-radius: 8px; padding: 11px 22px;
+            color: var(--accent-cyan, #5ce1e6);
+            font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+            letter-spacing: 1px; text-transform: uppercase;
+            cursor: pointer; transition: all 0.2s; white-space: nowrap;
+        }
+        .ggb-extract-btn:hover {
+            background: rgba(92,225,230,0.22);
+            border-color: rgba(92,225,230,0.65);
+            transform: translateY(-1px);
+        }
+        .ggb-extract-btn:disabled {
+            opacity: 0.5; cursor: not-allowed; transform: none;
+        }
+
+        .ggb-hint {
+            font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;
+            color: var(--exam-text-color); opacity: 0.45;
+            margin-top: 10px;
+        }
+
+        /* ── Status Bar ── */
+        .ggb-status {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 16px;
+            background: rgba(92,225,230,0.04);
+            border: 1px solid rgba(92,225,230,0.1);
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.76rem;
+            color: var(--exam-text-color);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            display: none;
+        }
+        .ggb-status.show { display: flex; }
+        .ggb-status.success { border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.05); color: #4ade80; }
+        .ggb-status.error { border-color: rgba(248,113,113,0.3); background: rgba(248,113,113,0.05); color: #f87171; }
+        .ggb-status.loading { border-color: rgba(92,225,230,0.2); }
+        .ggb-spinner {
+            width: 14px; height: 14px;
+            border: 2px solid rgba(92,225,230,0.2);
+            border-top-color: var(--accent-cyan, #5ce1e6);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            flex-shrink: 0;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Output Panel ── */
+        .ggb-output-panel {
+            display: none;
+        }
+        .ggb-output-panel.show { display: block; }
+
+        .pane-header {
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(92,225,230,0.06);
+            border: 1px solid rgba(92,225,230,0.12);
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+            padding: 9px 15px;
+        }
+        .pane-title {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            color: var(--accent-cyan, #5ce1e6);
+        }
+        .pane-actions { display: flex; gap: 7px; }
+        .pane-btn {
+            background: rgba(92,225,230,0.09);
+            border: 1px solid rgba(92,225,230,0.22);
+            border-radius: 5px; padding: 4px 11px;
+            color: var(--accent-cyan, #5ce1e6);
+            font-family: 'JetBrains Mono', monospace; font-size: 0.70rem;
+            letter-spacing: 0.8px; text-transform: uppercase;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .pane-btn:hover { background: rgba(92,225,230,0.2); border-color: rgba(92,225,230,0.55); }
+
+        #tikz-output {
+            width: 100%; box-sizing: border-box;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(92,225,230,0.10);
+            border-top: none; border-radius: 0 0 10px 10px;
+            padding: 18px 20px;
+            color: var(--exam-text-color);
+            font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;
+            line-height: 1.7; min-height: 350px;
+            resize: vertical; outline: none;
+            tab-size: 2;
+        }
+        body:not(.dark-mode) #tikz-output { background: #f1f5f9; border-color: rgba(15,23,42,0.08); }
+
+        /* ── Export Bar ── */
+        .export-bar { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+        .export-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(92,225,230,0.08);
+            border: 1px solid rgba(92,225,230,0.25);
+            border-radius: 8px; padding: 10px 20px;
+            color: var(--accent-cyan, #5ce1e6);
+            font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+            letter-spacing: 1px; text-transform: uppercase;
+            cursor: pointer; transition: all 0.22s;
+        }
+        .export-btn:hover {
+            background: rgba(92,225,230,0.18);
+            border-color: rgba(92,225,230,0.55);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 16px rgba(92,225,230,0.1);
+        }
+
+        /* ── Hidden applet container ── */
+        #ggb-container { display: none; position: fixed; }
+
+        /* ── How to use ── */
+        .how-to {
+            background: var(--exam-paper-bg);
+            border: 1px solid var(--exam-paper-border);
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-top: 20px;
+        }
+        .how-to-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent-cyan, #5ce1e6);
+            margin-bottom: 14px;
+        }
+        .how-to ol {
+            padding-left: 20px;
+            color: var(--exam-text-color);
+            font-size: 0.87rem;
+            line-height: 2;
+            opacity: 0.8;
+        }
+        .how-to code {
+            background: rgba(92,225,230,0.1);
+            border: 1px solid rgba(92,225,230,0.15);
+            border-radius: 4px;
+            padding: 1px 7px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-cyan, #5ce1e6);
+        }
+
+        .exam-end { text-align: center; color: #999; font-style: italic; font-size: 0.82rem; margin-top: 30px; }
+
+        .stats-strip {
+            display: flex; gap: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 8px; overflow: hidden;
+            margin-bottom: 36px; margin-top: 50px;
+            max-width: 100%; box-sizing: border-box;
+        }
+        .stat-item {
+            flex: 1; padding: 18px 20px; text-align: center;
+            border-right: 1px solid var(--border-light);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.6rem;
+            font-weight: 700; color: var(--accent-cyan); line-height: 1; margin-bottom: 6px;
+        }
+        .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="main-content-layout">
+
+                <aside class="tags-comment-sidebar">
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Categories</div>
+                        <ul class="side-widget-list">
+                            <li><a href="../Math/toanhoc.html">Chuyên Toán <span>10</span></a></li>
+                            <li><a href="../Math/toanhoc.html">HSG Toán 9 <span>8</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Math Olympiad <span>4</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Number Theory <span>5</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Algebra <span>3</span></a></li>
+                            <li><a href="../My%20Life/cuocsong.html">Cuộc Sống <span>1</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Archives</div>
+                        <ul class="side-widget-list">
+                            <li><a href="#">Tháng 4, 2026 <span>12</span></a></li>
+                            <li><a href="#">Tháng 3, 2026 <span>8</span></a></li>
+                            <li><a href="#">Tháng 2, 2026 <span>5</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="comment-section fade-up">
+                        <h3>Thảo Luận &amp; Góp Ý</h3>
+                        <div class="comment-form">
+                            <div class="comment-form-row">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Gmail c&#7911;a b&#7841;n...">
+                            </div>
+                            <div style="margin-bottom:14px">
+                                <textarea id="comment-text-input" class="comment-textarea"
+                                    placeholder="Nhập bình luận hoặc lời nhắn của bạn tại đây..."></textarea>
+                            </div>
+                            <button id="comment-submit" class="comment-submit">Gửi Bình Luận</button>
+                        </div>
+                        <div id="comment-list" class="comment-list"></div>
+                    </div>
+
+                </aside>
+
+                <div class="main-articles-body">
+
+                    <a href="toanhoc.html" class="exam-back-btn fade-up">&#8592; Quay L&#7841;i</a>
+
+                    <div class="exam-meta fade-up">
+                        <span class="exam-tag">Công Cụ</span>
+                        <span class="exam-tag">GeoGebra</span>
+                        <span class="exam-tag">TikZ / PGF</span>
+                    </div>
+
+                    <div class="latex-hero fade-up">
+                        <h1>📐 GeoGebra → TikZ Extractor</h1>
+                        <p>Dán link GeoGebra — nhận ngay mã TikZ để dùng trong LaTeX / Overleaf.</p>
+                    </div>
+
+                    <div class="ggb-panel fade-up">
+                        <div class="ggb-panel-title">🔗 Nhập Link GeoGebra</div>
+                        <div class="ggb-input-row">
+                            <input
+                                type="text"
+                                id="ggb-link-input"
+                                placeholder="https://www.geogebra.org/m/xxxxxx  hoặc  https://www.geogebra.org/calculator/xxxxxx"
+                            >
+                            <button class="ggb-extract-btn" id="ggb-extract-btn" onclick="extractTikZ()">
+                                ⚡ Lấy Code TikZ
+                            </button>
+                        </div>
+                        <div class="ggb-hint">
+                            Hỗ trợ các định dạng link: <code>geogebra.org/m/ID</code>, <code>geogebra.org/calculator/ID</code>, <code>geogebra.org/graphing/ID</code>
+                        </div>
+                    </div>
+
+                    <div class="ggb-status" id="ggb-status">
+                        <div class="ggb-spinner" id="ggb-spinner"></div>
+                        <span id="ggb-status-text">Đang tải...</span>
+                    </div>
+
+                    <div class="ggb-output-panel fade-up" id="ggb-output-panel">
+                        <div class="pane-header">
+                            <span class="pane-title">📄 Mã TikZ / PGF</span>
+                            <div class="pane-actions">
+                                <button class="pane-btn" onclick="copyTikZ()">Copy</button>
+                                <button class="pane-btn" onclick="clearOutput()">Xóa</button>
+                            </div>
+                        </div>
+                        <textarea id="tikz-output" readonly spellcheck="false" placeholder="Mã TikZ sẽ xuất hiện ở đây..."></textarea>
+                    </div>
+
+                    <div class="export-bar fade-up" id="ggb-export-bar" style="display:none">
+                        <button class="export-btn" onclick="copyTikZ()">📋 Copy TikZ Code</button>
+                        <button class="export-btn" onclick="openInLatex()">📝 Mở trong LaTeX Editor</button>
+                    </div>
+
+                    <div class="how-to fade-up">
+                        <div class="how-to-title">📖 Hướng Dẫn Sử Dụng</div>
+                        <ol>
+                            <li>Vào <a href="https://www.geogebra.org" target="_blank" style="color:var(--accent-cyan)">GeoGebra.org</a> và tạo hoặc mở hình vẽ bạn muốn.</li>
+                            <li>Nhấn vào biểu tượng <strong>Chia sẻ</strong> (Share) góc trên bên phải của GeoGebra và copy đường link (dạng <code>geogebra.org/m/ID</code>).</li>
+                            <li>Dán vào ô nhập bên trên và nhấn <strong style="color:var(--accent-cyan)">⚡ Lấy Code TikZ</strong>.</li>
+                            <li>Chờ vài giây để hệ thống tải đồ thị từ GeoGebra và trích xuất mã.</li>
+                            <li>Copy mã TikZ và dán thẳng vào file <code>.tex</code> hoặc Overleaf của bạn.</li>
+                            <li><strong>💡 Mẹo:</strong> Nếu hình quá to hoặc quá nhỏ, hãy tìm thông số <code>scale=1.0</code> ở đầu đoạn code trích xuất và thay đổi nó (VD: <code>scale=0.5</code> để thu nhỏ một nửa).</li>
+                        </ol>
+                    </div>
+
+                    <p class="exam-end"><b>─── SMP GeoGebra Extractor ───</b></p>
+
+                </div>
+            </div>
+
+            <div class="stats-strip fade-up">
+                <div class="stat-item"><div class="stat-number">$\Sigma$</div><div class="stat-label">Bài Viết</div></div>
+                <div class="stat-item"><div class="stat-number">$\Phi$</div><div class="stat-label">Chủ Đề</div></div>
+                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
+                <div class="stat-item"><div class="stat-number">$\infty$</div><div class="stat-label">Đam Mê</div></div>
+            </div>
+
+            <footer class="site-footer fade-up">
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 <span class="footer-brand">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <div id="ggb-container"></div>
+
+    <script src="/SMP/js/layout.js"></script>
+    <script src="/SMP/js/shared.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof Comments !== 'undefined') Comments.init('GeoGebraExtractor');
+
+        // Allow pressing Enter in the input to trigger extraction
+        document.getElementById('ggb-link-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') extractTikZ();
+        });
+    });
+
+    // ── Parse material ID from various GeoGebra URL formats ──
+    function parseGGBId(url) {
+        url = url.trim();
+        // Formats:
+        //  geogebra.org/m/ID
+        //  geogebra.org/calculator/ID
+        //  geogebra.org/graphing/ID
+        //  geogebra.org/geometry/ID
+        //  geogebra.org/classic/ID
+        var patterns = [
+            /geogebra\.org\/m\/([A-Za-z0-9_-]+)/,
+            /geogebra\.org\/[a-z]+\/([A-Za-z0-9_-]+)/
+        ];
+        for (var i = 0; i < patterns.length; i++) {
+            var m = url.match(patterns[i]);
+            if (m && m[1] && m[1].length > 3) return m[1];
+        }
+        return null;
+    }
+
+    // ── Show / hide status bar ──
+    function setStatus(type, text) {
+        var bar = document.getElementById('ggb-status');
+        var txt = document.getElementById('ggb-status-text');
+        var spinner = document.getElementById('ggb-spinner');
+        bar.className = 'ggb-status show ' + type;
+        txt.textContent = text;
+        spinner.style.display = (type === 'loading') ? 'block' : 'none';
+    }
+    function hideStatus() {
+        document.getElementById('ggb-status').className = 'ggb-status';
+    }
+
+    // ── Main extraction function ──
+    var ggbApi = null;
+    var ggbScriptLoaded = false;
+
+    function extractTikZ() {
+        var url = document.getElementById('ggb-link-input').value.trim();
+        if (!url) {
+            setStatus('error', '⚠ Vui lòng nhập link GeoGebra.');
+            return;
+        }
+
+        var id = parseGGBId(url);
+        if (!id) {
+            setStatus('error', '⚠ Không nhận diện được link. Hãy thử dạng: geogebra.org/m/ID');
+            return;
+        }
+
+        document.getElementById('ggb-extract-btn').disabled = true;
+        setStatus('loading', 'Đang tải thư viện GeoGebra...');
+
+        if (ggbScriptLoaded) {
+            loadApplet(id);
+        } else {
+            var s = document.createElement('script');
+            s.src = 'https://www.geogebra.org/apps/deployggb.js';
+            s.onload = function () {
+                ggbScriptLoaded = true;
+                loadApplet(id);
+            };
+            s.onerror = function () {
+                setStatus('error', '✕ Không thể tải thư viện GeoGebra. Kiểm tra kết nối mạng.');
+                document.getElementById('ggb-extract-btn').disabled = false;
+            };
+            document.head.appendChild(s);
+        }
+    }
+
+    function loadApplet(materialId) {
+        setStatus('loading', 'Đang tải đồ thị từ GeoGebra (ID: ' + materialId + ')...');
+
+        // Clear old applet if any
+        var container = document.getElementById('ggb-container');
+        container.innerHTML = '';
+
+        var params = {
+            material_id: materialId,
+            width: 600,
+            height: 400,
+            showToolBar: false,
+            showAlgebraInput: false,
+            showMenuBar: false,
+            appletOnLoad: function(api) {
+                ggbApi = api;
+                setStatus('loading', 'Đang trích xuất mã TikZ...');
+                try {
+                    api.exportPGF(function(tikzCode) {
+                        if (!tikzCode || tikzCode.trim() === '') {
+                            setStatus('error', '✕ Không thể trích xuất TikZ từ hình vẽ này (có thể là hình 3D hoặc hình trống).');
+                            document.getElementById('ggb-extract-btn').disabled = false;
+                            return;
+                        }
+                        
+                        // --- TỰ ĐỘNG SỬA LỖI & TỐI ƯU HÓA MÃ TIKZ ---
+                        let processedCode = tikzCode;
+
+                        // 1. Ép sang khổ A4 và căn lề
+                        processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}');
+
+                        // 2. Nạp thư viện
+                        processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}');
+
+                        // 3. 🔥 PHÉP THUẬT ĐỈNH CAO: Đọc tọa độ \clip để tự động dịch tâm (shift) hình về gốc (0,0)
+                        let shiftX = 0, shiftY = 0;
+                        let clipMatch = processedCode.match(/\\clip\s*\(([-0-9.]+),([-0-9.]+)\)\s*rectangle/);
+                        if (clipMatch) {
+                            // Lấy tọa độ góc trái dưới của khung hình làm điểm neo dịch tâm
+                            shiftX = -parseFloat(clipMatch[1]);
+                            shiftY = -parseFloat(clipMatch[2]);
+                        }
+
+                        // 4. Vô hiệu hóa \clip bằng cách biến thành comment
+                        processedCode = processedCode.replace(/\\clip([\s\S]*?);/g, '% \\clip $1;');
+
+                        // 5. Gom nhãn và điểm vào 1 dòng chuẩn
+                        processedCode = processedCode.replace(/\\draw\s*\[fill=[^\]]*\]\s*\(([^)]+)\)\s*circle\s*\([^)]+\);\s*\n\s*\\draw\[color=[^\]]*\]\s*\([^)]+\)\s*node\s*\{([^}]+)\};/g, '\\fill[black] ($1) circle (1.5pt) node[above right] {$2};');
+
+                        // 6. 🔥 Ép thêm tham số shift vào options để kéo toàn bộ tọa độ khổng lồ về vùng nhìn thấy được
+                        let tikzOptions = `scale=1.0, shift={(${shiftX.toFixed(2)},${shiftY.toFixed(2)})}`;
+                        processedCode = processedCode.replace(/\\begin\{tikzpicture\}\[(.*?)\]/, `\\begin{tikzpicture}[$1, ${tikzOptions}] % 💡 CHỈNH ĐỘ LỚN HÌNH Ở ĐÂY (scale=0.5 là thu nhỏ 1 nửa, scale=2.0 là phóng to gấp đôi)`);
+
+                        // 7. Thẻ căn giữa hình
+                        processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\n% Căn giữa dọc\n\\vspace*{\\fill}\n% Căn giữa ngang\n\\begin{center}');
+                        processedCode = processedCode.replace(/\\end\{document\}/, '\\end{center}\n\\vspace*{\\fill}\n\n\\end{document}');
+                        // ----------------------------------------------------
+                        
+                        // Hiển thị code đã xử lý ra giao diện
+                        document.getElementById('tikz-output').value = processedCode;
+                        
+                        document.getElementById('ggb-output-panel').classList.add('show');
+                        document.getElementById('ggb-export-bar').style.display = 'flex';
+                        setStatus('success', '✓ Trích xuất thành công! Mã TikZ đã sẵn sàng.');
+                        document.getElementById('ggb-extract-btn').disabled = false;
+                        
+                        // Scroll to output
+                        document.getElementById('ggb-output-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                } catch(e) {
+                    setStatus('error', '✕ Lỗi khi trích xuất: ' + e.message);
+                    document.getElementById('ggb-extract-btn').disabled = false;
+                }
+            }
+        };
+
+        try {
+            var applet = new GGBApplet(params, true);
+            applet.inject('ggb-container');
+        } catch(e) {
+            setStatus('error', '✕ Lỗi khi khởi tạo GeoGebra: ' + e.message);
+            document.getElementById('ggb-extract-btn').disabled = false;
+        }
+    }
+
+    // ── Actions ──
+    function copyTikZ() {
+        var code = document.getElementById('tikz-output').value;
+        if (!code) return;
+        navigator.clipboard.writeText(code).then(function () {
+            showToast('✓ Đã copy mã TikZ');
+        });
+    }
+
+    function openInLatex() {
+        var code = document.getElementById('tikz-output').value;
+        if (!code) return;
+        localStorage.setItem('smp_latex_pending', code);
+        window.open('LaTeX.html', '_blank');
+        showToast('✓ Đã gửi sang LaTeX Editor');
+    }
+
+    function clearOutput() {
+        document.getElementById('tikz-output').value = '';
+        document.getElementById('ggb-output-panel').classList.remove('show');
+        document.getElementById('ggb-export-bar').style.display = 'none';
+        hideStatus();
+    }
+
+    // ── Toast ──
+    function showToast(msg) {
+        var t = document.getElementById('smp-toast');
+        if (!t) {
+            t = document.createElement('div');
+            t.id = 'smp-toast';
+            t.style.cssText = 'position:fixed;bottom:26px;right:26px;background:rgba(11,17,17,0.96);border:1px solid rgba(92,225,230,0.4);border-radius:10px;padding:11px 20px;color:#5ce1e6;font-family:\'JetBrains Mono\',monospace;font-size:0.80rem;z-index:10000;transition:opacity 0.3s;pointer-events:none;';
+            document.body.appendChild(t);
+        }
+        t.textContent = msg;
+        t.style.opacity = '1';
+        clearTimeout(t._t);
+        t._t = setTimeout(function () { t.style.opacity = '0'; }, 2200);
+    }
+    </script>
+</body>
+</html>

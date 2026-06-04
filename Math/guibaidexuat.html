@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Gửi Bài Toán Đề Xuất</title>
+    <meta name="description" content="Gửi bài toán đề xuất cho mục Thách Thức Kì Này của SMP — Secrets of Mathematical Principles.">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
+    <style>
+        body { overflow-x: hidden; }
+
+        :root {
+            --body-bg: #0b1111;
+            --widget-title-color: #fff;
+            --widget-link-color: #888;
+            --widget-badge-bg: rgba(255,255,255,0.05);
+            --widget-badge-color: #aaa;
+            --exam-paper-bg: rgba(255,255,255,0.025);
+            --exam-paper-border: rgba(92,225,230,0.09);
+            --exam-text-color: #ddd;
+            --exam-bold-color: #f4f4f4;
+            --exam-title-color: #f0f0f0;
+            --exam-divider-color: rgba(92,225,230,0.1);
+        }
+
+        body:not(.dark-mode) {
+            --body-bg: #f8fafc;
+            --widget-title-color: #1e293b;
+            --widget-link-color: #64748b;
+            --widget-badge-bg: rgba(0,0,0,0.05);
+            --widget-badge-color: #475569;
+            --exam-paper-bg: #ffffff;
+            --exam-paper-border: rgba(15,23,42,0.08);
+            --exam-text-color: #334155;
+            --exam-bold-color: #0f172a;
+            --exam-title-color: #1e293b;
+            --exam-divider-color: rgba(15,23,42,0.08);
+            --accent-cyan: #009eb3;
+        }
+
+        body {
+            background-color: var(--body-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        .main-wrapper {
+            position: relative;
+            max-width: 2000px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            transform: none !important;
+            left: 0 !important;
+            transition: transform 0s !important;
+        }
+
+        .main-content-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 100px;
+            margin-top: 20px;
+        }
+
+        .tags-comment-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            z-index: 1;
+        }
+
+        .side-widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--widget-title-color);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s ease;
+        }
+        body:not(.dark-mode) .side-widget-title {
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .side-widget-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .side-widget-list a {
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--widget-link-color); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+        }
+        .side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(4px); }
+        .side-widget-list a span {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            background: var(--widget-badge-bg); padding: 2px 8px;
+            border-radius: 12px; color: var(--widget-badge-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @media (max-width: 1100px) {
+            .main-content-layout { grid-template-columns: 1fr; }
+            .tags-comment-sidebar { position: static; }
+        }
+
+        .main-articles-body { min-width: 0; overflow: hidden; }
+
+        .stats-strip {
+            display: flex; gap: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 8px; overflow: hidden;
+            margin-bottom: 36px; margin-top: 50px;
+        }
+        .stat-item { flex: 1; padding: 18px 20px; text-align: center; border-right: 1px solid var(--border-light); }
+        .stat-item:last-child { border-right: none; }
+        .stat-number { font-family: 'JetBrains Mono', monospace; font-size: 1.6rem; font-weight: 700; color: var(--accent-cyan); line-height: 1; margin-bottom: 6px; }
+        .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+        /* ── Back btn & Meta ── */
+        .exam-back-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: var(--accent-cyan, #5ce1e6); text-decoration: none;
+            font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px; text-transform: uppercase;
+            margin-bottom: 22px; opacity: 0.65; transition: opacity 0.2s;
+        }
+        .exam-back-btn:hover { opacity: 1; }
+
+        .exam-meta { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+        .exam-tag {
+            font-size: 0.7rem; font-family: 'JetBrains Mono', monospace;
+            padding: 4px 13px; border-radius: 20px;
+            border: 1px solid rgba(92,225,230,0.35);
+            color: var(--accent-cyan, #5ce1e6);
+        }
+
+        /* ── Hero ── */
+        .page-hero { margin-bottom: 32px; }
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            color: var(--exam-title-color);
+            margin: 0 0 8px 0;
+            line-height: 1.3;
+        }
+        .page-hero p {
+            font-size: 0.9rem;
+            color: var(--exam-text-color);
+            opacity: 0.75;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* ── Info Banner ── */
+        .info-banner {
+            background: linear-gradient(135deg, rgba(92,225,230,0.07), rgba(167,139,250,0.07));
+            border: 1px solid rgba(92,225,230,0.2);
+            border-left: 4px solid var(--accent-cyan, #5ce1e6);
+            border-radius: 0 12px 12px 0;
+            padding: 18px 24px;
+            margin-bottom: 28px;
+            font-size: 0.88rem;
+            color: var(--exam-text-color);
+            line-height: 1.7;
+        }
+        .info-banner strong { color: var(--accent-cyan, #5ce1e6); }
+
+        /* ── Guidelines Panel ── */
+        .guidelines-panel {
+            background: var(--exam-paper-bg);
+            border: 1px solid var(--exam-paper-border);
+            border-radius: 12px;
+            padding: 28px 32px;
+            margin-bottom: 28px;
+        }
+        .guidelines-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent-cyan, #5ce1e6);
+            margin-bottom: 16px;
+        }
+        .guidelines-list {
+            list-style: none;
+            padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .guidelines-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            font-size: 0.88rem;
+            color: var(--exam-text-color);
+            line-height: 1.6;
+        }
+        .guide-num {
+            flex-shrink: 0;
+            width: 24px; height: 24px;
+            background: rgba(92,225,230,0.12);
+            border: 1px solid rgba(92,225,230,0.3);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent-cyan, #5ce1e6);
+            margin-top: 1px;
+        }
+
+        /* ── Submission Form ── */
+        .submission-form-wrap {
+            background: var(--exam-paper-bg);
+            border: 1px solid rgba(92,225,230,0.18);
+            border-radius: 16px;
+            padding: 42px 50px;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .submission-form-wrap::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #5ce1e6, #a78bfa, #f472b6, #5ce1e6);
+            background-size: 300% 100%;
+            animation: shimmer 4s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 300% 0; }
+            100% { background-position: -300% 0; }
+        }
+
+        .form-header {
+            display: flex; align-items: center; gap: 14px; margin-bottom: 8px;
+        }
+        .form-icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, rgba(92,225,230,0.15), rgba(167,139,250,0.15));
+            border: 1px solid rgba(92,225,230,0.3);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; flex-shrink: 0;
+        }
+        .form-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--exam-title-color);
+            font-weight: 700;
+        }
+        .form-subtitle {
+            font-size: 0.86rem;
+            color: var(--exam-text-color);
+            margin-bottom: 32px;
+            line-height: 1.6;
+            opacity: 0.82;
+            padding-left: 62px;
+        }
+        .form-subtitle em { color: var(--accent-cyan, #5ce1e6); font-style: normal; font-weight: 600; }
+
+        .form-body { display: flex; flex-direction: column; gap: 20px; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 700px) { .form-row { grid-template-columns: 1fr; } }
+
+        .form-field { display: flex; flex-direction: column; gap: 7px; }
+        .form-field.full { grid-column: 1 / -1; }
+
+        .form-label {
+            font-size: 0.71rem;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+            color: var(--accent-cyan, #5ce1e6);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .form-label .req { color: #f87171; margin-left: 3px; }
+
+        .form-input,
+        .form-select {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(92,225,230,0.18);
+            border-radius: 8px;
+            padding: 12px 15px;
+            color: var(--exam-text-color);
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        body:not(.dark-mode) .form-input,
+        body:not(.dark-mode) .form-select {
+            background: rgba(0,0,0,0.03);
+            border-color: rgba(15,23,42,0.12);
+        }
+        .form-input:focus, .form-select:focus {
+            border-color: rgba(92,225,230,0.55);
+            box-shadow: 0 0 0 3px rgba(92,225,230,0.08);
+        }
+        .form-input::placeholder { color: rgba(180,180,180,0.45); font-style: italic; }
+        .form-select option { background: #0b1111; color: #ddd; }
+        body:not(.dark-mode) .form-select option { background: #fff; color: #334155; }
+
+        .form-textarea {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(92,225,230,0.18);
+            border-radius: 8px;
+            padding: 14px 15px;
+            color: var(--exam-text-color);
+            font-size: 0.92rem;
+            font-family: "Times New Roman", Times, serif;
+            outline: none;
+            resize: vertical;
+            line-height: 1.8;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-textarea.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+        body:not(.dark-mode) .form-textarea {
+            background: rgba(0,0,0,0.03);
+            border-color: rgba(15,23,42,0.12);
+        }
+        .form-textarea:focus {
+            border-color: rgba(92,225,230,0.55);
+            box-shadow: 0 0 0 3px rgba(92,225,230,0.08);
+        }
+        .form-textarea::placeholder { color: rgba(180,180,180,0.45); font-style: italic; }
+
+        /* LaTeX Preview */
+        .latex-preview-wrap { margin-top: 10px; }
+        .latex-preview-toggle {
+            background: none; border: none; cursor: pointer;
+            font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px; text-transform: uppercase;
+            color: var(--accent-cyan, #5ce1e6); padding: 0;
+            opacity: 0.75; transition: opacity 0.2s;
+        }
+        .latex-preview-toggle:hover { opacity: 1; }
+        .latex-preview-box {
+            display: none; margin-top: 10px;
+            background: rgba(92,225,230,0.04);
+            border: 1px solid rgba(92,225,230,0.15);
+            border-radius: 8px; padding: 16px 20px;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1rem; color: var(--exam-text-color);
+            line-height: 1.85; min-height: 60px;
+        }
+        .latex-preview-box.active { display: block; }
+
+        /* Difficulty selector */
+        .diff-group {
+            display: flex; gap: 8px; flex-wrap: wrap;
+        }
+        .diff-btn {
+            padding: 7px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(92,225,230,0.25);
+            background: transparent;
+            color: var(--exam-text-color);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .diff-btn:hover { border-color: rgba(92,225,230,0.55); color: var(--accent-cyan, #5ce1e6); }
+        .diff-btn.selected {
+            background: rgba(92,225,230,0.12);
+            border-color: rgba(92,225,230,0.6);
+            color: var(--accent-cyan, #5ce1e6);
+            font-weight: 700;
+        }
+        .diff-btn.d1.selected { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.6); color: #4ade80; }
+        .diff-btn.d2.selected { background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.6); color: #fbbf24; }
+        .diff-btn.d3.selected { background: rgba(251,113,133,0.12); border-color: rgba(251,113,133,0.6); color: #fb7185; }
+        .diff-btn.d4.selected { background: rgba(167,139,250,0.12); border-color: rgba(167,139,250,0.6); color: #a78bfa; }
+
+        /* File drop zone */
+        .file-zone {
+            border: 1.5px dashed rgba(92,225,230,0.28);
+            border-radius: 10px;
+            padding: 22px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            position: relative;
+        }
+        .file-zone:hover { border-color: rgba(92,225,230,0.6); background: rgba(92,225,230,0.04); }
+        .file-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+        .file-zone-icon { font-size: 1.6rem; margin-bottom: 6px; display: block; }
+        .file-zone-label { font-size: 0.82rem; color: var(--exam-text-color); opacity: 0.7; }
+        .file-zone-label strong { color: var(--accent-cyan, #5ce1e6); }
+        .file-names { margin-top: 8px; font-size: 0.78rem; color: var(--accent-cyan, #5ce1e6); font-family: 'JetBrains Mono', monospace; min-height: 16px; }
+
+        .form-hint {
+            font-size: 0.74rem;
+            color: var(--exam-text-color);
+            opacity: 0.5;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .form-hint code {
+            background: rgba(92,225,230,0.08);
+            padding: 1px 5px; border-radius: 4px;
+            color: var(--accent-cyan, #5ce1e6);
+        }
+
+        /* Submit btn */
+        .submit-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .submit-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            background: linear-gradient(135deg, rgba(92,225,230,0.2), rgba(167,139,250,0.2));
+            border: 1px solid rgba(92,225,230,0.45);
+            border-radius: 10px; padding: 15px 36px;
+            color: var(--accent-cyan, #5ce1e6);
+            font-size: 0.92rem; font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            cursor: pointer; transition: all 0.25s;
+        }
+        .submit-btn:hover {
+            background: linear-gradient(135deg, rgba(92,225,230,0.3), rgba(167,139,250,0.3));
+            border-color: rgba(92,225,230,0.75);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(92,225,230,0.18);
+        }
+        .submit-btn:active { transform: translateY(0); }
+        .submit-note { font-size: 0.76rem; color: var(--exam-text-color); opacity: 0.45; font-style: italic; }
+
+        /* Success overlay */
+        .success-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.65); z-index: 9999;
+            align-items: center; justify-content: center;
+        }
+        .success-overlay.active { display: flex; }
+        .success-box {
+            background: #0f1e1e;
+            border: 1px solid rgba(74,222,128,0.35);
+            border-radius: 16px; padding: 48px 52px;
+            max-width: 480px; width: 90%; text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: popIn 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
+        }
+        body:not(.dark-mode) .success-box { background: #fff; border-color: rgba(74,222,128,0.3); }
+        @keyframes popIn {
+            from { transform: scale(0.85); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+        .success-icon { font-size: 3rem; margin-bottom: 16px; }
+        .success-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; color: #4ade80;
+            margin-bottom: 10px;
+        }
+        .success-desc { font-size: 0.88rem; color: var(--exam-text-color); opacity: 0.8; line-height: 1.7; margin-bottom: 24px; }
+        .success-close {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(74,222,128,0.12);
+            border: 1px solid rgba(74,222,128,0.4);
+            border-radius: 8px; padding: 11px 28px;
+            color: #4ade80; font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem; text-transform: uppercase;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .success-close:hover { background: rgba(74,222,128,0.22); }
+
+        .exam-end { text-align: center; color: #999; font-style: italic; font-size: 0.82rem; margin-top: 30px; }
+
+        @media (max-width: 700px) {
+            .submission-form-wrap { padding: 28px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="main-content-layout">
+
+                <aside class="tags-comment-sidebar">
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Categories</div>
+                        <ul class="side-widget-list">
+                            <li><a href="../Math/toanhoc.html">Chuyên Toán <span>10</span></a></li>
+                            <li><a href="../Math/toanhoc.html">HSG Toán 9 <span>8</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Math Olympiad <span>4</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Number Theory <span>5</span></a></li>
+                            <li><a href="../Math/toanhoc.html">Algebra <span>3</span></a></li>
+                            <li><a href="../My%20Life/cuocsong.html">Cuộc Sống <span>1</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Archives</div>
+                        <ul class="side-widget-list">
+                            <li><a href="#">Tháng 4, 2026 <span>12</span></a></li>
+                            <li><a href="#">Tháng 3, 2026 <span>8</span></a></li>
+                            <li><a href="#">Tháng 2, 2026 <span>5</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="side-widget fade-up">
+                        <div class="side-widget-title">Liên Kết</div>
+                        <ul class="side-widget-list">
+                            <li><a href="ThachThucKiNaySo42026.html">🏆 Thách Thức Kì Này #4</a></li>
+                            <li><a href="toanhoc.html">📐 Toán Học</a></li>
+                            <li><a href="mailto:smp.cqt0907@gmail.com">✉️ Email SMP</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="comment-section fade-up">
+                        <h3>Thảo Luận &amp; Góp Ý</h3>
+                        <div class="comment-form">
+                            <div class="comment-form-row">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Gmail c&#7911;a b&#7841;n...">
+                            </div>
+                            <div style="margin-bottom:14px">
+                                <textarea id="comment-text-input" class="comment-textarea"
+                                    placeholder="Nhập bình luận hoặc lời nhắn của bạn tại đây..."></textarea>
+                            </div>
+                            <button id="comment-submit" class="comment-submit">Gửi Bình Luận</button>
+                        </div>
+                        <div id="comment-list" class="comment-list"></div>
+                    </div>
+
+                </aside>
+
+                <div class="main-articles-body">
+
+                    <a href="toanhoc.html" class="exam-back-btn fade-up">&#8592; Quay Lại</a>
+
+                    <div class="exam-meta fade-up">
+                        <span class="exam-tag">Trao Đổi</span>
+                        <span class="exam-tag">Đề Xuất Bài Toán</span>
+                        <span class="exam-tag">Thách Thức Kì Này</span>
+                    </div>
+
+                    <div class="page-hero fade-up">
+                        <h1>✏️ Gửi Bài Toán Đề Xuất</h1>
+                        <p>Dành cho các tác giả muốn đóng góp bài toán vào mục <strong style="color:var(--accent-cyan)">Thách Thức Kì Này</strong> của SMP. Mọi bài toán hay sẽ được xem xét đăng tải và ghi nhận tên tác giả.</p>
+                    </div>
+
+                    <div class="info-banner fade-up">
+                        📌 <strong>Lưu ý:</strong> Bài toán đề xuất sẽ được Ban biên tập SMP xem xét và lựa chọn. Chúng tôi ưu tiên các bài toán <strong>chưa được công bố</strong>, có lời giải đẹp và phù hợp với trình độ học sinh chuyên Toán cấp THPT. Bạn sẽ được liên hệ qua email hoặc Facebook nếu bài được chọn.
+                    </div>
+
+                    <div class="guidelines-panel fade-up">
+                        <div class="guidelines-title">📋 Tiêu Chí Bài Toán Đề Xuất</div>
+                        <ul class="guidelines-list">
+                            <li>
+                                <div class="guide-num">1</div>
+                                <div><strong style="color:var(--exam-title-color)">Độ khó phù hợp:</strong> Bài toán nên ở mức độ từ HSG tỉnh đến VMO/IMO — không quá dễ, không quá chuyên biệt.</div>
+                            </li>
+                            <li>
+                                <div class="guide-num">2</div>
+                                <div><strong style="color:var(--exam-title-color)">Có lời giải kèm theo:</strong> Vui lòng gửi kèm ít nhất một lời giải hoàn chỉnh hoặc gợi ý hướng giải chính.</div>
+                            </li>
+                            <li>
+                                <div class="guide-num">3</div>
+                                <div><strong style="color:var(--exam-title-color)">Nguồn gốc rõ ràng:</strong> Nếu bài toán được lấy từ nguồn khác, hãy ghi rõ nguồn gốc để tránh trùng lặp.</div>
+                            </li>
+                            <li>
+                                <div class="guide-num">4</div>
+                                <div><strong style="color:var(--exam-title-color)">Dùng LaTeX:</strong> Viết công thức bằng <code style="background:rgba(92,225,230,0.1);padding:1px 5px;border-radius:4px;color:var(--accent-cyan)">$...$</code> hoặc <code style="background:rgba(92,225,230,0.1);padding:1px 5px;border-radius:4px;color:var(--accent-cyan)">\[...\]</code> để đề toán hiển thị đẹp.</div>
+                            </li>
+                            <li>
+                                <div class="guide-num">5</div>
+                                <div><strong style="color:var(--exam-title-color)">Chủ đề ưu tiên:</strong> Số Học, Đại Số, Tổ Hợp, Hình Học Phẳng — theo tinh thần Olympic Toán quốc tế.</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- ═══ SUBMISSION FORM ═══ -->
+                    <div class="submission-form-wrap fade-up">
+                        <div class="form-header">
+                            <div class="form-icon">🏅</div>
+                            <div class="form-title">Biểu Mẫu Đề Xuất Bài Toán</div>
+                        </div>
+                        <p class="form-subtitle">
+                            Điền đầy đủ thông tin bên dưới. Bài toán <em>hay và có lời giải đẹp</em> sẽ được đăng trong kì tới!
+                        </p>
+
+                        <div class="form-body" id="proposal-form">
+
+                            <!-- Hàng 1: Tên + Email -->
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label class="form-label" for="author-name">Họ &amp; Tên tác giả <span class="req">*</span></label>
+                                    <input type="text" id="author-name" class="form-input" placeholder="Nguyễn Văn A...">
+                                </div>
+                                <div class="form-field">
+                                    <label class="form-label" for="author-contact">Email / Facebook <span class="req">*</span></label>
+                                    <input type="text" id="author-contact" class="form-input" placeholder="email@gmail.com hoặc link FB...">
+                                </div>
+                            </div>
+
+                            <!-- Hàng 2: Trường + Lớp -->
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label class="form-label" for="author-school">Trường / Đơn vị</label>
+                                    <input type="text" id="author-school" class="form-input" placeholder="THPT Chuyên ...">
+                                </div>
+                                <div class="form-field">
+                                    <label class="form-label" for="problem-topic">Chủ đề bài toán <span class="req">*</span></label>
+                                    <select id="problem-topic" class="form-input form-select">
+                                        <option value="">-- Chọn chủ đề --</option>
+                                        <option value="Số Học">Số Học (Number Theory)</option>
+                                        <option value="Đại Số">Đại Số (Algebra)</option>
+                                        <option value="Tổ Hợp">Tổ Hợp (Combinatorics)</option>
+                                        <option value="Hình Học">Hình Học (Geometry)</option>
+                                        <option value="Giải Tích">Giải Tích (Analysis)</option>
+                                        <option value="Bất Đẳng Thức">Bất Đẳng Thức (Inequality)</option>
+                                        <option value="Khác">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Độ khó -->
+                            <div class="form-field">
+                                <label class="form-label">Độ khó ước tính <span class="req">*</span></label>
+                                <div class="diff-group" id="diff-group">
+                                    <button type="button" class="diff-btn d1" data-val="Dễ (HSG tỉnh)" onclick="selectDiff(this)">⬤ Dễ — HSG tỉnh</button>
+                                    <button type="button" class="diff-btn d2" data-val="Trung bình (VMO)" onclick="selectDiff(this)">⬤ Trung bình — VMO</button>
+                                    <button type="button" class="diff-btn d3" data-val="Khó (TST)" onclick="selectDiff(this)">⬤ Khó — TST</button>
+                                    <button type="button" class="diff-btn d4" data-val="Rất khó (IMO)" onclick="selectDiff(this)">⬤ Rất khó — IMO</button>
+                                </div>
+                                <input type="hidden" id="diff-val" value="">
+                            </div>
+
+                            <!-- Đề bài -->
+                            <div class="form-field">
+                                <label class="form-label" for="problem-statement">Đề bài toán <span class="req">*</span></label>
+                                <textarea id="problem-statement" class="form-textarea" rows="7"
+                                    placeholder="Gõ đề bài tại đây. Dùng LaTeX: $x^2 + y^2 = z^2$ hoặc \[ \sum_{k=1}^{n} k = \frac{n(n+1)}{2} \]&#10;&#10;Ví dụ: Cho số nguyên tố $p$ và số tự nhiên $n$. Chứng minh rằng..."></textarea>
+                                <span class="form-hint">Hỗ trợ LaTeX inline <code>$ ... $</code> và display <code>\[ ... \]</code></span>
+                                <div class="latex-preview-wrap">
+                                    <button class="latex-preview-toggle" onclick="togglePreview('problem-statement', 'preview-problem')">▶ Xem preview LaTeX đề bài</button>
+                                    <div class="latex-preview-box" id="preview-problem">
+                                        <span style="opacity:0.4;font-style:italic;font-family:'Inter',sans-serif;font-size:0.85rem;">Bắt đầu gõ để xem preview...</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lời giải -->
+                            <div class="form-field">
+                                <label class="form-label" for="problem-solution">Lời giải / Hướng dẫn <span class="req">*</span></label>
+                                <textarea id="problem-solution" class="form-textarea" rows="9"
+                                    placeholder="Gõ lời giải đầy đủ hoặc gợi ý hướng giải chính tại đây...&#10;&#10;Nếu lời giải dài, bạn có thể tóm tắt ý tưởng chính và đính kèm file đầy đủ ở phần bên dưới."></textarea>
+                                <span class="form-hint">Lời giải đầy đủ sẽ được ưu tiên. Có thể đính kèm file PDF/ảnh bên dưới.</span>
+                                <div class="latex-preview-wrap">
+                                    <button class="latex-preview-toggle" onclick="togglePreview('problem-solution', 'preview-solution')">▶ Xem preview LaTeX lời giải</button>
+                                    <div class="latex-preview-box" id="preview-solution">
+                                        <span style="opacity:0.4;font-style:italic;font-family:'Inter',sans-serif;font-size:0.85rem;">Bắt đầu gõ để xem preview...</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Nguồn gốc -->
+                            <div class="form-field">
+                                <label class="form-label" for="problem-source">Nguồn gốc bài toán <span class="req">*</span></label>
+                                <input type="text" id="problem-source" class="form-input"
+                                    placeholder="Bài toán tự nghĩ / trích từ ... / lấy từ kỳ thi ...">
+                            </div>
+
+                            <!-- Ghi chú thêm -->
+                            <div class="form-field">
+                                <label class="form-label" for="extra-note">Ghi chú thêm cho Ban biên tập</label>
+                                <textarea id="extra-note" class="form-textarea mono" rows="3"
+                                    placeholder="Ví dụ: bài này có nhiều lời giải, tôi đề xuất đặt vào câu 3, ..."></textarea>
+                            </div>
+
+                            <!-- Đính kèm file -->
+                            <div class="form-field">
+                                <label class="form-label">Đính kèm file (tuỳ chọn)</label>
+                                <div class="file-zone" id="file-drop-zone">
+                                    <input type="file" id="proposal-files" accept="image/*,.pdf,.tex,.docx" multiple>
+                                    <span class="file-zone-icon">📎</span>
+                                    <p class="file-zone-label"><strong>Nhấn để chọn file</strong> hoặc kéo &amp; thả vào đây</p>
+                                    <p class="file-zone-label" style="margin-top:4px;font-size:0.75rem;">Hỗ trợ ảnh, PDF, .tex, .docx</p>
+                                    <div class="file-names" id="file-names"></div>
+                                </div>
+                            </div>
+
+                            <div class="submit-row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                <button class="submit-btn" id="submit-btn" onclick="submitProposal()">
+                                    <span id="submit-icon">📨</span>
+                                    <span id="submit-text">Gửi Bài Đề Xuất</span>
+                                </button>
+                                <button class="submit-btn" style="background: linear-gradient(135deg, rgba(251,113,133,0.18), rgba(251,191,36,0.18)); border-color: rgba(251,113,133,0.4); color: #fb7185;" onclick="submitProposalViaGmail()">
+                                    <span>✉️</span> Mở Gmail (Cho Tệp Lớn)
+                                </button>
+                                <p class="submit-note" style="width: 100%;">Nhấn Gửi Bài Đề Xuất để gửi trực tiếp. Nếu có đính kèm file ảnh/PDF lớn, vui lòng nhấn Mở Gmail.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- ═══ END FORM ═══ -->
+
+                    <p class="exam-end"><b>─── SMP — Trao Đổi & Đề Xuất ───</b></p>
+
+                </div>
+            </div>
+
+            <div class="stats-strip fade-up">
+                <div class="stat-item"><div class="stat-number">$\Sigma$</div><div class="stat-label">Bài Viết</div></div>
+                <div class="stat-item"><div class="stat-number">$\Phi$</div><div class="stat-label">Chủ Đề</div></div>
+                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
+                <div class="stat-item"><div class="stat-number">$\infty$</div><div class="stat-label">Đam Mê</div></div>
+            </div>
+
+            <footer class="site-footer fade-up">
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 <span class="footer-brand">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Success overlay -->
+    <div class="success-overlay" id="success-overlay">
+        <div class="success-box">
+            <div class="success-icon">🎉</div>
+            <div class="success-title">Gửi Thành Công!</div>
+            <p class="success-desc">
+                Cảm ơn bạn đã đóng góp bài toán cho SMP!<br>
+                Ban biên tập đã nhận được thông tin của bạn và sẽ liên hệ trong vòng
+                <strong style="color:#4ade80;">3–7 ngày</strong> nếu bài toán được chọn.
+            </p>
+            <button class="success-close" onclick="closeSuccess()">✓ Đã hiểu</button>
+        </div>
+    </div>
+
+    <script src="/SMP/js/layout.js"></script>
+    <script src="/SMP/js/shared.js"></script>
+    <script>
+    // ══════════════════════════════════════════════════
+    //  CẤU HÌNH EMAILJS — Điền 3 giá trị này sau khi
+    //  đăng ký tại https://www.emailjs.com
+    // ══════════════════════════════════════════════════
+    const EMAILJS_PUBLIC_KEY  = 'cvYDEg5CFprNoHT-B';   // Account > API Keys
+    const EMAILJS_SERVICE_ID  = 'service_o024u9u';   // Email Services > Service ID
+    const EMAILJS_TEMPLATE_ID = 'template_24c224j';  // Email Templates > Template ID
+
+    // Khởi tạo EmailJS
+    (function(){
+        if (window.emailjs) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    })();
+
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof Comments !== 'undefined') Comments.init('GuiBaiDeXuat');
+
+        const fileInput = document.getElementById('proposal-files');
+        if (fileInput) {
+            fileInput.addEventListener('change', function () {
+                const names = Array.from(this.files).map(f => '📄 ' + f.name).join('<br>');
+                document.getElementById('file-names').innerHTML = names;
+            });
+        }
+    });
+
+    // ── Difficulty selector ──
+    function selectDiff(btn) {
+        document.querySelectorAll('#diff-group .diff-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        document.getElementById('diff-val').value = btn.getAttribute('data-val');
+    }
+
+    // ── LaTeX Preview ──
+    function togglePreview(sourceId, previewId) {
+        const box = document.getElementById(previewId);
+        const src = document.getElementById(sourceId);
+        if (box.classList.contains('active')) { box.classList.remove('active'); return; }
+        box.classList.add('active');
+        const renderBox = () => {
+            const text = src.value.trim();
+            if (!text) {
+                box.innerHTML = '<span style="opacity:0.4;font-style:italic;">Chưa có nội dung để preview...</span>';
+            } else {
+                box.innerHTML = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+                if (window.MathJax) { MathJax.typesetClear([box]); MathJax.typesetPromise([box]).catch(()=>{}); }
+            }
+        };
+        renderBox();
+        src.oninput = () => { if (box.classList.contains('active')) renderBox(); };
+    }
+
+    // ── Gửi form qua EmailJS ──
+    async function submitProposal() {
+        const name      = document.getElementById('author-name').value.trim();
+        const contact   = document.getElementById('author-contact').value.trim();
+        const school    = document.getElementById('author-school').value.trim();
+        const topic     = document.getElementById('problem-topic').value;
+        const diff      = document.getElementById('diff-val').value;
+        const statement = document.getElementById('problem-statement').value.trim();
+        const solution  = document.getElementById('problem-solution').value.trim();
+        const source    = document.getElementById('problem-source').value.trim();
+        const note      = document.getElementById('extra-note').value.trim();
+
+        if (!name || !contact || !topic || !diff || !statement || !solution || !source) {
+            alert('⚠ Vui lòng điền đầy đủ các trường bắt buộc (có dấu *)!');
+            return;
+        }
+
+        // Kiểm tra EmailJS đã được cấu hình chưa
+        if (EMAILJS_TEMPLATE_ID === 'YOUR_TEMPLATE_ID') {
+            alert('⚠ Còn thiếu Template ID!\n\nVui lòng điền EMAILJS_TEMPLATE_ID trong file guibaidexuat.html.');
+            return;
+        }
+
+        const btn = document.getElementById('submit-btn');
+        const icon = document.getElementById('submit-icon');
+        const text = document.getElementById('submit-text');
+
+        // Loading state
+        btn.disabled = true;
+        icon.textContent = '⏳';
+        text.textContent = 'Đang gửi...';
+        btn.style.opacity = '0.7';
+
+        try {
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                author_name:    name,
+                author_contact: contact,
+                author_school:  school || '(không ghi)',
+                problem_topic:  topic,
+                difficulty:     diff,
+                statement:      statement,
+                solution:       solution,
+                source:         source,
+                extra_note:     note || '(không có)',
+                sent_at:        new Date().toLocaleString('vi-VN'),
+            });
+
+            // Thành công
+            document.getElementById('success-overlay').classList.add('active');
+            document.getElementById('proposal-form').reset();
+            document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
+            document.getElementById('diff-val').value = '';
+            document.getElementById('file-names').innerHTML = '';
+
+        } catch (err) {
+            console.error('EmailJS error:', err);
+            alert('❌ Gửi thất bại: ' + (err.text || err.message || JSON.stringify(err)) + '\n\nKiểm tra lại cấu hình EmailJS.');
+        } finally {
+            btn.disabled = false;
+            icon.textContent = '📨';
+            text.textContent = 'Gửi Bài Đề Xuất';
+            btn.style.opacity = '';
+        }
+    }
+
+    // ── Gửi qua Gmail (Cho file đính kèm lớn) ──
+    function submitProposalViaGmail() {
+        const name      = document.getElementById('author-name').value.trim();
+        const contact   = document.getElementById('author-contact').value.trim();
+        const school    = document.getElementById('author-school').value.trim();
+        const topic     = document.getElementById('problem-topic').value;
+        const diff      = document.getElementById('diff-val').value;
+        const statement = document.getElementById('problem-statement').value.trim();
+        const solution  = document.getElementById('problem-solution').value.trim();
+        const source    = document.getElementById('problem-source').value.trim();
+        const note      = document.getElementById('extra-note').value.trim();
+        const imgInput  = document.getElementById('proposal-files');
+        const files     = imgInput ? Array.from(imgInput.files) : [];
+
+        if (!name || !contact || !topic || !diff || !statement || !solution || !source) {
+            alert('⚠ Vui lòng điền đầy đủ các trường bắt buộc (có dấu *)!');
+            return;
+        }
+
+        const subject = encodeURIComponent(`[SMP Đề Xuất] Bài toán ${topic} — ${name}`);
+
+        const body = encodeURIComponent(
+`[BÀI TOÁN ĐỀ XUẤT CHO THÁCH THỨC KÌ NÀY]
+════════════════════════════════════════
+
+Tác giả    : ${name}
+Liên hệ    : ${contact}
+Đơn vị     : ${school || '(không ghi)'}
+Chủ đề     : ${topic}
+Độ khó     : ${diff}
+Nguồn gốc  : ${source || '(tự nghĩ)'}
+
+════════════════════════════════════════
+ĐỀ BÀI:
+────────────────────────────────────────
+${statement}
+
+════════════════════════════════════════
+LỜI GIẢI / HƯỚNG DẪN:
+────────────────────────────────────────
+${solution}
+
+${note ? '════════════════════════════════════════\nGHI CHÚ THÊM:\n────────────────────────────────────────\n' + note + '\n' : ''}
+════════════════════════════════════════
+(File đính kèm: xem attachment)
+`);
+
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&to=smp.cqt0907@gmail.com&su=${subject}&body=${body}`;
+        window.open(gmailUrl, '_blank');
+        
+        // Show success / reminder overlay if files are selected
+        if (files.length > 0) {
+            // Re-use success overlay but change text slightly
+            const overlay = document.getElementById('success-overlay');
+            overlay.querySelector('.success-title').textContent = 'Gmail đã mở!';
+            overlay.querySelector('.success-desc').innerHTML = 
+                'Trình duyệt không thể tự đính kèm file vào Gmail vì lý do bảo mật.<br>' +
+                'Vui lòng <strong>kéo các file sau vào cửa sổ Gmail</strong> vừa mở:<br><br>' + 
+                '<span style="color:#4ade80;font-family:monospace;">' + files.map(f => '📄 ' + f.name).join('<br>') + '</span>';
+            overlay.classList.add('active');
+        }
+    }
+
+    function closeSuccess() {
+        document.getElementById('success-overlay').classList.remove('active');
+    }
+    </script>
+</body>
+</html>

@@ -14,6 +14,8 @@
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
         body { overflow-x: hidden; }
 
@@ -605,7 +607,7 @@
                         <h3>Thảo Luận & Góp Ý</h3>
                         <div class="comment-form">
                             <div class="comment-form-row">
-                                <input type="text" id="comment-name" class="comment-input" placeholder="Tên của bạn...">
+                                <input type="text" id="comment-name" class="comment-input" placeholder="Gmail c&#7911;a b&#7841;n...">
                             </div>
                             <div style="margin-bottom:14px">
                                 <textarea id="comment-text-input" class="comment-textarea"
@@ -620,7 +622,7 @@
 
                 <div class="main-articles-body">
 
-                    <a href="../index.html" class="exam-back-btn fade-up">← Quay Lại Trang Chủ</a>
+                    <a href="../index.html" class="exam-back-btn fade-up">&#8592; Quay L&#7841;i</a>
 
                     <div class="exam-meta fade-up">
                         <span class="exam-tag">Thách Thức Kì Này</span>
@@ -703,11 +705,18 @@
                         <div class="mailbox-form" id="solution-form">
                             <div class="mailbox-row">
                                 <div class="mailbox-field">
-                                    <label class="mailbox-label" for="sol-name">Họ &amp; Tên</label>
+                                    <label class="mailbox-label" for="sol-name">Họ &amp; Tên <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
                                     <input type="text" id="sol-name" class="mailbox-input" placeholder="Nguyễn Văn A...">
                                 </div>
                                 <div class="mailbox-field">
-                                    <label class="mailbox-label" for="sol-problem">Bài toán</label>
+                                    <label class="mailbox-label" for="sol-contact">Email / Facebook <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
+                                    <input type="text" id="sol-contact" class="mailbox-input" placeholder="Để lại liên hệ...">
+                                </div>
+                            </div>
+                            
+                            <div class="mailbox-row">
+                                <div class="mailbox-field">
+                                    <label class="mailbox-label" for="sol-problem">Bài toán <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
                                     <select id="sol-problem" class="mailbox-input mailbox-select">
                                         <option value="">-- Chọn bài --</option>
                                         <option value="Bài 1">Bài 1 — Dãy số trên bảng</option>
@@ -721,7 +730,7 @@
                             </div>
 
                             <div class="mailbox-field">
-                                <label class="mailbox-label" for="sol-content">Nội dung lời giải</label>
+                                <label class="mailbox-label" for="sol-content">Nội dung lời giải <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
                                 <textarea id="sol-content" class="mailbox-textarea"
                                     placeholder="Viết lời giải của bạn tại đây. Bạn có thể dùng LaTeX thông thường, ví dụ: $x^2 + y^2 = z^2$ hoặc \[ \sum_{k=1}^{n} k = \frac{n(n+1)}{2} \]"></textarea>
                                 <span class="mailbox-hint">Hỗ trợ LaTeX inline <code>$ ... $</code> và display <code>\[ ... \]</code></span>
@@ -744,12 +753,15 @@
                                 </div>
                             </div>
 
-                            <div>
+                            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                                 <button class="mailbox-send-btn" id="sol-send-btn" onclick="sendSolution()">
                                     <span>📨</span> Gửi Lời Giải
                                 </button>
-                                <p class="mailbox-note">Gmail sẽ mở trong tab mới với nội dung đã điền sẵn — bạn chỉ cần đính kèm ảnh / PDF rồi nhấn Gửi.</p>
+                                <button class="mailbox-send-btn" style="background: linear-gradient(135deg, rgba(251,113,133,0.18), rgba(251,191,36,0.18)); border-color: rgba(251,113,133,0.4); color: #fb7185;" onclick="sendSolutionViaGmail()">
+                                    <span>✉️</span> Mở Gmail (Cho Tệp Lớn)
+                                </button>
                             </div>
+                            <p class="mailbox-note">Nhấn Gửi Lời Giải để gửi trực tiếp. Nếu có đính kèm file ảnh/PDF kích thước lớn, vui lòng nhấn Mở Gmail.</p>
                         </div>
                     </div>
 
@@ -892,43 +904,75 @@
         }
     }
 
-    // ── Send solution via Gmail ──
-    function sendSolution() {
-        const name     = document.getElementById('sol-name').value.trim();
-        const problem  = document.getElementById('sol-problem').value;
-        const content  = document.getElementById('sol-content').value.trim();
-        const imgInput = document.getElementById('sol-images');
-        const files    = imgInput ? Array.from(imgInput.files) : [];
+    // ══════════════════════════════════════════════════
+    // ══════════════════════════════════════════════════
+    //  CẤU HÌNH EMAILJS — điền sau khi đăng ký emailjs.com
+    // ══════════════════════════════════════════════════
+    const EMAILJS_PUBLIC_KEY  = 'cvYDEg5CFprNoHT-B';
+    const EMAILJS_SERVICE_ID  = 'service_o024u9u';
+    const EMAILJS_TEMPLATE_ID = 'template_24c224j';
+    (function(){ if (window.emailjs) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); })();
 
-        if (!problem) { alert('Bạn chưa chọn bài toán!'); return; }
-        if (!content)  { alert('Bạn chưa nhập nội dung lời giải!'); return; }
+    // ── Gửi lời giải qua EmailJS ──
+    async function sendSolution() {
+        const name    = document.getElementById('sol-name').value.trim();
+        const contact = document.getElementById('sol-contact').value.trim();
+        const problem = document.getElementById('sol-problem').value;
+        const content = document.getElementById('sol-content').value.trim();
 
-        const sender = name || 'Ẩn danh';
-
-        let body  = `Người gửi: ${sender}\n`;
-        body += `Bài toán: ${problem}\n`;
-        body += `\n─────────────────────────────\n`;
-        body += `Lời giải:\n\n${content}\n`;
-        body += `\n─────────────────────────────\n`;
-        if (files.length > 0) {
-            body += `\n[File đính kèm: ${files.map(f => f.name).join(', ')}]\n`;
+        if (!name || !contact || !problem || !content) {
+            alert('⚠ Vui lòng điền đầy đủ các trường bắt buộc (có dấu *)!');
+            return;
         }
-        body += `\nGửi từ trang: § Thách Thức Kì Này — SMP`;
 
-        const subject     = encodeURIComponent(`[SMP Lời Giải] ${problem} — ${sender}`);
-        const bodyEncoded = encodeURIComponent(body);
-        const gmailLink   = `https://mail.google.com/mail/?view=cm&to=smp.cqt0907%40gmail.com&su=${subject}&body=${bodyEncoded}`;
+        if (EMAILJS_TEMPLATE_ID === 'YOUR_TEMPLATE_ID') {
+            alert('⚠ Còn thiếu Template ID!\nVui lòng điền TEMPLATE_ID trong file HTML.');
+            return;
+        }
 
-        window.open(gmailLink, '_blank');
+        const sender  = name || 'Ẩn danh';
+        const btn     = document.getElementById('sol-send-btn');
+        const origHTML = btn.innerHTML;
 
-        // If files selected → show reminder overlay
-        if (files.length > 0) {
-            const list = document.getElementById('reminder-file-list');
-            list.innerHTML = files.map(f => {
-                const icon = f.type === 'application/pdf' ? '📄' : '🖼️';
-                return `<li>${icon} ${f.name}</li>`;
-            }).join('');
-            document.getElementById('file-reminder-overlay').classList.add('active');
+        // Loading state
+        btn.disabled = true;
+        btn.innerHTML = '<span>⏳</span> Đang gửi...';
+        btn.style.opacity = '0.7';
+
+        try {
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                author_name:    sender,
+                problem_topic:  problem,
+                statement:      '(Lời giải cho: ' + problem + ')',
+                solution:       content,
+                author_contact: contact || '(Không để lại)',
+                author_school:  '',
+                difficulty:     '',
+                source:         'Thách Thức Kì Này — SMP',
+                extra_note:     '',
+                sent_at:        new Date().toLocaleString('vi-VN'),
+            });
+
+            // Thành công: hiện overlay
+            const list = overlay.querySelector('.file-reminder-list');
+            if (list) list.innerHTML = '';
+            overlay.classList.add('active');
+
+            // Reset form
+            document.getElementById('sol-name').value    = '';
+            document.getElementById('sol-problem').value = '';
+            document.getElementById('sol-content').value = '';
+            const imgInput = document.getElementById('sol-images');
+            if (imgInput) imgInput.value = '';
+            document.getElementById('file-names').textContent = '';
+
+        } catch (err) {
+            console.error('EmailJS error:', err);
+            alert('❌ Gửi thất bại: ' + (err.text || err.message || JSON.stringify(err)) + '\n\nKiểm tra lại cấu hình EmailJS.');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = origHTML;
+            btn.style.opacity = '';
         }
     }
     </script>

@@ -3,6 +3,18 @@
 //   Secret of Mathematical Principles
 // ============================================
 
+// === EARLY DARK MODE APPLY (trước DOMContentLoaded để tránh flash màu sai) ===
+// Áp class ngay khi script được parse, không cần đợi DOM ready
+(function() {
+    if (localStorage.getItem('smp-dark-mode') === 'true') {
+        document.documentElement.classList.add('dark-mode-pre');
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('dark-mode');
+            document.documentElement.classList.remove('dark-mode-pre');
+        }, { once: true });
+    }
+})();
+
 // === DARK MODE ===
 const DarkMode = {
     init() {
@@ -433,5 +445,18 @@ document.addEventListener('DOMContentLoaded', () => {
     DarkMode.init();
     LiveSearch.init();
     setActiveNav();
-    PostViewer.init(); 
+    PostViewer.init();
+
+    // === BACK BUTTON: dùng history.back() thay vì link cứng ===
+    // Intercept tất cả .exam-back-btn để quay lại trang trước
+    document.querySelectorAll('.exam-back-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            // Nếu có lịch sử duyệt web thì quay lại
+            if (window.history.length > 1) {
+                e.preventDefault();
+                window.history.back();
+            }
+            // Nếu không có lịch sử (vào thẳng URL), dùng href gốc bình thường
+        });
+    });
 });

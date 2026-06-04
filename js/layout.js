@@ -49,18 +49,57 @@
             justify-content: center;
             z-index: 201;
             padding: 0;
-            transition: background 0.2s, color 0.2s;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
             line-height: 1;
+            pointer-events: auto !important;
         }
         .sidebar-toggle:hover {
-            background: #223535;
-            color: #fff;
+            opacity: 0.85;
+        }
+
+        /* Light mode (giao diện sáng): nút nền ĐEN để nổi bật */
+        body:not(.dark-mode) .sidebar-toggle {
+            background: #1a1a1a;
+            border-color: #1a1a1a;
+            color: var(--accent-cyan, #009eb3);
+        }
+        body:not(.dark-mode) .sidebar-toggle:hover {
+            background: #333333;
+            border-color: #333333;
+        }
+
+        /* Dark mode (giao diện tối): nút nền TRẮNG để nổi bật */
+        body.dark-mode .sidebar-toggle {
+            background: #ffffff;
+            border-color: #ffffff;
+            color: var(--accent-cyan, #5ce1e6);
+        }
+        body.dark-mode .sidebar-toggle:hover {
+            background: #e0e0e0;
+            border-color: #e0e0e0;
+        }
+
+        /* Dark mode: dark-toggle button turns white */
+        body.dark-mode .dark-toggle {
+            color: #ffffff !important;
+            border-color: rgba(255,255,255,0.25) !important;
+            background: rgba(255,255,255,0.08) !important;
+        }
+        body.dark-mode .dark-toggle:hover {
+            border-color: var(--accent-cyan, #5ce1e6) !important;
+            color: var(--accent-cyan, #5ce1e6) !important;
+            background: rgba(92,225,230,0.12) !important;
         }
 
         /* ── Collapsed state ── */
         .sidebar.collapsed {
             width: 0 !important;
             padding: 0 !important;
+            pointer-events: none; /* sidebar bị thu lại không click được */
+        }
+        /* Nhưng nút toggle VẪN phải click được kể cả khi sidebar đóng */
+        .sidebar.collapsed .sidebar-toggle {
+            pointer-events: auto !important;
         }
         .sidebar.collapsed .sidebar-inner {
             opacity: 0;
@@ -182,7 +221,7 @@
 
     const TOPBAR_HTML = `
     <header class="topbar">
-        <div style="color:#5ce1e6; font-family:'JetBrains Mono',monospace; font-size:0.8rem; letter-spacing:2px; flex-shrink:0;">SMP</div>
+        <a href="/SMP/index.html" style="color:#5ce1e6; font-family:'JetBrains Mono',monospace; font-size:0.8rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Trang Chủ">SMP</a>
         <div class="search-wrapper">
             <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
             <span class="search-icon">&#x2315;</span>

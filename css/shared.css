@@ -263,6 +263,18 @@ body {
 }
 .dark-toggle:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
 
+/* Dark mode: nút chuyển giao diện hiện màu trắng rõ ràng */
+body.dark-mode .dark-toggle {
+    color: #ffffff;
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.06);
+}
+body.dark-mode .dark-toggle:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    background: rgba(92,225,230,0.1);
+}
+
 /* === MAIN CONTENT === */
 main {
     padding: 48px 56px;

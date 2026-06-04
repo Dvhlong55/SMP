@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -76,8 +76,9 @@
                 <button class="math-nav-btn" data-filter="thpt">THPT</button>
                 <button class="math-nav-btn" data-filter="uni">Đại Học</button>
                 <button class="math-nav-btn" data-filter="challenge">Thách Thức Kì Này</button>
+                <button class="math-nav-btn" data-filter="trao-doi">Trao Đổi</button>
                 <button class="math-nav-btn" data-filter="misc">Tản Mạn</button>
-                <button class="math-nav-btn" data-filter="tools">$\LaTeX$</button>
+                <button class="math-nav-btn" data-filter="tools">Tool</button>
             </div>
 
             <div class="section-label" id="dynamic-section-label">Tất Cả Bài Viết Toán Học</div>
@@ -172,12 +173,28 @@
                     <a href="ThachThucKiNaySo42026.html" class="card-link">CHINH PHỤC NGAY</a>
                 </div>
 
+                <div class="card fade-up" data-category="trao-doi">
+                    <div class="card-date">June 04, 2026</div>
+                    <span class="card-tag">Trao Đổi</span>
+                    <h3>✏️ Gửi Bài Toán Đề Xuất</h3>
+                    <p>Bạn có bài toán hay muốn đóng góp cho mục Thách Thức Kì Này? Điền form đề xuất — Ban biên tập SMP sẽ xem xét và ghi nhận tên tác giả khi đăng.</p>
+                    <a href="guibaidexuat.html" class="card-link">GỬI ĐỀ XUẤT</a>
+                </div>
+
                 <div class="card fade-up" data-category="tools">
                     <div class="card-date">June 04, 2026</div>
                     <span class="card-tag">Công Cụ</span>
-                    <h3>📝 Trình Soạn Thảo LaTeX Trực Tuyến</h3>
+                    <h3>📝 Trình Soạn Thảo $\LaTeX$ Trực Tuyến</h3>
                     <p>Công cụ gõ LaTeX trực tiếp trên trình duyệt: preview realtime, xuất PDF, có sẵn các snippet toán học thường dùng.</p>
                     <a href="LaTeX.html" target="_blank" class="card-link">MỞ CÔNG CỤ</a>
+                </div>
+
+                <div class="card fade-up" data-category="tools">
+                    <div class="card-date">June 04, 2026</div>
+                    <span class="card-tag">Công Cụ</span>
+                    <h3>📐 GeoGebra → TikZ Extractor</h3>
+                    <p>Dán link GeoGebra, nhận ngay mã TikZ/PGF để chèn thẳng vào file LaTeX hoặc Overleaf. Hỗ trợ mọi định dạng link GeoGebra.</p>
+                    <a href="GeoGebra.html" target="_blank" class="card-link">MỞ CÔNG CỤ</a>
                 </div>
             </div>
 
@@ -185,7 +202,7 @@
                 <h3>Thảo Luận Học Thuật</h3>
                 <div class="comment-form">
                     <div class="comment-form-row">
-                        <input type="text" id="comment-name" class="comment-input" placeholder="Biệt danh của bạn...">
+                        <input type="text" id="comment-name" class="comment-input" placeholder="Gmail c&#7911;a b&#7841;n...">
                     </div>
                     <div style="margin-bottom: 14px;">
                         <textarea id="comment-text-input" class="comment-textarea" placeholder="Chia sẻ hướng giải quyết hoặc thắc mắc của bạn về các bài toán tại đây..."></textarea>
