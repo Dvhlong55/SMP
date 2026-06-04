@@ -5,6 +5,15 @@
 
 (function() {
 
+    // ── Inject Favicon ───────────────
+    if (!document.querySelector('link[rel="icon"]')) {
+        const link = document.createElement('link');
+        link.rel = 'icon';
+        link.type = 'image/png';
+        link.href = '/SMP/image/image_49b1a4.png';
+        document.head.appendChild(link);
+    }
+
     // ── Toggle-specific CSS only — layout stays in shared.css ───────────────
     const TOGGLE_CSS = `
         /* Sidebar must be fixed (shared.css already does this) */
