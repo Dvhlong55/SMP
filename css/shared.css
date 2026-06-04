@@ -14,9 +14,9 @@
     --text-dark: #1a1a1a;
     --text-muted: #6b6b6b;
     --text-light: #e8e8e8;
-    --accent-cyan: #5ce1e6;
+    --accent-cyan: #009eb3;
     --accent-gold: #c9a96e;
-    --accent-cyan-dim: rgba(92, 225, 230, 0.15);
+    --accent-cyan-dim: rgba(0, 158, 179, 0.15);
     --border-color: #2e2e2e;
     --border-light: #e8e4dc;
     --shadow-soft: 0 4px 24px rgba(0,0,0,0.06);
@@ -31,6 +31,8 @@ body.dark-mode {
     --card-bg: #1e1e1e;
     --text-dark: #e8e8e8;
     --text-muted: #9a9a9a;
+    --accent-cyan: #5ce1e6;
+    --accent-cyan-dim: rgba(92, 225, 230, 0.15);
     --border-light: #2e2e2e;
     --shadow-soft: 0 4px 24px rgba(0,0,0,0.3);
     --shadow-hover: 0 12px 40px rgba(0,0,0,0.5);
@@ -72,8 +74,8 @@ body {
 .sidebar::-webkit-scrollbar { display: none; }
 
 .sidebar-logo {
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 100px;
     object-fit: contain;
     margin-bottom: 18px;
     filter: drop-shadow(0 0 12px rgba(92,225,230,0.3));
@@ -265,7 +267,7 @@ body {
 main {
     padding: 48px 56px;
     flex-grow: 1;
-    max-width: 1400px; /* SỬA 1200px THÀNH 1400px hoặc 100% để mở rộng không gian */
+    max-width: 1500px; /* SỬA 1200px THÀNH 1400px hoặc 100% để mở rộng không gian */
     margin: 0 auto;    /* THÊM DÒNG NÀY để căn giữa */
     width: 100%;       /* THÊM DÒNG NÀY để đảm bảo nó tràn hết mức cho phép */
 }
@@ -853,4 +855,93 @@ body.dark-mode .modal-expand-btn {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     padding-left: 20px;
+}
+
+/* === VẼ LOGO SMP THEO TỶ LỆ MANIM === */
+.smp-logo-wrapper {
+    position: relative;
+    width: 280px;  /* Có thể tinh chỉnh độ lớn ở đây */
+    height: 180px;
+    margin: 60px auto;
+    /* Ẩn overflow lúc đầu nếu không muốn các khối hiện ở ngoài vòng */
+}
+
+/* Base block */
+.smp-block {
+    position: absolute;
+    background-color: #4DE8D0;
+    border-radius: 6px;
+    /* Mô phỏng bóng (shadow) của Manim */
+    box-shadow: 6px 6px 0px 0px rgba(30, 107, 154, 0.85);
+    opacity: 0; /* Ẩn đi để chờ cuộn chuột */
+}
+
+/* Định vị và kích thước mô phỏng (Quy đổi từ H1t, H1b... trong Python) */
+.smp-block.c1 { width: 24px; left: 0; }
+.smp-block.c1.top { height: 60px; top: 20px; }
+.smp-block.c1.bot { height: 26px; top: 92px; }
+
+.smp-block.c2 { width: 24px; left: 52px; }
+.smp-block.c2.top { height: 26px; top: 20px; }
+.smp-block.c2.bot { height: 60px; top: 58px; }
+
+.smp-block.c3 { width: 24px; left: 104px; height: 50px; top: 68px; }
+
+.smp-block.c4 { width: 25px; left: 156px; height: 96px; top: 20px; }
+.smp-block.c5 { width: 25px; left: 208px; height: 70px; top: 46px; }
+
+/* Vòng sáng (Glow Ring) */
+.smp-glow-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    width: 150px; height: 150px;
+    border: 3px solid #4DE8D0;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* === ANIMATION CLASSES KHI KÍCH HOẠT === */
+.smp-logo-wrapper.is-animating .smp-block {
+    animation: 
+        flyInBlock 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, /* ease_out_back */
+        pulseBlock 0.42s ease-in-out 1.2s forwards; /* pulse sau khi bay vào xong */
+}
+
+/* Stagger (Độ trễ bay vào từng khối như trong Manim) */
+.smp-logo-wrapper.is-animating .c1.top { animation-delay: 0s, 1.2s; }
+.smp-logo-wrapper.is-animating .c1.bot { animation-delay: 0.1s, 1.2s; }
+.smp-logo-wrapper.is-animating .c2.top { animation-delay: 0.2s, 1.2s; }
+.smp-logo-wrapper.is-animating .c2.bot { animation-delay: 0.3s, 1.2s; }
+.smp-logo-wrapper.is-animating .c3 { animation-delay: 0.4s, 1.2s; }
+.smp-logo-wrapper.is-animating .c4 { animation-delay: 0.5s, 1.2s; }
+.smp-logo-wrapper.is-animating .c5 { animation-delay: 0.6s, 1.2s; }
+
+/* Hiệu ứng bay vào từ quỹ đạo ngoài (orbit) */
+@keyframes flyInBlock {
+    0% {
+        opacity: 0;
+        transform: translate(200px, -200px) scale(0.5); /* Điểm xuất phát văng ra ngoài */
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+/* Hiệu ứng Pulse (There and back) */
+@keyframes pulseBlock {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.055); }
+}
+
+/* Hiệu ứng vòng sáng chớp lên */
+.smp-logo-wrapper.is-animating .smp-glow-ring {
+    animation: glowRingExpand 0.8s ease-out 1.5s forwards;
+}
+
+@keyframes glowRingExpand {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.45; }
+    100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
 }
