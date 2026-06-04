@@ -279,9 +279,9 @@ body.dark-mode .dark-toggle:hover {
 main {
     padding: 48px 56px;
     flex-grow: 1;
-    max-width: 1500px; /* SỬA 1200px THÀNH 1400px hoặc 100% để mở rộng không gian */
-    margin: 0 auto;    /* THÊM DÒNG NÀY để căn giữa */
-    width: 100%;       /* THÊM DÒNG NÀY để đảm bảo nó tràn hết mức cho phép */
+    max-width: 1500px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 /* Hero Header */
@@ -957,3 +957,40 @@ body.dark-mode .modal-expand-btn {
     0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.45; }
     100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
 }
+
+.sidebar-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 150; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.sidebar-overlay.active { opacity: 1; pointer-events: auto; }
+
+/* Overrides for tighter content */
+.main-content-layout { gap: 120px !important; }
+
+.exam-content, .article-content { max-width: 900px; margin: 0 auto; font-size: 1.15rem; line-height: 1.8; }
+.exam-content p, .article-content p, .page-hero p, .info-banner, .guidelines-panel p, .guidelines-panel li, .proposal-container p { font-size: 1.15rem; line-height: 1.8; margin-bottom: 24px; }
+.exam-content li, .article-content li, .guidelines-panel li { font-size: 1.15rem; line-height: 1.8; margin-bottom: 12px; }
+
+/* Center category pages content */
+main > .hero-header, 
+main > .math-nav-bar, 
+main > .nonmath-nav-bar, 
+main > .nav-bar,
+main > .category-nav-bar,
+main > .category-tabs,
+main > .section-title, 
+main > .grid-container, 
+main > .comment-section,
+main > .nav-filter-bar,
+main > .life-nav-bar,
+main > .section-label,
+main > .profile-container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Override all inline exam-paper font sizes */
+.exam-paper h1 { font-size: 1.5rem !important; }
+.exam-paper h2 { font-size: 1.3rem !important; }
+.exam-paper h3 { font-size: 1.15rem !important; }
+.exam-paper p { font-size: 1.15rem !important; line-height: 1.8 !important; }
+.exam-paper li { font-size: 1.15rem !important; line-height: 1.8 !important; }
+.exam-paper { font-size: 1.15rem !important; line-height: 1.8 !important; }

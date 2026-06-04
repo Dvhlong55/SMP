@@ -29,6 +29,16 @@
         }
         .sidebar-inner::-webkit-scrollbar { display: none; }
 
+        #smp-logo-canvas {
+            position: relative;
+            width: 120px;
+            height: 90px;
+            margin: 0 auto 16px;
+            /* Phóng to một chút */
+            transform: scale(1.7);
+            transform-origin: center;
+        }
+
         /* Toggle tab — hangs off the right edge, vertically centred */
         .sidebar-toggle {
             position: absolute;
@@ -163,7 +173,7 @@
         .sidebar-widget-list li a {
             color: #888;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 1.5rem;
             display: flex;
             justify-content: space-between;
             transition: color 0.2s;
@@ -221,7 +231,7 @@
 
     const TOPBAR_HTML = `
     <header class="topbar">
-        <a href="/SMP/index.html" style="color:#5ce1e6; font-family:'JetBrains Mono',monospace; font-size:0.8rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Trang Chủ">SMP</a>
+        <a href="/SMP/index.html" style="color:#5ce1e6; font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Trang Chủ">SMP</a>
         <div class="search-wrapper">
             <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
             <span class="search-icon">&#x2315;</span>
@@ -235,8 +245,11 @@
     // ── Inject into placeholders ─────────────────────────────────────────────
     const sidebarEl = document.getElementById('sidebar-placeholder');
     const topbarEl  = document.getElementById('topbar-placeholder');
+    const leftTagsEl = document.getElementById('left-sidebar-placeholder');
+
     if (sidebarEl) sidebarEl.outerHTML = SIDEBAR_HTML;
     if (topbarEl)  topbarEl.outerHTML  = TOPBAR_HTML;
+    if (leftTagsEl && typeof LEFT_TAGS_HTML !== 'undefined') leftTagsEl.outerHTML = LEFT_TAGS_HTML;
 
     // ── Sidebar collapse logic ───────────────────────────────────────────────
     function initSidebar() {
@@ -245,12 +258,23 @@
         const wrapper   = document.querySelector('.main-wrapper');
         if (!sidebar || !toggleBtn) return;
 
+        
         const STORAGE_KEY  = 'smp-sidebar-collapsed';
-        const SIDEBAR_W    = 280; // matches --sidebar-width in shared.css
+        const SIDEBAR_W    = 380;
         const iconEl = toggleBtn.querySelector('.toggle-icon');
 
+        // Insert overlay
+        let overlay = document.querySelector('.sidebar-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.className = 'sidebar-overlay';
+            document.body.appendChild(overlay);
+            overlay.addEventListener('click', () => setCollapsed(true, true));
+        }
+
+
+        
         function setCollapsed(collapsed, animate) {
-            // Temporarily disable transitions to avoid flash on page load
             if (!animate) {
                 sidebar.style.transition = 'none';
                 if (wrapper) wrapper.style.transition = 'none';
@@ -260,13 +284,16 @@
 
             // Drive margin-left and width of .main-wrapper directly
             if (wrapper) {
-                wrapper.style.marginLeft = collapsed ? '0' : SIDEBAR_W + 'px';
-                wrapper.style.width = collapsed
-                    ? '100%'
-                    : 'calc(100% - ' + SIDEBAR_W + 'px)';
+                wrapper.style.marginLeft = '0';
+                wrapper.style.width = '100%';
+            }
+
+            if (typeof overlay !== 'undefined' && overlay) {
+                overlay.classList.toggle('active', !collapsed);
             }
 
             iconEl.innerHTML = collapsed ? '&#x00BB;' : '&#x00AB;';
+
             localStorage.setItem(STORAGE_KEY, collapsed);
 
             if (!animate) {

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -77,7 +77,7 @@
                 <button class="math-nav-btn" data-filter="uni">Đại Học</button>
                 <button class="math-nav-btn" data-filter="challenge">Thách Thức Kì Này</button>
                 <button class="math-nav-btn" data-filter="trao-doi">Trao Đổi</button>
-                <button class="math-nav-btn" data-filter="misc">Tản Mạn</button>
+
                 <button class="math-nav-btn" data-filter="tools">Tool</button>
             </div>
 
@@ -214,6 +214,7 @@
         </main>
     </div>
 
+    <script src="/SMP/js/sidebar-data.js"></script>
     <script src="/SMP/js/layout.js"></script>
     <script src="/SMP/js/shared.js"></script>
     
@@ -228,7 +229,7 @@
             const sectionLabel = document.getElementById('dynamic-section-label');
 
             navBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
+                btn.addEventListener('click', (e) => {
                     // 1. Xóa trạng thái active của các nút khác và bật cho nút được click
                     navBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
@@ -236,6 +237,17 @@
                     // 2. Lấy bộ lọc từ thuộc tính data-filter
                     const filter = btn.getAttribute('data-filter');
                     
+                    // Cập nhật URL History nếu là người dùng bấm thật (tránh pushState khi auto click lúc load)
+                    if (e && e.isTrusted) {
+                        const newUrl = new URL(window.location);
+                        if (filter === 'all') {
+                            newUrl.searchParams.delete('filter');
+                        } else {
+                            newUrl.searchParams.set('filter', filter);
+                        }
+                        window.history.pushState({ filter: filter }, '', newUrl);
+                    }
+
                     // 3. Đổi tiêu đề dải nhãn
                     if (filter === 'all') {
                         sectionLabel.textContent = 'Tất Cả Bài Viết Toán Học';
@@ -260,6 +272,28 @@
                     });
                 });
             });
+
+            // Lắng nghe sự kiện back/forward của trình duyệt
+            window.addEventListener('popstate', (e) => {
+                const filter = e.state && e.state.filter ? e.state.filter : (new URLSearchParams(window.location.search).get('filter') || 'all');
+                const targetBtn = Array.from(navBtns).find(b => b.getAttribute('data-filter') === filter);
+                if (targetBtn) {
+                    targetBtn.click();
+                }
+            });
+
+            // Check URL query param to activate correct tab on load
+            const urlParams = new URLSearchParams(window.location.search);
+            const filterParam = urlParams.get('filter');
+            if (filterParam) {
+                const targetBtn = Array.from(navBtns).find(b => b.getAttribute('data-filter') === filterParam);
+                if (targetBtn) {
+                    targetBtn.click();
+                    window.history.replaceState({ filter: filterParam }, '', window.location.href);
+                }
+            } else {
+                window.history.replaceState({ filter: 'all' }, '', window.location.href);
+            }
         });
     </script>
 </body>

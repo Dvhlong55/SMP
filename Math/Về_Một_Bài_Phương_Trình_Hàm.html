@@ -174,6 +174,8 @@
         }
 
         .exam-paper {
+            font-size: 1.5rem;
+            line-height: 1.8;
             background: var(--exam-paper-bg);
             border: 1px solid var(--exam-paper-border);
             border-radius: 12px;
@@ -193,11 +195,10 @@
             margin: 7px 0;
             transition: color 0.3s ease;
         }
-        .exam-paper h1 { font-size: 1.5rem; letter-spacing: 0.5px; }
-        .exam-paper h2 { font-size: 1.1rem; font-weight: normal; }
+        .exam-paper h1 { font-size: 2.4rem; letter-spacing: 0.5px; }
+        .exam-paper h2 { font-size: 1.8rem; font-weight: normal; }
 
-        .exam-paper h3 {
-            font-size: 1.1rem;
+        .exam-paper h3 { font-size: 1.6rem;
             color: var(--accent-cyan, #5ce1e6);
             margin-top: 34px;
             margin-bottom: 10px;
@@ -243,26 +244,9 @@
 
                 <aside class="tags-comment-sidebar">
 
-                    <div class="side-widget fade-up">
-                        <div class="side-widget-title">Categories</div>
-                        <ul class="side-widget-list">
-                            <li><a href="../Math/toanhoc.html">Chuyên Toán <span>10</span></a></li>
-                            <li><a href="../Math/toanhoc.html">HSG Toán 9 <span>8</span></a></li>
-                            <li><a href="../Math/toanhoc.html">Math Olympiad <span>4</span></a></li>
-                            <li><a href="../Math/toanhoc.html">Number Theory <span>5</span></a></li>
-                            <li><a href="../Math/toanhoc.html">Algebra <span>3</span></a></li>
-                            <li><a href="../My%20Life/cuocsong.html">Cuộc Sống <span>1</span></a></li>
-                        </ul>
-                    </div>
+                    <div id="left-sidebar-placeholder"></div>
 
-                    <div class="side-widget fade-up">
-                        <div class="side-widget-title">Archives</div>
-                        <ul class="side-widget-list">
-                            <li><a href="#">Tháng 4, 2026 <span>12</span></a></li>
-                            <li><a href="#">Tháng 3, 2026 <span>8</span></a></li>
-                            <li><a href="#">Tháng 2, 2026 <span>5</span></a></li>
-                        </ul>
-                    </div>
+
 
                     <div class="comment-section fade-up">
                         <h3>Thảo Luận & Góp Ý</h3>
@@ -283,7 +267,7 @@
 
                 <div class="main-articles-body">
 
-                    <a href="../index.html" class="exam-back-btn fade-up">&#8592; Quay L&#7841;i</a>
+                    <a href="javascript:history.back()" class="exam-back-btn fade-up">&#8592; Quay L&#7841;i</a>
 
                     <div class="exam-meta fade-up">
                         <span class="exam-tag">VMO</span>
@@ -531,7 +515,8 @@
                 </div>
             </footer>
         </main>
-    </div><script src="/SMP/js/layout.js"></script>
+    </div><script src="/SMP/js/sidebar-data.js"></script>
+    <script src="/SMP/js/layout.js"></script>
     <script src="/SMP/js/shared.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -542,3 +527,4 @@
 </script>
 </body>
 </html>
+
