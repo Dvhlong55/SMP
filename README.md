@@ -13,3 +13,9 @@ The website is divided into main categories for easy content management:
 - **`css/`** & **`js/`**: Contains stylesheets and logic scripts that keep the website running smoothly.
 - **`image/`**: Stores all the image resources used on the website.
 - **`index.html`**: The main homepage.
+
+## ⚖️ Copyright
+
+**© 2026 SMP — Secrets of Mathematical Principles. All rights reserved.**
+
+This project is **NOT** Open Source. All source code, academic documents, and images in this repository are the exclusive property of the author. Please carefully review the `COPYRIGHT.md` file for more details. Copying, cloning, modifying, or redistributing in any form is strictly prohibited.
