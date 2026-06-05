@@ -53,6 +53,12 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
+mjx-container {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
 /* === SIDEBAR === */
 .sidebar {
     width: var(--sidebar-width);
@@ -328,7 +334,10 @@ main {
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
+    gap: 30px;
+}
+.grid-container > * {
+    min-width: 0;
 }
 
 /* Cards */
@@ -973,6 +982,11 @@ body.dark-mode .modal-expand-btn {
     grid-template-columns: 200px 1fr;
     gap: 100px;
     margin-top: 20px;
+}
+
+.main-articles-body {
+    min-width: 0;
+    width: 100%;
 }
 .tags-comment-sidebar {
     display: flex;

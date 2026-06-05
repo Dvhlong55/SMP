@@ -122,30 +122,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.body.innerHTML = FULL_LAYOUT;
     
-    // 6. Nhúng các script giao diện
+    // 6. Nhúng các script giao diện theo thứ tự tuần tự để tránh race condition
     const scriptsToLoad = [
         "/SMP/core/js/sidebar-data.js?v=4",
         "/SMP/core/js/layout.js?v=4",
         "/SMP/core/js/shared.js?v=4"
     ];
 
-    let loadedCount = 0;
-    
-    scriptsToLoad.forEach(src => {
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = () => {
-            loadedCount++;
-            if (loadedCount === scriptsToLoad.length) {
-                // Khi toàn bộ layout script load xong
-                document.body.style.display = '';
-                
-                // Khởi tạo bình luận
-                if (typeof Comments !== 'undefined') {
-                    Comments.init(postId);
-                }
+    function loadScriptSequentially(index) {
+        if (index >= scriptsToLoad.length) {
+            document.body.style.display = '';
+            if (typeof Comments !== 'undefined') {
+                Comments.init(postId);
             }
-        };
+            return;
+        }
+        const script = document.createElement('script');
+        script.src = scriptsToLoad[index];
+        script.onload = () => loadScriptSequentially(index + 1);
         document.body.appendChild(script);
-    });
+    }
+    
+    loadScriptSequentially(0);
 });
