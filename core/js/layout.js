@@ -293,8 +293,13 @@
 
             // Drive margin-left and width of .main-wrapper directly
             if (wrapper) {
-                wrapper.style.marginLeft = '0';
-                wrapper.style.width = '100%';
+                if (collapsed) {
+                    wrapper.style.marginLeft = '0';
+                    wrapper.style.width = '100%';
+                } else {
+                    wrapper.style.marginLeft = '';
+                    wrapper.style.width = '';
+                }
             }
 
             if (typeof overlay !== 'undefined' && overlay) {

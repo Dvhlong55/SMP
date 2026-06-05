@@ -192,10 +192,16 @@
         /* Responsive: Gộp thành 1 cột khi màn hình nhỏ */
         @media (max-width: 1100px) {
             .main-content-layout {
-                grid-template-columns: 1fr;
+                display: flex;
+                flex-direction: column;
             }
             .tags-comment-sidebar {
                 position: static;
+                order: 2;
+                margin-top: 40px; /* add spacing from the content above */
+            }
+            .main-articles-body {
+                order: 1;
             }
             .label-cloud {
                 flex-direction: row;
