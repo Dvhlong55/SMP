@@ -1,0 +1,21 @@
+{
+  "name": "SMP - Đỗ Viết Hoàng Long",
+  "short_name": "SMP",
+  "description": "Nơi chia sẻ kiến thức Toán học, Máy tính, và những câu chuyện.",
+  "start_url": "/SMP/index.html",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#121212",
+  "icons": [
+    {
+      "src": "/SMP/core/image/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/SMP/core/image/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

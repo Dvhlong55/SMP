@@ -253,6 +253,19 @@ const LiveSearch = {
     }
 };
 
+// Register Service Worker for PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/SMP/service-worker.js')
+            .then(registration => {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(err => {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+    });
+}
+
 // === COMMENT SYSTEM (Giscus) ===
 const Comments = {
     // Inject Giscus vào phần tử có id='giscus-container'
