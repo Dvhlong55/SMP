@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMP — Cuộc Sống</title>
-    <link rel="stylesheet" href="/SMP/css/shared.css">
+    <title>SMP — Tài Liệu</title>
+    <link rel="stylesheet" href="/SMP/core/css/shared.css">
     
     <style>
-        .life-nav-bar {
+        .nav-filter-bar {
             display: flex;
             gap: 12px;
             margin-bottom: 24px;
@@ -16,10 +16,10 @@
             overflow-x: auto; /* Hỗ trợ trượt ngang trên điện thoại */
             scrollbar-width: none; /* Ẩn thanh cuộn Firefox */
         }
-        .life-nav-bar::-webkit-scrollbar {
+        .nav-filter-bar::-webkit-scrollbar {
             display: none; /* Ẩn thanh cuộn Chrome/Safari */
         }
-        .life-nav-btn {
+        .nav-filter-btn {
             background: transparent;
             border: 1px solid transparent;
             color: var(--text-muted);
@@ -33,11 +33,11 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .life-nav-btn:hover {
+        .nav-filter-btn:hover {
             color: var(--accent-cyan);
             background: var(--accent-cyan-dim);
         }
-        .life-nav-btn.active {
+        .nav-filter-btn.active {
             color: var(--accent-cyan);
             background: var(--accent-cyan-dim);
             border: 1px solid var(--accent-cyan);
@@ -47,7 +47,7 @@
             display: none !important;
         }
     </style>
-<link rel="icon" type="image/png" href="/SMP/image/favicon.png">
+<link rel="icon" type="image/png" href="/SMP/core/image/favicon.png">
 </head>
 <body>
     <div id="sidebar-placeholder"></div>
@@ -57,34 +57,35 @@
 
         <main>
             <div class="hero-header fade-up">
-                <h1>Cuộc Sống & Góc Nhìn</h1>
-                <p class="quote">"Những câu chuyện tản mạn bên lề bảng đen."</p>
+                <h1>Kho Tài Liệu Học Tập</h1>
+                <p class="quote">"Tổng hợp tài liệu các môn khoa học ngoài Toán."</p>
             </div>
 
-            <div class="life-nav-bar fade-up">
-                <button class="life-nav-btn active" data-filter="all">Tất Cả</button>
-                <button class="life-nav-btn" data-filter="2026">2026</button>
-                <button class="life-nav-btn" data-filter="2025">2025</button>
-                <button class="life-nav-btn" data-filter="2024">2024</button>
+            <div class="nav-filter-bar fade-up">
+                <button class="nav-filter-btn active" data-filter="all">Tất Cả</button>
+                <button class="nav-filter-btn" data-filter="cs">Khoa Học Máy Tính</button>
+                <button class="nav-filter-btn" data-filter="physics">Vật Lý</button>
+                <button class="nav-filter-btn" data-filter="other">Khác</button>
             </div>
 
-            <div class="section-label" id="dynamic-section-label">Nhật Ký Học Thuật</div>
-            <div class="grid-container" id="life-grid-container">
-
-                <div class="card fade-up" data-category="2026">
-                    <div class="card-date">May 25, 2026</div>
-                    <span class="card-tag">Tản Mạn</span>
-                    <h3>Một mùa hè rực rỡ</h3>
-                    <p>Đi một vòng Việt Nam để gặp gỡ những người bạn tuyệt vời...</p>
-                    <a href="seas.html" class="card-link">READ MORE</a>
-                </div>
+            <div class="section-label" id="dynamic-section-label">Tài Liệu Khác</div>
+            
+            <div class="grid-container" id="doc-grid-container">
                 
-                <div class="card fade-up" data-category="2026">
-                    <div class="card-date">May 25, 2026</div>
-                    <span class="card-tag">Tản Mạn</span>
-                    <h3>Hành trình từ Chuyên Toán đến Khoa học máy tính</h3>
-                    <p>Chia sẻ về trải nghiệm khi bước đầu tiếp cận các cấu trúc dữ liệu đồ thị, thuật toán Prim, Kruskal và sự tương đồng kỳ diệu giữa tư duy chứng minh Toán học với lập trình logic...</p>
-                    <a href="#" class="card-link">ĐANG BIÊN SOẠN</a>
+                <div class="card fade-up" data-category="physics">
+                    <div class="card-date">July, 29 2025</div>
+                    <span class="card-tag">Physics</span>
+                    <h3>Lecture Note Quantum tại SEAS (Phần 1)</h3>
+                    <p> Viết lại bài giảng và bài tập về dự án tôi làm tại SEAS.</p>
+                    <a href="/SMP/posts/non-math/seas-quantum1.html" target="_blank" class="card-link">READ MORE</a>
+                </div>
+
+                <div class="card fade-up" data-category="physics">
+                    <div class="card-date">July, 29 2026</div>
+                    <span class="card-tag">Physics</span>
+                    <h3>Lecture Note Quantum tại SEAS (Phần 2)</h3>
+                    <p> Viết lại bài giảng và bài tập về dự án tôi làm tại SEAS phần tiếp theo.</p>
+                    <a href="/SMP/posts/non-math/seas-quantum2.html" target="_blank" class="card-link">READ MORE</a>
                 </div>
 
             </div>
@@ -93,26 +94,27 @@
         </main>
     </div>
 
-    <script src="/SMP/js/sidebar-data.js"></script>
-    <script src="/SMP/js/layout.js"></script>
-    <script src="/SMP/js/shared.js"></script>
+    <script src="/SMP/core/js/sidebar-data.js"></script>
+    <script src="/SMP/core/js/layout.js"></script>
+    <script src="/SMP/core/js/shared.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
 
-            // Logic thanh Tab Phân Loại theo Năm
-            const navBtns = document.querySelectorAll('.life-nav-btn');
-            const cards = document.querySelectorAll('#life-grid-container .card');
+            // Logic thanh Tab Phân Loại
+            const navBtns = document.querySelectorAll('.nav-filter-btn');
+            const cards = document.querySelectorAll('#doc-grid-container .card');
             const sectionLabel = document.getElementById('dynamic-section-label');
 
             navBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    // 1. Cập nhật trạng thái active
+                    // 1. Xóa trạng thái active của các nút khác
                     navBtns.forEach(b => b.classList.remove('active'));
+                    // Bật trạng thái active cho nút hiện tại
                     btn.classList.add('active');
 
-                    // 2. Lấy năm từ data-filter
+                    // 2. Lấy bộ lọc từ thuộc tính data-filter
                     const filter = btn.getAttribute('data-filter');
                     
                     // Cập nhật URL History nếu là người dùng bấm thật
@@ -126,23 +128,23 @@
                         window.history.pushState({ filter: filter }, '', newUrl);
                     }
 
-                    // 3. Đổi tiêu đề dải nhãn cho phù hợp
+                    // 3. Đổi tiêu đề dải nhãn
                     if (filter === 'all') {
-                        sectionLabel.textContent = 'Nhật Ký Học Thuật';
+                        sectionLabel.textContent = 'Tài Liệu Lưu Hành Nội Bộ';
                     } else {
-                        sectionLabel.textContent = `Hành Trình Năm ${filter}`;
+                        sectionLabel.textContent = `Chuyên Mục: ${btn.textContent}`;
                     }
 
-                    // 4. Ẩn/Hiện Card dựa vào năm
+                    // 4. Lọc hiển thị Card
                     cards.forEach(card => {
                         const category = card.getAttribute('data-category');
                         
                         if (filter === 'all' || category === filter) {
                             card.classList.remove('hidden');
                             
-                            // Kích hoạt lại hiệu ứng fade-up
+                            // Mẹo để trigger lại hiệu ứng fade-up mỗi khi chuyển tab
                             card.style.animation = 'none';
-                            card.offsetHeight; 
+                            card.offsetHeight; // Kích hoạt reflow trình duyệt
                             card.style.animation = null; 
                         } else {
                             card.classList.add('hidden');

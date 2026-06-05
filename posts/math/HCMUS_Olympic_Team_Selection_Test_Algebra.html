@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMP — Mùa Hè Của AI :)</title>
+    <title>SMP — Đề Thi Thử Lần 2 HSGS 2025–2026</title>
     <script>
         window.MathJax = {
             tex: {
@@ -13,7 +13,7 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link class="theme-link" rel="stylesheet" href="/SMP/css/shared.css">
+    <link class="theme-link" rel="stylesheet" href="/SMP/core/css/shared.css">
     <style>
         body { overflow-x: hidden; }
 
@@ -21,7 +21,7 @@
            HỆ THỐNG BIẾN MÀU CHUYỂN ĐỔI SÁNG / TỐI (DARK MODE)
            ======================================================== */
         :root {
-            --body-bg: #0b1111; 
+            --body-bg: #0b1111; /* Màu nền tối nguyên bản của bạn */
             --widget-title-color: #fff;
             --widget-link-color: #888;
             --widget-badge-bg: rgba(255,255,255,0.05);
@@ -34,6 +34,7 @@
             --exam-divider-color: rgba(92,225,230,0.1);
         }
 
+        /* Khi ở chế độ nền sáng (nếu class dark-mode không được active hoặc theo cấu hình ngược lại) */
         body:not(.dark-mode) {
             --body-bg: #f8fafc;
             --widget-title-color: #1e293b;
@@ -48,6 +49,7 @@
             --exam-divider-color: rgba(15,23,42,0.08);
         }
 
+        /* Áp dụng các biến màu động vào đúng các Class nguyên bản */
         body {
             background-color: var(--body-bg);
             transition: background-color 0.3s ease;
@@ -118,6 +120,7 @@
             .tags-comment-sidebar { position: static; }
         }
 
+        /* Stats strip */
         .stats-strip {
             display: flex;
             gap: 0;
@@ -138,6 +141,7 @@
         }
         .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
 
+        /* ── Exam-specific styles ── */
         .exam-back-btn {
             display: inline-flex;
             align-items: center;
@@ -227,19 +231,8 @@
         body.light-mode .exam-end {
             border-top: 1px solid rgba(0,0,0,0.06);
         }
-
-        a {
-            color: #ff69b4; 
-            text-decoration: none; 
-            transition: color 0.2s ease;
-        }
-
-        a:hover {
-            color: #ff1493; 
-            text-decoration: underline; 
-        }
     </style>
-<link rel="icon" type="image/png" href="/SMP/image/favicon.png">
+<link rel="icon" type="image/png" href="/SMP/core/image/favicon.png">
 </head>
 <body>
     <div id="sidebar-placeholder"></div>
@@ -255,6 +248,7 @@
                     <div id="left-sidebar-placeholder"></div>
 
 
+
                     </aside>
 
                 <div class="main-articles-body">
@@ -262,72 +256,160 @@
                     <a href="javascript:history.back()" class="exam-back-btn fade-up">&#8592; Quay L&#7841;i</a>
 
                     <div class="exam-meta fade-up">
-                        <span class="exam-tag"><a href="/SMP/My-Life/cuocsong.html" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">MY-LIFE</a> &nbsp;&gt;&nbsp; <a href="/SMP/My-Life/cuocsong.html" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Cuộc Sống</a> &nbsp;&gt;&nbsp; Một mùa hè rực rỡ</span>
+                        <span class="exam-tag"><a href="/SMP/pages/toanhoc.html" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">MATH</a> &nbsp;&gt;&nbsp; <a href="/SMP/Math/toanhoc.html?filter=vmo" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Olympic Toán</a> &nbsp;&gt;&nbsp; HCMUS Olympic Team Selection Test (Algebra)</span>
                     </div>
 
                     <div class="exam-paper fade-up">
-  
-                        <div class="header-box">
-                            <div class="header-top">
-                                <div>SMP – Hành trình & Trải nghiệm</div>
-                                <div><b>Đỗ Viết Hoàng Long</b></div>
-                            </div>
-                            
-                            <h1>
-                            <div class="header-center">
-                                $\S$ Mùa Hè Của AI :)
-                            </div>
-                            </h1>
 
-                            <div class="header-bottom">
-                                <div>Mùa hè năm 2025</div>
-                                <span style="font-size: 16px; font-weight: normal;">
-                                    <a href="mailto:hoanglong251027@gmail.com">hoanglong251027@gmail.com</a>
-                                </span>
-                            </div>
-                        </div>
+                      <h1>HCMUS Olympic Team Selection Test Algebra Section</h1>
 
-                        <p>
-                            Một vài thứ có vẻ là thú vị và mình muốn lưu lại chúng :). Ở mùa hè năm 2025, sau khi tốt nghiệp lớp 12 (không phải thi đại học :>), mình đã có một chuyến đi kéo dài vừa tròn 1 tháng - từ Bình Phước > Hà Tĩnh > Quảng Bình > Sài Gòn > Về nhà. Một chuyến đi dài với rất nhiều kỉ niệm, hơn nữa là những kiến thức siêu thú vị.
-                        </p>
+                      <h2 style="text-align: center;">
+                      $\LaTeX$ by Long Do <br />
+                      January 11, 2026
+                      </h2>
 
-                        <h3>Giao lưu tại trường hè SEAS & Quantum Physics</h3>
+                      <div class="problem">
+                      <h3>Problem 1.</h3>
 
-                        <p>
-                            Điểm dừng chân học thuật đáng nhớ đầu tiên là SEAS (Summer in Engineering and Applied Sciences). Đây là trường hè miễn phí dành cho học sinh THPT miền Trung, được thành lập bởi các chuyên viên nghiên cứu người miền Trung đang làm việc tại các viện nghiên cứu hàng đầu trong nước và thế giới. Mục tiêu của SEAS là giúp các bạn học sinh tiếp cận với các ngành khoa học công nghệ mới như trí tuệ nhân tạo (AI), khoa học dữ liệu, lập trình, năng lượng tái tạo, công nghệ lượng tử, và hơn thế nữa. 
-                        </p>
+                      Find $a,b$ such that the following system of equations has a solution
 
-                        <p>
-                            Tại đây, mình đặc biệt được giao lưu với các cao thủ ở MIT, Harvard, Kaist,... Nhớ in lúc đó được làm về Quantum Physics với anh Nguyễn Thế Quỳnh, nào thì ket, bra hay state energy. Tham gia SEAS cũng mang lại những trải nghiệm giao lưu văn hóa và khám phá vẻ đẹp của Quảng Bình rất tuyệt vời.
-                        </p>
+                      $$
+                      \begin{cases}
+                      (a+1)x_1+x_2+x_3+x_4=1\\
+                      x_1+(a+1)x_2+x_3+x_4=1\\
+                      x_1+x_2+(a+1)x_3+x_4=1\\
+                      x_1+x_2+x_3+(a+1)x_4=b
+                      \end{cases}
+                      $$
 
-                        <h3>Từ Đồ thị tới AI tại PiMA</h3>
+                      <h3>Problem 2.</h3>
 
-                        <p>
-                            Song sau khi kết thúc trại SEAS, đến với PiMA. Tạm gác lại những dòng code C++ hay những thuật toán duyệt đồ thị vốn đã rất quen thuộc, mình bước vào một không gian máy học hoàn toàn mới mẻ. Tại đây, mình được hiểu thêm về K - Means, GMM và đặc biệt là VAE, với sự giúp sức tận tình của anh mentor Phước (Hcmus) và chị Hà ở UET. 
-                        </p>
+                      <p>Consider the equation</h3>
 
-                        <p>
-                            Okiee dù lúc present bị sấy hơi úa nhưng mình nghĩ đó là những cơ hội để hiểu rõ hơn và cải thiện bản thân, hẹ hẹ.
-                        </p>
+                      $$
+                      x^3-2026x+1=0
+                      $$
 
-                        <h3>Tài liệu & Thông tin</h3>
-                        <p>
-                            Đây là một số tài liệu mình tổng hợp lại được:
-                        </p>
-                        <ul>
-                            <li><a href="https://drive.google.com/drive/folders/1HhHtBaLgY8BB_wR66BeJv_iJDkqklADq?usp=drive_link" target="_blank"><b>Tài liệu: Mùa hè của AI :)</b></a></li>
-                            <li><a href="/SMP/Non-Math/seas-quantum1.html" target="_blank"><b>Tài liệu: Lecturte Quantum tại SEAS phần 1</b></a></li>
-                            <li><a href="/SMP/Non-Math/seas-quantum2.html" target="_blank"><b>Tài liệu: Lecturte Quantum tại SEAS phần 2</b></a></li>
-                        </ul>
+                      <ol>
 
-                        <p class="exam-end"><b>─── HẾT ───</b></p>
+                      <li>
+                      Prove that the equation has three real roots $ a < b < c$ .
+                      </li>
 
-                    </div>
-                </div>
-            </div>
-            
-            
+                      <li>
+
+                      Let
+
+                      $$
+                      \mathcal A=
+                      \begin{pmatrix}
+                      a & b & c\\
+                      c & a & b\\
+                      b & c & a
+                      \end{pmatrix}
+                      $$
+
+                      Compute $r(\mathcal A)$.
+
+                      </li>
+
+                      <li>
+
+                      Is the matrix $\mathcal A$ diagonalizable over $\mathbb R$?  
+                      What about over $\mathbb C$? Justify your answer.
+
+                      </li>
+
+                      </ol>
+
+                      <h3>Problem 3.</h3>
+
+                      Let $n$ be a positive integer.
+
+                      Consider tuples $(b_1,b_2,\ldots,b_n)\in\mathbb R^n$.
+
+                      Denote by $V_n$ the set of tuples $(b_1,b_2,\ldots,b_n)$ such that there exist
+                      pairwise distinct real numbers $a_1,a_2,\ldots,a_n$ satisfying
+
+                      $$
+                      \sum_{i=1}^n b_iP(x+a_i)=0,
+                      \qquad \deg P < n
+                      $$
+                        
+                      Find $\dim V_n$.
+                                      
+                      </b></li></ol>
+
+                      <h3>Problem 4.</h3>
+
+                      Let $A\in M_n(\mathbb R)$.
+
+                      Prove that there exists $B\in M_n(\mathbb R)$ such that
+
+                      $$
+                      (AB)^2=AB
+                      $$
+
+                      and
+
+                      $$
+                      r(AB)=r(A)=r(B).
+                      $$
+
+                      <h3>Problem 5.</h3>
+
+                      Let
+
+                      $$
+                      S=\{1,2,\ldots,100\}
+                      $$
+
+                      and let $\mathcal F$ be the set of functions $f:S\to S$ satisfying
+
+                      $$
+                      f(k)\le f(k+1)\le f(k)+1,
+                      \qquad k=1,\ldots,99.
+                      $$
+
+                      <ol>
+
+                      <li>Determine the number of elements in $\mathcal F$.</li>
+
+                      <li>
+                      For each $f\in\mathcal F$, let $n(f)$ be the number of solutions of $f(x)=x$.
+
+                      Compute
+
+                      $$
+                      \sum_{f\in\mathcal F} n(f).
+                      $$
+
+                      </li>
+
+                      </ol>
+
+                      </div>
+
+
+
+                      <div class="problem">
+                      <b>Problem 6.</b>
+
+                      Let $M\in M_n(\mathbb R)$ be a square matrix whose entries all have absolute value $1$.
+
+                      Compute
+
+                      $$
+                      \sum \det(M)
+                      \qquad\text{and}\qquad
+                      \sum \det(M^2).
+                      $$
+
+                      </div>
+
+                      <p class="exam-end"><b>─── END ───</b></p>
+
+                    </div></div></div>
             <!-- Thảo Luận & Góp Ý (Giscus) -->
             <div class="giscus-section-outer fade-up" style="max-width: 900px; margin: 48px auto; padding: 48px 24px 0 24px; border-top: 1px solid var(--border-light);">
                 <h2 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 24px; color: var(--text-main);">Thảo Luận &amp; Góp Ý</h2>
@@ -349,18 +431,18 @@
                 </div>
             </footer>
         </main>
-    </div>
-    <script src="/SMP/js/sidebar-data.js"></script>
-    <script src="/SMP/js/layout.js"></script>
-    <script src="/SMP/js/shared.js"></script>
+    </div><script src="/SMP/core/js/sidebar-data.js"></script>
+    <script src="/SMP/core/js/layout.js"></script>
+    <script src="/SMP/core/js/shared.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof Comments !== 'undefined') {
-            Comments.init('ChuyenDiMuaHeAI');
+            Comments.init('ThiThuLan2HSGS2526');
         }
     });
 </script>
 </body>
 </html>
+
 
 

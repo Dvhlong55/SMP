@@ -204,7 +204,7 @@
     const SIDEBAR_HTML = `
     <aside class="sidebar" id="main-sidebar">
         <div class="sidebar-inner">
-            <img src="/SMP/image/image_49b1a4.png" alt="SMP Logo" class="sidebar-logo">
+            <img src="/SMP/core/image/image_49b1a4.png" alt="SMP Logo" class="sidebar-logo">
             <div class="sidebar-title">Secret of<br>Mathematical<br>Principles</div>
             <div class="sidebar-divider"></div>
             <p class="sidebar-bio">
@@ -227,10 +227,10 @@
             </div>
             <nav class="sidebar-nav">
                 <a href="/SMP/index.html">&#x2302; Home page</a>
-                <a href="/SMP/Math/toanhoc.html">&#x2211; Math</a>
-                <a href="/SMP/Non-Math/nonmath.html">&#x2734; Non Math</a>
-                <a href="/SMP/My-Life/cuocsong.html">&#x2726; My Life</a>
-                <a href="/SMP/About-Me/vetoi.html">&#x25CE; About Me</a>
+                <a href="/SMP/pages/toanhoc.html">&#x2211; Math</a>
+                <a href="/SMP/pages/nonmath.html">&#x2734; Non Math</a>
+                <a href="/SMP/pages/cuocsong.html">&#x2726; My Life</a>
+                <a href="/SMP/pages/vetoi.html">&#x25CE; About Me</a>
             </nav>
         </div>
         <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle sidebar" aria-label="Toggle sidebar">
