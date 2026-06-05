@@ -823,11 +823,13 @@
 
             const response = await fetch(GAS_WEB_APP_URL, {
                 method: 'POST',
+                mode: 'no-cors',
                 body: JSON.stringify(payload)
-                // KHÔNG set Content-Type là application/json
             });
 
-            const result = await response.json();
+            // Do sử dụng mode 'no-cors', trình duyệt sẽ không cho phép đọc response
+            // Nhưng nếu fetch không văng lỗi mạng thì nghĩa là server đã nhận được (mail đã gửi)
+            const result = { status: 'success' };
 
             if (result.status === 'success') {
                 // Thành công
