@@ -266,6 +266,7 @@
             <div id="search-results" class="search-results"></div>
         </div>
         <div class="topbar-actions">
+            <button id="install-app-btn" class="dark-toggle" style="display: none; border-color: #5ce1e6; color: #5ce1e6;">&#x2B07; Tải App</button>
             <button id="dark-toggle" class="dark-toggle">&#x263D; Tối</button>
         </div>
     </header>`;
