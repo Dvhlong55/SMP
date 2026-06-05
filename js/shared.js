@@ -433,4 +433,22 @@ document.addEventListener('DOMContentLoaded', () => {
             // Nếu không có lịch sử (vào thẳng URL), dùng href gốc bình thường
         });
     });
+
+    // === COZE WEB SDK ===
+    const cozeScript = document.createElement('script');
+    cozeScript.src = "https://sf-cdn.coze.com/obj/unpkg-va/flow-web-client/chat-client-sdk/1.0.0-beta.4/libs/oversea/index.js";
+    cozeScript.async = true;
+    cozeScript.onload = function() {
+        if (typeof CozeWebSDK !== 'undefined') {
+            new CozeWebSDK.WebChatClient({
+              config: {
+                bot_id: '7647750965072265269',
+              },
+              componentProps: {
+                title: 'subSMP',
+              },
+            });
+        }
+    };
+    document.body.appendChild(cozeScript);
 });
