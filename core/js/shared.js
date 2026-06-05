@@ -54,6 +54,20 @@ const DarkMode = {
 // === ALL POSTS DATABASE ===
 const ALL_POSTS = [
     {
+        title: '[Hà Nội] Đề thi tuyển sinh lớp 10 môn Toán năm 2026',
+        date: 'May 31, 2026',
+        url: '/SMP/posts/math/hanoi-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Hà Tĩnh] Đề thi môn Toán chuyên lớp 10 THPT Chuyên Hà Tĩnh năm 2026',
+        date: 'June 05, 2026',
+        url: '/SMP/posts/math/hatinh-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
         title: '[HSGS] Đề thi thử lần 2 môn Toán (Chuyên) năm 2026',
         date: 'March 08, 2026',
         url: 'https://smp0907.blogspot.com/2026/03/hsgs-e-thi-thu-lan-2-mon-toan-chuyen.html',
