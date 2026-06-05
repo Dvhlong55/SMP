@@ -436,7 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === COZE WEB SDK ===
     const cozeScript = document.createElement('script');
-    cozeScript.src = "https://sf-cdn.coze.com/obj/unpkg-va/flow-web-client/chat-client-sdk/1.0.0-beta.4/libs/oversea/index.js";
+    cozeScript.src = "https://sf-cdn.coze.com/obj/unpkg-va/flow-web-client/chat-client-sdk/0.1.0/libs/oversea/index.js";
     cozeScript.async = true;
     cozeScript.onload = function() {
         if (typeof CozeWebSDK !== 'undefined') {
