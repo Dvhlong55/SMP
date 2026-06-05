@@ -813,6 +813,7 @@
             const combinedContent = `ĐỀ BÀI:\n${statement}\n\nLỜI GIẢI / HƯỚNG DẪN:\n${solution}\n\nĐƠN VỊ: ${school || '(không ghi)'}\nGHI CHÚ: ${note || '(không có)'}`;
 
             const payload = {
+                type: 'de_xuat',
                 name: name,
                 contact: contact,
                 problem: combinedProblem,
