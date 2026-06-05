@@ -311,10 +311,19 @@ const PostViewer = {
                 
                 // BƯỚC QUAN TRỌNG: Rút trích cả thẻ <style> từ bài viết để giữ CSS bản đẹp
                 let extractedStyles = '';
+                if (!document.querySelector('link[href*="post.css"]')) {
+                    extractedStyles += '<link rel="stylesheet" href="/SMP/core/css/post.css">';
+                }
                 doc.querySelectorAll('style').forEach(s => extractedStyles += s.outerHTML);
 
-                // Lấy nội dung cột phải của bài viết gốc
-                let realContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
+                // Lấy nội dung bản dựng mới hoặc cột phải của bài viết gốc
+                const newPostContent = doc.getElementById('smp-post-content');
+                let realContent = '';
+                if (newPostContent) {
+                    realContent = '<div class="exam-paper fade-up">' + newPostContent.innerHTML + '</div>';
+                } else {
+                    realContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
+                }
 
                 // Gói gọn lại trong class .main-articles-body để CSS nhận diện chuẩn xác
                 const finalHTML = extractedStyles + '<div class="main-articles-body" style="padding:0; margin:0;">' + realContent + '</div>';
@@ -353,8 +362,19 @@ const PostViewer = {
                 
                 // Nhúng cả CSS và Nội dung vào cột phải trang chủ
                 let extractedStyles = '';
+                if (!document.querySelector('link[href*="post.css"]')) {
+                    extractedStyles += '<link rel="stylesheet" href="/SMP/core/css/post.css">';
+                }
                 doc.querySelectorAll('style').forEach(s => extractedStyles += s.outerHTML);
-                let fullRealContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
+                
+                const newPostContent = doc.getElementById('smp-post-content');
+                let fullRealContent = '';
+                if (newPostContent) {
+                    fullRealContent = '<a href="javascript:void(0)" class="exam-back-btn fade-up">&#8592; Quay Lại Danh Sách</a>' + 
+                                      '<div class="exam-paper fade-up">' + newPostContent.innerHTML + '</div>';
+                } else {
+                    fullRealContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
+                }
 
                 col.style.opacity = '0';
                 col.style.transform = 'translateX(40px)'; 
@@ -414,7 +434,7 @@ const PostViewer = {
 };
 
 // === INIT ON DOM READY ===
-document.addEventListener('DOMContentLoaded', () => {
+function initShared() {
     DarkMode.init();
     LiveSearch.init();
     setActiveNav();
@@ -433,5 +453,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Nếu không có lịch sử (vào thẳng URL), dùng href gốc bình thường
         });
     });
+}
 
-});
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initShared);
+} else {
+    initShared();
+}
