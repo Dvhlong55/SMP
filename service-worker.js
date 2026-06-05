@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smp-cache-v1';
+const CACHE_NAME = 'smp-cache-v2';
 const urlsToCache = [
   '/SMP/',
   '/SMP/index.html',
@@ -15,6 +15,8 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
+  // Bỏ qua chờ để kích hoạt Service Worker mới ngay lập tức
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -24,20 +26,30 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // Chiến lược: Network First, Fallback to Cache
   event.respondWith(
-    caches.match(event.request)
+    fetch(event.request)
       .then(response => {
-        // Cache hit - return response
-        if (response) {
-          return response;
+        // Cập nhật lại cache với dữ liệu mới nhất
+        if (response && response.status === 200 && response.type === 'basic') {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, responseClone);
+            });
         }
-        return fetch(event.request);
+        return response;
+      })
+      .catch(() => {
+        // Nếu rớt mạng, lấy từ cache
+        return caches.match(event.request);
       })
   );
 });
 
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
+  // Take control of all clients immediately
+  event.waitUntil(clients.claim());
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
