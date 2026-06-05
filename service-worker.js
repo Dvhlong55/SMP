@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smp-cache-v5';
+const CACHE_NAME = 'smp-cache-v6';
 const urlsToCache = [
   '/SMP/',
   '/SMP/index.html',
@@ -11,7 +11,9 @@ const urlsToCache = [
   '/SMP/core/js/layout.js',
   '/SMP/core/js/sidebar-data.js',
   '/SMP/core/js/post-layout.js',
-  '/SMP/core/image/favicon.png'
+  '/SMP/core/image/favicon.png',
+  '/SMP/core/image/image_49b1a4.png',
+  '/SMP/core/image/mobile_demo.png'
 ];
 
 self.addEventListener('install', event => {
