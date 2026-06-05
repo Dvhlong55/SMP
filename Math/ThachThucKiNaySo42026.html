@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -723,13 +723,10 @@
 
                             <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                                 <button class="mailbox-send-btn" id="sol-send-btn" onclick="sendSolution()">
-                                    <span>📨</span> Gửi Lời Giải
-                                </button>
-                                <button class="mailbox-send-btn" style="background: linear-gradient(135deg, rgba(251,113,133,0.18), rgba(251,191,36,0.18)); border-color: rgba(251,113,133,0.4); color: #fb7185;" onclick="sendSolutionViaGmail()">
-                                    <span>✉️</span> Mở Gmail (Cho Tệp Lớn)
+                                    <span>📨</span> Gửi Lời Giải (Đính Kèm Tự Động)
                                 </button>
                             </div>
-                            <p class="mailbox-note">Nhấn Gửi Lời Giải để gửi trực tiếp. Nếu có đính kèm file ảnh/PDF kích thước lớn, vui lòng nhấn Mở Gmail.</p>
+                            <p class="mailbox-note">Lời giải và toàn bộ file đính kèm sẽ được nén và đẩy thẳng đến tác giả!</p>
                         </div>
                     </div>
 
@@ -757,19 +754,7 @@
         </main>
     </div>
 
-    <!-- File attachment reminder overlay -->
-    <div class="file-reminder-overlay" id="file-reminder-overlay">
-        <div class="file-reminder-box">
-            <span class="file-reminder-icon">📎</span>
-            <div class="file-reminder-title">Gmail đã mở! Còn một bước nữa...</div>
-            <p class="file-reminder-desc">
-                Trình duyệt không thể tự đính kèm file vào Gmail vì lý do bảo mật.<br>
-                Vui lòng <strong>kéo các file sau vào cửa sổ Gmail</strong> vừa mở:
-            </p>
-            <ul class="file-reminder-list" id="reminder-file-list"></ul>
-            <button class="file-reminder-close" onclick="document.getElementById('file-reminder-overlay').classList.remove('active')">✓ Đã hiểu, đi đính kèm</button>
-        </div>
-    </div>
+
         <script src="/SMP/js/sidebar-data.js"></script>
     <script src="/SMP/js/layout.js"></script>
     <script src="/SMP/js/shared.js"></script>
@@ -882,69 +867,88 @@
 
     // ══════════════════════════════════════════════════
     // ══════════════════════════════════════════════════
-    //  CẤU HÌNH EMAILJS — điền sau khi đăng ký emailjs.com
+    //  CẤU HÌNH GOOGLE APPS SCRIPT WEB APP
     // ══════════════════════════════════════════════════
-    const EMAILJS_PUBLIC_KEY  = 'cvYDEg5CFprNoHT-B';
-    const EMAILJS_SERVICE_ID  = 'service_o024u9u';
-    const EMAILJS_TEMPLATE_ID = 'template_24c224j';
-    (function(){ if (window.emailjs) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); })();
+    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwPY-Ps-x68hyNAa4VhbsFpiYarOGugyzuG82k5EyehFmwu4FbWwurj7XRXXutLm933_Q/exec';
 
-    // ── Gửi lời giải qua EmailJS ──
+    // Helper: Convert File to Base64
+    function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = error => reject(error);
+        });
+    }
+
+    // ── Gửi lời giải qua Google Apps Script ──
     async function sendSolution() {
         const name    = document.getElementById('sol-name').value.trim();
         const contact = document.getElementById('sol-contact').value.trim();
         const problem = document.getElementById('sol-problem').value;
         const content = document.getElementById('sol-content').value.trim();
+        const fileInput = document.getElementById('sol-images');
 
         if (!name || !contact || !problem || !content) {
             alert('⚠ Vui lòng điền đầy đủ các trường bắt buộc (có dấu *)!');
             return;
         }
 
-        if (EMAILJS_TEMPLATE_ID === 'YOUR_TEMPLATE_ID') {
-            alert('⚠ Còn thiếu Template ID!\nVui lòng điền TEMPLATE_ID trong file HTML.');
-            return;
-        }
-
-        const sender  = name || 'Ẩn danh';
         const btn     = document.getElementById('sol-send-btn');
         const origHTML = btn.innerHTML;
 
         // Loading state
         btn.disabled = true;
-        btn.innerHTML = '<span>⏳</span> Đang gửi...';
+        btn.innerHTML = '<span>⏳</span> Đang tải file và gửi...';
         btn.style.opacity = '0.7';
 
         try {
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-                author_name:    sender,
-                problem_topic:  problem,
-                statement:      '(Lời giải cho: ' + problem + ')',
-                solution:       content,
-                author_contact: contact || '(Không để lại)',
-                author_school:  '',
-                difficulty:     '',
-                source:         'Thách Thức Kì Này — SMP',
-                extra_note:     '',
-                sent_at:        new Date().toLocaleString('vi-VN'),
+            // Chuẩn bị danh sách file đính kèm
+            let filesData = [];
+            if (fileInput && fileInput.files.length > 0) {
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    const file = fileInput.files[i];
+                    const base64Data = await getBase64(file);
+                    filesData.push({
+                        name: file.name,
+                        mimeType: file.type,
+                        data: base64Data
+                    });
+                }
+            }
+
+            const payload = {
+                name: name,
+                contact: contact,
+                problem: problem,
+                content: content,
+                files: filesData
+            };
+
+            const response = await fetch(GAS_WEB_APP_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+                // KHÔNG set Content-Type là application/json để tránh lỗi CORS Preflight của trình duyệt
             });
 
-            // Thành công: hiện overlay
-            const list = overlay.querySelector('.file-reminder-list');
-            if (list) list.innerHTML = '';
-            overlay.classList.add('active');
-
-            // Reset form
-            document.getElementById('sol-name').value    = '';
-            document.getElementById('sol-problem').value = '';
-            document.getElementById('sol-content').value = '';
-            const imgInput = document.getElementById('sol-images');
-            if (imgInput) imgInput.value = '';
-            document.getElementById('file-names').textContent = '';
+            const result = await response.json();
+            
+            if (result.status === 'success') {
+                alert('✅ Lời giải và file đã được gửi thành công đến Google Drive của tác giả!');
+                
+                // Reset form
+                document.getElementById('sol-name').value    = '';
+                document.getElementById('sol-problem').value = '';
+                document.getElementById('sol-content').value = '';
+                if (fileInput) fileInput.value = '';
+                document.getElementById('file-names').textContent = '';
+            } else {
+                alert('❌ Gửi thất bại: ' + result.message);
+            }
 
         } catch (err) {
-            console.error('EmailJS error:', err);
-            alert('❌ Gửi thất bại: ' + (err.text || err.message || JSON.stringify(err)) + '\n\nKiểm tra lại cấu hình EmailJS.');
+            console.error('GAS error:', err);
+            alert('❌ Đã xảy ra lỗi khi kết nối máy chủ!');
         } finally {
             btn.disabled = false;
             btn.innerHTML = origHTML;
