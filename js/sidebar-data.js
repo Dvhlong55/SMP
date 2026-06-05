@@ -21,9 +21,9 @@ const LEFT_TAGS_HTML = `
             <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin: 16px 0;">
 
             <ul class="side-widget-list">
-                <li><a href="/SMP/My-Life/cuocsong.html?filter=2026">2026 <span>12</span></a></li>
-                <li><a href="/SMP/My-Life/cuocsong.html?filter=2025">2025 <span>8</span></a></li>
-                <li><a href="/SMP/My-Life/cuocsong.html?filter=2024">2024 <span>5</span></a></li>
+                <li><a href="/SMP/My-Life/cuocsong.html?filter=2026">2026 <span>0</span></a></li>
+                <li><a href="/SMP/My-Life/cuocsong.html?filter=2025">2025 <span>1</span></a></li>
+                <li><a href="/SMP/My-Life/cuocsong.html?filter=2024">2024 <span>0</span></a></li>
             </ul>
         </div>
 `;

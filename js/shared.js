@@ -26,11 +26,13 @@ const DarkMode = {
         document.body.classList.add('dark-mode');
         if (save) localStorage.setItem('smp-dark-mode', 'true');
         this.updateBtn('☀ Sáng');
+        Comments.setTheme('dark');
     },
     disable(save = true) {
         document.body.classList.remove('dark-mode');
         if (save) localStorage.setItem('smp-dark-mode', 'false');
         this.updateBtn('☽ Tối');
+        Comments.setTheme('light');
     },
     toggle() {
         if (document.body.classList.contains('dark-mode')) this.disable();
@@ -160,69 +162,40 @@ const LiveSearch = {
     }
 };
 
-// === COMMENT SYSTEM (localStorage) ===
+// === COMMENT SYSTEM (Giscus) ===
 const Comments = {
-    getKey(pageId) { return `smp-comments-${pageId}`; },
+    // Inject Giscus vào phần tử có id='giscus-container'
+    init() {
+        const container = document.getElementById('giscus-container');
+        if (!container) return;
 
-    load(pageId) {
-        try {
-            return JSON.parse(localStorage.getItem(this.getKey(pageId))) || [];
-        } catch { return []; }
+        const isDark = document.body.classList.contains('dark-mode');
+        const script = document.createElement('script');
+        script.src = 'https://giscus.app/client.js';
+        script.setAttribute('data-repo', 'Dvhlong55/SMP');
+        script.setAttribute('data-repo-id', 'R_kgDOSvmBLQ');
+        script.setAttribute('data-category', 'General');
+        script.setAttribute('data-category-id', 'DIC_kwDOSvmBLc4Csk4j');
+        script.setAttribute('data-mapping', 'pathname');
+        script.setAttribute('data-strict', '0');
+        script.setAttribute('data-reactions-enabled', '1');
+        script.setAttribute('data-emit-metadata', '0');
+        script.setAttribute('data-input-position', 'bottom');
+        script.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        script.setAttribute('data-lang', 'vi');
+        script.setAttribute('crossorigin', 'anonymous');
+        script.async = true;
+        container.appendChild(script);
     },
 
-    save(pageId, comments) {
-        localStorage.setItem(this.getKey(pageId), JSON.stringify(comments));
-    },
-
-    render(pageId) {
-        const list = document.getElementById('comment-list');
-        if (!list) return;
-        const comments = this.load(pageId);
-        if (comments.length === 0) {
-            list.innerHTML = '<p style="color:var(--text-muted); font-size:0.88rem; text-align:center; padding: 20px 0;">Chưa có bình luận nào. Hãy là người đầu tiên!</p>';
-            return;
-        }
-        list.innerHTML = comments.map(c => `
-            <div class="comment-item fade-up">
-                <div class="comment-meta">
-                    <span class="comment-author">${this.escape(c.name)}</span>
-                    <span class="comment-date">${c.date}</span>
-                </div>
-                <div class="comment-text">${this.escape(c.text)}</div>
-            </div>
-        `).join('');
-    },
-
-    submit(pageId) {
-        const name = document.getElementById('comment-name')?.value?.trim();
-        const text = document.getElementById('comment-text-input')?.value?.trim();
-        if (!name || !text) { alert('Vui lòng điền đầy đủ tên và nội dung!'); return; }
-
-        const comments = this.load(pageId);
-        comments.unshift({
-            name,
-            text,
-            date: new Date().toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' })
-        });
-        this.save(pageId, comments);
-        this.render(pageId);
-
-        document.getElementById('comment-name').value = '';
-        document.getElementById('comment-text-input').value = '';
-    },
-
-    escape(str) {
-        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    },
-
-    init(pageId) {
-        if (document.getElementById('comment-list')) {
-            this.render(pageId);
-        }
-        const btn = document.getElementById('comment-submit');
-        if (btn) {
-            btn.addEventListener('click', () => this.submit(pageId));
-        }
+    // Đồng bộ theme Giscus khi bật/tắt dark mode
+    setTheme(theme) {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            'https://giscus.app'
+        );
     }
 };
 
@@ -446,6 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
     LiveSearch.init();
     setActiveNav();
     PostViewer.init();
+    Comments.init();
 
     // === BACK BUTTON: dùng history.back() thay vì link cứng ===
     // Intercept tất cả .exam-back-btn để quay lại trang trước
