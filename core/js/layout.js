@@ -223,7 +223,9 @@
     const SIDEBAR_HTML = `
     <aside class="sidebar" id="main-sidebar">
         <div class="sidebar-inner">
-            <img src="/SMP/core/image/image_49b1a4.png" alt="SMP Logo" class="sidebar-logo">
+            <a href="/SMP/demo.html" style="display: block; cursor: pointer; border: none; outline: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" title="Xem tính năng hệ sinh thái">
+                <img src="/SMP/core/image/image_49b1a4.png" alt="SMP Logo" class="sidebar-logo">
+            </a>
             <div class="sidebar-title">Secret of<br>Mathematical<br>Principles</div>
             <div class="sidebar-divider"></div>
             <p class="sidebar-bio">
