@@ -146,6 +146,7 @@ body.light-mode .side-widget-title {
     color: var(--exam-text-color);
     line-height: 1.85;
     font-size: 1.01rem;
+    overflow-x: auto;
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
@@ -177,7 +178,7 @@ body.light-mode .side-widget-title {
 
 .exam-paper p   { margin: 10px 0; }
 .exam-paper ol,
-.exam-paper ul  { margin: 10px 0; padding-left: 28px; }
+.exam-paper ul  { margin: 10px 0; padding-left: 18px; }
 .exam-paper li  { margin: 8px 0; }
 .exam-paper b   { color: var(--exam-bold-color); transition: color 0.3s ease; }
 

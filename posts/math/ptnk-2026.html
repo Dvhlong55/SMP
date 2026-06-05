@@ -12,17 +12,6 @@
     <meta name="subcategory-filter" content="hsg">
 
     <script src="/SMP/core/js/post-layout.js?v=4"></script>
-    <style>
-        .grid-3x3 {
-            border-collapse: collapse;
-            margin: 20px auto;
-        }
-        .grid-3x3 td {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--text-main);
-        }
-    </style>
 </head>
 <body>
     <div id="smp-post-content" style="display: none;">
@@ -51,11 +40,19 @@
 
         <p><b>Câu 5 (2 điểm).</b> Cho bảng ô vuông kích thước $3 \times 3$ gồm 3 hàng, 3 cột và 2 đường chéo như sau:</p>
         
-        <table class="grid-3x3">
-            <tr><td></td><td></td><td></td></tr>
-            <tr><td></td><td></td><td></td></tr>
-            <tr><td></td><td></td><td></td></tr>
-        </table>
+        <p style="text-align: center; margin: 30px 0;">
+            $$
+            \begin{array}{|c|c|c|}
+            \hline
+            \phantom{\rule{0pt}{1.5em}\rule{1.5em}{0pt}} & \phantom{\rule{0pt}{1.5em}\rule{1.5em}{0pt}} & \phantom{\rule{0pt}{1.5em}\rule{1.5em}{0pt}} \\
+            \hline
+            \phantom{\rule{0pt}{1.5em}\rule{1.5em}{0pt}} & \phantom{\rule{0pt}{1.5em}\rule{1.5em}{0pt}} & \phantom{\rule{0pt}{1.5em}\rule{1.5em}{0pt}} \\
+            \hline
+            \phantom{\rule{0pt}{1.5em}\rule{1.5em}{0pt}} & \phantom{\rule{0pt}{1.5em}\rule{1.5em}{0pt}} & \phantom{\rule{0pt}{1.5em}\rule{1.5em}{0pt}} \\
+            \hline
+            \end{array}
+            $$
+        </p>
 
         <p>Một số nguyên dương $n$ được gọi là số tốt nếu ta tìm được 9 số nguyên dương phân biệt và điền vào các ô của bảng, mỗi ô một số, sao cho tổng các số trên mỗi hàng, mỗi cột và mỗi đường chéo đều bằng $n$.</p>
         <p>a) Hãy chỉ ra một cách điền các số nguyên dương từ 1 đến 9 vào các ô của bảng sao cho tổng các số trên mỗi hàng, mỗi cột và mỗi đường chéo đều bằng nhau.</p>

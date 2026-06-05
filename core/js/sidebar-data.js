@@ -1,10 +1,10 @@
 const LEFT_TAGS_HTML = `
         <div class="side-widget fade-up">
             <ul class="side-widget-list">
-                <li><a href="/SMP/pages/toanhoc.html?filter=vmo">VMO <span>2</span></a></li>
-                <li><a href="/SMP/pages/toanhoc.html?filter=hsg">HSG & Chuyên Toán 9 <span>4</span></a></li>
-                <li><a href="/SMP/pages/toanhoc.html?filter=thpt">THPT <span>1</span></a></li>
-                <li><a href="/SMP/pages/toanhoc.html?filter=uni">Đại Học <span>3</span></a></li>
+                <li><a href="/SMP/pages/toanhoc.html?filter=vmo">VMO <span>7</span></a></li>
+                <li><a href="/SMP/pages/toanhoc.html?filter=hsg">HSG & Chuyên Toán 9 <span>18</span></a></li>
+                <li><a href="/SMP/pages/toanhoc.html?filter=thpt">THPT <span>0</span></a></li>
+                <li><a href="/SMP/pages/toanhoc.html?filter=uni">Đại Học <span>1</span></a></li>
                 <li><a href="/SMP/pages/toanhoc.html?filter=challenge">Thách Thức Kì Này <span>1</span></a></li>
                 <li><a href="/SMP/pages/toanhoc.html?filter=trao-doi">Trao Đổi <span>1</span></a></li>
                 <li><a href="/SMP/pages/toanhoc.html?filter=tools">Tool <span>2</span></a></li>
