@@ -434,21 +434,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // === COZE WEB SDK ===
-    const cozeScript = document.createElement('script');
-    cozeScript.src = "https://sf-cdn.coze.com/obj/unpkg-va/flow-platform/chat-app-sdk/1.2.0-beta.17/libs/oversea/index.js";
-    cozeScript.async = true;
-    cozeScript.onload = function() {
-        if (typeof CozeWebSDK !== 'undefined') {
-            new CozeWebSDK.WebChatClient({
-              config: {
-                bot_id: '7647750965072265269',
-              },
-              componentProps: {
-                title: 'subSMP',
-              },
-            });
-        }
-    };
-    document.body.appendChild(cozeScript);
 });
