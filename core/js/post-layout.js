@@ -35,16 +35,16 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // Thêm các CSS cần thiết nếu chưa có trong thẻ head
     const head = document.head;
-    if (!document.querySelector('link[href="/SMP/core/css/shared.css"]')) {
+    if (!document.querySelector('link[href="/SMP/core/css/shared.css?v=4"]')) {
         const linkShared = document.createElement('link');
         linkShared.rel = 'stylesheet';
-        linkShared.href = '/SMP/core/css/shared.css';
+        linkShared.href = '/SMP/core/css/shared.css?v=4';
         head.appendChild(linkShared);
     }
-    if (!document.querySelector('link[href="/SMP/core/css/post.css"]')) {
+    if (!document.querySelector('link[href="/SMP/core/css/post.css?v=4"]')) {
         const linkPost = document.createElement('link');
         linkPost.rel = 'stylesheet';
-        linkPost.href = '/SMP/core/css/post.css';
+        linkPost.href = '/SMP/core/css/post.css?v=4';
         head.appendChild(linkPost);
     }
     
@@ -124,9 +124,9 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // 6. Nhúng các script giao diện
     const scriptsToLoad = [
-        "/SMP/core/js/sidebar-data.js",
-        "/SMP/core/js/layout.js",
-        "/SMP/core/js/shared.js"
+        "/SMP/core/js/sidebar-data.js?v=4",
+        "/SMP/core/js/layout.js?v=4",
+        "/SMP/core/js/shared.js?v=4"
     ];
 
     let loadedCount = 0;

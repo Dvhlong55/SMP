@@ -968,7 +968,35 @@ body.dark-mode .modal-expand-btn {
 .sidebar-overlay.active { opacity: 1; pointer-events: auto; }
 
 /* Overrides for tighter content */
-.main-content-layout { gap: 120px !important; }
+.main-content-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 100px;
+    margin-top: 20px;
+}
+.tags-comment-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+    z-index: 1; 
+}
+@media (max-width: 1100px) {
+    .main-content-layout {
+        display: flex;
+        flex-direction: column;
+    }
+    .tags-comment-sidebar {
+        position: static;
+        order: 2;
+        margin-top: 40px;
+    }
+    .main-articles-body {
+        order: 1;
+    }
+}
 
 .exam-content, .article-content { max-width: 900px; margin: 0 auto; font-size: 1.15rem; line-height: 1.8; }
 .exam-content p, .article-content p, .page-hero p, .info-banner, .guidelines-panel p, .guidelines-panel li, .proposal-container p { font-size: 1.15rem; line-height: 1.8; margin-bottom: 24px; }

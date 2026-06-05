@@ -126,6 +126,25 @@
             transform: translateX(-16px);
         }
 
+        /* Mobile Floating Action Button for sidebar toggle */
+        @media (max-width: 768px) {
+            .sidebar-toggle {
+                position: fixed;
+                bottom: 24px;
+                left: 24px;
+                right: auto;
+                top: auto;
+                transform: none;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                border: 1px solid rgba(92, 225, 230, 0.4);
+                background: var(--body-bg) !important;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+                z-index: 999;
+            }
+        }
+
         /* Shift main-wrapper to match sidebar width */
         .main-wrapper {
             transition: margin-left 0.35s cubic-bezier(.4,0,.2,1),

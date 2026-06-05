@@ -13,7 +13,7 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="stylesheet" href="/SMP/core/css/shared.css">
+    <link rel="stylesheet" href="/SMP/core/css/shared.css?v=4">
     <style>
         /* Featured post hero */
         .featured-hero {
@@ -147,13 +147,6 @@
             transform: none !important;
         }
 
-        .main-content-layout {
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            gap: 100px;
-            margin-top: 20px;
-        }
-        
         .tags-comment-sidebar {
             display: flex;
             flex-direction: column;
@@ -191,10 +184,6 @@
         
         /* Responsive: Gộp thành 1 cột khi màn hình nhỏ */
         @media (max-width: 1100px) {
-            .main-content-layout {
-                display: flex;
-                flex-direction: column;
-            }
             .tags-comment-sidebar {
                 position: static;
                 order: 2;
@@ -383,8 +372,8 @@
     </div>
 
     <script src="/SMP/core/js/sidebar-data.js"></script>
-    <script src="/SMP/core/js/layout.js"></script>
-    <script src="/SMP/core/js/shared.js"></script>
+    <script src="/SMP/core/js/layout.js?v=4"></script>
+    <script src="/SMP/core/js/shared.js?v=4"></script>
     <script>
         // === DAILY CHALLENGE DATA ===
         const CHALLENGES = [
