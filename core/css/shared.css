@@ -528,6 +528,7 @@ main {
     color: #ccc;
     font-size: 0.9rem;
     line-height: 1.8;
+    overflow-x: auto; /* Fix horizontal scroll on mobile for math */
 }
 .challenge-btn {
     background: transparent;
@@ -553,6 +554,7 @@ main {
     font-size: 0.88rem;
     display: none;
     line-height: 1.7;
+    overflow-x: auto; /* Fix horizontal scroll on mobile */
 }
 .challenge-answer.show { display: block; }
 
@@ -574,11 +576,19 @@ main {
     .sidebar-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
     .sidebar-nav a { padding: 6px 12px; margin-bottom: 0; }
     .main-wrapper { margin-left: 0; width: 100%; }
-    .topbar { padding: 0 16px; flex-wrap: wrap; height: auto; padding: 12px; gap: 10px; }
-    .search-wrapper { max-width: 100%; margin: 0; }
+    .topbar { padding: 12px 16px; flex-wrap: wrap; height: auto; gap: 12px; justify-content: space-between; }
+    .topbar > a { flex-shrink: 0; }
+    .topbar-actions { flex-shrink: 0; margin-left: auto; }
+    .search-wrapper { flex: 0 0 100%; order: 3; margin: 0; max-width: 100%; }
     main { padding: 24px 16px; }
     .comment-form-row { grid-template-columns: 1fr; }
     .grid-container { grid-template-columns: 1fr; }
+
+    /* Fix challenge card on mobile */
+    .challenge-card { padding: 20px; margin-bottom: 24px; }
+    .challenge-card::before { font-size: 3.5rem; right: 12px; top: 12px; }
+    .challenge-card h3 { font-size: 1.1rem; }
+    .challenge-problem { padding: 12px 16px; font-size: 0.85rem; }
 }
 
 /* === POST VIEWER MODAL === */

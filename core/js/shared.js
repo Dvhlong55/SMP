@@ -320,13 +320,17 @@ const PostViewer = {
                 .smp-modal-overlay.show { opacity: 1; pointer-events: auto; }
                 .smp-modal-content {
                     position: relative; width: 92%; max-width: 1050px; max-height: 88vh;
-                    background: var(--body-bg, #0b1111); border-radius: 12px;
+                    background: var(--main-bg, #fafaf8); border-radius: 12px;
                     box-shadow: 0 10px 40px rgba(0,0,0,0.5);
                     display: flex; flex-direction: column; overflow: hidden;
                     transform: translateY(20px); transition: transform 0.25s ease;
                 }
                 .smp-modal-overlay.show .smp-modal-content { transform: translateY(0); }
                 .smp-modal-body { flex: 1; overflow-y: auto; padding: 50px 40px 30px; }
+                @media (max-width: 768px) {
+                    .smp-modal-content { width: 95%; max-height: 90vh; }
+                    .smp-modal-body { padding: 50px 20px 20px; }
+                }
             </style>
             
             <div id="post-viewer-modal" class="smp-modal-overlay">
