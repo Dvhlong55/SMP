@@ -175,7 +175,7 @@ const Comments = {
         script.setAttribute('data-repo', 'Dvhlong55/SMP');
         script.setAttribute('data-repo-id', 'R_kgDOSvmBLQ');
         script.setAttribute('data-category', 'General');
-        script.setAttribute('data-category-id', 'DIC_kwDOSvmBLc4Csk4j');
+        script.setAttribute('data-category-id', 'DIC_kwDOSvmBLc4C-ipH');
         script.setAttribute('data-mapping', 'pathname');
         script.setAttribute('data-strict', '0');
         script.setAttribute('data-reactions-enabled', '1');
