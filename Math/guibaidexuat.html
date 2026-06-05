@@ -657,12 +657,9 @@
                             <div class="submit-row" style="display: flex; gap: 12px; flex-wrap: wrap;">
                                 <button class="submit-btn" id="submit-btn" onclick="submitProposal()">
                                     <span id="submit-icon">📨</span>
-                                    <span id="submit-text">Gửi Bài Đề Xuất</span>
+                                    <span id="submit-text">Gửi Bài Đề Xuất (Đính Kèm Tự Động)</span>
                                 </button>
-                                <button class="submit-btn" style="background: linear-gradient(135deg, rgba(251,113,133,0.18), rgba(251,191,36,0.18)); border-color: rgba(251,113,133,0.4); color: #fb7185;" onclick="submitProposalViaGmail()">
-                                    <span>✉️</span> Mở Gmail (Cho Tệp Lớn)
-                                </button>
-                                <p class="submit-note" style="width: 100%;">Nhấn Gửi Bài Đề Xuất để gửi trực tiếp. Nếu có đính kèm file ảnh/PDF lớn, vui lòng nhấn Mở Gmail.</p>
+                                <p class="submit-note" style="width: 100%;">Bài đề xuất và toàn bộ file đính kèm sẽ được nén và đẩy thẳng đến Ban biên tập!</p>
                             </div>
 
                         </div>
@@ -716,17 +713,19 @@
     <script src="/SMP/js/shared.js"></script>
     <script>
     // ══════════════════════════════════════════════════
-    //  CẤU HÌNH EMAILJS — Điền 3 giá trị này sau khi
-    //  đăng ký tại https://www.emailjs.com
+    //  CẤU HÌNH GOOGLE APPS SCRIPT WEB APP
     // ══════════════════════════════════════════════════
-    const EMAILJS_PUBLIC_KEY  = 'cvYDEg5CFprNoHT-B';   // Account > API Keys
-    const EMAILJS_SERVICE_ID  = 'service_o024u9u';   // Email Services > Service ID
-    const EMAILJS_TEMPLATE_ID = 'template_24c224j';  // Email Templates > Template ID
+    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwPY-Ps-x68hyNAa4VhbsFpiYarOGugyzuG82k5EyehFmwu4FbWwurj7XRXXutLm933_Q/exec';
 
-    // Khởi tạo EmailJS
-    (function(){
-        if (window.emailjs) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-    })();
+    // Helper: Convert File to Base64
+    function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = error => reject(error);
+        });
+    }
 
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof Comments !== 'undefined') Comments.init('GuiBaiDeXuat');
@@ -766,7 +765,7 @@
         src.oninput = () => { if (box.classList.contains('active')) renderBox(); };
     }
 
-    // ── Gửi form qua EmailJS ──
+    // ── Gửi form qua Google Apps Script ──
     async function submitProposal() {
         const name      = document.getElementById('author-name').value.trim();
         const contact   = document.getElementById('author-contact').value.trim();
@@ -777,15 +776,10 @@
         const solution  = document.getElementById('problem-solution').value.trim();
         const source    = document.getElementById('problem-source').value.trim();
         const note      = document.getElementById('extra-note').value.trim();
+        const fileInput = document.getElementById('proposal-files');
 
         if (!name || !contact || !topic || !diff || !statement || !solution || !source) {
             alert('⚠ Vui lòng điền đầy đủ các trường bắt buộc (có dấu *)!');
-            return;
-        }
-
-        // Kiểm tra EmailJS đã được cấu hình chưa
-        if (EMAILJS_TEMPLATE_ID === 'YOUR_TEMPLATE_ID') {
-            alert('⚠ Còn thiếu Template ID!\n\nVui lòng điền EMAILJS_TEMPLATE_ID trong file guibaidexuat.html.');
             return;
         }
 
@@ -796,101 +790,68 @@
         // Loading state
         btn.disabled = true;
         icon.textContent = '⏳';
-        text.textContent = 'Đang gửi...';
+        text.textContent = 'Đang tải file và gửi...';
         btn.style.opacity = '0.7';
 
         try {
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-                author_name:    name,
-                author_contact: contact,
-                author_school:  school || '(không ghi)',
-                problem_topic:  topic,
-                difficulty:     diff,
-                statement:      statement,
-                solution:       solution,
-                source:         source,
-                extra_note:     note || '(không có)',
-                sent_at:        new Date().toLocaleString('vi-VN'),
+            // Chuẩn bị danh sách file đính kèm
+            let filesData = [];
+            if (fileInput && fileInput.files.length > 0) {
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    const file = fileInput.files[i];
+                    const base64Data = await getBase64(file);
+                    filesData.push({
+                        name: file.name,
+                        mimeType: file.type,
+                        data: base64Data
+                    });
+                }
+            }
+
+            // Gộp nội dung để tương thích với cấu trúc của Google Apps Script
+            const combinedProblem = `[${topic}] - Độ khó: ${diff} - Nguồn: ${source}`;
+            const combinedContent = `ĐỀ BÀI:\n${statement}\n\nLỜI GIẢI / HƯỚNG DẪN:\n${solution}\n\nĐƠN VỊ: ${school || '(không ghi)'}\nGHI CHÚ: ${note || '(không có)'}`;
+
+            const payload = {
+                name: name,
+                contact: contact,
+                problem: combinedProblem,
+                content: combinedContent,
+                files: filesData
+            };
+
+            const response = await fetch(GAS_WEB_APP_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+                // KHÔNG set Content-Type là application/json
             });
 
-            // Thành công
-            document.getElementById('success-overlay').classList.add('active');
-            document.getElementById('proposal-form').reset();
-            document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
-            document.getElementById('diff-val').value = '';
-            document.getElementById('file-names').innerHTML = '';
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                // Thành công
+                const overlay = document.getElementById('success-overlay');
+                overlay.querySelector('.success-title').textContent = 'Gửi Thành Công!';
+                overlay.querySelector('.success-desc').innerHTML = 'Cảm ơn bạn đã đóng góp bài toán cho SMP!<br>Ban biên tập đã nhận được thông tin và file đính kèm của bạn.';
+                overlay.classList.add('active');
+
+                document.getElementById('proposal-form').reset();
+                document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
+                document.getElementById('diff-val').value = '';
+                if (fileInput) fileInput.value = '';
+                document.getElementById('file-names').innerHTML = '';
+            } else {
+                alert('❌ Gửi thất bại: ' + result.message);
+            }
 
         } catch (err) {
-            console.error('EmailJS error:', err);
-            alert('❌ Gửi thất bại: ' + (err.text || err.message || JSON.stringify(err)) + '\n\nKiểm tra lại cấu hình EmailJS.');
+            console.error('GAS error:', err);
+            alert('❌ Đã xảy ra lỗi khi kết nối máy chủ!');
         } finally {
             btn.disabled = false;
             icon.textContent = '📨';
-            text.textContent = 'Gửi Bài Đề Xuất';
+            text.textContent = 'Gửi Bài Đề Xuất (Đính Kèm Tự Động)';
             btn.style.opacity = '';
-        }
-    }
-
-    // ── Gửi qua Gmail (Cho file đính kèm lớn) ──
-    function submitProposalViaGmail() {
-        const name      = document.getElementById('author-name').value.trim();
-        const contact   = document.getElementById('author-contact').value.trim();
-        const school    = document.getElementById('author-school').value.trim();
-        const topic     = document.getElementById('problem-topic').value;
-        const diff      = document.getElementById('diff-val').value;
-        const statement = document.getElementById('problem-statement').value.trim();
-        const solution  = document.getElementById('problem-solution').value.trim();
-        const source    = document.getElementById('problem-source').value.trim();
-        const note      = document.getElementById('extra-note').value.trim();
-        const imgInput  = document.getElementById('proposal-files');
-        const files     = imgInput ? Array.from(imgInput.files) : [];
-
-        if (!name || !contact || !topic || !diff || !statement || !solution || !source) {
-            alert('⚠ Vui lòng điền đầy đủ các trường bắt buộc (có dấu *)!');
-            return;
-        }
-
-        const subject = encodeURIComponent(`[SMP Đề Xuất] Bài toán ${topic} — ${name}`);
-
-        const body = encodeURIComponent(
-`[BÀI TOÁN ĐỀ XUẤT CHO THÁCH THỨC KÌ NÀY]
-════════════════════════════════════════
-
-Tác giả    : ${name}
-Liên hệ    : ${contact}
-Đơn vị     : ${school || '(không ghi)'}
-Chủ đề     : ${topic}
-Độ khó     : ${diff}
-Nguồn gốc  : ${source || '(tự nghĩ)'}
-
-════════════════════════════════════════
-ĐỀ BÀI:
-────────────────────────────────────────
-${statement}
-
-════════════════════════════════════════
-LỜI GIẢI / HƯỚNG DẪN:
-────────────────────────────────────────
-${solution}
-
-${note ? '════════════════════════════════════════\nGHI CHÚ THÊM:\n────────────────────────────────────────\n' + note + '\n' : ''}
-════════════════════════════════════════
-(File đính kèm: xem attachment)
-`);
-
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&to=smp.cqt0907@gmail.com&su=${subject}&body=${body}`;
-        window.open(gmailUrl, '_blank');
-        
-        // Show success / reminder overlay if files are selected
-        if (files.length > 0) {
-            // Re-use success overlay but change text slightly
-            const overlay = document.getElementById('success-overlay');
-            overlay.querySelector('.success-title').textContent = 'Gmail đã mở!';
-            overlay.querySelector('.success-desc').innerHTML = 
-                'Trình duyệt không thể tự đính kèm file vào Gmail vì lý do bảo mật.<br>' +
-                'Vui lòng <strong>kéo các file sau vào cửa sổ Gmail</strong> vừa mở:<br><br>' + 
-                '<span style="color:#4ade80;font-family:monospace;">' + files.map(f => '📄 ' + f.name).join('<br>') + '</span>';
-            overlay.classList.add('active');
         }
     }
 
