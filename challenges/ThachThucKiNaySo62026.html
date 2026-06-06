@@ -13,7 +13,20 @@
     <meta name="subcategory-name" content="Thách Thức Kì Này">
     <meta name="subcategory-filter" content="challenge">
 
-    <script src="/SMP/core/js/post-layout.js?v=4"></script>`n    <script src="/SMP/core/js/mailbox.js"></script>
+    <script src="/SMP/core/js/post-layout.js?v=4"></script>
+    <script src="/SMP/core/js/mailbox.js"></script>
+    <!-- CodeMirror 5 Core & Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/stex/stex.min.js"></script>
+    <!-- CodeMirror Hint -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+    <link rel="stylesheet" href="/SMP/tools/latex-v2/latex.css">
+    <script src="/SMP/core/js/smp-latex-core.js"></script>
 </head>
 <body>
     <div id="smp-post-content" style="display: none;">
@@ -146,5 +159,12 @@
                         </div> <!-- closes mailbox-form (if not already closed) -->
                     </div> <!-- closes solution-mailbox -->
     </div> <!-- closes smp-post-content -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof SMPLatexCore !== 'undefined') {
+            SMPLatexCore.init('sol-content');
+        }
+    });
+    </script>
 </body>
 </html>

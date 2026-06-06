@@ -19,6 +19,18 @@
     <!-- EmailJS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <link class="theme-link" rel="stylesheet" href="/SMP/core/css/shared.css?v=4">
+    <!-- CodeMirror 5 Core & Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/stex/stex.min.js"></script>
+    <!-- CodeMirror Hint -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+    <link rel="stylesheet" href="/SMP/tools/latex-v2/latex.css">
+    <script src="/SMP/core/js/smp-latex-core.js"></script>
     <style>
         body { overflow-x: hidden; }
 
@@ -355,8 +367,8 @@
             background: rgba(92,225,230,0.04);
             border: 1px solid rgba(92,225,230,0.15);
             border-radius: 8px; padding: 16px 20px;
-            font-family: "Times New Roman", Times, serif;
-            font-size: 1.15rem; color: var(--exam-text-color);
+            font-family: var(--body-font, 'Inter', sans-serif);
+            font-size: 1.05rem; color: var(--exam-text-color);
             line-height: 1.85; min-height: 60px;
         }
         .latex-preview-box.active { display: block; }
@@ -731,6 +743,11 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof Comments !== 'undefined') Comments.init('GuiBaiDeXuat');
+
+        if (typeof SMPLatexCore !== 'undefined') {
+            SMPLatexCore.init('problem-statement');
+            SMPLatexCore.init('problem-solution');
+        }
 
         const fileInput = document.getElementById('proposal-files');
         if (fileInput) {

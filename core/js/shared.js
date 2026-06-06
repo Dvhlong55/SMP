@@ -453,6 +453,11 @@ const PostViewer = {
                     extractedStyles += '<link rel="stylesheet" href="/SMP/core/css/post.css">';
                 }
                 doc.querySelectorAll('style').forEach(s => extractedStyles += s.outerHTML);
+                doc.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
+                    if (!l.href.includes('shared.css') && !l.href.includes('post.css')) {
+                        extractedStyles += l.outerHTML;
+                    }
+                });
 
                 // Lấy nội dung bản dựng mới hoặc cột phải của bài viết gốc
                 const newPostContent = doc.getElementById('smp-post-content');
@@ -504,6 +509,11 @@ const PostViewer = {
                     extractedStyles += '<link rel="stylesheet" href="/SMP/core/css/post.css">';
                 }
                 doc.querySelectorAll('style').forEach(s => extractedStyles += s.outerHTML);
+                doc.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
+                    if (!l.href.includes('shared.css') && !l.href.includes('post.css')) {
+                        extractedStyles += l.outerHTML;
+                    }
+                });
                 
                 const newPostContent = doc.getElementById('smp-post-content');
                 let fullRealContent = '';

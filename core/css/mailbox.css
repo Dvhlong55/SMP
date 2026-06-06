@@ -274,9 +274,8 @@ body:not(.dark-mode) .latex-preview-wrap {
     color: var(--exam-text-color);
     font-size: 1.1rem;
     overflow-x: auto;
-    font-family: "Times New Roman", Times, serif;
+    font-family: sans-serif;
     background: #fff;
-    color: #000;
 }
 
 .latex-preview-box.active {
