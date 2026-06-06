@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <link rel="manifest" href="/SMP/manifest.json">
@@ -559,12 +559,22 @@
     <script src="/SMP/core/js/layout.js?v=4"></script>
     <script src="/SMP/core/js/shared.js?v=4"></script>
     <script>
-    // ── Init ──
+    // 🚀 Init 🚀
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof Comments !== 'undefined') Comments.init('LaTeXEditor');
 
-        // Wire textarea
         var editor = document.getElementById('latex-editor');
+        
+        // Check for transfer from MathType
+        var transferData = localStorage.getItem('smp_latex_transfer');
+        if (transferData) {
+            editor.value += (editor.value ? '\n\n' : '') + '\\[' + transferData + '\\]';
+            localStorage.removeItem('smp_latex_transfer');
+            // Auto schedule render right away
+            setTimeout(doRender, 100);
+        }
+
+        // Wire textarea
         var charCount = document.getElementById('char-count');
         editor.addEventListener('input', function () {
             charCount.textContent = editor.value.length + ' ký tự';

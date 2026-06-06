@@ -7,7 +7,7 @@ const LEFT_TAGS_HTML = `
                 <li><a href="/SMP/pages/toanhoc.html?filter=uni">Đại Học <span>1</span></a></li>
                 <li><a href="/SMP/pages/toanhoc.html?filter=challenge">Thách Thức Kì Này <span>1</span></a></li>
                 <li><a href="/SMP/pages/toanhoc.html?filter=trao-doi">Trao Đổi <span>1</span></a></li>
-                <li><a href="/SMP/pages/toanhoc.html?filter=tools">Tool <span>2</span></a></li>
+                <li><a href="/SMP/pages/toanhoc.html?filter=tools">Tool <span>3</span></a></li>
             </ul>
             
             <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin: 16px 0;">
