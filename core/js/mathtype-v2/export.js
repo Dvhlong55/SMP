@@ -19,7 +19,39 @@
         }
         
         MathJax.tex2mmlPromise(text).then(function(mml) {
-            // Thêm XML header để MS Word nhận diện đây là mã phương trình (Equation)
+            // Fix thần thánh cho MS Word (DOM Parser chống vỡ XML khi có ma trận lồng nhau)
+            try {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(mml, "application/xml");
+                var ns = "http://www.w3.org/1998/Math/MathML";
+                var mrows = doc.getElementsByTagNameNS ? doc.getElementsByTagNameNS(ns, 'mrow') : doc.getElementsByTagName('mrow');
+                if (!mrows || mrows.length === 0) mrows = doc.getElementsByTagName('mrow');
+                
+                // Phải lặp từ dưới lên để xử lý các thẻ con (nested) trước thẻ cha
+                for (var i = mrows.length - 1; i >= 0; i--) {
+                    var row = mrows[i];
+                    var children = Array.from(row.childNodes).filter(function(n) { return n.nodeType === 1; });
+                    
+                    if (children.length === 3 && 
+                        children[0].localName === 'mo' && 
+                        children[1].localName === 'mtable' && 
+                        children[2].localName === 'mo') {
+                        
+                        var mfenced = doc.createElementNS(ns, 'mfenced');
+                        mfenced.setAttribute('open', children[0].textContent);
+                        mfenced.setAttribute('close', children[2].textContent);
+                        mfenced.appendChild(children[1].cloneNode(true));
+                        row.parentNode.replaceChild(mfenced, row);
+                    }
+                }
+                var serializer = new XMLSerializer();
+                mml = serializer.serializeToString(doc);
+                mml = mml.replace(/ xmlns=""/g, ''); // Fix bug DOMParser sinh namespace rỗng
+            } catch (e) {
+                console.error("Lỗi parse MathML:", e);
+            }
+
+            // Thêm XML header để MS Word nhận diện đây là một phương trình (Equation)
             var wordMathML = '<?xml version="1.0"?>\n' + mml;
             
             navigator.clipboard.writeText(wordMathML).then(function() {
@@ -98,3 +130,5 @@
 
     // Modal Văn Bản Tiếng Việt
     
+
+

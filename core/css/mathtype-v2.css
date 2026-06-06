@@ -234,11 +234,13 @@
         }
         body:not(.dark-mode) .math-editor-container { background: #ffffff; border-color: rgba(15,23,42,0.1); }
         
-        .math-field-instance {
-            width: 100%; border: none; box-shadow: none; padding: 5px 20px; font-size: 1.6rem; outline: none;
+                math-field {
+            width: 100%; border: none !important; box-shadow: none !important; padding: 5px 20px; font-size: 1.6rem; outline: none !important; background: transparent !important; color: var(--exam-text-color);
+            --caret-color: var(--accent-cyan);
+            --selection-background-color: rgba(92,225,230,0.2);
+            --selection-color: var(--accent-cyan);
         }
-        .math-field-instance.mq-focused { border: none !important; box-shadow: none !important; outline: none !important; background: rgba(92,225,230,0.02); }
-        .math-editor-container .mq-cursor { border-left-color: var(--exam-text-color) !important; }
+        math-field:focus-within { border: none !important; box-shadow: none !important; outline: none !important; background: rgba(92,225,230,0.02) !important; }
 
         #latex-output {
             width: 100%; height: 100px; margin-top: 10px; background: rgba(255,255,255,0.025);
@@ -249,3 +251,83 @@
         body:not(.dark-mode) #latex-output { background: #ffffff; border-color: rgba(15,23,42,0.1); }
 
     
+
+/* Zen Mode */
+body.zen-mode #sidebar-placeholder,
+body.zen-mode #topbar-placeholder,
+body.zen-mode .tags-comment-sidebar,
+body.zen-mode .exam-meta,
+body.zen-mode .exam-back-btn,
+body.zen-mode .latex-hero,
+body.zen-mode .math-notice {
+    display: none !important;
+}
+
+body.zen-mode .main-content-layout {
+    grid-template-columns: 1fr;
+    margin-top: 0;
+    gap: 0;
+}
+
+body.zen-mode .main-wrapper {
+    padding: 0;
+    margin: 0;
+    max-width: 100% !important;
+}
+
+body.zen-mode .latex-workspace {
+    margin-bottom: 0;
+}
+
+
+/* Vietnamese Inline Input Popup Premium */
+.vi-input-wrapper {
+    position: fixed;
+    z-index: 10000;
+    animation: viPopup 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.vi-input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--nav-bg, #1e293b);
+    border: 1px solid var(--accent-cyan, #5ce1e6);
+    border-radius: 12px;
+    padding: 8px 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+}
+
+.vi-input-container input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--exam-text-color, #e2e8f0);
+    font-size: 1.2rem;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    min-width: 250px;
+}
+
+.vi-input-container input::placeholder {
+    color: var(--exam-text-color);
+    opacity: 0.4;
+}
+
+.vi-input-container .vi-icon {
+    font-size: 1.3rem;
+}
+
+.vi-input-container .vi-hint {
+    font-size: 0.75rem;
+    color: var(--exam-text-color);
+    opacity: 0.5;
+    background: rgba(255,255,255,0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+@keyframes viPopup {
+    0% { opacity: 0; transform: translateY(15px) scale(0.9); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
