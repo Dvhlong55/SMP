@@ -1,4 +1,4 @@
-﻿    // 🚀 Init 🚀
+    // 🚀 Init 🚀
     var cmEditor = null;
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -256,7 +256,7 @@
     // ── Hàm Render chính (MathJax render realtime với DOM-diffing cục bộ) ──
     function doRender() {
         var preview = document.getElementById('latex-preview');
-        var src = getEditorValue().trim();
+        var src = cmEditor ? cmEditor.getValue().trim() : '';
         if (!src) {
             preview.className = 'empty-state';
             preview.innerHTML = 'Kết quả render sẽ hiện ở đây...';
@@ -310,53 +310,18 @@
 
     // ── Insert snippet ──
     function insertSnip(text) {
-        if (!cmEditor) {
-            if (nativeEditor) {
-                var start = nativeEditor.selectionStart;
-                var end = nativeEditor.selectionEnd;
-                var val = nativeEditor.value;
-                var real = text.replace(/\\n/g, '\n');
-                var selected = val.substring(start, end);
-                var insertStr = real;
-                var moveBack = 0;
-                
-                if (real.endsWith('{}')) {
-                    insertStr = real.slice(0, -1) + selected + '}';
-                    if (selected.length === 0) moveBack = 1;
-                } else if (real === '') {
-                    insertStr = '' + selected + '';
-                    if (selected.length === 0) moveBack = 2;
-                } else if (selected.length > 0) {
-                    insertStr = real;
-                }
-                
-                nativeEditor.value = val.substring(0, start) + insertStr + val.substring(end);
-                nativeEditor.selectionStart = nativeEditor.selectionEnd = start + insertStr.length - moveBack;
-                nativeEditor.focus();
-                handleContentChange(nativeEditor.value);
-            }
-            return;
-        }
+        if (!cmEditor) return;
         cmEditor.focus();
         var real = text.replace(/\\n/g, '\n');
         var selected = cmEditor.getSelection();
+        
         var insertStr = real;
         var moveBack = 0;
+        
         if (real.endsWith('{}')) {
             insertStr = real.slice(0, -1) + selected + '}';
             if (selected.length === 0) moveBack = 1;
-        } else if (real === '') {
-            insertStr = '' + selected + '';
-            if (selected.length === 0) moveBack = 2;
-        } else if (selected.length > 0) {
-            insertStr = real;
-        }
-        cmEditor.replaceSelection(insertStr);
-        if (moveBack > 0) {
-            var pos = cmEditor.getCursor();
-            cmEditor.setCursor({line: pos.line, ch: pos.ch - moveBack});
-        }
-    } else if (real === '$$$$') {
+        } else if (real === '$$$$') {
             insertStr = '$$' + selected + '$$';
             if (selected.length === 0) moveBack = 2;
         } else if (selected.length > 0) {
@@ -380,17 +345,19 @@
     };
 
     function insertTemplate(key) {
-        setEditorValue(TEMPLATES[key] || ''); if (cmEditor) cmEditor.focus(); else if (nativeEditor) nativeEditor.focus();
+        if (!cmEditor) return;
+        cmEditor.setValue(TEMPLATES[key] || '');
+        cmEditor.focus();
     }
 
     // ── Actions ──
     function clearEditor() {
         if (!confirm('Xóa toàn bộ nội dung?')) return;
-        setEditorValue('');
+        if (cmEditor) cmEditor.setValue('');
     }
 
     function copySource() {
-        var val = getEditorValue();
+        var val = cmEditor ? cmEditor.getValue() : '';
         navigator.clipboard.writeText(val).then(function () {
             showToast('✓ Đã copy source LaTeX');
         });
@@ -421,7 +388,7 @@
     }
 
     function exportTex() {
-        var src = getEditorValue();
+        var src = cmEditor ? cmEditor.getValue() : '';
         var template = "\\documentclass{article}\n\\usepackage[utf8]{inputenc}\n\\usepackage{amsmath, amssymb}\n\\begin{document}\n\n" + src + "\n\n\\end{document}";
         var blob = new Blob([template], { type: 'text/plain;charset=utf-8' });
         var url = URL.createObjectURL(blob);
@@ -461,4 +428,3 @@
             if (cmEditor) cmEditor.refresh();
         }, 100);
     }
-
