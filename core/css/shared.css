@@ -71,19 +71,11 @@ body {
 
 mjx-container {
     max-width: 100%;
-    overflow-x: auto !important;
     box-sizing: border-box;
 }
 
 mjx-container:not([display="true"]) {
-    display: inline-block;
-    vertical-align: middle;
-    /* Hide scrollbar for inline math to avoid ugly layout breaking */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-}
-mjx-container:not([display="true"])::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    /* Do not set overflow-x here, as it changes the baseline to the bottom margin edge */
 }
 
 mjx-container[display="true"] {
@@ -1152,3 +1144,27 @@ body:not(.dark-mode) .cm-s-material-darker span.cm-header { color: #2563eb !impo
 body:not(.dark-mode) .cm-s-material-darker span.cm-quote { color: #059669 !important; }
 body:not(.dark-mode) .cm-s-material-darker span.cm-hr { color: #cbd5e1 !important; }
 body:not(.dark-mode) .cm-s-material-darker span.cm-link { color: #2563eb !important; }
+/* === EMBED MODE === */
+body.embed-mode .sidebar,
+body.embed-mode .topbar,
+body.embed-mode .site-footer,
+body.embed-mode .tags-comment-sidebar,
+body.embed-mode .exam-back-btn,
+body.embed-mode .exam-meta {
+    display: none !important;
+}
+
+body.embed-mode .main-wrapper {
+    margin-left: 0 !important;
+    padding-top: 0 !important;
+}
+
+body.embed-mode main {
+    padding: 0 !important;
+}
+
+body.embed-mode .main-content-layout {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+

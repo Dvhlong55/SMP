@@ -443,6 +443,30 @@ const PostViewer = {
             this._currentUrl = url;
 
             try {
+                if (url.includes('/tools/')) {
+                    const embedUrl = url.split('#')[0] + (url.includes('?') ? '&' : '?') + 'embed=true' + (url.includes('#') ? '#' + url.split('#')[1] : '');
+                    const iframeHTML = `
+                        <style>
+                            #modal-body { padding: 0 !important; overflow: hidden !important; }
+                            .tool-iframe-wrapper {
+                                padding: 4px;
+                                background: linear-gradient(135deg, #f472b6 0%, #db2777 100%);
+                                border-radius: 14px;
+                                box-shadow: 0 10px 40px -10px rgba(219, 39, 119, 0.4);
+                                height: 88vh;
+                                width: 100%;
+                                box-sizing: border-box;
+                            }
+                            .tool-iframe-wrapper iframe {
+                                width: 100%; height: 100%; display: block; border: none; border-radius: 12px;
+                            }
+                        </style>
+                        <div class="tool-iframe-wrapper">
+                            <iframe src="${embedUrl}"></iframe>
+                        </div>`;
+                    this.openHTML(iframeHTML);
+                    return;
+                }
                 const response = await fetch(url);
                 const htmlText = await response.text();
                 const doc = new DOMParser().parseFromString(htmlText, 'text/html');
@@ -499,6 +523,32 @@ const PostViewer = {
             col.style.transform = 'translateX(0)';
             
             try {
+                if (url.includes('/tools/')) {
+                    const embedUrl = url.split('#')[0] + (url.includes('?') ? '&' : '?') + 'embed=true' + (url.includes('#') ? '#' + url.split('#')[1] : '');
+                    setTimeout(() => {
+                        col.innerHTML = `
+                            <a href="javascript:void(0)" class="exam-back-btn fade-up" style="margin-bottom: 20px; display: inline-flex;">&#8592; Quay Lại Danh Sách</a>
+                            <style>
+                                .right-col-tool-wrapper {
+                                    padding: 4px;
+                                    background: linear-gradient(135deg, #f472b6 0%, #db2777 100%);
+                                    border-radius: 14px;
+                                    box-shadow: 0 10px 40px -10px rgba(219, 39, 119, 0.4);
+                                    height: 80vh;
+                                    width: 100%;
+                                    box-sizing: border-box;
+                                    margin-bottom: 30px;
+                                }
+                                .right-col-tool-wrapper iframe {
+                                    width: 100%; height: 100%; display: block; border: none; border-radius: 12px;
+                                }
+                            </style>
+                            <div class="right-col-tool-wrapper fade-up">
+                                <iframe src="${embedUrl}"></iframe>
+                            </div>`;
+                    }, 200);
+                    return;
+                }
                 const response = await fetch(url);
                 const htmlText = await response.text();
                 const doc = new DOMParser().parseFromString(htmlText, 'text/html');
@@ -583,6 +633,10 @@ const PostViewer = {
 
 // === INIT ON DOM READY ===
 function initShared() {
+    if (window.location.search.includes('embed=true')) {
+        document.body.classList.add('embed-mode');
+    }
+    
     DarkMode.init();
     LiveSearch.init();
     setActiveNav();
