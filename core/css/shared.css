@@ -72,7 +72,6 @@ body {
 mjx-container {
     max-width: 100%;
     overflow-x: auto !important;
-    overflow-y: hidden !important;
     box-sizing: border-box;
 }
 
@@ -90,7 +89,6 @@ mjx-container:not([display="true"])::-webkit-scrollbar {
 mjx-container[display="true"] {
     display: block;
     overflow-x: auto !important;
-    overflow-y: hidden !important;
     max-width: 100%;
 }
 

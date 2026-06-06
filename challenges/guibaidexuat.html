@@ -840,7 +840,14 @@
                 overlay.querySelector('.success-desc').innerHTML = 'Cảm ơn bạn đã đóng góp bài toán cho SMP!<br>Ban biên tập đã nhận được thông tin và file đính kèm của bạn.';
                 overlay.classList.add('active');
 
-                document.getElementById('proposal-form').reset();
+                document.getElementById('author-name').value = '';
+                document.getElementById('author-contact').value = '';
+                document.getElementById('author-school').value = '';
+                document.getElementById('problem-topic').value = '';
+                document.getElementById('problem-statement').value = '';
+                document.getElementById('problem-solution').value = '';
+                document.getElementById('problem-source').value = '';
+                document.getElementById('extra-note').value = '';
                 document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
                 document.getElementById('diff-val').value = '';
                 if (fileInput) fileInput.value = '';

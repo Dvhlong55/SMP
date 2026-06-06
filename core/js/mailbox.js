@@ -107,12 +107,14 @@ async function sendSolution() {
         return;
     }
 
-    const btn     = document.getElementById('sol-send-btn');
-    const origHTML = btn.innerHTML;
+    const btn  = document.getElementById('sol-send-btn');
+    const icon = document.getElementById('sol-submit-icon');
+    const text = document.getElementById('sol-submit-text');
 
     // Loading state
     btn.disabled = true;
-    btn.innerHTML = '<span>⏳</span> Đang tải file và gửi...';
+    if (icon) icon.textContent = '⏳';
+    if (text) text.textContent = 'Đang tải file và gửi...';
     btn.style.opacity = '0.7';
 
     try {
@@ -167,7 +169,8 @@ async function sendSolution() {
         alert('❌ Đã xảy ra lỗi khi kết nối máy chủ!');
     } finally {
         btn.disabled = false;
-        btn.innerHTML = origHTML;
+        if (icon) icon.textContent = '📨';
+        if (text) text.textContent = 'Gửi Lời Giải (Đính Kèm Tự Động)';
         btn.style.opacity = '';
     }
 }
