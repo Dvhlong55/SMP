@@ -165,6 +165,7 @@
             text-transform: uppercase; margin-bottom: 1rem; border: 1px solid rgba(92, 225, 230, 0.3);
         }
         .tag.exam { background: rgba(96, 165, 250, 0.1); color: #60a5fa; border-color: rgba(96, 165, 250, 0.3); }
+        .tag mjx-container { overflow: hidden !important; pointer-events: none; }
 
         .post-card h3 { font-size: 1.25rem; margin-bottom: 0.8rem; color: #f8fafc; line-height: 1.4; }
         .post-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; }
@@ -397,16 +398,17 @@
             <div class="split-text">
                 <span class="tag">Visual Editor</span>
                 <h3>Gõ Toán Trực Quan (MathType)</h3>
-                <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">Không cần phải nhớ mã LaTeX phức tạp nữa! Công cụ Gõ Toán Trực Quan cho phép bạn bấm nút và tạo ra phương trình dễ dàng như MathType, sau đó tự động xuất ra mã LaTeX chuẩn 100%.</p>
+                <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">Không cần phải nhớ mã LaTeX phức tạp nữa! Công cụ Gõ Toán Trực Quan cho phép bạn bấm nút và tạo ra phương trình dễ dàng, có thể dán thẳng vào Word (hoặc xuất mã LaTeX chuẩn 100%).</p>
                 <a href="/SMP/tools/MathType.html" class="read-more" style="display:inline-block; margin-top: 15px;">READ MORE →</a>
             </div>
             <div class="mockup-box edge-glow">
                 <div class="glow-content">
                     <div style="display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
-                        <span class="tag" style="margin: 0; cursor: pointer; padding: 4px 8px;">$\begin{cases}x\\y\end{cases}$</span>
-                        <span class="tag" style="margin: 0; cursor: pointer; padding: 4px 8px;">$\iint$</span>
-                        <span class="tag" style="margin: 0; cursor: pointer; padding: 4px 8px;">$\overline{x}$</span>
-                        <span class="tag" style="margin: 0; cursor: pointer; padding: 4px 8px;">$\mathbb{R}$</span>
+                        <span class="tag" style="margin: 0; cursor: pointer; padding: 6px 10px; display: inline-flex; align-items: center; justify-content: center; height: auto;">$\mathbb{N}$</span>
+                        <span class="tag" style="margin: 0; cursor: pointer; padding: 6px 10px; display: inline-flex; align-items: center; justify-content: center; height: auto;">$\mathbb{Z}$</span>
+                        <span class="tag" style="margin: 0; cursor: pointer; padding: 6px 10px; display: inline-flex; align-items: center; justify-content: center; height: auto;">$\mathbb{Q}$</span>
+                        <span class="tag" style="margin: 0; cursor: pointer; padding: 6px 10px; display: inline-flex; align-items: center; justify-content: center; height: auto;">$\mathbb{R}$</span>
+                        <span class="tag" style="margin: 0; cursor: pointer; padding: 6px 10px; display: inline-flex; align-items: center; justify-content: center; height: auto;">$\mathbb{C}$</span>
                     </div>
                     <div class="latex-workspace">
                         <div class="latex-pane" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(92,225,230,0.2);">
