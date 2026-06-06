@@ -260,19 +260,9 @@
     </aside>`;
 
     const TOPBAR_HTML = `
-    <header class="topbar" style="height: auto; flex-wrap: wrap; padding-bottom: 10px; padding-top: 15px;">
-        <div style="display: flex; width: 100%; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 15px;">
-            <a href="/SMP/index.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Trang Chủ">SMP</a>
-            <div class="search-wrapper">
-                <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
-                <span class="search-icon">&#x2315;</span>
-                <div id="search-results" class="search-results"></div>
-            </div>
-            <div class="topbar-actions">
-                <button id="install-app-btn" class="dark-toggle" style="display: none; border-color: var(--accent-cyan); color: var(--accent-cyan);">&#x2B07; Tải App</button>
-                <button id="dark-toggle" class="dark-toggle">&#x263D; Tối</button>
-            </div>
-        </div>
+    <header class="topbar">
+        <a href="/SMP/index.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s; margin-right: 20px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Trang Chủ">SMP</a>
+        
         <nav class="topbar-nav">
             <a href="/SMP/index.html">&#x2302; Home</a>
             <a href="/SMP/pages/toanhoc.html">&#x2211; Math</a>
@@ -280,16 +270,37 @@
             <a href="/SMP/pages/cuocsong.html">&#x2726; Life</a>
             <a href="/SMP/pages/vetoi.html">&#x25CE; About</a>
         </nav>
+
+        <div class="search-wrapper">
+            <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
+            <span class="search-icon">&#x2315;</span>
+            <div id="search-results" class="search-results"></div>
+        </div>
+        
+        <div class="topbar-actions">
+            <button id="install-app-btn" class="dark-toggle" style="display: none; border-color: var(--accent-cyan); color: var(--accent-cyan);">&#x2B07; Tải App</button>
+            <button id="dark-toggle" class="dark-toggle">&#x263D; Tối</button>
+        </div>
     </header>`;
+
+    const FOOTER_HTML = `
+    <footer class="site-footer fade-up" style="margin-top: 40px; padding: 20px; text-align: center;">
+        <div class="footer-divider" style="width: 50px; height: 2px; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-gold)); margin: 0 auto 15px; border-radius: 2px;"></div>
+        <div class="footer-bottom">
+            <p style="font-size: 0.9rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">&copy; 2026 <span class="footer-brand" style="color: var(--accent-cyan); font-weight: bold;">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
+        </div>
+    </footer>`;
 
     // ── Inject into placeholders ─────────────────────────────────────────────
     const sidebarEl = document.getElementById('sidebar-placeholder');
     const topbarEl  = document.getElementById('topbar-placeholder');
     const leftTagsEl = document.getElementById('left-sidebar-placeholder');
+    const mainEl = document.querySelector('main');
 
     if (sidebarEl) sidebarEl.outerHTML = SIDEBAR_HTML;
     if (topbarEl)  topbarEl.outerHTML  = TOPBAR_HTML;
     if (leftTagsEl && typeof LEFT_TAGS_HTML !== 'undefined') leftTagsEl.outerHTML = LEFT_TAGS_HTML;
+    if (mainEl && !document.querySelector('.site-footer')) mainEl.insertAdjacentHTML('beforeend', FOOTER_HTML);
 
     // ── Sidebar collapse logic ───────────────────────────────────────────────
     function initSidebar() {

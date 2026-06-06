@@ -147,65 +147,72 @@ const ALL_POSTS = [
     {
         title: '[HSGS] Đề thi thử lần 2 môn Toán (Chuyên) năm 2026',
         date: 'March 08, 2026',
-        url: 'https://smp0907.blogspot.com/2026/03/hsgs-e-thi-thu-lan-2-mon-toan-chuyen.html',
+        url: '/SMP/posts/math/ThiThuLan2HSGS2526.html',
         tags: ['Chuyên Toán', 'Đề Thi'],
-        page: '/Math/toanhoc.html'
+        page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[HSGS] Số Học trong đề thi thử (Toán điều kiện) năm 2026 (Đợt 2)',
         date: 'March 07, 2026',
-        url: 'https://smp0907.blogspot.com/2026/03/hsgs-bai-toan-so-hoc-trong-e-thi-thu.html',
+        url: '/SMP/posts/math/SoHocTrongDeThiThuToanDKHSGS2526.html',
         tags: ['Số Học', 'Đề Thi'],
-        page: '/Math/toanhoc.html'
+        page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[HSGS] Đề thi thử lần 2 môn Toán (Chung) năm 2026',
         date: 'March 07, 2026',
-        url: 'https://smp0907.blogspot.com/2026/03/hsgs-e-thi-thu-lan-2-mon-toan-chung-nam.html',
+        url: '/SMP/posts/math/DeThiThuLan2ToanDKHSGS.html',
         tags: ['Đề Thi'],
-        page: '/Math/toanhoc.html'
+        page: '/SMP/pages/toanhoc.html'
     },
     {
         title: 'HCMUS Olympic Team Selection Test (Algebra)',
         date: 'March 07, 2026',
-        url: 'https://smp0907.blogspot.com/2026/03/hcmus-olympic-team-selection-test.html',
-        tags: ['Math Olympiad', 'Algebra'],
-        page: '/Math/toanhoc.html'
+        url: '/SMP/posts/math/HCMUS_Olympic_Team_Selection_Test_Algebra.html',
+        tags: ['Math Olympiad', 'Đại số'],
+        page: '/SMP/pages/toanhoc.html'
     },
     {
         title: 'On a Counting Problem, From HCMUS TST',
         date: 'March 07, 2026',
-        url: 'https://smp0907.blogspot.com/2026/03/on-counting-problem-from-student.html',
-        tags: ['Combinatorics', 'TST'],
-        page: '/Math/toanhoc.html'
+        url: '/SMP/posts/math/On_a_Counting_Problem_From_HCMUS_TST.html',
+        tags: ['Tổ Hợp', 'TST'],
+        page: '/SMP/pages/toanhoc.html'
     },
     {
         title: 'Về Một Bài Phương Trình Hàm',
         date: 'March 07, 2026',
-        url: 'https://smp0907.blogspot.com/2026/03/ve-mot-bai-phuong-trinh-ham.html',
-        tags: ['Giải Tích', 'Math'],
-        page: '/Math/toanhoc.html'
+        url: '/SMP/posts/math/Về_Một_Bài_Phương_Trình_Hàm.html',
+        tags: ['Đại số', 'Math'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: 'Tọa Độ Cực và Ứng Dụng',
+        date: 'May 06, 2026',
+        url: '/SMP/posts/math/toa_do_cuc.html',
+        tags: ['THPT'],
+        page: '/SMP/pages/toanhoc.html'
     },
     {
         title: 'A Number Theory Problem from the Poland TST',
         date: 'March 07, 2026',
-        url: '/Math/polandNumber.html',
-        tags: ['Number Theory', 'TST'],
-        page: '/Math/toanhoc.html'
+        url: '/SMP/posts/math/polandNumber.html',
+        tags: ['Số Học', 'TST'],
+        page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[Đồng Nai] Đề tuyển sinh lớp 10 môn Toán (chuyên) năm 2025',
         date: 'February 23, 2026',
-        url: '/Math/dongnai-2025.html',
+        url: '/SMP/posts/math/dongnai-2025.html',
         tags: ['Chuyên Toán', 'Đề Thi'],
-        page: '/Math/toanhoc.html'
+        page: '/SMP/pages/toanhoc.html'
     },
     {
         title: 'Khóa học Số học Olympic 2026',
         date: 'April 19, 2026',
-        url: 'https://smp0907.blogspot.com/2026/04/khoa-hoc-so-hoc-olympic-2026.html',
-        tags: ['Tài Liệu', 'Number Theory'],
-        page: '/Non%20Math/tailieu.html'
+        url: '/SMP/posts/math/KhoaSoHoc.html',
+        tags: ['Tài Liệu', 'Số Học'],
+        page: '/SMP/pages/nonmath.html'
     }
 ];
 
