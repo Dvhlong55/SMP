@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <link rel="manifest" href="/SMP/manifest.json">
@@ -658,7 +658,7 @@
         var code = document.getElementById('tikz-output').value;
         if (!code) return;
         localStorage.setItem('smp_latex_pending', code);
-        window.open('LaTeX.html', '_blank');
+        window.open('/SMP/tools/latex-v2/index.html', '_blank');
         showToast('✓ Đã gửi sang LaTeX Editor');
     }
 
