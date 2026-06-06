@@ -648,9 +648,9 @@
         editor.focus();
         var s = editor.selectionStart;
         var e = editor.selectionEnd;
-        var real = text.replace(/\\n/g, '\n');
-        editor.value = editor.value.substring(0, s) + real + editor.value.substring(e);
-        editor.selectionStart = editor.selectionEnd = s + real.length;
+
+        editor.value = editor.value.substring(0, s) + text + editor.value.substring(e);
+        editor.selectionStart = editor.selectionEnd = s + text.length;
         editor.dispatchEvent(new Event('input'));
     }
 
