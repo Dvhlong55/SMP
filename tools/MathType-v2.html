@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/SMP/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Trình Soạn Thảo MathType</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.js"></script>
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link class="theme-link" rel="stylesheet" href="/SMP/core/css/shared.css?v=5">
+    
+    <link rel="stylesheet" href="/SMP/core/css/mathtype-v2.css">
+<link rel="icon" type="image/png" href="/SMP/core/image/favicon.png">
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="main-content-layout">
+
+                <aside class="tags-comment-sidebar">
+                    <div id="left-sidebar-placeholder"></div>
+                </aside>
+
+                <div class="main-articles-body">
+
+                    <a href="javascript:history.back()" class="exam-back-btn fade-up">&#8592; Quay Lại</a>
+
+                    <div class="exam-meta fade-up">
+                        <span class="exam-tag"><a href="/SMP/pages/toanhoc.html" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">MATH</a> &nbsp;&gt;&nbsp; <a href="/SMP/pages/toanhoc.html?filter=tools" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Công Cụ</a> &nbsp;&gt;&nbsp; 📝 MathType Trực Tuyến</span>
+                    </div>
+
+                    <div class="latex-hero fade-up">
+                        <h1 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--exam-title-color);margin:0 0 5px 0;">
+                            📝 Gõ Toán Theo Kiểu MathType
+                        </h1>
+                        <p style="font-size:0.86rem;color:var(--exam-text-color);opacity:0.7;margin:0;">
+                            Gõ toán học một cách trực quan không cần phải thuộc mã LaTeX. Sau đó bạn có thể chuyển thành mã LaTeX dễ dàng.
+                        </p>
+                    </div>
+
+                    <div class="math-editor-layout">
+                        <div class="math-editor-left">
+                            <div class="math-notice fade-up" style="background: rgba(92,225,230,0.05); border: 1px solid rgba(92,225,230,0.2); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;">
+                                <div style="font-size: 0.9rem; color: var(--exam-text-color); opacity: 0.9; line-height: 1.6;">
+                                    <strong style="color: var(--accent-cyan);">💡 Mẹo gõ nhanh:</strong> Vui lòng tắt bộ gõ Tiếng Việt (chuyển sang <b>Tiếng Anh - EN</b>) để gõ Toán mượt mà nhất.<br>
+                                    <ul style="margin: 8px 0 0 15px; padding: 0; font-size: 0.85rem; opacity: 0.85;">
+                                        <li>Bấm <b>Ctrl + Space</b> (hoặc gõ nhanh <b>""</b>) để chèn ô gõ Tiếng Việt trực tiếp.</li>
+                                        <li>Bấm <b>Ctrl + Z</b> để Hoàn tác, <b>Ctrl + Y</b> để Làm lại. Trạng thái tự động lưu mỗi 10 giây!</li>
+                                        <li>Đối với Hệ & Ma trận: Bấm <b>Shift + Space</b> (hoặc <b>Enter</b>) để thêm dòng/cột.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="latex-workspace fade-up">
+                                <div class="editor-pane">
+                                    <div class="pane-header">
+                                        <div class="pane-title">Giao diện gõ trực quan</div>
+                                        <div class="pane-actions">
+                                            <button class="pane-btn danger" onclick="clearMath()">🗑 Xóa</button>
+                                            <button class="pane-btn" onclick="printPreview()">🖨 In</button>
+                                        </div>
+                                    </div>
+                                    <div id="math-editor-container" class="math-editor-container">
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 20px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
+                                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--accent-cyan);">Mã LaTeX tương ứng:</div>
+                                        <div class="pane-actions">
+                                            <button class="pane-btn" onclick="copyWord()">📝 Copy cho Word</button>
+                                            <button class="pane-btn" onclick="copyLatex()">📋 Copy LaTeX</button>
+                                            <button class="pane-btn" style="color:#a78bfa; border-color:rgba(167,139,250,0.3)" onclick="sendToLaTeXTool()">🚀 Đi tới tool LaTeX</button>
+                                        </div>
+                                    </div>
+                                    <textarea id="latex-output" readonly placeholder="Mã LaTeX sẽ tự động xuất hiện ở đây..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="math-editor-right fade-up">
+                            <div class="snippet-toolbar" id="snippet-toolbar">
+                                
+                                <div class="snip-group-row" draggable="true" data-group="he-ma-tran">
+                                    <div class="snip-group-label" onclick="toggleSnipGroup(this)">
+                                        <span class="drag-handle" style="cursor: grab; margin-right: 6px; opacity: 0.6;">⠿</span>
+                                        <span style="flex: 1;">Hệ & Ma trận</span>
+                                        <span class="toggle-icon" style="transition: transform 0.2s; font-size: 0.6rem; opacity: 0.7;">▼</span>
+                                    </div>
+                                    <div class="snip-group-btns">
+                                        <button class="snip-btn" onclick="insertCmd('\\cases')" title="Hệ phương trình">$\begin{cases}x\\y\end{cases}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('\\bmatrix')" title="Ma trận vuông">$\begin{bmatrix}x\\y\end{bmatrix}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('\\pmatrix')" title="Ma trận tròn">$\begin{pmatrix}x\\y\end{pmatrix}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('\\vmatrix')" title="Định thức">$\begin{vmatrix}x\\y\end{vmatrix}$</button>
+                                    </div>
+                                </div>
+
+                                <div class="snip-group-row" draggable="true" data-group="dai-so">
+                                    <div class="snip-group-label" onclick="toggleSnipGroup(this)">
+                                        <span class="drag-handle" style="cursor: grab; margin-right: 6px; opacity: 0.6;">⠿</span>
+                                        <span style="flex: 1;">Đại Số</span>
+                                        <span class="toggle-icon" style="transition: transform 0.2s; font-size: 0.6rem; opacity: 0.7;">▼</span>
+                                    </div>
+                                    <div class="snip-group-btns">
+                                        <button class="snip-btn" onclick="writeMath('\\pm')" title="Cộng trừ">$\pm$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\mp')" title="Trừ cộng">$\mp$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\times')" title="Nhân">$\times$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\div')" title="Chia">$\div$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\ast')" title="Sao">$\ast$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\cdot')" title="Chấm">$\cdot$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\circ')" title="Tròn">$\circ$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\oplus')" title="Cộng vòng">$\oplus$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\otimes')" title="Nhân vòng">$\otimes$</button>
+                                    </div>
+                                </div>
+
+                                <div class="snip-group-row" draggable="true" data-group="quan-he">
+                                    <div class="snip-group-label" onclick="toggleSnipGroup(this)">
+                                        <span class="drag-handle" style="cursor: grab; margin-right: 6px; opacity: 0.6;">⠿</span>
+                                        <span style="flex: 1;">Quan Hệ</span>
+                                        <span class="toggle-icon" style="transition: transform 0.2s; font-size: 0.6rem; opacity: 0.7;">▼</span>
+                                    </div>
+                                    <div class="snip-group-btns">
+                                        <button class="snip-btn" onclick="writeMath('\\le')" title="Nhỏ hơn hoặc bằng">$\le$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\ge')" title="Lớn hơn hoặc bằng">$\ge$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\neq')" title="Khác">$\neq$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\approx')" title="Xấp xỉ">$\approx$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\equiv')" title="Đồng dư">$\equiv$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\sim')" title="Tương đương">$\sim$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\cong')" title="Bằng nhau">$\cong$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\propto')" title="Tỉ lệ thuận">$\propto$</button>
+                                    </div>
+                                </div>
+
+                                <div class="snip-group-row" draggable="true" data-group="trang-tri">
+                                    <div class="snip-group-label" onclick="toggleSnipGroup(this)">
+                                        <span class="drag-handle" style="cursor: grab; margin-right: 6px; opacity: 0.6;">⠿</span>
+                                        <span style="flex: 1;">Trang Trí</span>
+                                        <span class="toggle-icon" style="transition: transform 0.2s; font-size: 0.6rem; opacity: 0.7;">▼</span>
+                                    </div>
+                                    <div class="snip-group-btns">
+                                        <button class="snip-btn" onclick="insertCmd('\\vec')" title="Vectơ">$\vec{x}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('\\overline')" title="Gạch đầu">$\overline{x}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('\\hat')" title="Mũ">$\hat{x}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('\\underbrace')" title="Ngoặc dưới">$\underbrace{x}$</button>
+                                    </div>
+                                </div>
+
+                                <div class="snip-group-row" draggable="true" data-group="logic-tap">
+                                    <div class="snip-group-label" onclick="toggleSnipGroup(this)">
+                                        <span class="drag-handle" style="cursor: grab; margin-right: 6px; opacity: 0.6;">⠿</span>
+                                        <span style="flex: 1;">Logic & Tập</span>
+                                        <span class="toggle-icon" style="transition: transform 0.2s; font-size: 0.6rem; opacity: 0.7;">▼</span>
+                                    </div>
+                                    <div class="snip-group-btns">
+                                        <button class="snip-btn" onclick="writeMath('\\therefore')" title="Suy ra">$\therefore$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\because')" title="Bởi vì">$\because$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\forall')" title="Mọi">$\forall$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\exists')" title="Tồn tại">$\exists$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\in')" title="Thuộc">$\in$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\notin')" title="Không thuộc">$\notin$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\subset')" title="Tập con">$\subset$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\subseteq')" title="Tập con hoặc bằng">$\subseteq$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\cup')" title="Hợp">$\cup$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\cap')" title="Giao">$\cap$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\emptyset')" title="Rỗng">$\emptyset$</button>
+                                    </div>
+                                </div>
+
+                                <div class="snip-group-row" draggable="true" data-group="cau-truc">
+                                    <div class="snip-group-label" onclick="toggleSnipGroup(this)">
+                                        <span class="drag-handle" style="cursor: grab; margin-right: 6px; opacity: 0.6;">⠿</span>
+                                        <span style="flex: 1;">Cấu Trúc</span>
+                                        <span class="toggle-icon" style="transition: transform 0.2s; font-size: 0.6rem; opacity: 0.7;">▼</span>
+                                    </div>
+                                    <div class="snip-group-btns">
+                                        <button class="snip-btn" onclick="insertCmd('\\frac')" title="Phân số">$\frac{a}{b}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('\\binom')" title="Tổ hợp chập">$\binom{n}{k}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('\\sqrt')" title="Căn bậc hai">$\sqrt{x}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('\\nthroot')" title="Căn bậc n">$\sqrt[n]{x}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('^')" title="Lũy thừa">$x^{n}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('_')" title="Chỉ số dưới">$x_{n}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('(')" title="Ngoặc tròn">$()$</button>
+                                        <button class="snip-btn" onclick="insertCmd('[')" title="Ngoặc vuông">$[]$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\{ \\}')" title="Ngoặc nhọn">$\{\}$</button>
+                                        <button class="snip-btn" onclick="insertCmd('|')" title="Trị tuyệt đối">$|x|$</button>
+                                    </div>
+                                </div>
+
+                                <div class="snip-group-row" draggable="true" data-group="mui-ten">
+                                    <div class="snip-group-label" onclick="toggleSnipGroup(this)">
+                                        <span class="drag-handle" style="cursor: grab; margin-right: 6px; opacity: 0.6;">⠿</span>
+                                        <span style="flex: 1;">Mũi Tên</span>
+                                        <span class="toggle-icon" style="transition: transform 0.2s; font-size: 0.6rem; opacity: 0.7;">▼</span>
+                                    </div>
+                                    <div class="snip-group-btns">
+                                        <button class="snip-btn" onclick="writeMath('\\to')" title="Mũi tên phải">$\to$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\gets')" title="Mũi tên trái">$\gets$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\leftrightarrow')" title="Mũi tên 2 chiều">$\leftrightarrow$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\Rightarrow')" title="Suy ra">$\Rightarrow$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\Leftarrow')" title="Suy ra ngược">$\Leftarrow$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\Leftrightarrow')" title="Tương đương">$\Leftrightarrow$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\uparrow')" title="Mũi tên lên">$\uparrow$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\downarrow')" title="Mũi tên xuống">$\downarrow$</button>
+                                    </div>
+                                </div>
+
+                                <div class="snip-group-row" draggable="true" data-group="giai-tich">
+                                    <div class="snip-group-label" onclick="toggleSnipGroup(this)">
+                                        <span class="drag-handle" style="cursor: grab; margin-right: 6px; opacity: 0.6;">⠿</span>
+                                        <span style="flex: 1;">Giải Tích</span>
+                                        <span class="toggle-icon" style="transition: transform 0.2s; font-size: 0.6rem; opacity: 0.7;">▼</span>
+                                    </div>
+                                    <div class="snip-group-btns">
+                                        <button class="snip-btn" onclick="writeMath('\\sum_{ }^{ }')" title="Tổng">$\sum$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\prod_{ }^{ }')" title="Tích">$\prod$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\int_{ }^{ }')" title="Tích phân">$\int$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\int \\int_{ }^{ }')" title="Tích phân kép">$\iint$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\oint_{ }^{ }')" title="Tích phân đường">$\oint$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\lim_{ \\to }')" title="Giới hạn">$\lim$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\infty')" title="Vô cực">$\infty$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\partial')" title="Đạo hàm riêng">$\partial$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\nabla')" title="Nabla">$\nabla$</button>
+                                    </div>
+                                </div>
+
+                                <div class="snip-group-row" draggable="true" data-group="luong-giac">
+                                    <div class="snip-group-label" onclick="toggleSnipGroup(this)">
+                                        <span class="drag-handle" style="cursor: grab; margin-right: 6px; opacity: 0.6;">⠿</span>
+                                        <span style="flex: 1;">Lượng Giác</span>
+                                        <span class="toggle-icon" style="transition: transform 0.2s; font-size: 0.6rem; opacity: 0.7;">▼</span>
+                                    </div>
+                                    <div class="snip-group-btns">
+                                        <button class="snip-btn" onclick="writeMath('\\sin\\left(\\right)')" title="Sin">$\sin$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\cos\\left(\\right)')" title="Cos">$\cos$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\tan\\left(\\right)')" title="Tan">$\tan$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\cot\\left(\\right)')" title="Cot">$\cot$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\log_{ }')" title="Logarit">$\log$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\ln\\left(\\right)')" title="Logarit tự nhiên">$\ln$</button>
+                                        <button class="snip-btn" onclick="writeMath('^\\circ')" title="Độ">$^\circ$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\angle')" title="Góc">$\angle$</button>
+                                    </div>
+                                </div>
+
+                                <div class="snip-group-row" draggable="true" data-group="hy-lap">
+                                    <div class="snip-group-label" onclick="toggleSnipGroup(this)">
+                                        <span class="drag-handle" style="cursor: grab; margin-right: 6px; opacity: 0.6;">⠿</span>
+                                        <span style="flex: 1;">Chữ Hy Lạp</span>
+                                        <span class="toggle-icon" style="transition: transform 0.2s; font-size: 0.6rem; opacity: 0.7;">▼</span>
+                                    </div>
+                                    <div class="snip-group-btns">
+                                        <button class="snip-btn" onclick="writeMath('\\alpha')">$\alpha$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\beta')">$\beta$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\gamma')">$\gamma$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\delta')">$\delta$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\epsilon')">$\epsilon$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\theta')">$\theta$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\lambda')">$\lambda$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\mu')">$\mu$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\pi')">$\pi$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\rho')">$\rho$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\sigma')">$\sigma$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\phi')">$\phi$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\omega')">$\omega$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\Delta')">$\Delta$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\Omega')">$\Omega$</button>
+                                    </div>
+                                </div>
+
+                                <div class="snip-group-row" draggable="true" data-group="khong-gian">
+                                    <div class="snip-group-label" onclick="toggleSnipGroup(this)">
+                                        <span class="drag-handle" style="cursor: grab; margin-right: 6px; opacity: 0.6;">⠿</span>
+                                        <span style="flex: 1;">Không Gian</span>
+                                        <span class="toggle-icon" style="transition: transform 0.2s; font-size: 0.6rem; opacity: 0.7;">▼</span>
+                                    </div>
+                                    <div class="snip-group-btns">
+                                        <button class="snip-btn" onclick="writeMath('\\text{ℕ}')">$\mathbb{N}$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\text{ℤ}')">$\mathbb{Z}$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\text{ℚ}')">$\mathbb{Q}$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\text{ℝ}')">$\mathbb{R}$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\text{ℂ}')">$\mathbb{C}$</button>
+                                        <button class="snip-btn" onclick="writeMath('\\text{ℙ}')">$\mathbb{P}$</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+    </div>
+
+    <script src="/SMP/core/js/sidebar-data.js"></script>
+    <script src="/SMP/core/js/layout.js?v=5"></script>
+    <script src="/SMP/core/js/shared.js?v=5"></script>
+    <script src="/SMP/core/js/mathtype-v2/core.js"></script>
+    <script src="/SMP/core/js/mathtype-v2/export.js"></script>
+    <script src="/SMP/core/js/mathtype-v2/toolbar.js"></script>
+</body>
+</html>
+
+
+
