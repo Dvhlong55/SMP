@@ -1,4 +1,4 @@
-    // 🚀 Init 🚀
+﻿    // 🚀 Init 🚀
     var cmEditor = null;
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -256,7 +256,7 @@
     // ── Hàm Render chính (MathJax render realtime với DOM-diffing cục bộ) ──
     function doRender() {
         var preview = document.getElementById('latex-preview');
-        var src = cmEditor ? cmEditor.getValue().trim() : '';
+        var src = getEditorValue().trim();
         if (!src) {
             preview.className = 'empty-state';
             preview.innerHTML = 'Kết quả render sẽ hiện ở đây...';
@@ -303,25 +303,111 @@
         
         // Chỉ gọi MathJax xử lý cho các block MỚI bị thay đổi
         if (blocksToMathJax.length > 0 && window.MathJax && MathJax.typesetPromise) {
-            MathJax.typesetClear(blocksToMathJax);
+            try { MathJax.typesetClear(blocksToMathJax); } catch(e) {}
             MathJax.typesetPromise(blocksToMathJax).catch(function (e) { console.warn('MathJax:', e); });
         }
     }
 
     // ── Insert snippet ──
     function insertSnip(text) {
-        if (!cmEditor) return;
+        if (!cmEditor) {
+            if (nativeEditor) {
+                var start = nativeEditor.selectionStart;
+                var end = nativeEditor.selectionEnd;
+                var val = nativeEditor.value;
+                var real = text.replace(/\\n/g, '\n');
+                var selected = val.substring(start, end);
+                var insertStr = real;
+                var moveBack = 0;
+                
+                if (real.endsWith('{}')) {
+                    insertStr = real.slice(0, -1) + selected + '}';
+                    if (selected.length === 0) moveBack = 1;
+                } else if (real === '') {
+                    insertStr = '' + selected + '';
+                    if (selected.length === 0) moveBack = 2;
+                } else if (selected.length > 0) {
+                    insertStr = real;
+                }
+                
+                nativeEditor.value = val.substring(0, start) + insertStr + val.substring(end);
+                nativeEditor.selectionStart = nativeEditor.selectionEnd = start + insertStr.length - moveBack;
+                nativeEditor.focus();
+                
+                var charCount = document.getElementById('char-count');
+                if (charCount) {
+                    var val2 = nativeEditor.value;
+                    var words = val2.trim().split(/\s+/).filter(function(x) { return x.length > 0; }).length;
+                    var lines = val2.length === 0 ? 0 : val2.split('\n').length;
+                    charCount.textContent = val2.length + ' ký tự | ' + words + ' từ | ' + lines + ' dòng';
+                }
+                localStorage.setItem('smp_latex_autosave', nativeEditor.value);
+                scheduleRender();
+            }
+            return;
+        }
         cmEditor.focus();
         var real = text.replace(/\\n/g, '\n');
         var selected = cmEditor.getSelection();
-        
         var insertStr = real;
         var moveBack = 0;
-        
         if (real.endsWith('{}')) {
             insertStr = real.slice(0, -1) + selected + '}';
             if (selected.length === 0) moveBack = 1;
-        } else if (real === '$$$$') {
+        } else if (real === '') {
+            insertStr = '' + selected + '';
+            if (selected.length === 0) moveBack = 2;
+        } else if (selected.length > 0) {
+            insertStr = real;
+        }
+        cmEditor.replaceSelection(insertStr);
+        if (moveBack > 0) {
+            var pos = cmEditor.getCursor();
+            cmEditor.setCursor({line: pos.line, ch: pos.ch - moveBack});
+        }
+    } else if (real === '') {
+                    insertStr = '' + selected + '';
+                    if (selected.length === 0) moveBack = 2;
+                } else if (selected.length > 0) {
+                    insertStr = real;
+                }
+                
+                nativeEditor.value = val.substring(0, start) + insertStr + val.substring(end);
+                nativeEditor.selectionStart = nativeEditor.selectionEnd = start + insertStr.length - moveBack;
+                nativeEditor.focus();
+                
+                var charCount = document.getElementById('char-count');
+                if (charCount) {
+                    var val2 = nativeEditor.value;
+                    var words = val2.trim().split(/\s+/).filter(function(x) { return x.length > 0; }).length;
+                    var lines = val2.length === 0 ? 0 : val2.split('\n').length;
+                    charCount.textContent = val2.length + ' ký tự | ' + words + ' từ | ' + lines + ' dòng';
+                }
+                localStorage.setItem('smp_latex_autosave', nativeEditor.value);
+                scheduleRender();
+            }
+            return;
+        }
+        cmEditor.focus();
+        var real = text.replace(/\\n/g, '\n');
+        var selected = cmEditor.getSelection();
+        var insertStr = real;
+        var moveBack = 0;
+        if (real.endsWith('{}')) {
+            insertStr = real.slice(0, -1) + selected + '}';
+            if (selected.length === 0) moveBack = 1;
+        } else if (real === '') {
+            insertStr = '' + selected + '';
+            if (selected.length === 0) moveBack = 2;
+        } else if (selected.length > 0) {
+            insertStr = real;
+        }
+        cmEditor.replaceSelection(insertStr);
+        if (moveBack > 0) {
+            var pos = cmEditor.getCursor();
+            cmEditor.setCursor({line: pos.line, ch: pos.ch - moveBack});
+        }
+    } else if (real === '$$$$') {
             insertStr = '$$' + selected + '$$';
             if (selected.length === 0) moveBack = 2;
         } else if (selected.length > 0) {
@@ -345,19 +431,17 @@
     };
 
     function insertTemplate(key) {
-        if (!cmEditor) return;
-        cmEditor.setValue(TEMPLATES[key] || '');
-        cmEditor.focus();
+        setEditorValue(TEMPLATES[key] || ''); if (cmEditor) cmEditor.focus(); else if (nativeEditor) nativeEditor.focus();
     }
 
     // ── Actions ──
     function clearEditor() {
         if (!confirm('Xóa toàn bộ nội dung?')) return;
-        if (cmEditor) cmEditor.setValue('');
+        setEditorValue('');
     }
 
     function copySource() {
-        var val = cmEditor ? cmEditor.getValue() : '';
+        var val = getEditorValue();
         navigator.clipboard.writeText(val).then(function () {
             showToast('✓ Đã copy source LaTeX');
         });
@@ -388,7 +472,7 @@
     }
 
     function exportTex() {
-        var src = cmEditor ? cmEditor.getValue() : '';
+        var src = getEditorValue();
         var template = "\\documentclass{article}\n\\usepackage[utf8]{inputenc}\n\\usepackage{amsmath, amssymb}\n\\begin{document}\n\n" + src + "\n\n\\end{document}";
         var blob = new Blob([template], { type: 'text/plain;charset=utf-8' });
         var url = URL.createObjectURL(blob);
@@ -428,3 +512,5 @@
             if (cmEditor) cmEditor.refresh();
         }, 100);
     }
+
+
