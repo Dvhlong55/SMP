@@ -1099,3 +1099,56 @@ main > .profile-container {
 .exam-paper p { font-size: 1.15rem !important; line-height: 1.8 !important; }
 .exam-paper li { font-size: 1.15rem !important; line-height: 1.8 !important; }
 .exam-paper { font-size: 1.15rem !important; line-height: 1.8 !important; }
+
+/* 🌞 LIGHT MODE OVERRIDES FOR CODEMIRROR THEME 🌞 */
+body:not(.dark-mode) .CodeMirror {
+    background-color: #f8fafc !important;
+    color: #334155 !important;
+    border-color: rgba(15,23,42,0.1) !important;
+}
+body:not(.dark-mode) .CodeMirror-gutters {
+    background-color: #f1f5f9 !important;
+    border-right: 1px solid #e2e8f0 !important;
+}
+body:not(.dark-mode) .CodeMirror-linenumber {
+    color: #94a3b8 !important;
+}
+body:not(.dark-mode) .CodeMirror-cursor {
+    border-left-color: #0f172a !important;
+}
+body:not(.dark-mode) .CodeMirror-selected {
+    background-color: #cbd5e1 !important;
+}
+body:not(.dark-mode) .CodeMirror-line::selection, 
+body:not(.dark-mode) .CodeMirror-line>span::selection, 
+body:not(.dark-mode) .CodeMirror-line>span>span::selection {
+    background-color: #cbd5e1 !important;
+}
+body:not(.dark-mode) .CodeMirror-activeline-background {
+    background-color: rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Syntax highlighting overrides for Light Mode */
+body:not(.dark-mode) .cm-s-material-darker.CodeMirror { color: #334155 !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-keyword { color: #2563eb !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-atom { color: #d946ef !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-number { color: #ea580c !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-def { color: #059669 !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-variable { color: #334155 !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-variable-2 { color: #0284c7 !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-variable-3 { color: #16a34a !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-property { color: #4f46e5 !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-operator { color: #9333ea !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-comment { color: #94a3b8 !important; font-style: italic; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-string { color: #15803d !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-string-2 { color: #b45309 !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-meta { color: #64748b !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-qualifier { color: #0d9488 !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-builtin { color: #ca8a04 !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-bracket { color: #475569 !important; font-weight: bold; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-tag { color: #dc2626 !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-attribute { color: #ea580c !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-header { color: #2563eb !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-quote { color: #059669 !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-hr { color: #cbd5e1 !important; }
+body:not(.dark-mode) .cm-s-material-darker span.cm-link { color: #2563eb !important; }
