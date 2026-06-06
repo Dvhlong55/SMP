@@ -8,7 +8,7 @@
 /* === CSS VARIABLES === */
 :root {
     --sidebar-bg: #1a1a1a;
-    --topbar-bg: #111111;
+    --topbar-bg: #ffffff;
     --main-bg: #fafaf8;
     --card-bg: #ffffff;
     --text-dark: #1a1a1a;
@@ -27,6 +27,7 @@
 
 /* DARK MODE */
 body.dark-mode {
+    --topbar-bg: #111111;
     --main-bg: #141414;
     --card-bg: #1e1e1e;
     --text-dark: #e8e8e8;
@@ -202,7 +203,31 @@ mjx-container {
     position: sticky;
     top: 0;
     z-index: 100;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(128,128,128,0.15);
+    transition: background-color 0.4s ease;
+}
+
+.topbar-nav {
+    width: 100%; 
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+    overflow-x: auto; 
+    padding-top: 8px; 
+    border-top: 1px solid rgba(128,128,128,0.15);
+}
+
+.topbar-nav a {
+    color: var(--text-dark);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+    transition: color 0.2s;
+}
+
+.topbar-nav a:hover {
+    color: var(--accent-cyan);
 }
 
 /* Search bar */

@@ -260,17 +260,26 @@
     </aside>`;
 
     const TOPBAR_HTML = `
-    <header class="topbar">
-        <a href="/SMP/index.html" style="color:#5ce1e6; font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Trang Chủ">SMP</a>
-        <div class="search-wrapper">
-            <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
-            <span class="search-icon">&#x2315;</span>
-            <div id="search-results" class="search-results"></div>
+    <header class="topbar" style="height: auto; flex-wrap: wrap; padding-bottom: 10px; padding-top: 15px;">
+        <div style="display: flex; width: 100%; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 15px;">
+            <a href="/SMP/index.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Trang Chủ">SMP</a>
+            <div class="search-wrapper">
+                <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
+                <span class="search-icon">&#x2315;</span>
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="topbar-actions">
+                <button id="install-app-btn" class="dark-toggle" style="display: none; border-color: var(--accent-cyan); color: var(--accent-cyan);">&#x2B07; Tải App</button>
+                <button id="dark-toggle" class="dark-toggle">&#x263D; Tối</button>
+            </div>
         </div>
-        <div class="topbar-actions">
-            <button id="install-app-btn" class="dark-toggle" style="display: none; border-color: #5ce1e6; color: #5ce1e6;">&#x2B07; Tải App</button>
-            <button id="dark-toggle" class="dark-toggle">&#x263D; Tối</button>
-        </div>
+        <nav class="topbar-nav">
+            <a href="/SMP/index.html">&#x2302; Home</a>
+            <a href="/SMP/pages/toanhoc.html">&#x2211; Math</a>
+            <a href="/SMP/pages/nonmath.html">&#x2734; Non Math</a>
+            <a href="/SMP/pages/cuocsong.html">&#x2726; Life</a>
+            <a href="/SMP/pages/vetoi.html">&#x25CE; About</a>
+        </nav>
     </header>`;
 
     // ── Inject into placeholders ─────────────────────────────────────────────
@@ -380,7 +389,7 @@ function runManimLogic() {
     // ============================================================
     //  BẢN DỊCH KHÁNG LỖI CSS (CHỐT CỨNG TỌA ĐỘ DOM)
     // ============================================================
-    const UNIT = 30; // 1 Đơn vị Manim = 55px trên Web
+    const UNIT = window.innerWidth < 768 ? 16 : 30; // 1 Đơn vị Manim = 30px trên Desktop, 16px trên Mobile
     const CR = 0.15;
     const U  = 0.60;
     const GAP = U * 0.55;
