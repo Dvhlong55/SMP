@@ -31,17 +31,35 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
+        html {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            overflow-x: hidden;
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
             /* Phông nền lưới toán học / Lập trình */
             background-image: 
                 linear-gradient(rgba(92, 225, 230, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(92, 225, 230, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             background-attachment: fixed;
+        }
+
+        /* Fix scroll cho công thức Toán trên Mobile */
+        mjx-container {
+            max-width: 100%;
+            overflow-x: auto !important;
+            overflow-y: hidden;
+        }
+        mjx-container[display="true"] {
+            overflow-x: auto !important;
+            overflow-y: hidden;
+            max-width: 100%;
         }
 
         /* Thanh cuộn phong cách Cyber */

@@ -43,8 +43,8 @@ body.dark-mode {
 
 html { 
     scroll-behavior: smooth; 
-    overflow-x: hidden;
-    max-width: 100vw;
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
 }
 
 body {
@@ -53,8 +53,8 @@ body {
     color: var(--text-dark);
     display: flex;
     min-height: 100vh;
-    overflow-x: hidden;
-    max-width: 100%;
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
     position: relative;
     transition: background-color 0.4s ease, color 0.4s ease;
 }
