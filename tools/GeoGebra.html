@@ -54,20 +54,18 @@
             transition: background-color 0.3s ease;
         }
 
-        .main-wrapper {
-            position: relative;
-            max-width: 2000px !important;
+        /* Fix embed mode for PostViewer */
+        body.embed-mode .main-wrapper {
             width: 100% !important;
-            margin: 0 auto !important;
-            transform: none !important;
-            left: 0 !important;
-            transition: transform 0s !important;
+            margin-left: 0 !important;
+            padding-top: 0 !important;
         }
 
+        /* Override shared.css to give more space for the tool */
         .main-content-layout {
             display: grid;
             grid-template-columns: 200px 1fr;
-            gap: 36px;
+            gap: 36px; /* Tighter gap to prevent squishing */
             margin-top: 20px;
             min-width: 0;
         }
@@ -117,11 +115,12 @@
 
         @media (max-width: 1100px) {
             .main-content-layout { grid-template-columns: 1fr; }
-            .tags-comment-sidebar { position: static; }
+            .tags-comment-sidebar { display: none; }
         }
 
         .main-articles-body {
             min-width: 0;
+            width: 100%;
             overflow: hidden;
         }
 
@@ -169,6 +168,35 @@
             color: var(--accent-cyan, #5ce1e6);
             margin-bottom: 14px;
         }
+
+        /* Drag & Drop Zone */
+        .ggb-drop-zone {
+            border: 2px dashed rgba(92,225,230,0.3);
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(0,0,0,0.15);
+            margin-bottom: 16px;
+        }
+        body:not(.dark-mode) .ggb-drop-zone { background: rgba(0,0,0,0.02); border-color: rgba(15,23,42,0.2); }
+        .ggb-drop-zone:hover, .ggb-drop-zone.dragover {
+            border-color: var(--accent-cyan);
+            background: rgba(92,225,230,0.05);
+        }
+        .ggb-drop-icon { font-size: 2rem; margin-bottom: 10px; }
+        .ggb-drop-text { color: var(--exam-title-color); font-weight: 500; font-size: 0.95rem; margin-bottom: 5px; }
+        .ggb-drop-sub { color: var(--exam-text-color); font-size: 0.8rem; opacity: 0.7; }
+
+        /* Smart Toggles */
+        .ggb-toggles-section { margin-top: 20px; }
+        .ggb-toggles-grid { display: flex; gap: 20px; flex-wrap: wrap; }
+        .ggb-toggle-label {
+            display: flex; align-items: center; gap: 8px;
+            cursor: pointer; color: var(--exam-text-color); font-size: 0.85rem;
+        }
+        .ggb-toggle-label input { accent-color: var(--accent-cyan); width: 16px; height: 16px; cursor: pointer; }
 
         .ggb-input-row {
             display: flex;
@@ -397,19 +425,39 @@
                     </div>
 
                     <div class="ggb-panel fade-up">
-                        <div class="ggb-panel-title">🔗 Nhập Link GeoGebra</div>
-                        <div class="ggb-input-row">
+                        <div class="ggb-panel-title">📂 NGUỒN DỮ LIỆU (LOCAL & ONLINE)</div>
+                        
+                        <div class="ggb-drop-zone" id="ggb-drop-zone" onclick="document.getElementById('ggb-file-input').click()">
+                            <div class="ggb-drop-icon">📥</div>
+                            <div class="ggb-drop-text">Kéo thả file .ggb vào đây, hoặc click để chọn file</div>
+                            <div class="ggb-drop-sub">Hỗ trợ trích xuất Offline hoàn toàn, không cần Internet</div>
+                            <input type="file" id="ggb-file-input" accept=".ggb" style="display: none;" onchange="handleFileUpload(event)">
+                        </div>
+
+                        <div class="ggb-input-row" style="margin-top: 16px;">
                             <input
                                 type="text"
                                 id="ggb-link-input"
-                                placeholder="https://www.geogebra.org/m/xxxxxx  hoặc  https://www.geogebra.org/calculator/xxxxxx"
+                                placeholder="Hoặc dán link GeoGebra (https://...)"
                             >
                             <button class="ggb-extract-btn" id="ggb-extract-btn" onclick="extractTikZ()">
-                                ⚡ Lấy Code TikZ
+                                ⚡ TRÍCH XUẤT
                             </button>
                         </div>
-                        <div class="ggb-hint">
-                            Hỗ trợ các định dạng link: <code>geogebra.org/m/ID</code>, <code>geogebra.org/calculator/ID</code>, <code>geogebra.org/graphing/ID</code>
+
+                        <div class="ggb-toggles-section">
+                            <div class="ggb-panel-title" style="margin-bottom: 10px;">⚙ TÙY CHỌN TRÍCH XUẤT (SMART TOGGLES)</div>
+                            <div class="ggb-toggles-grid">
+                                <label class="ggb-toggle-label" style="opacity: 0.6; cursor: not-allowed;">
+                                    <input type="checkbox" id="toggle-grid" disabled>
+                                    <span class="ggb-toggle-text">Thêm Lưới (Grid) <small style="font-style: italic;">(Đang cải tiến)</small></span>
+                                </label>
+                                <label class="ggb-toggle-label" style="opacity: 0.6; cursor: not-allowed;">
+                                    <input type="checkbox" id="toggle-axes" disabled>
+                                    <span class="ggb-toggle-text">Thêm Trục (Axes) <small style="font-style: italic;">(Đang cải tiến)</small></span>
+                                </label>
+
+                            </div>
                         </div>
                     </div>
 
@@ -419,14 +467,36 @@
                     </div>
 
                     <div class="ggb-output-panel fade-up" id="ggb-output-panel">
-                        <div class="pane-header">
-                            <span class="pane-title">📄 Mã TikZ / PGF</span>
-                            <div class="pane-actions">
-                                <button class="pane-btn" onclick="copyTikZ()">Copy</button>
-                                <button class="pane-btn" onclick="clearOutput()">Xóa</button>
+                        <div class="studio-layout">
+                            <!-- Left: Code Editor -->
+                            <div class="studio-pane">
+                                <div class="studio-pane-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 10px; border-bottom: 1px solid rgba(150,150,150,0.1);">
+                                    <span class="studio-pane-title">📄 TikZ / PGF Code</span>
+                                    <div>
+                                        <button class="pane-btn" onclick="copyTikZ()" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 6px; background: rgba(92,225,230,0.15); color: var(--accent-cyan); border: 1px solid rgba(92,225,230,0.4); cursor: pointer; transition: all 0.2s;">📋 Copy Code</button>
+                                    </div>
+                                </div>
+                                <div class="studio-pane-content dark-cm">
+                                    <textarea id="tikz-output" style="display:none;"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Right: Live Preview -->
+                            <div class="studio-pane">
+                                <div class="studio-pane-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 10px; border-bottom: 1px solid rgba(150,150,150,0.1);">
+                                    <span class="studio-pane-title">👁 Live Preview</span>
+                                    <div>
+                                        <button class="pane-btn" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 6px; background: rgba(92,225,230,0.15); color: var(--accent-cyan); border: 1px solid rgba(92,225,230,0.4); cursor: pointer; transition: all 0.2s;" onclick="renderPreview()">🔄 Tải Lại</button>
+                                    </div>
+                                </div>
+                                <div class="studio-pane-content" id="tikz-preview" style="position: relative;">
+                                    <div class="tikz-loading" id="tikz-loading" style="display:none;">Đang biên dịch TikZ...</div>
+                                    <div id="tikz-canvas" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; overflow: auto;">
+                                        <span style="color:#aaa; font-family:'JetBrains Mono',monospace; font-size:0.8rem; text-align: center;">Bản xem trước sẽ hiển thị ở đây<br><br><small style="opacity: 0.6;">(Hỗ trợ chuẩn PGF/TikZ cơ bản)</small></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <textarea id="tikz-output" readonly spellcheck="false" placeholder="Mã TikZ sẽ xuất hiện ở đây..."></textarea>
                     </div>
 
                     <div class="export-bar fade-up" id="ggb-export-bar" style="display:none">
@@ -480,6 +550,11 @@
     <script src="/SMP/core/js/sidebar-data.js"></script>
     <script src="/SMP/core/js/layout.js?v=4"></script>
     <script src="/SMP/core/js/shared.js?v=4"></script>
+    <!-- CodeMirror 5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/stex/stex.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof Comments !== 'undefined') Comments.init('GeoGebraExtractor');
@@ -488,6 +563,8 @@
         document.getElementById('ggb-link-input').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') extractTikZ();
         });
+        
+        setupDragAndDrop();
     });
 
     // ── Parse material ID from various GeoGebra URL formats ──
@@ -523,20 +600,72 @@
         document.getElementById('ggb-status').className = 'ggb-status';
     }
 
+    // ── File Upload (Drag & Drop) ──
+    var currentBase64 = null;
+
+    function setupDragAndDrop() {
+        var dropZone = document.getElementById('ggb-drop-zone');
+        if (!dropZone) return;
+        
+        dropZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+        
+        dropZone.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+        });
+        
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length > 0) {
+                processFile(e.dataTransfer.files[0]);
+            }
+        });
+    }
+
+    function handleFileUpload(event) {
+        if (event.target.files.length > 0) {
+            processFile(event.target.files[0]);
+        }
+    }
+
+    function processFile(file) {
+        if (!file.name.toLowerCase().endsWith('.ggb')) {
+            setStatus('error', '❌ Vui lòng chọn file định dạng .ggb');
+            return;
+        }
+        var reader = new FileReader();
+        setStatus('loading', 'Đang đọc file ' + file.name + '...');
+        reader.onload = function(e) {
+            var data = e.target.result;
+            currentBase64 = data.split(',')[1];
+            document.getElementById('ggb-link-input').value = '';
+            document.getElementById('ggb-drop-zone').querySelector('.ggb-drop-text').textContent = 'Đã tải: ' + file.name;
+            extractTikZ();
+        };
+        reader.readAsDataURL(file);
+    }
+
     // ── Main extraction function ──
     var ggbApi = null;
     var ggbScriptLoaded = false;
 
     function extractTikZ() {
         var url = document.getElementById('ggb-link-input').value.trim();
-        if (!url) {
-            setStatus('error', '⚠ Vui lòng nhập link GeoGebra.');
-            return;
-        }
+        var id = null;
 
-        var id = parseGGBId(url);
-        if (!id) {
-            setStatus('error', '⚠ Không nhận diện được link. Hãy thử dạng: geogebra.org/m/ID');
+        if (url) {
+            currentBase64 = null; // Ignore file if URL is provided
+            id = parseGGBId(url);
+            if (!id) {
+                setStatus('error', '⚠ Không nhận diện được link. Hãy thử dạng: geogebra.org/m/ID');
+                return;
+            }
+        } else if (!currentBase64) {
+            setStatus('error', '⚠ Vui lòng dán link GeoGebra hoặc chọn file .ggb.');
             return;
         }
 
@@ -544,13 +673,13 @@
         setStatus('loading', 'Đang tải thư viện GeoGebra...');
 
         if (ggbScriptLoaded) {
-            loadApplet(id);
+            loadApplet(id, currentBase64);
         } else {
             var s = document.createElement('script');
             s.src = 'https://www.geogebra.org/apps/deployggb.js';
             s.onload = function () {
                 ggbScriptLoaded = true;
-                loadApplet(id);
+                loadApplet(id, currentBase64);
             };
             s.onerror = function () {
                 setStatus('error', '✕ Không thể tải thư viện GeoGebra. Kiểm tra kết nối mạng.');
@@ -560,15 +689,17 @@
         }
     }
 
-    function loadApplet(materialId) {
-        setStatus('loading', 'Đang tải đồ thị từ GeoGebra (ID: ' + materialId + ')...');
+    function loadApplet(materialId, base64) {
+        if (materialId) {
+            setStatus('loading', 'Đang tải đồ thị từ GeoGebra (ID: ' + materialId + ')...');
+        } else {
+            setStatus('loading', 'Đang tải đồ thị từ file Local...');
+        }
 
-        // Clear old applet if any
         var container = document.getElementById('ggb-container');
         container.innerHTML = '';
 
         var params = {
-            material_id: materialId,
             width: 600,
             height: 400,
             showToolBar: false,
@@ -576,65 +707,78 @@
             showMenuBar: false,
             appletOnLoad: function(api) {
                 ggbApi = api;
-                setStatus('loading', 'Đang trích xuất mã TikZ...');
-                try {
-                    api.exportPGF(function(tikzCode) {
-                        if (!tikzCode || tikzCode.trim() === '') {
-                            setStatus('error', '✕ Không thể trích xuất TikZ từ hình vẽ này (có thể là hình 3D hoặc hình trống).');
+                
+                // Smart Toggles
+                let showGrid = false; // Tính năng đang cải tiến
+                let showAxes = false; // Tính năng đang cải tiến
+
+                api.setGridVisible(showGrid);
+                api.setAxesVisible(showAxes, showAxes);
+
+                // Chờ 800ms để đảm bảo hình học đã được tải hoàn toàn vào applet
+                setTimeout(function() {
+                    // Ép GeoGebra tự động thu phóng để bắt trọn TOÀN BỘ hình vẽ
+                    try {
+                        api.showAllObjects();
+                    } catch(e) {
+                        console.log("showAllObjects failed:", e);
+                    }
+
+                    // Chờ thêm 400ms để GeoGebra kịp cập nhật viewport sau khi zoom
+                    setTimeout(function() {
+                        setStatus('loading', 'Đang trích xuất mã TikZ...');
+                        try {
+                            api.exportPGF(function(tikzCode) {
+                            if (!tikzCode || tikzCode.trim() === '') {
+                                setStatus('error', '✕ Không thể trích xuất TikZ. (Hình trống hoặc lỗi định dạng).');
+                                document.getElementById('ggb-extract-btn').disabled = false;
+                                return;
+                            }
+                            var processedCode = processTikzCode(tikzCode, showGrid, showAxes);
+                            
+                            // Initialize CodeMirror if not yet initialized
+                            if (!window.tikzEditor) {
+                                window.tikzEditor = CodeMirror.fromTextArea(document.getElementById('tikz-output'), {
+                                    mode: 'stex',
+                                    theme: 'dracula',
+                                    lineNumbers: true,
+                                    lineWrapping: true,
+                                    matchBrackets: true
+                                });
+                                window.tikzEditor.setSize("100%", "100%");
+                                window.tikzEditor.on('change', function() {
+                                    clearTimeout(window.previewTimeout);
+                                    window.previewTimeout = setTimeout(renderPreview, 1000);
+                                });
+                            }
+                            
+                            window.tikzEditor.setValue(processedCode);
+                            document.getElementById('ggb-output-panel').classList.add('show');
+                            document.getElementById('ggb-export-bar').style.display = 'flex';
+                            
+                            setTimeout(function() {
+                                window.tikzEditor.refresh();
+                                renderPreview();
+                            }, 100);
+
+                            setStatus('success', '✓ Trích xuất thành công! TikZ Studio đã sẵn sàng.');
                             document.getElementById('ggb-extract-btn').disabled = false;
-                            return;
-                        }
-                        
-                        // --- TỰ ĐỘNG SỬA LỖI & TỐI ƯU HÓA MÃ TIKZ ---
-                        let processedCode = tikzCode;
-
-                        // 1. Ép sang khổ A4 và căn lề
-                        processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}');
-
-                        // 2. Nạp thư viện
-                        processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}');
-
-                        // 3. 🔥 PHÉP THUẬT ĐỈNH CAO: Đọc tọa độ \clip để tự động dịch tâm (shift) hình về gốc (0,0)
-                        let shiftX = 0, shiftY = 0;
-                        let clipMatch = processedCode.match(/\\clip\s*\(([-0-9.]+),([-0-9.]+)\)\s*rectangle/);
-                        if (clipMatch) {
-                            // Lấy tọa độ góc trái dưới của khung hình làm điểm neo dịch tâm
-                            shiftX = -parseFloat(clipMatch[1]);
-                            shiftY = -parseFloat(clipMatch[2]);
-                        }
-
-                        // 4. Vô hiệu hóa \clip bằng cách biến thành comment
-                        processedCode = processedCode.replace(/\\clip([\s\S]*?);/g, '% \\clip $1;');
-
-                        // 5. Gom nhãn và điểm vào 1 dòng chuẩn
-                        processedCode = processedCode.replace(/\\draw\s*\[fill=[^\]]*\]\s*\(([^)]+)\)\s*circle\s*\([^)]+\);\s*\n\s*\\draw\[color=[^\]]*\]\s*\([^)]+\)\s*node\s*\{([^}]+)\};/g, '\\fill[black] ($1) circle (1.5pt) node[above right] {$2};');
-
-                        // 6. 🔥 Ép thêm tham số shift vào options để kéo toàn bộ tọa độ khổng lồ về vùng nhìn thấy được
-                        let tikzOptions = `scale=1.0, shift={(${shiftX.toFixed(2)},${shiftY.toFixed(2)})}`;
-                        processedCode = processedCode.replace(/\\begin\{tikzpicture\}\[(.*?)\]/, `\\begin{tikzpicture}[$1, ${tikzOptions}] % 💡 CHỈNH ĐỘ LỚN HÌNH Ở ĐÂY (scale=0.5 là thu nhỏ 1 nửa, scale=2.0 là phóng to gấp đôi)`);
-
-                        // 7. Thẻ căn giữa hình
-                        processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\n% Căn giữa dọc\n\\vspace*{\\fill}\n% Căn giữa ngang\n\\begin{center}');
-                        processedCode = processedCode.replace(/\\end\{document\}/, '\\end{center}\n\\vspace*{\\fill}\n\n\\end{document}');
-                        // ----------------------------------------------------
-                        
-                        // Hiển thị code đã xử lý ra giao diện
-                        document.getElementById('tikz-output').value = processedCode;
-                        
-                        document.getElementById('ggb-output-panel').classList.add('show');
-                        document.getElementById('ggb-export-bar').style.display = 'flex';
-                        setStatus('success', '✓ Trích xuất thành công! Mã TikZ đã sẵn sàng.');
+                            document.getElementById('ggb-output-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        });
+                    } catch(e) {
+                        setStatus('error', '✕ Lỗi khi trích xuất: ' + e.message);
                         document.getElementById('ggb-extract-btn').disabled = false;
-                        
-                        // Scroll to output
-                        document.getElementById('ggb-output-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    });
-                } catch(e) {
-                    setStatus('error', '✕ Lỗi khi trích xuất: ' + e.message);
-                    document.getElementById('ggb-extract-btn').disabled = false;
-                }
+                    }
+                    }, 400);
+                }, 800);
             }
         };
+
+        if (materialId) {
+            params.material_id = materialId;
+        } else if (base64) {
+            params.ggbBase64 = base64;
+        }
 
         try {
             var applet = new GGBApplet(params, true);
@@ -645,9 +789,246 @@
         }
     }
 
+    function processTikzCode(code, showGrid, showAxes) {
+        let processedCode = code;
+
+        // 1. CHUẨN BỊ MÔI TRƯỜNG LATEX
+        processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}');
+        processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}');
+
+        // 2. TÀN SÁT: XÓA SẠCH LƯỚI, TRỤC VÀ SỐ CỦA GEOGEBRA (Dù người dùng có bật hay tắt, ta sẽ tự vẽ lại bản xịn hơn)
+        processedCode = processedCode.replace(/\\draw[^;]*?step=[^;]*?grid[^;]*?;/g, ''); 
+        processedCode = processedCode.replace(/\\draw[^;]*?\([^,]+,\s*0(?:\.0*)?\s*\)\s*--\s*\([^,]+,\s*0(?:\.0*)?\s*\)[^;]*;/g, ''); 
+        processedCode = processedCode.replace(/\\draw[^;]*?\(\s*0(?:\.0*)?\s*,[^)]+\)\s*--\s*\(\s*0(?:\.0*)?\s*,[^)]+\)[^;]*;/g, ''); 
+        processedCode = processedCode.replace(/\\draw[^;]*?\\footnotesize[^;]*?;/g, ''); 
+        processedCode = processedCode.replace(/\\draw[^;]*?node[^;]*?\{\$[xyO0]\$\};/g, ''); 
+        processedCode = processedCode.replace(/\\foreach[\s\S]*?;/g, ''); 
+
+        // 3. TÌM BOUNDING BOX CHUẨN (CHỈ DỰA VÀO HÌNH HỌC)
+        let clipMinX = -Infinity, clipMaxX = Infinity, clipMinY = -Infinity, clipMaxY = Infinity;
+        let clipRegex = /\\clip\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*rectangle\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\);/;
+        let clipMatch = clipRegex.exec(processedCode);
+        if (clipMatch) {
+            let cx1 = parseFloat(clipMatch[1]), cy1 = parseFloat(clipMatch[2]);
+            let cx2 = parseFloat(clipMatch[3]), cy2 = parseFloat(clipMatch[4]);
+            clipMinX = Math.min(cx1, cx2); clipMaxX = Math.max(cx1, cx2);
+            clipMinY = Math.min(cy1, cy2); clipMaxY = Math.max(cy1, cy2);
+        }
+
+        let codeForParsing = processedCode.replace(/\\clip[\s\S]*?;/g, ''); 
+        codeForParsing = codeForParsing.replace(/\(0,0\)\s*arc/g, ''); 
+
+        let minX = Infinity, maxX = -Infinity;
+        let minY = Infinity, maxY = -Infinity;
+        let found = false;
+
+        let coordRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)/g;
+        let match;
+        
+        let coreMinX = Infinity, coreMaxX = -Infinity;
+        let coreMinY = Infinity, coreMaxY = -Infinity;
+        let coreFound = false;
+
+        let pointRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*(?:circle\s*\(\s*[0-9.]+\s*pt\s*\)|node)/g;
+        while ((match = pointRegex.exec(codeForParsing)) !== null) {
+            let px = parseFloat(match[1]); let py = parseFloat(match[2]);
+            if (px === 0 && py === 0) continue;
+            if (Math.abs(px - clipMinX) < 0.05 || Math.abs(px - clipMaxX) < 0.05 || Math.abs(py - clipMinY) < 0.05 || Math.abs(py - clipMaxY) < 0.05) continue;
+            coreMinX = Math.min(coreMinX, px); coreMaxX = Math.max(coreMaxX, px);
+            coreMinY = Math.min(coreMinY, py); coreMaxY = Math.max(coreMaxY, py);
+            coreFound = true;
+        }
+
+        let circleRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*circle\s*\(\s*([-0-9.]+)(?:\s*cm)?\s*\)/g;
+        while ((match = circleRegex.exec(codeForParsing)) !== null) {
+            let cx = parseFloat(match[1]); let cy = parseFloat(match[2]); let r = parseFloat(match[3]);
+            if (Math.abs(cx - clipMinX) < 0.05 || Math.abs(cx - clipMaxX) < 0.05 || Math.abs(cy - clipMinY) < 0.05 || Math.abs(cy - clipMaxY) < 0.05) continue;
+            coreMinX = Math.min(coreMinX, cx - r); coreMaxX = Math.max(coreMaxX, cx + r);
+            coreMinY = Math.min(coreMinY, cy - r); coreMaxY = Math.max(coreMaxY, cy + r);
+            coreFound = true;
+        }
+
+        if (coreFound) {
+            minX = coreMinX; maxX = coreMaxX;
+            minY = coreMinY; maxY = coreMaxY;
+            found = true;
+        } else {
+            while ((match = coordRegex.exec(codeForParsing)) !== null) {
+                let x = parseFloat(match[1]); let y = parseFloat(match[2]);
+                if (x === 0 && y === 0) continue; 
+                if (Math.abs(x - clipMinX) < 0.05 || Math.abs(x - clipMaxX) < 0.05 || Math.abs(y - clipMinY) < 0.05 || Math.abs(y - clipMaxY) < 0.05) continue; 
+                minX = Math.min(minX, x); maxX = Math.max(maxX, x);
+                minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+                found = true;
+            }
+        }
+
+        // 4. CĂN GIỮA "GEN CỨNG", THU PHÓNG VÀ TỰ SINH TRỤC/LƯỚI
+        let shiftX = 0, shiftY = 0;
+        let autoScale = 1.0;
+        let customGridAxes = "";
+
+        if (found && minX !== Infinity) {
+            let pad = 1.5; // Thêm đệm lề cho đẹp
+            minX -= pad; maxX += pad; minY -= pad; maxY += pad;
+            
+            // Ép chết Bounding Box
+            processedCode = processedCode.replace(/\\clip[\s\S]*?;/, `\\useasboundingbox (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});\n\\clip (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});`);
+            
+            shiftX = -(minX + maxX) / 2;
+            shiftY = -(minY + maxY) / 2;
+            
+            // Tự động thu phóng (Zoom out nếu quá to, Zoom in nếu quá nhỏ)
+            let maxDim = Math.max(maxX - minX, maxY - minY);
+            if (maxDim > 14) autoScale = 14 / maxDim; 
+            else if (maxDim < 6) autoScale = 6 / maxDim;
+
+            // Tự sinh Lưới và Trục bằng TikZ thuần túy
+            let rangeX = maxX - minX;
+            let stepX = 1;
+            if (rangeX > 12) stepX = 2;
+            if (rangeX > 30) stepX = 5;
+            if (rangeX > 60) stepX = 10;
+            if (rangeX > 120) stepX = 20;
+            if (rangeX > 300) stepX = 50;
+
+            let rangeY = maxY - minY;
+            let stepY = 1;
+            if (rangeY > 12) stepY = 2;
+            if (rangeY > 30) stepY = 5;
+            if (rangeY > 60) stepY = 10;
+            if (rangeY > 120) stepY = 20;
+            if (rangeY > 300) stepY = 50;
+
+            if (showGrid) {
+                let x1 = Math.floor(minX), x2 = Math.ceil(maxX);
+                let y1 = Math.floor(minY), y2 = Math.ceil(maxY);
+                customGridAxes += `\\draw[help lines, color=gray!30, dashed, xstep=${stepX}, ystep=${stepY}] (${x1},${y1}) grid (${x2},${y2});\n`;
+            }
+            if (showAxes) {
+                let hasOriginX = (minY <= 0 && maxY >= 0);
+                let hasOriginY = (minX <= 0 && maxX >= 0);
+
+                let xAxisY = hasOriginX ? 0 : minY;
+                let yAxisX = hasOriginY ? 0 : minX;
+
+                // X Axis
+                customGridAxes += `\\draw[->, thick] (${minX.toFixed(2)},${xAxisY.toFixed(2)}) -- (${maxX.toFixed(2)},${xAxisY.toFixed(2)}) node[right] {$x$};\n`;
+                
+                let xStart = Math.ceil(minX), xEnd = Math.floor(maxX);
+                let ticksX = [];
+                for(let i = xStart; i <= xEnd; i++) { 
+                    if (i % stepX === 0 && !(i === 0 && hasOriginX && hasOriginY)) {
+                        // Tránh đè số ở góc tọa độ giả
+                        if (!hasOriginX && !hasOriginY && Math.abs(i - minX) < stepX * 0.8) continue;
+                        ticksX.push(i); 
+                    }
+                }
+                if(ticksX.length > 0) {
+                    if (hasOriginX) {
+                        customGridAxes += `\\foreach \\x in {${ticksX.join(',')}} { \\draw (\\x,0.1) -- (\\x,-0.1) node[below, font=\\footnotesize] {$\\x$}; }\n`;
+                    } else {
+                        customGridAxes += `\\foreach \\x in {${ticksX.join(',')}} { \\draw (\\x,${xAxisY.toFixed(2)}) -- (\\x,${(xAxisY+0.15).toFixed(2)}) node[above, font=\\footnotesize] {$\\x$}; }\n`;
+                    }
+                }
+
+                // Y Axis
+                customGridAxes += `\\draw[->, thick] (${yAxisX.toFixed(2)},${minY.toFixed(2)}) -- (${yAxisX.toFixed(2)},${maxY.toFixed(2)}) node[above] {$y$};\n`;
+                
+                let yStart = Math.ceil(minY), yEnd = Math.floor(maxY);
+                let ticksY = [];
+                for(let i = yStart; i <= yEnd; i++) { 
+                    if (i % stepY === 0 && !(i === 0 && hasOriginX && hasOriginY)) ticksY.push(i); 
+                }
+                if(ticksY.length > 0) {
+                    if (hasOriginY) {
+                        customGridAxes += `\\foreach \\y in {${ticksY.join(',')}} { \\draw (0.1,\\y) -- (-0.1,\\y) node[left, font=\\footnotesize] {$\\y$}; }\n`;
+                    } else {
+                        customGridAxes += `\\foreach \\y in {${ticksY.join(',')}} { \\draw (${yAxisX.toFixed(2)},\\y) -- (${(yAxisX+0.15).toFixed(2)},\\y) node[right, font=\\footnotesize] {$\\y$}; }\n`;
+                    }
+                }
+
+                if (hasOriginX && hasOriginY) {
+                    customGridAxes += `\\fill (0,0) circle (1.5pt) node[below left] {$O$};\n`;
+                }
+            }
+        }
+
+        // Tối ưu hóa các cụm điểm Node của GeoGebra cho code gọn gàng
+        processedCode = processedCode.replace(/\\draw\s*\[fill=[^\]]*\]\s*\(([^)]+)\)\s*circle\s*\([^)]+\);\s*\n\s*\\draw\[color=[^\]]*\]\s*\([^)]+\)\s*node\s*\{([^}]+)\};/g, '\\fill[black] ($1) circle (1.5pt) node[above right] {$2};');
+
+        // 5. RÁP THÀNH PHẨM VÀO TIKZPICTURE
+        let scaleStr = autoScale.toFixed(2);
+        let tikzOptions = `shift={(${shiftX.toFixed(3)},${shiftY.toFixed(3)})}, scale=${scaleStr}`;
+        
+        // Chèn Lưới & Trục mới trực tiếp vào sau \begin{tikzpicture}
+        processedCode = processedCode.replace(/\\begin\{tikzpicture\}\[(.*?)\]/, `\\begin{tikzpicture}[$1, ${tikzOptions}]\n${customGridAxes}`);
+
+        // Đóng gói Căn giữa trang giấy
+        processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Căn giữa dọc\n\\vspace*{\\fill}\n% Căn giữa ngang\n\\begin{center}');
+        processedCode = processedCode.replace(/\\end\{document\}/, '\\end{center}\n\\vspace*{\\fill}\n\n\\end{document}');
+
+        return processedCode;
+    }
+
+    // ── Live Preview Logic (Bulletproof DOM Manipulation) ──
+    function renderPreview() {
+        if (!window.tikzEditor) return;
+        var code = window.tikzEditor.getValue();
+        if (!code || code.trim() === '') return;
+
+        // Tạo bản copy code để lọc bớt thư viện không hỗ trợ bởi TikZJax
+        var previewCode = code;
+        previewCode = previewCode.replace(/\\usepackage\{pgfplots\}/g, '% \\usepackage{pgfplots}');
+        previewCode = previewCode.replace(/\\usepackage\[margin=2cm\]\{geometry\}/g, '% \\usepackage[margin=2cm]{geometry}');
+        previewCode = previewCode.replace(/\\usepackage\{mathrsfs\}/g, '% \\usepackage{mathrsfs}');
+        previewCode = previewCode.replace(/\\pgfplotsset\{[^\}]*\}/g, '% \\pgfplotsset');
+
+        var previewContainer = document.getElementById('tikz-canvas');
+        var loading = document.getElementById('tikz-loading');
+        
+        loading.style.display = 'flex';
+        previewContainer.innerHTML = '';
+        
+        var iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = 'none';
+        previewContainer.appendChild(iframe);
+        
+        var iframeDoc = iframe.contentWindow.document;
+        
+        // Dùng DOM để chèn nội dung vào iframe, hoàn toàn thoát khỏi lỗi HTML parser
+        // (Không dùng document.write chứa thẻ <body> vì Live Server sẽ tự chèn script vào đó và phá vỡ cấu trúc)
+        var link = iframeDoc.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://tikzjax.com/v1/fonts.css';
+        iframeDoc.head.appendChild(link);
+        
+        var style = iframeDoc.createElement('style');
+        style.textContent = 'body{margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh;background:transparent;} svg{max-width:100%;max-height:100%;}';
+        iframeDoc.head.appendChild(style);
+        
+        var tikzScript = iframeDoc.createElement('script');
+        tikzScript.type = 'text/tikz';
+        tikzScript.setAttribute('data-show-console', 'true');
+        tikzScript.text = previewCode;
+        iframeDoc.body.appendChild(tikzScript);
+        
+        // Chèn thư viện TikZJax cuối cùng để tự động chạy
+        var tikzJaxScript = iframeDoc.createElement('script');
+        tikzJaxScript.src = 'https://tikzjax.com/v1/tikzjax.js';
+        iframeDoc.head.appendChild(tikzJaxScript);
+
+        setTimeout(() => {
+            loading.style.display = 'none';
+        }, 2000);
+    }
+
     // ── Actions ──
     function copyTikZ() {
-        var code = document.getElementById('tikz-output').value;
+        if (!window.tikzEditor) return;
+        var code = window.tikzEditor.getValue();
         if (!code) return;
         navigator.clipboard.writeText(code).then(function () {
             showToast('✓ Đã copy mã TikZ');
@@ -655,7 +1036,8 @@
     }
 
     function openInLatex() {
-        var code = document.getElementById('tikz-output').value;
+        if (!window.tikzEditor) return;
+        var code = window.tikzEditor.getValue();
         if (!code) return;
         localStorage.setItem('smp_latex_pending', code);
         window.open('/SMP/tools/latex-v2/index.html', '_blank');
@@ -663,7 +1045,9 @@
     }
 
     function clearOutput() {
-        document.getElementById('tikz-output').value = '';
+        if (window.tikzEditor) {
+            window.tikzEditor.setValue('');
+        }
         document.getElementById('ggb-output-panel').classList.remove('show');
         document.getElementById('ggb-export-bar').style.display = 'none';
         hideStatus();
