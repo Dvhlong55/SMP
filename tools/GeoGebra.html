@@ -954,8 +954,60 @@
             }
         }
 
-        // Tối ưu hóa các cụm điểm Node của GeoGebra cho code gọn gàng
-        processedCode = processedCode.replace(/\\draw\s*\[fill=[^\]]*\]\s*\(([^)]+)\)\s*circle\s*\([^)]+\);\s*\n\s*\\draw\[color=[^\]]*\]\s*\([^)]+\)\s*node\s*\{([^}]+)\};/g, '\\fill[black] ($1) circle (1.5pt) node[above right] {$2};');
+        // Tối ưu hóa: Gắn các Label (Node) bị rời rạc vào thẳng các điểm (Circle) gần nhất
+        let pointsArr = [];
+        let ptRegex = /\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*circle\s*\([^)]+pt\);/g;
+        let ptMatch;
+        while ((ptMatch = ptRegex.exec(processedCode)) !== null) {
+            pointsArr.push({
+                x: parseFloat(ptMatch[1]),
+                y: parseFloat(ptMatch[2]),
+                matchStr: ptMatch[0],
+                hasNode: false
+            });
+        }
+
+        let ndRegex = /\\draw\s*(?:\[color=[^\]]+\])?\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*node\s*(?:\[[^\]]*\])?\s*\{([^}]+)\};/g;
+        let ndMatch;
+        let nodesArr = [];
+        while ((ndMatch = ndRegex.exec(processedCode)) !== null) {
+            nodesArr.push({
+                x: parseFloat(ndMatch[1]),
+                y: parseFloat(ndMatch[2]),
+                text: ndMatch[3],
+                matchStr: ndMatch[0]
+            });
+        }
+
+        nodesArr.forEach(node => {
+            let minDist = Infinity;
+            let bestPt = null;
+            pointsArr.forEach(pt => {
+                let dist = Math.hypot(node.x - pt.x, node.y - pt.y);
+                if (dist < minDist) { minDist = dist; bestPt = pt; }
+            });
+
+            if (bestPt && minDist < 1.5) {
+                processedCode = processedCode.replace(node.matchStr, '');
+                let dx = node.x - bestPt.x;
+                let dy = node.y - bestPt.y;
+                let anchor = '';
+                if (dy >= 0) anchor += 'above'; else anchor += 'below';
+                if (dx >= 0) anchor += ' right'; else anchor += ' left';
+                anchor = anchor.trim();
+
+                if (!bestPt.hasNode) {
+                    let newPtStr = bestPt.matchStr.replace(';', ' node[' + anchor + '] {' + node.text + '};');
+                    processedCode = processedCode.replace(bestPt.matchStr, newPtStr);
+                    bestPt.hasNode = true;
+                    bestPt.matchStr = newPtStr;
+                }
+            }
+        });
+        
+        // Chuẩn hóa màu sắc các điểm về black (vì GeoGebra hay xuất xdxdff)
+        processedCode = processedCode.replace(/\\(?:draw|fill)\\s*(?:\\[[^\\]]*\\])?\\s*\\(([^)]+)\\)\\s*circle\\s*\\([^)]+pt\\)/g, '\\fill[black] () circle (1.5pt)');
+
 
         // 5. RÁP THÀNH PHẨM VÀO TIKZPICTURE
         let scaleStr = autoScale.toFixed(2);
