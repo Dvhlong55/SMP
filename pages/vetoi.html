@@ -26,10 +26,108 @@
             font-size: 0.95rem;
             line-height: 1.8;
             margin-bottom: 16px;
+            text-align: justify; /* MỚI: Căn đều 2 bên mép trái/phải cho văn bản */
         }
         .highlight-text {
             color: var(--accent-gold);
             font-weight: 600;
+        }
+        
+        /* --- PHẦN KHUNG DONATE --- */
+        .donate-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 40px;
+            margin-bottom: 36px;
+        }
+        .donate-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+        .donate-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 32px;
+            text-align: justify; /* MỚI: Căn đều 2 bên mép trái/phải cho văn bản */
+        }
+
+        /* --- PHẦN THẺ NGÂN HÀNG NẰM NGANG --- */
+        .donate-methods {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .donate-card {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 32px;
+            width: 100%;
+            max-width: 100%; /* MỚI: Đổi thành 100% để thẻ ngân hàng tràn đều lề ngang bằng với khung trên */
+            max-width: 600px;
+            
+            /* Dùng Grid để chia 2 cột */
+            display: grid;
+            grid-template-columns: 160px 1fr; 
+            column-gap: 32px; 
+            align-items: center; 
+            text-align: left; 
+            
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .donate-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        .qr-image {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+            grid-column: 1;
+            grid-row: 1 / span 4;
+            margin: 0; 
+        }
+        .donate-card h3 {
+            grid-column: 2;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            margin: 0 0 12px 0;
+            align-self: end;
+        }
+        .donate-card p {
+            grid-column: 2;
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin: 0 0 8px 0;
+            line-height: 1.5;
+        }
+        .donate-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Giao diện trên điện thoại */
+        @media (max-width: 600px) {
+            .donate-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 24px;
+            }
+            .qr-image {
+                grid-column: 1;
+                grid-row: auto;
+                max-width: 160px;
+                margin: 0 auto 20px auto;
+            }
+            .donate-card h3, .donate-card p {
+                grid-column: 1;
+            }
         }
     </style>
 <link rel="icon" type="image/png" href="/SMP/core/image/favicon.png">
@@ -56,6 +154,20 @@
                 </div>
             </div>
 
+            <div class="profile-container donate-container fade-up">
+                <h2 class="donate-title">☕ Ủng hộ dự án</h2>
+                <p class="donate-desc">
+                    SMP là một dự án hoàn toàn phi lợi nhuận. Mọi nội dung, công cụ và tài liệu trên web đều được chia sẻ miễn phí. Nếu bạn thấy website hữu ích, bạn có thể mời mình một ly cà phê. Sự ủng hộ của bạn là động lực to lớn để mình tiếp tục phát triển dự án!
+                </p>
+                
+                <div class="donate-methods">
+                    <div class="donate-card">
+                        <img src="/SMP/core/image/link_anh_qr_ngan_hang.png" alt="QR Ngân Hàng" class="qr-image">
+                        <h3>Chuyển khoản</h3>
+                        <p>Ngân hàng: <strong>VietinBank</strong></p> <p>STK: <strong>100877874401</strong></p> <p>Tên: DO VIET HOANG LONG</p>
+                    </div>
+                </div>
+            </div>
 
         </main>
     </div>
@@ -70,4 +182,3 @@
     </script>
 </body>
 </html>
-
