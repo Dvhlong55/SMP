@@ -487,7 +487,7 @@ const PostViewer = {
                 const newPostContent = doc.getElementById('smp-post-content');
                 let realContent = '';
                 if (newPostContent) {
-                    realContent = '<div class="exam-paper-wrapper fade-up"><div class="exam-paper">' + newPostContent.innerHTML + '</div></div>';
+                    realContent = '<div class="exam-paper fade-up">' + newPostContent.innerHTML + '</div>';
                 } else {
                     realContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
                 }
@@ -569,7 +569,7 @@ const PostViewer = {
                 let fullRealContent = '';
                 if (newPostContent) {
                     fullRealContent = '<a href="javascript:void(0)" class="exam-back-btn fade-up">&#8592; Quay Lại Danh Sách</a>' + 
-                                      '<div class="exam-paper-wrapper fade-up"><div class="exam-paper">' + newPostContent.innerHTML + '</div></div>';
+                                      '<div class="exam-paper fade-up">' + newPostContent.innerHTML + '</div>';
                 } else {
                     fullRealContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
                 }
