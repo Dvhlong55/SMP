@@ -987,7 +987,7 @@
                 if (dist < minDist) { minDist = dist; bestPt = pt; }
             });
 
-            if (bestPt && minDist < 1.5) {
+            if (bestPt) { // Remove distance limit to allow ALL floating labels to snap to nearest point
                 processedCode = processedCode.replace(node.matchStr, '');
                 let dx = node.x - bestPt.x;
                 let dy = node.y - bestPt.y;
@@ -996,17 +996,14 @@
                 if (dx >= 0) anchor += ' right'; else anchor += ' left';
                 anchor = anchor.trim();
 
-                if (!bestPt.hasNode) {
-                    let newPtStr = bestPt.matchStr.replace(';', ' node[' + anchor + '] {' + node.text + '};');
-                    processedCode = processedCode.replace(bestPt.matchStr, newPtStr);
-                    bestPt.hasNode = true;
-                    bestPt.matchStr = newPtStr;
-                }
+                let newPtStr = bestPt.matchStr.replace(';', ' node[' + anchor + '] {' + node.text + '};');
+                processedCode = processedCode.replace(bestPt.matchStr, newPtStr);
+                bestPt.matchStr = newPtStr;
             }
         });
         
         // Chuẩn hóa màu sắc các điểm về black (vì GeoGebra hay xuất xdxdff)
-        processedCode = processedCode.replace(/\\(?:draw|fill)\\s*(?:\\[[^\\]]*\\])?\\s*\\(([^)]+)\\)\\s*circle\\s*\\([^)]+pt\\)/g, '\\fill[black] () circle (1.5pt)');
+        processedCode = processedCode.replace(/\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(([^)]+)\)\s*circle\s*\([^)]+pt\)/g, '\\fill[black] ($1) circle (1.5pt)');
 
 
         // 5. RÁP THÀNH PHẨM VÀO TIKZPICTURE
