@@ -1168,3 +1168,112 @@ body.embed-mode .main-content-layout {
     padding: 0 !important;
 }
 
+/* Style cho nút Tải PDF */
+.pdf-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(92, 225, 230, 0.05);
+    border: 1px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+}
+
+.pdf-download-btn:hover {
+    background: var(--accent-cyan);
+    color: #111;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(92, 225, 230, 0.2);
+}
+
+/* ============================================
+   PRINT / PDF EXPORT STYLES (TRỊ BỆNH SHRINK-TO-FIT)
+   ============================================ */
+@media print {
+    /* 1. ẨN GIAO DIỆN THỪA */
+    .sidebar, .sidebar-toggle, .sidebar-overlay, .topbar, 
+    .search-wrapper, .topbar-actions, .tags-comment-sidebar, 
+    .site-footer, .giscus-section-outer, #giscus-container,
+    .comment-section, .pdf-download-btn, .back-to-list-btn,
+    .challenge-card, .exam-back-btn, .exam-meta, .back-to-top,
+    #smp-logo-canvas, .stats-strip, .modal-header, .modal-expand-btn {
+        display: none !important;
+    }
+
+    /* 2. CÀI ĐẶT LỀ A4 CHUẨN MỰC */
+    @page {
+        margin: 1.5cm 2cm; 
+        size: A4;
+    }
+
+    body, html {
+        background: #fff !important;
+        color: #000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* 3. LÀM PHẲNG VÀ XÓA PADDING CỦA TẤT CẢ CÁC WRAPPER */
+    /* Đã bổ sung .exam-paper và các class trong bài post */
+    .main-content-layout, .main-wrapper, main, 
+    .main-articles-body, .exam-content, .article-content,
+    .exam-paper, .post-container, .modal-content, .modal-body, .card {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        transform: none !important;
+    }
+
+    /* 4. CHỐNG BỆNH "ZOOM NHỎ" (SHRINK-TO-FIT) CỦA TRÌNH DUYỆT */
+    /* Ép tất cả các thẻ không được vượt quá 100% chiều rộng giấy */
+    * {
+        box-sizing: border-box !important;
+        max-width: 100% !important;
+    }
+
+    /* Xử lý riêng sự cứng đầu của MathJax: Ép hình SVG co lại theo giấy */
+    mjx-container, mjx-container[display="true"], mjx-math {
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        max-width: 100% !important;
+        overflow-wrap: break-word !important;
+    }
+    mjx-container svg {
+        max-width: 100% !important;
+        height: auto !important; /* Đảm bảo tỷ lệ công thức không bị méo */
+    }
+
+    /* Mấy thẻ code/pre cũng hay làm vỡ layout */
+    pre, code {
+        white-space: pre-wrap !important;
+        word-wrap: break-word !important;
+        max-width: 100% !important;
+    }
+
+    /* 5. TỐI ƯU HIỂN THỊ DÒNG CHỮ CHUYÊN NGHIỆP */
+    .header-box {
+        border: 1px solid #000 !important;
+        background: transparent !important;
+        padding: 15px !important;
+        margin-bottom: 20px !important;
+        border-radius: 0 !important; 
+    }
+
+    h1, h2, h3, h4 { page-break-after: avoid; color: #000 !important; }
+    p, img, li, .header-box { page-break-inside: avoid; }
+    a { text-decoration: none !important; color: #000 !important; }
+}
