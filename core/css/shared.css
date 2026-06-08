@@ -1160,7 +1160,7 @@ body.embed-mode .main-wrapper {
 }
 
 body.embed-mode main {
-    padding: 0 !important;
+    padding: 16px 24px !important;
 }
 
 body.embed-mode .main-content-layout {

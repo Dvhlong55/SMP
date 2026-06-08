@@ -91,8 +91,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         <span class="exam-tag">${breadcrumbHtml}</span>
                     </div>
 
-                    <div class="exam-paper fade-up">
-                        ${contentHtml}
+                    <div class="exam-paper-wrapper fade-up">
+                        <div class="exam-paper">
+                            ${contentHtml}
+                        </div>
                     </div>
                 </div>
             </div>

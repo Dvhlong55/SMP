@@ -213,3 +213,15 @@ a:hover {
     color: #ff1493;
     text-decoration: underline;
 }
+
+.exam-paper-wrapper {
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(92,225,230,0.5) 0%, rgba(167,139,250,0.5) 100%);
+    border-radius: 14px;
+    box-shadow: 0 10px 40px -10px rgba(92, 225, 230, 0.25);
+    margin-bottom: 30px;
+}
+.exam-paper-wrapper .exam-paper {
+    border: none !important;
+    margin-bottom: 0;
+}

@@ -449,10 +449,10 @@ const PostViewer = {
                         <style>
                             #modal-body { padding: 0 !important; overflow: hidden !important; }
                             .tool-iframe-wrapper {
-                                padding: 4px;
-                                background: linear-gradient(135deg, #f472b6 0%, #db2777 100%);
+                                padding: 2px;
+                                background: linear-gradient(135deg, rgba(92,225,230,0.5) 0%, rgba(167,139,250,0.5) 100%);
                                 border-radius: 14px;
-                                box-shadow: 0 10px 40px -10px rgba(219, 39, 119, 0.4);
+                                box-shadow: 0 10px 40px -10px rgba(92, 225, 230, 0.25);
                                 height: 88vh;
                                 width: 100%;
                                 box-sizing: border-box;
@@ -487,7 +487,7 @@ const PostViewer = {
                 const newPostContent = doc.getElementById('smp-post-content');
                 let realContent = '';
                 if (newPostContent) {
-                    realContent = '<div class="exam-paper fade-up">' + newPostContent.innerHTML + '</div>';
+                    realContent = '<div class="exam-paper-wrapper fade-up"><div class="exam-paper">' + newPostContent.innerHTML + '</div></div>';
                 } else {
                     realContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
                 }
@@ -530,10 +530,10 @@ const PostViewer = {
                             <a href="javascript:void(0)" class="exam-back-btn fade-up" style="margin-bottom: 20px; display: inline-flex;">&#8592; Quay Lại Danh Sách</a>
                             <style>
                                 .right-col-tool-wrapper {
-                                    padding: 4px;
-                                    background: linear-gradient(135deg, #f472b6 0%, #db2777 100%);
+                                    padding: 2px;
+                                    background: linear-gradient(135deg, rgba(92,225,230,0.5) 0%, rgba(167,139,250,0.5) 100%);
                                     border-radius: 14px;
-                                    box-shadow: 0 10px 40px -10px rgba(219, 39, 119, 0.4);
+                                    box-shadow: 0 10px 40px -10px rgba(92, 225, 230, 0.25);
                                     height: 80vh;
                                     width: 100%;
                                     box-sizing: border-box;
@@ -569,7 +569,7 @@ const PostViewer = {
                 let fullRealContent = '';
                 if (newPostContent) {
                     fullRealContent = '<a href="javascript:void(0)" class="exam-back-btn fade-up">&#8592; Quay Lại Danh Sách</a>' + 
-                                      '<div class="exam-paper fade-up">' + newPostContent.innerHTML + '</div>';
+                                      '<div class="exam-paper-wrapper fade-up"><div class="exam-paper">' + newPostContent.innerHTML + '</div></div>';
                 } else {
                     fullRealContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
                 }
