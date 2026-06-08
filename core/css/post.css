@@ -149,7 +149,6 @@ body.light-mode .side-widget-title {
     font-size: 1.01rem;
     overflow-wrap: break-word;
     word-break: break-word;
-    overflow-x: auto;
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
@@ -213,4 +212,12 @@ a {
 a:hover {
     color: #ff1493;
     text-decoration: underline;
+}
+
+/* Allow long inline math formulas to scroll horizontally within their paragraphs/list items 
+   without breaking the baseline or causing the entire page to scroll */
+.exam-paper p, .exam-paper li {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
