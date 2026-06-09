@@ -897,79 +897,59 @@
             else if (figMaxDim < 6) autoScale = 6 / figMaxDim;
         }
 
-        // 5. THUẬT TOÁN "BÁM RỄ 8 HƯỚNG" CẢI TIẾN (SỬA LỖI ĐẨY CAO)
+        // 5. THUẬT TOÁN "TIA THU NHỎ" (SHRINK-RAY) - BẢO TOÀN TỈ LỆ THỦ CÔNG
         let ndRegex = /\\draw\s*(?:\[color=[^\]]+\])?\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*node\s*(?:\[([^\]]*)\])?\s*\{([^}]+)\};/g;
         let ndMatch;
         let nodesArr = [];
         while ((ndMatch = ndRegex.exec(processedCode)) !== null) {
             nodesArr.push({
                 x: parseFloat(ndMatch[1]), y: parseFloat(ndMatch[2]),
-                anchor: ndMatch[3] || '', text: ndMatch[4], matchStr: ndMatch[0]
+                text: ndMatch[4], matchStr: ndMatch[0]
             });
         }
 
-        // Tạo danh sách điểm mỏ neo từ exactPoints (Lấy từ não GeoGebra)
-        let poiArr = [];
-        if (exactPoints && exactPoints.length > 0) {
-            poiArr = exactPoints;
-        } else {
-            let crx = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*(?:circle|--)/g;
-            let m2;
-            while ((m2 = crx.exec(codeForParsing)) !== null) {
-                poiArr.push({x: parseFloat(m2[1]), y: parseFloat(m2[2])});
-            }
+        // Quét tìm tất cả các điểm đen (tọa độ hiển thị thực tế)
+        let ptRegex = /\\(?:draw|fill)[^;]*?\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*circle\s*\(/g;
+        let ptMatch;
+        let canvasPoints = [];
+        while ((ptMatch = ptRegex.exec(processedCode)) !== null) {
+            canvasPoints.push({ x: parseFloat(ptMatch[1]), y: parseFloat(ptMatch[2]) });
         }
 
-        nodesArr.forEach(node => {
-            // 🔥 FIX 1: Dịch tọa độ về đúng TÂM CỦA CHỮ (Khử ảo giác Top-Left của GeoGebra)
-            let cx = node.x;
-            let cy = node.y;
-            if (node.anchor.includes('north west') || node.anchor === '') {
-                cx += 0.15 / autoScale;
-                cy -= 0.15 / autoScale;
-            }
+        if (nodesArr.length > 0 && canvasPoints.length > 0) {
+            nodesArr.forEach(node => {
+                // Bắt cặp Chữ với Điểm đen gần nó nhất
+                let closestPt = null;
+                let minDist = Infinity;
+                canvasPoints.forEach(pt => {
+                    let dist = Math.hypot(node.x - pt.x, node.y - pt.y);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        closestPt = pt;
+                    }
+                });
 
-            let minD = Infinity, bestPt = null;
-            poiArr.forEach(pt => {
-                const d = Math.hypot(cx - pt.x, cy - pt.y);
-                if (d < minD) { minD = d; bestPt = pt; }
+                if (closestPt) {
+                    // Vector khoảng cách gốc (đang bị phóng đại quá mức)
+                    let dx = node.x - closestPt.x;
+                    let dy = node.y - closestPt.y;
+
+                    // HỆ SỐ THU NHỎ: 0.2 (Tương đương thu nhỏ khoảng cách 5 lần)
+                    // (Bạn có thể tinh chỉnh 0.15 - 0.25 nếu muốn chữ nằm sát hơn hoặc xa hơn một chút xíu)
+                    let dampening = 0.4; 
+                    
+                    let fixedX = closestPt.x + (dx * dampening);
+                    let fixedY = closestPt.y + (dy * dampening);
+                    
+                    // Xóa anchor mặc định, ép inner sep nhỏ để chữ nằm chuẩn xác tại tâm điểm vector chỉ tới
+                    let replacement = `\\draw (${fixedX.toFixed(4)}, ${fixedY.toFixed(4)}) node[inner sep=1.5pt] {${node.text}};`;
+                    processedCode = processedCode.split(node.matchStr).join(replacement);
+                }
             });
-
-            let replacement = '';
-            let textClean = node.text.replace(/[^a-zA-Z0-9]/g, '');
-            let isPointLabel = /^[A-Z]/.test(textClean);
-            
-            let threshold = isPointLabel ? (figMaxDim * 0.4) : (figMaxDim * 0.1);
-
-            if (bestPt && minD < threshold) {
-                let dx = cx - bestPt.x;
-                let dy = cy - bestPt.y;
-                
-                let angle = Math.atan2(dy, dx) * 180 / Math.PI;
-                if (angle < 0) angle += 360;
-
-                let anchor = "above right";
-                if (angle >= 337.5 || angle < 22.5) anchor = "right";
-                else if (angle >= 22.5 && angle < 67.5) anchor = "above right";
-                else if (angle >= 67.5 && angle < 112.5) anchor = "above";
-                else if (angle >= 112.5 && angle < 157.5) anchor = "above left";
-                else if (angle >= 157.5 && angle < 202.5) anchor = "left";
-                else if (angle >= 202.5 && angle < 247.5) anchor = "below left";
-                else if (angle >= 247.5 && angle < 292.5) anchor = "below";
-                else if (angle >= 292.5 && angle < 337.5) anchor = "below right";
-
-                // 🔥 FIX 2: Thêm inner sep=1.5pt để chữ ôm sát rạt vào điểm đen như ảnh gốc
-                replacement = `\\node[${anchor}, inner sep=1.5pt] at (${bestPt.x.toFixed(4)}, ${bestPt.y.toFixed(4)}) {${node.text}};`;
-            } else {
-                replacement = `\\node at (${node.x}, ${node.y}) {${node.text}};`;
-            }
-
-            processedCode = processedCode.split(node.matchStr).join(replacement);
-        });
+        }
 
         // Chuẩn hóa màu điểm đen
         processedCode = processedCode.replace(/\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(([^)]+)\)\s*circle\s*\([^)]+pt\)/g, '\\fill[black] ($1) circle (1.5pt)');
-
         // 6. RÁP THÀNH PHẨM (Chỉ dùng scale tự nhiên của TikZ)
         let scaleStr = autoScale.toFixed(3);
         let tikzOptions = `shift={(${shiftX.toFixed(3)},${shiftY.toFixed(3)})}, scale=${scaleStr}`;

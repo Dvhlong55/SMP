@@ -162,9 +162,22 @@
             }
 
             .smp-dynamic-theme .header-center {
-                font-size: 2.2rem; font-weight: 800; text-align: center; margin: 15px 0;
-                background: var(--smp-header-title); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-                text-shadow: var(--smp-header-title-glow); transition: all 0.25s ease;
+                font-size: 2.2rem; 
+                font-weight: 800; 
+                text-align: center; 
+                margin: 15px 0;
+                
+                /* 1. Hoàn thiện cú pháp Gradient Text để IDE ngừng báo lỗi */
+                background: var(--smp-header-title); 
+                -webkit-background-clip: text; 
+                background-clip: text; /* Bổ sung thuộc tính CSS chuẩn */
+                -webkit-text-fill-color: transparent; 
+                color: transparent; /* Bổ sung fallback color */
+                
+                /* 2. Fix lỗi xung đột hiển thị với text-shadow trên chữ trong suốt */
+                filter: drop-shadow(var(--smp-header-title-glow)); 
+                
+                transition: all 0.25s ease;
             }
 
             .smp-dynamic-theme .header-bottom {
