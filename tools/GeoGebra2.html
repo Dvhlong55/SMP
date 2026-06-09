@@ -746,7 +746,7 @@
                                 document.getElementById('ggb-extract-btn').disabled = false;
                                 return;
                             }
-                            var processedCode = processTikzCode(tikzCode, showGrid, showAxes);
+                            var processedCode = processTikzCode(tikzCode, showGrid, showAxes, exactPoints);
                             
                             // Initialize CodeMirror if not yet initialized
                             if (!window.tikzEditor) {
@@ -818,6 +818,8 @@
         processedCode = processedCode.replace(/\\foreach[\s\S]*?;/g, ''); 
 
         // 3. TÍNH TOÁN BOUNDING BOX CHUẨN XÁC
+        // Chỉ dùng: tọa độ điểm chấm (circle pt), tâm đường tròn, và exactPoints từ API
+        // KHÔNG dùng tọa độ node/label vì GeoGebra đặt chúng rất xa so với điểm thực
         let clipMinX = -Infinity, clipMaxX = Infinity, clipMinY = -Infinity, clipMaxY = Infinity;
         let clipRegex = /\\clip\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*rectangle\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\);/;
         let clipMatch = clipRegex.exec(processedCode);
@@ -828,50 +830,52 @@
             clipMinY = Math.min(cy1, cy2); clipMaxY = Math.max(cy1, cy2);
         }
 
-        let codeForParsing = processedCode.replace(/\\clip[\s\S]*?;/g, ''); 
-        codeForParsing = codeForParsing.replace(/\(0,0\)\s*arc/g, ''); 
+        // Dùng codeForParsing (đã bỏ \clip) để quét tọa độ hình học
+        let codeForParsing = processedCode.replace(/\\clip[\s\S]*?;/g, '');
+        codeForParsing = codeForParsing.replace(/\(0,0\)\s*arc/g, '');
 
         let minX = Infinity, maxX = -Infinity;
         let minY = Infinity, maxY = -Infinity;
         let found = false;
 
-        let coordRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)/g;
         let match;
-        
-        let coreMinX = Infinity, coreMaxX = -Infinity;
-        let coreMinY = Infinity, coreMaxY = -Infinity;
-        let coreFound = false;
 
-        let pointRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*(?:circle\s*\(\s*[0-9.]+\s*pt\s*\)|node)/g;
-        while ((match = pointRegex.exec(codeForParsing)) !== null) {
-            let px = parseFloat(match[1]); let py = parseFloat(match[2]);
-            if (px === 0 && py === 0) continue;
-            const atH = Math.abs(px - clipMinX) < 0.05 || Math.abs(px - clipMaxX) < 0.05;
-            const atV = Math.abs(py - clipMinY) < 0.05 || Math.abs(py - clipMaxY) < 0.05;
-            if (atH && atV) continue;
-            coreMinX = Math.min(coreMinX, px); coreMaxX = Math.max(coreMaxX, px);
-            coreMinY = Math.min(coreMinY, py); coreMaxY = Math.max(coreMaxY, py);
-            coreFound = true;
+        // Ưu tiên 1: exactPoints từ API — tọa độ hình học chính xác nhất
+        if (exactPoints && exactPoints.length > 0) {
+            exactPoints.forEach(function(pt) {
+                if (!isFinite(pt.x) || !isFinite(pt.y)) return;
+                minX = Math.min(minX, pt.x); maxX = Math.max(maxX, pt.x);
+                minY = Math.min(minY, pt.y); maxY = Math.max(maxY, pt.y);
+                found = true;
+            });
         }
 
+        // Ưu tiên 2: tọa độ chấm điểm trong TikZ (circle Npt)
+        let pointDotRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*circle\s*\(\s*[0-9.]+\s*pt\s*\)/g;
+        while ((match = pointDotRegex.exec(codeForParsing)) !== null) {
+            let px = parseFloat(match[1]), py = parseFloat(match[2]);
+            if (px === 0 && py === 0) continue;
+            minX = Math.min(minX, px); maxX = Math.max(maxX, px);
+            minY = Math.min(minY, py); maxY = Math.max(maxY, py);
+            found = true;
+        }
+
+        // Ưu tiên 3: tâm + bán kính đường tròn (circle Ncm)
         let circleRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*circle\s*\(\s*([-0-9.]+)(?:\s*cm)?\s*\)/g;
         while ((match = circleRegex.exec(codeForParsing)) !== null) {
-            let cx = parseFloat(match[1]); let cy = parseFloat(match[2]); let r = parseFloat(match[3]);
-            if (Math.abs(cx - clipMinX) < 0.05 || Math.abs(cx - clipMaxX) < 0.05 || Math.abs(cy - clipMinY) < 0.05 || Math.abs(cy - clipMaxY) < 0.05) continue;
-            coreMinX = Math.min(coreMinX, cx - r); coreMaxX = Math.max(coreMaxX, cx + r);
-            coreMinY = Math.min(coreMinY, cy - r); coreMaxY = Math.max(coreMaxY, cy + r);
-            coreFound = true;
+            let cx = parseFloat(match[1]), cy = parseFloat(match[2]), r = parseFloat(match[3]);
+            if (r > 20) continue; // bỏ qua đường tròn quá lớn (artifact)
+            minX = Math.min(minX, cx - r); maxX = Math.max(maxX, cx + r);
+            minY = Math.min(minY, cy - r); maxY = Math.max(maxY, cy + r);
+            found = true;
         }
 
-        if (coreFound) {
-            minX = coreMinX; maxX = coreMaxX;
-            minY = coreMinY; maxY = coreMaxY;
-            found = true;
-        } else {
-            while ((match = coordRegex.exec(codeForParsing)) !== null) {
-                let x = parseFloat(match[1]); let y = parseFloat(match[2]);
-                if (x === 0 && y === 0) continue; 
-                if (Math.abs(x - clipMinX) < 0.05 || Math.abs(x - clipMaxX) < 0.05 || Math.abs(y - clipMinY) < 0.05 || Math.abs(y - clipMaxY) < 0.05) continue; 
+        // Ưu tiên 4: tọa độ đường thẳng/đoạn (-- syntax), bỏ qua tọa độ node
+        if (!found) {
+            let lineCoordRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*--/g;
+            while ((match = lineCoordRegex.exec(codeForParsing)) !== null) {
+                let x = parseFloat(match[1]), y = parseFloat(match[2]);
+                if (x === 0 && y === 0) continue;
                 minX = Math.min(minX, x); maxX = Math.max(maxX, x);
                 minY = Math.min(minY, y); maxY = Math.max(maxY, y);
                 found = true;
@@ -884,10 +888,11 @@
         let figMaxDim = 10;
         
         if (found && minX !== Infinity) {
-            let pad = 1.0; 
+            let pad = 1.5; // padding cho nhãn không bị cắt
             minX -= pad; maxX += pad; minY -= pad; maxY += pad;
             
-            processedCode = processedCode.replace(/\\clip[\s\S]*?;/, `\\useasboundingbox (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});\n\\clip (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});`);
+            // Dùng \useasboundingbox thay vì \clip — không cắt nhãn điểm
+            processedCode = processedCode.replace(/\\clip[\s\S]*?;/, `\\useasboundingbox (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});`);
             
             shiftX = -(minX + maxX) / 2;
             shiftY = -(minY + maxY) / 2;
@@ -897,77 +902,94 @@
             else if (figMaxDim < 6) autoScale = 6 / figMaxDim;
         }
 
-        // 5. THUẬT TOÁN "BÁM RỄ 8 HƯỚNG" CẢI TIẾN (SỬA LỖI ĐẨY CAO)
-        let ndRegex = /\\draw\s*(?:\[color=[^\]]+\])?\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*node\s*(?:\[([^\]]*)\])?\s*\{([^}]+)\};/g;
+        // 5. ĐẶT NHÃN ĐIỂM ĐÚNG VỊ TRÍ
+        // Vấn đề: GeoGebra xuất \draw (xL,yL) node[anchor]{Name} 
+        // trong đó (xL,yL) là tọa độ NHÃN trên màn hình — rất xa điểm thực.
+        // Giải pháp: dùng exactPoints (tọa độ API) để đặt nhãn gần sát điểm,
+        // dùng anchor gốc của GeoGebra để biết hướng nhãn.
+
+        // Xóa \clip còn sót (không xóa \useasboundingbox bước 4 đã set)
+        processedCode = processedCode.replace(/^\\clip\s*\([^)]+\)\s*rectangle\s*\([^)]+\)\s*;/mg, '');
+
+        // Xây map: tên điểm → tọa độ chính xác
+        let pointMap = {};
+        if (exactPoints && exactPoints.length > 0) {
+            exactPoints.forEach(function(pt) {
+                if (isFinite(pt.x) && isFinite(pt.y)) {
+                    pointMap[pt.name] = pt;
+                }
+            });
+        }
+
+        // Parse tất cả node-label từ TikZ gốc
+        let ndRegex = /\\draw\s*(?:\[[^\]]*\])?\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*node\s*(?:\[([^\]]*)\])?\s*\{([^}]+)\};/g;
         let ndMatch;
         let nodesArr = [];
         while ((ndMatch = ndRegex.exec(processedCode)) !== null) {
             nodesArr.push({
-                x: parseFloat(ndMatch[1]), y: parseFloat(ndMatch[2]),
-                anchor: ndMatch[3] || '', text: ndMatch[4], matchStr: ndMatch[0]
+                rawX: parseFloat(ndMatch[1]),
+                rawY: parseFloat(ndMatch[2]),
+                anchor: ndMatch[3] || '',
+                text: ndMatch[4],
+                matchStr: ndMatch[0]
             });
-        }
-
-        // Tạo danh sách điểm mỏ neo từ exactPoints (Lấy từ não GeoGebra)
-        let poiArr = [];
-        if (exactPoints && exactPoints.length > 0) {
-            poiArr = exactPoints;
-        } else {
-            let crx = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*(?:circle|--)/g;
-            let m2;
-            while ((m2 = crx.exec(codeForParsing)) !== null) {
-                poiArr.push({x: parseFloat(m2[1]), y: parseFloat(m2[2])});
-            }
         }
 
         nodesArr.forEach(node => {
-            // 🔥 FIX 1: Dịch tọa độ về đúng TÂM CỦA CHỮ (Khử ảo giác Top-Left của GeoGebra)
-            let cx = node.x;
-            let cy = node.y;
-            if (node.anchor.includes('north west') || node.anchor === '') {
-                cx += 0.15 / autoScale;
-                cy -= 0.15 / autoScale;
-            }
+            // Lấy tên điểm thuần (bỏ $...$, khoảng trắng)
+            let plainName = node.text.replace(/^\$|\$$/g, '').trim();
 
-            let minD = Infinity, bestPt = null;
-            poiArr.forEach(pt => {
-                const d = Math.hypot(cx - pt.x, cy - pt.y);
-                if (d < minD) { minD = d; bestPt = pt; }
-            });
+            let finalX, finalY, finalAnchor;
 
-            let replacement = '';
-            let textClean = node.text.replace(/[^a-zA-Z0-9]/g, '');
-            let isPointLabel = /^[A-Z]/.test(textClean);
-            
-            let threshold = isPointLabel ? (figMaxDim * 0.4) : (figMaxDim * 0.1);
+            let ptData = pointMap[plainName];
+            if (ptData) {
+                // Có tọa độ API chính xác → dùng nó, tính offset nhỏ dựa theo anchor gốc
+                let anchor = node.anchor.toLowerCase();
+                let dx = 0, dy = 0;
+                // Offset nhỏ (0.25 units) theo hướng anchor để nhãn không chồng lên chấm
+                if (anchor.includes('north') || anchor.includes('above')) dy = 0.25;
+                else if (anchor.includes('south') || anchor.includes('below')) dy = -0.25;
+                else dy = 0.2;
+                if (anchor.includes('east') || anchor.includes('right')) dx = 0.2;
+                else if (anchor.includes('west') || anchor.includes('left')) dx = -0.2;
+                else dx = 0.15;
 
-            if (bestPt && minD < threshold) {
-                let dx = cx - bestPt.x;
-                let dy = cy - bestPt.y;
-                
-                let angle = Math.atan2(dy, dx) * 180 / Math.PI;
-                if (angle < 0) angle += 360;
-
-                let anchor = "above right";
-                if (angle >= 337.5 || angle < 22.5) anchor = "right";
-                else if (angle >= 22.5 && angle < 67.5) anchor = "above right";
-                else if (angle >= 67.5 && angle < 112.5) anchor = "above";
-                else if (angle >= 112.5 && angle < 157.5) anchor = "above left";
-                else if (angle >= 157.5 && angle < 202.5) anchor = "left";
-                else if (angle >= 202.5 && angle < 247.5) anchor = "below left";
-                else if (angle >= 247.5 && angle < 292.5) anchor = "below";
-                else if (angle >= 292.5 && angle < 337.5) anchor = "below right";
-
-                // 🔥 FIX 2: Thêm inner sep=1.5pt để chữ ôm sát rạt vào điểm đen như ảnh gốc
-                replacement = `\\node[${anchor}, inner sep=1.5pt] at (${bestPt.x.toFixed(4)}, ${bestPt.y.toFixed(4)}) {${node.text}};`;
+                finalX = (ptData.x + dx).toFixed(4);
+                finalY = (ptData.y + dy).toFixed(4);
+                // Giữ anchor gốc nếu có, không thì dùng above right
+                finalAnchor = node.anchor || 'above right';
             } else {
-                replacement = `\\node at (${node.x}, ${node.y}) {${node.text}};`;
+                // Không có trong map → giữ nguyên tọa độ gốc
+                finalX = node.rawX.toFixed(4);
+                finalY = node.rawY.toFixed(4);
+                finalAnchor = node.anchor;
             }
 
-            processedCode = processedCode.split(node.matchStr).join(replacement);
+            let nodeLine;
+            if (finalAnchor) {
+                nodeLine = `\\node[${finalAnchor}] at (${finalX}, ${finalY}) {${node.text}};`;
+            } else {
+                nodeLine = `\\node at (${finalX}, ${finalY}) {${node.text}};`;
+            }
+            processedCode = processedCode.split(node.matchStr).join(nodeLine);
         });
 
-        // Chuẩn hóa màu điểm đen
+        // Chuẩn hóa chấm điểm về tọa độ API chính xác
+        if (exactPoints && exactPoints.length > 0) {
+            exactPoints.forEach(function(pt) {
+                if (!isFinite(pt.x) || !isFinite(pt.y)) return;
+                processedCode = processedCode.replace(
+                    /\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*circle\s*\(\s*[0-9.]+\s*pt\s*\)/g,
+                    function(m, cx, cy) {
+                        if (Math.abs(parseFloat(cx) - pt.x) < 0.15 && Math.abs(parseFloat(cy) - pt.y) < 0.15) {
+                            return `\\fill[black] (${pt.x},${pt.y}) circle (1.5pt)`;
+                        }
+                        return m;
+                    }
+                );
+            });
+        }
+        // Fallback normalize còn lại
         processedCode = processedCode.replace(/\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(([^)]+)\)\s*circle\s*\([^)]+pt\)/g, '\\fill[black] ($1) circle (1.5pt)');
 
         // 6. RÁP THÀNH PHẨM (Chỉ dùng scale tự nhiên của TikZ)
