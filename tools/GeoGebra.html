@@ -54,18 +54,16 @@
             transition: background-color 0.3s ease;
         }
 
-        /* Fix embed mode for PostViewer */
         body.embed-mode .main-wrapper {
             width: 100% !important;
             margin-left: 0 !important;
             padding-top: 0 !important;
         }
 
-        /* Override shared.css to give more space for the tool */
         .main-content-layout {
             display: grid;
             grid-template-columns: 200px 1fr;
-            gap: 36px; /* Tighter gap to prevent squishing */
+            gap: 36px;
             margin-top: 20px;
             min-width: 0;
         }
@@ -124,7 +122,6 @@
             overflow: hidden;
         }
 
-        /* ── Hero ── */
         .latex-hero { margin-bottom: 22px; }
         .latex-hero h1 {
             font-family: 'Playfair Display', serif;
@@ -151,7 +148,6 @@
             color: var(--accent-cyan, #5ce1e6);
         }
 
-        /* ── Input Panel ── */
         .ggb-panel {
             background: var(--exam-paper-bg);
             border: 1px solid var(--exam-paper-border);
@@ -169,7 +165,6 @@
             margin-bottom: 14px;
         }
 
-        /* Drag & Drop Zone */
         .ggb-drop-zone {
             border: 2px dashed rgba(92,225,230,0.3);
             border-radius: 12px;
@@ -189,15 +184,8 @@
         .ggb-drop-text { color: var(--exam-title-color); font-weight: 500; font-size: 0.95rem; margin-bottom: 5px; }
         .ggb-drop-sub { color: var(--exam-text-color); font-size: 0.8rem; opacity: 0.7; }
 
-        /* Smart Toggles */
         .ggb-toggles-section { margin-top: 20px; }
-        .ggb-toggles-grid { display: flex; gap: 20px; flex-wrap: wrap; }
-        .ggb-toggle-label {
-            display: flex; align-items: center; gap: 8px;
-            cursor: pointer; color: var(--exam-text-color); font-size: 0.85rem;
-        }
-        .ggb-toggle-label input { accent-color: var(--accent-cyan); width: 16px; height: 16px; cursor: pointer; }
-
+        
         .ggb-input-row {
             display: flex;
             gap: 10px;
@@ -239,13 +227,6 @@
             opacity: 0.5; cursor: not-allowed; transform: none;
         }
 
-        .ggb-hint {
-            font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;
-            color: var(--exam-text-color); opacity: 0.45;
-            margin-top: 10px;
-        }
-
-        /* ── Status Bar ── */
         .ggb-status {
             display: flex; align-items: center; gap: 10px;
             padding: 10px 16px;
@@ -272,10 +253,7 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ── Output Panel ── */
-        .ggb-output-panel {
-            display: none;
-        }
+        .ggb-output-panel { display: none; }
         .ggb-output-panel.show { display: block; }
 
         .pane-header {
@@ -317,7 +295,6 @@
         }
         body:not(.dark-mode) #tikz-output { background: #f1f5f9; border-color: rgba(15,23,42,0.08); }
 
-        /* ── Export Bar ── */
         .export-bar { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
         .export-btn {
             display: inline-flex; align-items: center; gap: 8px;
@@ -336,10 +313,8 @@
             box-shadow: 0 5px 16px rgba(92,225,230,0.1);
         }
 
-        /* ── Hidden applet container ── */
         #ggb-container { display: none; position: fixed; }
 
-        /* ── How to use ── */
         .how-to {
             background: var(--exam-paper-bg);
             border: 1px solid var(--exam-paper-border);
@@ -391,6 +366,60 @@
             font-weight: 700; color: var(--accent-cyan); line-height: 1; margin-bottom: 6px;
         }
         .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+        /* ── Mode Selector UI ── */
+        .mode-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .mode-card {
+            position: relative;
+            cursor: pointer;
+        }
+        .mode-card input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .mode-content {
+            background: rgba(255,255,255,0.02);
+            border: 2px solid rgba(150,150,150,0.2);
+            border-radius: 10px;
+            padding: 16px;
+            transition: all 0.2s ease;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        body:not(.dark-mode) .mode-content { background: #f8fafc; border-color: #cbd5e1; }
+        
+        .mode-content h4 {
+            margin: 0 0 8px 0;
+            color: var(--exam-title-color);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+        .mode-content p {
+            margin: 0;
+            font-size: 0.78rem;
+            color: var(--exam-text-color);
+            opacity: 0.75;
+            line-height: 1.5;
+        }
+
+        .mode-card input:checked ~ .mode-content {
+            border-color: var(--accent-cyan);
+            background: rgba(92,225,230,0.05);
+            box-shadow: 0 4px 15px rgba(92,225,230,0.1);
+        }
+        .mode-card input:checked ~ .mode-content h4 {
+            color: var(--accent-cyan);
+        }
+        
+        @media (max-width: 600px) {
+            .mode-selector { grid-template-columns: 1fr; }
+        }
     </style>
 <link rel="icon" type="image/png" href="/SMP/core/image/favicon.png">
 </head>
@@ -404,12 +433,8 @@
             <div class="main-content-layout">
 
                 <aside class="tags-comment-sidebar">
-
                     <div id="left-sidebar-placeholder"></div>
-
-
-
-                    </aside>
+                </aside>
 
                 <div class="main-articles-body">
 
@@ -446,17 +471,23 @@
                         </div>
 
                         <div class="ggb-toggles-section">
-                            <div class="ggb-panel-title" style="margin-bottom: 10px;">⚙ TÙY CHỌN TRÍCH XUẤT (SMART TOGGLES)</div>
-                            <div class="ggb-toggles-grid">
-                                <label class="ggb-toggle-label" style="opacity: 0.6; cursor: not-allowed;">
-                                    <input type="checkbox" id="toggle-grid" disabled>
-                                    <span class="ggb-toggle-text">Thêm Lưới (Grid) <small style="font-style: italic;">(Đang cải tiến)</small></span>
-                                </label>
-                                <label class="ggb-toggle-label" style="opacity: 0.6; cursor: not-allowed;">
-                                    <input type="checkbox" id="toggle-axes" disabled>
-                                    <span class="ggb-toggle-text">Thêm Trục (Axes) <small style="font-style: italic;">(Đang cải tiến)</small></span>
+                            <div class="ggb-panel-title" style="margin-bottom: 12px;">⚙ CHẾ ĐỘ TRÍCH XUẤT</div>
+                            <div class="mode-selector">
+                                <label class="mode-card">
+                                    <input type="radio" name="extractMode" value="standard" checked>
+                                    <div class="mode-content">
+                                        <h4>✨ Chuẩn (Khuyên dùng)</h4>
+                                        <p>Giữ vị trí chữ hoàn hảo 100% như GeoGebra. Yêu cầu bạn phải Zoom và kéo hình vào giữa màn hình trước khi lấy link.</p>
+                                    </div>
                                 </label>
 
+                                <label class="mode-card">
+                                    <input type="radio" name="extractMode" value="autofit">
+                                    <div class="mode-content">
+                                        <h4>🔧 Bắt Hình (Auto-Fit)</h4>
+                                        <p>Dùng khi bạn lỡ vứt hình ra góc xa hoặc hình quá to. Ép hình về giữa tờ A4, nhưng vị trí tên điểm có thể bị lệch một chút.</p>
+                                    </div>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -468,7 +499,6 @@
 
                     <div class="ggb-output-panel fade-up" id="ggb-output-panel">
                         <div class="studio-layout">
-                            <!-- Left: Code Editor -->
                             <div class="studio-pane">
                                 <div class="studio-pane-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 10px; border-bottom: 1px solid rgba(150,150,150,0.1);">
                                     <span class="studio-pane-title">📄 TikZ / PGF Code</span>
@@ -481,7 +511,6 @@
                                 </div>
                             </div>
                             
-                            <!-- Right: Live Preview -->
                             <div class="studio-pane">
                                 <div class="studio-pane-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 10px; border-bottom: 1px solid rgba(150,150,150,0.1);">
                                     <span class="studio-pane-title">👁 Live Preview</span>
@@ -522,14 +551,12 @@
                 </div>
             </div>
 
-            
-            <!-- Thảo Luận & Góp Ý (Giscus) -->
             <div class="giscus-section-outer fade-up" style="max-width: 900px; margin: 48px auto; padding: 48px 24px 0 24px; border-top: 1px solid var(--border-light);">
                 <h2 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 24px; color: var(--text-main);">Thảo Luận &amp; Góp Ý</h2>
                 <div id="giscus-container"></div>
             </div>
 
-<div class="stats-strip fade-up">
+            <div class="stats-strip fade-up">
                 <div class="stat-item"><div class="stat-number">$\Sigma$</div><div class="stat-label">Bài Viết</div></div>
                 <div class="stat-item"><div class="stat-number">$\Phi$</div><div class="stat-label">Chủ Đề</div></div>
                 <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
@@ -550,16 +577,15 @@
     <script src="/SMP/core/js/sidebar-data.js"></script>
     <script src="/SMP/core/js/layout.js?v=4"></script>
     <script src="/SMP/core/js/shared.js?v=4"></script>
-    <!-- CodeMirror 5 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/stex/stex.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
+    
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof Comments !== 'undefined') Comments.init('GeoGebraExtractor');
 
-        // Allow pressing Enter in the input to trigger extraction
         document.getElementById('ggb-link-input').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') extractTikZ();
         });
@@ -567,15 +593,8 @@
         setupDragAndDrop();
     });
 
-    // ── Parse material ID from various GeoGebra URL formats ──
     function parseGGBId(url) {
         url = url.trim();
-        // Formats:
-        //  geogebra.org/m/ID
-        //  geogebra.org/calculator/ID
-        //  geogebra.org/graphing/ID
-        //  geogebra.org/geometry/ID
-        //  geogebra.org/classic/ID
         var patterns = [
             /geogebra\.org\/m\/([A-Za-z0-9_-]+)/,
             /geogebra\.org\/[a-z]+\/([A-Za-z0-9_-]+)/
@@ -587,7 +606,6 @@
         return null;
     }
 
-    // ── Show / hide status bar ──
     function setStatus(type, text) {
         var bar = document.getElementById('ggb-status');
         var txt = document.getElementById('ggb-status-text');
@@ -596,11 +614,11 @@
         txt.textContent = text;
         spinner.style.display = (type === 'loading') ? 'block' : 'none';
     }
+    
     function hideStatus() {
         document.getElementById('ggb-status').className = 'ggb-status';
     }
 
-    // ── File Upload (Drag & Drop) ──
     var currentBase64 = null;
 
     function setupDragAndDrop() {
@@ -649,7 +667,6 @@
         reader.readAsDataURL(file);
     }
 
-    // ── Main extraction function ──
     var ggbApi = null;
     var ggbScriptLoaded = false;
 
@@ -658,7 +675,7 @@
         var id = null;
 
         if (url) {
-            currentBase64 = null; // Ignore file if URL is provided
+            currentBase64 = null;
             id = parseGGBId(url);
             if (!id) {
                 setStatus('error', '⚠ Không nhận diện được link. Hãy thử dạng: geogebra.org/m/ID');
@@ -699,6 +716,8 @@
         var container = document.getElementById('ggb-container');
         container.innerHTML = '';
 
+        const selectedMode = document.querySelector('input[name="extractMode"]:checked').value;
+
         var params = {
             width: 600,
             height: 400,
@@ -708,25 +727,21 @@
             appletOnLoad: function(api) {
                 ggbApi = api;
                 
-                // Smart Toggles
-                let showGrid = false; // Tính năng đang cải tiến
-                let showAxes = false; // Tính năng đang cải tiến
+                let showGrid = false;
+                let showAxes = false;
 
                 api.setGridVisible(showGrid);
                 api.setAxesVisible(showAxes, showAxes);
 
-                // Chờ 800ms để đảm bảo hình học đã được tải hoàn toàn vào applet
                 setTimeout(function() {
-                    // Ép GeoGebra tự động thu phóng để bắt trọn TOÀN BỘ hình vẽ
                     try {
                         api.showAllObjects();
                     } catch(e) {
                         console.log("showAllObjects failed:", e);
                     }
 
-                    // Chờ thêm 400ms để GeoGebra kịp cập nhật viewport sau khi zoom
                     setTimeout(function() {
-                        setStatus('loading', 'Đang trích xuất mã TikZ...');
+                        setStatus('loading', 'Đang xử lý mã TikZ...');
                         try {
                             let exactPoints = [];
                             try {
@@ -741,56 +756,49 @@
                             } catch(err) { console.warn("Lỗi lấy điểm từ API:", err); }
 
                             api.exportPGF(function(tikzCode) {
-                            if (!tikzCode || tikzCode.trim() === '') {
-                                setStatus('error', '✕ Không thể trích xuất TikZ. (Hình trống hoặc lỗi định dạng).');
-                                document.getElementById('ggb-extract-btn').disabled = false;
-                                return;
-                            }
-                            var processedCode = processTikzCode(tikzCode, showGrid, showAxes);
-                            
-                            // Initialize CodeMirror if not yet initialized
-                            if (!window.tikzEditor) {
-                                window.tikzEditor = CodeMirror.fromTextArea(document.getElementById('tikz-output'), {
-                                    mode: 'stex',
-                                    theme: 'dracula',
-                                    lineNumbers: true,
-                                    lineWrapping: true,
-                                    matchBrackets: true
-                                });
-                                window.tikzEditor.setSize("100%", "100%");
-                                window.tikzEditor.on('change', function() {
-                                    clearTimeout(window.previewTimeout);
-                                    window.previewTimeout = setTimeout(renderPreview, 1000);
-                                });
-                            }
-                            
-                            window.tikzEditor.setValue(processedCode);
-                            document.getElementById('ggb-output-panel').classList.add('show');
-                            document.getElementById('ggb-export-bar').style.display = 'flex';
-                            
-                            setTimeout(function() {
-                                window.tikzEditor.refresh();
-                                renderPreview();
-                            }, 100);
+                                if (!tikzCode || tikzCode.trim() === '') {
+                                    setStatus('error', '✕ Không thể trích xuất TikZ.');
+                                    document.getElementById('ggb-extract-btn').disabled = false;
+                                    return;
+                                }
+                                
+                                var processedCode = processTikzCode(tikzCode, showGrid, showAxes, exactPoints, selectedMode);
+                                
+                                if (!window.tikzEditor) {
+                                    window.tikzEditor = CodeMirror.fromTextArea(document.getElementById('tikz-output'), {
+                                        mode: 'stex', theme: 'dracula', lineNumbers: true, lineWrapping: true, matchBrackets: true
+                                    });
+                                    window.tikzEditor.setSize("100%", "100%");
+                                    window.tikzEditor.on('change', function() {
+                                        clearTimeout(window.previewTimeout);
+                                        window.previewTimeout = setTimeout(renderPreview, 1000);
+                                    });
+                                }
+                                
+                                window.tikzEditor.setValue(processedCode);
+                                document.getElementById('ggb-output-panel').classList.add('show');
+                                document.getElementById('ggb-export-bar').style.display = 'flex';
+                                
+                                setTimeout(function() {
+                                    window.tikzEditor.refresh();
+                                    renderPreview();
+                                }, 100);
 
-                            setStatus('success', '✓ Trích xuất thành công! TikZ Studio đã sẵn sàng.');
+                                setStatus('success', `✓ Thành công!`);
+                                document.getElementById('ggb-extract-btn').disabled = false;
+                                document.getElementById('ggb-output-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            });
+                        } catch(e) {
+                            setStatus('error', '✕ Lỗi khi trích xuất: ' + e.message);
                             document.getElementById('ggb-extract-btn').disabled = false;
-                            document.getElementById('ggb-output-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        });
-                    } catch(e) {
-                        setStatus('error', '✕ Lỗi khi trích xuất: ' + e.message);
-                        document.getElementById('ggb-extract-btn').disabled = false;
-                    }
+                        }
                     }, 400);
                 }, 800);
             }
         };
 
-        if (materialId) {
-            params.material_id = materialId;
-        } else if (base64) {
-            params.ggbBase64 = base64;
-        }
+        if (materialId) params.material_id = materialId;
+        else if (base64) params.ggbBase64 = base64;
 
         try {
             var applet = new GGBApplet(params, true);
@@ -798,190 +806,257 @@
         } catch(e) {
             setStatus('error', '✕ Lỗi khi khởi tạo GeoGebra: ' + e.message);
             document.getElementById('ggb-extract-btn').disabled = false;
-            hideStatus();
         }
     }
 
-    function processTikzCode(code, showGrid, showAxes, exactPoints) {
-        let processedCode = code;
+    function processTikzCode(code, showGrid, showAxes, exactPoints, mode) {
+        if (mode === 'autofit') {
+            // =========================================================
+            // CHẾ ĐỘ BẮT HÌNH (GEO GEBRA 1) - TÁC GIẢ GỐC
+            // =========================================================
+            let processedCode = code;
 
-        // 1. CẬP NHẬT MÔI TRƯỜNG LATEX
-        processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}');
-        processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}');
+            processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}');
+            processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}');
 
-        // 2. DỌN RÁC LƯỚI TRỤC CỦA GEOGEBRA
-        processedCode = processedCode.replace(/\\draw[^;]*?step=[^;]*?grid[^;]*?;/g, ''); 
-        processedCode = processedCode.replace(/\\draw[^;]*?\([^,]+,\s*0(?:\.0*)?\s*\)\s*--\s*\([^,]+,\s*0(?:\.0*)?\s*\)[^;]*;/g, ''); 
-        processedCode = processedCode.replace(/\\draw[^;]*?\(\s*0(?:\.0*)?\s*,[^)]+\)\s*--\s*\(\s*0(?:\.0*)?\s*,[^)]+\)[^;]*;/g, ''); 
-        processedCode = processedCode.replace(/\\draw[^;]*?\\footnotesize[^;]*?;/g, ''); 
-        processedCode = processedCode.replace(/\\draw[^;]*?node[^;]*?\{\$[xyO0]\$\};/g, ''); 
-        processedCode = processedCode.replace(/\\foreach[\s\S]*?;/g, ''); 
+            processedCode = processedCode.replace(/\\draw[^;]*?step=[^;]*?grid[^;]*?;/g, ''); 
+            processedCode = processedCode.replace(/\\draw[^;]*?\([^,]+,\s*0(?:\.0*)?\s*\)\s*--\s*\([^,]+,\s*0(?:\.0*)?\s*\)[^;]*;/g, ''); 
+            processedCode = processedCode.replace(/\\draw[^;]*?\(\s*0(?:\.0*)?\s*,[^)]+\)\s*--\s*\(\s*0(?:\.0*)?\s*,[^)]+\)[^;]*;/g, ''); 
+            processedCode = processedCode.replace(/\\draw[^;]*?\\footnotesize[^;]*?;/g, ''); 
+            processedCode = processedCode.replace(/\\draw[^;]*?node[^;]*?\{\$[xyO0]\$\};/g, ''); 
+            processedCode = processedCode.replace(/\\foreach[\s\S]*?;/g, ''); 
 
-        // 3. TÍNH TOÁN BOUNDING BOX CHUẨN XÁC
-        let clipMinX = -Infinity, clipMaxX = Infinity, clipMinY = -Infinity, clipMaxY = Infinity;
-        let clipRegex = /\\clip\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*rectangle\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\);/;
-        let clipMatch = clipRegex.exec(processedCode);
-        if (clipMatch) {
-            let cx1 = parseFloat(clipMatch[1]), cy1 = parseFloat(clipMatch[2]);
-            let cx2 = parseFloat(clipMatch[3]), cy2 = parseFloat(clipMatch[4]);
-            clipMinX = Math.min(cx1, cx2); clipMaxX = Math.max(cx1, cx2);
-            clipMinY = Math.min(cy1, cy2); clipMaxY = Math.max(cy1, cy2);
-        }
-
-        let codeForParsing = processedCode.replace(/\\clip[\s\S]*?;/g, ''); 
-        codeForParsing = codeForParsing.replace(/\(0,0\)\s*arc/g, ''); 
-
-        let minX = Infinity, maxX = -Infinity;
-        let minY = Infinity, maxY = -Infinity;
-        let found = false;
-
-        let coordRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)/g;
-        let match;
-        
-        let coreMinX = Infinity, coreMaxX = -Infinity;
-        let coreMinY = Infinity, coreMaxY = -Infinity;
-        let coreFound = false;
-
-        let pointRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*(?:circle\s*\(\s*[0-9.]+\s*pt\s*\)|node)/g;
-        while ((match = pointRegex.exec(codeForParsing)) !== null) {
-            let px = parseFloat(match[1]); let py = parseFloat(match[2]);
-            if (px === 0 && py === 0) continue;
-            const atH = Math.abs(px - clipMinX) < 0.05 || Math.abs(px - clipMaxX) < 0.05;
-            const atV = Math.abs(py - clipMinY) < 0.05 || Math.abs(py - clipMaxY) < 0.05;
-            if (atH && atV) continue;
-            coreMinX = Math.min(coreMinX, px); coreMaxX = Math.max(coreMaxX, px);
-            coreMinY = Math.min(coreMinY, py); coreMaxY = Math.max(coreMaxY, py);
-            coreFound = true;
-        }
-
-        let circleRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*circle\s*\(\s*([-0-9.]+)(?:\s*cm)?\s*\)/g;
-        while ((match = circleRegex.exec(codeForParsing)) !== null) {
-            let cx = parseFloat(match[1]); let cy = parseFloat(match[2]); let r = parseFloat(match[3]);
-            if (Math.abs(cx - clipMinX) < 0.05 || Math.abs(cx - clipMaxX) < 0.05 || Math.abs(cy - clipMinY) < 0.05 || Math.abs(cy - clipMaxY) < 0.05) continue;
-            coreMinX = Math.min(coreMinX, cx - r); coreMaxX = Math.max(coreMaxX, cx + r);
-            coreMinY = Math.min(coreMinY, cy - r); coreMaxY = Math.max(coreMaxY, cy + r);
-            coreFound = true;
-        }
-
-        if (coreFound) {
-            minX = coreMinX; maxX = coreMaxX;
-            minY = coreMinY; maxY = coreMaxY;
-            found = true;
-        } else {
-            while ((match = coordRegex.exec(codeForParsing)) !== null) {
-                let x = parseFloat(match[1]); let y = parseFloat(match[2]);
-                if (x === 0 && y === 0) continue; 
-                if (Math.abs(x - clipMinX) < 0.05 || Math.abs(x - clipMaxX) < 0.05 || Math.abs(y - clipMinY) < 0.05 || Math.abs(y - clipMaxY) < 0.05) continue; 
-                minX = Math.min(minX, x); maxX = Math.max(maxX, x);
-                minY = Math.min(minY, y); maxY = Math.max(maxY, y);
-                found = true;
+            let clipMinX = -Infinity, clipMaxX = Infinity, clipMinY = -Infinity, clipMaxY = Infinity;
+            let clipRegex = /\\clip\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*rectangle\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\);/;
+            let clipMatch = clipRegex.exec(processedCode);
+            if (clipMatch) {
+                let cx1 = parseFloat(clipMatch[1]), cy1 = parseFloat(clipMatch[2]);
+                let cx2 = parseFloat(clipMatch[3]), cy2 = parseFloat(clipMatch[4]);
+                clipMinX = Math.min(cx1, cx2); clipMaxX = Math.max(cx1, cx2);
+                clipMinY = Math.min(cy1, cy2); clipMaxY = Math.max(cy1, cy2);
             }
-        }
 
-        // 4. THU PHÓNG VÀ CĂN GIỮA
-        let shiftX = 0, shiftY = 0;
-        let autoScale = 1.0;
-        let figMaxDim = 10;
-        
-        if (found && minX !== Infinity) {
-            let pad = 1.0; 
-            minX -= pad; maxX += pad; minY -= pad; maxY += pad;
+            let codeForParsing = processedCode.replace(/\\clip[\s\S]*?;/g, ''); 
+            codeForParsing = codeForParsing.replace(/\(0,0\)\s*arc/g, ''); 
+
+            let minX = Infinity, maxX = -Infinity;
+            let minY = Infinity, maxY = -Infinity;
+            let found = false;
+
+            let coordRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)/g;
+            let match;
             
-            processedCode = processedCode.replace(/\\clip[\s\S]*?;/, `\\useasboundingbox (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});\n\\clip (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});`);
+            let coreMinX = Infinity, coreMaxX = -Infinity;
+            let coreMinY = Infinity, coreMaxY = -Infinity;
+            let coreFound = false;
+
+            let pointRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*(?:circle\s*\(\s*[0-9.]+\s*pt\s*\)|node)/g;
+            while ((match = pointRegex.exec(codeForParsing)) !== null) {
+                let px = parseFloat(match[1]); let py = parseFloat(match[2]);
+                if (px === 0 && py === 0) continue;
+                const atH = Math.abs(px - clipMinX) < 0.05 || Math.abs(px - clipMaxX) < 0.05;
+                const atV = Math.abs(py - clipMinY) < 0.05 || Math.abs(py - clipMaxY) < 0.05;
+                if (atH && atV) continue;
+                coreMinX = Math.min(coreMinX, px); coreMaxX = Math.max(coreMaxX, px);
+                coreMinY = Math.min(coreMinY, py); coreMaxY = Math.max(coreMaxY, py);
+                coreFound = true;
+            }
+
+            let circleRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*circle\s*\(\s*([-0-9.]+)(?:\s*cm)?\s*\)/g;
+            while ((match = circleRegex.exec(codeForParsing)) !== null) {
+                let cx = parseFloat(match[1]); let cy = parseFloat(match[2]); let r = parseFloat(match[3]);
+                if (Math.abs(cx - clipMinX) < 0.05 || Math.abs(cx - clipMaxX) < 0.05 || Math.abs(cy - clipMinY) < 0.05 || Math.abs(cy - clipMaxY) < 0.05) continue;
+                coreMinX = Math.min(coreMinX, cx - r); coreMaxX = Math.max(coreMaxX, cx + r);
+                coreMinY = Math.min(coreMinY, cy - r); coreMaxY = Math.max(coreMaxY, cy + r);
+                coreFound = true;
+            }
+
+            if (coreFound) {
+                minX = coreMinX; maxX = coreMaxX;
+                minY = coreMinY; maxY = coreMaxY;
+                found = true;
+            } else {
+                while ((match = coordRegex.exec(codeForParsing)) !== null) {
+                    let x = parseFloat(match[1]); let y = parseFloat(match[2]);
+                    if (x === 0 && y === 0) continue; 
+                    if (Math.abs(x - clipMinX) < 0.05 || Math.abs(x - clipMaxX) < 0.05 || Math.abs(y - clipMinY) < 0.05 || Math.abs(y - clipMaxY) < 0.05) continue; 
+                    minX = Math.min(minX, x); maxX = Math.max(maxX, x);
+                    minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+                    found = true;
+                }
+            }
+
+            let shiftX = 0, shiftY = 0;
+            let autoScale = 1.0;
+            let figMaxDim = 10;
             
-            shiftX = -(minX + maxX) / 2;
-            shiftY = -(minY + maxY) / 2;
-            
-            figMaxDim = Math.max(maxX - minX, maxY - minY);
-            if (figMaxDim > 14) autoScale = 14 / figMaxDim; 
-            else if (figMaxDim < 6) autoScale = 6 / figMaxDim;
-        }
+            if (found && minX !== Infinity) {
+                let pad = 1.0; 
+                minX -= pad; maxX += pad; minY -= pad; maxY += pad;
+                
+                processedCode = processedCode.replace(/\\clip[\s\S]*?;/, `\\useasboundingbox (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});\n\\clip (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});`);
+                
+                shiftX = -(minX + maxX) / 2;
+                shiftY = -(minY + maxY) / 2;
+                
+                figMaxDim = Math.max(maxX - minX, maxY - minY);
+                if (figMaxDim > 14) autoScale = 14 / figMaxDim; 
+                else if (figMaxDim < 6) autoScale = 6 / figMaxDim;
+            }
 
-        // 5. THUẬT TOÁN "TIA THU NHỎ" (SHRINK-RAY) - BẢO TOÀN TỈ LỆ THỦ CÔNG
-        let ndRegex = /\\draw\s*(?:\[color=[^\]]+\])?\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*node\s*(?:\[([^\]]*)\])?\s*\{([^}]+)\};/g;
-        let ndMatch;
-        let nodesArr = [];
-        while ((ndMatch = ndRegex.exec(processedCode)) !== null) {
-            nodesArr.push({
-                x: parseFloat(ndMatch[1]), y: parseFloat(ndMatch[2]),
-                text: ndMatch[4], matchStr: ndMatch[0]
-            });
-        }
+            let ndRegex = /\\draw\s*(?:\[color=[^\]]+\])?\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*node\s*(?:\[([^\]]*)\])?\s*\{([^}]+)\};/g;
+            let ndMatch;
+            let nodesArr = [];
+            while ((ndMatch = ndRegex.exec(processedCode)) !== null) {
+                nodesArr.push({
+                    x: parseFloat(ndMatch[1]), y: parseFloat(ndMatch[2]),
+                    text: ndMatch[4], matchStr: ndMatch[0]
+                });
+            }
 
-        // Quét tìm tất cả các điểm đen (tọa độ hiển thị thực tế)
-        let ptRegex = /\\(?:draw|fill)[^;]*?\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*circle\s*\(/g;
-        let ptMatch;
-        let canvasPoints = [];
-        while ((ptMatch = ptRegex.exec(processedCode)) !== null) {
-            canvasPoints.push({ x: parseFloat(ptMatch[1]), y: parseFloat(ptMatch[2]) });
-        }
+            let ptRegex = /\\(?:draw|fill)[^;]*?\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*circle\s*\(/g;
+            let ptMatch;
+            let canvasPoints = [];
+            while ((ptMatch = ptRegex.exec(processedCode)) !== null) {
+                canvasPoints.push({ x: parseFloat(ptMatch[1]), y: parseFloat(ptMatch[2]) });
+            }
 
-        if (nodesArr.length > 0 && canvasPoints.length > 0) {
-            nodesArr.forEach(node => {
-                // Bắt cặp Chữ với Điểm đen gần nó nhất
-                let closestPt = null;
-                let minDist = Infinity;
-                canvasPoints.forEach(pt => {
-                    let dist = Math.hypot(node.x - pt.x, node.y - pt.y);
-                    if (dist < minDist) {
-                        minDist = dist;
-                        closestPt = pt;
+            if (nodesArr.length > 0 && canvasPoints.length > 0) {
+                nodesArr.forEach(node => {
+                    let closestPt = null;
+                    let minDist = Infinity;
+                    canvasPoints.forEach(pt => {
+                        let dist = Math.hypot(node.x - pt.x, node.y - pt.y);
+                        if (dist < minDist) {
+                            minDist = dist;
+                            closestPt = pt;
+                        }
+                    });
+
+                    if (closestPt) {
+                        let dx = node.x - closestPt.x;
+                        let dy = node.y - closestPt.y;
+                        let dampening = 0.4; 
+                        let fixedX = closestPt.x + (dx * dampening);
+                        let fixedY = closestPt.y + (dy * dampening);
+                        let replacement = `\\draw (${fixedX.toFixed(4)}, ${fixedY.toFixed(4)}) node[inner sep=1.5pt] {${node.text}};`;
+                        processedCode = processedCode.split(node.matchStr).join(replacement);
                     }
                 });
+            }
 
-                if (closestPt) {
-                    // Vector khoảng cách gốc (đang bị phóng đại quá mức)
-                    let dx = node.x - closestPt.x;
-                    let dy = node.y - closestPt.y;
+            processedCode = processedCode.replace(/\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(([^)]+)\)\s*circle\s*\([^)]+pt\)/g, '\\fill[black] ($1) circle (1.5pt)');
+            
+            let scaleStr = autoScale.toFixed(3);
+            let tikzOptions = `shift={(${shiftX.toFixed(3)},${shiftY.toFixed(3)})}, scale=${scaleStr}`;
+            
+            processedCode = processedCode.replace(/\\begin\{tikzpicture\}\[(.*?)\]/, `\\begin{tikzpicture}[$1, ${tikzOptions}]`);
 
-                    // HỆ SỐ THU NHỎ: 0.2 (Tương đương thu nhỏ khoảng cách 5 lần)
-                    // (Bạn có thể tinh chỉnh 0.15 - 0.25 nếu muốn chữ nằm sát hơn hoặc xa hơn một chút xíu)
-                    let dampening = 0.4; 
-                    
-                    let fixedX = closestPt.x + (dx * dampening);
-                    let fixedY = closestPt.y + (dy * dampening);
-                    
-                    // Xóa anchor mặc định, ép inner sep nhỏ để chữ nằm chuẩn xác tại tâm điểm vector chỉ tới
-                    let replacement = `\\draw (${fixedX.toFixed(4)}, ${fixedY.toFixed(4)}) node[inner sep=1.5pt] {${node.text}};`;
-                    processedCode = processedCode.split(node.matchStr).join(replacement);
-                }
-            });
+            processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Căn giữa dọc\n\\vspace*{\\fill}\n% Căn giữa ngang\n\\begin{center}');
+            processedCode = processedCode.replace(/\\end\{document\}/, '\\end{center}\n\\vspace*{\\fill}\n\n\\end{document}');
+
+            return processedCode;
+
+        } else {
+            // =========================================================
+            // CHẾ ĐỘ CHUẨN (BẢN DUNG HỢP TIA THU NHỎ + CENTERING)
+            // =========================================================
+            let processedCode = code;
+
+            // 1. CẬP NHẬT MÔI TRƯỜNG LATEX
+            processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}');
+            processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}');
+            
+            // 🔥 XÓA LỆNH CLIP: Để \centering hoạt động chuẩn 100%
+            processedCode = processedCode.replace(/\\clip[\s\S]*?;/g, ''); 
+
+            // 2. DỌN RÁC TRỤC TỌA ĐỘ
+            if (!showGrid) {
+                processedCode = processedCode.replace(/\\draw[^;]*?step=[^;]*?grid[^;]*?;/g, ''); 
+            }
+            if (!showAxes) {
+                processedCode = processedCode.replace(/\\draw[^;]*?\([^,]+,\s*0(?:\.0*)?\s*\)\s*--\s*\([^,]+,\s*0(?:\.0*)?\s*\)[^;]*;/g, ''); 
+                processedCode = processedCode.replace(/\\draw[^;]*?\(\s*0(?:\.0*)?\s*,[^)]+\)\s*--\s*\(\s*0(?:\.0*)?\s*,[^)]+\)[^;]*;/g, ''); 
+                processedCode = processedCode.replace(/\\draw[^;]*?\\footnotesize[^;]*?;/g, ''); 
+                processedCode = processedCode.replace(/\\draw[^;]*?node[^;]*?\{\$[xyO0]\$\};/g, ''); 
+            }
+            processedCode = processedCode.replace(/\\foreach[\s\S]*?;/g, ''); 
+
+            // 3. THUẬT TOÁN "TIA THU NHỎ" (Cứu tinh cho lỗi văng nhãn của showAllObjects)
+            let ndRegex = /\\draw\s*(?:\[color=[^\]]+\])?\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*node\s*(?:\[([^\]]*)\])?\s*\{([^}]+)\};/g;
+            let ndMatch;
+            let nodesArr = [];
+            while ((ndMatch = ndRegex.exec(processedCode)) !== null) {
+                nodesArr.push({
+                    x: parseFloat(ndMatch[1]), y: parseFloat(ndMatch[2]),
+                    text: ndMatch[4], matchStr: ndMatch[0]
+                });
+            }
+
+            let ptRegex = /\\(?:draw|fill)[^;]*?\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*circle\s*\(/g;
+            let ptMatch;
+            let canvasPoints = [];
+            while ((ptMatch = ptRegex.exec(processedCode)) !== null) {
+                canvasPoints.push({ x: parseFloat(ptMatch[1]), y: parseFloat(ptMatch[2]) });
+            }
+
+            if (nodesArr.length > 0 && canvasPoints.length > 0) {
+                nodesArr.forEach(node => {
+                    let closestPt = null;
+                    let minDist = Infinity;
+                    canvasPoints.forEach(pt => {
+                        let dist = Math.hypot(node.x - pt.x, node.y - pt.y);
+                        if (dist < minDist) {
+                            minDist = dist;
+                            closestPt = pt;
+                        }
+                    });
+
+                    if (closestPt) {
+                        let dx = node.x - closestPt.x;
+                        let dy = node.y - closestPt.y;
+                        
+                        // Hệ số kéo nhãn lại gần điểm (Thay đổi 0.25 nếu muốn nhãn xa/gần hơn chút xíu)
+                        let dampening = 0.25; 
+                        
+                        let fixedX = closestPt.x + (dx * dampening);
+                        let fixedY = closestPt.y + (dy * dampening);
+                        
+                        let replacement = `\\draw (${fixedX.toFixed(4)}, ${fixedY.toFixed(4)}) node[inner sep=1.5pt] {${node.text}};`;
+                        processedCode = processedCode.split(node.matchStr).join(replacement);
+                    }
+                });
+            }
+
+            // 4. CHUẨN HÓA MÀU ĐIỂM
+            processedCode = processedCode.replace(/\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(([^)]+)\)\s*circle\s*\([^)]+pt\)/g, '\\fill[black] ($1) circle (1.5pt)');
+
+            // 5. BỌC FIGURE (Tuyệt chiêu Layout của bạn)
+            processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Căn giữa hình bằng môi trường chuẩn của LaTeX\n\\begin{figure}[htbp]\n\\centering');
+            processedCode = processedCode.replace(/\\end\{document\}/, '\\end{figure}\n\n\\end{document}');
+
+            return processedCode;
         }
-
-        // Chuẩn hóa màu điểm đen
-        processedCode = processedCode.replace(/\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(([^)]+)\)\s*circle\s*\([^)]+pt\)/g, '\\fill[black] ($1) circle (1.5pt)');
-        // 6. RÁP THÀNH PHẨM (Chỉ dùng scale tự nhiên của TikZ)
-        let scaleStr = autoScale.toFixed(3);
-        let tikzOptions = `shift={(${shiftX.toFixed(3)},${shiftY.toFixed(3)})}, scale=${scaleStr}`;
-        
-        processedCode = processedCode.replace(/\\begin\{tikzpicture\}\[(.*?)\]/, `\\begin{tikzpicture}[$1, ${tikzOptions}]`);
-
-        // Đóng gói Căn giữa
-        processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Căn giữa dọc\n\\vspace*{\\fill}\n% Căn giữa ngang\n\\begin{center}');
-        processedCode = processedCode.replace(/\\end\{document\}/, '\\end{center}\n\\vspace*{\\fill}\n\n\\end{document}');
-
-        return processedCode;
     }
 
-    // ── Live Preview Logic (Bulletproof DOM Manipulation) ──
     function renderPreview() {
         if (!window.tikzEditor) return;
         var code = window.tikzEditor.getValue();
         if (!code || code.trim() === '') return;
 
         var previewCode = code;
-        previewCode = previewCode.replace(/\\usepackage\{pgfplots\}/g, '% \\usepackage{pgfplots}');
-        previewCode = previewCode.replace(/\\usepackage\[margin=2cm\]\{geometry\}/g, '% \\usepackage[margin=2cm]{geometry}');
-        previewCode = previewCode.replace(/\\usepackage\{mathrsfs\}/g, '% \\usepackage{mathrsfs}');
-        previewCode = previewCode.replace(/\\pgfplotsset\{[^\}]*\}/g, '% \\pgfplotsset');
-
-        previewCode = previewCode.replace(/\\resizebox\{[^}]*\}\{[^}]*\}\{%\s*\\begin\{tikzpicture\}/, '\\begin{tikzpicture}');
-        previewCode = previewCode.replace(/\\end\{tikzpicture\}%\s*\}/, '\\end{tikzpicture}');
+        
+        let tikzMatch = previewCode.match(/\\begin\{tikzpicture\}[\s\S]*?\\end\{tikzpicture\}/);
+        if (tikzMatch) {
+            previewCode = tikzMatch[0];
+        } else {
+            return;
+        }
 
         var previewContainer = document.getElementById('tikz-canvas');
         var loading = document.getElementById('tikz-loading');
         
-        loading.style.display = 'flex'; // Hiện loading
+        loading.style.display = 'flex';
         previewContainer.innerHTML = '';
         
         var iframe = document.createElement('iframe');
@@ -1012,15 +1087,13 @@
         iframeDoc.head.appendChild(tikzJaxScript);
 
         iframe.onload = function() {
-            // Đợi một chút cho TikZJax xử lý sinh mã hình ảnh
             var checkSVGExist = setInterval(function() {
                 if (iframeDoc.querySelector('svg') || iframeDoc.body.innerHTML.includes('Error')) {
-                    loading.style.display = 'none'; // Tắt vòng xoay ngay lập tức khi có kết quả
+                    loading.style.display = 'none'; 
                     clearInterval(checkSVGExist);
                 }
             }, 100);
             
-            // Safety timeout: Sau 5 giây nếu lỗi mạng không tải được thư viện thì cũng phải tắt xoay
             setTimeout(function() { 
                 loading.style.display = 'none'; 
                 clearInterval(checkSVGExist);
@@ -1028,7 +1101,6 @@
         };
     }
 
-    // ── Actions ──
     function copyTikZ() {
         if (!window.tikzEditor) return;
         var code = window.tikzEditor.getValue();
@@ -1056,7 +1128,6 @@
         hideStatus();
     }
 
-    // ── Toast ──
     function showToast(msg) {
         var t = document.getElementById('smp-toast');
         if (!t) {
