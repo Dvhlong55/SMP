@@ -3,12 +3,14 @@
    HỆ THỐNG BIẾN MÀU CHUYỂN ĐỔI SÁNG / TỐI (DARK MODE) CHO BÀI VIẾT
    ======================================================== */
 :root {
+    --body-bg: #0b1111;
     --widget-title-color: #fff;
     --widget-link-color: #888;
     --widget-badge-bg: rgba(255,255,255,0.05);
     --widget-badge-color: #aaa;
     --exam-paper-bg: rgba(255,255,255,0.025);
-    --exam-paper-border: rgba(92,225,230,0.09);
+    --exam-paper-border: rgba(92,225,230,0.3);
+    --exam-paper-shadow: 0 8px 32px rgba(0,0,0,0.5);
     --exam-text-color: #ddd;
     --exam-bold-color: #f4f4f4;
     --exam-title-color: #f0f0f0;
@@ -21,7 +23,8 @@ body:not(.dark-mode) {
     --widget-badge-bg: rgba(0,0,0,0.05);
     --widget-badge-color: #475569;
     --exam-paper-bg: #ffffff;
-    --exam-paper-border: rgba(15,23,42,0.08);
+    --exam-paper-border: rgba(0, 158, 179, 0.3);
+    --exam-paper-shadow: 0 10px 40px rgba(0,0,0,0.08);
     --exam-text-color: #334155;
     --exam-bold-color: #0f172a;
     --exam-title-color: #1e293b;
@@ -143,13 +146,14 @@ body.light-mode .side-widget-title {
     border: 1px solid var(--exam-paper-border);
     border-radius: 12px;
     padding: 46px 54px;
+    box-shadow: var(--exam-paper-shadow);
     font-family: "Times New Roman", Times, serif;
     color: var(--exam-text-color);
     line-height: 1.85;
     font-size: 1.01rem;
     overflow-wrap: break-word;
     word-break: break-word;
-    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 @media (max-width: 600px) {
