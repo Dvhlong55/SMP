@@ -51,9 +51,15 @@ const DarkMode = {
     }
 };
 
-// === ALL POSTS DATABASE ===
 const ALL_POSTS = [
-        {
+    {
+        title: 'Bổ đề Thue và biểu diễn số nguyên tố',
+        date: 'June 13, 2026',
+        url: '/SMP/posts/math/BoDeThueVaBieuDienSoNguyenTo.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
         title: '[Bắc Ninh] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
         url: '/SMP/posts/math/dethichuyen/bacninh-chuyen-2026.html',
