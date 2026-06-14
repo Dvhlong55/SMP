@@ -1220,6 +1220,8 @@ body.embed-mode .main-content-layout {
         color: #000 !important;
         padding: 0 !important;
         margin: 0 !important;
+        overflow: visible !important;
+        overflow-x: visible !important;
     }
 
     /* 3. LÀM PHẲNG VÀ XÓA PADDING CỦA TẤT CẢ CÁC WRAPPER */
@@ -1237,6 +1239,8 @@ body.embed-mode .main-content-layout {
         padding: 0 !important;
         margin: 0 !important;
         transform: none !important;
+        overflow: visible !important;
+        overflow-x: visible !important;
     }
 
     /* 4. CHỐNG BỆNH "ZOOM NHỎ" (SHRINK-TO-FIT) CỦA TRÌNH DUYỆT */
