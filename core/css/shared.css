@@ -1279,6 +1279,6 @@ body.embed-mode .main-content-layout {
     }
 
     h1, h2, h3, h4 { page-break-after: avoid; color: #000 !important; }
-    p, img, li, .header-box { page-break-inside: avoid; }
+    p, img, .header-box { page-break-inside: avoid; }
     a { text-decoration: none !important; color: #000 !important; }
 }
