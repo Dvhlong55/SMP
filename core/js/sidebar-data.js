@@ -13,9 +13,9 @@ const LEFT_TAGS_HTML = `
             <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin: 16px 0;">
             
             <ul class="side-widget-list">
-                <li><a href="/SMP/pages/nonmath.html?filter=cs">Khoa Học Máy Tính <span>0</span></a></li>
+                <li><a href="/SMP/pages/nonmath.html?filter=cs">CS <span>0</span></a></li>
                 <li><a href="/SMP/pages/nonmath.html?filter=physics">Vật Lý <span>2</span></a></li>
-                <li><a href="/SMP/pages/nonmath.html?filter=other">Non Math khác <span>0</span></a></li>
+                <li><a href="/SMP/pages/nonmath.html?filter=other">Khác <span>0</span></a></li>
             </ul>
 
             <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin: 16px 0;">
