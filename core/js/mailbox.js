@@ -97,15 +97,22 @@ function updatePreview() {
 // ── Gửi form qua Google Apps Script ──
 async function sendSolution() {
     const name    = document.getElementById('sol-name').value.trim();
-    const contact = document.getElementById('sol-contact').value.trim();
+    const contactEl = document.getElementById('sol-contact');
+    const fbEl    = document.getElementById('sol-fb');
+    
+    const contact = contactEl ? contactEl.value.trim() : '';
+    const fb      = fbEl ? fbEl.value.trim() : '';
+    
     const problem = document.getElementById('sol-problem').value;
     const content = document.getElementById('sol-content').value.trim();
     const fileInput = document.getElementById('sol-images');
 
-    if (!name || !contact || !problem || !content) {
+    if (!name || !contact || !problem || !content || (fbEl && !fb)) {
         alert('⚠ Vui lòng điền đầy đủ các trường bắt buộc (có dấu *)!');
         return;
     }
+    
+    const contactCombined = fb ? `Email: ${contact} | FB/Nick: ${fb}` : contact;
 
     const btn  = document.getElementById('sol-send-btn');
     const icon = document.getElementById('sol-submit-icon');
@@ -135,7 +142,7 @@ async function sendSolution() {
         const payload = {
             type: 'loi_giai',
             name: name,
-            contact: contact,
+            contact: contactCombined,
             problem: problem,
             content: content,
             files: filesData
