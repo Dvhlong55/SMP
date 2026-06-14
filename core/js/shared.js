@@ -53,80 +53,178 @@ const DarkMode = {
 
 // === ALL POSTS DATABASE ===
 const ALL_POSTS = [
+        {
+        title: '[Bắc Ninh] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/bacninh-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
     {
+        title: '[An Giang] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/angiang-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Đà Nẵng] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/danang-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Đồng Tháp] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/dongthap-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Hải Phòng] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/haiphong-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Hưng Yên] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/hungyen-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Lai Châu] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/laichau-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Lào Cai] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/laocai-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Ninh Bình] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/ninhbinh-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Quảng Ngãi] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/quangngai-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Quảng Trị] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/quangtri-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Thanh Hóa] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/thanhhoa-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Tuyên Quang] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/tuyenquang-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[Nghệ An] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 01, 2026',
+        url: '/SMP/posts/math/dethichuyen/nghean-chuyen-2026.html',
+        tags: ['Đề Thi'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+{
         title: '[PTNK] Đề thi tuyển sinh lớp 10 môn Toán Chuyên năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/ptnk-2026.html',
+        url: '/SMP/posts/math/dethichuyen/ptnk-2026.html',
         tags: ['Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[Phú Thọ] Đề thi môn Toán chuyên Toán năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/phutho-toan-2026.html',
+        url: '/SMP/posts/math/dethichuyen/phutho-toan-2026.html',
         tags: ['Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[Phú Thọ] Đề thi môn Toán chuyên Tin năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/phutho-tin-2026.html',
+        url: '/SMP/posts/math/dethichuyen/phutho-tin-2026.html',
         tags: ['Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[Đắk Lắk] Đề thi môn Toán chuyên năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/daklak-2026.html',
+        url: '/SMP/posts/math/dethichuyen/daklak-2026.html',
         tags: ['Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[Hà Nội] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/hanoi-chuyen-2026.html',
+        url: '/SMP/posts/math/dethichuyen/hanoi-chuyen-2026.html',
         tags: ['Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[Hà Nội] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên Tin) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/hanoi-tin-2026.html',
+        url: '/SMP/posts/math/dethichuyen/hanoi-tin-2026.html',
         tags: ['Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[ĐH Vinh] Đề thi tuyển sinh lớp 10 THPT Chuyên ĐH Vinh năm 2026 (Vòng 2)',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dhvinh-vong2-2026.html',
+        url: '/SMP/posts/math/dethichuyen/dhvinh-vong2-2026.html',
         tags: ['Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[Khánh Hòa] Đề thi tuyển sinh lớp 10 THPT Chuyên năm 2026',
         date: 'May 29, 2026',
-        url: '/SMP/posts/math/khanhhoa-toan-2026.html',
+        url: '/SMP/posts/math/dethichuyen/khanhhoa-toan-2026.html',
         tags: ['Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[Thái Nguyên] Đề thi tuyển sinh lớp 10 THPT môn Toán (Chuyên Toán) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/thainguyen-toan-2026.html',
+        url: '/SMP/posts/math/dethichuyen/thainguyen-toan-2026.html',
         tags: ['Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[Huế] Đề thi tuyển sinh lớp 10 Chuyên môn Toán năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/hue-toan-2026.html',
+        url: '/SMP/posts/math/dethichuyen/hue-toan-2026.html',
         tags: ['Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
     {
         title: '[KHTN] Đề thi tuyển sinh lớp 10 THPT Chuyên KHTN năm 2026 (Vòng 1 & Vòng 2)',
         date: 'June 06, 2026',
-        url: '/SMP/posts/math/khtn-2026.html',
+        url: '/SMP/posts/math/dethichuyen/khtn-2026.html',
         tags: ['Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
@@ -140,7 +238,7 @@ const ALL_POSTS = [
     {
         title: '[Hà Tĩnh] Đề thi môn Toán chuyên lớp 10 THPT Chuyên Hà Tĩnh năm 2026',
         date: 'June 05, 2026',
-        url: '/SMP/posts/math/hatinh-2026.html',
+        url: '/SMP/posts/math/dethichuyen/hatinh-2026.html',
         tags: ['Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
@@ -203,7 +301,7 @@ const ALL_POSTS = [
     {
         title: '[Đồng Nai] Đề tuyển sinh lớp 10 môn Toán (chuyên) năm 2025',
         date: 'February 23, 2026',
-        url: '/SMP/posts/math/dongnai-2025.html',
+        url: '/SMP/posts/math/dethichuyen/dongnai-2025.html',
         tags: ['Chuyên Toán', 'Đề Thi'],
         page: '/SMP/pages/toanhoc.html'
     },
