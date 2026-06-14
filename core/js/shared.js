@@ -60,6 +60,20 @@ const ALL_POSTS = [
         page: '/SMP/pages/toanhoc.html'
     },
     {
+        title: '[VIASM] Đề thi Vietnam IMO New Initiative 2026 - Khối 11',
+        date: 'June 14, 2026',
+        url: '/SMP/posts/math/vmo/viasm-khoi-11-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
+        title: '[VIASM] Đề thi Vietnam IMO New Initiative 2026 - Khối 10',
+        date: 'June 14, 2026',
+        url: '/SMP/posts/math/vmo/viasm-khoi-10-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/SMP/pages/toanhoc.html'
+    },
+    {
         title: '[Bắc Ninh] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
         url: '/SMP/posts/math/dethichuyen/bacninh-chuyen-2026.html',

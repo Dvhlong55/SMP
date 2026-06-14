@@ -289,3 +289,9 @@ body:not(.dark-mode) .latex-preview-wrap {
     font-size: 0.85rem;
     color: var(--exam-text-color);
 }
+
+@media print {
+    .solution-mailbox {
+        display: none !important;
+    }
+}
