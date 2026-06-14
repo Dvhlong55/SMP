@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/SMP/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>SMP — Số Học Trong Đề VIMONI 2026</title>
+    
+    <meta name="post-id" content="VIMONINumberTheory">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/SMP/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/SMP/core/js/post-layout.js?v=4"></script>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Số Học Trong Đề VIMONI 2026</h1>
+            <p style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Long Do</p>
+            <p style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">June 14, 2026</p>
+        </div>
+
+        <button class="pdf-download-btn" onclick="window.print()" title="Tải xuống hoặc In bài viết này">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Tải bản PDF
+        </button>
+
+        <p><i>Tham khảo nguyên bản đề thi tại: <a href="/SMP/posts/math/vmo/viasm-khoi-10-2026.html">Đề VIMONI Khối 10</a> và <a href="/SMP/posts/math/vmo/viasm-khoi-11-2026.html">Đề VIMONI Khối 11</a>.</i></p>
+
+        <h3>VIMONI 2026 - P5</h3>
+        
+        <p>Xét \( p \) là số nguyên tố thoả mãn \( p \equiv 1 \pmod{3} \).</p>
+        <ol>
+            <li>Chứng minh rằng tồn tại số nguyên \( a \) để \( a^2 + a + 1 \) chia hết cho \( p \).</li>
+            <li>Chứng minh rằng luôn tồn tại số nguyên dương \( a \) để \( (a + 1)^p - a^p - 1 \) chia hết cho \( p^2 \).</li>
+        </ol>
+
+        <h4>Lời Giải</h4>
+
+        <ol>
+            <li>
+                <p>Đặt \(p = 3k+1, k \in \mathbb{N}^*\). Xét phương trình \(f(x) = x^k - 1\).</p>
+                <p>Ta chứng minh tồn tại \(x = x_0\) để \(p \nmid f(x_0)\). Giả sử phản chứng rằng</p>
+                \[
+                p \mid f(x) , \forall x \in \mathbb{Z} \iff p \mid x^k - 1, \forall x \in \mathbb{Z}.
+                \]
+                <p>Theo định lý Lagrange, đa thức \(f\) có không quá \(k\) nghiệm theo modulo \(p\) (điều này mâu thuẫn). Do vậy, tồn tại \(x_0: p \mid x_0^k - 1\). Theo định lý Fermat thì</p>
+                \[
+                p \mid x_0^{p-1} - 1 = x_0^{3k} - 1 = (x_0^k - 1) \cdot (x_0^{2k} + x_0^k + 1) \quad
+                \Longrightarrow p \mid (x_0^{2k} + x_0^k + 1).
+                \]
+                <p>Đặt \(x_0^k = a\) chính là số cần tìm.</p>
+                
+                <div class="note-box" style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); padding: 14px; border-radius: 8px; margin: 20px 0;">
+                    <b>Một cách khác</b><br>
+                    Vì:
+                    \[
+                    \left( \frac{-3}{p} \right) = \left( \frac{-1}{p} \right) \left( \frac{3}{p} \right) 
+                    = (-1)^{\frac{p-1}{2}} \left( \frac{p}{3} \right) (-1)^{\frac{p-1}{2}} = (-1)^{p-1} = 1.
+                    \]
+                    \(\Rightarrow \exists x \in \mathbb{Z}: x^2 \equiv -3 \pmod{p} \).
+                    <br><br>
+                    Mặt khác trong hai số \( x \) và \( x + p \) có 1 số lẻ nên tồn tại số nguyên \( k \) để \( (2a + 1)^2 \equiv -3 \pmod{p} \), khai triển hằng đẳng thức ta có điều phải chứng minh.
+                </div>
+            </li>
+            <li style="margin-top: 20px;">
+                <p>Theo nhị thức Newton thì</p>
+                \[
+                 (a + 1)^p - a^p - 1 = \sum_{i = 0}^p \binom{p}{i} \cdot a^{p-i}  -a^p - 1 = \sum_{i = 1}^{p-1} \binom{p}{i} \cdot a^{p-i}
+                \]
+                \[
+                \Longrightarrow \frac{(a + 1)^p - a^p - 1}{p} = \frac{1}{p} \cdot \left(\sum_{i = 1}^{p-1} \binom{p}{i} \cdot a^{p-i}\right) = \sum_{i = 1}^{p-1} \binom{p - 1}{i - 1} \cdot a^{p-i} \cdot i.
+                \]
+                <p>Ta chọn \(a = p\) thì</p>
+                \[
+                \binom{p - 1}{i - 1} \cdot a^{p-i} \cdot i \; \vdots \;p \quad \Longrightarrow \sum_{i = 1}^{p-1} \binom{p - 1}{i - 1} \cdot a^{p-i} \cdot i \;\vdots \; p,\]
+                đó cũng là số \(a\) ta cần tìm.
+            </li>
+        </ol>
+
+        <p class="exam-end" style="text-align: center; margin-top: 40px;"><b>─── HẾT ───</b></p>
+    </div>
+</body>
+</html>
