@@ -19,8 +19,8 @@
     <div id="smp-post-content" style="display: none;">
         <div class="header-box">
             <h1>Số Học Trong Đề VIMONI 2026</h1>
-            <p style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Long Do</p>
-            <p style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">June 14, 2026</p>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secret of Mathematical Principles</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">June 14, 2026</h2>
         </div>
 
         <button class="pdf-download-btn" onclick="window.print()" title="Tải xuống hoặc In bài viết này">
@@ -30,19 +30,21 @@
 
         <p><i>Tham khảo nguyên bản đề thi tại: <a href="/SMP/posts/math/vmo/viasm-khoi-10-2026.html">Đề VIMONI Khối 10</a> và <a href="/SMP/posts/math/vmo/viasm-khoi-11-2026.html">Đề VIMONI Khối 11</a>.</i></p>
 
-        <h3>VIMONI 2026 - P5</h3>
+        <h3>VIMONI 2026 - P5
         
-        <p>Xét \( p \) là số nguyên tố thoả mãn \( p \equiv 1 \pmod{3} \).</p>
-        <ol>
-            <li>Chứng minh rằng tồn tại số nguyên \( a \) để \( a^2 + a + 1 \) chia hết cho \( p \).</li>
-            <li>Chứng minh rằng luôn tồn tại số nguyên dương \( a \) để \( (a + 1)^p - a^p - 1 \) chia hết cho \( p^2 \).</li>
-        </ol>
+            <p>Xét \( p \) là số nguyên tố thoả mãn \( p \equiv 1 \pmod{3} \).</p>
+            <ol>
+                <li>a. Chứng minh rằng tồn tại số nguyên \( a \) để \( a^2 + a + 1 \) chia hết cho \( p \).</li>
+                <li>b. Chứng minh rằng luôn tồn tại số nguyên dương \( a \) để \( (a + 1)^p - a^p - 1 \) chia hết cho \( p^2 \).</li>
+            </ol>
+
+        </h3>
 
         <h4>Lời Giải</h4>
 
         <ol>
             <li>
-                <p>Đặt \(p = 3k+1, k \in \mathbb{N}^*\). Xét phương trình \(f(x) = x^k - 1\).</p>
+                <p>a. Đặt \(p = 3k+1, k \in \mathbb{N}^*\). Xét phương trình \(f(x) = x^k - 1\).</p>
                 <p>Ta chứng minh tồn tại \(x = x_0\) để \(p \nmid f(x_0)\). Giả sử phản chứng rằng</p>
                 \[
                 p \mid f(x) , \forall x \in \mathbb{Z} \iff p \mid x^k - 1, \forall x \in \mathbb{Z}.
@@ -67,7 +69,7 @@
                 </div>
             </li>
             <li style="margin-top: 20px;">
-                <p>Theo nhị thức Newton thì</p>
+                <p>b. Theo nhị thức Newton thì</p>
                 \[
                  (a + 1)^p - a^p - 1 = \sum_{i = 0}^p \binom{p}{i} \cdot a^{p-i}  -a^p - 1 = \sum_{i = 1}^{p-1} \binom{p}{i} \cdot a^{p-i}
                 \]
