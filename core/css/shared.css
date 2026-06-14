@@ -1282,3 +1282,19 @@ body.embed-mode .main-content-layout {
     p, img, .header-box { page-break-inside: avoid; }
     a { text-decoration: none !important; color: #000 !important; }
 }
+/* Styling cho các khung xem trước (Preview Iframe) trong bài viết, giống với khung preview của Tool */
+.smp-dynamic-theme .post-preview-wrapper {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    background: var(--smp-card-bg);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    margin: 20px auto;
+    transition: all 0.3s ease;
+    max-width: 100%;
+}
+.smp-dynamic-theme .post-preview-wrapper iframe {
+    width: 100%;
+    border: none;
+    display: block;
+}
