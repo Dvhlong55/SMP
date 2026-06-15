@@ -83,16 +83,22 @@
         .post-actions { display: flex; gap: 8px; align-items: center; }
         .edit-badge { font-size: 0.7rem; color: var(--text-muted); font-style: italic; margin-left: 8px; }
 
-        /* History modal */
+        /* History / Edit modal */
         .history-modal-overlay {
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
             z-index: 9999; justify-content: center; align-items: center;
+            backdrop-filter: blur(3px);
         }
         .history-modal-overlay.show { display: flex; }
         .history-modal {
             background: var(--card-bg); border: 1px solid var(--border-light);
-            border-radius: 10px; padding: 28px; max-width: 640px; width: 90%; max-height: 80vh;
+            border-radius: 12px; padding: 28px; max-width: 680px; width: 92%; max-height: 82vh;
             overflow-y: auto;
+        }
+        /* Wider variant for the edit-reply modal which contains a CodeMirror editor */
+        #edit-reply-modal .history-modal {
+            max-width: 860px;
+            width: min(860px, 94vw);
         }
         .history-item { padding: 12px 0; border-bottom: 1px dashed var(--border-light); }
         .history-item:last-child { border: none; }

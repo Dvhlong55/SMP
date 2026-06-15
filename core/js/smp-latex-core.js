@@ -117,9 +117,11 @@ window.SMPLatexCore = {
         cmEditor.on('focus', function() { cmEditor.refresh(); });
         var statusBar = document.createElement('div');
         statusBar.style.display = 'flex';
+        statusBar.style.flexWrap = 'nowrap';
         statusBar.style.justifyContent = 'space-between';
         statusBar.style.alignItems = 'center';
-        statusBar.style.padding = '6px 12px';
+        statusBar.style.gap = '8px';
+        statusBar.style.padding = '5px 12px';
         statusBar.style.background = 'rgba(255,255,255,0.02)';
         statusBar.style.border = '1px solid rgba(92,225,230,0.1)';
         statusBar.style.borderTop = 'none';
@@ -128,11 +130,19 @@ window.SMPLatexCore = {
         statusBar.style.fontFamily = "'JetBrains Mono', monospace";
         statusBar.style.fontSize = '0.75rem';
         statusBar.style.color = 'var(--text-muted, #888)';
+        statusBar.style.overflow = 'hidden';
+        statusBar.style.minWidth = '0';
         
         var leftSpan = document.createElement('span');
-        leftSpan.innerHTML = '<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#5ce1e6;margin-right:6px;box-shadow:0 0 5px #5ce1e6;"></span> LaTeX Editor v2 Core';
+        leftSpan.style.display = 'flex';
+        leftSpan.style.alignItems = 'center';
+        leftSpan.style.flexShrink = '0';
+        leftSpan.style.gap = '4px';
+        leftSpan.innerHTML = '<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#5ce1e6;box-shadow:0 0 5px #5ce1e6;"></span> LaTeX Editor v2 Core';
         
         var rightSpan = document.createElement('span');
+        rightSpan.style.flexShrink = '0';
+        rightSpan.style.whiteSpace = 'nowrap';
         rightSpan.textContent = '0 ký tự | 0 từ | 0 dòng';
         
         statusBar.appendChild(leftSpan);
