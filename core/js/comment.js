@@ -242,7 +242,7 @@ function renderCommentsSection(postId, comments, container) {
                         </div>
                         ${deleteBtn}
                     </div>
-                    <div class="comment-content">${escapeHTML(comment.content)}</div>
+                    <div class="comment-content">${renderLatexText(comment.content)}</div>
                 </div>
             `;
         });
@@ -374,4 +374,40 @@ function escapeHTML(str) {
             '"': '&quot;'
         }[tag] || tag)
     );
+}
+
+function parseLatexTextCommands(text) {
+    let result = '';
+    let i = 0;
+    while (i < text.length) {
+        if (text.startsWith('\\textbf{', i) || text.startsWith('\\textit{', i) || text.startsWith('\\underline{', i)) {
+            let cmdType = '';
+            let cmdLength = 0;
+            if (text.startsWith('\\textbf{', i)) { cmdType = 'b'; cmdLength = 8; }
+            else if (text.startsWith('\\textit{', i)) { cmdType = 'i'; cmdLength = 8; }
+            else if (text.startsWith('\\underline{', i)) { cmdType = 'u'; cmdLength = 11; }
+            
+            let braceCount = 1;
+            let j = i + cmdLength;
+            while (j < text.length && braceCount > 0) {
+                if (text[j] === '{') braceCount++;
+                else if (text[j] === '}') braceCount--;
+                if (braceCount > 0) j++;
+            }
+            if (j < text.length && text[j] === '}') {
+                const innerText = text.substring(i + cmdLength, j);
+                result += `<${cmdType}>${parseLatexTextCommands(innerText)}</${cmdType}>`;
+                i = j + 1;
+                continue;
+            }
+        }
+        result += text[i];
+        i++;
+    }
+    return result;
+}
+
+function renderLatexText(text) {
+    if (!text) return '';
+    return parseLatexTextCommands(escapeHTML(text));
 }

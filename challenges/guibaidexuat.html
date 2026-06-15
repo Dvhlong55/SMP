@@ -766,6 +766,49 @@
     }
 
     // ── LaTeX Preview ──
+    function escapeHTML(str) {
+        if (!str) return '';
+        return str.replace(/[&<>'"]/g,
+            t => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[t] || t)
+        );
+    }
+
+    function parseLatexTextCommands(text) {
+        let result = '';
+        let i = 0;
+        while (i < text.length) {
+            if (text.startsWith('\\textbf{', i) || text.startsWith('\\textit{', i) || text.startsWith('\\underline{', i)) {
+                let cmdType = '';
+                let cmdLength = 0;
+                if (text.startsWith('\\textbf{', i)) { cmdType = 'b'; cmdLength = 8; }
+                else if (text.startsWith('\\textit{', i)) { cmdType = 'i'; cmdLength = 8; }
+                else if (text.startsWith('\\underline{', i)) { cmdType = 'u'; cmdLength = 11; }
+                
+                let braceCount = 1;
+                let j = i + cmdLength;
+                while (j < text.length && braceCount > 0) {
+                    if (text[j] === '{') braceCount++;
+                    else if (text[j] === '}') braceCount--;
+                    if (braceCount > 0) j++;
+                }
+                if (j < text.length && text[j] === '}') {
+                    const innerText = text.substring(i + cmdLength, j);
+                    result += `<${cmdType}>${parseLatexTextCommands(innerText)}</${cmdType}>`;
+                    i = j + 1;
+                    continue;
+                }
+            }
+            result += text[i];
+            i++;
+        }
+        return result;
+    }
+
+    function renderLatexText(text) {
+        if (!text) return '';
+        return parseLatexTextCommands(escapeHTML(text));
+    }
+
     function togglePreview(sourceId, previewId) {
         const box = document.getElementById(previewId);
         const src = document.getElementById(sourceId);
@@ -776,7 +819,7 @@
             if (!text) {
                 box.innerHTML = '<span style="opacity:0.4;font-style:italic;">Chưa có nội dung để preview...</span>';
             } else {
-                box.innerHTML = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+                box.innerHTML = renderLatexText(text).replace(/\n/g, '<br>');
                 if (window.MathJax) { MathJax.typesetClear([box]); MathJax.typesetPromise([box]).catch(()=>{}); }
             }
         };

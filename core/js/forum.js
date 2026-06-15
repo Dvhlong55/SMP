@@ -13,6 +13,42 @@ function escapeHTML(str) {
     );
 }
 
+function parseLatexTextCommands(text) {
+    let result = '';
+    let i = 0;
+    while (i < text.length) {
+        if (text.startsWith('\\textbf{', i) || text.startsWith('\\textit{', i) || text.startsWith('\\underline{', i)) {
+            let cmdType = '';
+            let cmdLength = 0;
+            if (text.startsWith('\\textbf{', i)) { cmdType = 'b'; cmdLength = 8; }
+            else if (text.startsWith('\\textit{', i)) { cmdType = 'i'; cmdLength = 8; }
+            else if (text.startsWith('\\underline{', i)) { cmdType = 'u'; cmdLength = 11; }
+            
+            let braceCount = 1;
+            let j = i + cmdLength;
+            while (j < text.length && braceCount > 0) {
+                if (text[j] === '{') braceCount++;
+                else if (text[j] === '}') braceCount--;
+                if (braceCount > 0) j++;
+            }
+            if (j < text.length && text[j] === '}') {
+                const innerText = text.substring(i + cmdLength, j);
+                result += `<${cmdType}>${parseLatexTextCommands(innerText)}</${cmdType}>`;
+                i = j + 1;
+                continue;
+            }
+        }
+        result += text[i];
+        i++;
+    }
+    return result;
+}
+
+function renderLatexText(text) {
+    if (!text) return '';
+    return parseLatexTextCommands(escapeHTML(text));
+}
+
 function formatDate(iso) {
     if (!iso) return '';
     return new Date(iso).toLocaleString('vi-VN', {
@@ -42,7 +78,7 @@ function toggleForumPreview(textareaId, previewId) {
         if (!text) {
             box.innerHTML = '<span style="opacity:0.4;font-style:italic;">Chưa có nội dung...</span>';
         } else {
-            box.innerHTML = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+            box.innerHTML = renderLatexText(text).replace(/\n/g, '<br>');
             if (window.MathJax) { MathJax.typesetClear([box]); MathJax.typesetPromise([box]).catch(()=>{}); }
         }
     };
@@ -137,7 +173,7 @@ async function openThread(threadId) {
                         ` : ''}
                     </div>
                 </div>
-                <div class="post-content">${escapeHTML(thread.content)}</div>
+                <div class="post-content">${renderLatexText(thread.content)}</div>
             </div>
         `;
 
@@ -157,12 +193,12 @@ async function openThread(threadId) {
                             <div class="post-actions">
                                 ${r.editHistory && r.editHistory.length > 0 ? `<button class="btn-secondary" onclick="showReplyHistory('${r.id}')" style="font-size:0.7rem;padding:3px 8px;">📜</button>` : ''}
                                 ${isReplyAuthor ? `
-                                    <button class="btn-secondary" style="font-size:0.7rem; padding:3px 8px;" onclick="showEditReplyModal('${r.id}', this.closest('.post-card').querySelector('.post-content').innerText)">✏️</button>
+                                    <button class="btn-secondary" style="font-size:0.7rem; padding:3px 8px;" data-content="${escapeHTML(r.content)}" onclick="showEditReplyModal('${r.id}', this.dataset.content)">✏️</button>
                                     <button class="btn-danger" onclick="deleteReply('${r.id}', '${currentThreadId}')">🗑</button>
                                 ` : ''}
                             </div>
                         </div>
-                        <div class="post-content">${escapeHTML(r.content)}</div>
+                        <div class="post-content">${renderLatexText(r.content)}</div>
                     </div>
                 `;
             }).join('');
