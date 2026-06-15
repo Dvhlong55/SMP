@@ -246,7 +246,7 @@
                 <a href="/SMP/pages/forum.html">⧉ Forum</a>
                 <a href="/SMP/pages/saved.html">🖫 Saved</a>
                 <a href="/SMP/pages/vetoi.html">◎ About</a>
-                <a href="/SMP/pages/auth.html" id="sidebar-auth-btn">&#x2637; Login</a>
+                <a href="#" id="sidebar-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">&#x2637; Login</a>
             </nav>
         </div>
         <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle sidebar" aria-label="Toggle sidebar">
@@ -275,7 +275,7 @@
             
             <nav class="topbar-nav" style="gap: 20px; margin-right: 15px;">
                 <a href="/SMP/pages/vetoi.html">◎ About</a>
-                <a href="/SMP/pages/auth.html" id="topbar-auth-btn">&#x2637; Login</a>
+                <a href="#" id="topbar-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">&#x2637; Login</a>
             </nav>
             
             <div class="topbar-actions" style="display: flex; gap: 10px; align-items: center;">
@@ -585,6 +585,78 @@ function runManimLogic() {
 // =========================================================================
 // AUTO-LOAD AUTH STATUS & COMMENTS IN POSTS
 // =========================================================================
+
+// ─── Auth Modal HTML ─────────────────────────────────────────────────────────
+const AUTH_MODAL_HTML = `
+<div id="auth-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px); transition:opacity 0.3s;">
+    <div style="background:var(--card-bg,#1a1a1a); border:1px solid var(--border-light,#2e2e2e); border-radius:12px; padding:0; width:min(440px,94vw); box-shadow:0 20px 60px rgba(0,0,0,0.6); transform:translateY(20px); transition:transform 0.3s; overflow:hidden; position:relative;">
+        <!-- Header -->
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 24px 0;">
+            <div style="display:flex; gap:0; border-bottom:1px solid var(--border-light,#2e2e2e); width:100%; padding-bottom:0;">
+                <button class="auth-modal-tab" data-tab="login" onclick="window.showAuthTab('login')" style="background:none; border:none; padding:10px 16px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--text-muted,#888); border-bottom:2px solid transparent; transition:all 0.2s;">ĐĂNG NHẬP</button>
+                <button class="auth-modal-tab" data-tab="register" onclick="window.showAuthTab('register')" style="background:none; border:none; padding:10px 16px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--text-muted,#888); border-bottom:2px solid transparent; transition:all 0.2s;">ĐĂNG KÝ</button>
+            </div>
+            <button onclick="window.closeAuthModal()" style="background:none; border:none; cursor:pointer; color:var(--text-muted,#888); font-size:1.2rem; padding:4px 8px; margin-bottom: 4px; flex-shrink:0; transition:color 0.2s;" onmouseover="this.style.color='var(--accent-cyan,#5ce1e6)'" onmouseout="this.style.color='var(--text-muted,#888)'">✕</button>
+        </div>
+        <!-- Login Tab -->
+        <div id="auth-login-tab" style="padding:24px;">
+            <form onsubmit="window.handleLogin(event)">
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted,#888); margin-bottom:6px; font-family:'JetBrains Mono',monospace;">Tên đăng nhập</label>
+                    <input id="modal-login-username" type="text" autocomplete="username" placeholder="username" style="width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); font-family:'JetBrains Mono',monospace; font-size:0.9rem; outline:none; transition:border-color 0.2s; box-sizing:border-box;" onfocus="this.style.borderColor='var(--accent-cyan,#5ce1e6)'" onblur="this.style.borderColor='var(--border-light,#2e2e2e)'">
+                </div>
+                <div style="margin-bottom:20px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted,#888); margin-bottom:6px; font-family:'JetBrains Mono',monospace;">Mật khẩu</label>
+                    <input id="modal-login-password" type="password" autocomplete="current-password" placeholder="••••••••" style="width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); font-family:'JetBrains Mono',monospace; font-size:0.9rem; outline:none; transition:border-color 0.2s; box-sizing:border-box;" onfocus="this.style.borderColor='var(--accent-cyan,#5ce1e6)'" onblur="this.style.borderColor='var(--border-light,#2e2e2e)'">
+                </div>
+                <div id="modal-login-msg" class="auth-msg" style="display:none; margin-bottom:12px;"></div>
+                <button id="modal-login-btn" type="submit" style="width:100%; padding:11px; background:var(--accent-cyan,#5ce1e6); color:#111; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.85rem; border:none; border-radius:6px; cursor:pointer; letter-spacing:1px; transition:all 0.2s;" onmouseover="this.style.background='var(--accent-gold,#f0c040)'" onmouseout="this.style.background='var(--accent-cyan,#5ce1e6)'">ĐĂNG NHẬP</button>
+            </form>
+        </div>
+        <!-- Register Tab -->
+        <div id="auth-register-tab" style="padding:24px; display:none;">
+            <form onsubmit="window.handleRegister(event)">
+                <div style="margin-bottom:14px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted,#888); margin-bottom:6px; font-family:'JetBrains Mono',monospace;">Tên đăng nhập</label>
+                    <input id="modal-reg-username" type="text" autocomplete="username" placeholder="username" style="width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); font-family:'JetBrains Mono',monospace; font-size:0.9rem; outline:none; transition:border-color 0.2s; box-sizing:border-box;" onfocus="this.style.borderColor='var(--accent-cyan,#5ce1e6)'" onblur="this.style.borderColor='var(--border-light,#2e2e2e)'">
+                </div>
+                <div style="margin-bottom:14px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted,#888); margin-bottom:6px; font-family:'JetBrains Mono',monospace;">Email</label>
+                    <input id="modal-reg-email" type="email" autocomplete="email" placeholder="you@example.com" style="width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); font-family:'JetBrains Mono',monospace; font-size:0.9rem; outline:none; transition:border-color 0.2s; box-sizing:border-box;" onfocus="this.style.borderColor='var(--accent-cyan,#5ce1e6)'" onblur="this.style.borderColor='var(--border-light,#2e2e2e)'">
+                </div>
+                <div style="margin-bottom:14px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted,#888); margin-bottom:6px; font-family:'JetBrains Mono',monospace;">Mật khẩu</label>
+                    <input id="modal-reg-password" type="password" autocomplete="new-password" placeholder="••••••••" style="width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); font-family:'JetBrains Mono',monospace; font-size:0.9rem; outline:none; transition:border-color 0.2s; box-sizing:border-box;" onfocus="this.style.borderColor='var(--accent-cyan,#5ce1e6)'" onblur="this.style.borderColor='var(--border-light,#2e2e2e)'">
+                </div>
+                <div style="margin-bottom:20px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted,#888); margin-bottom:6px; font-family:'JetBrains Mono',monospace;">Xác nhận mật khẩu</label>
+                    <input id="modal-reg-confirm" type="password" autocomplete="new-password" placeholder="••••••••" style="width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); font-family:'JetBrains Mono',monospace; font-size:0.9rem; outline:none; transition:border-color 0.2s; box-sizing:border-box;" onfocus="this.style.borderColor='var(--accent-cyan,#5ce1e6)'" onblur="this.style.borderColor='var(--border-light,#2e2e2e)'">
+                </div>
+                <div id="modal-reg-msg" class="auth-msg" style="display:none; margin-bottom:12px;"></div>
+                <button id="modal-reg-btn" type="submit" style="width:100%; padding:11px; background:var(--accent-cyan,#5ce1e6); color:#111; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.85rem; border:none; border-radius:6px; cursor:pointer; letter-spacing:1px; transition:all 0.2s;" onmouseover="this.style.background='var(--accent-gold,#f0c040)'" onmouseout="this.style.background='var(--accent-cyan,#5ce1e6)'">ĐĂNG KÝ</button>
+            </form>
+        </div>
+        <!-- Profile Tab -->
+        <div id="auth-profile-tab" style="padding:28px 24px; display:none; text-align:center;">
+            <div style="font-size:2.5rem; margin-bottom:12px;">☯</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:1.1rem; color:var(--accent-cyan,#5ce1e6); margin-bottom:6px;" id="auth-profile-username">...</div>
+            <div style="font-size:0.8rem; color:var(--text-muted,#888); margin-bottom:24px;">Đã đăng nhập</div>
+            <button onclick="window.handleLogout()" style="width:100%; padding:11px; background:#e74c3c; color:#fff; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.85rem; border:none; border-radius:6px; cursor:pointer; letter-spacing:1px; transition:all 0.2s;" onmouseover="this.style.background='#c0392b'" onmouseout="this.style.background='#e74c3c'">ĐĂNG XUẤT</button>
+        </div>
+    </div>
+</div>
+<!-- Auth Tab Active Style -->
+<style>
+    #auth-modal.show > div { transform: translateY(0) !important; }
+    .auth-modal-tab.active { color: var(--accent-cyan,#5ce1e6) !important; border-bottom-color: var(--accent-cyan,#5ce1e6) !important; }
+    .auth-msg { padding:10px 12px; border-radius:6px; font-size:0.82rem; font-family:'JetBrains Mono',monospace; }
+    .auth-msg-error { background:rgba(231,76,60,0.15); color:#e74c3c; border:1px solid rgba(231,76,60,0.3); }
+    .auth-msg-success { background:rgba(39,174,96,0.15); color:#27ae60; border:1px solid rgba(39,174,96,0.3); }
+</style>
+<!-- Toast -->
+<div id="auth-toast" style="display:none; position:fixed; bottom:24px; right:24px; z-index:10000; background:rgba(30,30,30,0.97); color:#fff; padding:12px 20px; border-radius:8px; font-family:'JetBrains Mono',monospace; font-size:0.85rem; box-shadow:0 4px 20px rgba(0,0,0,0.5); border:1px solid rgba(92,225,230,0.2); max-width:360px;"></div>
+`;
+
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('smp_access_token');
     const username = localStorage.getItem('smp_username');
@@ -596,6 +668,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (token && username) {
         if (sidebarAuthBtn) sidebarAuthBtn.innerHTML = `&#x2637; ${username}`;
         if (topbarAuthBtn) topbarAuthBtn.innerHTML = `&#x2637; ${username}`;
+    }
+
+    // Inject Auth Modal into body
+    document.body.insertAdjacentHTML('beforeend', AUTH_MODAL_HTML);
+
+    // Auto-load auth.js
+    if (!document.querySelector('script[src*="auth.js"]')) {
+        const authScript = document.createElement('script');
+        authScript.src = '/SMP/core/js/auth.js?v=2';
+        document.body.appendChild(authScript);
     }
 
     // Load comments on any page that has the comment container
