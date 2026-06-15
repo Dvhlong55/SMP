@@ -165,9 +165,10 @@ async function openThread(threadId) {
     document.getElementById('create-reply-form').style.display = token ? 'block' : 'none';
 
     try {
+        const viewerId = getUsername() || '';
         const [threadRes, repliesRes] = await Promise.all([
-            fetch(`${API_BASE}/api/forum/threads/${threadId}`),
-            fetch(`${API_BASE}/api/forum/threads/${threadId}/replies`)
+            fetch(`${API_BASE}/api/forum/threads/${threadId}?viewer_id=${encodeURIComponent(viewerId)}`),
+            fetch(`${API_BASE}/api/forum/threads/${threadId}/replies?viewer_id=${encodeURIComponent(viewerId)}`)
         ]);
         const thread = await threadRes.json();
         const replies = await repliesRes.json();
@@ -197,6 +198,11 @@ async function openThread(threadId) {
                         <span class="post-date" style="margin-left:12px;">👁 ${thread.viewCount} lượt xem</span>
                     </div>
                     <div class="post-actions">
+                        ${!isAuthor && token ? `
+                        <button id="like-thread-btn" onclick="toggleLikeThread('${thread.id}', this)"
+                            style="background:none; border:1px solid ${thread.likedByMe ? '#e74c3c' : 'var(--border-light)'}; color:${thread.likedByMe ? '#e74c3c' : 'var(--text-muted)'}; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:0.8rem; transition:all 0.2s;">
+                            ${thread.likedByMe ? '❤️' : '♡'} <span id="like-thread-count">${thread.likeCount || 0}</span>
+                        </button>` : (thread.likeCount > 0 ? `<span style="font-size:0.8rem; color:var(--text-muted);">❤️ ${thread.likeCount}</span>` : '')}
                         <button id="save-thread-btn"
                             data-id="${thread.id}"
                             data-title="${escapeHTML(thread.title)}"
@@ -229,6 +235,7 @@ async function openThread(threadId) {
                                 ${r.editedAt ? '<span class="edit-badge">(đã chỉnh sửa)</span>' : ''}
                             </div>
                             <div class="post-actions">
+                                ${(!isReplyAuthor && token) ? `<button class="btn-like" id="like-reply-${r.id}" onclick="toggleLikeReply('${currentThreadId}','${r.id}',this)" style="background:none; border:1px solid ${r.likedByMe ? '#e74c3c' : 'var(--border-light)'}; color:${r.likedByMe ? '#e74c3c' : 'var(--text-muted)'}; padding:3px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem; transition:all 0.2s;">${r.likedByMe ? '❤️' : '♡'} <span>${r.likeCount || 0}</span></button>` : (r.likeCount > 0 ? `<span style="font-size:0.75rem;color:var(--text-muted);">❤️ ${r.likeCount}</span>` : '')}
                                 <button class="btn-secondary" onclick="replyToUser('${escapeHTML(r.author_name)}')" style="font-size:0.7rem; padding:3px 8px;">↩ Trả lời</button>
                                 ${r.editHistory && r.editHistory.length > 0 ? `<button class="btn-secondary" onclick="showReplyHistory('${r.id}')" style="font-size:0.7rem;padding:3px 8px;">📜</button>` : ''}
                                 ${isReplyAuthor ? `
@@ -250,6 +257,53 @@ async function openThread(threadId) {
         mainContent.innerHTML = `<div style="color:#e74c3c;">${err.message}</div>`;
     }
 }
+
+// ─── Like Thread ──────────────────────────────────────────────────────────
+window.toggleLikeThread = async function(threadId, btn) {
+    const token = getToken();
+    if (!token) { alert('Vui lòng đăng nhập để tim bài!'); return; }
+    try {
+        const res = await fetch(`${API_BASE}/api/forum/threads/${threadId}/like`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) { const d = await res.json(); throw new Error(d.detail || 'Lỗi'); }
+        const data = await res.json();
+        const countEl = btn.querySelector('span') || document.getElementById('like-thread-count');
+        if (data.liked) {
+            btn.innerHTML = `❤️ <span>${data.likeCount}</span>`;
+            btn.style.color = '#e74c3c';
+            btn.style.borderColor = '#e74c3c';
+        } else {
+            btn.innerHTML = `♡ <span>${data.likeCount}</span>`;
+            btn.style.color = 'var(--text-muted)';
+            btn.style.borderColor = 'var(--border-light)';
+        }
+    } catch (err) { alert(err.message); }
+};
+
+// ─── Like Reply ───────────────────────────────────────────────────────────
+window.toggleLikeReply = async function(threadId, replyId, btn) {
+    const token = getToken();
+    if (!token) { alert('Vui lòng đăng nhập để tim bình luận!'); return; }
+    try {
+        const res = await fetch(`${API_BASE}/api/forum/threads/${threadId}/replies/${replyId}/like`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) { const d = await res.json(); throw new Error(d.detail || 'Lỗi'); }
+        const data = await res.json();
+        if (data.liked) {
+            btn.innerHTML = `❤️ <span>${data.likeCount}</span>`;
+            btn.style.color = '#e74c3c';
+            btn.style.borderColor = '#e74c3c';
+        } else {
+            btn.innerHTML = `♡ <span>${data.likeCount}</span>`;
+            btn.style.color = 'var(--text-muted)';
+            btn.style.borderColor = 'var(--border-light)';
+        }
+    } catch (err) { alert(err.message); }
+};
 
 // ─── Edit Thread ──────────────────────────────────────────────────────────
 function showEditThreadForm(id, title, content) {
