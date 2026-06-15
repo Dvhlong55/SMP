@@ -573,3 +573,44 @@ function runManimLogic() {
         { transform: 'scale(3.2)', opacity: 0, offset: 1 } 
     ], { duration: 650, delay: glowDelay, easing: 'ease-out', fill: 'forwards' });
 }
+
+// =========================================================================
+// AUTO-LOAD AUTH STATUS & COMMENTS IN POSTS
+// =========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('smp_access_token');
+    const username = localStorage.getItem('smp_username');
+    
+    // Add auth status link to sidebar and topbar
+    const sidebarNav = document.querySelector('.sidebar-nav');
+    const topbarNav = document.querySelector('.topbar-nav');
+    
+    if (sidebarNav) {
+        const authLink = document.createElement('a');
+        authLink.href = '/SMP/pages/auth.html';
+        if (token && username) {
+            authLink.innerHTML = `&#x25CE; ${username}`;
+        } else {
+            authLink.innerHTML = `&#x25CE; Đăng Nhập`;
+        }
+        sidebarNav.appendChild(authLink);
+    }
+    
+    if (topbarNav) {
+        const authLink = document.createElement('a');
+        authLink.href = '/SMP/pages/auth.html';
+        if (token && username) {
+            authLink.innerHTML = `&#x25CE; ${username}`;
+        } else {
+            authLink.innerHTML = `&#x25CE; Login`;
+        }
+        topbarNav.appendChild(authLink);
+    }
+
+    // Load comments on post pages
+    if (window.location.pathname.includes('/posts/')) {
+        const script = document.createElement('script');
+        script.src = '/SMP/core/js/comment.js?v=1';
+        document.body.appendChild(script);
+    }
+});

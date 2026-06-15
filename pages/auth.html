@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/SMP/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP — Xác Thực</title>
+    <link rel="stylesheet" href="/SMP/core/css/shared.css?v=4">
+    <style>
+        .auth-container {
+            max-width: 450px;
+            margin: 60px auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .auth-container:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        .auth-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            color: var(--text-dark);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            transition: border-color 0.3s, background 0.3s;
+        }
+        body:not(.dark-mode) .form-control {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .form-control:focus {
+            border-color: var(--accent-cyan);
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .auth-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-cyan);
+            color: #111;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        .auth-btn:hover {
+            background: var(--accent-gold);
+            transform: translateY(-2px);
+        }
+        .auth-switch {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .auth-switch a {
+            color: var(--accent-cyan);
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .auth-switch a:hover {
+            color: var(--accent-gold);
+        }
+        .message-box {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            display: none;
+            text-align: center;
+        }
+        .message-success {
+            background: rgba(46, 204, 113, 0.15);
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
+        }
+        .message-error {
+            background: rgba(231, 76, 60, 0.15);
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+        }
+        .user-info-panel {
+            text-align: center;
+        }
+        .user-info-panel p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+    </style>
+    <link rel="icon" type="image/png" href="/SMP/core/image/favicon.png">
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-wrapper">
+        <div id="topbar-placeholder"></div>
+
+        <main>
+            <div class="hero-header fade-up">
+                <h1>Tài Khoản</h1>
+                <p class="quote">Tham gia hệ sinh thái SMP để thảo luận và bình luận</p>
+            </div>
+
+            <!-- Login Form -->
+            <div class="auth-container fade-up" id="login-container">
+                <h2 class="auth-title">Đăng Nhập</h2>
+                
+                <div class="message-box message-error" id="login-error"></div>
+                <div class="message-box message-success" id="login-success"></div>
+
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="login-username">Tên người dùng</label>
+                        <input type="text" id="login-username" class="form-control" required autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Mật khẩu</label>
+                        <input type="password" id="login-password" class="form-control" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="auth-btn">Đăng Nhập</button>
+                </form>
+                <div class="auth-switch">
+                    Chưa có tài khoản? <a onclick="toggleAuthMode('register')">Đăng ký ngay</a>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div class="auth-container fade-up" id="register-container" style="display: none;">
+                <h2 class="auth-title">Đăng Ký</h2>
+                
+                <div class="message-box message-error" id="register-error"></div>
+                <div class="message-box message-success" id="register-success"></div>
+
+                <form id="register-form" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="register-username">Tên người dùng</label>
+                        <input type="text" id="register-username" class="form-control" required minlength="3" maxlength="50" autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Địa chỉ Email</label>
+                        <input type="email" id="register-email" class="form-control" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Mật khẩu</label>
+                        <input type="password" id="register-password" class="form-control" required minlength="6" autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Xác nhận mật khẩu</label>
+                        <input type="password" id="register-confirm-password" class="form-control" required minlength="6" autocomplete="new-password">
+                    </div>
+                    <button type="submit" class="auth-btn">Đăng Ký</button>
+                </form>
+                <div class="auth-switch">
+                    Đã có tài khoản? <a onclick="toggleAuthMode('login')">Đăng nhập</a>
+                </div>
+            </div>
+
+            <!-- Logged In User Info -->
+            <div class="auth-container fade-up" id="user-container" style="display: none;">
+                <h2 class="auth-title">Thông Tin Tài Khoản</h2>
+                <div class="user-info-panel">
+                    <p>Chào mừng quay trở lại, <strong id="user-display-name" style="color: var(--accent-cyan);"></strong>!</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Tài khoản hoạt động bình thường.</p>
+                    <button class="auth-btn" onclick="handleLogout()" style="background: #e74c3c; color: #fff;">Đăng Xuất</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="/SMP/core/js/sidebar-data.js"></script>
+    <script src="/SMP/core/js/layout.js?v=4"></script>
+    <script src="/SMP/core/js/shared.js?v=4"></script>
+    <script src="/SMP/core/js/auth.js?v=1"></script>
+</body>
+</html>
