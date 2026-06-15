@@ -17,6 +17,22 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <!-- CSS dùng chung -->
     <link rel="stylesheet" href="/SMP/core/css/shared.css">
+    
+    <!-- CodeMirror 5 Core & Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/stex/stex.min.js"></script>
+    <!-- CodeMirror Hint -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+    
+    <!-- SMP LaTeX Core -->
+    <link rel="stylesheet" href="/SMP/tools/latex-v2/latex.css">
+    <script src="/SMP/core/js/smp-latex-core.js"></script>
+
     <style>
         .forum-container { max-width: 1000px; margin: 60px auto; padding: 0 24px; }
 
@@ -82,25 +98,11 @@
         .history-item:last-child { border: none; }
 
         /* LaTeX Editor */
-        .latex-editor-wrap { position: relative; }
-        .latex-toolbar {
-            display: flex; flex-wrap: wrap; gap: 4px;
-            padding: 8px 10px; background: rgba(92,225,230,0.04);
-            border: 1px solid var(--border-light); border-bottom: none;
-            border-radius: 6px 6px 0 0;
-        }
-        .latex-toolbar button {
-            background: rgba(92,225,230,0.08); border: 1px solid rgba(92,225,230,0.2);
-            color: var(--accent-cyan); padding: 4px 10px; border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; cursor: pointer;
-            transition: background 0.2s; white-space: nowrap;
-        }
-        .latex-toolbar button:hover { background: rgba(92,225,230,0.2); }
-        .latex-toolbar .sep { width: 1px; background: var(--border-light); margin: 2px 4px; }
+        .latex-editor-wrap { position: relative; margin-bottom: 16px; }
         .latex-textarea {
             width: 100%; box-sizing: border-box;
             padding: 12px; background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border-light); border-radius: 0 0 6px 6px;
+            border: 1px solid var(--border-light); border-radius: 6px;
             color: var(--text-dark); font-family: 'JetBrains Mono', monospace;
             font-size: 0.9rem; resize: vertical; min-height: 140px;
             transition: border-color 0.2s; outline: none;
@@ -175,23 +177,6 @@
                             <div class="form-group">
                                 <label>Nội dung — hỗ trợ LaTeX <code style="background:rgba(92,225,230,0.1);padding:1px 6px;border-radius:3px;color:var(--accent-cyan)">$...$</code> và <code style="background:rgba(92,225,230,0.1);padding:1px 6px;border-radius:3px;color:var(--accent-cyan)">$$...$$</code></label>
                                 <div class="latex-editor-wrap">
-                                    <div class="latex-toolbar" id="create-toolbar">
-                                        <button type="button" onclick="insertLatex('create-content','$','$')">$ inline $</button>
-                                        <button type="button" onclick="insertLatex('create-content','$$\n','\n$$')">$$ display $$</button>
-                                        <div class="sep"></div>
-                                        <button type="button" onclick="insertLatex('create-content','\\frac{','}{...}')">frac</button>
-                                        <button type="button" onclick="insertLatex('create-content','\\sqrt{','}')">&radic;</button>
-                                        <button type="button" onclick="insertLatex('create-content','\\sum_{i=1}^{n}','')">∑</button>
-                                        <button type="button" onclick="insertLatex('create-content','\\int_{','...}^{...} dx')">∫</button>
-                                        <button type="button" onclick="insertLatex('create-content','\\lim_{x \\to ','...}')">lim</button>
-                                        <button type="button" onclick="insertLatex('create-content','\\forall ','')">∀</button>
-                                        <button type="button" onclick="insertLatex('create-content','\\exists ','')">∃</button>
-                                        <button type="button" onclick="insertLatex('create-content','\\infty','')">∞</button>
-                                        <div class="sep"></div>
-                                        <button type="button" onclick="insertLatex('create-content','\\begin{cases}\n','...\n\\end{cases}')">cases</button>
-                                        <button type="button" onclick="insertLatex('create-content','\\vec{','}')">&rarr;vec</button>
-                                        <button type="button" onclick="insertLatex('create-content','\\overline{','}')">&macr;over</button>
-                                    </div>
                                     <textarea id="create-content" class="latex-textarea"
                                         placeholder="Nhập nội dung bài viết. Gõ công thức bằng LaTeX: $x^2 + y^2 = z^2$ hoặc $$\int_0^1 x\,dx = \frac{1}{2}$$" required></textarea>
                                 </div>
@@ -228,15 +213,6 @@
                             <div class="form-group">
                                 <label>Nội dung</label>
                                 <div class="latex-editor-wrap">
-                                    <div class="latex-toolbar">
-                                        <button type="button" onclick="insertLatex('edit-thread-content','$','$')">$ inline $</button>
-                                        <button type="button" onclick="insertLatex('edit-thread-content','$$\n','\n$$')">$$ display $$</button>
-                                        <div class="sep"></div>
-                                        <button type="button" onclick="insertLatex('edit-thread-content','\\frac{','}{...}')">frac</button>
-                                        <button type="button" onclick="insertLatex('edit-thread-content','\\sqrt{','}')">&radic;</button>
-                                        <button type="button" onclick="insertLatex('edit-thread-content','\\sum_{i=1}^{n}','')">∑</button>
-                                        <button type="button" onclick="insertLatex('edit-thread-content','\\infty','')">∞</button>
-                                    </div>
                                     <textarea id="edit-thread-content" class="latex-textarea" required></textarea>
                                 </div>
                                 <button type="button" class="latex-preview-toggle" onclick="toggleForumPreview('edit-thread-content','edit-thread-preview')">▶ Xem preview LaTeX</button>
@@ -261,15 +237,6 @@
                         <form id="create-reply-form" style="display:none;">
                             <div class="form-group">
                                 <div class="latex-editor-wrap">
-                                    <div class="latex-toolbar">
-                                        <button type="button" onclick="insertLatex('reply-content','$','$')">$ inline $</button>
-                                        <button type="button" onclick="insertLatex('reply-content','$$\n','\n$$')">$$ display $$</button>
-                                        <div class="sep"></div>
-                                        <button type="button" onclick="insertLatex('reply-content','\\frac{','}{...}')">frac</button>
-                                        <button type="button" onclick="insertLatex('reply-content','\\sqrt{','}')">&radic;</button>
-                                        <button type="button" onclick="insertLatex('reply-content','\\sum_{i=1}^{n}','')">∑</button>
-                                        <button type="button" onclick="insertLatex('reply-content','\\infty','')">∞</button>
-                                    </div>
                                     <textarea id="reply-content" class="latex-textarea" placeholder="Viết bình luận... Hỗ trợ LaTeX: $x^2$, $$\frac{a}{b}$$" required></textarea>
                                 </div>
                                 <button type="button" class="latex-preview-toggle" onclick="toggleForumPreview('reply-content','reply-preview')">▶ Xem preview LaTeX</button>
@@ -291,13 +258,6 @@
         <div class="history-modal">
             <h3 style="margin-bottom:16px; font-family:'Playfair Display',serif;">✏️ Sửa bình luận</h3>
             <div class="latex-editor-wrap">
-                <div class="latex-toolbar">
-                    <button type="button" onclick="insertLatex('edit-reply-content','$','$')">$ inline $</button>
-                    <button type="button" onclick="insertLatex('edit-reply-content','$$\n','\n$$')">$$ display $$</button>
-                    <div class="sep"></div>
-                    <button type="button" onclick="insertLatex('edit-reply-content','\\frac{','}{...}')">frac</button>
-                    <button type="button" onclick="insertLatex('edit-reply-content','\\sqrt{','}')">&radic;</button>
-                </div>
                 <textarea id="edit-reply-content" class="latex-textarea" style="min-height:100px;"></textarea>
             </div>
             <div class="form-row-actions" style="margin-top:16px;">
@@ -320,6 +280,7 @@
 
     <script src="/SMP/core/js/layout.js"></script>
     <script src="/SMP/core/js/shared.js"></script>
+    <script src="/SMP/core/js/saved.js"></script>
     <script src="/SMP/core/js/forum.js"></script>
 </body>
 </html>

@@ -32,14 +32,22 @@ function insertLatex(textareaId, before, after) {
 }
 
 function toggleForumPreview(textareaId, previewId) {
-    const ta = document.getElementById(textareaId);
     const box = document.getElementById(previewId);
-    if (!ta || !box) return;
-    box.classList.toggle('active');
-    if (box.classList.contains('active')) {
-        box.innerHTML = ta.value || '<span style="opacity:0.4;font-style:italic;">Chưa có nội dung...</span>';
-        if (window.MathJax) MathJax.startup.promise.then(() => MathJax.typesetPromise([box]));
-    }
+    const src = document.getElementById(textareaId);
+    if (!src || !box) return;
+    if (box.classList.contains('active')) { box.classList.remove('active'); return; }
+    box.classList.add('active');
+    const renderBox = () => {
+        const text = src.value.trim();
+        if (!text) {
+            box.innerHTML = '<span style="opacity:0.4;font-style:italic;">Chưa có nội dung...</span>';
+        } else {
+            box.innerHTML = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+            if (window.MathJax) { MathJax.typesetClear([box]); MathJax.typesetPromise([box]).catch(()=>{}); }
+        }
+    };
+    renderBox();
+    src.oninput = () => { if (box.classList.contains('active')) renderBox(); };
 }
 
 // ─── Thread List ──────────────────────────────────────────────────────────
@@ -115,6 +123,11 @@ async function openThread(threadId) {
                         <span class="post-date" style="margin-left:12px;">👁 ${thread.viewCount} lượt xem</span>
                     </div>
                     <div class="post-actions">
+                        <button id="save-thread-btn"
+                            onclick="(function(btn){ if(window.toggleSavePost){ toggleSavePost('${thread.id}', ${JSON.stringify(thread.title).replace(/'/g,"&#39;")}, window.location.href, btn); } else { alert('Vui lòng đăng nhập để lưu!'); } })(this)"
+                            style="background:none; border:1px solid var(--border-light); color:var(--text-muted); padding:4px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem; font-family:'JetBrains Mono', monospace;">
+                            &#x2606; Lưu bài
+                        </button>
                         ${thread.editedAt ? `<button class="btn-secondary" onclick="showHistory('${thread.id}','thread')" style="font-size:0.75rem; padding:4px 10px;">📜 Lịch sử sửa</button>` : ''}
                         ${isAuthor ? `
                             <button class="btn-secondary" style="font-size:0.75rem; padding:4px 10px;" onclick="showEditThreadForm('${thread.id}', ${JSON.stringify(thread.title).replace(/'/g,"&#39;")}, ${JSON.stringify(thread.content).replace(/'/g,"&#39;")})">✏️ Sửa</button>
@@ -371,4 +384,12 @@ function setupFormHandlers() {
 document.addEventListener('DOMContentLoaded', () => {
     loadThreadList();
     setupFormHandlers();
+    if (typeof SMPLatexCore !== 'undefined') {
+        setTimeout(() => {
+            SMPLatexCore.init('create-content');
+            SMPLatexCore.init('edit-thread-content');
+            SMPLatexCore.init('reply-content');
+            SMPLatexCore.init('edit-reply-content');
+        }, 100);
+    }
 });
