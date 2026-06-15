@@ -414,42 +414,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
 });
 
-// === COMMENT SYSTEM (Giscus) ===
-const Comments = {
-    // Inject Giscus vào phần tử có id='giscus-container'
-    init() {
-        const container = document.getElementById('giscus-container');
-        if (!container) return;
-
-        const isDark = document.body.classList.contains('dark-mode');
-        const script = document.createElement('script');
-        script.src = 'https://giscus.app/client.js';
-        script.setAttribute('data-repo', 'Dvhlong55/SMP');
-        script.setAttribute('data-repo-id', 'R_kgDOSvmBLQ');
-        script.setAttribute('data-category', 'General');
-        script.setAttribute('data-category-id', 'DIC_kwDOSvmBLc4C-ipH');
-        script.setAttribute('data-mapping', 'pathname');
-        script.setAttribute('data-strict', '0');
-        script.setAttribute('data-reactions-enabled', '1');
-        script.setAttribute('data-emit-metadata', '0');
-        script.setAttribute('data-input-position', 'bottom');
-        script.setAttribute('data-theme', isDark ? 'dark' : 'light');
-        script.setAttribute('data-lang', 'vi');
-        script.setAttribute('crossorigin', 'anonymous');
-        script.async = true;
-        container.appendChild(script);
-    },
-
-    // Đồng bộ theme Giscus khi bật/tắt dark mode
-    setTheme(theme) {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage(
-            { giscus: { setConfig: { theme } } },
-            'https://giscus.app'
-        );
-    }
-};
 
 // === HIGHLIGHT ACTIVE NAV LINK ===
 function setActiveNav() {

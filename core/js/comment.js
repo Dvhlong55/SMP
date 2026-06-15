@@ -10,18 +10,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const path = window.location.pathname;
     const postId = path.split('/').pop().replace('.html', '') || 'homepage';
     
-    // Tạo container cho bình luận
-    const commentSection = document.createElement('section');
-    commentSection.id = 'smp-comments-wrapper';
-    commentSection.className = 'fade-up';
-    commentSection.style.marginTop = '40px';
+    // Tìm container Giscus hoặc smp có sẵn để thay thế
+    let commentSection = document.getElementById('giscus-container') || document.getElementById('smp-comments-container');
     
-    // Chèn section bình luận trước footer nếu có, hoặc ở cuối thẻ main
-    const footer = mainEl.querySelector('.site-footer');
-    if (footer) {
-        mainEl.insertBefore(commentSection, footer);
+    if (!commentSection) {
+        // Tạo container mới nếu không tìm thấy
+        commentSection = document.createElement('section');
+        commentSection.id = 'smp-comments-wrapper';
+        commentSection.className = 'fade-up';
+        commentSection.style.marginTop = '40px';
+        
+        // Chèn section bình luận trước footer nếu có, hoặc ở cuối thẻ main
+        const footer = mainEl.querySelector('.site-footer');
+        if (footer) {
+            mainEl.insertBefore(commentSection, footer);
+        } else {
+            mainEl.appendChild(commentSection);
+        }
     } else {
-        mainEl.appendChild(commentSection);
+        // Làm sạch container cũ
+        commentSection.innerHTML = '';
     }
     
     // Inject CSS styling cho comment

@@ -240,11 +240,14 @@
                 </a>
             </div>
             <nav class="sidebar-nav">
-                <a href="/SMP/index.html">&#x2302; Home page</a>
+                <a href="/SMP/index.html">&#x2302; Home</a>
                 <a href="/SMP/pages/toanhoc.html">&#x2211; Math</a>
                 <a href="/SMP/pages/nonmath.html">&#x2734; Non Math</a>
-                <a href="/SMP/pages/cuocsong.html">&#x2726; My Life</a>
-                <a href="/SMP/pages/vetoi.html">&#x25CE; About Me</a>
+                <a href="/SMP/pages/cuocsong.html">✦ Life</a>
+                <a href="/SMP/pages/forum.html">⧉ Forum</a>
+                <a href="/SMP/pages/saved.html">🖫 Saved</a>
+                <a href="/SMP/pages/vetoi.html">◎ About</a>
+                <a href="/SMP/pages/auth.html" id="sidebar-auth-btn">&#x2637; Login</a>
             </nav>
         </div>
         <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle sidebar" aria-label="Toggle sidebar">
@@ -256,23 +259,30 @@
     <header class="topbar">
         <a href="/SMP/index.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s; margin-right: 20px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Trang Chủ">SMP</a>
         
-        <nav class="topbar-nav">
+        <nav class="topbar-nav" style="flex: 1; justify-content: flex-start; gap: 20px;">
             <a href="/SMP/index.html">&#x2302; Home</a>
             <a href="/SMP/pages/toanhoc.html">&#x2211; Math</a>
             <a href="/SMP/pages/nonmath.html">&#x2734; Non Math</a>
-            <a href="/SMP/pages/cuocsong.html">&#x2726; Life</a>
-            <a href="/SMP/pages/vetoi.html">&#x25CE; About</a>
+            <a href="/SMP/pages/cuocsong.html">✦ Life</a>
+            <a href="/SMP/pages/forum.html">⧉ Forum</a>
+            <a href="/SMP/pages/saved.html">🖫 Saved</a>
         </nav>
 
-        <div class="search-wrapper">
-            <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
-            <span class="search-icon">&#x2315;</span>
-            <div id="search-results" class="search-results"></div>
-        </div>
-        
-        <div class="topbar-actions">
-            <button id="install-app-btn" class="dark-toggle" style="display: none; border-color: var(--accent-cyan); color: var(--accent-cyan);">&#x2B07; Tải App</button>
-            <button id="dark-toggle" class="dark-toggle">&#x263D; Tối</button>
+        <div style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
+            <div class="search-wrapper" style="margin-right: 10px;">
+                <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
+                <span class="search-icon">&#x2315;</span>
+                <div id="search-results" class="search-results"></div>
+            </div>
+            
+            <nav class="topbar-nav" style="gap: 20px; margin-right: 15px;">
+                <a href="/SMP/pages/vetoi.html">◎ About</a>
+                <a href="/SMP/pages/auth.html" id="topbar-auth-btn">&#x2637; Login</a>
+            </nav>
+            
+            <div class="topbar-actions">
+                <button id="dark-toggle" class="dark-toggle">&#x263D; Tối</button>
+            </div>
         </div>
     </header>`;
 
@@ -574,34 +584,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('smp_access_token');
     const username = localStorage.getItem('smp_username');
     
-    // Add auth status link to sidebar and topbar
-    const sidebarNav = document.querySelector('.sidebar-nav');
-    const topbarNav = document.querySelector('.topbar-nav');
+    // Update auth status link
+    const sidebarAuthBtn = document.getElementById('sidebar-auth-btn');
+    const topbarAuthBtn = document.getElementById('topbar-auth-btn');
     
-    if (sidebarNav) {
-        const authLink = document.createElement('a');
-        authLink.href = '/SMP/pages/auth.html';
-        if (token && username) {
-            authLink.innerHTML = `&#x25CE; ${username}`;
-        } else {
-            authLink.innerHTML = `&#x25CE; LOGIN`;
-        }
-        sidebarNav.appendChild(authLink);
-    }
-    
-    if (topbarNav) {
-        const authLink = document.createElement('a');
-        authLink.href = '/SMP/pages/auth.html';
-        if (token && username) {
-            authLink.innerHTML = `&#x25CE; ${username}`;
-        } else {
-            authLink.innerHTML = `&#x25CE; Login`;
-        }
-        topbarNav.appendChild(authLink);
+    if (token && username) {
+        if (sidebarAuthBtn) sidebarAuthBtn.innerHTML = `&#x2637; ${username}`;
+        if (topbarAuthBtn) topbarAuthBtn.innerHTML = `&#x2637; ${username}`;
     }
 
-    // Load comments on post pages
-    if (window.location.pathname.includes('/posts/')) {
+    // Load comments on any page that has the comment container
+    if (document.getElementById('smp-comments-container') || document.getElementById('giscus-container')) {
         const script = document.createElement('script');
         script.src = '/SMP/core/js/comment.js?v=1';
         document.body.appendChild(script);

@@ -97,9 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             </div>
 
-            <!-- Thảo Luận & Góp Ý (Giscus) -->
+            <!-- Bình Luận (SMP Comments) -->
             <div class="giscus-section-outer fade-up" style="max-width: 900px; margin: 48px auto; padding: 48px 24px 0 24px; border-top: 1px solid var(--border-light);">
-                <h2 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 24px; color: var(--text-main);">Thảo Luận &amp; Góp Ý</h2>
                 <div id="giscus-container"></div>
             </div>
 
