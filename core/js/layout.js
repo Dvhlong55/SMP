@@ -243,7 +243,6 @@
                 <a href="/SMP/index.html">&#x2302; Home</a>
                 <a href="/SMP/pages/toanhoc.html">&#x2211; Math</a>
                 <a href="/SMP/pages/nonmath.html">&#x2734; Non Math</a>
-                <a href="/SMP/pages/cuocsong.html">✦ Life</a>
                 <a href="/SMP/pages/forum.html">⧉ Forum</a>
                 <a href="/SMP/pages/saved.html">🖫 Saved</a>
                 <a href="/SMP/pages/vetoi.html">◎ About</a>
@@ -263,7 +262,6 @@
             <a href="/SMP/index.html">&#x2302; Home</a>
             <a href="/SMP/pages/toanhoc.html">&#x2211; Math</a>
             <a href="/SMP/pages/nonmath.html">&#x2734; Non Math</a>
-            <a href="/SMP/pages/cuocsong.html">✦ Life</a>
             <a href="/SMP/pages/forum.html">⧉ Forum</a>
             <a href="/SMP/pages/saved.html">🖫 Saved</a>
         </nav>
@@ -280,7 +278,14 @@
                 <a href="/SMP/pages/auth.html" id="topbar-auth-btn">&#x2637; Login</a>
             </nav>
             
-            <div class="topbar-actions">
+            <div class="topbar-actions" style="display: flex; gap: 10px; align-items: center;">
+                <div class="notif-wrapper" style="position: relative;">
+                    <button id="notif-toggle-btn" onclick="if(window.toggleNotificationDropdown) window.toggleNotificationDropdown(event)" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; transition:color 0.2s;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-muted)'" title="Thông báo">
+                        🔔
+                        <span id="top-notif-badge" style="display:none; position:absolute; top:0; right:0; background:var(--accent-red,#e74c3c); width:8px; height:8px; border-radius:50%;"></span>
+                    </button>
+                    <!-- Dropdown sẽ được inject qua notifications.js -->
+                </div>
                 <button id="dark-toggle" class="dark-toggle">&#x263D; Tối</button>
             </div>
         </div>
@@ -599,4 +604,9 @@ document.addEventListener('DOMContentLoaded', () => {
         script.src = '/SMP/core/js/comment.js?v=1';
         document.body.appendChild(script);
     }
-});
+
+    // ── Inject notifications script ──────────────────────────────────────────
+    const notifScript = document.createElement('script');
+    notifScript.src = '/SMP/core/js/notifications.js';
+    document.body.appendChild(notifScript);
+});

@@ -13,17 +13,16 @@ const LEFT_TAGS_HTML = `
             <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin: 16px 0;">
             
             <ul class="side-widget-list">
-                <li><a href="/SMP/pages/nonmath.html?filter=cs">CS <span>0</span></a></li>
-                <li><a href="/SMP/pages/nonmath.html?filter=physics">Vật Lý <span>2</span></a></li>
-                <li><a href="/SMP/pages/nonmath.html?filter=other">Khác <span>0</span></a></li>
-            </ul>
-
-            <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin: 16px 0;">
-
-            <ul class="side-widget-list">
-                <li><a href="/SMP/pages/cuocsong.html?filter=2026">2026 <span>0</span></a></li>
-                <li><a href="/SMP/pages/cuocsong.html?filter=2025">2025 <span>1</span></a></li>
-                <li><a href="/SMP/pages/cuocsong.html?filter=2024">2024 <span>0</span></a></li>
+                <li><a href="/SMP/pages/forum.html">⧉ Forum</a></li>
+                <li><a href="/SMP/pages/saved.html">🖫 Saved</a></li>
+                <li>
+                    <a href="javascript:void(0)" onclick="if(window.toggleNotificationDropdown) window.toggleNotificationDropdown(event)">
+                        <span style="position:relative;">
+                            🔔 Thông báo
+                            <span id="side-notif-badge" style="display:none; position:absolute; top:-2px; right:-8px; background:var(--accent-red,#e74c3c); width:8px; height:8px; border-radius:50%;"></span>
+                        </span>
+                    </a>
+                </li>
             </ul>
         </div>
 `;
