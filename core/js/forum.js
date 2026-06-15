@@ -96,7 +96,7 @@ async function openThread(threadId) {
 
         // Re-render MathJax after content load
         if (window.MathJax) {
-            MathJax.typesetPromise([mainContent, repliesList]);
+            MathJax.startup.promise.then(() => MathJax.typesetPromise([mainContent, repliesList]));
         }
 
     } catch (err) {
@@ -117,14 +117,22 @@ function setupFormHandlers() {
 
     // Show create form
     document.getElementById('btn-show-create').addEventListener('click', () => {
-        const token = localStorage.getItem('smp_access_token');
-        if (!token) {
-            alert('Vui lòng đăng nhập để tạo chủ đề mới!');
-            window.location.href = '/SMP/pages/auth.html';
-            return;
-        }
         const formEl = document.getElementById('create-thread-form-container');
-        formEl.style.display = formEl.style.display === 'none' ? 'block' : 'none';
+        const isVisible = formEl.style.display === 'block';
+        formEl.style.display = isVisible ? 'none' : 'block';
+        if (!isVisible) {
+            const token = localStorage.getItem('smp_access_token');
+            const notice = document.getElementById('create-login-notice');
+            const form = document.getElementById('create-thread-form');
+            if (token) {
+                notice.style.display = 'none';
+                form.style.display = 'block';
+            } else {
+                notice.style.display = 'block';
+                form.style.display = 'none';
+            }
+            formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     });
 
     // Cancel create form
