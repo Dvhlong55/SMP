@@ -38,9 +38,15 @@ class NotificationsController {
             }
             // Đóng menu context "..."
             if (!e.target.closest('.notif-menu-wrapper')) {
-                document.querySelectorAll('[id^="notif-menu-"]').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.notif-context-menu').forEach(el => el.style.display = 'none');
             }
         });
+
+        // Initialize full notifications page if container exists
+        if (document.getElementById('notif-container')) {
+            window.renderFullNotifications = () => this.renderFullPage();
+            this.renderFullPage();
+        }
     }
     
     createDropdownUI() {
@@ -48,21 +54,6 @@ class NotificationsController {
         
         const dropdown = document.createElement('div');
         dropdown.id = 'notif-dropdown';
-        dropdown.style.display = 'none';
-        dropdown.style.position = 'absolute';
-        // Vị trí mặc định (dùng cho topbar)
-        dropdown.style.right = '0';
-        dropdown.style.top = '40px';
-        dropdown.style.width = '320px';
-        dropdown.style.maxHeight = '400px';
-        dropdown.style.overflowY = 'auto';
-        dropdown.style.background = 'var(--bg-secondary, #1e1e1e)';
-        dropdown.style.border = '1px solid var(--border-light, #333)';
-        dropdown.style.borderRadius = '8px';
-        dropdown.style.boxShadow = '0 10px 25px rgba(0,0,0,0.5)';
-        dropdown.style.zIndex = '1000';
-        dropdown.style.padding = '0';
-        dropdown.style.fontFamily = "'Inter', sans-serif";
         
         // Gắn vào .notif-wrapper của topbar nếu có
         const wrapper = document.querySelector('.notif-wrapper');
@@ -93,6 +84,9 @@ class NotificationsController {
                 this.notifications = await res.json();
                 this.updateBadges();
                 this.renderDropdown();
+                if (window.renderFullNotifications) {
+                    window.renderFullNotifications();
+                }
             }
         } catch (err) {
             console.error("Failed to fetch notifications", err);
@@ -133,7 +127,7 @@ class NotificationsController {
         
         if (this.notifications.length === 0) {
             this.dropdownEl.innerHTML = `
-                <div style="padding: 16px; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+                <div class="notif-empty-state">
                     Không có thông báo nào.
                 </div>
             `;
@@ -141,11 +135,11 @@ class NotificationsController {
         }
         
         let html = `
-            <div style="padding: 12px 16px; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02);">
-                <h4 style="margin: 0; font-size: 1rem; color: var(--text-color);">Thông báo</h4>
-                <button onclick="notifCtrl.markAllRead()" style="background:none; border:none; color:var(--accent-cyan); cursor:pointer; font-size:0.8rem;">Đánh dấu tất cả đã đọc</button>
+            <div class="notif-dropdown-header">
+                <h4>Thông báo</h4>
+                <button onclick="notifCtrl.markAllRead()" class="notif-mark-all-btn">Đánh dấu tất cả đã đọc</button>
             </div>
-            <div style="display: flex; flex-direction: column;">
+            <div class="notif-dropdown-list">
         `;
         
         // Hiển thị tối đa 10 thông báo trong dropdown
@@ -153,24 +147,23 @@ class NotificationsController {
         
         displayNotifs.forEach(notif => {
             const isRead = notif.read;
-            const bg = isRead ? 'transparent' : 'rgba(92, 225, 230, 0.05)';
-            const opacity = isRead ? '0.7' : '1';
+            const itemClass = isRead ? 'notif-dropdown-item' : 'notif-dropdown-item unread';
             
             html += `
-                <div style="padding: 12px 16px; border-bottom: 1px solid var(--border-light); background: ${bg}; opacity: ${opacity}; display: flex; align-items: flex-start; gap: 10px; position: relative;" class="notif-item">
-                    ${!isRead ? '<div style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent-red); margin-top: 6px; flex-shrink: 0;"></div>' : '<div style="width: 8px; flex-shrink: 0;"></div>'}
-                    <div style="flex: 1; min-width: 0;">
-                        <a href="${notif.url}" onclick="notifCtrl.markReadAndGo('${notif.id}', '${notif.url}', event)" style="text-decoration: none; color: var(--text-color); display: block; font-size: 0.9rem;">
-                            <span style="font-weight: bold; color: var(--accent-gold);">${this.escapeHTML(notif.senderName)}</span> ${this.escapeHTML(notif.message)}
+                <div class="${itemClass}">
+                    ${!isRead ? '<div class="notif-unread-dot"></div>' : '<div class="notif-dot-placeholder"></div>'}
+                    <div class="notif-item-body">
+                        <a href="${notif.url}" onclick="notifCtrl.markReadAndGo('${notif.id}', '${notif.url}', event)" class="notif-item-link">
+                            <span class="notif-item-sender">${this.escapeHTML(notif.senderName)}</span> ${this.escapeHTML(notif.message)}
                         </a>
-                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">${this.formatDate(notif.createdAt)}</div>
+                        <div class="notif-item-time">${this.formatDate(notif.createdAt)}</div>
                     </div>
                     
-                    <div class="notif-menu-wrapper" style="position: relative; flex-shrink: 0;">
-                        <button onclick="notifCtrl.toggleMenu('${notif.id}', event)" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size: 1.2rem; padding: 0 4px; line-height: 1;">⋯</button>
-                        <div id="notif-menu-${notif.id}" style="display:none; position:absolute; right:0; top:20px; background:var(--bg-card,#252525); border:1px solid var(--border-light); border-radius:4px; box-shadow:0 4px 12px rgba(0,0,0,0.5); z-index:1001; min-width:140px; overflow:hidden;">
-                            ${!isRead ? `<button onclick="notifCtrl.markRead('${notif.id}', event)" style="display:block; width:100%; text-align:left; padding:8px 12px; background:none; border:none; color:var(--text-color); cursor:pointer; font-size:0.85rem; border-bottom:1px solid var(--border-light);">Đánh dấu đã đọc</button>` : ''}
-                            <button onclick="notifCtrl.deleteNotif('${notif.id}', event)" style="display:block; width:100%; text-align:left; padding:8px 12px; background:none; border:none; color:var(--accent-red,#e74c3c); cursor:pointer; font-size:0.85rem;">Xóa thông báo</button>
+                    <div class="notif-menu-wrapper">
+                        <button onclick="notifCtrl.toggleMenu('${notif.id}', event)" class="notif-opt-btn">⋯</button>
+                        <div id="notif-menu-${notif.id}" class="notif-context-menu">
+                            ${!isRead ? `<button onclick="notifCtrl.markRead('${notif.id}', event)">Đánh dấu đã đọc</button>` : ''}
+                            <button onclick="notifCtrl.deleteNotif('${notif.id}', event)" class="delete">Xóa thông báo</button>
                         </div>
                     </div>
                 </div>
@@ -179,7 +172,7 @@ class NotificationsController {
         
         html += `
             </div>
-            <a href="/SMP/pages/notifications.html" style="display: block; text-align: center; padding: 12px; background: rgba(255,255,255,0.02); color: var(--accent-cyan); text-decoration: none; font-size: 0.9rem; border-top: 1px solid var(--border-light);">Xem tất cả</a>
+            <a href="/SMP/pages/notifications.html" class="notif-dropdown-footer">Xem tất cả</a>
         `;
         
         this.dropdownEl.innerHTML = html;
@@ -192,7 +185,7 @@ class NotificationsController {
         const isVisible = menu.style.display === 'block';
         
         // Đóng các menu khác
-        document.querySelectorAll('[id^="notif-menu-"]').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.notif-context-menu').forEach(el => el.style.display = 'none');
         
         if (!isVisible) {
             menu.style.display = 'block';
@@ -259,6 +252,43 @@ class NotificationsController {
             // Nếu ở trang full thì reload list
             if (window.renderFullNotifications) window.renderFullNotifications();
         } catch (err) {}
+    }
+    
+    renderFullPage() {
+        const container = document.getElementById('notif-container');
+        if (!container) return;
+        
+        if (this.notifications.length === 0) {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 40px; border: 1px dashed var(--border-light); border-radius: 8px; grid-column: 1 / -1;">
+                    <p style="color: var(--text-muted); margin-bottom: 16px;">Bạn không có thông báo nào.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        let html = '<div style="display: flex; flex-direction: column; gap: 14px;">';
+        this.notifications.forEach(notif => {
+            const isRead = notif.read;
+            const cardClass = isRead ? 'notif-full-card' : 'notif-full-card unread';
+            
+            html += `
+                <div class="${cardClass}">
+                    <div class="notif-full-content">
+                        <a href="${notif.url}" onclick="notifCtrl.markReadAndGo('${notif.id}', '${notif.url}', event)" class="notif-full-link">
+                            <span class="notif-full-sender">${this.escapeHTML(notif.senderName)}</span> ${this.escapeHTML(notif.message)}
+                        </a>
+                        <div class="notif-full-time">${this.formatDate(notif.createdAt)}</div>
+                    </div>
+                    <div class="notif-full-actions">
+                        ${!isRead ? `<button onclick="notifCtrl.markRead('${notif.id}', event)" class="notif-full-btn">Đánh dấu đã đọc</button>` : ''}
+                        <button onclick="notifCtrl.deleteNotif('${notif.id}', event)" class="notif-full-btn delete">Xóa</button>
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
     }
     
     escapeHTML(str) {
