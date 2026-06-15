@@ -16,7 +16,7 @@
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <!-- CSS dùng chung -->
-    <link rel="stylesheet" href="/SMP/core/css/shared.css">
+    <link rel="stylesheet" href="/SMP/core/css/shared.css?v=5">
     
     <!-- CodeMirror 5 Core & Theme -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
@@ -145,6 +145,19 @@
         }
         .login-notice a { color: var(--accent-cyan); font-weight: bold; }
         .form-row-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+
+        /* Tags and Mentions */
+        .forum-tag { display: inline-block; padding: 3px 8px; background: rgba(92,225,230,0.1); color: var(--accent-cyan); border: 1px solid rgba(92,225,230,0.3); border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; margin-right: 6px; margin-top: 6px; }
+        .forum-mention { color: var(--accent-gold); font-weight: bold; padding: 0 2px; background: rgba(243, 156, 18, 0.1); border-radius: 3px; }
+        
+        .nav-filter-bar { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; scrollbar-width: none; }
+        .nav-filter-bar::-webkit-scrollbar { display: none; }
+        .nav-filter-btn { background: transparent; border: 1px solid transparent; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; padding: 6px 14px; cursor: pointer; border-radius: 6px; white-space: nowrap; transition: all 0.3s; }
+        .nav-filter-btn:hover { color: var(--accent-cyan); background: rgba(92,225,230,0.1); }
+        .nav-filter-btn.active { color: var(--accent-cyan); background: rgba(92,225,230,0.1); border: 1px solid var(--accent-cyan); font-weight: bold; }
+        
+        .tag-checkboxes { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+        .tag-checkbox-label { display: flex; align-items: center; gap: 5px; font-size: 0.85rem; color: var(--text-main); cursor: pointer; }
     </style>
 </head>
 <body>
@@ -162,6 +175,15 @@
                         <button class="btn-primary" id="btn-show-create">+ Tạo chủ đề mới</button>
                     </div>
 
+                    <div class="nav-filter-bar fade-up" id="forum-filter-bar">
+                        <button class="nav-filter-btn active" data-tag="all">Tất Cả</button>
+                        <button class="nav-filter-btn" data-tag="Số Học">Số Học</button>
+                        <button class="nav-filter-btn" data-tag="Tổ Hợp">Tổ Hợp</button>
+                        <button class="nav-filter-btn" data-tag="Hình Học">Hình Học</button>
+                        <button class="nav-filter-btn" data-tag="Đại Số">Đại Số</button>
+                        <button class="nav-filter-btn" data-tag="Giải Tích">Giải Tích</button>
+                    </div>
+
                     <!-- Form tạo chủ đề -->
                     <div class="forum-form" id="create-thread-form-container">
                         <h3>✏️ Chủ đề mới</h3>
@@ -173,6 +195,17 @@
                                 <label>Tiêu đề <span style="color:#e74c3c">*</span></label>
                                 <input type="text" id="thread-title" class="form-control"
                                     placeholder="Ví dụ: Chứng minh bất đẳng thức Cauchy-Schwarz dạng tổng quát" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Gắn thẻ (Tags)</label>
+                                <div class="tag-checkboxes">
+                                    <label class="tag-checkbox-label"><input type="checkbox" value="Số Học" class="thread-tag-cb"> Số Học</label>
+                                    <label class="tag-checkbox-label"><input type="checkbox" value="Tổ Hợp" class="thread-tag-cb"> Tổ Hợp</label>
+                                    <label class="tag-checkbox-label"><input type="checkbox" value="Hình Học" class="thread-tag-cb"> Hình Học</label>
+                                    <label class="tag-checkbox-label"><input type="checkbox" value="Đại Số" class="thread-tag-cb"> Đại Số</label>
+                                    <label class="tag-checkbox-label"><input type="checkbox" value="Giải Tích" class="thread-tag-cb"> Giải Tích</label>
+                                </div>
+                                <input type="text" id="thread-custom-tags" class="form-control" placeholder="Các thẻ khác (cách nhau bằng dấu phẩy, vd: IMO, Phương trình hàm)">
                             </div>
                             <div class="form-group">
                                 <label>Nội dung — hỗ trợ LaTeX <code style="background:rgba(92,225,230,0.1);padding:1px 6px;border-radius:3px;color:var(--accent-cyan)">$...$</code> và <code style="background:rgba(92,225,230,0.1);padding:1px 6px;border-radius:3px;color:var(--accent-cyan)">$$...$$</code></label>
@@ -278,9 +311,9 @@
         </div>
     </div>
 
-    <script src="/SMP/core/js/layout.js"></script>
-    <script src="/SMP/core/js/shared.js"></script>
-    <script src="/SMP/core/js/saved.js"></script>
-    <script src="/SMP/core/js/forum.js"></script>
+    <script src="/SMP/core/js/layout.js?v=6"></script>
+    <script src="/SMP/core/js/shared.js?v=6"></script>
+    <script src="/SMP/core/js/saved.js?v=6"></script>
+    <script src="/SMP/core/js/forum.js?v=6"></script>
 </body>
 </html>

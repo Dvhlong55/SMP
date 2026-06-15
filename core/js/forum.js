@@ -46,15 +46,42 @@ function parseLatexTextCommands(text) {
 
 function renderLatexText(text) {
     if (!text) return '';
-    return parseLatexTextCommands(escapeHTML(text));
+    let parsed = parseLatexTextCommands(escapeHTML(text));
+    parsed = parsed.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+    parsed = parsed.replace(/(^|[^\\])\*([^*]+)\*/g, '$1<i>$2</i>');
+    parsed = parsed.replace(/@([A-Za-z0-9_.-]+)/g, '<span class="forum-mention">@$1</span>');
+    return parsed;
 }
 
 function formatDate(iso) {
     if (!iso) return '';
+    if (!iso.endsWith('Z')) iso += 'Z';
     return new Date(iso).toLocaleString('vi-VN', {
         day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'
     });
 }
+
+// ─── Reactions (Likes) ──────────────────────────────────────────────────
+window.isLiked = function(id) {
+    let liked = JSON.parse(localStorage.getItem('smp_liked_posts') || '{}');
+    return !!liked[id];
+};
+
+window.toggleLike = function(id, btnElement) {
+    let liked = JSON.parse(localStorage.getItem('smp_liked_posts') || '{}');
+    if (liked[id]) {
+        delete liked[id];
+        btnElement.innerHTML = '♡ Thích';
+        btnElement.style.color = 'var(--text-muted)';
+        btnElement.style.borderColor = 'var(--border-light)';
+    } else {
+        liked[id] = true;
+        btnElement.innerHTML = '❤️ Đã thích';
+        btnElement.style.color = '#e74c3c';
+        btnElement.style.borderColor = '#e74c3c';
+    }
+    localStorage.setItem('smp_liked_posts', JSON.stringify(liked));
+};
 
 // ─── LaTeX helpers ────────────────────────────────────────────────────────
 function insertLatex(textareaId, before, after) {
@@ -87,12 +114,26 @@ function toggleForumPreview(textareaId, previewId) {
 }
 
 // ─── Thread List ──────────────────────────────────────────────────────────
+let currentTagFilter = 'all';
+
 async function loadThreadList() {
     const container = document.getElementById('thread-list-container');
     try {
         const res = await fetch(`${API_BASE}/api/forum/threads`);
         if (!res.ok) throw new Error('Không thể tải danh sách chủ đề');
-        const threads = await res.json();
+        let threads = await res.json();
+
+        // Filter by tags
+        if (currentTagFilter !== 'all') {
+            threads = threads.filter(t => {
+                const tagsMatch = t.content.match(/\[TAGS:\s*(.+?)\]/);
+                if (tagsMatch) {
+                    const tags = tagsMatch[1].split(',').map(tag => tag.trim().toLowerCase());
+                    return tags.includes(currentTagFilter.toLowerCase());
+                }
+                return false;
+            });
+        }
 
         if (threads.length === 0) {
             container.innerHTML = `
@@ -103,7 +144,14 @@ async function loadThreadList() {
             return;
         }
 
-        container.innerHTML = threads.map(t => `
+        container.innerHTML = threads.map(t => {
+            let tagsHtml = '';
+            const tagsMatch = t.content.match(/\[TAGS:\s*(.+?)\]/);
+            if (tagsMatch) {
+                const tags = tagsMatch[1].split(',').map(tag => tag.trim());
+                tagsHtml = '<div style="margin-top: 8px;">' + tags.map(tag => `<span class="forum-tag">${escapeHTML(tag)}</span>`).join('') + '</div>';
+            }
+            return `
             <div class="thread-item" onclick="openThread('${t.id}')">
                 <div class="thread-item-title">${escapeHTML(t.title)}${t.editedAt ? '<span class="edit-badge">(đã chỉnh sửa)</span>' : ''}</div>
                 <div class="thread-item-meta">
@@ -112,8 +160,10 @@ async function loadThreadList() {
                     <span>💬 ${t.replyCount} phản hồi</span>
                     <span>🕐 ${formatDate(t.createdAt)}</span>
                 </div>
+                ${tagsHtml}
             </div>
-        `).join('');
+            `;
+        }).join('');
     } catch (err) {
         container.innerHTML = `<div style="color:#e74c3c; text-align:center; padding:40px;">${err.message}</div>`;
     }
@@ -146,12 +196,22 @@ async function openThread(threadId) {
         const currentUser = getUsername();
         const isAuthor = currentUser && currentUser === thread.author_name;
 
+        let displayContent = thread.content;
+        let tagsHtml = '';
+        const tagsMatch = displayContent.match(/\[TAGS:\s*(.+?)\]/);
+        if (tagsMatch) {
+            const tags = tagsMatch[1].split(',').map(tag => tag.trim());
+            tagsHtml = '<div style="margin-bottom: 16px;">' + tags.map(tag => `<span class="forum-tag">${escapeHTML(tag)}</span>`).join('') + '</div>';
+            displayContent = displayContent.replace(/\[TAGS:\s*(.+?)\]\n*/, '');
+        }
+
         mainContent.innerHTML = `
             <div class="post-card op">
                 <h2 style="font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--text-dark); margin-bottom:16px;">
                     ${escapeHTML(thread.title)}
                     ${thread.editedAt ? '<span class="edit-badge">(đã chỉnh sửa)</span>' : ''}
                 </h2>
+                ${tagsHtml}
                 <div class="post-meta">
                     <div>
                         <span class="post-author">✍️ ${escapeHTML(thread.author_name)}</span>
@@ -159,6 +219,10 @@ async function openThread(threadId) {
                         <span class="post-date" style="margin-left:12px;">👁 ${thread.viewCount} lượt xem</span>
                     </div>
                     <div class="post-actions">
+                        <button onclick="window.toggleLike('${thread.id}', this)"
+                            style="background:none; border:1px solid ${isLiked(thread.id) ? '#e74c3c' : 'var(--border-light)'}; color:${isLiked(thread.id) ? '#e74c3c' : 'var(--text-muted)'}; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem; font-family:'JetBrains Mono', monospace; margin-right: 6px;">
+                            ${isLiked(thread.id) ? '❤️ Đã thích' : '♡ Thích'}
+                        </button>
                         <button id="save-thread-btn"
                             data-id="${thread.id}"
                             data-title="${escapeHTML(thread.title)}"
@@ -173,7 +237,7 @@ async function openThread(threadId) {
                         ` : ''}
                     </div>
                 </div>
-                <div class="post-content">${renderLatexText(thread.content)}</div>
+                <div class="post-content">${renderLatexText(displayContent)}</div>
             </div>
         `;
 
@@ -191,6 +255,8 @@ async function openThread(threadId) {
                                 ${r.editedAt ? '<span class="edit-badge">(đã chỉnh sửa)</span>' : ''}
                             </div>
                             <div class="post-actions">
+                                <button class="btn-secondary" onclick="window.toggleLike('reply_${r.id}', this)" style="font-size:0.7rem; padding:3px 8px; border-color:${isLiked('reply_'+r.id) ? '#e74c3c' : ''}; color:${isLiked('reply_'+r.id) ? '#e74c3c' : ''};">${isLiked('reply_'+r.id) ? '❤️' : '♡'}</button>
+                                <button class="btn-secondary" onclick="replyToUser('${escapeHTML(r.author_name)}')" style="font-size:0.7rem; padding:3px 8px;">↩ Trả lời</button>
                                 ${r.editHistory && r.editHistory.length > 0 ? `<button class="btn-secondary" onclick="showReplyHistory('${r.id}')" style="font-size:0.7rem;padding:3px 8px;">📜</button>` : ''}
                                 ${isReplyAuthor ? `
                                     <button class="btn-secondary" style="font-size:0.7rem; padding:3px 8px;" data-content="${escapeHTML(r.content)}" onclick="showEditReplyModal('${r.id}', this.dataset.content)">✏️</button>
@@ -226,6 +292,15 @@ function showEditReplyModal(replyId, currentContent) {
     editingReplyId = replyId;
     document.getElementById('edit-reply-content').value = currentContent;
     document.getElementById('edit-reply-modal').classList.add('show');
+}
+
+function replyToUser(username) {
+    const box = document.getElementById('reply-content');
+    if (!box) return;
+    box.value += (box.value ? ' ' : '') + '@' + username + ' ';
+    box.focus();
+    // Also scroll down to the form
+    document.getElementById('reply-form-container').scrollIntoView({ behavior: 'smooth', block: 'end' });
 }
 
 async function showHistory(id, type) {
@@ -331,7 +406,21 @@ function setupFormHandlers() {
         const token = getToken();
         if (!token) return;
         const title = document.getElementById('thread-title').value.trim();
-        const content = document.getElementById('create-content').value.trim();
+        let content = document.getElementById('create-content').value.trim();
+        
+        // Combine tags
+        const tagCbs = document.querySelectorAll('.thread-tag-cb:checked');
+        let selectedTags = Array.from(tagCbs).map(cb => cb.value);
+        const customTagsInput = document.getElementById('thread-custom-tags');
+        if (customTagsInput && customTagsInput.value.trim()) {
+            const customTags = customTagsInput.value.split(',').map(t => t.trim()).filter(t => t);
+            selectedTags = selectedTags.concat(customTags);
+        }
+        
+        if (selectedTags.length > 0) {
+            content = `[TAGS: ${selectedTags.join(', ')}]\n\n` + content;
+        }
+
         const btn = document.getElementById('btn-submit-create');
         btn.disabled = true; btn.innerText = 'Đang đăng...';
         try {
@@ -416,6 +505,19 @@ function setupFormHandlers() {
     document.getElementById('edit-reply-modal').addEventListener('click', (e) => {
         if (e.target === e.currentTarget) e.currentTarget.classList.remove('show');
     });
+
+    // Filter Buttons
+    const filterBtns = document.querySelectorAll('.nav-filter-btn');
+    if (filterBtns) {
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentTagFilter = btn.getAttribute('data-tag');
+                loadThreadList();
+            });
+        });
+    }
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────

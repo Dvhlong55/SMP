@@ -230,7 +230,9 @@ function renderCommentsSection(postId, comments, container) {
             const deleteBtn = isAuthor ? `<button class="comment-delete" onclick="handleDeleteComment('${comment.id}', '${postId}')">Xóa</button>` : '';
             
             // Format time
-            const date = new Date(comment.createdAt);
+            let dateStr = comment.createdAt;
+            if (dateStr && !dateStr.endsWith('Z')) dateStr += 'Z';
+            const date = new Date(dateStr);
             const timeStr = date.toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
             
             commentsListHTML += `
