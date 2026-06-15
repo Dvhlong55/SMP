@@ -294,14 +294,25 @@ function showEditReplyModal(replyId, currentContent) {
     document.getElementById('edit-reply-modal').classList.add('show');
 }
 
-function replyToUser(username) {
+window.replyToUser = function(username) {
     const box = document.getElementById('reply-content');
     if (!box) return;
-    box.value += (box.value ? ' ' : '') + '@' + username + ' ';
-    box.focus();
-    // Also scroll down to the form
+    
+    // Check if CodeMirror is wrapping this textarea
+    if (box.nextSibling && box.nextSibling.CodeMirror) {
+        const cm = box.nextSibling.CodeMirror;
+        const currentVal = cm.getValue();
+        const appendText = (currentVal ? ' ' : '') + '@' + username + ' ';
+        cm.setValue(currentVal + appendText);
+        cm.focus();
+        cm.setCursor(cm.lineCount(), 0);
+    } else {
+        box.value += (box.value ? ' ' : '') + '@' + username + ' ';
+        box.focus();
+    }
+    
     document.getElementById('reply-form-container').scrollIntoView({ behavior: 'smooth', block: 'end' });
-}
+};
 
 async function showHistory(id, type) {
     const modal = document.getElementById('history-modal');
