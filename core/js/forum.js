@@ -126,7 +126,7 @@ async function openThread(threadId) {
                         <button id="save-thread-btn"
                             data-id="${thread.id}"
                             data-title="${escapeHTML(thread.title)}"
-                            onclick="(function(btn){ if(window.toggleSavePost){ toggleSavePost(btn.dataset.id, btn.dataset.title, window.location.href, btn); } else { alert('Vui lòng đăng nhập để lưu!'); } })(this)"
+                            onclick="(function(btn){ if(window.toggleSavePost){ const threadUrl = window.location.origin + window.location.pathname + '?threadId=' + btn.dataset.id; toggleSavePost(btn.dataset.id, btn.dataset.title, threadUrl, btn); } else { alert('Vui lòng đăng nhập để lưu!'); } })(this)"
                             style="background:none; border:1px solid var(--border-light); color:var(--text-muted); padding:4px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem; font-family:'JetBrains Mono', monospace;">
                             &#x2606; Lưu bài
                         </button>
@@ -384,7 +384,13 @@ function setupFormHandlers() {
 
 // ─── Init ─────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-    loadThreadList();
+    loadThreadList().then(() => {
+        const params = new URLSearchParams(window.location.search);
+        const tId = params.get('threadId');
+        if (tId) {
+            openThread(tId);
+        }
+    });
     setupFormHandlers();
     if (typeof SMPLatexCore !== 'undefined') {
         setTimeout(() => {
