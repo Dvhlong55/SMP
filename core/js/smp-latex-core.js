@@ -144,25 +144,23 @@ window.SMPLatexCore = {
         fullEditorBtn.href = '/SMP/tools/latex-v2/index.html';
         fullEditorBtn.target = '_blank';
         fullEditorBtn.innerHTML = 'Mở Trình Soạn Thảo Đầy Đủ ↗';
-        fullEditorBtn.style.position = 'absolute';
-        fullEditorBtn.style.top = '10px';
-        fullEditorBtn.style.right = '10px';
-        fullEditorBtn.style.zIndex = '10';
+        fullEditorBtn.style.marginLeft = '12px';
         fullEditorBtn.style.fontSize = '0.75rem';
         fullEditorBtn.style.background = 'rgba(92,225,230,0.15)';
         fullEditorBtn.style.border = '1px solid rgba(92,225,230,0.4)';
         fullEditorBtn.style.color = '#5ce1e6';
-        fullEditorBtn.style.padding = '4px 8px';
+        fullEditorBtn.style.padding = '3px 8px';
         fullEditorBtn.style.borderRadius = '4px';
         fullEditorBtn.style.textDecoration = 'none';
         fullEditorBtn.style.transition = 'all 0.2s';
         fullEditorBtn.onmouseover = function() { this.style.background = 'rgba(92,225,230,0.25)'; };
         fullEditorBtn.onmouseout = function() { this.style.background = 'rgba(92,225,230,0.15)'; };
 
+        leftSpan.appendChild(fullEditorBtn);
+
         // Wrapper for CodeMirror
         cmEditor.getWrapperElement().style.borderRadius = '6px 6px 0 0';
         cmEditor.getWrapperElement().style.borderBottom = 'none';
-        cmEditor.getWrapperElement().appendChild(fullEditorBtn);
 
         // Cập nhật số ký tự
         cmEditor.on('change', function () {
