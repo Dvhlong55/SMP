@@ -1,4 +1,3 @@
-var API_BASE = 'https://smp-backend-kcwn.onrender.com';
 
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('smp_access_token');
@@ -86,50 +85,6 @@ async function unsavePost(postId) {
     }
 }
 
-// Hàm dùng chung cho việc Toggle Save ở bất kỳ đâu (nhúng vào file layout.js hoặc để đây)
-window.toggleSavePost = async function(postId, postTitle, postUrl, btnElement) {
-    const token = localStorage.getItem('smp_access_token');
-    if (!token) {
-        alert("Vui lòng đăng nhập để lưu bài viết!");
-        window.location.href = '/SMP/pages/auth.html';
-        return;
-    }
-    
-    const isSaving = btnElement.innerText.includes('Bỏ lưu') ? false : true;
-    const originalText = btnElement.innerText;
-    btnElement.innerText = 'Đang xử lý...';
-    btnElement.disabled = true;
-    
-    try {
-        const res = await fetch(`${API_BASE}/api/users/saved`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ postId, postTitle, postUrl })
-        });
-        
-        const data = await res.json();
-        if (res.ok) {
-            if (data.saved) {
-                btnElement.innerHTML = '&#x2605; Đã lưu';
-                btnElement.classList.add('saved-active');
-            } else {
-                btnElement.innerHTML = '&#x2606; Lưu bài';
-                btnElement.classList.remove('saved-active');
-            }
-        } else {
-            btnElement.innerText = originalText;
-            alert(data.detail || "Lỗi lưu bài viết");
-        }
-    } catch (err) {
-        btnElement.innerText = originalText;
-        alert("Không thể kết nối đến máy chủ.");
-    } finally {
-        btnElement.disabled = false;
-    }
-}
 
 function escapeHTML(str) {
     if (!str) return '';

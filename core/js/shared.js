@@ -3,6 +3,8 @@
 //   Secret of Mathematical Principles
 // ============================================
 
+var API_BASE = 'https://smp-backend-kcwn.onrender.com';
+
 // === EARLY DARK MODE APPLY (trước DOMContentLoaded để tránh flash màu sai) ===
 // Áp class ngay khi script được parse, không cần đợi DOM ready
 (function() {
@@ -711,6 +713,72 @@ const PostViewer = {
     }
 };
 
+// === ADD SAVE BUTTONS TO CARDS DYNAMICALLY ===
+function addSaveButtonsToCards() {
+    const cards = document.querySelectorAll('.card, .featured-card');
+    cards.forEach(card => {
+        if (card.querySelector('.card-save-btn')) return;
+
+        const link = card.querySelector('.card-link, .featured-link');
+        const titleEl = card.querySelector('h3');
+        if (!link || !titleEl) return;
+
+        const url = link.getAttribute('href');
+        const title = titleEl.innerText.trim();
+
+        if (!url || url.startsWith('http') || url.startsWith('#') || url.includes('forum.html')) return;
+
+        const postId = url.split('/').pop().replace('.html', '');
+
+        const saveBtn = document.createElement('button');
+        saveBtn.className = 'card-save-btn';
+        saveBtn.innerHTML = '&#x2606; Lưu bài';
+        Object.assign(saveBtn.style, {
+            background: 'none',
+            border: '1px solid var(--border-light)',
+            color: 'var(--text-muted)',
+            padding: '4px 10px',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontSize: '0.75rem',
+            fontFamily: "'JetBrains Mono', monospace",
+            transition: 'all 0.2s',
+            marginLeft: 'auto'
+        });
+        
+        saveBtn.onmouseover = () => { saveBtn.style.color = 'var(--accent-gold)'; saveBtn.style.borderColor = 'var(--accent-gold)'; };
+        saveBtn.onmouseout = () => { 
+            if (!saveBtn.classList.contains('saved-active')) { 
+                saveBtn.style.color = 'var(--text-muted)'; 
+                saveBtn.style.borderColor = 'var(--border-light)'; 
+            } 
+        };
+
+        saveBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (window.toggleSavePost) {
+                const fullUrl = window.location.origin + url;
+                window.toggleSavePost(postId, title, fullUrl, saveBtn);
+            } else {
+                alert('Vui lòng đăng nhập để lưu bài viết!');
+            }
+        });
+
+        const footerDiv = document.createElement('div');
+        footerDiv.style.display = 'flex';
+        footerDiv.style.justifyContent = 'space-between';
+        footerDiv.style.alignItems = 'center';
+        footerDiv.style.marginTop = '15px';
+        
+        link.style.marginTop = '0';
+        
+        link.parentNode.insertBefore(footerDiv, link);
+        footerDiv.appendChild(link);
+        footerDiv.appendChild(saveBtn);
+    });
+}
+
 // === INIT ON DOM READY ===
 function initShared() {
     if (window.location.search.includes('embed=true')) {
@@ -721,19 +789,63 @@ function initShared() {
     LiveSearch.init();
     setActiveNav();
     PostViewer.init();
+    addSaveButtonsToCards();
 
     // === BACK BUTTON: dùng history.back() thay vì link cứng ===
     // Intercept tất cả .exam-back-btn để quay lại trang trước
     document.querySelectorAll('.exam-back-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
-            // Nếu có lịch sử duyệt web thì quay lại
             if (window.history.length > 1) {
                 e.preventDefault();
                 window.history.back();
             }
-            // Nếu không có lịch sử (vào thẳng URL), dùng href gốc bình thường
         });
     });
+}
+
+// === TOGGLE SAVE POST GLOBAL LOGIC ===
+window.toggleSavePost = async function(postId, postTitle, postUrl, btnElement) {
+    const token = localStorage.getItem('smp_access_token');
+    if (!token) {
+        alert("Vui lòng đăng nhập để lưu bài viết!");
+        window.location.href = '/SMP/pages/auth.html';
+        return;
+    }
+    
+    const isSaving = btnElement.innerText.includes('Bỏ lưu') ? false : true;
+    const originalText = btnElement.innerText;
+    btnElement.innerText = 'Đang xử lý...';
+    btnElement.disabled = true;
+    
+    try {
+        const res = await fetch(`${API_BASE}/api/users/saved`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ postId, postTitle, postUrl })
+        });
+        
+        const data = await res.json();
+        if (res.ok) {
+            if (data.saved) {
+                btnElement.innerHTML = '&#x2605; Đã lưu';
+                btnElement.classList.add('saved-active');
+            } else {
+                btnElement.innerHTML = '&#x2606; Lưu bài';
+                btnElement.classList.remove('saved-active');
+            }
+        } else {
+            btnElement.innerText = originalText;
+            alert(data.detail || "Lỗi lưu bài viết");
+        }
+    } catch (err) {
+        btnElement.innerText = originalText;
+        alert("Không thể kết nối đến máy chủ.");
+    } finally {
+        btnElement.disabled = false;
+    }
 }
 
 if (document.readyState === 'loading') {
