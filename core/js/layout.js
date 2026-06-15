@@ -587,7 +587,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (token && username) {
             authLink.innerHTML = `&#x25CE; ${username}`;
         } else {
-            authLink.innerHTML = `&#x25CE; Đăng Nhập`;
+            authLink.innerHTML = `&#x25CE; LOGIN`;
         }
         sidebarNav.appendChild(authLink);
     }
