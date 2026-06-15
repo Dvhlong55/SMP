@@ -638,7 +638,7 @@ const AUTH_MODAL_HTML = `
         </div>
         <!-- Profile Tab -->
         <div id="auth-profile-tab" style="padding:28px 24px; display:none; text-align:center;">
-            <div style="font-size:2.5rem; margin-bottom:12px;">☯</div>
+            <div style="font-size:3rem; font-family:'JetBrains Mono',monospace; color:var(--accent-cyan,#5ce1e6); margin-bottom:12px; font-weight:700; letter-spacing:2px; text-shadow:0 0 16px rgba(92,225,230,0.6);">Φ</div>
             <div style="font-family:'JetBrains Mono',monospace; font-size:1.1rem; color:var(--accent-cyan,#5ce1e6); margin-bottom:6px;" id="auth-profile-username">...</div>
             <div style="font-size:0.8rem; color:var(--text-muted,#888); margin-bottom:24px;">Đã đăng nhập</div>
             <button onclick="window.handleLogout()" style="width:100%; padding:11px; background:#e74c3c; color:#fff; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.85rem; border:none; border-radius:6px; cursor:pointer; letter-spacing:1px; transition:all 0.2s;" onmouseover="this.style.background='#c0392b'" onmouseout="this.style.background='#e74c3c'">ĐĂNG XUẤT</button>
