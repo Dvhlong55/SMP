@@ -83,8 +83,10 @@ class NotificationsController {
         const token = localStorage.getItem('smp_access_token');
         if (!token) return;
         
+        const backendUrl = window.API_BASE || 'https://smp-backend-kcwn.onrender.com';
+        
         try {
-            const res = await fetch(`${API_BASE}/api/notifications`, {
+            const res = await fetch(`${backendUrl}/api/notifications`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (res.ok) {
@@ -207,9 +209,10 @@ class NotificationsController {
         if (e) { e.preventDefault(); e.stopPropagation(); }
         const token = localStorage.getItem('smp_access_token');
         if (!token) return;
+        const backendUrl = window.API_BASE || 'https://smp-backend-kcwn.onrender.com';
         
         try {
-            await fetch(`${API_BASE}/api/notifications/${id}/read`, {
+            await fetch(`${backendUrl}/api/notifications/${id}/read`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -225,9 +228,10 @@ class NotificationsController {
     async markAllRead() {
         const token = localStorage.getItem('smp_access_token');
         if (!token) return;
+        const backendUrl = window.API_BASE || 'https://smp-backend-kcwn.onrender.com';
         
         try {
-            await fetch(`${API_BASE}/api/notifications/read-all`, {
+            await fetch(`${backendUrl}/api/notifications/read-all`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -242,9 +246,10 @@ class NotificationsController {
         if (e) { e.preventDefault(); e.stopPropagation(); }
         const token = localStorage.getItem('smp_access_token');
         if (!token) return;
+        const backendUrl = window.API_BASE || 'https://smp-backend-kcwn.onrender.com';
         
         try {
-            await fetch(`${API_BASE}/api/notifications/${id}`, {
+            await fetch(`${backendUrl}/api/notifications/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
