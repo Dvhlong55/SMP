@@ -61,28 +61,6 @@ function formatDate(iso) {
     });
 }
 
-// ─── Reactions (Likes) ──────────────────────────────────────────────────
-window.isLiked = function(id) {
-    let liked = JSON.parse(localStorage.getItem('smp_liked_posts') || '{}');
-    return !!liked[id];
-};
-
-window.toggleLike = function(id, btnElement) {
-    let liked = JSON.parse(localStorage.getItem('smp_liked_posts') || '{}');
-    if (liked[id]) {
-        delete liked[id];
-        btnElement.innerHTML = '♡ Thích';
-        btnElement.style.color = 'var(--text-muted)';
-        btnElement.style.borderColor = 'var(--border-light)';
-    } else {
-        liked[id] = true;
-        btnElement.innerHTML = '❤️ Đã thích';
-        btnElement.style.color = '#e74c3c';
-        btnElement.style.borderColor = '#e74c3c';
-    }
-    localStorage.setItem('smp_liked_posts', JSON.stringify(liked));
-};
-
 // ─── LaTeX helpers ────────────────────────────────────────────────────────
 function insertLatex(textareaId, before, after) {
     const ta = document.getElementById(textareaId);
@@ -219,10 +197,6 @@ async function openThread(threadId) {
                         <span class="post-date" style="margin-left:12px;">👁 ${thread.viewCount} lượt xem</span>
                     </div>
                     <div class="post-actions">
-                        <button onclick="window.toggleLike('${thread.id}', this)"
-                            style="background:none; border:1px solid ${isLiked(thread.id) ? '#e74c3c' : 'var(--border-light)'}; color:${isLiked(thread.id) ? '#e74c3c' : 'var(--text-muted)'}; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem; font-family:'JetBrains Mono', monospace; margin-right: 6px;">
-                            ${isLiked(thread.id) ? '❤️ Đã thích' : '♡ Thích'}
-                        </button>
                         <button id="save-thread-btn"
                             data-id="${thread.id}"
                             data-title="${escapeHTML(thread.title)}"
@@ -255,7 +229,6 @@ async function openThread(threadId) {
                                 ${r.editedAt ? '<span class="edit-badge">(đã chỉnh sửa)</span>' : ''}
                             </div>
                             <div class="post-actions">
-                                <button class="btn-secondary" onclick="window.toggleLike('reply_${r.id}', this)" style="font-size:0.7rem; padding:3px 8px; border-color:${isLiked('reply_'+r.id) ? '#e74c3c' : ''}; color:${isLiked('reply_'+r.id) ? '#e74c3c' : ''};">${isLiked('reply_'+r.id) ? '❤️' : '♡'}</button>
                                 <button class="btn-secondary" onclick="replyToUser('${escapeHTML(r.author_name)}')" style="font-size:0.7rem; padding:3px 8px;">↩ Trả lời</button>
                                 ${r.editHistory && r.editHistory.length > 0 ? `<button class="btn-secondary" onclick="showReplyHistory('${r.id}')" style="font-size:0.7rem;padding:3px 8px;">📜</button>` : ''}
                                 ${isReplyAuthor ? `
@@ -283,14 +256,26 @@ function showEditThreadForm(id, title, content) {
     const formEl = document.getElementById('edit-thread-form-container');
     formEl.style.display = 'block';
     document.getElementById('edit-thread-title').value = title;
-    document.getElementById('edit-thread-content').value = content;
+    const box = document.getElementById('edit-thread-content');
+    if (box) {
+        box.value = content;
+        if (box.nextElementSibling && box.nextElementSibling.CodeMirror) {
+            box.nextElementSibling.CodeMirror.setValue(content);
+        }
+    }
     formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ─── Edit Reply ───────────────────────────────────────────────────────────
 function showEditReplyModal(replyId, currentContent) {
     editingReplyId = replyId;
-    document.getElementById('edit-reply-content').value = currentContent;
+    const box = document.getElementById('edit-reply-content');
+    if (box) {
+        box.value = currentContent;
+        if (box.nextElementSibling && box.nextElementSibling.CodeMirror) {
+            box.nextElementSibling.CodeMirror.setValue(currentContent);
+        }
+    }
     document.getElementById('edit-reply-modal').classList.add('show');
 }
 
@@ -299,8 +284,8 @@ window.replyToUser = function(username) {
     if (!box) return;
     
     // Check if CodeMirror is wrapping this textarea
-    if (box.nextSibling && box.nextSibling.CodeMirror) {
-        const cm = box.nextSibling.CodeMirror;
+    if (box.nextElementSibling && box.nextElementSibling.CodeMirror) {
+        const cm = box.nextElementSibling.CodeMirror;
         const currentVal = cm.getValue();
         const appendText = (currentVal ? ' ' : '') + '@' + username + ' ';
         cm.setValue(currentVal + appendText);
