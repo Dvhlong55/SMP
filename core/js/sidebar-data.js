@@ -15,14 +15,6 @@ const LEFT_TAGS_HTML = `
             <ul class="side-widget-list">
                 <li><a href="/SMP/pages/forum.html">⧉ Forum</a></li>
                 <li><a href="/SMP/pages/saved.html">🖫 Saved</a></li>
-                <li>
-                    <a href="javascript:void(0)" onclick="if(window.toggleNotificationDropdown) window.toggleNotificationDropdown(event)">
-                        <span style="position:relative;">
-                            🔔 Thông báo
-                            <span id="side-notif-badge" style="display:none; position:absolute; top:-2px; right:-8px; background:var(--accent-red,#e74c3c); width:8px; height:8px; border-radius:50%;"></span>
-                        </span>
-                    </a>
-                </li>
             </ul>
         </div>
 `;
