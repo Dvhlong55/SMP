@@ -228,10 +228,6 @@
             </a>
             <div class="sidebar-title">Secret of<br>Mathematical<br>Principles</div>
             <div class="sidebar-divider"></div>
-            <p class="sidebar-bio">
-                Sharing a journey through mathematics and computer science —
-                a blog by Long, where ideas, problems, and stories from academic life come to life.
-            </p>
             <div class="sidebar-socials">
                 <a href="mailto:smp.cqt0907@gmail.com" class="sidebar-social-btn" title="Email">
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
