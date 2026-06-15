@@ -26,13 +26,11 @@ const DarkMode = {
         document.body.classList.add('dark-mode');
         if (save) localStorage.setItem('smp-dark-mode', 'true');
         this.updateBtn('☀ Sáng');
-        Comments.setTheme('dark');
     },
     disable(save = true) {
         document.body.classList.remove('dark-mode');
         if (save) localStorage.setItem('smp-dark-mode', 'false');
         this.updateBtn('☽ Tối');
-        Comments.setTheme('light');
     },
     toggle() {
         if (document.body.classList.contains('dark-mode')) this.disable();
@@ -723,7 +721,6 @@ function initShared() {
     LiveSearch.init();
     setActiveNav();
     PostViewer.init();
-    Comments.init();
 
     // === BACK BUTTON: dùng history.back() thay vì link cứng ===
     // Intercept tất cả .exam-back-btn để quay lại trang trước
