@@ -1,4 +1,4 @@
-const API_BASE = 'https://smp-backend-kcwn.onrender.com';
+var API_BASE = 'https://smp-backend-kcwn.onrender.com';
 let currentThreadId = null;
 let editingReplyId = null;
 
@@ -124,13 +124,15 @@ async function openThread(threadId) {
                     </div>
                     <div class="post-actions">
                         <button id="save-thread-btn"
-                            onclick="(function(btn){ if(window.toggleSavePost){ toggleSavePost('${thread.id}', ${JSON.stringify(thread.title).replace(/'/g,"&#39;")}, window.location.href, btn); } else { alert('Vui lòng đăng nhập để lưu!'); } })(this)"
+                            data-id="${thread.id}"
+                            data-title="${escapeHTML(thread.title)}"
+                            onclick="(function(btn){ if(window.toggleSavePost){ toggleSavePost(btn.dataset.id, btn.dataset.title, window.location.href, btn); } else { alert('Vui lòng đăng nhập để lưu!'); } })(this)"
                             style="background:none; border:1px solid var(--border-light); color:var(--text-muted); padding:4px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem; font-family:'JetBrains Mono', monospace;">
                             &#x2606; Lưu bài
                         </button>
                         ${thread.editedAt ? `<button class="btn-secondary" onclick="showHistory('${thread.id}','thread')" style="font-size:0.75rem; padding:4px 10px;">📜 Lịch sử sửa</button>` : ''}
                         ${isAuthor ? `
-                            <button class="btn-secondary" style="font-size:0.75rem; padding:4px 10px;" onclick="showEditThreadForm('${thread.id}', ${JSON.stringify(thread.title).replace(/'/g,"&#39;")}, ${JSON.stringify(thread.content).replace(/'/g,"&#39;")})">✏️ Sửa</button>
+                            <button class="btn-secondary" style="font-size:0.75rem; padding:4px 10px;" data-id="${thread.id}" data-title="${escapeHTML(thread.title)}" data-content="${escapeHTML(thread.content)}" onclick="showEditThreadForm(this.dataset.id, this.dataset.title, this.dataset.content)">✏️ Sửa</button>
                             <button class="btn-danger" onclick="deleteThread('${thread.id}')">🗑 Xóa</button>
                         ` : ''}
                     </div>

@@ -1,15 +1,18 @@
-const API_BASE = 'https://smp-backend-kcwn.onrender.com';
+var API_BASE = 'https://smp-backend-kcwn.onrender.com';
 
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('smp_access_token');
     
-    if (!token) {
-        // Show auth required message
-        document.getElementById('auth-required').style.display = 'block';
-    } else {
-        // Show content and load data
-        document.getElementById('saved-content').style.display = 'block';
-        loadSavedPosts(token);
+    const authReq = document.getElementById('auth-required');
+    const savedContent = document.getElementById('saved-content');
+    
+    if (authReq && savedContent) {
+        if (!token) {
+            authReq.style.display = 'block';
+        } else {
+            savedContent.style.display = 'block';
+            loadSavedPosts(token);
+        }
     }
 });
 
