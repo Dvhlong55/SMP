@@ -4,234 +4,279 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diễn Đàn Toán Học - SMP</title>
+    <meta name="description" content="Diễn đàn thảo luận Toán học của SMP — nơi trao đổi bài toán, hướng dẫn và kiến thức.">
+    <!-- MathJax (NO polyfill.io!) -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <!-- CSS dùng chung -->
     <link rel="stylesheet" href="/SMP/core/css/shared.css">
-    <!-- MathJax -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        .forum-container {
-            max-width: 1000px;
-            margin: 60px auto;
-            padding: 0 24px;
-        }
+        .forum-container { max-width: 1000px; margin: 60px auto; padding: 0 24px; }
+
         .forum-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 32px; border-bottom: 1px solid var(--border-light); padding-bottom: 20px;
         }
-        .forum-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--accent-gold);
-        }
+        .forum-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--accent-gold); }
+
         .btn-primary {
-            background: var(--accent-cyan);
-            color: #111;
-            padding: 10px 24px;
-            border-radius: 6px;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
+            background: var(--accent-cyan); color: #111; padding: 10px 22px;
+            border-radius: 6px; font-family: 'JetBrains Mono', monospace;
+            font-weight: bold; border: none; cursor: pointer; transition: transform 0.2s, background 0.2s;
+            font-size: 0.85rem;
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            background: var(--accent-gold);
+        .btn-primary:hover { transform: translateY(-2px); background: var(--accent-gold); }
+        .btn-secondary {
+            background: transparent; color: var(--text-muted); padding: 8px 16px;
+            border-radius: 6px; font-family: 'JetBrains Mono', monospace;
+            border: 1px solid var(--border-light); cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
         }
+        .btn-secondary:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+        .btn-danger { background: none; border: 1px solid transparent; color: #e74c3c; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; transition: all 0.2s; }
+        .btn-danger:hover { border-color: #e74c3c; background: rgba(231,76,60,0.1); }
 
-        /* Danh sách chủ đề */
-        .thread-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+        /* Thread list */
+        .thread-list { display: flex; flex-direction: column; gap: 14px; }
         .thread-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            transition: border-color 0.2s;
+            background: var(--card-bg); border: 1px solid var(--border-light);
+            border-radius: 8px; padding: 18px 20px; cursor: pointer; transition: border-color 0.2s, transform 0.15s;
         }
-        .thread-item:hover {
-            border-color: var(--accent-cyan);
-        }
-        .thread-item-title {
-            font-size: 1.3rem;
-            font-family: 'Playfair Display', serif;
-            color: var(--text-dark);
-            margin-bottom: 8px;
-        }
-        .thread-item-meta {
-            display: flex;
-            gap: 16px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-family: 'JetBrains Mono', monospace;
-        }
+        .thread-item:hover { border-color: var(--accent-cyan); transform: translateX(4px); }
+        .thread-item-title { font-size: 1.15rem; font-family: 'Playfair Display', serif; color: var(--text-dark); margin-bottom: 8px; }
+        .thread-item-meta { display: flex; gap: 16px; font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; flex-wrap: wrap; }
 
-        /* Chi tiết chủ đề */
-        #thread-detail-view {
-            display: none;
-        }
-        .btn-back {
-            background: none;
-            border: none;
-            color: var(--accent-cyan);
-            font-family: 'JetBrains Mono', monospace;
-            cursor: pointer;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            padding: 0;
-            display: inline-block;
-        }
-        .btn-back:hover {
-            color: var(--accent-gold);
-            text-decoration: underline;
-        }
-        .post-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-        .post-meta {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-            border-bottom: 1px dashed var(--border-light);
-            padding-bottom: 12px;
-        }
-        .post-author {
-            color: var(--accent-gold);
-            font-weight: bold;
-        }
-        .post-date {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-        .post-content {
-            line-height: 1.6;
-            color: var(--text-dark);
-            white-space: pre-line;
-        }
+        /* Thread detail */
+        #thread-detail-view { display: none; }
+        .btn-back { background: none; border: none; color: var(--accent-cyan); font-family: 'JetBrains Mono', monospace; cursor: pointer; font-size: 0.95rem; margin-bottom: 20px; padding: 0; }
+        .btn-back:hover { color: var(--accent-gold); text-decoration: underline; }
 
-        /* Form tạo mới */
+        .post-card { background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 8px; padding: 24px; margin-bottom: 20px; }
+        .post-card.op { border-left: 3px solid var(--accent-gold); }
+        .post-card.reply { border-left: 3px solid var(--accent-cyan); }
+        .post-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px dashed var(--border-light); padding-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+        .post-author { color: var(--accent-gold); font-weight: bold; font-family: 'JetBrains Mono', monospace; }
+        .post-date { color: var(--text-muted); font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
+        .post-content { line-height: 1.75; color: var(--text-dark); white-space: pre-wrap; word-break: break-word; }
+        .post-actions { display: flex; gap: 8px; align-items: center; }
+        .edit-badge { font-size: 0.7rem; color: var(--text-muted); font-style: italic; margin-left: 8px; }
+
+        /* History modal */
+        .history-modal-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+            z-index: 9999; justify-content: center; align-items: center;
+        }
+        .history-modal-overlay.show { display: flex; }
+        .history-modal {
+            background: var(--card-bg); border: 1px solid var(--border-light);
+            border-radius: 10px; padding: 28px; max-width: 640px; width: 90%; max-height: 80vh;
+            overflow-y: auto;
+        }
+        .history-item { padding: 12px 0; border-bottom: 1px dashed var(--border-light); }
+        .history-item:last-child { border: none; }
+
+        /* LaTeX Editor */
+        .latex-editor-wrap { position: relative; }
+        .latex-toolbar {
+            display: flex; flex-wrap: wrap; gap: 4px;
+            padding: 8px 10px; background: rgba(92,225,230,0.04);
+            border: 1px solid var(--border-light); border-bottom: none;
+            border-radius: 6px 6px 0 0;
+        }
+        .latex-toolbar button {
+            background: rgba(92,225,230,0.08); border: 1px solid rgba(92,225,230,0.2);
+            color: var(--accent-cyan); padding: 4px 10px; border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; cursor: pointer;
+            transition: background 0.2s; white-space: nowrap;
+        }
+        .latex-toolbar button:hover { background: rgba(92,225,230,0.2); }
+        .latex-toolbar .sep { width: 1px; background: var(--border-light); margin: 2px 4px; }
+        .latex-textarea {
+            width: 100%; box-sizing: border-box;
+            padding: 12px; background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-light); border-radius: 0 0 6px 6px;
+            color: var(--text-dark); font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem; resize: vertical; min-height: 140px;
+            transition: border-color 0.2s; outline: none;
+        }
+        body:not(.dark-mode) .latex-textarea { background: rgba(0,0,0,0.02); }
+        .latex-textarea:focus { border-color: var(--accent-cyan); }
+        .latex-preview-toggle {
+            background: none; border: none; cursor: pointer;
+            font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-cyan); padding: 4px 0; margin-top: 6px; display: block;
+            opacity: 0.75; transition: opacity 0.2s;
+        }
+        .latex-preview-toggle:hover { opacity: 1; }
+        .latex-preview-box {
+            display: none; margin-top: 8px; background: rgba(92,225,230,0.04);
+            border: 1px solid rgba(92,225,230,0.15); border-radius: 8px;
+            padding: 14px 18px; line-height: 1.85; color: var(--text-dark); min-height: 50px;
+        }
+        .latex-preview-box.active { display: block; }
+
+        /* Create/edit form panel */
         .forum-form {
-            background: var(--card-bg);
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 24px;
-            margin-bottom: 30px;
-            display: none; /* Ẩn mặc định */
+            background: var(--card-bg); border: 1px solid var(--border-light);
+            border-radius: 8px; padding: 24px; margin-bottom: 28px; display: none;
         }
-        .form-group {
-            margin-bottom: 16px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-dark);
-        }
+        .forum-form h3 { font-family: 'Playfair Display', serif; margin-bottom: 18px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
         .form-control {
-            width: 100%;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-light);
-            border-radius: 6px;
-            color: var(--text-dark);
-            font-family: inherit;
+            width: 100%; box-sizing: border-box; padding: 10px 14px;
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border-light);
+            border-radius: 6px; color: var(--text-dark); font-family: inherit; outline: none;
         }
-        body:not(.dark-mode) .form-control {
-            background: rgba(0, 0, 0, 0.02);
+        body:not(.dark-mode) .form-control { background: rgba(0,0,0,0.02); }
+        .form-control:focus { border-color: var(--accent-cyan); }
+
+        .login-notice {
+            text-align: center; padding: 20px; border: 1px dashed var(--border-light);
+            border-radius: 6px; color: var(--text-muted); margin-bottom: 16px;
         }
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent-cyan);
-        }
-        textarea.form-control {
-            resize: vertical;
-            min-height: 120px;
-        }
+        .login-notice a { color: var(--accent-cyan); font-weight: bold; }
+        .form-row-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
     </style>
 </head>
 <body>
-
     <div class="main-wrapper">
         <div id="topbar-placeholder"></div>
         <div id="sidebar-placeholder"></div>
-        
+
         <main>
             <div class="forum-container fade-up">
-                
+
                 <!-- VIEW 1: DANH SÁCH CHỦ ĐỀ -->
                 <div id="thread-list-view">
                     <div class="forum-header">
-                        <h1 class="forum-title">Diễn Đàn Toán Học</h1>
-                        <button class="btn-primary" id="btn-show-create">Tạo chủ đề mới</button>
+                        <h1 class="forum-title">⧉ Diễn Đàn Toán Học</h1>
+                        <button class="btn-primary" id="btn-show-create">+ Tạo chủ đề mới</button>
                     </div>
 
-                    <!-- Form tạo chủ đề (Ẩn mặc định) -->
+                    <!-- Form tạo chủ đề -->
                     <div class="forum-form" id="create-thread-form-container">
-                        <h3 style="margin-bottom: 16px; font-family: 'Playfair Display', serif;">Chủ đề mới</h3>
-                        <!-- Thông báo chưa đăng nhập -->
-                        <div id="create-login-notice" style="display:none; text-align:center; padding: 24px; border: 1px dashed var(--border-light); border-radius: 6px; color: var(--text-muted); margin-bottom: 16px;">
-                            Bạn cần <a href="/SMP/pages/auth.html" style="color: var(--accent-cyan); font-weight:bold;">đăng nhập</a> để tạo chủ đề thảo luận.
+                        <h3>✏️ Chủ đề mới</h3>
+                        <div id="create-login-notice" class="login-notice" style="display:none;">
+                            Bạn cần <a href="/SMP/pages/auth.html">đăng nhập</a> để tạo chủ đề thảo luận.
                         </div>
-                        <form id="create-thread-form">
+                        <form id="create-thread-form" style="display:none;">
                             <div class="form-group">
-                                <input type="text" id="thread-title" class="form-control" placeholder="Nhập tiêu đề (VD: Cho mình hỏi bài toán hình học 12...)" required>
+                                <label>Tiêu đề <span style="color:#e74c3c">*</span></label>
+                                <input type="text" id="thread-title" class="form-control"
+                                    placeholder="Ví dụ: Chứng minh bất đẳng thức Cauchy-Schwarz dạng tổng quát" required>
                             </div>
                             <div class="form-group">
-                                <textarea id="thread-content" class="form-control" placeholder="Nhập nội dung. Hỗ trợ gõ công thức Toán học bằng LaTeX, ví dụ: $x^2 + y^2 = r^2$ hoặc $$\int_{0}^{1} x dx$$" required></textarea>
+                                <label>Nội dung — hỗ trợ LaTeX <code style="background:rgba(92,225,230,0.1);padding:1px 6px;border-radius:3px;color:var(--accent-cyan)">$...$</code> và <code style="background:rgba(92,225,230,0.1);padding:1px 6px;border-radius:3px;color:var(--accent-cyan)">$$...$$</code></label>
+                                <div class="latex-editor-wrap">
+                                    <div class="latex-toolbar" id="create-toolbar">
+                                        <button type="button" onclick="insertLatex('create-content','$','$')">$ inline $</button>
+                                        <button type="button" onclick="insertLatex('create-content','$$\n','\n$$')">$$ display $$</button>
+                                        <div class="sep"></div>
+                                        <button type="button" onclick="insertLatex('create-content','\\frac{','}{...}')">frac</button>
+                                        <button type="button" onclick="insertLatex('create-content','\\sqrt{','}')">&radic;</button>
+                                        <button type="button" onclick="insertLatex('create-content','\\sum_{i=1}^{n}','')">∑</button>
+                                        <button type="button" onclick="insertLatex('create-content','\\int_{','...}^{...} dx')">∫</button>
+                                        <button type="button" onclick="insertLatex('create-content','\\lim_{x \\to ','...}')">lim</button>
+                                        <button type="button" onclick="insertLatex('create-content','\\forall ','')">∀</button>
+                                        <button type="button" onclick="insertLatex('create-content','\\exists ','')">∃</button>
+                                        <button type="button" onclick="insertLatex('create-content','\\infty','')">∞</button>
+                                        <div class="sep"></div>
+                                        <button type="button" onclick="insertLatex('create-content','\\begin{cases}\n','...\n\\end{cases}')">cases</button>
+                                        <button type="button" onclick="insertLatex('create-content','\\vec{','}')">&rarr;vec</button>
+                                        <button type="button" onclick="insertLatex('create-content','\\overline{','}')">&macr;over</button>
+                                    </div>
+                                    <textarea id="create-content" class="latex-textarea"
+                                        placeholder="Nhập nội dung bài viết. Gõ công thức bằng LaTeX: $x^2 + y^2 = z^2$ hoặc $$\int_0^1 x\,dx = \frac{1}{2}$$" required></textarea>
+                                </div>
+                                <button type="button" class="latex-preview-toggle" onclick="toggleForumPreview('create-content','create-preview')">▶ Xem preview LaTeX</button>
+                                <div class="latex-preview-box" id="create-preview">
+                                    <span style="opacity:0.4; font-style:italic; font-size:0.85rem;">Bắt đầu gõ rồi bấm preview...</span>
+                                </div>
                             </div>
-                            <div style="display: flex; gap: 12px; justify-content: flex-end;">
-                                <button type="button" class="btn-primary" style="background: transparent; color: var(--text-muted); border: 1px solid var(--border-light);" id="btn-cancel-create">Hủy</button>
-                                <button type="submit" class="btn-primary" id="btn-submit-create">Đăng bài</button>
+                            <div class="form-row-actions">
+                                <button type="button" class="btn-secondary" id="btn-cancel-create">Hủy</button>
+                                <button type="submit" class="btn-primary" id="btn-submit-create">📮 Đăng bài</button>
                             </div>
                         </form>
                     </div>
 
                     <div class="thread-list" id="thread-list-container">
-                        <div style="text-align: center; color: var(--text-muted); padding: 40px;">Đang tải danh sách chủ đề...</div>
+                        <div style="text-align:center; color:var(--text-muted); padding:40px;">Đang tải danh sách chủ đề...</div>
                     </div>
                 </div>
 
                 <!-- VIEW 2: CHI TIẾT CHỦ ĐỀ -->
                 <div id="thread-detail-view">
                     <button class="btn-back" id="btn-back-to-list">&larr; Quay lại danh sách</button>
-                    
-                    <div id="thread-main-content">
-                        <!-- Sẽ được render bằng JS -->
-                    </div>
+                    <div id="thread-main-content"></div>
 
-                    <h3 style="font-family: 'Playfair Display', serif; margin: 40px 0 20px; border-bottom: 1px solid var(--border-light); padding-bottom: 10px;">Bình luận</h3>
-                    
-                    <div id="thread-replies-list" style="margin-bottom: 30px;">
-                        <!-- Các phản hồi render ở đây -->
-                    </div>
-
-                    <!-- Form phản hồi -->
-                    <div class="forum-form" id="reply-form-container" style="display: block;">
-                        <h4 style="margin-bottom: 16px;">Viết bình luận</h4>
-                        <div id="reply-auth-alert" style="display: none; padding: 16px; background: rgba(255,255,255,0.05); text-align: center; border-radius: 6px; margin-bottom: 16px;">
-                            Bạn cần <a href="/SMP/pages/auth.html" style="color: var(--accent-cyan);">đăng nhập</a> để bình luận.
-                        </div>
-                        <form id="create-reply-form" style="display: none;">
+                    <!-- Edit thread form (ẩn mặc định) -->
+                    <div class="forum-form" id="edit-thread-form-container">
+                        <h3>✏️ Chỉnh sửa chủ đề</h3>
+                        <form id="edit-thread-form">
                             <div class="form-group">
-                                <textarea id="reply-content" class="form-control" placeholder="Viết phản hồi... Hỗ trợ gõ LaTeX" required></textarea>
+                                <label>Tiêu đề</label>
+                                <input type="text" id="edit-thread-title" class="form-control" required>
                             </div>
-                            <div style="text-align: right;">
-                                <button type="submit" class="btn-primary" id="btn-submit-reply">Gửi bình luận</button>
+                            <div class="form-group">
+                                <label>Nội dung</label>
+                                <div class="latex-editor-wrap">
+                                    <div class="latex-toolbar">
+                                        <button type="button" onclick="insertLatex('edit-thread-content','$','$')">$ inline $</button>
+                                        <button type="button" onclick="insertLatex('edit-thread-content','$$\n','\n$$')">$$ display $$</button>
+                                        <div class="sep"></div>
+                                        <button type="button" onclick="insertLatex('edit-thread-content','\\frac{','}{...}')">frac</button>
+                                        <button type="button" onclick="insertLatex('edit-thread-content','\\sqrt{','}')">&radic;</button>
+                                        <button type="button" onclick="insertLatex('edit-thread-content','\\sum_{i=1}^{n}','')">∑</button>
+                                        <button type="button" onclick="insertLatex('edit-thread-content','\\infty','')">∞</button>
+                                    </div>
+                                    <textarea id="edit-thread-content" class="latex-textarea" required></textarea>
+                                </div>
+                                <button type="button" class="latex-preview-toggle" onclick="toggleForumPreview('edit-thread-content','edit-thread-preview')">▶ Xem preview LaTeX</button>
+                                <div class="latex-preview-box" id="edit-thread-preview"></div>
+                            </div>
+                            <div class="form-row-actions">
+                                <button type="button" class="btn-secondary" onclick="document.getElementById('edit-thread-form-container').style.display='none'">Hủy</button>
+                                <button type="submit" class="btn-primary">💾 Lưu thay đổi</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <h3 style="font-family:'Playfair Display',serif; margin:36px 0 16px; border-bottom:1px solid var(--border-light); padding-bottom:10px;">Bình luận</h3>
+                    <div id="thread-replies-list" style="margin-bottom:28px;"></div>
+
+                    <!-- Form viết bình luận -->
+                    <div class="forum-form" id="reply-form-container" style="display:block;">
+                        <h4 style="margin-bottom:14px; font-family:'JetBrains Mono',monospace; font-size:0.9rem; color:var(--text-muted);">VIẾT BÌNH LUẬN</h4>
+                        <div id="reply-auth-notice" class="login-notice" style="display:none;">
+                            Bạn cần <a href="/SMP/pages/auth.html">đăng nhập</a> để bình luận.
+                        </div>
+                        <form id="create-reply-form" style="display:none;">
+                            <div class="form-group">
+                                <div class="latex-editor-wrap">
+                                    <div class="latex-toolbar">
+                                        <button type="button" onclick="insertLatex('reply-content','$','$')">$ inline $</button>
+                                        <button type="button" onclick="insertLatex('reply-content','$$\n','\n$$')">$$ display $$</button>
+                                        <div class="sep"></div>
+                                        <button type="button" onclick="insertLatex('reply-content','\\frac{','}{...}')">frac</button>
+                                        <button type="button" onclick="insertLatex('reply-content','\\sqrt{','}')">&radic;</button>
+                                        <button type="button" onclick="insertLatex('reply-content','\\sum_{i=1}^{n}','')">∑</button>
+                                        <button type="button" onclick="insertLatex('reply-content','\\infty','')">∞</button>
+                                    </div>
+                                    <textarea id="reply-content" class="latex-textarea" placeholder="Viết bình luận... Hỗ trợ LaTeX: $x^2$, $$\frac{a}{b}$$" required></textarea>
+                                </div>
+                                <button type="button" class="latex-preview-toggle" onclick="toggleForumPreview('reply-content','reply-preview')">▶ Xem preview LaTeX</button>
+                                <div class="latex-preview-box" id="reply-preview"></div>
+                            </div>
+                            <div class="form-row-actions">
+                                <button type="submit" class="btn-primary" id="btn-submit-reply">💬 Gửi bình luận</button>
                             </div>
                         </form>
                     </div>
@@ -241,7 +286,38 @@
         </main>
     </div>
 
-    <!-- Scripts -->
+    <!-- Edit reply modal -->
+    <div class="history-modal-overlay" id="edit-reply-modal">
+        <div class="history-modal">
+            <h3 style="margin-bottom:16px; font-family:'Playfair Display',serif;">✏️ Sửa bình luận</h3>
+            <div class="latex-editor-wrap">
+                <div class="latex-toolbar">
+                    <button type="button" onclick="insertLatex('edit-reply-content','$','$')">$ inline $</button>
+                    <button type="button" onclick="insertLatex('edit-reply-content','$$\n','\n$$')">$$ display $$</button>
+                    <div class="sep"></div>
+                    <button type="button" onclick="insertLatex('edit-reply-content','\\frac{','}{...}')">frac</button>
+                    <button type="button" onclick="insertLatex('edit-reply-content','\\sqrt{','}')">&radic;</button>
+                </div>
+                <textarea id="edit-reply-content" class="latex-textarea" style="min-height:100px;"></textarea>
+            </div>
+            <div class="form-row-actions" style="margin-top:16px;">
+                <button class="btn-secondary" onclick="document.getElementById('edit-reply-modal').classList.remove('show')">Hủy</button>
+                <button class="btn-primary" id="btn-save-reply-edit">💾 Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit history modal -->
+    <div class="history-modal-overlay" id="history-modal">
+        <div class="history-modal">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h3 style="font-family:'Playfair Display',serif;">📜 Lịch sử chỉnh sửa</h3>
+                <button class="btn-secondary" onclick="document.getElementById('history-modal').classList.remove('show')">✕ Đóng</button>
+            </div>
+            <div id="history-list"></div>
+        </div>
+    </div>
+
     <script src="/SMP/core/js/layout.js"></script>
     <script src="/SMP/core/js/shared.js"></script>
     <script src="/SMP/core/js/forum.js"></script>
