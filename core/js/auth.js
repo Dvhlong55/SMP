@@ -95,16 +95,19 @@ function showMsg(id, text, isError = true) {
 window.applyAuthUI = function(username) {
     const sidebarBtn = document.getElementById('sidebar-auth-btn');
     const topbarBtn  = document.getElementById('topbar-auth-btn');
+    const mobileTopbarBtn = document.getElementById('mobile-topbar-auth-btn');
     if (username) {
         const html = `&#x2637; ${username}`;
         if (sidebarBtn) { sidebarBtn.innerHTML = html; sidebarBtn.onclick = function(e){ e.preventDefault(); window.openAuthModal('profile'); }; }
         if (topbarBtn)  { topbarBtn.innerHTML  = html; topbarBtn.onclick  = function(e){ e.preventDefault(); window.openAuthModal('profile'); }; }
+        if (mobileTopbarBtn) { mobileTopbarBtn.onclick = function(e){ e.preventDefault(); window.openAuthModal('profile'); }; }
         // Fill profile tab
         const nameEl = document.getElementById('auth-profile-username');
         if (nameEl) nameEl.textContent = username;
     } else {
         if (sidebarBtn) { sidebarBtn.innerHTML = '&#x2637; Login'; sidebarBtn.onclick = function(e){ e.preventDefault(); window.openAuthModal('login'); }; }
         if (topbarBtn)  { topbarBtn.innerHTML  = '&#x2637; Login'; topbarBtn.onclick  = function(e){ e.preventDefault(); window.openAuthModal('login'); }; }
+        if (mobileTopbarBtn) { mobileTopbarBtn.onclick = function(e){ e.preventDefault(); window.openAuthModal('login'); }; }
     }
 };
 const applyAuthUI = window.applyAuthUI;

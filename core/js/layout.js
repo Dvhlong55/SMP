@@ -349,6 +349,8 @@
         </nav>
 
         <div class="topbar-controls" style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
+            <a href="#" id="mobile-topbar-auth-btn" class="mobile-only-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;" style="color: var(--text-muted); text-decoration: none; font-size: 1.25rem; display: none; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-cyan)'" onmouseout="this.style.color='var(--text-muted)'" title="Đăng nhập">&#x2637;</a>
+            
             <div class="search-wrapper" style="margin-right: 10px;">
                 <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
                 <span class="search-icon" onclick="this.parentElement.classList.toggle('mobile-active'); document.getElementById('search-input').focus();">&#x2315;</span>
@@ -778,6 +780,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update auth status link
     const sidebarAuthBtn = document.getElementById('sidebar-auth-btn');
     const topbarAuthBtn = document.getElementById('topbar-auth-btn');
+    const mobileTopbarAuthBtn = document.getElementById('mobile-topbar-auth-btn');
     
     if (token && username) {
         if (sidebarAuthBtn) {
@@ -791,6 +794,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (topbarAuthBtn) {
             topbarAuthBtn.innerHTML = `&#x2637; ${username}`;
             topbarAuthBtn.onclick = function(e) {
+                e.preventDefault();
+                if (window.openAuthModal) window.openAuthModal('profile');
+                return false;
+            };
+        }
+        if (mobileTopbarAuthBtn) {
+            mobileTopbarAuthBtn.onclick = function(e) {
                 e.preventDefault();
                 if (window.openAuthModal) window.openAuthModal('profile');
                 return false;

@@ -634,6 +634,7 @@ main {
     #smp-logo-canvas { display: none !important; }
     .topbar-controls { display: flex; align-items: center; gap: 16px; margin-left: auto; }
     .topbar-actions { flex-shrink: 0; order: 2; }
+    .mobile-only-auth-btn { display: block !important; }
     
     /* Search mobile dropdown style */
     .search-wrapper { flex: 0 0 auto; order: 1; margin: 0 !important; width: auto; max-width: none; }
