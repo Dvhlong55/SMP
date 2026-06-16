@@ -14,6 +14,29 @@
         document.head.appendChild(link);
     }
 
+    // ── Ensure Viewport-Fit=Cover for iOS Safe Areas ───────────────
+    let viewportMeta = document.querySelector('meta[name="viewport"]');
+    if (viewportMeta) {
+        let content = viewportMeta.getAttribute('content');
+        if (content && !content.includes('viewport-fit')) {
+            viewportMeta.setAttribute('content', content + ', viewport-fit=cover');
+        }
+    } else {
+        const meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, initial-scale=1.0, viewport-fit=cover';
+        document.head.appendChild(meta);
+    }
+
+    // ── Force reload manifest.json by appending version query ───────────────
+    const manifestLink = document.querySelector('link[rel="manifest"]');
+    if (manifestLink) {
+        const href = manifestLink.getAttribute('href');
+        if (href && !href.includes('?v=')) {
+            manifestLink.setAttribute('href', href + '?v=16');
+        }
+    }
+
     // ── Toggle-specific CSS only — layout stays in shared.css ───────────────
     const TOGGLE_CSS = `
         /* Sidebar must be fixed (shared.css already does this) */
@@ -214,13 +237,14 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
-                height: 64px;
+                height: calc(64px + env(safe-area-inset-bottom));
                 background-color: var(--topbar-bg, #111111);
                 border-top: 1px solid rgba(128, 128, 128, 0.15);
                 z-index: 9999;
                 justify-content: space-around;
-                align-items: center;
+                align-items: flex-start;
                 padding-bottom: env(safe-area-inset-bottom);
+                box-sizing: border-box;
                 box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
             }
 
@@ -235,7 +259,8 @@
                 font-weight: 500;
                 font-family: 'JetBrains Mono', monospace;
                 flex: 1;
-                height: 100%;
+                height: 64px;
+                box-sizing: border-box;
                 transition: color 0.2s ease, transform 0.15s ease;
             }
 

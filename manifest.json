@@ -9,11 +9,16 @@
   "icons": [
     {
       "src": "/SMP/core/image/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/SMP/core/image/favicon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/SMP/core/image/favicon.png",
+      "src": "/SMP/core/image/favicon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

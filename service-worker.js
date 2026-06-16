@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smp-cache-v13';
+const CACHE_NAME = 'smp-cache-v16';
 const urlsToCache = [
   '/SMP/',
   '/SMP/index.html',
@@ -12,6 +12,8 @@ const urlsToCache = [
   '/SMP/core/js/sidebar-data.js',
   '/SMP/core/js/post-layout.js',
   '/SMP/core/image/favicon.png',
+  '/SMP/core/image/favicon-192.png',
+  '/SMP/core/image/favicon-512.png',
   '/SMP/core/image/image_49b1a4.png',
   '/SMP/core/image/mobile_demo.png'
 ];
@@ -28,6 +30,22 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // Chỉ xử lý yêu cầu GET
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
+  // Bỏ qua các yêu cầu gọi API động hoặc các request đến origin khác (như API backend trên Render)
+  const url = new URL(event.request.url);
+  if (url.pathname.includes('/api/') || url.origin !== self.location.origin) {
+    return;
+  }
+
+  // Chỉ xử lý các giao thức http hoặc https (tránh các lỗi từ chrome-extension://, ws://, ...)
+  if (!event.request.url.startsWith('http')) {
+    return;
+  }
+
   // Chiến lược: Network First, Fallback to Cache
   event.respondWith(
     fetch(event.request)
@@ -41,9 +59,15 @@ self.addEventListener('fetch', event => {
         }
         return response;
       })
-      .catch(() => {
+      .catch(error => {
         // Nếu rớt mạng, lấy từ cache
-        return caches.match(event.request);
+        return caches.match(event.request).then(cachedResponse => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          // Nếu không có trong cache, ném lỗi để trình duyệt xử lý lỗi mạng tự nhiên
+          throw error;
+        });
       })
   );
 });
