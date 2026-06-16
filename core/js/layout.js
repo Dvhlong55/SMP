@@ -335,7 +335,7 @@
             <a href="/SMP/pages/saved.html">🖫 Saved</a>
         </nav>
 
-        <div style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
+        <div class="topbar-controls" style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
             <div class="search-wrapper" style="margin-right: 10px;">
                 <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
                 <span class="search-icon">&#x2315;</span>
