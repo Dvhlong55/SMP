@@ -71,7 +71,7 @@
             return;
         }
         localStorage.setItem('smp_latex_transfer', text);
-        window.location.href = '/SMP/tools/latex-v2/index.html';
+        window.location.href = '/tools/latex-v2/index.html';
     }
 
     function printPreview() {

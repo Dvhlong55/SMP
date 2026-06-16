@@ -151,7 +151,7 @@ window.SMPLatexCore = {
 
         // Nút mở trình soạn thảo đầy đủ
         var fullEditorBtn = document.createElement('a');
-        fullEditorBtn.href = '/SMP/tools/latex-v2/index.html';
+        fullEditorBtn.href = '/tools/latex-v2/index.html';
         fullEditorBtn.target = '_blank';
         fullEditorBtn.innerHTML = 'Mở Trình Soạn Thảo Đầy Đủ ↗';
         fullEditorBtn.style.marginLeft = '12px';

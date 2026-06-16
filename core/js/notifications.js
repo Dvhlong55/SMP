@@ -175,7 +175,7 @@ class NotificationsController {
         
         html += `
             </div>
-            <a href="/SMP/pages/notifications.html" class="notif-dropdown-footer">Xem tất cả</a>
+            <a href="/pages/notifications.html" class="notif-dropdown-footer">Xem tất cả</a>
         `;
         
         this.dropdownEl.innerHTML = html;

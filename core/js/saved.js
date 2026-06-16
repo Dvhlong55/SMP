@@ -33,7 +33,7 @@ async function loadSavedPosts(token) {
             listContainer.innerHTML = `
                 <div style="grid-column: 1 / -1; text-align: center; padding: 40px; border: 1px dashed var(--border-light); border-radius: 8px;">
                     <p style="color: var(--text-muted); margin-bottom: 16px;">Bạn chưa lưu bài viết nào.</p>
-                    <a href="/SMP/index.html" style="color: var(--accent-cyan); text-decoration: underline;">Khám phá bài viết mới</a>
+                    <a href="/index.html" style="color: var(--accent-cyan); text-decoration: underline;">Khám phá bài viết mới</a>
                 </div>
             `;
             return;

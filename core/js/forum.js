@@ -193,7 +193,7 @@ function getTagStyle(tag) {
 
 async function loadTagsConfig() {
     try {
-        const res = await fetch('/SMP/core/data/tags-config.json');
+        const res = await fetch('/core/data/tags-config.json');
         tagsConfig = await res.json();
         renderMainFilterLevel(1, Object.keys(tagsConfig));
         renderFormFilterLevel(1, Object.keys(tagsConfig));

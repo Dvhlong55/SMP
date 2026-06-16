@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     const postId = postIdMeta ? postIdMeta.getAttribute('content') : document.title.replace(/[^a-zA-Z0-9]/g, '');
     const catName = catNameMeta ? catNameMeta.getAttribute('content') : 'HOME';
-    const catUrl = catUrlMeta ? catUrlMeta.getAttribute('content') : '/SMP/index.html';
+    const catUrl = catUrlMeta ? catUrlMeta.getAttribute('content') : '/index.html';
     const subName = subNameMeta ? subNameMeta.getAttribute('content') : '';
     const subFilter = subFilterMeta ? subFilterMeta.getAttribute('content') : '';
 
@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Determine depth to root (where 'core' is)
     let depthPrefix = './';
     const path = window.location.pathname;
-    const smpIndex = path.indexOf('/SMP/');
+    const smpIndex = path.indexOf('/');
     if (smpIndex !== -1) {
-        depthPrefix = '/SMP/';
+        depthPrefix = '/';
     } else {
         const segments = path.split('/').filter(s => s !== '');
         let depth = 0;

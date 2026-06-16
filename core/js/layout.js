@@ -10,7 +10,7 @@
         const link = document.createElement('link');
         link.rel = 'icon';
         link.type = 'image/png';
-        link.href = '/SMP/core/image/favicon.png';
+        link.href = '/core/image/favicon.png';
         document.head.appendChild(link);
     }
 
@@ -305,8 +305,8 @@
     const SIDEBAR_HTML = `
     <aside class="sidebar" id="main-sidebar">
         <div class="sidebar-inner">
-            <a href="/SMP/demo.html" style="display: block; cursor: pointer; border: none; outline: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" title="Xem tính năng hệ sinh thái">
-                <img src="/SMP/core/image/image_49b1a4.png" alt="SMP Logo" class="sidebar-logo">
+            <a href="/demo.html" style="display: block; cursor: pointer; border: none; outline: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" title="Xem tính năng hệ sinh thái">
+                <img src="/core/image/image_49b1a4.png" alt="SMP Logo" class="sidebar-logo">
             </a>
             <div class="sidebar-title">Secret of<br>Mathematical<br>Principles</div>
             <div class="sidebar-divider"></div>
@@ -322,12 +322,12 @@
                 </a>
             </div>
             <nav class="sidebar-nav">
-                <a href="/SMP/index.html">&#x2302; Home</a>
-                <a href="/SMP/pages/toanhoc.html">&#x2211; Math</a>
-                <a href="/SMP/pages/nonmath.html">&#x2734; Non Math</a>
-                <a href="/SMP/pages/forum.html">⧉ Forum</a>
-                <a href="/SMP/pages/saved.html">★ Saved</a>
-                <a href="/SMP/pages/vetoi.html">◎ About</a>
+                <a href="/index.html">&#x2302; Home</a>
+                <a href="/pages/toanhoc.html">&#x2211; Math</a>
+                <a href="/pages/nonmath.html">&#x2734; Non Math</a>
+                <a href="/pages/forum.html">⧉ Forum</a>
+                <a href="/pages/saved.html">★ Saved</a>
+                <a href="/pages/vetoi.html">◎ About</a>
                 <a href="#" id="sidebar-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">&#x2637; Login</a>
             </nav>
         </div>
@@ -338,14 +338,14 @@
 
     const TOPBAR_HTML = `
     <header class="topbar">
-        <a href="/SMP/pages/vetoi.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s; margin-right: 20px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Tôi">SMP</a>
+        <a href="/pages/vetoi.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s; margin-right: 20px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Tôi">SMP</a>
         
         <nav class="topbar-nav" style="flex: 1; justify-content: flex-start; gap: 20px;">
-            <a href="/SMP/index.html">&#x2302; Home</a>
-            <a href="/SMP/pages/toanhoc.html">&#x2211; Math</a>
-            <a href="/SMP/pages/nonmath.html">&#x2734; Non Math</a>
-            <a href="/SMP/pages/forum.html">⧉ Forum</a>
-            <a href="/SMP/pages/saved.html">★ Saved</a>
+            <a href="/index.html">&#x2302; Home</a>
+            <a href="/pages/toanhoc.html">&#x2211; Math</a>
+            <a href="/pages/nonmath.html">&#x2734; Non Math</a>
+            <a href="/pages/forum.html">⧉ Forum</a>
+            <a href="/pages/saved.html">★ Saved</a>
         </nav>
 
         <div class="topbar-controls" style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
@@ -358,7 +358,7 @@
             </div>
             
             <nav class="topbar-nav" style="gap: 20px; margin-right: 15px;">
-                <a href="/SMP/pages/vetoi.html">◎ About</a>
+                <a href="/pages/vetoi.html">◎ About</a>
                 <a href="#" id="topbar-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">&#x2637; Login</a>
             </nav>
             
@@ -385,23 +385,23 @@
 
     const MOBILE_BOTTOM_NAV_HTML = `
     <nav class="mobile-bottom-nav">
-        <a href="/SMP/index.html">
+        <a href="/index.html">
             <span class="icon">&#x2302;</span>
             <span class="label">Home</span>
         </a>
-        <a href="/SMP/pages/toanhoc.html">
+        <a href="/pages/toanhoc.html">
             <span class="icon">&#x2211;</span>
             <span class="label">Math</span>
         </a>
-        <a href="/SMP/pages/forum.html">
+        <a href="/pages/forum.html">
             <span class="icon">⧉</span>
             <span class="label">Forum</span>
         </a>
-        <a href="/SMP/pages/saved.html">
+        <a href="/pages/saved.html">
             <span class="icon">★</span>
             <span class="label">Saved</span>
         </a>
-        <a href="/SMP/pages/nonmath.html">
+        <a href="/pages/nonmath.html">
             <span class="icon">&#x2734;</span>
             <span class="label">Non Math</span>
         </a>
@@ -814,9 +814,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Determine depth to root (where 'core' is)
     let depthPrefix = './';
     const path = window.location.pathname;
-    const smpIndex = path.indexOf('/SMP/');
+    const smpIndex = path.indexOf('/');
     if (smpIndex !== -1) {
-        depthPrefix = '/SMP/';
+        depthPrefix = '/';
     } else {
         const segments = path.split('/').filter(s => s !== '');
         let depth = 0;

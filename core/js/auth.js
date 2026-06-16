@@ -151,7 +151,7 @@ window.handleLogin = async function(event) {
         setTimeout(() => {
             window.closeAuthModal();
             if (form.id === 'login-form') {
-                window.location.href = '/SMP/index.html'; // redirect if on standalone auth page
+                window.location.href = '/index.html'; // redirect if on standalone auth page
             }
         }, 800);
     } catch (err) {

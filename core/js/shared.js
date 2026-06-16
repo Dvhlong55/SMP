@@ -55,282 +55,282 @@ const ALL_POSTS = [
     {
         title: 'Bổ đề Thue và biểu diễn số nguyên tố',
         date: 'June 13, 2026',
-        url: '/SMP/posts/math/BoDeThueVaBieuDienSoNguyenTo.html',
+        url: '/posts/math/BoDeThueVaBieuDienSoNguyenTo.html',
         tags: ['Số Học', 'VMO'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[VIASM] Đề thi Vietnam IMO New Initiative 2026 - Khối 11',
         date: 'June 14, 2026',
-        url: '/SMP/posts/math/vmo/viasm-khoi-11-2026.html',
+        url: '/posts/math/vmo/viasm-khoi-11-2026.html',
         tags: ['Đề Thi', 'VMO'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[VIASM] Đề thi Vietnam IMO New Initiative 2026 - Khối 10',
         date: 'June 14, 2026',
-        url: '/SMP/posts/math/vmo/viasm-khoi-10-2026.html',
+        url: '/posts/math/vmo/viasm-khoi-10-2026.html',
         tags: ['Đề Thi', 'VMO'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Bắc Ninh] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/bacninh-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/bacninh-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[An Giang] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/angiang-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/angiang-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Đà Nẵng] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/danang-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/danang-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Đồng Tháp] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/dongthap-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/dongthap-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Hải Phòng] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/haiphong-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/haiphong-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Hưng Yên] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/hungyen-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/hungyen-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Lai Châu] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/laichau-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/laichau-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Lào Cai] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/laocai-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/laocai-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Ninh Bình] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/ninhbinh-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/ninhbinh-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Quảng Ngãi] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/quangngai-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/quangngai-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Quảng Trị] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/quangtri-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/quangtri-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Thanh Hóa] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/thanhhoa-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/thanhhoa-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Tuyên Quang] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/tuyenquang-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/tuyenquang-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Nghệ An] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/nghean-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/nghean-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
 {
         title: '[PTNK] Đề thi tuyển sinh lớp 10 môn Toán Chuyên năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/ptnk-2026.html',
+        url: '/posts/math/dethichuyen/ptnk-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Phú Thọ] Đề thi môn Toán chuyên Toán năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/phutho-toan-2026.html',
+        url: '/posts/math/dethichuyen/phutho-toan-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Phú Thọ] Đề thi môn Toán chuyên Tin năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/phutho-tin-2026.html',
+        url: '/posts/math/dethichuyen/phutho-tin-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Đắk Lắk] Đề thi môn Toán chuyên năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/daklak-2026.html',
+        url: '/posts/math/dethichuyen/daklak-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Hà Nội] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/hanoi-chuyen-2026.html',
+        url: '/posts/math/dethichuyen/hanoi-chuyen-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Hà Nội] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên Tin) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/hanoi-tin-2026.html',
+        url: '/posts/math/dethichuyen/hanoi-tin-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[ĐH Vinh] Đề thi tuyển sinh lớp 10 THPT Chuyên ĐH Vinh năm 2026 (Vòng 2)',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/dhvinh-vong2-2026.html',
+        url: '/posts/math/dethichuyen/dhvinh-vong2-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Khánh Hòa] Đề thi tuyển sinh lớp 10 THPT Chuyên năm 2026',
         date: 'May 29, 2026',
-        url: '/SMP/posts/math/dethichuyen/khanhhoa-toan-2026.html',
+        url: '/posts/math/dethichuyen/khanhhoa-toan-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Thái Nguyên] Đề thi tuyển sinh lớp 10 THPT môn Toán (Chuyên Toán) năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/thainguyen-toan-2026.html',
+        url: '/posts/math/dethichuyen/thainguyen-toan-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Huế] Đề thi tuyển sinh lớp 10 Chuyên môn Toán năm 2026',
         date: 'June 01, 2026',
-        url: '/SMP/posts/math/dethichuyen/hue-toan-2026.html',
+        url: '/posts/math/dethichuyen/hue-toan-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[KHTN] Đề thi tuyển sinh lớp 10 THPT Chuyên KHTN năm 2026 (Vòng 1 & Vòng 2)',
         date: 'June 06, 2026',
-        url: '/SMP/posts/math/dethichuyen/khtn-2026.html',
+        url: '/posts/math/dethichuyen/khtn-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Hà Nội] Đề thi tuyển sinh lớp 10 môn Toán năm 2026',
         date: 'May 31, 2026',
-        url: '/SMP/posts/math/hanoi-2026.html',
+        url: '/posts/math/hanoi-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Hà Tĩnh] Đề thi môn Toán chuyên lớp 10 THPT Chuyên Hà Tĩnh năm 2026',
         date: 'June 05, 2026',
-        url: '/SMP/posts/math/dethichuyen/hatinh-2026.html',
+        url: '/posts/math/dethichuyen/hatinh-2026.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[HSGS] Đề thi thử lần 2 môn Toán (Chuyên) năm 2026',
         date: 'March 08, 2026',
-        url: '/SMP/posts/math/ThiThuLan2HSGS2526.html',
+        url: '/posts/math/ThiThuLan2HSGS2526.html',
         tags: ['Chuyên Toán', 'Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[HSGS] Số Học trong đề thi thử (Toán điều kiện) năm 2026 (Đợt 2)',
         date: 'March 07, 2026',
-        url: '/SMP/posts/math/SoHocTrongDeThiThuToanDKHSGS2526.html',
+        url: '/posts/math/SoHocTrongDeThiThuToanDKHSGS2526.html',
         tags: ['Số Học', 'Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[HSGS] Đề thi thử lần 2 môn Toán (Chung) năm 2026',
         date: 'March 07, 2026',
-        url: '/SMP/posts/math/DeThiThuLan2ToanDKHSGS.html',
+        url: '/posts/math/DeThiThuLan2ToanDKHSGS.html',
         tags: ['Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: 'HCMUS Olympic Team Selection Test (Algebra)',
         date: 'March 07, 2026',
-        url: '/SMP/posts/math/HCMUS_Olympic_Team_Selection_Test_Algebra.html',
+        url: '/posts/math/HCMUS_Olympic_Team_Selection_Test_Algebra.html',
         tags: ['Math Olympiad', 'Đại số'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: 'On a Counting Problem, From HCMUS TST',
         date: 'March 07, 2026',
-        url: '/SMP/posts/math/On_a_Counting_Problem_From_HCMUS_TST.html',
+        url: '/posts/math/On_a_Counting_Problem_From_HCMUS_TST.html',
         tags: ['Tổ Hợp', 'TST'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: 'Về Một Bài Phương Trình Hàm',
         date: 'March 07, 2026',
-        url: '/SMP/posts/math/Về_Một_Bài_Phương_Trình_Hàm.html',
+        url: '/posts/math/Về_Một_Bài_Phương_Trình_Hàm.html',
         tags: ['Đại số', 'Math'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: 'Tọa Độ Cực và Ứng Dụng',
         date: 'May 06, 2026',
-        url: '/SMP/posts/math/toa_do_cuc.html',
+        url: '/posts/math/toa_do_cuc.html',
         tags: ['THPT'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: 'A Number Theory Problem from the Poland TST',
         date: 'March 07, 2026',
-        url: '/SMP/posts/math/polandNumber.html',
+        url: '/posts/math/polandNumber.html',
         tags: ['Số Học', 'TST'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: '[Đồng Nai] Đề tuyển sinh lớp 10 môn Toán (chuyên) năm 2025',
         date: 'February 23, 2026',
-        url: '/SMP/posts/math/dethichuyen/dongnai-2025.html',
+        url: '/posts/math/dethichuyen/dongnai-2025.html',
         tags: ['Chuyên Toán', 'Đề Thi'],
-        page: '/SMP/pages/toanhoc.html'
+        page: '/pages/toanhoc.html'
     },
     {
         title: 'Khóa học Số học Olympic 2026',
         date: 'April 19, 2026',
-        url: '/SMP/posts/math/KhoaSoHoc.html',
+        url: '/posts/math/KhoaSoHoc.html',
         tags: ['Tài Liệu', 'Số Học'],
-        page: '/SMP/pages/nonmath.html'
+        page: '/pages/nonmath.html'
     }
 ];
 
@@ -382,7 +382,7 @@ const LiveSearch = {
 let deferredPrompt;
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/SMP/service-worker.js')
+        navigator.serviceWorker.register('/service-worker.js')
             .then(registration => {
                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
             })
@@ -430,7 +430,7 @@ function setActiveNav() {
     let current = window.location.pathname;
     // Normalise trailing slash to /index.html
     if (current === '/' || current === '') current = '/index.html';
-    if (current === '/SMP' || current === '/SMP/') current = '/SMP/index.html';
+    if (current === '/SMP' || current === '/') current = '/index.html';
     document.querySelectorAll('.sidebar-nav a, .mobile-bottom-nav a').forEach(a => {
         a.classList.toggle('active', a.getAttribute('href') === current);
     });
@@ -567,7 +567,7 @@ const PostViewer = {
                 // BƯỚC QUAN TRỌNG: Rút trích cả thẻ <style> từ bài viết để giữ CSS bản đẹp
                 let extractedStyles = '';
                 if (!document.querySelector('link[href*="post.css"]')) {
-                    extractedStyles += '<link rel="stylesheet" href="/SMP/core/css/post.css">';
+                    extractedStyles += '<link rel="stylesheet" href="/core/css/post.css">';
                 }
                 doc.querySelectorAll('style').forEach(s => extractedStyles += s.outerHTML);
                 doc.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
@@ -649,7 +649,7 @@ const PostViewer = {
                 // Nhúng cả CSS và Nội dung vào cột phải trang chủ
                 let extractedStyles = '';
                 if (!document.querySelector('link[href*="post.css"]')) {
-                    extractedStyles += '<link rel="stylesheet" href="/SMP/core/css/post.css">';
+                    extractedStyles += '<link rel="stylesheet" href="/core/css/post.css">';
                 }
                 doc.querySelectorAll('style').forEach(s => extractedStyles += s.outerHTML);
                 doc.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
