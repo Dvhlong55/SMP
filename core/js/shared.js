@@ -390,6 +390,16 @@ if ('serviceWorker' in navigator) {
                 console.log('ServiceWorker registration failed: ', err);
             });
     });
+
+    // Tự động tải lại trang khi Service Worker mới được kích hoạt và chiếm quyền kiểm soát
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+            refreshing = true;
+            console.log('Service Worker updated. Reloading page...');
+            window.location.reload();
+        }
+    });
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
