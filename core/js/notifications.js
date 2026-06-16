@@ -15,6 +15,9 @@ class NotificationsController {
         const token = localStorage.getItem('smp_access_token');
         if (token) {
             this.fetchNotifications();
+            if (typeof ALL_POSTS !== 'undefined' && Array.isArray(ALL_POSTS)) {
+                this.syncArticles(token);
+            }
             // Optional: Auto fetch every 1 minute
             setInterval(() => this.fetchNotifications(), 60000);
         }
@@ -307,6 +310,35 @@ class NotificationsController {
     formatDate(dateString) {
         const date = new Date(dateString + 'Z');
         return date.toLocaleDateString('vi-VN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    async syncArticles(token) {
+        if (sessionStorage.getItem('smp_articles_synced') === 'true') return;
+        const backendUrl = window.API_BASE || 'https://smp-backend-kcwn.onrender.com';
+        try {
+            const payload = ALL_POSTS.map(p => ({
+                title: p.title,
+                url: p.url,
+                page: p.page || ''
+            }));
+            const res = await fetch(`${backendUrl}/api/notifications/sync-articles`, {
+                method: 'POST',
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+            if (res.ok) {
+                sessionStorage.setItem('smp_articles_synced', 'true');
+                const data = await res.json();
+                if (data.new_count > 0) {
+                    this.fetchNotifications();
+                }
+            }
+        } catch (err) {
+            console.error("Failed to sync articles", err);
+        }
     }
 }
 
