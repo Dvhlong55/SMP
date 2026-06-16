@@ -629,12 +629,31 @@ main {
 }
 @media (max-width: 768px) {
     .main-wrapper { margin-left: 0; width: 100%; overflow-x: hidden; }
-    .topbar { padding: 12px 16px; flex-wrap: wrap; height: auto; gap: 12px; justify-content: space-between; align-items: center; }
+    .topbar { padding: 12px 16px; flex-wrap: nowrap; height: auto; gap: 12px; justify-content: space-between; align-items: center; position: relative; }
     .topbar > a { flex-shrink: 0; }
-    .topbar-controls { display: contents; }
-    .topbar-actions { flex-shrink: 0; margin-left: auto; order: 2; }
-    .search-wrapper { flex: 0 0 100%; order: 3; margin: 0 !important; max-width: 100%; }
-    .topbar-nav { flex: 0 0 100%; order: 4; overflow-x: auto; padding-top: 10px; border-top: 1px solid rgba(128,128,128,0.15); margin-left: 0; justify-content: flex-start; }
+    .topbar-controls { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+    .topbar-actions { flex-shrink: 0; order: 2; }
+    
+    /* Search mobile dropdown style */
+    .search-wrapper { flex: 0 0 auto; order: 1; margin: 0 !important; width: auto; max-width: none; }
+    .search-input { display: none; }
+    .search-icon { 
+        position: static; transform: none; font-size: 1.3rem; 
+        pointer-events: auto; cursor: pointer; padding: 4px; display: block; 
+    }
+    .search-wrapper.mobile-active {
+        position: absolute; top: 100%; left: 0; right: 0;
+        padding: 12px 16px; background: var(--topbar-bg);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        z-index: 100; display: flex; align-items: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .search-wrapper.mobile-active .search-input { display: block; width: 100%; padding-right: 40px; }
+    .search-wrapper.mobile-active .search-icon {
+        position: absolute; right: 26px; top: 50%; transform: translateY(-50%);
+        pointer-events: none;
+    }
+    .topbar-nav { display: none !important; }
     main { padding: 24px 16px; }
     .comment-form-row { grid-template-columns: 1fr; }
     .grid-container { grid-template-columns: 1fr; }

@@ -128,20 +128,8 @@
 
         /* Mobile Floating Action Button for sidebar toggle */
         @media (max-width: 768px) {
-            .sidebar-toggle {
-                position: fixed;
-                bottom: 24px;
-                left: 24px;
-                right: auto;
-                top: auto;
-                transform: none;
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                border: 1px solid rgba(92, 225, 230, 0.4);
-                background: var(--body-bg) !important;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-                z-index: 999;
+            .sidebar, .sidebar-toggle, .sidebar-overlay {
+                display: none !important;
             }
         }
 
@@ -338,7 +326,7 @@
         <div class="topbar-controls" style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
             <div class="search-wrapper" style="margin-right: 10px;">
                 <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
-                <span class="search-icon">&#x2315;</span>
+                <span class="search-icon" onclick="this.parentElement.classList.toggle('mobile-active'); document.getElementById('search-input').focus();">&#x2315;</span>
                 <div id="search-results" class="search-results"></div>
             </div>
             
