@@ -5,6 +5,10 @@
     <meta name="theme-color" content="#121212">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/SMP/core/image/favicon-192.png">
     <title>SMP — Trang Chủ</title>
     <script>
         window.MathJax = {
@@ -271,6 +275,46 @@
     <link rel="icon" type="image/png" href="/SMP/core/image/favicon.png">
 </head>
 <body>
+    <!-- Splash Screen / Welcome Overlay -->
+    <div id="smp-splash-screen" style="position: fixed; inset: 0; background: #121212; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999999; transition: opacity 0.5s ease-out, visibility 0.5s;">
+        <div style="text-align: center; animation: pulseLogo 2s infinite ease-in-out; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+            <img src="/SMP/core/image/image_49b1a4.png" alt="SMP Logo" style="width: 140px; height: auto; filter: drop-shadow(0 0 20px rgba(92,225,230,0.4));">
+            <div style="font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #c9a96e; font-weight: bold; letter-spacing: 2px;">SMP</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #5ce1e6; letter-spacing: 3px; text-transform: uppercase;">Secrets of Mathematical Principles</div>
+            <div style="margin-top: 20px; width: 40px; height: 2px; background: #5ce1e6; border-radius: 1px; animation: loadingLine 1.5s infinite ease-in-out;"></div>
+        </div>
+        <style>
+            @keyframes pulseLogo {
+                0%, 100% { transform: scale(0.98); opacity: 0.95; }
+                50% { transform: scale(1.02); opacity: 1; }
+            }
+            @keyframes loadingLine {
+                0% { width: 10px; opacity: 0.3; }
+                50% { width: 60px; opacity: 1; }
+                100% { width: 10px; opacity: 0.3; }
+            }
+        </style>
+    </div>
+    <script>
+        // Dismiss splash screen function
+        function dismissSplash() {
+            const splash = document.getElementById('smp-splash-screen');
+            if (splash) {
+                splash.style.opacity = '0';
+                splash.style.visibility = 'hidden';
+                setTimeout(() => splash.remove(), 500);
+            }
+        }
+        // Dismiss splash screen when window is fully loaded or state is already complete
+        if (document.readyState === 'complete') {
+            dismissSplash();
+        } else {
+            window.addEventListener('load', dismissSplash);
+        }
+        // Safety timeout (dismiss after 3s max)
+        setTimeout(dismissSplash, 3000);
+    </script>
+
     <div id="sidebar-placeholder"></div>
 
     <div class="main-wrapper">

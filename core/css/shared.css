@@ -1242,7 +1242,7 @@ body.embed-mode .main-content-layout {
     .comment-section, .pdf-download-btn, .back-to-list-btn,
     .challenge-card, .exam-back-btn, .exam-meta, .back-to-top,
     #smp-logo-canvas, .stats-strip, .modal-header, .modal-expand-btn,
-    .solution-mailbox {
+    .solution-mailbox, .mobile-bottom-nav {
         display: none !important;
     }
 
