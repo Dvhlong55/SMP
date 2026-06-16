@@ -836,10 +836,12 @@ main {
 }
 
 .footer-divider {
-    height: 1px;
-    background: var(--border-light);
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-gold));
     margin-bottom: 24px;
     width: 100%;
+    border-radius: 2px;
+    opacity: 0.4;
 }
 
 .footer-bottom {

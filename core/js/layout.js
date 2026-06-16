@@ -350,7 +350,7 @@
 
     const FOOTER_HTML = `
     <footer class="site-footer fade-up" style="margin-top: 40px; padding: 20px; text-align: center;">
-        <div class="footer-divider" style="width: 50px; height: 2px; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-gold)); margin: 0 auto 15px; border-radius: 2px;"></div>
+        <div class="footer-divider" style="width: 100%; height: 2px; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-gold)); margin: 0 auto 15px; border-radius: 2px; opacity: 0.4;"></div>
         <div class="footer-bottom">
             <p style="font-size: 0.9rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">&copy; 2026 <span class="footer-brand" style="color: var(--accent-cyan); font-weight: bold;">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
         </div>
