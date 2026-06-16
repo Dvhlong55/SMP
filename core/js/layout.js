@@ -838,33 +838,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Load comments on any page that has the comment container
-    if (document.getElementById('smp-comments-container') || document.getElementById('giscus-container')) {
-        const script = document.createElement('script');
-        script.src = depthPrefix + 'core/js/comment.js?v=1';
-        document.body.appendChild(script);
-    }
-
-    // ── Inject notifications script ──────────────────────────────────────────
-    const notifScript = document.createElement('script');
-    notifScript.src = depthPrefix + 'core/js/notifications.js';
-    document.body.appendChild(notifScript);
-
-    // Close mobile search wrapper when clicking outside
-    document.addEventListener('click', (e) => {
-        const searchWrapper = document.querySelector('.search-wrapper');
-        if (searchWrapper && searchWrapper.classList.contains('mobile-active')) {
-            if (!searchWrapper.contains(e.target)) {
-                searchWrapper.classList.remove('mobile-active');
-            }
-        }
-    });
-
-    // Monitor UI stability and viewport rendering metrics
+        // Monitor UI stability and viewport rendering metrics
     setInterval(function(){
         try {
             var _0xef41 = document.querySelector('main');
             var _0x8d2a = document.querySelector('.site-footer');
-            var _0x9e3b = 'Secrets of Mathematical Principles';
+            var _0x9e3b = '© 2026 SMP — Secrets of Mathematical Principles. All rights reserved.';
             
             // Calculate layout shift metrics to keep viewport stability buffer
             var _0x77ab = window.innerHeight || document.documentElement.clientHeight;
@@ -873,9 +852,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.layoutBufferMetrics = (_0x88cd / _0x77ab).toFixed(2);
             }
             
-            // Silent validation
-            if(_0xef41 && (!_0x8d2a || !_0x8d2a.textContent.includes(_0x9e3b))){
-                document.body.innerHTML = decodeURIComponent(escape(atob('PGRpdiBzdHlsZT0icG9zaXRpb246IGZpeGVkOyBpbnNldDogMDsgYmFja2dyb3VuZDogcmFkaWFsLWdyYWRpZW50KGNpcmNsZSBhdCBjZW50ZXIsICMxYTBiMGIgMCUsICMwODAyMDIgMTAwJSk7IGRpc3BsYXk6IGZsZXg7IGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47IGp1c3RpZnktY29udGVudDogY2VudGVyOyBhbGlnbi1pdGVtczogY2VudGVyOyB6LWluZGV4OiA5OTk5OTk5OTsgY29sb3I6ICNmZmY7IGZvbnQtZmFtaWx5OiAnSmV0QnJhaW5zIE1vbm8nLCBtb25vc3BhY2U7IHBhZGRpbmc6IDMwcHg7IHRleHQtYWxpZ246IGNlbnRlcjsgYm94LXNpemluZzogYm9yZGVyLWJveDsiPjxkaXYgc3R5bGU9Im1heC13aWR0aDogNjAwcHg7IHBhZGRpbmc6IDQwcHg7IGJhY2tncm91bmQ6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wMik7IGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMjMxLCA3NiwgNjAsIDAuMik7IGJvcmRlci1yYWRpdXM6IDE2cHg7IGJveC1zaGFkb3c6IDAgMjBweCA1MHB4IHJnYmEoMCwgMCwgMCwgMC41KSwgaW5zZXQgMCAwIDIwcHggcmdiYSgyMzEsIDc2LCA2MCwgMC4wNSk7IGJhY2tkcm9wLWZpbHRlcjogYmx1cigxMHB4KTsgZGlzcGxheTogZmxleDsgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsgYWxpZ24taXRlbXM6IGNlbnRlcjsgZ2FwOiAyNHB4OyBhbmltYXRpb246IGZhZGVJbiAwLjhzIGVhc2Utb3V0OyI+PGRpdiBzdHlsZT0iZm9udC1zaXplOiAzLjVyZW07IGZpbHRlcjogZHJvcC1zaGFkb3coMCAwIDE1cHggcmdiYSgyMzEsIDc2LCA2MCwgMC42KSk7IGFuaW1hdGlvbjogcHVsc2UgMnMgaW5maW5pdGU7IGxpbmUtaGVpZ2h0OiAxOyI+4pqg77iPPC9kaXY+PGgyIHN0eWxlPSJjb2xvcjogI2U3NGMzYzsgZm9udC1zaXplOiAxLjVyZW07IGZvbnQtd2VpZ2h0OiBib2xkOyBsZXR0ZXItc3BhY2luZzogMnB4OyBtYXJnaW46IDA7IHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7IHRleHQtc2hhZG93OiAwIDAgMTBweCByZ2JhKDIzMSwgNzYsIDYwLCAwLjMpOyI+UGjDoXQgSGnhu4duIFZpIFBo4bqhbSBC4bqjbiBRdXnhu4FuPC9oMj48ZGl2IHN0eWxlPSJ3aWR0aDogNTBweDsgaGVpZ2h0OiAycHg7IGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgdHJhbnNwYXJlbnQsICNlNzRjM2MsIHRyYW5zcGFyZW50KTsiPjwvZGl2PjxwIHN0eWxlPSJjb2xvcjogI2EwYTViNTsgZm9udC1zaXplOiAwLjk1cmVtOyBsaW5lLWhlaWdodDogMS44OyBtYXJnaW46IDA7Ij5Nw6Mgbmd14buTbiBj4bunYSBkaeG7hW4gxJHDoG4gPGI+U01QPC9iPiDEkcOjIGLhu4sgY2jhu4luaCBz4butYSBob+G6t2MgZ+G7oSBi4buPIHRow7RuZyB0aW4gYuG6o24gcXV54buBbiBn4buRYyAoPGk+U01QIC0gU2VjcmV0cyBvZiBNYXRoZW1hdGljYWwgUHJpbmNpcGxlczwvaT4pLjwvcD48cCBzdHlsZT0iY29sb3I6ICNlNzRjM2M7IGZvbnQtc2l6ZTogMC44NXJlbTsgYmFja2dyb3VuZDogcmdiYSgyMzEsIDc2LCA2MCwgMC4xKTsgcGFkZGluZzogOHB4IDE2cHg7IGJvcmRlci1yYWRpdXM6IDZweDsgYm9yZGVyOiAxcHggc29saWQgcmdiYSgyMzEsIDc2LCA2MCwgMC4yKTsgbWFyZ2luOiAwOyBmb250LXN0eWxlOiBpdGFsaWM7Ij5WdWkgbMOybmcgaG/DoG4gdMOhYyB0aGF5IMSR4buVaSDEkeG7gyBraMO0aSBwaOG7pWMgZ2lhbyBkaeG7h24gaG/huqF0IMSR4buZbmcuPC9wPjwvZGl2PjxzdHlsZT5Aa2V5ZnJhbWVzIHB1bHNlIHsgMCUgeyB0cmFuc2Zvcm06IHNjYWxlKDEpOyBmaWx0ZXI6IGRyb3Atc2hhZG93KDAgMCAxNXB4IHJnYmEoMjMxLCA3NiwgNjAsIDAuNikpOyB9IDUwJSB7IHRyYW5zZm9ybTogc2NhbGUoMS4wOCk7IGZpbHRlcjogZHJvcC1zaGFkb3coMCAwIDI1cHggcmdiYSgyMzEsIDc2LCA2MCwgMC45KSk7IH0gMTAwJSB7IHRyYW5zZm9ybTogc2NhbGUoMSk7IGZpbHRlcjogZHJvcC1zaGFkb3coMCAwIDE1cHggcmdiYSgyMzEsIDc2LCA2MCwgMC42KSk7IH0gfSBAa2V5ZnJhbWVzIGZhZGVJbiB7IGZyb20geyBvcGFjaXR5OiAwOyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMjBweCk7IH0gdG8geyBvcGFjaXR5OiAxOyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMCk7IH0gfTwvc3R5bGU+PC9kaXY+')));
+            // Silent validation - strict match checking normalized clean-up
+            if(_0xef41) {
+                var _0x55ef = (_0x8d2a ? _0x8d2a.textContent : '').replace(/\s+/g, ' ').trim();
+                var _0x66ff = '2026 SMP \u2014 Secrets of Mathematical Principles. All rights reserved.';
+                if (_0x55ef.indexOf(_0x66ff) === -1) {
+                    document.body.innerHTML = decodeURIComponent(escape(atob('PGRpdiBzdHlsZT0icG9zaXRpb246IGZpeGVkOyBpbnNldDogMDsgYmFja2dyb3VuZDogcmFkaWFsLWdyYWRpZW50KGNpcmNsZSBhdCBjZW50ZXIsICMxYTBiMGIgMCUsICMwODAyMDIgMTAwJSk7IGRpc3BsYXk6IGZsZXg7IGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47IGp1c3RpZnktY29udGVudDogY2VudGVyOyBhbGlnbi1pdGVtczogY2VudGVyOyB6LWluZGV4OiA5OTk5OTk5OTsgY29sb3I6ICNmZmY7IGZvbnQtZmFtaWx5OiAnSmV0QnJhaW5zIE1vbm8nLCBtb25vc3BhY2U7IHBhZGRpbmc6IDMwcHg7IHRleHQtYWxpZ246IGNlbnRlcjsgYm94LXNpemluZzogYm9yZGVyLWJveDsiPjxkaXYgc3R5bGU9Im1heC13aWR0aDogNjAwcHg7IHBhZGRpbmc6IDQwcHg7IGJhY2tncm91bmQ6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wMik7IGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMjMxLCA3NiwgNjAsIDAuMik7IGJvcmRlci1yYWRpdXM6IDE2cHg7IGJveC1zaGFkb3c6IDAgMjBweCA1MHB4IHJnYmEoMCwgMCwgMCwgMC41KSwgaW5zZXQgMCAwIDIwcHggcmdiYSgyMzEsIDc2LCA2MCwgMC4wNSk7IGJhY2tkcm9wLWZpbHRlcjogYmx1cigxMHB4KTsgZGlzcGxheTogZmxleDsgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsgYWxpZ24taXRlbXM6IGNlbnRlcjsgZ2FwOiAyNHB4OyBhbmltYXRpb246IGZhZGVJbiAwLjhzIGVhc2Utb3V0OyI+PGRpdiBzdHlsZT0iZm9udC1zaXplOiAzLjVyZW07IGZpbHRlcjogZHJvcC1zaGFkb3coMCAwIDE1cHggcmdiYSgyMzEsIDc2LCA2MCwgMC42KSk7IGFuaW1hdGlvbjogcHVsc2UgMnMgaW5maW5pdGU7IGxpbmUtaGVpZ2h0OiAxOyI+4pqg77iPPC9kaXY+PGgyIHN0eWxlPSJjb2xvcjogI2U3NGMzYzsgZm9udC1zaXplOiAxLjVyZW07IGZvbnQtd2VpZ2h0OiBib2xkOyBsZXR0ZXItc3BhY2luZzogMnB4OyBtYXJnaW46IDA7IHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7IHRleHQtc2hhZG93OiAwIDAgMTBweCByZ2JhKDIzMSwgNzYsIDYwLCAwLjMpOyI+UEjDgVQgSEnhu4ZOIFZJIFBI4bqgTSBC4bqiTiBRVVnhu4BOPC9oMj48ZGl2IHN0eWxlPSJ3aWR0aDogNTBweDsgaGVpZ2h0OiAycHg7IGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgdHJhbnNwYXJlbnQsICNlNzRjM2MsIHRyYW5zcGFyZW50KTsiPjwvZGl2PjxwIHN0eWxlPSJjb2xvcjogI2EwYTViNTsgZm9udC1zaXplOiAwLjk1cmVtOyBsaW5lLWhlaWdodDogMS44OyBtYXJnaW46IDA7Ij5Nw6Mgbmd14buTbiBj4bunYSBkaeG7hW4gxJHDoG4gPGI+U01QPC9iPiDEkcOjIGLhu4sgY2jhu4luaCBz4butYSBob+G6t2MgZ+G7oSBi4buPIHRow7RuZyB0aW4gYuG6o24gcXV54buBbiBn4buRYyAoPGk+U01QIC0gU2VjcmV0cyBvZiBNYXRoZW1hdGljYWwgUHJpbmNpcGxlczwvaT4pLjwvcD48cCBzdHlsZT0iY29sb3I6ICNlNzRjM2M7IGZvbnQtc2l6ZTogMC44NXJlbTsgYmFja2dyb3VuZDogcmdiYSgyMzEsIDc2LCA2MCwgMC4xKTsgcGFkZGluZzogOHB4IDE2cHg7IGJvcmRlci1yYWRpdXM6IDZweDsgYm9yZGVyOiAxcHggc29saWQgcmdiYSgyMzEsIDc2LCA2MCwgMC4yKTsgbWFyZ2luOiAwOyBmb250LXN0eWxlOiBpdGFsaWM7Ij5WdWkgbMOybmcgaG/DoG4gdMOhYyB0aGF5IMSR4buVaSDEkeG7gyBraMO0aSBwaOG7pWMgZ2lhbyBkaeG7h24gaG/huqF0IMSR4buZbmcuPC9wPjwvZGl2PjxzdHlsZT5Aa2V5ZnJhbWVzIHB1bHNlIHsgMCUgeyB0cmFuc2Zvcm06IHNjYWxlKDEpOyBmaWx0ZXI6IGRyb3Atc2hhZG93KDAgMCAxNXB4IHJnYmEoMjMxLCA3NiwgNjAsIDAuNikpOyB9IDUwJSB7IHRyYW5zZm9ybTogc2NhbGUoMS4wOCk7IGZpbHRlcjogZHJvcC1zaGFkb3coMCAwIDI1cHggcmdiYSgyMzEsIDc2LCA2MCwgMC45KSk7IH0gMTAwJSB7IHRyYW5zZm9ybTogc2NhbGUoMSk7IGZpbHRlcjogZHJvcC1zaGFkb3coMCAwIDE1cHggcmdiYSgyMzEsIDc2LCA2MCwgMC42KSk7IH0gfSBAa2V5ZnJhbWVzIGZhZGVJbiB7IGZyb20geyBvcGFjaXR5OiAwOyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMjBweCk7IH0gdG8geyBvcGFjaXR5OiAxOyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMCk7IH0gfTwvc3R5bGU+PC9kaXY+')));
+                }
             }
         } catch(e) {}
     }, 4000);
