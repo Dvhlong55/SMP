@@ -35,16 +35,36 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // Thêm các CSS cần thiết nếu chưa có trong thẻ head
     const head = document.head;
-    if (!document.querySelector('link[href="/SMP/core/css/shared.css?v=4"]')) {
+    
+    // Determine depth to root (where 'core' is)
+    let depthPrefix = './';
+    const path = window.location.pathname;
+    const smpIndex = path.indexOf('/SMP/');
+    if (smpIndex !== -1) {
+        depthPrefix = '/SMP/';
+    } else {
+        const segments = path.split('/').filter(s => s !== '');
+        let depth = 0;
+        const pagesIdx = segments.indexOf('pages');
+        const postsIdx = segments.indexOf('posts');
+        if (pagesIdx !== -1) {
+            depth = segments.length - 1 - pagesIdx;
+        } else if (postsIdx !== -1) {
+            depth = segments.length - 1 - postsIdx;
+        }
+        depthPrefix = '../'.repeat(depth);
+    }
+
+    if (!document.querySelector('link[href*="shared.css"]')) {
         const linkShared = document.createElement('link');
         linkShared.rel = 'stylesheet';
-        linkShared.href = '/SMP/core/css/shared.css?v=4';
+        linkShared.href = depthPrefix + 'core/css/shared.css?v=4';
         head.appendChild(linkShared);
     }
-    if (!document.querySelector('link[href="/SMP/core/css/post.css?v=4"]')) {
+    if (!document.querySelector('link[href*="post.css"]')) {
         const linkPost = document.createElement('link');
         linkPost.rel = 'stylesheet';
-        linkPost.href = '/SMP/core/css/post.css?v=4';
+        linkPost.href = depthPrefix + 'core/css/post.css?v=4';
         head.appendChild(linkPost);
     }
     
@@ -130,10 +150,10 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // 6. Nhúng các script giao diện theo thứ tự tuần tự để tránh race condition
     const scriptsToLoad = [
-        "/SMP/core/js/sidebar-data.js?v=4",
-        "/SMP/core/js/layout.js?v=4",
-        "/SMP/core/js/shared.js?v=4",
-        "/SMP/core/js/saved.js"
+        depthPrefix + "core/js/sidebar-data.js?v=4",
+        depthPrefix + "core/js/layout.js?v=4",
+        depthPrefix + "core/js/shared.js?v=4",
+        depthPrefix + "core/js/saved.js"
     ];
 
     function loadScriptSequentially(index) {

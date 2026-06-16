@@ -214,7 +214,7 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
-                height: 56px;
+                height: 64px;
                 background-color: var(--topbar-bg, #111111);
                 border-top: 1px solid rgba(128, 128, 128, 0.15);
                 z-index: 9999;
@@ -267,7 +267,7 @@
 
             /* Adjust body padding so bottom nav doesn't overlap content */
             body {
-                padding-bottom: calc(56px + env(safe-area-inset-bottom)) !important;
+                padding-bottom: calc(64px + env(safe-area-inset-bottom)) !important;
             }
         }
     `;
@@ -751,30 +751,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const topbarAuthBtn = document.getElementById('topbar-auth-btn');
     
     if (token && username) {
-        if (sidebarAuthBtn) sidebarAuthBtn.innerHTML = `&#x2637; ${username}`;
-        if (topbarAuthBtn) topbarAuthBtn.innerHTML = `&#x2637; ${username}`;
+        if (sidebarAuthBtn) {
+            sidebarAuthBtn.innerHTML = `&#x2637; ${username}`;
+            sidebarAuthBtn.onclick = function(e) {
+                e.preventDefault();
+                if (window.openAuthModal) window.openAuthModal('profile');
+                return false;
+            };
+        }
+        if (topbarAuthBtn) {
+            topbarAuthBtn.innerHTML = `&#x2637; ${username}`;
+            topbarAuthBtn.onclick = function(e) {
+                e.preventDefault();
+                if (window.openAuthModal) window.openAuthModal('profile');
+                return false;
+            };
+        }
     }
 
     // Inject Auth Modal into body
     document.body.insertAdjacentHTML('beforeend', AUTH_MODAL_HTML);
 
+    // Determine depth to root (where 'core' is)
+    let depthPrefix = './';
+    const path = window.location.pathname;
+    const smpIndex = path.indexOf('/SMP/');
+    if (smpIndex !== -1) {
+        depthPrefix = '/SMP/';
+    } else {
+        const segments = path.split('/').filter(s => s !== '');
+        let depth = 0;
+        const pagesIdx = segments.indexOf('pages');
+        const postsIdx = segments.indexOf('posts');
+        if (pagesIdx !== -1) {
+            depth = segments.length - 1 - pagesIdx;
+        } else if (postsIdx !== -1) {
+            depth = segments.length - 1 - postsIdx;
+        }
+        depthPrefix = '../'.repeat(depth);
+    }
+
     // Auto-load auth.js
     if (!document.querySelector('script[src*="auth.js"]')) {
         const authScript = document.createElement('script');
-        authScript.src = '/SMP/core/js/auth.js?v=2';
+        authScript.src = depthPrefix + 'core/js/auth.js?v=2';
         document.body.appendChild(authScript);
     }
 
     // Load comments on any page that has the comment container
     if (document.getElementById('smp-comments-container') || document.getElementById('giscus-container')) {
         const script = document.createElement('script');
-        script.src = '/SMP/core/js/comment.js?v=1';
+        script.src = depthPrefix + 'core/js/comment.js?v=1';
         document.body.appendChild(script);
     }
 
     // ── Inject notifications script ──────────────────────────────────────────
     const notifScript = document.createElement('script');
-    notifScript.src = '/SMP/core/js/notifications.js';
+    notifScript.src = depthPrefix + 'core/js/notifications.js';
     document.body.appendChild(notifScript);
 
     // Close mobile search wrapper when clicking outside

@@ -4,6 +4,47 @@
 
 const API_BASE_URL = 'https://smp-backend-kcwn.onrender.com';
 
+// ─── Session Expiration Handler ──────────────────────────────────────────────
+window.handleExpiredSession = function() {
+    localStorage.removeItem('smp_access_token');
+    localStorage.removeItem('smp_username');
+    if (window.applyAuthUI) {
+        window.applyAuthUI(null);
+    }
+    
+    // Show toast
+    const toast = document.getElementById('auth-toast');
+    if (toast) {
+        toast.textContent = '⚠️ Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.';
+        toast.style.display = 'block';
+        toast.style.background = 'rgba(231,76,60,0.95)';
+        setTimeout(() => { toast.style.display = 'none'; toast.style.background = ''; }, 5000);
+    }
+
+    // Automatically open the login modal
+    if (window.openAuthModal) {
+        window.openAuthModal('login');
+    }
+};
+
+// ─── Global Fetch Interceptor for 401/403 ─────────────────────────────────────
+const originalFetch = window.fetch;
+window.fetch = async function(...args) {
+    try {
+        const res = await originalFetch(...args);
+        if (res.status === 401 || res.status === 403) {
+            // Check if we are currently logged in to avoid intercepting non-logged-in requests
+            if (localStorage.getItem('smp_access_token')) {
+                console.warn('Session expired (401/403). Logging out...');
+                window.handleExpiredSession();
+            }
+        }
+        return res;
+    } catch (err) {
+        throw err;
+    }
+};
+
 // ─── Open/Close Modal ────────────────────────────────────────────────────────
 window.openAuthModal = function(mode) {
     const modal = document.getElementById('auth-modal');
@@ -51,7 +92,7 @@ function showMsg(id, text, isError = true) {
 }
 
 // ─── Update Topbar + Sidebar UI after login/logout ───────────────────────────
-function applyAuthUI(username) {
+window.applyAuthUI = function(username) {
     const sidebarBtn = document.getElementById('sidebar-auth-btn');
     const topbarBtn  = document.getElementById('topbar-auth-btn');
     if (username) {
@@ -65,7 +106,8 @@ function applyAuthUI(username) {
         if (sidebarBtn) { sidebarBtn.innerHTML = '&#x2637; Login'; sidebarBtn.onclick = function(e){ e.preventDefault(); window.openAuthModal('login'); }; }
         if (topbarBtn)  { topbarBtn.innerHTML  = '&#x2637; Login'; topbarBtn.onclick  = function(e){ e.preventDefault(); window.openAuthModal('login'); }; }
     }
-}
+};
+const applyAuthUI = window.applyAuthUI;
 
 // ─── Login ────────────────────────────────────────────────────────────────────
 window.handleLogin = async function(event) {
@@ -167,27 +209,31 @@ async function verifyToken() {
         const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-        if (!res.ok) throw new Error('Token expired');
+        
+        if (res.status === 401 || res.status === 403) {
+            // Explicit expired or invalid token
+            console.warn('verifyToken: Token expired or invalid status:', res.status);
+            window.handleExpiredSession();
+            return;
+        }
+
+        if (!res.ok) {
+            // Other server error (e.g. 500, 502, 503) — keep optimistic session
+            console.warn('verifyToken: Server error (not 401/403):', res.status);
+            return;
+        }
+
         const user = await res.json();
         localStorage.setItem('smp_username', user.username);
         applyAuthUI(user.username);
-    } catch {
-        // Token invalid — auto-logout silently + notify
-        localStorage.removeItem('smp_access_token');
-        localStorage.removeItem('smp_username');
-        applyAuthUI(null);
-        const toast = document.getElementById('auth-toast');
-        if (toast) {
-            toast.textContent = '⚠️ Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.';
-            toast.style.display = 'block';
-            toast.style.background = 'rgba(231,76,60,0.95)';
-            setTimeout(() => { toast.style.display = 'none'; toast.style.background = ''; }, 5000);
-        }
+    } catch (err) {
+        // Network error (e.g. Render server offline or sleeping) — keep optimistic session
+        console.warn('verifyToken: Network error/Server offline during verification:', err);
     }
 }
 
-// ─── Init on DOMContentLoaded ─────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+// ─── Init ─────────────────────────────────────────────────────────────────────
+function initAuth() {
     verifyToken();
 
     // Close modal when clicking backdrop
@@ -202,4 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') window.closeAuthModal();
     });
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAuth);
+} else {
+    initAuth();
+}
