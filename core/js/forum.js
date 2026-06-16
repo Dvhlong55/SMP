@@ -91,60 +91,344 @@ function toggleForumPreview(textareaId, previewId) {
     src.oninput = () => { if (box.classList.contains('active')) renderBox(); };
 }
 
-// ─── Thread List ──────────────────────────────────────────────────────────
-let currentTagFilter = 'all';
+// ─── Cascading Tags Config & State ────────────────────────────────────────
+let tagsConfig = {};
+let allPostsCache = [];
+let currentFilters = { level1: 'all', level2: null, level3: null, keyword: '' };
+
+// ─── Form Tags State ──────────────────────────────────────────────────────
+let formSelectedTags = { level1: null, level2: null, level3: null };
+let formUserTags = [];
+
+const TAGS_DISPLAY_DICT = {
+    // THPT
+    "Dai-So-Giai-Tich": "Đại Số - Giải Tích",
+    "Ham-So-Do-Thi": "Hàm Số & Đồ Thị",
+    "Phuong-Trinh-Bat-PT": "Phương Trình & Bất Phương Trình",
+    "Luong-Giac": "Lượng Giác",
+    "Mu-Logarit": "Mũ & Logarit",
+    "Day-So-Gioi-Han": "Dãy Số & Giới Hạn",
+    "Dao-Ham-Tich-Phan": "Đạo Hàm & Tích Phân",
+    "So-Phuc": "Số Phức",
+    "Hinh-Hoc": "Hình Học",
+    "Toa-Do-Phong-Oxy": "Tọa Độ Phẳng Oxy",
+    "Hinh-Khong-Gian": "Hình Không Gian",
+    "Khoi-Da-Dien-Tron-Xoay": "Khối Đa Diện & Tròn Xoay",
+    "Toa-Do-Khong-Gian-Oxyz": "Tọa Độ Không Gian Oxyz",
+    "To-Hop-Xac-Suat": "Tổ Hợp - Xác Suất",
+    "Dai-So-To-Hop": "Đại Số Tổ Hợp",
+    "Nhi-Thuc-Newton": "Nhị Thức Newton",
+    "Xac-Suat": "Xác Suất",
+    "Thong-Ke": "Thống Kê",
+    "De-Thi": "Đề Thi",
+    "Thi-Tot-Nghiep-THPT": "Thi Tốt Nghiệp THPT",
+    "Danh-Gia-Nang-Luc": "Đánh Giá Năng Lực",
+    "De-Kiem-Tra-Truong-So": "Đề Kiểm Tra Trường/Sở",
+    // VMO
+    "Dai-So": "Đại Số",
+    "Bat-Dang-Thuc": "Bất Đẳng Thức",
+    "Da-Thuc": "Đa Thức",
+    "Phuong-Trinh-Ham": "Phương Trình Hàm",
+    "Giai-Tich": "Giải Tích",
+    "Day-So": "Dãy Số",
+    "Tinh-Chat-Ham-So": "Tính Chất Hàm Số",
+    "Dong-Quy-Thang-Hang": "Đồng Quy & Thẳng Hàng",
+    "Hang-Diem-Cuc-Doi-Cuc": "Hàng Điểm - Cực & Đối Cực",
+    "Phep-Bien-Hinh": "Phép Biến Hình",
+    "Mo-hinh": "Mô Hình",
+    "Mo-Hinh": "Mô Hình",
+    "So-Hoc": "Số Học",
+    "Chia-Het-Dong-Du": "Chia Hết - Đồng Dư",
+    "Phuong-Trinh-Nghiem-Nguyen": "Phương Trình Nghiệm Nguyên",
+    "Cap-Can-Nguyen-Thuy": "Cấp & Căn Nguyên Thủy",
+    "Ham-So-Hoc": "Hàm Số Học",
+    "To-Hop": "Tổ Hợp",
+    "Bai-Toan-Dem": "Bài Toán Đếm",
+    "Ly-Thuyet-Do-Thi": "Lý Thuyết Đồ Thị",
+    "Bat-Bien-Nua-Bat-Bien": "Bất Biến & Nửa Bất Biến",
+    "Cuc-Han-Dirichlet": "Cực Hạn - Dirichlet",
+    "Tro-Choi-Toan-Hoc": "Trò Chơi Toán Học",
+    "VMO-Chinh-Thuc": "VMO Chính Thức",
+    "TST-Chon-Doi-Tuyen": "TST - Chọn Đội Tuyển",
+    "Tap-Huan-Trai-He": "Tập Huấn - Trại Hè"
+};
+
+function getDisplayName(tag) {
+    if (!tag) return '';
+    if (TAGS_DISPLAY_DICT[tag]) return TAGS_DISPLAY_DICT[tag];
+    // Fallback: replace hyphens with spaces, capitalize first letter
+    let name = tag.replace(/-/g, ' ');
+    return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+function getTagLevel(tag) {
+    if (!tag) return 0;
+    if (tagsConfig[tag]) return 1;
+    for (let l1 in tagsConfig) {
+        if (tagsConfig[l1] && tagsConfig[l1][tag] !== undefined) return 2;
+    }
+    for (let l1 in tagsConfig) {
+        if (tagsConfig[l1]) {
+            for (let l2 in tagsConfig[l1]) {
+                const l3List = tagsConfig[l1][l2];
+                if (Array.isArray(l3List) && l3List.includes(tag)) return 3;
+            }
+        }
+    }
+    return 4;
+}
+
+function getTagStyle(tag) {
+    const lvl = getTagLevel(tag);
+    if (lvl === 1) {
+        return 'background: rgba(92,225,230,0.1); color: var(--accent-cyan); border-color: rgba(92,225,230,0.3);';
+    } else if (lvl === 2) {
+        return 'background: rgba(201,169,110,0.1); color: var(--accent-gold); border-color: rgba(201,169,110,0.3);';
+    } else if (lvl === 3) {
+        return 'background: rgba(185,117,255,0.1); color: var(--accent-purple); border-color: rgba(185,117,255,0.3);';
+    } else {
+        return 'background: rgba(231,76,60,0.1); color: #e74c3c; border-color: rgba(231,76,60,0.3);';
+    }
+}
+
+async function loadTagsConfig() {
+    try {
+        const res = await fetch('/SMP/core/data/tags-config.json');
+        tagsConfig = await res.json();
+        renderMainFilterLevel(1, Object.keys(tagsConfig));
+        renderFormFilterLevel(1, Object.keys(tagsConfig));
+        
+        // Listeners for keyword search
+        const searchInput = document.getElementById('forum-search-input');
+        if (searchInput) {
+            let debounceTimer;
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    currentFilters.keyword = e.target.value;
+                    applyFilters();
+                }, 300);
+            });
+        }
+        // Custom tags input
+        const customInput = document.getElementById('thread-custom-tags');
+        if (customInput) {
+            customInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ',') {
+                    e.preventDefault();
+                    let tag = customInput.value.trim().replace(/,/g, '');
+                    if (tag) {
+                        tag = tag.toLowerCase().replace(/\s+/g, '-');
+                        if (!formUserTags.includes(tag)) {
+                            formUserTags.push(tag);
+                            renderFormUserTags();
+                        }
+                    }
+                    customInput.value = '';
+                }
+            });
+        }
+    } catch (err) { console.error("Failed to load tags config", err); }
+}
+
+function renderFormUserTags() {
+    const container = document.getElementById('create-user-tags-badges');
+    if (!container) return;
+    container.innerHTML = formUserTags.map((t, idx) => 
+        `<span class="forum-tag" style="${getTagStyle(t)}">${escapeHTML(getDisplayName(t))} <span style="cursor:pointer;margin-left:4px;" onclick="removeUserTag(${idx})">✖</span></span>`
+    ).join('');
+}
+window.removeUserTag = function(idx) {
+    formUserTags.splice(idx, 1);
+    renderFormUserTags();
+};
+
+function renderMainFilterLevel(level, items) {
+    if (level === 1) {
+        const c = document.getElementById('filter-level1');
+        if (!c) return;
+        c.innerHTML = '<button class="nav-filter-btn active lvl1" onclick="selectMainFilter(1, \'all\')">Tất Cả</button>' + 
+                      items.map(i => `<button class="nav-filter-btn lvl1" data-val="${i}" onclick="selectMainFilter(1, '${i}')">${getDisplayName(i)}</button>`).join('');
+        document.getElementById('filter-level2').style.display = 'none';
+        document.getElementById('filter-level3').style.display = 'none';
+    } else if (level === 2) {
+        const c = document.getElementById('filter-level2');
+        if (!c) return;
+        if (!items || items.length === 0) { c.style.display = 'none'; return; }
+        c.style.display = 'flex';
+        c.innerHTML = items.map(i => `<button class="nav-filter-btn lvl2" data-val="${i}" onclick="selectMainFilter(2, '${i}')">${getDisplayName(i)}</button>`).join('');
+        document.getElementById('filter-level3').style.display = 'none';
+    } else if (level === 3) {
+        const c = document.getElementById('filter-level3');
+        if (!c) return;
+        if (!items || items.length === 0) { c.style.display = 'none'; return; }
+        c.style.display = 'flex';
+        c.innerHTML = items.map(i => `<button class="nav-filter-btn lvl3" data-val="${i}" onclick="selectMainFilter(3, '${i}')">${getDisplayName(i)}</button>`).join('');
+    }
+}
+
+window.selectMainFilter = function(level, val) {
+    const updateActiveBtn = (containerId, val) => {
+        const c = document.getElementById(containerId);
+        if (c) {
+            c.querySelectorAll('.nav-filter-btn').forEach(b => {
+                b.classList.remove('active');
+                if ((val === 'all' && b.innerText === 'Tất Cả') || b.getAttribute('data-val') === val) b.classList.add('active');
+            });
+        }
+    };
+    
+    if (level === 1) {
+        currentFilters.level1 = val;
+        currentFilters.level2 = null;
+        currentFilters.level3 = null;
+        updateActiveBtn('filter-level1', val);
+        if (val !== 'all' && tagsConfig[val]) {
+            renderMainFilterLevel(2, Object.keys(tagsConfig[val]));
+        } else {
+            document.getElementById('filter-level2').style.display = 'none';
+            document.getElementById('filter-level3').style.display = 'none';
+        }
+    } else if (level === 2) {
+        currentFilters.level2 = currentFilters.level2 === val ? null : val;
+        currentFilters.level3 = null;
+        updateActiveBtn('filter-level2', currentFilters.level2 || '');
+        if (currentFilters.level2 && tagsConfig[currentFilters.level1] && tagsConfig[currentFilters.level1][currentFilters.level2]) {
+            renderMainFilterLevel(3, tagsConfig[currentFilters.level1][currentFilters.level2]);
+        } else {
+            document.getElementById('filter-level3').style.display = 'none';
+        }
+    } else if (level === 3) {
+        currentFilters.level3 = currentFilters.level3 === val ? null : val;
+        updateActiveBtn('filter-level3', currentFilters.level3 || '');
+    }
+    applyFilters();
+};
+
+function renderFormFilterLevel(level, items) {
+    const createCb = (val, lv) => `<label class="tag-checkbox-label" style="padding:4px 8px; border:1px solid var(--border-light); border-radius:4px;"><input type="radio" name="form-lvl${lv}" value="${val}" onchange="selectFormFilter(${lv}, '${val}')"> ${getDisplayName(val)}</label>`;
+    if (level === 1) {
+        const c = document.getElementById('create-level1-tags');
+        if (!c) return;
+        c.innerHTML = items.map(i => createCb(i, 1)).join('');
+        document.getElementById('create-level2-tags').style.display = 'none';
+        document.getElementById('create-level3-tags').style.display = 'none';
+    } else if (level === 2) {
+        const c = document.getElementById('create-level2-tags');
+        if (!c) return;
+        if (!items || items.length === 0) { c.style.display = 'none'; return; }
+        c.style.display = 'flex';
+        c.innerHTML = items.map(i => createCb(i, 2)).join('');
+        document.getElementById('create-level3-tags').style.display = 'none';
+    } else if (level === 3) {
+        const c = document.getElementById('create-level3-tags');
+        if (!c) return;
+        if (!items || items.length === 0) { c.style.display = 'none'; return; }
+        c.style.display = 'flex';
+        c.innerHTML = items.map(i => createCb(i, 3)).join('');
+    }
+}
+
+window.selectFormFilter = function(level, val) {
+    if (level === 1) {
+        formSelectedTags.level1 = val;
+        formSelectedTags.level2 = null;
+        formSelectedTags.level3 = null;
+        if (tagsConfig[val]) {
+            renderFormFilterLevel(2, Object.keys(tagsConfig[val]));
+        } else {
+            document.getElementById('create-level2-tags').style.display = 'none';
+            document.getElementById('create-level3-tags').style.display = 'none';
+        }
+    } else if (level === 2) {
+        formSelectedTags.level2 = val;
+        formSelectedTags.level3 = null;
+        if (tagsConfig[formSelectedTags.level1] && tagsConfig[formSelectedTags.level1][val]) {
+            renderFormFilterLevel(3, tagsConfig[formSelectedTags.level1][val]);
+        } else {
+            document.getElementById('create-level3-tags').style.display = 'none';
+        }
+    } else if (level === 3) {
+        formSelectedTags.level3 = val;
+    }
+};
+
+function parseTagsFromContent(content) {
+    const tagsMatch = content.match(/\[TAGS:\s*(.+?)\]/);
+    if (tagsMatch) {
+        return tagsMatch[1].split(',').map(tag => tag.trim());
+    }
+    return [];
+}
 
 async function loadThreadList() {
     const container = document.getElementById('thread-list-container');
     try {
-        const res = await fetch(`${API_BASE}/api/forum/threads`);
-        if (!res.ok) throw new Error('Không thể tải danh sách chủ đề');
-        let threads = await res.json();
-
-        // Filter by tags
-        if (currentTagFilter !== 'all') {
-            threads = threads.filter(t => {
-                const tagsMatch = t.content.match(/\[TAGS:\s*(.+?)\]/);
-                if (tagsMatch) {
-                    const tags = tagsMatch[1].split(',').map(tag => tag.trim().toLowerCase());
-                    return tags.includes(currentTagFilter.toLowerCase());
-                }
-                return false;
-            });
+        if (allPostsCache.length === 0) {
+            const res = await fetch(`${API_BASE}/api/forum/threads`);
+            if (!res.ok) throw new Error('Không thể tải danh sách chủ đề');
+            allPostsCache = await res.json();
         }
-
-        if (threads.length === 0) {
-            container.innerHTML = `
-                <div style="text-align:center; padding:60px; border:1px dashed var(--border-light); border-radius:8px;">
-                    <p style="color:var(--text-muted); font-size:1.1rem;">Diễn đàn chưa có chủ đề nào.</p>
-                    <p style="color:var(--text-muted); font-size:0.85rem; margin-top:8px;">Hãy tạo chủ đề đầu tiên! 🚀</p>
-                </div>`;
-            return;
-        }
-
-        container.innerHTML = threads.map(t => {
-            let tagsHtml = '';
-            const tagsMatch = t.content.match(/\[TAGS:\s*(.+?)\]/);
-            if (tagsMatch) {
-                const tags = tagsMatch[1].split(',').map(tag => tag.trim());
-                tagsHtml = '<div style="margin-top: 8px;">' + tags.map(tag => `<span class="forum-tag">${escapeHTML(tag)}</span>`).join('') + '</div>';
-            }
-            return `
-            <div class="thread-item" onclick="openThread('${t.id}')">
-                <div class="thread-item-title">${escapeHTML(t.title)}${t.editedAt ? '<span class="edit-badge">(đã chỉnh sửa)</span>' : ''}</div>
-                <div class="thread-item-meta">
-                    <span>✍️ ${escapeHTML(t.author_name)}</span>
-                    <span>👁 ${t.viewCount} lượt xem</span>
-                    <span>💬 ${t.replyCount} phản hồi</span>
-                    <span>🕐 ${formatDate(t.createdAt)}</span>
-                </div>
-                ${tagsHtml}
-            </div>
-            `;
-        }).join('');
+        applyFilters();
     } catch (err) {
         container.innerHTML = `<div style="color:#e74c3c; text-align:center; padding:40px;">${err.message}</div>`;
     }
+}
+
+function applyFilters() {
+    const container = document.getElementById('thread-list-container');
+    let threads = allPostsCache;
+
+    if (currentFilters.keyword) {
+        const kw = currentFilters.keyword.toLowerCase();
+        threads = threads.filter(t => 
+            t.title.toLowerCase().includes(kw) || 
+            (t.author_name && t.author_name.toLowerCase().includes(kw)) ||
+            parseTagsFromContent(t.content).some(tag => 
+                tag.toLowerCase().includes(kw) || 
+                getDisplayName(tag).toLowerCase().includes(kw)
+            )
+        );
+    }
+
+    if (currentFilters.level1 && currentFilters.level1 !== 'all') {
+        threads = threads.filter(t => {
+            const tags = parseTagsFromContent(t.content);
+            if (!tags.includes(currentFilters.level1)) return false;
+            if (currentFilters.level2 && !tags.includes(currentFilters.level2)) return false;
+            if (currentFilters.level3 && !tags.includes(currentFilters.level3)) return false;
+            return true;
+        });
+    }
+
+    if (threads.length === 0) {
+        container.innerHTML = `
+            <div style="text-align:center; padding:60px; border:1px dashed var(--border-light); border-radius:8px;">
+                <p style="color:var(--text-muted); font-size:1.1rem;">Không tìm thấy chủ đề nào phù hợp.</p>
+                <p style="color:var(--text-muted); font-size:0.85rem; margin-top:8px;">Hãy tạo chủ đề mới hoặc thử từ khóa khác! 🚀</p>
+            </div>`;
+        return;
+    }
+
+    container.innerHTML = threads.map(t => {
+        let tagsHtml = '';
+        const tags = parseTagsFromContent(t.content);
+        if (tags.length > 0) {
+            tagsHtml = '<div style="margin-top: 8px;">' + tags.map(tag => `<span class="forum-tag" style="${getTagStyle(tag)}">${escapeHTML(getDisplayName(tag))}</span>`).join('') + '</div>';
+        }
+        return `
+        <div class="thread-item" onclick="openThread('${t.id}')">
+            <div class="thread-item-title">${escapeHTML(t.title)}${t.editedAt ? '<span class="edit-badge">(đã chỉnh sửa)</span>' : ''}</div>
+            <div class="thread-item-meta">
+                <span>✍️ ${escapeHTML(t.author_name)}</span>
+                <span>👁 ${t.viewCount} lượt xem</span>
+                <span>💬 ${t.replyCount} phản hồi</span>
+                <span>🕐 ${formatDate(t.createdAt)}</span>
+            </div>
+            ${tagsHtml}
+        </div>
+        `;
+    }).join('');
 }
 
 // ─── Thread Detail ────────────────────────────────────────────────────────
@@ -180,7 +464,7 @@ async function openThread(threadId) {
         const tagsMatch = displayContent.match(/\[TAGS:\s*(.+?)\]/);
         if (tagsMatch) {
             const tags = tagsMatch[1].split(',').map(tag => tag.trim());
-            tagsHtml = '<div style="margin-bottom: 16px;">' + tags.map(tag => `<span class="forum-tag">${escapeHTML(tag)}</span>`).join('') + '</div>';
+            tagsHtml = '<div style="margin-bottom: 16px;">' + tags.map(tag => `<span class="forum-tag" style="${getTagStyle(tag)}">${escapeHTML(getDisplayName(tag))}</span>`).join('') + '</div>';
             displayContent = displayContent.replace(/\[TAGS:\s*(.+?)\]\n*/, '');
         }
 
@@ -459,13 +743,21 @@ function setupFormHandlers() {
         let content = document.getElementById('create-content').value.trim();
         
         // Combine tags
-        const tagCbs = document.querySelectorAll('.thread-tag-cb:checked');
-        let selectedTags = Array.from(tagCbs).map(cb => cb.value);
+        let selectedTags = [];
+        if (formSelectedTags.level1) selectedTags.push(formSelectedTags.level1);
+        if (formSelectedTags.level2) selectedTags.push(formSelectedTags.level2);
+        if (formSelectedTags.level3) selectedTags.push(formSelectedTags.level3);
+        
+        selectedTags = selectedTags.concat(formUserTags);
+        
         const customTagsInput = document.getElementById('thread-custom-tags');
         if (customTagsInput && customTagsInput.value.trim()) {
-            const customTags = customTagsInput.value.split(',').map(t => t.trim()).filter(t => t);
+            const customTags = customTagsInput.value.split(',').map(t => t.trim().toLowerCase().replace(/\s+/g, '-')).filter(t => t);
             selectedTags = selectedTags.concat(customTags);
         }
+        
+        // Remove duplicates
+        selectedTags = [...new Set(selectedTags)];
         
         if (selectedTags.length > 0) {
             content = `[TAGS: ${selectedTags.join(', ')}]\n\n` + content;
@@ -481,6 +773,7 @@ function setupFormHandlers() {
             });
             if (!res.ok) { const d = await res.json(); throw new Error(d.detail || 'Lỗi đăng bài'); }
             e.target.reset();
+            allPostsCache = []; // clear cache
             document.getElementById('create-thread-form-container').style.display = 'none';
             loadThreadList();
         } catch (err) { alert(err.message); }
@@ -556,23 +849,12 @@ function setupFormHandlers() {
         if (e.target === e.currentTarget) e.currentTarget.classList.remove('show');
     });
 
-    // Filter Buttons
-    const filterBtns = document.querySelectorAll('.nav-filter-btn');
-    if (filterBtns) {
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentTagFilter = btn.getAttribute('data-tag');
-                loadThreadList();
-            });
-        });
-    }
+    // Filter Buttons logic has been replaced by selectMainFilter and selectFormFilter
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-    loadThreadList().then(() => {
+    loadTagsConfig().then(() => loadThreadList()).then(() => {
         const params = new URLSearchParams(window.location.search);
         const tId = params.get('threadId');
         if (tId) {

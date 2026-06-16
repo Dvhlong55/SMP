@@ -152,6 +152,13 @@
         .login-notice a { color: var(--accent-cyan); font-weight: bold; }
         .form-row-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
 
+        :root {
+            --accent-purple: #b975ff;
+        }
+        body:not(.dark-mode) {
+            --accent-purple: #8e44ad;
+        }
+
         /* Tags and Mentions */
         .forum-tag { display: inline-block; padding: 3px 8px; background: rgba(92,225,230,0.1); color: var(--accent-cyan); border: 1px solid rgba(92,225,230,0.3); border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; margin-right: 6px; margin-top: 6px; }
         .forum-mention { color: var(--accent-gold); font-weight: bold; padding: 0 2px; background: rgba(243, 156, 18, 0.1); border-radius: 3px; }
@@ -161,9 +168,29 @@
         .nav-filter-btn { background: transparent; border: 1px solid transparent; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; padding: 6px 14px; cursor: pointer; border-radius: 6px; white-space: nowrap; transition: all 0.3s; }
         .nav-filter-btn:hover { color: var(--accent-cyan); background: rgba(92,225,230,0.1); }
         .nav-filter-btn.active { color: var(--accent-cyan); background: rgba(92,225,230,0.1); border: 1px solid var(--accent-cyan); font-weight: bold; }
+        .nav-filter-btn.active.lvl1 { color: var(--accent-cyan); background: rgba(92,225,230,0.1); border: 1px solid var(--accent-cyan); font-weight: bold; }
+        .nav-filter-btn.active.lvl2 { color: var(--accent-gold); background: rgba(201,169,110,0.1); border: 1px solid var(--accent-gold); font-weight: bold; }
+        .nav-filter-btn.active.lvl3 { color: var(--accent-purple); background: rgba(185,117,255,0.1); border: 1px solid var(--accent-purple); font-weight: bold; }
         
         .tag-checkboxes { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
-        .tag-checkbox-label { display: flex; align-items: center; gap: 5px; font-size: 0.85rem; color: var(--text-main); cursor: pointer; }
+        .tag-checkbox-label { display: flex; align-items: center; gap: 5px; font-size: 0.85rem; color: var(--text-main); cursor: pointer; transition: all 0.2s; }
+
+        /* Level-specific selected radio labels in Form */
+        .tag-checkboxes[id="create-level1-tags"] .tag-checkbox-label:has(input:checked) {
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan) !important;
+            background: rgba(92,225,230,0.08);
+        }
+        .tag-checkboxes[id="create-level2-tags"] .tag-checkbox-label:has(input:checked) {
+            color: var(--accent-gold);
+            border-color: var(--accent-gold) !important;
+            background: rgba(201,169,110,0.08);
+        }
+        .tag-checkboxes[id="create-level3-tags"] .tag-checkbox-label:has(input:checked) {
+            color: var(--accent-purple);
+            border-color: var(--accent-purple) !important;
+            background: rgba(185,117,255,0.08);
+        }
     </style>
 </head>
 <body>
@@ -181,13 +208,13 @@
                         <button class="btn-primary" id="btn-show-create">+ Tạo chủ đề mới</button>
                     </div>
 
-                    <div class="nav-filter-bar fade-up" id="forum-filter-bar">
-                        <button class="nav-filter-btn active" data-tag="all">Tất Cả</button>
-                        <button class="nav-filter-btn" data-tag="Số Học">Số Học</button>
-                        <button class="nav-filter-btn" data-tag="Tổ Hợp">Tổ Hợp</button>
-                        <button class="nav-filter-btn" data-tag="Hình Học">Hình Học</button>
-                        <button class="nav-filter-btn" data-tag="Đại Số">Đại Số</button>
-                        <button class="nav-filter-btn" data-tag="Giải Tích">Giải Tích</button>
+                    <div id="cascading-filter-container" class="fade-up">
+                        <div class="nav-filter-bar" id="filter-level1"></div>
+                        <div class="nav-filter-bar" id="filter-level2" style="display:none; margin-top:-10px;"></div>
+                        <div class="nav-filter-bar" id="filter-level3" style="display:none; margin-top:-10px;"></div>
+                    </div>
+                    <div class="forum-search-bar fade-up" style="margin-bottom:20px;">
+                        <input type="text" id="forum-search-input" class="form-control" placeholder="🔍 Tìm kiếm bài viết theo từ khóa hoặc thẻ...">
                     </div>
 
                     <!-- Form tạo chủ đề -->
@@ -204,14 +231,13 @@
                             </div>
                             <div class="form-group">
                                 <label>Gắn thẻ (Tags)</label>
-                                <div class="tag-checkboxes">
-                                    <label class="tag-checkbox-label"><input type="checkbox" value="Số Học" class="thread-tag-cb"> Số Học</label>
-                                    <label class="tag-checkbox-label"><input type="checkbox" value="Tổ Hợp" class="thread-tag-cb"> Tổ Hợp</label>
-                                    <label class="tag-checkbox-label"><input type="checkbox" value="Hình Học" class="thread-tag-cb"> Hình Học</label>
-                                    <label class="tag-checkbox-label"><input type="checkbox" value="Đại Số" class="thread-tag-cb"> Đại Số</label>
-                                    <label class="tag-checkbox-label"><input type="checkbox" value="Giải Tích" class="thread-tag-cb"> Giải Tích</label>
+                                <div id="create-cascading-tags" style="margin-bottom: 12px;">
+                                    <div class="tag-checkboxes" id="create-level1-tags"></div>
+                                    <div class="tag-checkboxes" id="create-level2-tags" style="display:none;"></div>
+                                    <div class="tag-checkboxes" id="create-level3-tags" style="display:none;"></div>
                                 </div>
-                                <input type="text" id="thread-custom-tags" class="form-control" placeholder="Các thẻ khác (cách nhau bằng dấu phẩy, vd: IMO, Phương trình hàm)">
+                                <div id="create-user-tags-badges" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;"></div>
+                                <input type="text" id="thread-custom-tags" class="form-control" placeholder="Thêm thẻ (nhấn Enter hoặc phẩy để thêm, vd: Định lý Miquel)">
                             </div>
                             <div class="form-group">
                                 <label>Nội dung — hỗ trợ LaTeX <code style="background:rgba(92,225,230,0.1);padding:1px 6px;border-radius:3px;color:var(--accent-cyan)">$...$</code> và <code style="background:rgba(92,225,230,0.1);padding:1px 6px;border-radius:3px;color:var(--accent-cyan)">$$...$$</code></label>
