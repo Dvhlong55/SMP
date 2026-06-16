@@ -1,10 +1,14 @@
-const CACHE_NAME = 'smp-cache-v17';
+const CACHE_NAME = 'smp-cache-v18';
 const urlsToCache = [
   '/SMP/',
   '/SMP/index.html',
   '/SMP/pages/toanhoc.html',
   '/SMP/pages/nonmath.html',
-  '/SMP/pages/cuocsong.html',
+  '/SMP/pages/forum.html',
+  '/SMP/pages/saved.html',
+  '/SMP/pages/vetoi.html',
+  '/SMP/pages/auth.html',
+  '/SMP/pages/notifications.html',
   '/SMP/core/css/shared.css',
   '/SMP/core/css/post.css',
   '/SMP/core/js/shared.js',
