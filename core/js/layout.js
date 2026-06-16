@@ -776,4 +776,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const notifScript = document.createElement('script');
     notifScript.src = '/SMP/core/js/notifications.js';
     document.body.appendChild(notifScript);
+
+    // Close mobile search wrapper when clicking outside
+    document.addEventListener('click', (e) => {
+        const searchWrapper = document.querySelector('.search-wrapper');
+        if (searchWrapper && searchWrapper.classList.contains('mobile-active')) {
+            if (!searchWrapper.contains(e.target)) {
+                searchWrapper.classList.remove('mobile-active');
+            }
+        }
+    });
 });
