@@ -301,7 +301,7 @@
                 <a href="/SMP/pages/toanhoc.html">&#x2211; Math</a>
                 <a href="/SMP/pages/nonmath.html">&#x2734; Non Math</a>
                 <a href="/SMP/pages/forum.html">⧉ Forum</a>
-                <a href="/SMP/pages/saved.html">🖫 Saved</a>
+                <a href="/SMP/pages/saved.html">★ Saved</a>
                 <a href="/SMP/pages/vetoi.html">◎ About</a>
                 <a href="#" id="sidebar-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">&#x2637; Login</a>
             </nav>
@@ -313,14 +313,14 @@
 
     const TOPBAR_HTML = `
     <header class="topbar">
-        <a href="/SMP/index.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s; margin-right: 20px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Trang Chủ">SMP</a>
+        <a href="/SMP/pages/vetoi.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s; margin-right: 20px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Tôi">SMP</a>
         
         <nav class="topbar-nav" style="flex: 1; justify-content: flex-start; gap: 20px;">
             <a href="/SMP/index.html">&#x2302; Home</a>
             <a href="/SMP/pages/toanhoc.html">&#x2211; Math</a>
             <a href="/SMP/pages/nonmath.html">&#x2734; Non Math</a>
             <a href="/SMP/pages/forum.html">⧉ Forum</a>
-            <a href="/SMP/pages/saved.html">🖫 Saved</a>
+            <a href="/SMP/pages/saved.html">★ Saved</a>
         </nav>
 
         <div class="topbar-controls" style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
@@ -371,7 +371,7 @@
             <span class="label">Forum</span>
         </a>
         <a href="/SMP/pages/saved.html">
-            <span class="icon">🖫</span>
+            <span class="icon">★</span>
             <span class="label">Saved</span>
         </a>
         <a href="/SMP/pages/nonmath.html">

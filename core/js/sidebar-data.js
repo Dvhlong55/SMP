@@ -14,7 +14,7 @@ const LEFT_TAGS_HTML = `
             
             <ul class="side-widget-list">
                 <li><a href="/SMP/pages/forum.html">⧉ Forum</a></li>
-                <li><a href="/SMP/pages/saved.html">🖫 Saved</a></li>
+                <li><a href="/SMP/pages/saved.html">★ Saved</a></li>
             </ul>
         </div>
 `;
