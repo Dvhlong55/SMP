@@ -819,7 +819,7 @@ window.toggleSavePost = async function(postId, postTitle, postUrl, btnElement) {
     const token = localStorage.getItem('smp_access_token');
     if (!token) {
         alert("Vui lòng đăng nhập để lưu bài viết!");
-        window.location.href = '/SMP/pages/auth.html';
+        if (window.openAuthModal) window.openAuthModal('login');
         return;
     }
     

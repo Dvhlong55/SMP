@@ -266,7 +266,7 @@ function renderCommentsSection(postId, comments, container) {
     } else {
         formHTML = `
             <div class="comment-login-promo">
-                Bạn cần <a href="/SMP/pages/auth.html">Đăng nhập</a> để tham gia thảo luận và bình luận bài viết này.
+                Bạn cần <a href="#" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">Đăng nhập</a> để tham gia thảo luận và bình luận bài viết này.
             </div>
         `;
     }

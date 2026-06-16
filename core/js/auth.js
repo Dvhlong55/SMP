@@ -112,9 +112,20 @@ const applyAuthUI = window.applyAuthUI;
 // ─── Login ────────────────────────────────────────────────────────────────────
 window.handleLogin = async function(event) {
     event.preventDefault();
-    const username = document.getElementById('modal-login-username')?.value.trim();
-    const password = document.getElementById('modal-login-password')?.value;
-    const btn = document.getElementById('modal-login-btn');
+    const form = event.target;
+    
+    // Find inputs within the submitted form
+    const usernameInput = form.querySelector('input[autocomplete="username"]') || form.querySelector('input[id*="username"]');
+    const passwordInput = form.querySelector('input[autocomplete="current-password"]') || form.querySelector('input[id*="password"]');
+    const btn = form.querySelector('button[type="submit"]');
+    
+    // Determine which message box to use
+    let msgId = form.id === 'login-form' ? 'login-error' : 'modal-login-msg';
+    let successMsgId = form.id === 'login-form' ? 'login-success' : 'modal-login-msg';
+
+    const username = usernameInput?.value.trim();
+    const password = passwordInput?.value;
+    
     if (!username || !password) return;
 
     if (btn) { btn.disabled = true; btn.textContent = 'Đang đăng nhập...'; }
@@ -131,12 +142,17 @@ window.handleLogin = async function(event) {
         localStorage.setItem('smp_access_token', data.access_token);
         localStorage.setItem('smp_username', username);
 
-        showMsg('modal-login-msg', '✅ Đăng nhập thành công!', false);
+        showMsg(successMsgId, '✅ Đăng nhập thành công!', false);
         applyAuthUI(username);
 
-        setTimeout(() => window.closeAuthModal(), 800);
+        setTimeout(() => {
+            window.closeAuthModal();
+            if (form.id === 'login-form') {
+                window.location.href = '/SMP/index.html'; // redirect if on standalone auth page
+            }
+        }, 800);
     } catch (err) {
-        showMsg('modal-login-msg', err.message);
+        showMsg(msgId, err.message, true);
     } finally {
         if (btn) { btn.disabled = false; btn.textContent = 'ĐĂNG NHẬP'; }
     }
@@ -145,13 +161,23 @@ window.handleLogin = async function(event) {
 // ─── Register ─────────────────────────────────────────────────────────────────
 window.handleRegister = async function(event) {
     event.preventDefault();
-    const username = document.getElementById('modal-reg-username')?.value.trim();
-    const email    = document.getElementById('modal-reg-email')?.value.trim();
-    const password = document.getElementById('modal-reg-password')?.value;
-    const confirm  = document.getElementById('modal-reg-confirm')?.value;
-    const btn = document.getElementById('modal-reg-btn');
+    const form = event.target;
+    
+    const usernameInput = form.querySelector('input[autocomplete="username"]') || form.querySelector('input[id*="username"]');
+    const emailInput = form.querySelector('input[autocomplete="email"]') || form.querySelector('input[id*="email"]');
+    const passwordInput = form.querySelector('input[autocomplete="new-password"]') || form.querySelector('input[id*="password"]:not([id*="confirm"])');
+    const confirmInput = form.querySelectorAll('input[type="password"]')[1] || document.getElementById('modal-reg-confirm');
+    const btn = form.querySelector('button[type="submit"]');
+    
+    let msgId = form.id === 'register-form' ? 'register-error' : 'modal-reg-msg';
+    let successMsgId = form.id === 'register-form' ? 'register-success' : 'modal-reg-msg';
 
-    if (password !== confirm) { showMsg('modal-reg-msg', 'Mật khẩu xác nhận không khớp.'); return; }
+    const username = usernameInput?.value.trim();
+    const email = emailInput?.value.trim();
+    const password = passwordInput?.value;
+    const confirm = confirmInput?.value;
+
+    if (password !== confirm) { showMsg(msgId, 'Mật khẩu xác nhận không khớp.', true); return; }
 
     if (btn) { btn.disabled = true; btn.textContent = 'Đang đăng ký...'; }
 
@@ -164,14 +190,20 @@ window.handleRegister = async function(event) {
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || 'Đăng ký thất bại.');
 
-        showMsg('modal-reg-msg', '✅ Đăng ký thành công! Vui lòng kiểm tra email để kích hoạt.', false);
+        showMsg(successMsgId, '✅ Đăng ký thành công! Vui lòng kiểm tra email để kích hoạt.', false);
         setTimeout(() => {
-            showAuthTab('login');
-            const u = document.getElementById('modal-login-username');
-            if (u) u.value = username;
+            if (form.id === 'register-form') {
+                if (typeof toggleAuthMode === 'function') toggleAuthMode('login');
+                const u = document.getElementById('login-username');
+                if (u) u.value = username;
+            } else {
+                showAuthTab('login');
+                const u = document.getElementById('modal-login-username');
+                if (u) u.value = username;
+            }
         }, 2500);
     } catch (err) {
-        showMsg('modal-reg-msg', err.message);
+        showMsg(msgId, err.message, true);
     } finally {
         if (btn) { btn.disabled = false; btn.textContent = 'ĐĂNG KÝ'; }
     }

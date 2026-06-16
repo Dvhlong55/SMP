@@ -194,7 +194,7 @@
                     <div class="forum-form" id="create-thread-form-container">
                         <h3>✏️ Chủ đề mới</h3>
                         <div id="create-login-notice" class="login-notice" style="display:none;">
-                            Bạn cần <a href="/SMP/pages/auth.html">đăng nhập</a> để tạo chủ đề thảo luận.
+                            Bạn cần <a href="#" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">đăng nhập</a> để tạo chủ đề thảo luận.
                         </div>
                         <form id="create-thread-form" style="display:none;">
                             <div class="form-group">
@@ -271,7 +271,7 @@
                     <div class="forum-form" id="reply-form-container" style="display:block;">
                         <h4 style="margin-bottom:14px; font-family:'JetBrains Mono',monospace; font-size:0.9rem; color:var(--text-muted);">VIẾT BÌNH LUẬN</h4>
                         <div id="reply-auth-notice" class="login-notice" style="display:none;">
-                            Bạn cần <a href="/SMP/pages/auth.html">đăng nhập</a> để bình luận.
+                            Bạn cần <a href="#" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">đăng nhập</a> để bình luận.
                         </div>
                         <form id="create-reply-form" style="display:none;">
                             <div class="form-group">

@@ -720,7 +720,7 @@ const AUTH_MODAL_HTML = `
                     <input id="modal-login-password" type="password" autocomplete="current-password" placeholder="••••••••" style="width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); font-family:'JetBrains Mono',monospace; font-size:0.9rem; outline:none; transition:border-color 0.2s; box-sizing:border-box;" onfocus="this.style.borderColor='var(--accent-cyan,#5ce1e6)'" onblur="this.style.borderColor='var(--border-light,#2e2e2e)'">
                 </div>
                 <div id="modal-login-msg" class="auth-msg" style="display:none; margin-bottom:12px;"></div>
-                <button id="modal-login-btn" type="submit" style="width:100%; padding:11px; background:var(--accent-cyan,#5ce1e6); color:#111; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.85rem; border:none; border-radius:6px; cursor:pointer; letter-spacing:1px; transition:all 0.2s;" onmouseover="this.style.background='var(--accent-gold,#f0c040)'" onmouseout="this.style.background='var(--accent-cyan,#5ce1e6)'">ĐĂNG NHẬP</button>
+                <button id="modal-login-btn" type="submit" class="modal-submit-btn">ĐĂNG NHẬP</button>
             </form>
         </div>
         <!-- Register Tab -->
@@ -743,7 +743,7 @@ const AUTH_MODAL_HTML = `
                     <input id="modal-reg-confirm" type="password" autocomplete="new-password" placeholder="••••••••" style="width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); font-family:'JetBrains Mono',monospace; font-size:0.9rem; outline:none; transition:border-color 0.2s; box-sizing:border-box;" onfocus="this.style.borderColor='var(--accent-cyan,#5ce1e6)'" onblur="this.style.borderColor='var(--border-light,#2e2e2e)'">
                 </div>
                 <div id="modal-reg-msg" class="auth-msg" style="display:none; margin-bottom:12px;"></div>
-                <button id="modal-reg-btn" type="submit" style="width:100%; padding:11px; background:var(--accent-cyan,#5ce1e6); color:#111; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.85rem; border:none; border-radius:6px; cursor:pointer; letter-spacing:1px; transition:all 0.2s;" onmouseover="this.style.background='var(--accent-gold,#f0c040)'" onmouseout="this.style.background='var(--accent-cyan,#5ce1e6)'">ĐĂNG KÝ</button>
+                <button id="modal-reg-btn" type="submit" class="modal-submit-btn">ĐĂNG KÝ</button>
             </form>
         </div>
         <!-- Profile Tab -->
@@ -751,7 +751,7 @@ const AUTH_MODAL_HTML = `
             <div style="font-size:3rem; font-family:'JetBrains Mono',monospace; color:var(--accent-cyan,#5ce1e6); margin-bottom:12px; font-weight:700; letter-spacing:2px; text-shadow:0 0 16px rgba(92,225,230,0.6);">Φ</div>
             <div style="font-family:'JetBrains Mono',monospace; font-size:1.1rem; color:var(--accent-cyan,#5ce1e6); margin-bottom:6px;" id="auth-profile-username">...</div>
             <div style="font-size:0.8rem; color:var(--text-muted,#888); margin-bottom:24px;">Đã đăng nhập</div>
-            <button onclick="window.handleLogout()" style="width:100%; padding:11px; background:#e74c3c; color:#fff; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.85rem; border:none; border-radius:6px; cursor:pointer; letter-spacing:1px; transition:all 0.2s;" onmouseover="this.style.background='#c0392b'" onmouseout="this.style.background='#e74c3c'">ĐĂNG XUẤT</button>
+            <button onclick="window.handleLogout()" class="modal-logout-btn">ĐĂNG XUẤT</button>
         </div>
     </div>
 </div>
@@ -762,6 +762,10 @@ const AUTH_MODAL_HTML = `
     .auth-msg { padding:10px 12px; border-radius:6px; font-size:0.82rem; font-family:'JetBrains Mono',monospace; }
     .auth-msg-error { background:rgba(231,76,60,0.15); color:#e74c3c; border:1px solid rgba(231,76,60,0.3); }
     .auth-msg-success { background:rgba(39,174,96,0.15); color:#27ae60; border:1px solid rgba(39,174,96,0.3); }
+    .modal-submit-btn { width:100%; padding:11px; background:var(--accent-cyan,#5ce1e6); color:#111; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.85rem; border:none; border-radius:6px; cursor:pointer; letter-spacing:1px; transition:all 0.2s; }
+    .modal-submit-btn:hover { background: var(--accent-gold,#f0c040); }
+    .modal-logout-btn { width:100%; padding:11px; background:#e74c3c; color:#fff; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.85rem; border:none; border-radius:6px; cursor:pointer; letter-spacing:1px; transition:all 0.2s; }
+    .modal-logout-btn:hover { background: #c0392b; }
 </style>
 <!-- Toast -->
 <div id="auth-toast" style="display:none; position:fixed; bottom:24px; right:24px; z-index:10000; background:rgba(30,30,30,0.97); color:#fff; padding:12px 20px; border-radius:8px; font-family:'JetBrains Mono',monospace; font-size:0.85rem; box-shadow:0 4px 20px rgba(0,0,0,0.5); border:1px solid rgba(92,225,230,0.2); max-width:360px;"></div>
