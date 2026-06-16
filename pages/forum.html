@@ -214,7 +214,14 @@
                         <div class="nav-filter-bar" id="filter-level3" style="display:none; margin-top:-10px;"></div>
                     </div>
                     <div class="forum-search-bar fade-up" style="margin-bottom:20px;">
-                        <input type="text" id="forum-search-input" class="form-control" placeholder="🔍 Tìm kiếm bài viết theo từ khóa hoặc thẻ...">
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <input type="text" id="forum-search-input" class="form-control" placeholder="🔍 Tìm kiếm cơ bản (từ khóa, tiêu đề, thẻ)...">
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="forum-advanced-search-input" class="form-control" style="border-color: var(--accent-purple);" placeholder="✨ Tìm kiếm nâng cao bằng AI (nhập ý nghĩa, nội dung bài toán)...">
+                            <button id="btn-advanced-search" class="btn-primary" style="background: var(--accent-purple); color: white; white-space: nowrap; border: none; padding: 10px 20px;">✨ Tìm ngay</button>
+                        </div>
+                        <div id="advanced-search-status" style="font-size: 0.85rem; color: var(--accent-purple); margin-top: 8px; display: none; font-family: 'JetBrains Mono', monospace;">Đang phân tích ngữ nghĩa...</div>
                     </div>
 
                     <!-- Form tạo chủ đề -->
@@ -343,9 +350,12 @@
         </div>
     </div>
 
+
+
     <script src="/SMP/core/js/layout.js?v=8"></script>
     <script src="/SMP/core/js/shared.js?v=8"></script>
     <script src="/SMP/core/js/saved.js?v=8"></script>
+    <script src="/SMP/core/js/vector-search.js?v=1"></script>
     <script src="/SMP/core/js/forum.js?v=8"></script>
 </body>
 </html>
