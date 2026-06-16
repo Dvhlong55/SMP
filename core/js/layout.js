@@ -213,6 +213,75 @@
             font-size: 0.75rem;
             color: #555;
         }
+
+        /* Mobile Bottom Navigation Bar */
+        .mobile-bottom-nav {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-bottom-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 56px;
+                background-color: var(--topbar-bg, #111111);
+                border-top: 1px solid rgba(128, 128, 128, 0.15);
+                z-index: 9999;
+                justify-content: space-around;
+                align-items: center;
+                padding-bottom: env(safe-area-inset-bottom);
+                box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            .mobile-bottom-nav a {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: var(--text-muted, #9a9a9a);
+                text-decoration: none;
+                font-size: 0.65rem;
+                font-weight: 500;
+                font-family: 'JetBrains Mono', monospace;
+                flex: 1;
+                height: 100%;
+                transition: color 0.2s ease, transform 0.15s ease;
+            }
+
+            .mobile-bottom-nav a .icon {
+                font-size: 1.35rem;
+                margin-bottom: 2px;
+                line-height: 1;
+                transition: transform 0.2s ease;
+            }
+
+            .mobile-bottom-nav a .label {
+                font-size: 0.62rem;
+                letter-spacing: 0.5px;
+                line-height: 1;
+            }
+
+            .mobile-bottom-nav a.active {
+                color: var(--accent-cyan, #5ce1e6) !important;
+            }
+
+            .mobile-bottom-nav a:active .icon {
+                transform: scale(0.85);
+            }
+
+            /* Hide the topbar navigation on mobile */
+            .topbar-nav {
+                display: none !important;
+            }
+
+            /* Adjust body padding so bottom nav doesn't overlap content */
+            body {
+                padding-bottom: calc(56px + env(safe-area-inset-bottom)) !important;
+            }
+        }
     `;
 
     const styleEl = document.createElement('style');
@@ -299,6 +368,30 @@
         </div>
     </footer>`;
 
+    const MOBILE_BOTTOM_NAV_HTML = `
+    <nav class="mobile-bottom-nav">
+        <a href="/SMP/index.html">
+            <span class="icon">&#x2302;</span>
+            <span class="label">Home</span>
+        </a>
+        <a href="/SMP/pages/toanhoc.html">
+            <span class="icon">&#x2211;</span>
+            <span class="label">Math</span>
+        </a>
+        <a href="/SMP/pages/nonmath.html">
+            <span class="icon">&#x2734;</span>
+            <span class="label">Non Math</span>
+        </a>
+        <a href="/SMP/pages/forum.html">
+            <span class="icon">⧉</span>
+            <span class="label">Forum</span>
+        </a>
+        <a href="/SMP/pages/saved.html">
+            <span class="icon">🖫</span>
+            <span class="label">Saved</span>
+        </a>
+    </nav>`;
+
     // ── Inject into placeholders ─────────────────────────────────────────────
     const sidebarEl = document.getElementById('sidebar-placeholder');
     const topbarEl  = document.getElementById('topbar-placeholder');
@@ -309,6 +402,10 @@
     if (topbarEl)  topbarEl.outerHTML  = TOPBAR_HTML;
     if (leftTagsEl && typeof LEFT_TAGS_HTML !== 'undefined') leftTagsEl.outerHTML = LEFT_TAGS_HTML;
     if (mainEl && !document.querySelector('.site-footer')) mainEl.insertAdjacentHTML('beforeend', FOOTER_HTML);
+
+    if (!document.querySelector('.mobile-bottom-nav')) {
+        document.body.insertAdjacentHTML('beforeend', MOBILE_BOTTOM_NAV_HTML);
+    }
 
     // ── Sidebar collapse logic ───────────────────────────────────────────────
     function initSidebar() {

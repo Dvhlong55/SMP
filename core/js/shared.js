@@ -420,7 +420,8 @@ function setActiveNav() {
     let current = window.location.pathname;
     // Normalise trailing slash to /index.html
     if (current === '/' || current === '') current = '/index.html';
-    document.querySelectorAll('.sidebar-nav a').forEach(a => {
+    if (current === '/SMP' || current === '/SMP/') current = '/SMP/index.html';
+    document.querySelectorAll('.sidebar-nav a, .mobile-bottom-nav a').forEach(a => {
         a.classList.toggle('active', a.getAttribute('href') === current);
     });
 }
