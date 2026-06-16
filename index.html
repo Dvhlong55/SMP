@@ -419,7 +419,7 @@
             const btn = document.getElementById('show-answer-btn');
             if (btn) btn.textContent = 'Xem Đáp Án';
             answerVisible = false;
-            if (window.MathJax) {
+            if (window.MathJax && window.MathJax.startup && window.MathJax.startup.promise) {
                 MathJax.startup.promise.then(() => MathJax.typesetPromise());
             }
         }
@@ -435,7 +435,7 @@
                 ans.innerHTML = CHALLENGES[currentChallenge].answer;
                 ans.classList.add('show');
                 btn.textContent = 'Ẩn Đáp Án';
-                if (window.MathJax) {
+                if (window.MathJax && window.MathJax.startup && window.MathJax.startup.promise) {
                     MathJax.startup.promise.then(() => MathJax.typesetPromise([ans]));
                 }
             }

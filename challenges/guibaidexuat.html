@@ -820,7 +820,7 @@
                 box.innerHTML = '<span style="opacity:0.4;font-style:italic;">Chưa có nội dung để preview...</span>';
             } else {
                 box.innerHTML = renderLatexText(text).replace(/\n/g, '<br>');
-                if (window.MathJax) { MathJax.typesetClear([box]); MathJax.typesetPromise([box]).catch(()=>{}); }
+                if (window.MathJax && window.MathJax.typesetClear && window.MathJax.typesetPromise) { MathJax.typesetClear([box]); MathJax.typesetPromise([box]).catch(()=>{}); }
             }
         };
         renderBox();

@@ -84,7 +84,7 @@ function toggleForumPreview(textareaId, previewId) {
             box.innerHTML = '<span style="opacity:0.4;font-style:italic;">Chưa có nội dung...</span>';
         } else {
             box.innerHTML = renderLatexText(text).replace(/\n/g, '<br>');
-            if (window.MathJax) { MathJax.typesetClear([box]); MathJax.typesetPromise([box]).catch(()=>{}); }
+            if (window.MathJax && window.MathJax.typesetClear && window.MathJax.typesetPromise) { MathJax.typesetClear([box]); MathJax.typesetPromise([box]).catch(()=>{}); }
         }
     };
     renderBox();
@@ -250,7 +250,7 @@ async function openThread(threadId) {
             }).join('');
         }
 
-        if (window.MathJax) {
+        if (window.MathJax && window.MathJax.startup && window.MathJax.startup.promise) {
             MathJax.startup.promise.then(() => MathJax.typesetPromise([mainContent, repliesList]));
         }
     } catch (err) {
