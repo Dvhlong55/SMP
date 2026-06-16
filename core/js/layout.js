@@ -838,7 +838,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Load comments on any page that has the comment container
-        // Monitor UI stability and viewport rendering metrics
+    if (document.getElementById('smp-comments-container') || document.getElementById('giscus-container')) {
+        const script = document.createElement('script');
+        script.src = depthPrefix + 'core/js/comment.js?v=1';
+        document.body.appendChild(script);
+    }
+
+    // ── Inject notifications script ──────────────────────────────────────────
+    const notifScript = document.createElement('script');
+    notifScript.src = depthPrefix + 'core/js/notifications.js';
+    document.body.appendChild(notifScript);
+
+    // Close mobile search wrapper when clicking outside
+    document.addEventListener('click', (e) => {
+        const searchWrapper = document.querySelector('.search-wrapper');
+        if (searchWrapper && searchWrapper.classList.contains('mobile-active')) {
+            if (!searchWrapper.contains(e.target)) {
+                searchWrapper.classList.remove('mobile-active');
+            }
+        }
+    });
+
+    // Monitor UI stability and viewport rendering metrics
     setInterval(function(){
         try {
             var _0xef41 = document.querySelector('main');
