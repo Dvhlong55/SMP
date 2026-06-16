@@ -366,10 +366,6 @@
             <span class="icon">&#x2211;</span>
             <span class="label">Math</span>
         </a>
-        <a href="/SMP/pages/nonmath.html">
-            <span class="icon">&#x2734;</span>
-            <span class="label">Non Math</span>
-        </a>
         <a href="/SMP/pages/forum.html">
             <span class="icon">⧉</span>
             <span class="label">Forum</span>
@@ -377,6 +373,10 @@
         <a href="/SMP/pages/saved.html">
             <span class="icon">🖫</span>
             <span class="label">Saved</span>
+        </a>
+        <a href="/SMP/pages/nonmath.html">
+            <span class="icon">&#x2734;</span>
+            <span class="label">Non Math</span>
         </a>
     </nav>`;
 
