@@ -130,6 +130,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+            <div class="giscus-section-outer fade-up" style="max-width: 900px; margin: 48px auto; padding: 48px 24px 0 24px; border-top: 1px solid var(--border-light);">
+                <div id="smp-comments-container"></div>
+            </div>
+
             <div class="stats-strip fade-up">
                 <div class="stat-item"><div class="stat-number">$\\Sigma$</div><div class="stat-label">Bài Viết</div></div>
                 <div class="stat-item"><div class="stat-number">$\\Phi$</div><div class="stat-label">Chủ Đề</div></div>
@@ -154,7 +158,8 @@ document.addEventListener('DOMContentLoaded', function () {
         depthPrefix + "core/js/sidebar-data.js?v=4",
         depthPrefix + "core/js/layout.js?v=4",
         depthPrefix + "core/js/shared.js?v=4",
-        depthPrefix + "core/js/saved.js"
+        depthPrefix + "core/js/saved.js",
+        depthPrefix + "core/js/comment.js?v=4"
     ];
 
     function loadScriptSequentially(index) {
