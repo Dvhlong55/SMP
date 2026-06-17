@@ -98,9 +98,12 @@ window.applyAuthUI = function(username) {
     const mobileTopbarBtn = document.getElementById('mobile-topbar-auth-btn');
     if (username) {
         const html = `&#x2637; ${username}`;
-        if (sidebarBtn) { sidebarBtn.innerHTML = html; sidebarBtn.onclick = function(e){ e.preventDefault(); window.openAuthModal('profile'); }; }
-        if (topbarBtn)  { topbarBtn.innerHTML  = html; topbarBtn.onclick  = function(e){ e.preventDefault(); window.openAuthModal('profile'); }; }
-        if (mobileTopbarBtn) { mobileTopbarBtn.onclick = function(e){ e.preventDefault(); window.openAuthModal('profile'); }; }
+        
+        const profilePath = window.location.pathname.includes('/SMP/') ? '/SMP/pages/profile.html' : '/pages/profile.html';
+        
+        if (sidebarBtn) { sidebarBtn.innerHTML = html; sidebarBtn.onclick = function(e){ e.preventDefault(); window.location.href = profilePath; }; }
+        if (topbarBtn)  { topbarBtn.innerHTML  = html; topbarBtn.onclick  = function(e){ e.preventDefault(); window.location.href = profilePath; }; }
+        if (mobileTopbarBtn) { mobileTopbarBtn.onclick = function(e){ e.preventDefault(); window.location.href = profilePath; }; }
         // Fill profile tab
         const nameEl = document.getElementById('auth-profile-username');
         if (nameEl) nameEl.textContent = username;
@@ -145,16 +148,30 @@ window.handleLogin = async function(event) {
         localStorage.setItem('smp_access_token', data.access_token);
         localStorage.setItem('smp_username', username);
 
-        showMsg(successMsgId, '✅ Đăng nhập thành công!', false);
+        showMsg(successMsgId, '✅ Đăng nhập thành công! Chuyển hướng...', false);
         applyAuthUI(username);
 
-        setTimeout(() => {
-            window.closeAuthModal();
-            if (form.id === 'login-form') {
-                window.location.href = '/index.html'; // redirect if on standalone auth page
-            } else {
-                window.location.reload();
+        // Fetch user data to sync theme
+        try {
+            const meRes = await fetch(`${API_BASE_URL}/api/auth/me`, {
+                headers: { 'Authorization': `Bearer ${data.access_token}` }
+            });
+            if (meRes.ok) {
+                const meData = await meRes.json();
+                if (meData.theme_preference) {
+                    if (window.DarkMode) {
+                        if (meData.theme_preference === 'dark') window.DarkMode.enable(true);
+                        else window.DarkMode.disable(true);
+                    }
+                }
             }
+        } catch (e) {
+            console.error(e);
+        }
+
+        setTimeout(() => {
+            const profilePath = window.location.pathname.includes('/SMP/') ? '/SMP/pages/profile.html' : '/pages/profile.html';
+            window.location.href = profilePath;
         }, 800);
     } catch (err) {
         showMsg(msgId, err.message, true);

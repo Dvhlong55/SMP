@@ -370,7 +370,6 @@
                     </button>
                     <!-- Dropdown sẽ được inject qua notifications.js -->
                 </div>
-                <button id="dark-toggle" class="dark-toggle">&#x263D; Tối</button>
             </div>
         </div>
     </header>`;
@@ -814,20 +813,25 @@ function initLayout() {
     // Determine depth to root (where 'core' is)
     let depthPrefix = './';
     const path = window.location.pathname;
-    const smpIndex = path.indexOf('/');
-    if (smpIndex !== -1) {
-        depthPrefix = '/';
-    } else {
-        const segments = path.split('/').filter(s => s !== '');
-        let depth = 0;
-        const pagesIdx = segments.indexOf('pages');
-        const postsIdx = segments.indexOf('posts');
-        if (pagesIdx !== -1) {
-            depth = segments.length - 1 - pagesIdx;
-        } else if (postsIdx !== -1) {
-            depth = segments.length - 1 - postsIdx;
-        }
+    const segments = path.split('/').filter(s => s !== '');
+    let depth = 0;
+    const pagesIdx = segments.indexOf('pages');
+    const postsIdx = segments.indexOf('posts');
+    const toolsIdx = segments.indexOf('tools');
+    if (pagesIdx !== -1) {
+        depth = segments.length - 1 - pagesIdx;
+    } else if (postsIdx !== -1) {
+        depth = segments.length - 1 - postsIdx;
+    } else if (toolsIdx !== -1) {
+        depth = segments.length - 1 - toolsIdx;
+    }
+    if (depth > 0) {
         depthPrefix = '../'.repeat(depth);
+    } else if (segments.length === 0 || segments[segments.length - 1].endsWith('.html') === false) {
+        // Root index
+        depthPrefix = './';
+    } else {
+        depthPrefix = './';
     }
 
     // Auto-load auth.js
