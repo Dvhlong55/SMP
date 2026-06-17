@@ -272,10 +272,13 @@ body:not(.dark-mode) .latex-preview-wrap {
     display: none;
     padding: 20px;
     color: var(--exam-text-color);
-    font-size: 1.1rem;
-    overflow-x: auto;
-    font-family: sans-serif;
+    line-height: 1.85;
+    font-size: 1.01rem;
+    font-family: "Times New Roman", Times, serif;
     background: #fff;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .latex-preview-box.active {

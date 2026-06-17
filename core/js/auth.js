@@ -32,6 +32,13 @@ const originalFetch = window.fetch;
 window.fetch = async function(...args) {
     try {
         const res = await originalFetch(...args);
+        
+        // Bỏ qua interceptor đối với request đăng nhập/đăng ký
+        const url = typeof args[0] === 'string' ? args[0] : (args[0] && args[0].url);
+        if (url && (url.includes('/api/auth/login') || url.includes('/api/auth/register'))) {
+            return res;
+        }
+
         if (res.status === 401 || res.status === 403) {
             // Check if we are currently logged in to avoid intercepting non-logged-in requests
             if (localStorage.getItem('smp_access_token')) {
@@ -160,7 +167,8 @@ window.handleLogin = async function(event) {
         // Fetch user data to sync theme
         try {
             const meRes = await fetch(`${API_BASE_URL}/api/auth/me`, {
-                headers: { 'Authorization': `Bearer ${data.access_token}` }
+                headers: { 'Authorization': `Bearer ${data.access_token}` },
+                cache: 'no-cache'
             });
             if (meRes.ok) {
                 const meData = await meRes.json();
@@ -272,7 +280,8 @@ async function verifyToken() {
 
     try {
         const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: { 'Authorization': `Bearer ${token}` },
+            cache: 'no-cache'
         });
         
         if (res.status === 401 || res.status === 403) {

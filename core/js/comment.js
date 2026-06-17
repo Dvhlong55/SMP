@@ -95,6 +95,9 @@ function initSmpComments() {
             color: var(--text-dark);
             white-space: pre-line;
             word-break: break-word;
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
         }
         .comment-delete {
             background: none;

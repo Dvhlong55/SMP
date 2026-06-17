@@ -240,6 +240,9 @@
             border-top: none; border-radius: 0 0 10px 10px;
             padding: 22px 26px;
             font-family: "Times New Roman", Times, serif; font-size: 1.01rem;
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
             color: var(--exam-text-color); line-height: 1.9;
             min-height: 400px; overflow-y: auto;
             

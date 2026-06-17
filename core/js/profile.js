@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 1. Fetch user profile data (points, streak, theme)
     try {
         const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: { 'Authorization': `Bearer ${token}` },
+            cache: 'no-cache'
         });
         if (res.ok) {
             const user = await res.json();
@@ -43,7 +44,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 2. Fetch Activity for Heatmap
     try {
         const res = await fetch(`${API_BASE_URL}/api/activity`, {
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: { 'Authorization': `Bearer ${token}` },
+            cache: 'no-cache'
         });
         if (res.ok) {
             const activities = await res.json();
