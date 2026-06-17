@@ -53,7 +53,7 @@ function renderLatexText(text) {
     
     // Parse custom buttons: [button:Text|Url]
     parsed = parsed.replace(/\[button:([^\]|]+)\|([^\]]+)\]/g, (match, textVal, urlVal) => {
-        return `<a href="${urlVal.trim()}" target="_blank" class="btn-primary" style="display: inline-block; text-decoration: none; margin: 8px 0; padding: 8px 18px; border-radius: 6px; font-weight: bold; font-size: 0.82rem; font-family: 'JetBrains Mono', monospace; color: #111;">${textVal.trim()}</a>`;
+        return `<div style="text-align: center; margin: 12px 0;"><a href="${urlVal.trim()}" target="_blank" class="btn-primary" style="display: inline-block; text-decoration: none; padding: 8px 18px; border-radius: 6px; font-weight: bold; font-size: 0.82rem; font-family: 'JetBrains Mono', monospace; color: #111;">${textVal.trim()}</a></div>`;
     });
     
     // Parse normal markdown links: [Text](Url)
