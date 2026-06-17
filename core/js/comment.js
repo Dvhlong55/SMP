@@ -1,7 +1,7 @@
 // --- CONFIGURATION ---
 const COMMENT_API_BASE = 'https://smp-backend-kcwn.onrender.com';
 
-document.addEventListener('DOMContentLoaded', () => {
+function initSmpComments() {
     // Tự động khởi tạo section bình luận nếu có thẻ <main>
     const mainEl = document.querySelector('main');
     if (!mainEl) return;
@@ -187,7 +187,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Bắt đầu load bình luận
     loadComments(postId, commentSection);
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSmpComments);
+} else {
+    initSmpComments();
+}
 
 // Load comments from API
 async function loadComments(postId, container) {
