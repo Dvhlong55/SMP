@@ -334,22 +334,25 @@
             </div>
 
             <div class="settings-section">
-                <h2>Hoạt Động Giải Bài (Heatmap)</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                    <h2 style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">Hoạt Động Giải Bài (Heatmap)</h2>
+                    <button id="profile-dark-toggle" onclick="toggleProfileTheme()" style="background: var(--card-bg); border: 1px solid var(--border-light); color: var(--text-dark); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; transition: all 0.3s; display: flex; align-items: center; gap: 6px;">
+                        ☽ Chuyển chế độ tối
+                    </button>
+                </div>
                 <div class="heatmap-container">
                     <div class="heatmap" id="activity-heatmap">
                         <!-- JS sẽ render các ô vuông vào đây -->
                     </div>
                 </div>
-            </div>
-
-            <div class="settings-section">
-                <h2>Cài Đặt Giao Diện</h2>
-                <div class="form-group">
-                    <label>Chế độ Sáng / Tối</label>
-                    <select id="theme-select" onchange="updateThemePreference(this.value)">
-                        <option value="dark">Tối (Dark Mode)</option>
-                        <option value="light">Sáng (Light Mode)</option>
-                    </select>
+                <div class="heatmap-legend" style="display: flex; align-items: center; justify-content: flex-end; gap: 4px; font-size: 0.75rem; color: var(--text-muted); margin-top: 15px;">
+                    <span style="margin-right: 4px;">Ít</span>
+                    <div class="heatmap-cell" data-level="0"></div>
+                    <div class="heatmap-cell" data-level="1"></div>
+                    <div class="heatmap-cell" data-level="2"></div>
+                    <div class="heatmap-cell" data-level="3"></div>
+                    <div class="heatmap-cell" data-level="4"></div>
+                    <span style="margin-left: 4px;">Nhiều</span>
                 </div>
             </div>
 

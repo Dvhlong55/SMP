@@ -21,14 +21,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('profile-username').textContent = user.username;
             document.getElementById('stat-points').textContent = user.points || 0;
             
-            // Set theme select
-            const themeSelect = document.getElementById('theme-select');
-            if (themeSelect) {
+            // Set theme toggle button
+            const themeToggleBtn = document.getElementById('profile-dark-toggle');
+            if (themeToggleBtn) {
                 const theme = user.theme_preference || 'dark';
-                themeSelect.value = theme;
                 if (window.DarkMode) {
-                    if (theme === 'dark') window.DarkMode.enable(false);
-                    else window.DarkMode.disable(false);
+                    if (theme === 'dark') {
+                        window.DarkMode.enable(false);
+                        themeToggleBtn.textContent = '☀ Chuyển chế độ sáng';
+                    } else {
+                        window.DarkMode.disable(false);
+                        themeToggleBtn.textContent = '☽ Chuyển chế độ tối';
+                    }
                 }
             }
         }
@@ -126,15 +130,21 @@ function calculateStreak(activities) {
     document.getElementById('stat-streak').textContent = streak;
 }
 
+window.toggleProfileTheme = async function() {
+    if (window.DarkMode) {
+        window.DarkMode.toggle();
+        const isDark = document.body.classList.contains('dark-mode');
+        const themeToggleBtn = document.getElementById('profile-dark-toggle');
+        if (themeToggleBtn) {
+            themeToggleBtn.textContent = isDark ? '☀ Chuyển chế độ sáng' : '☽ Chuyển chế độ tối';
+        }
+        await updateThemePreference(isDark ? 'dark' : 'light');
+    }
+};
+
 async function updateThemePreference(theme) {
     const token = localStorage.getItem('smp_access_token');
     const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
-    
-    // Apply locally first for immediate feedback
-    if (window.DarkMode) {
-        if (theme === 'dark') window.DarkMode.enable(true);
-        else window.DarkMode.disable(true);
-    }
     
     if (!token) return;
     
