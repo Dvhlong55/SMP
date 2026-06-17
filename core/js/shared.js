@@ -53,6 +53,13 @@ const DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: 'Bài Tập Về Đồng Dư',
+        date: 'June 17, 2026',
+        url: '/posts/math/bai-tap-dong-du.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: 'Bổ đề Thue và biểu diễn số nguyên tố',
         date: 'June 13, 2026',
         url: '/posts/math/BoDeThueVaBieuDienSoNguyenTo.html',

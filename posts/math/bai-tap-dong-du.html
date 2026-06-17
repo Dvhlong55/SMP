@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Bài Tập Về Đồng Dư</title>
+    
+    <meta name="post-id" content="BaiTapVeDongDu">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=4"></script>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <h1 style="text-align: center;">
+        Bài Tập Về Đồng Dư
+        </h1>
+
+        <h2 style="text-align: center;">
+        Secrets of Mathematical Principles<br />
+        Jun, 17 2026
+        </h2>
+
+        <button class="pdf-download-btn" onclick="window.print()" title="Tải xuống hoặc In bài viết này">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Tải bản PDF
+        </button>
+
+        <h3>Bài 1</h3>
+        <p>Cho $p$ là số nguyên tố lẻ.</p>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li>a) Giả sử $p$ lớn hơn 3 và xét đa thức 
+            $$
+            P(x) = p\cdot x^{p-1} + (p-1)\cdot x^{p-2} + \dots + 2x + 1.
+            $$
+            Chứng minh rằng: với mọi số nguyên $m$ thì phương trình đồng dư $P(x) \equiv m \pmod p$ luôn có nghiệm.</li>
+            <li style="margin-top: 12px;">b) Xét đa thức 
+            $$
+            Q(x) = (p-1)x^p - x - 1.
+            $$
+            Chứng minh rằng: với mọi số nguyên $n$ thì phương trình đồng dư $Q(x) \equiv n \pmod{p^p}$ luôn có nghiệm.</li>
+        </ul>
+
+        <h3>Bài 2 (TCPi)</h3>
+        <p>Ta gọi số nguyên dương \( n \) là "số đẹp", nếu trong 22 số: \( 5, \, n + 5, \, 2n + 5, \, \dots, \, 21n + 5 \), tồn tại một số có cùng số dư với tích tất cả các số đó, trong phép chia cho 23. Hãy tìm tất cả các số đẹp.</p>
+
+        <h3>Bài 3 (SMP)</h3>
+        <p>Với mỗi số nguyên dương $n$, ta kí hiệu $\mathcal{T} (n) = 2^n - 5$.</p>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li>a) Xét tập $\mathcal{S}$ là tập hợp tất cả các số nguyên tố sao cho $\forall p \in \mathcal{S}, \exists \  m \in \mathcal{S}: p \mid  \mathcal{T} (m)$. Chứng minh rằng $\mathcal{S}$ có vô hạn phần tử.</li>
+            <li style="margin-top: 12px;">b) Xét số nguyên tố $p$ bất kì. Chứng minh rằng với mọi $n \equiv 1 \pmod{p - 1}$ thì luôn tồn tại số nguyên dương $v$ sao cho: 
+            $$v^n \cdot \mathcal{T}(n) \equiv 2025 \pmod{p}$$</li>
+        </ul>
+
+        <h3>Bài 4</h3>
+        <p>Cho số nguyên tố $p\ge 3$ và dãy số tự nhiên $a_1,a_2,\dots,a_{p-2}$ thỏa mãn tính chất $p$ không chia hết $a_k\left(a_k^k-1\right)$ với mọi $k$. Chứng minh rằng từ dãy số trên ta có thể chọn được một số số sao cho tích các số này sau khi trừ đi 2 là bội của $p$.</p>
+
+        <h3>Bài 5</h3>
+        <p>Cho đa thức \( P(x) = x^3 - 11x^2 - 87x + m \), trong đó \( m \in \mathbb{Z} \). Chứng minh rằng với mọi \( m \), tồn tại số nguyên \( n \) sao cho \( P(n) \equiv 0 \pmod{191} \).</p>
+
+        <h3>Bài 6</h3>
+        <p>Cho \( S = \{0,1,2,\dots,22\} \) gồm 23 số tự nhiên đầu tiên. Xét các hàm số sau  
+        \[f(x) = 3x^{15} + 3x^8 + x + 1 \quad \text{và} \quad g(x) = x^{2022}.\]</p>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li>a) Chứng minh rằng \( f(0), f(1), \dots, f(22) \) lập thành một hệ thặng dư đầy đủ modulo 23 nhưng \( g(0), g(1), \dots, g(22) \) thì không.</li>
+            <li style="margin-top: 12px;">b) Mỗi bước, ta được chọn đúng một trong hai hàm \( f(x) \) hoặc \( g(x) \), sau đó thay lần lượt mỗi số trong \( S \) bởi giá trị tương ứng của nó vào hàm đó, rồi lấy số dư của chúng khi chia cho 23. Cụ thể là:  
+            \[S \to \{f(s) \bmod 23 \mid \forall s \in S\}
+            \quad\text{hoặc}\quad
+            S \to \{g(s) \bmod 23 \mid \forall s \in S\}.\]
+            
+            Chứng minh rằng có thể chuyển các số trong \( S \) về toàn bộ bằng 0 sau hữu hạn các bước như trên.</li>
+        </ul>
+
+        <h3>Bài 7</h3>
+        <p>Chứng minh rằng với mỗi số tự nhiên $n$, tồn tại một cấp số cộng gồm $n$ số hạng sao cho mọi số hạng của nó đều là lũy thừa của một số tự nhiên với số mũ lớn hơn 1.</p>
+        <div style="background: rgba(255, 255, 255, 0.02); border-left: 3px solid var(--accent-gold); padding: 12px 18px; margin: 14px 0; border-radius: 4px;">
+            <p style="margin: 0 0 8px 0; font-weight: bold; color: var(--accent-gold);">Gợi ý:</p>
+            <ol style="margin: 0; padding-left: 20px; font-size: 0.92rem; color: var(--text-muted);">
+                <li>Việc chỉ ra một cấp số cộng nào là khó. Do đó việc đầu tiên là nghĩ đến chọn cấp số cộng nào cho dễ kiểm tra. Cấp số cộng đơn giản nhất là $1, 2, \dots, n$. Tuy nhiên dãy này không thỏa. Do đó ta nghĩ đến chọn cấp số cộng "tương tự như trên" là $a, 2a, 3a, \dots, na$.</li>
+                <li style="margin-top: 6px;">Vì mong muốn $a, 2a, \dots, na$ là lũy thừa của một số tự nhiên. Do đó số $a$ cần sự xuất hiện của các hạng tử $2, 3, \dots, n$ trong biểu diễn, tức cần có dạng:
+                \[a = 2^{k_2} 3^{k_3} 4^{k_4} \dots n^{k_n}.\] (ở đây đánh chỉ số của $k$ theo số hạng trong cơ số)</li>
+            </ol>
+        </div>
+
+        <h3>Bài 8 (IMO Shortlist 1999)</h3>
+        <p>Tìm tất cả các số nguyên dương $n$ để tồn tại số nguyên $m$ thoả mãn $2^n - 1 \mid m^2 + 9$.</p>
+        <div style="background: rgba(255, 255, 255, 0.02); border-left: 3px solid var(--accent-gold); padding: 12px 18px; margin: 14px 0; border-radius: 4px;">
+            <p style="margin: 0 0 8px 0; font-weight: bold; color: var(--accent-gold);">Gợi ý:</p>
+            <ol style="margin: 0; padding-left: 20px; font-size: 0.92rem; color: var(--text-muted);">
+                <li>Chứng minh được \(n\) là lũy thừa của \(2\).</li>
+                <li style="margin-top: 6px;">Phân tích \(2^n-1\) thành tích các nhân tử là các số "Fermat" \(F_n = 2^{2^n} + 1\) và áp dụng tính chất <i>hai số Fermat thì nguyên tố cùng nhau</i>.</li>
+            </ol>
+        </div>
+
+        <h3>Bài 9</h3>
+        <p>Chứng minh rằng với mọi số nguyên dương $n$ thì 
+        $$\left[\dfrac{(n-1)!}{n\cdot (n+1)} \right] \;\vdots \; 2$$</p>
+
+        <h3>Bài 10 (VMF)</h3>
+        <p>Giả sử phương trình \( x^{2017} + ax^2 + bx + c = 0 \) với các hệ số nguyên \( a, b, c \) có 3 nghiệm nguyên là \( x_1, x_2, x_3 \). Chứng minh rằng:  
+        \[(a + b + c + 1)(x_1 - x_2)(x_2 - x_3)(x_3 - x_1)\]  
+        chia hết cho \(2017\).</p>
+
+        <h3>Bài 11 (Số Carmichael)</h3>
+        <p>Chỉ ra sự tồn tại của các hợp số \( n \) sao cho với bất kì số nguyên \( a \) thì \( a^n - a \) chia hết cho \( n \).</p>
+
+        <p class="exam-end"><b>─── HẾT ───</b></p>
+    </div>
+</body>
+</html>
