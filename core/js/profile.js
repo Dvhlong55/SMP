@@ -97,7 +97,7 @@ function renderHeatmap(activities) {
         else if (count >= 1) level = 1;
         
         cell.setAttribute('data-level', level);
-        cell.setAttribute('data-tooltip', `${date}: ${count} bài`);
+        cell.setAttribute('title', `${date}: ${count} bài`);
         
         heatmap.appendChild(cell);
     });

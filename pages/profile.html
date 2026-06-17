@@ -221,23 +221,6 @@
             background-color: var(--heatmap-0, #333);
             position: relative;
         }
-        .heatmap-cell:hover::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #000;
-            color: #fff;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            white-space: nowrap;
-            z-index: 10;
-            margin-bottom: 5px;
-            pointer-events: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
         
         body.dark-mode {
             --heatmap-0: #1a1a1a;
@@ -326,12 +309,16 @@
             </div>
 
             <div class="settings-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
-                    <h2 style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">Hoạt Động Giải Bài (Heatmap)</h2>
-                    <button id="profile-dark-toggle" onclick="toggleProfileTheme()" style="background: var(--card-bg); border: 1px solid var(--border-light); color: var(--text-dark); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; transition: all 0.3s; display: flex; align-items: center; gap: 6px;">
+                <h2>Cài Đặt Giao Diện</h2>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <button id="profile-dark-toggle" onclick="toggleProfileTheme()" style="background: var(--card-bg); border: 1px solid var(--border-light); color: var(--text-dark); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;">
                         ☽ Chuyển chế độ tối
                     </button>
                 </div>
+            </div>
+
+            <div class="settings-section">
+                <h2>Hoạt Động Giải Bài (Heatmap)</h2>
                 <div class="heatmap-container">
                     <div class="heatmap" id="activity-heatmap">
                         <!-- JS sẽ render các ô vuông vào đây -->
