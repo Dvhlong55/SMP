@@ -17,6 +17,16 @@
             max-width: 900px;
             margin: 40px auto;
             padding: 20px;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: profileFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.1s;
+        }
+        @keyframes profileFadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         .profile-header {
             display: flex;
@@ -25,21 +35,27 @@
             margin-bottom: 30px;
             border-bottom: 1px solid var(--border-light);
             padding-bottom: 20px;
+            gap: 15px;
         }
         .profile-header h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: var(--text-dark);
             margin: 0;
+            word-break: break-word;
         }
         .logout-btn {
             background-color: transparent;
             color: #ef4444;
             border: 1px solid #ef4444;
             padding: 8px 16px;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 500;
             transition: all 0.3s;
+            white-space: nowrap;
         }
         .logout-btn:hover {
             background-color: #ef4444;
@@ -60,7 +76,7 @@
             box-shadow: var(--shadow-soft);
         }
         .stat-card h3 {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
             margin-bottom: 10px;
             font-weight: normal;
@@ -83,7 +99,7 @@
         .settings-section h2 {
             margin-top: 0;
             margin-bottom: 20px;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--text-dark);
             border-bottom: 1px solid var(--border-light);
             padding-bottom: 10px;
@@ -99,13 +115,15 @@
         }
         .form-group input {
             width: 100%;
-            padding: 12px;
+            padding: 12px 16px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-light);
             border-radius: 6px;
             color: var(--text-dark);
             font-family: inherit;
+            font-size: 0.9rem;
             transition: all 0.3s;
+            box-sizing: border-box;
         }
         body:not(.dark-mode) .form-group input {
             background: rgba(0, 0, 0, 0.02);
@@ -173,6 +191,7 @@
             font-weight: bold;
             transition: all 0.2s;
             letter-spacing: 0.5px;
+            font-family: inherit;
         }
         .btn-primary:hover {
             opacity: 0.9;
@@ -194,18 +213,20 @@
         .heatmap-container {
             overflow-x: auto;
             padding-bottom: 10px;
+            margin-top: 10px;
         }
         .heatmap {
             display: grid;
             grid-template-rows: repeat(7, 12px);
             grid-auto-flow: column;
             gap: 3px;
+            width: max-content;
         }
         .heatmap-cell {
             width: 12px;
             height: 12px;
             border-radius: 2px;
-            background-color: var(--heatmap-0, #333); /* Sẽ update theo theme */
+            background-color: var(--heatmap-0, #333);
             position: relative;
         }
         .heatmap-cell:hover::after {
@@ -218,11 +239,12 @@
             color: #fff;
             padding: 4px 8px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 11px;
             white-space: nowrap;
             z-index: 10;
             margin-bottom: 5px;
             pointer-events: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
         
         body.dark-mode {
@@ -246,6 +268,45 @@
         .heatmap-cell[data-level="2"] { background-color: var(--heatmap-2); }
         .heatmap-cell[data-level="3"] { background-color: var(--heatmap-3); }
         .heatmap-cell[data-level="4"] { background-color: var(--heatmap-4); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .profile-container {
+                margin: 10px auto;
+                padding: 12px;
+            }
+            .profile-header {
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+            }
+            .profile-header h1 {
+                font-size: 1.6rem;
+            }
+            .logout-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            .settings-section {
+                padding: 20px 16px;
+                margin-bottom: 20px;
+            }
+            .settings-section h2 {
+                font-size: 1.15rem;
+                margin-bottom: 15px;
+            }
+            .form-group input {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+            .btn-primary {
+                width: 100%;
+                padding: 11px 20px;
+                font-size: 0.9rem;
+            }
+            #theme-select {
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
