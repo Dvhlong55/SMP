@@ -521,13 +521,27 @@ async function openThread(threadId) {
         } else {
             repliesList.innerHTML = replies.map(r => {
                 const isReplyAuthor = currentUser && currentUser === r.author_name;
+                const approveHtml = r.isApproved ? 
+                    `<span style="background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3); padding: 3px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: bold; font-family:'JetBrains Mono', monospace; margin-left: 8px;">✓ Đã duyệt (+${r.approvedPoints}đ)</span>` : 
+                    (currentUser === 'SMP' ? `
+                        <select onchange="window.approveReply('${r.id}', this.value)" style="background: rgba(201, 169, 110, 0.15); color: var(--accent-gold); border: 1px solid rgba(201,169,110,0.4); padding: 3px 8px; border-radius: 4px; font-size: 0.72rem; font-family:'JetBrains Mono', monospace; cursor: pointer; outline: none; margin-left: 8px;">
+                            <option value="">Duyệt lời giải...</option>
+                            <option value="1">Độ khó 1 (Dễ - +1đ)</option>
+                            <option value="2">Độ khó 2 (Vừa - +2đ)</option>
+                            <option value="3">Độ khó 3 (Khó - +3đ)</option>
+                            <option value="4">Độ khó 4 (Rất khó - +4đ)</option>
+                            <option value="5">Độ khó 5 (Olympiad - +5đ)</option>
+                        </select>
+                    ` : '');
+
                 return `
-                    <div class="post-card reply" id="reply-${r.id}">
+                    <div class="post-card reply" id="reply-${r.id}" style="${r.isApproved ? 'border-left: 3px solid #2ecc71;' : ''}">
                         <div class="post-meta">
                             <div>
                                 <span class="post-author">${escapeHTML(r.author_name)}</span>
                                 <span class="post-date" style="margin-left:10px;">${formatDate(r.createdAt)}</span>
                                 ${r.editedAt ? '<span class="edit-badge">(đã chỉnh sửa)</span>' : ''}
+                                ${approveHtml}
                             </div>
                             <div class="post-actions">
                                 ${(!isReplyAuthor && token) ? `<button class="btn-like" id="like-reply-${r.id}" onclick="toggleLikeReply('${currentThreadId}','${r.id}',this)" style="background:none; border:1px solid ${r.likedByMe ? '#e74c3c' : 'var(--border-light)'}; color:${r.likedByMe ? '#e74c3c' : 'var(--text-muted)'}; padding:3px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem; transition:all 0.2s;">${r.likedByMe ? '❤️' : '♡'} <span>${r.likeCount || 0}</span></button>` : (r.likeCount > 0 ? `<span style="font-size:0.75rem;color:var(--text-muted);">❤️ ${r.likeCount}</span>` : '')}
@@ -552,6 +566,35 @@ async function openThread(threadId) {
         mainContent.innerHTML = `<div style="color:#e74c3c;">${err.message}</div>`;
     }
 }
+
+window.approveReply = async function(replyId, points) {
+    if (!points) return;
+    const token = getToken();
+    if (!token) return;
+    
+    if (!confirm(`Xác nhận duyệt lời giải này với độ khó ${points}/5?`)) {
+        openThread(currentThreadId);
+        return;
+    }
+    
+    try {
+        const res = await fetch(`${API_BASE}/api/forum/replies/${replyId}/approve`, {
+            method: 'POST',
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ points: parseInt(points) })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || "Không thể duyệt lời giải.");
+        
+        alert("Đã duyệt lời giải và cộng điểm thành công!");
+        openThread(currentThreadId);
+    } catch (err) {
+        alert(err.message);
+    }
+};
 
 // ─── Like Thread ──────────────────────────────────────────────────────────
 window.toggleLikeThread = async function(threadId, btn) {

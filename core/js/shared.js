@@ -22,6 +22,7 @@ const DarkMode = {
     init() {
         const saved = localStorage.getItem('smp-dark-mode');
         if (saved === 'true') this.enable(false);
+        else if (saved === 'false') this.disable(false);
         this.bindToggle();
     },
     enable(save = true) {

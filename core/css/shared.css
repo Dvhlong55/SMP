@@ -31,11 +31,11 @@
 
 /* DARK MODE */
 body.dark-mode {
-    --sidebar-bg: #f8fafc;
-    --sidebar-text: #1a1a1a;
-    --sidebar-title: #1a1a1a;
-    --sidebar-link: #475569;
-    --sidebar-link-hover: rgba(0,0,0,0.05);
+    --sidebar-bg: #111111;
+    --sidebar-text: #e8e8e8;
+    --sidebar-title: #ffffff;
+    --sidebar-link: #888888;
+    --sidebar-link-hover: rgba(255,255,255,0.05);
     --topbar-bg: #111111;
     --main-bg: #141414;
     --card-bg: #1e1e1e;

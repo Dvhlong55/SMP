@@ -65,9 +65,11 @@ window.showAuthTab = function(tab) {
     const loginEl = document.getElementById('auth-login-tab');
     const registerEl = document.getElementById('auth-register-tab');
     const profileEl = document.getElementById('auth-profile-tab');
+    const forgotEl = document.getElementById('auth-forgot-tab');
+    const resetEl = document.getElementById('auth-reset-tab');
     const tabs = document.querySelectorAll('.auth-modal-tab');
 
-    [loginEl, registerEl, profileEl].forEach(el => el && (el.style.display = 'none'));
+    [loginEl, registerEl, profileEl, forgotEl, resetEl].forEach(el => el && (el.style.display = 'none'));
     tabs.forEach(t => t.classList.remove('active'));
 
     if (tab === 'login' && loginEl) {
@@ -78,6 +80,10 @@ window.showAuthTab = function(tab) {
         document.querySelector('.auth-modal-tab[data-tab="register"]')?.classList.add('active');
     } else if (tab === 'profile' && profileEl) {
         profileEl.style.display = 'block';
+    } else if (tab === 'forgot' && forgotEl) {
+        forgotEl.style.display = 'block';
+    } else if (tab === 'reset' && resetEl) {
+        resetEl.style.display = 'block';
     }
 };
 
@@ -294,6 +300,7 @@ async function verifyToken() {
 // ─── Init ─────────────────────────────────────────────────────────────────────
 function initAuth() {
     verifyToken();
+    checkRecoveryParams();
 
     // Close modal when clicking backdrop
     const modal = document.getElementById('auth-modal');
@@ -307,6 +314,98 @@ function initAuth() {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') window.closeAuthModal();
     });
+}
+
+window.handleForgotPassword = async function(event) {
+    event.preventDefault();
+    const email = document.getElementById('modal-forgot-email').value.trim();
+    const btn = document.getElementById('modal-forgot-btn');
+    const msg = document.getElementById('modal-forgot-msg');
+    
+    btn.disabled = true;
+    btn.textContent = 'ĐANG XỬ LÝ...';
+    
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/forgot-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || "Có lỗi xảy ra.");
+        
+        msg.textContent = '✅ ' + data.message;
+        msg.className = 'auth-msg auth-msg-success';
+        msg.style.display = 'block';
+        document.getElementById('modal-forgot-email').value = '';
+    } catch (err) {
+        msg.textContent = err.message;
+        msg.className = 'auth-msg auth-msg-error';
+        msg.style.display = 'block';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'KÍCH HOẠT ĐỔI MẬT KHẨU';
+    }
+};
+
+window.handleResetPassword = async function(event) {
+    event.preventDefault();
+    const token = document.getElementById('modal-reset-token').value;
+    const password = document.getElementById('modal-reset-password').value;
+    const confirm = document.getElementById('modal-reset-confirm').value;
+    const btn = document.getElementById('modal-reset-btn');
+    const msg = document.getElementById('modal-reset-msg');
+    
+    if (password !== confirm) {
+        msg.textContent = 'Mật khẩu xác nhận không khớp.';
+        msg.className = 'auth-msg auth-msg-error';
+        msg.style.display = 'block';
+        return;
+    }
+    
+    btn.disabled = true;
+    btn.textContent = 'ĐANG CẬP NHẬT...';
+    
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/reset-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token, new_password: password })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || "Có lỗi xảy ra.");
+        
+        msg.textContent = '✅ ' + data.message;
+        msg.className = 'auth-msg auth-msg-success';
+        msg.style.display = 'block';
+        
+        setTimeout(() => {
+            window.showAuthTab('login');
+            window.openAuthModal('login');
+        }, 2000);
+    } catch (err) {
+        msg.textContent = err.message;
+        msg.className = 'auth-msg auth-msg-error';
+        msg.style.display = 'block';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'ĐỔI MẬT KHẨU';
+    }
+};
+
+function checkRecoveryParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const action = urlParams.get('action');
+    const token = urlParams.get('token');
+    
+    if (action === 'reset-password' && token) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+        setTimeout(() => {
+            window.openAuthModal('reset');
+            const tokenInput = document.getElementById('modal-reset-token');
+            if (tokenInput) tokenInput.value = token;
+        }, 500);
+    }
 }
 
 if (document.readyState === 'loading') {

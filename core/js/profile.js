@@ -24,7 +24,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Set theme select
             const themeSelect = document.getElementById('theme-select');
             if (themeSelect) {
-                themeSelect.value = user.theme_preference || 'dark';
+                const theme = user.theme_preference || 'dark';
+                themeSelect.value = theme;
+                if (window.DarkMode) {
+                    if (theme === 'dark') window.DarkMode.enable(false);
+                    else window.DarkMode.disable(false);
+                }
             }
         }
     } catch (e) {
@@ -82,9 +87,9 @@ function renderHeatmap(activities) {
         
         const count = actDict[date] || 0;
         let level = 0;
-        if (count >= 10) level = 4;
-        else if (count >= 6) level = 3;
-        else if (count >= 3) level = 2;
+        if (count >= 5) level = 4;
+        else if (count >= 3) level = 3;
+        else if (count >= 2) level = 2;
         else if (count >= 1) level = 1;
         
         cell.setAttribute('data-level', level);

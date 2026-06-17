@@ -719,9 +719,44 @@ const AUTH_MODAL_HTML = `
                 <div style="margin-bottom:20px;">
                     <label style="display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted,#888); margin-bottom:6px; font-family:'JetBrains Mono',monospace;">Mật khẩu</label>
                     <input id="modal-login-password" type="password" autocomplete="current-password" placeholder="••••••••" style="width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); font-family:'JetBrains Mono',monospace; font-size:0.9rem; outline:none; transition:border-color 0.2s; box-sizing:border-box;" onfocus="this.style.borderColor='var(--accent-cyan,#5ce1e6)'" onblur="this.style.borderColor='var(--border-light,#2e2e2e)'">
+                    <div style="text-align: right; margin-top: 6px;">
+                        <a href="#" onclick="window.showAuthTab('forgot'); return false;" style="font-size: 0.72rem; color: var(--accent-cyan,#5ce1e6); text-decoration: none; font-family: 'JetBrains Mono', monospace;">Quên mật khẩu?</a>
+                    </div>
                 </div>
                 <div id="modal-login-msg" class="auth-msg" style="display:none; margin-bottom:12px;"></div>
                 <button id="modal-login-btn" type="submit" class="modal-submit-btn">ĐĂNG NHẬP</button>
+            </form>
+        </div>
+        <!-- Forgot Password Tab -->
+        <div id="auth-forgot-tab" style="padding:24px; display:none;">
+            <h3 style="font-family:'JetBrains Mono',monospace; font-size:1rem; color:var(--text-dark,#eee); margin-bottom:16px; font-weight:normal; text-transform:uppercase; letter-spacing:1px;">Lấy lại tài khoản</h3>
+            <form onsubmit="window.handleForgotPassword(event)">
+                <div style="margin-bottom:20px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted,#888); margin-bottom:6px; font-family:'JetBrains Mono',monospace;">Email của tài khoản</label>
+                    <input id="modal-forgot-email" type="email" placeholder="you@example.com" required style="width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); font-family:'JetBrains Mono',monospace; font-size:0.9rem; outline:none; transition:border-color 0.2s; box-sizing:border-box;" onfocus="this.style.borderColor='var(--accent-cyan,#5ce1e6)'" onblur="this.style.borderColor='var(--border-light,#2e2e2e)'">
+                </div>
+                <div id="modal-forgot-msg" class="auth-msg" style="display:none; margin-bottom:12px;"></div>
+                <button id="modal-forgot-btn" type="submit" class="modal-submit-btn">KÍCH HOẠT ĐỔI MẬT KHẨU</button>
+                <div style="text-align:center; margin-top:16px;">
+                    <a href="#" onclick="window.showAuthTab('login'); return false;" style="font-size:0.75rem; color:var(--accent-cyan,#5ce1e6); font-family:'JetBrains Mono',monospace; text-decoration:none;">Quay lại đăng nhập</a>
+                </div>
+            </form>
+        </div>
+        <!-- Reset Password Tab -->
+        <div id="auth-reset-tab" style="padding:24px; display:none;">
+            <h3 style="font-family:'JetBrains Mono',monospace; font-size:1rem; color:var(--text-dark,#eee); margin-bottom:16px; font-weight:normal; text-transform:uppercase; letter-spacing:1px;">Đặt lại mật khẩu</h3>
+            <form onsubmit="window.handleResetPassword(event)">
+                <input type="hidden" id="modal-reset-token" value="">
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted,#888); margin-bottom:6px; font-family:'JetBrains Mono',monospace;">Mật khẩu mới</label>
+                    <input id="modal-reset-password" type="password" placeholder="••••••••" required minlength="6" style="width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); font-family:'JetBrains Mono',monospace; font-size:0.9rem; outline:none; transition:border-color 0.2s; box-sizing:border-box;" onfocus="this.style.borderColor='var(--accent-cyan,#5ce1e6)'" onblur="this.style.borderColor='var(--border-light,#2e2e2e)'">
+                </div>
+                <div style="margin-bottom:20px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted,#888); margin-bottom:6px; font-family:'JetBrains Mono',monospace;">Xác nhận mật khẩu mới</label>
+                    <input id="modal-reset-confirm" type="password" placeholder="••••••••" required minlength="6" style="width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); font-family:'JetBrains Mono',monospace; font-size:0.9rem; outline:none; transition:border-color 0.2s; box-sizing:border-box;" onfocus="this.style.borderColor='var(--accent-cyan,#5ce1e6)'" onblur="this.style.borderColor='var(--border-light,#2e2e2e)'">
+                </div>
+                <div id="modal-reset-msg" class="auth-msg" style="display:none; margin-bottom:12px;"></div>
+                <button id="modal-reset-btn" type="submit" class="modal-submit-btn">ĐỔI MẬT KHẨU</button>
             </form>
         </div>
         <!-- Register Tab -->
