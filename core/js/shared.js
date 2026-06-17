@@ -18,7 +18,7 @@ var API_BASE = 'https://smp-backend-kcwn.onrender.com';
 })();
 
 // === DARK MODE ===
-const DarkMode = {
+window.DarkMode = {
     init() {
         const saved = localStorage.getItem('smp-dark-mode');
         if (saved === 'true') this.enable(false);
@@ -804,7 +804,7 @@ function initShared() {
         document.body.classList.add('embed-mode');
     }
     
-    DarkMode.init();
+    window.DarkMode.init();
     LiveSearch.init();
     setActiveNav();
     PostViewer.init();

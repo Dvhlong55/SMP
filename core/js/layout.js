@@ -327,7 +327,6 @@
                 <a href="/pages/nonmath.html">&#x2734; Non Math</a>
                 <a href="/pages/forum.html">⧉ Forum</a>
                 <a href="/pages/saved.html">★ Saved</a>
-                <a href="/pages/vetoi.html">◎ About</a>
                 <a href="#" id="sidebar-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">&#x2637; Login</a>
             </nav>
         </div>
@@ -358,7 +357,6 @@
             </div>
             
             <nav class="topbar-nav" style="gap: 20px; margin-right: 15px;">
-                <a href="/pages/vetoi.html">◎ About</a>
                 <a href="#" id="topbar-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">&#x2637; Login</a>
             </nav>
             
