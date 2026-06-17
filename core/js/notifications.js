@@ -198,7 +198,19 @@ class NotificationsController {
     async markReadAndGo(id, url, e) {
         e.preventDefault();
         await this.markRead(id, e, false);
-        window.location.href = url;
+        
+        let targetUrl = url;
+        const hasSmpPrefix = window.location.pathname.startsWith('/SMP/');
+        if (hasSmpPrefix) {
+            if (targetUrl.startsWith('/pages/') || targetUrl.startsWith('/posts/') || targetUrl.startsWith('/challenges/')) {
+                targetUrl = '/SMP' + targetUrl;
+            }
+        } else {
+            if (targetUrl.startsWith('/SMP/')) {
+                targetUrl = targetUrl.substring(4); // Remove '/SMP'
+            }
+        }
+        window.location.href = targetUrl;
     }
     
     async markRead(id, e, reRender = true) {
