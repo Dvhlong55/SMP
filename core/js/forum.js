@@ -50,6 +50,17 @@ function renderLatexText(text) {
     parsed = parsed.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
     parsed = parsed.replace(/(^|[^\\])\*([^*]+)\*/g, '$1<i>$2</i>');
     parsed = parsed.replace(/@([A-Za-z0-9_.-]+)/g, '<span class="forum-mention">@$1</span>');
+    
+    // Parse custom buttons: [button:Text|Url]
+    parsed = parsed.replace(/\[button:([^\]|]+)\|([^\]]+)\]/g, (match, textVal, urlVal) => {
+        return `<a href="${urlVal.trim()}" target="_blank" class="btn-primary" style="display: inline-block; text-decoration: none; margin: 8px 0; padding: 8px 18px; border-radius: 6px; font-weight: bold; font-size: 0.82rem; font-family: 'JetBrains Mono', monospace; color: #111;">${textVal.trim()}</a>`;
+    });
+    
+    // Parse normal markdown links: [Text](Url)
+    parsed = parsed.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, textVal, urlVal) => {
+        return `<a href="${urlVal.trim()}" target="_blank" style="color: var(--accent-cyan); text-decoration: underline; font-weight: 500;">${textVal.trim()}</a>`;
+    });
+    
     return parsed;
 }
 
