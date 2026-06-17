@@ -128,10 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             </div>
 
-            <!-- Bình Luận (SMP Comments) -->
-            <div class="giscus-section-outer fade-up" style="max-width: 900px; margin: 48px auto; padding: 48px 24px 0 24px; border-top: 1px solid var(--border-light);">
-                <div id="giscus-container"></div>
-            </div>
+
 
             <div class="stats-strip fade-up">
                 <div class="stat-item"><div class="stat-number">$\\Sigma$</div><div class="stat-label">Bài Viết</div></div>
