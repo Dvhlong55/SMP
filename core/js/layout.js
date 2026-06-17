@@ -773,7 +773,7 @@ const AUTH_MODAL_HTML = `
 <div id="auth-toast" style="display:none; position:fixed; bottom:24px; right:24px; z-index:10000; background:rgba(30,30,30,0.97); color:#fff; padding:12px 20px; border-radius:8px; font-family:'JetBrains Mono',monospace; font-size:0.85rem; box-shadow:0 4px 20px rgba(0,0,0,0.5); border:1px solid rgba(92,225,230,0.2); max-width:360px;"></div>
 `;
 
-document.addEventListener('DOMContentLoaded', () => {
+function initLayout() {
     const token = localStorage.getItem('smp_access_token');
     const username = localStorage.getItem('smp_username');
     
@@ -883,4 +883,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch(e) {}
     }, 4000);
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLayout);
+} else {
+    initLayout();
+}
