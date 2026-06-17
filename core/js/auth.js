@@ -152,6 +152,8 @@ window.handleLogin = async function(event) {
             window.closeAuthModal();
             if (form.id === 'login-form') {
                 window.location.href = '/index.html'; // redirect if on standalone auth page
+            } else {
+                window.location.reload();
             }
         }, 800);
     } catch (err) {
@@ -218,12 +220,17 @@ window.handleLogout = function() {
     localStorage.removeItem('smp_username');
     applyAuthUI(null);
     window.closeAuthModal();
-    // Show brief toast
+    // Show brief toast and reload page
     const toast = document.getElementById('auth-toast');
     if (toast) {
         toast.textContent = '👋 Đã đăng xuất.';
         toast.style.display = 'block';
-        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        setTimeout(() => { 
+            toast.style.display = 'none'; 
+            window.location.reload();
+        }, 1000);
+    } else {
+        window.location.reload();
     }
 };
 
