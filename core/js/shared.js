@@ -819,6 +819,9 @@ function initShared() {
             }
         });
     });
+
+    initCustomCursor();
+    initFadeUpAnimation();
 }
 
 // === TOGGLE SAVE POST GLOBAL LOGIC ===
@@ -864,6 +867,77 @@ window.toggleSavePost = async function(postId, postTitle, postUrl, btnElement) {
     } finally {
         btnElement.disabled = false;
     }
+}
+
+// === CUSTOM CURSOR ===
+function initCustomCursor() {
+    if (window.matchMedia('(pointer: coarse)').matches) return; // Ignore on touch devices
+
+    const cursor = document.createElement('div');
+    cursor.className = 'custom-cursor';
+    document.body.appendChild(cursor);
+
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+
+    const attachHoverEvents = () => {
+        const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .sidebar-toggle, .post-card, .custom-cursor-hover');
+        interactiveElements.forEach(el => {
+            if (!el.dataset.cursorAttached) {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+                el.dataset.cursorAttached = 'true';
+            }
+        });
+    };
+
+    attachHoverEvents();
+
+    // Re-attach hover events when DOM changes (e.g., loading posts dynamically)
+    const observer = new MutationObserver((mutations) => {
+        let shouldReattach = false;
+        mutations.forEach(mutation => {
+            if (mutation.addedNodes.length > 0) shouldReattach = true;
+        });
+        if (shouldReattach) attachHoverEvents();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+}
+
+// === FADE-UP ANIMATION ===
+function initFadeUpAnimation() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    const observeFadeElements = () => {
+        document.querySelectorAll('.post-card, .post-container, .forum-post, .home-banner, .comment-item').forEach(el => {
+            if (!el.classList.contains('fade-up')) el.classList.add('fade-up');
+            if (!el.dataset.fadeObserved) {
+                observer.observe(el);
+                el.dataset.fadeObserved = 'true';
+            }
+        });
+    };
+
+    observeFadeElements();
+
+    // Re-observe when DOM changes
+    const mutObserver = new MutationObserver((mutations) => {
+        let shouldReobserve = false;
+        mutations.forEach(mutation => {
+            if (mutation.addedNodes.length > 0) shouldReobserve = true;
+        });
+        if (shouldReobserve) observeFadeElements();
+    });
+    mutObserver.observe(document.body, { childList: true, subtree: true });
 }
 
 if (document.readyState === 'loading') {

@@ -1677,4 +1677,58 @@ body.embed-mode .main-content-layout {
     transform: translateY(-1px);
 }
 
+/* ============================================
+   CUSTOM CURSOR & FADE-UP ANIMATION
+   ============================================ */
+
+/* Fade-up animation classes */
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Custom Cursor */
+@media (pointer: fine) {
+    body, a, button, input, textarea, select, .sidebar-toggle, .custom-cursor-hover {
+        cursor: none !important;
+    }
+
+    .custom-cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        background-color: var(--accent-cyan);
+        border-radius: 50%;
+        pointer-events: none; /* Let clicks pass through */
+        z-index: 999999;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border 0.2s ease;
+        mix-blend-mode: difference;
+        display: block;
+    }
+
+    /* Apply a different look when hovering over interactive elements */
+    .custom-cursor.hovering {
+        width: 50px;
+        height: 50px;
+        background-color: rgba(92, 225, 230, 0.1); 
+        border: 1px solid var(--accent-cyan);
+        mix-blend-mode: normal;
+    }
+}
+
+/* Hide custom cursor on touch devices */
+@media (pointer: coarse) {
+    .custom-cursor {
+        display: none !important;
+    }
+}
 
