@@ -151,7 +151,7 @@
 
         /* Mobile Floating Action Button for sidebar toggle */
         @media (max-width: 768px) {
-            .sidebar, .sidebar-toggle {
+            .sidebar, .sidebar-toggle, .sidebar-overlay {
                 display: none !important;
             }
         }
@@ -305,9 +305,6 @@
     const SIDEBAR_HTML = `
     <aside class="sidebar" id="main-sidebar">
         <div class="sidebar-inner">
-            <div id="smp-logo-canvas">
-                <div id="smp-logo-center"></div>
-            </div>
             <a href="/demo.html" style="display: block; cursor: pointer; border: none; outline: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" title="Xem tính năng hệ sinh thái">
                 <img src="/core/image/image_49b1a4.png" alt="SMP Logo" class="sidebar-logo">
             </a>
@@ -361,6 +358,7 @@
             </div>
             
             <nav class="topbar-nav" style="gap: 20px; margin-right: 15px;">
+                <a href="/pages/vetoi.html">◎ About</a>
                 <a href="#" id="topbar-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">&#x2637; Login</a>
             </nav>
             
@@ -434,6 +432,17 @@
         const STORAGE_KEY  = 'smp-sidebar-collapsed';
         const SIDEBAR_W    = 380;
         const iconEl = toggleBtn.querySelector('.toggle-icon');
+
+        // Insert overlay
+        let overlay = document.querySelector('.sidebar-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.className = 'sidebar-overlay';
+            document.body.appendChild(overlay);
+            overlay.addEventListener('click', () => setCollapsed(true, true));
+        }
+
+
         
         function setCollapsed(collapsed, animate) {
             if (!animate) {
@@ -452,6 +461,10 @@
                     wrapper.style.marginLeft = '';
                     wrapper.style.width = '';
                 }
+            }
+
+            if (typeof overlay !== 'undefined' && overlay) {
+                overlay.classList.toggle('active', !collapsed);
             }
 
             iconEl.innerHTML = collapsed ? '&#x00BB;' : '&#x00AB;';
