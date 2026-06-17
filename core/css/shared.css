@@ -76,6 +76,7 @@ mjx-container {
 
 mjx-container:not([display="true"]) {
     /* Do not set overflow-x here, as it changes the baseline to the bottom margin edge */
+    max-width: none !important;
 }
 
 mjx-container[display="true"] {
