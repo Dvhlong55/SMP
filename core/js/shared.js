@@ -53,7 +53,7 @@ const DarkMode = {
 
 const ALL_POSTS = [
     {
-        title: 'Bài Tập Về Đồng Dư',
+        title: 'Bài Tập Về Hệ Thặng Dư -- Phương Trình Đồng Dư',
         date: 'June 17, 2026',
         url: '/posts/math/bai-tap-dong-du.html',
         tags: ['Số Học', 'VMO'],
