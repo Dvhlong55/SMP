@@ -98,6 +98,20 @@ function initSmpComments() {
             max-width: 100%;
             overflow-x: auto;
             overflow-y: hidden;
+            padding-bottom: 5px;
+        }
+        .comment-content::-webkit-scrollbar {
+            height: 4px;
+        }
+        .comment-content::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        .comment-content::-webkit-scrollbar-thumb {
+            background: rgba(92, 225, 230, 0.6);
+            border-radius: 4px;
+        }
+        body.dark-mode .comment-content::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
         }
         .comment-delete {
             background: none;

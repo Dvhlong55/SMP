@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
         depthPrefix + "core/js/layout.js?v=4",
         depthPrefix + "core/js/shared.js?v=4",
         depthPrefix + "core/js/saved.js",
-        depthPrefix + "core/js/comment.js?v=4"
+        depthPrefix + "core/js/comment.js?v=7"
     ];
 
     function loadScriptSequentially(index) {
