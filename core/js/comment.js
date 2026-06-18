@@ -11,7 +11,7 @@ function initSmpComments() {
     const postId = path.split('/').pop().replace('.html', '') || 'homepage';
     
     // Tìm container Giscus hoặc smp có sẵn để thay thế
-    let commentSection = document.getElementById('giscus-container') || document.getElementById('smp-comments-container');
+    let commentSection = document.getElementById('giscus-container') || document.getElementById('smp-comments-container') || document.getElementById('smp-comments-wrapper');
     
     if (!commentSection) {
         // Tạo container mới nếu không tìm thấy
@@ -28,7 +28,8 @@ function initSmpComments() {
             mainEl.appendChild(commentSection);
         }
     } else {
-        // Làm sạch container cũ
+        // Đổi ID thành smp-comments-wrapper và làm sạch container cũ
+        commentSection.id = 'smp-comments-wrapper';
         commentSection.innerHTML = '';
     }
     
@@ -248,8 +249,8 @@ function renderCommentsSection(postId, comments, container) {
         commentsListHTML = `<div style="text-align: center; padding: 30px 0; color: var(--text-muted); font-style: italic;">Chưa có bình luận nào. Hãy là người đầu tiên!</div>`;
     } else {
         comments.forEach(comment => {
-            // Check if user is the author of this comment to display Delete button
-            const isAuthor = currentUsername && comment.username === currentUsername;
+            // Check if user is the author of this comment or is SMP to display Delete button
+            const isAuthor = currentUsername && (comment.username === currentUsername || currentUsername.toUpperCase() === 'SMP');
             const deleteBtn = isAuthor ? `<button class="comment-delete" onclick="handleDeleteComment('${comment.id}', '${postId}')">Xóa</button>` : '';
             
             // Format time
@@ -344,7 +345,7 @@ async function handleSubmitComment(event, postId) {
         }
         
         // Success: reload comments
-        const wrapper = document.getElementById('smp-comments-wrapper');
+        const wrapper = document.getElementById('smp-comments-wrapper') || document.getElementById('smp-comments-container') || document.getElementById('giscus-container');
         await loadComments(postId, wrapper);
         
     } catch (err) {
@@ -380,7 +381,7 @@ async function handleDeleteComment(commentId, postId) {
         }
         
         // Reload comments
-        const wrapper = document.getElementById('smp-comments-wrapper');
+        const wrapper = document.getElementById('smp-comments-wrapper') || document.getElementById('smp-comments-container') || document.getElementById('giscus-container');
         await loadComments(postId, wrapper);
     } catch (err) {
         alert(err.message);
