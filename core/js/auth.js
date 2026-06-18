@@ -31,6 +31,28 @@ window.handleExpiredSession = function() {
 const originalFetch = window.fetch;
 window.fetch = async function(...args) {
     try {
+        let urlStr = typeof args[0] === 'string' ? args[0] : (args[0] && args[0].url);
+        let options = args[1] || {};
+
+        if (urlStr && options && options.headers) {
+            let hasAuth = false;
+            if (options.headers instanceof Headers) hasAuth = options.headers.has('Authorization');
+            else if (Array.isArray(options.headers)) hasAuth = options.headers.some(h => h[0].toLowerCase() === 'authorization');
+            else hasAuth = Object.keys(options.headers).some(k => k.toLowerCase() === 'authorization');
+
+            if (hasAuth && (!options.method || options.method.toUpperCase() === 'GET')) {
+                const separator = urlStr.includes('?') ? '&' : '?';
+                urlStr += `${separator}_cb=${Date.now()}`;
+                
+                if (typeof args[0] === 'string') args[0] = urlStr;
+                else if (args[0] instanceof Request) args[0] = new Request(urlStr, args[0]);
+                else if (args[0] instanceof URL) args[0] = new URL(urlStr);
+                
+                options.cache = 'no-store';
+                args[1] = options;
+            }
+        }
+
         const res = await originalFetch(...args);
         
         // Bỏ qua interceptor đối với request đăng nhập/đăng ký
