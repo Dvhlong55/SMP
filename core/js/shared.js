@@ -855,7 +855,7 @@ window.toggleSavePost = async function(postId, postTitle, postUrl, btnElement) {
     btnElement.disabled = true;
     
     try {
-        const res = await fetch(`${API_BASE}/api/users/saved`, {
+        const res = await fetch(`${API_BASE}/api/users/saved/`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

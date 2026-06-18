@@ -19,7 +19,7 @@ async function loadSavedPosts(token) {
     const listContainer = document.getElementById('saved-list');
     
     try {
-        const res = await fetch(`${API_BASE}/api/users/saved`, {
+        const res = await fetch(`${API_BASE}/api/users/saved/`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -64,7 +64,7 @@ async function unsavePost(postId) {
     if (!token) return;
     
     try {
-        const res = await fetch(`${API_BASE}/api/users/saved`, {
+        const res = await fetch(`${API_BASE}/api/users/saved/`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

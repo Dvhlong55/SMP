@@ -80,7 +80,7 @@ class NotificationsController {
         const backendUrl = window.API_BASE || 'https://smp-backend-kcwn.onrender.com';
         
         try {
-            const res = await fetch(`${backendUrl}/api/notifications`, {
+            const res = await fetch(`${backendUrl}/api/notifications/`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (res.ok) {

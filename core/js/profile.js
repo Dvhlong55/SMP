@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // 2. Fetch Activity for Heatmap
     try {
-        const res = await fetch(`${API_BASE_URL}/api/activity`, {
+        const res = await fetch(`${API_BASE_URL}/api/activity/`, {
             headers: { 'Authorization': `Bearer ${token}` },
             cache: 'no-cache'
         });
