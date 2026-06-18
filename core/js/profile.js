@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // 1. Fetch user profile data (points, streak, theme)
     try {
-        const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+        const res = await fetch(`${API_BASE_URL}/api/auth/me?_t=${Date.now()}`, {
             headers: { 'Authorization': `Bearer ${token}` },
-            cache: 'no-cache'
+            cache: 'no-store'
         });
         if (res.ok) {
             const user = await res.json();

@@ -166,9 +166,9 @@ window.handleLogin = async function(event) {
 
         // Fetch user data to sync theme
         try {
-            const meRes = await fetch(`${API_BASE_URL}/api/auth/me`, {
+            const meRes = await fetch(`${API_BASE_URL}/api/auth/me?_t=${Date.now()}`, {
                 headers: { 'Authorization': `Bearer ${data.access_token}` },
-                cache: 'no-cache'
+                cache: 'no-store'
             });
             if (meRes.ok) {
                 const meData = await meRes.json();
@@ -279,9 +279,9 @@ async function verifyToken() {
     applyAuthUI(storedUsername);
 
     try {
-        const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+        const res = await fetch(`${API_BASE_URL}/api/auth/me?_t=${Date.now()}`, {
             headers: { 'Authorization': `Bearer ${token}` },
-            cache: 'no-cache'
+            cache: 'no-store'
         });
         
         if (res.status === 401 || res.status === 403) {
