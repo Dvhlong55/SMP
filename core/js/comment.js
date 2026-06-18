@@ -329,7 +329,7 @@ async function handleSubmitComment(event, postId) {
     if (errorMsg) errorMsg.style.display = 'none';
     
     try {
-        const response = await fetch(`${COMMENT_API_BASE}/api/comments/`, {
+        const response = await fetch(`${COMMENT_API_BASE}/api/comments`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

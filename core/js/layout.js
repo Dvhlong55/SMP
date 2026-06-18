@@ -870,20 +870,20 @@ function initLayout() {
     // Auto-load auth.js
     if (!document.querySelector('script[src*="auth.js"]')) {
         const authScript = document.createElement('script');
-        authScript.src = depthPrefix + 'core/js/auth.js?v=2';
+        authScript.src = depthPrefix + 'core/js/auth.js?v=10';
         document.body.appendChild(authScript);
     }
 
     // Load comments on any page that has the comment container
     if (document.getElementById('smp-comments-container') || document.getElementById('giscus-container')) {
         const script = document.createElement('script');
-        script.src = depthPrefix + 'core/js/comment.js?v=7';
+        script.src = depthPrefix + 'core/js/comment.js?v=10';
         document.body.appendChild(script);
     }
 
     // ── Inject notifications script ──────────────────────────────────────────
     const notifScript = document.createElement('script');
-    notifScript.src = depthPrefix + 'core/js/notifications.js';
+    notifScript.src = depthPrefix + 'core/js/notifications.js?v=10';
     document.body.appendChild(notifScript);
 
     // Close mobile search wrapper when clicking outside
