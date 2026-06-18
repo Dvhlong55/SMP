@@ -432,6 +432,21 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
 });
 
+// === MATHJAX OVERFLOW FIXER ===
+// Liên tục kiểm tra và xử lý công thức Toán dài vượt quá màn hình
+setInterval(function() {
+    document.querySelectorAll('mjx-container:not([display="true"])').forEach(mjx => {
+        if (mjx.offsetWidth > mjx.parentElement.clientWidth) {
+            mjx.style.display = 'block';
+            mjx.style.overflowX = 'auto';
+            mjx.style.overflowY = 'hidden';
+            mjx.style.maxWidth = '100%';
+            mjx.style.minWidth = '0';
+            mjx.style.paddingBottom = '4px'; // Avoid clipping scrollbar
+        }
+    });
+}, 1000);
+
 
 // === HIGHLIGHT ACTIVE NAV LINK ===
 function setActiveNav() {

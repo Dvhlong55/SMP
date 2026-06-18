@@ -5,7 +5,7 @@
 const API_BASE_URL = 'https://smp-backend-kcwn.onrender.com';
 
 // ─── Session Expiration Handler ──────────────────────────────────────────────
-window.handleExpiredSession = function() {
+window.handleExpiredSession = function(errUrl) {
     localStorage.removeItem('smp_access_token');
     localStorage.removeItem('smp_username');
     if (window.applyAuthUI) {
@@ -15,7 +15,9 @@ window.handleExpiredSession = function() {
     // Show toast
     const toast = document.getElementById('auth-toast');
     if (toast) {
-        toast.textContent = '⚠️ Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.';
+        let msg = '⚠️ Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.';
+        if (errUrl) msg += ` (Lỗi tại: ${errUrl})`;
+        toast.textContent = msg;
         toast.style.display = 'block';
         toast.style.background = 'rgba(231,76,60,0.95)';
         setTimeout(() => { toast.style.display = 'none'; toast.style.background = ''; }, 5000);
@@ -64,8 +66,9 @@ window.fetch = async function(...args) {
         if (res.status === 401 || res.status === 403) {
             // Check if we are currently logged in to avoid intercepting non-logged-in requests
             if (localStorage.getItem('smp_access_token')) {
-                console.warn('Session expired (401/403). Logging out...');
-                window.handleExpiredSession();
+                const debugUrl = typeof args[0] === 'string' ? args[0] : (args[0] && args[0].url);
+                console.warn('Session expired (401/403). Logging out...', debugUrl);
+                window.handleExpiredSession(debugUrl);
             }
         }
         return res;
