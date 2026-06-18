@@ -543,10 +543,10 @@ main {
 .comment-author { font-weight: 700; font-size: 0.88rem; color: var(--text-dark); }
 .comment-date { font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
 .comment-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
-.comment-content, .post-content, .forum-post .post-content {
+.comment-content mjx-container, .post-content mjx-container {
     max-width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
 }
 
 /* === DAILY CHALLENGE === */
