@@ -223,19 +223,19 @@
         }
         
         body.dark-mode {
-            --heatmap-0: #1a1a1a;
-            --heatmap-1: #0e4429;
-            --heatmap-2: #006d32;
-            --heatmap-3: #26a641;
-            --heatmap-4: #39d353;
+            --heatmap-0: #1c2735; /* Dark blue-gray, clearly visible against card background */
+            --heatmap-1: #0d5c75; /* Deep ocean teal */
+            --heatmap-2: #008eb3; /* Medium cyan-blue */
+            --heatmap-3: #00b8d4; /* Bright cyan */
+            --heatmap-4: #5ce1e6; /* Signature accent cyan */
         }
         
         body:not(.dark-mode) {
-            --heatmap-0: #ebedf0;
-            --heatmap-1: #9be9a8;
-            --heatmap-2: #40c463;
-            --heatmap-3: #30a14e;
-            --heatmap-4: #216e39;
+            --heatmap-0: #eef2f7; /* Very soft light gray-blue */
+            --heatmap-1: #b3e5fc; /* Soft light blue */
+            --heatmap-2: #81d4fa; /* Sky blue */
+            --heatmap-3: #29b6f6; /* Vibrant blue */
+            --heatmap-4: #0288d1; /* Deep rich blue */
         }
         
         .heatmap-cell[data-level="0"] { background-color: var(--heatmap-0); }
