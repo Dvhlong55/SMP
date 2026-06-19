@@ -99,7 +99,7 @@ function renderHeatmap(activities) {
         else if (count >= 1) level = 1;
         
         cell.setAttribute('data-level', level);
-        cell.setAttribute('title', `${date}: ${count} bài`);
+        cell.setAttribute('title', `${date}: ${count} bình luận`);
         
         heatmap.appendChild(cell);
     });
