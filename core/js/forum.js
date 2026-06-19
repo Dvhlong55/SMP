@@ -460,7 +460,7 @@ async function openThread(threadId) {
     document.getElementById('create-reply-form').style.display = token ? 'block' : 'none';
 
     try {
-        const viewerId = getUsername() || '';
+        const viewerId = (window.getUserId && window.getUserId()) || '';
         const [threadRes, repliesRes] = await Promise.all([
             fetch(`${API_BASE}/api/forum/threads/${threadId}?viewer_id=${encodeURIComponent(viewerId)}`),
             fetch(`${API_BASE}/api/forum/threads/${threadId}/replies?viewer_id=${encodeURIComponent(viewerId)}`)

@@ -197,6 +197,7 @@ window.handleLogin = async function(event) {
             });
             if (meRes.ok) {
                 const meData = await meRes.json();
+                localStorage.setItem('smp_user_id', meData.id);
                 if (meData.theme_preference) {
                     if (window.DarkMode) {
                         if (meData.theme_preference === 'dark') window.DarkMode.enable(true);
@@ -324,6 +325,7 @@ async function verifyToken() {
 
         const user = await res.json();
         localStorage.setItem('smp_username', user.username);
+        localStorage.setItem('smp_user_id', user.id);
         applyAuthUI(user.username);
     } catch (err) {
         // Network error (e.g. Render server offline or sleeping) — keep optimistic session

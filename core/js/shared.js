@@ -961,3 +961,25 @@ if (document.readyState === 'loading') {
 } else {
     initShared();
 }
+
+window.getUserId = function() {
+    const userId = localStorage.getItem('smp_user_id');
+    if (userId) return userId;
+    const token = localStorage.getItem('smp_access_token');
+    if (!token) return '';
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        const payload = JSON.parse(jsonPayload);
+        if (payload && payload.sub) {
+            localStorage.setItem('smp_user_id', payload.sub);
+            return payload.sub;
+        }
+    } catch (e) {
+        console.error("Error parsing token sub", e);
+    }
+    return '';
+};

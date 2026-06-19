@@ -198,6 +198,26 @@ function initSmpComments() {
             margin-bottom: 8px;
             display: none;
         }
+        .comment-like-btn {
+            background: none;
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+            padding: 3px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.72rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 12px;
+            vertical-align: middle;
+        }
+        .comment-like-btn:hover {
+            border-color: #e74c3c;
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.05);
+        }
     `;
     const styleEl = document.createElement('style');
     styleEl.textContent = css;
@@ -223,7 +243,8 @@ async function loadComments(postId, container) {
     `;
     
     try {
-        const response = await fetch(`${COMMENT_API_BASE}/api/comments/post/${postId}`);
+        const viewerId = (window.getUserId && window.getUserId()) || '';
+        const response = await fetch(`${COMMENT_API_BASE}/api/comments/post/${postId}?viewer_id=${encodeURIComponent(viewerId)}`);
         if (!response.ok) throw new Error('Không thể tải bình luận');
         const comments = await response.json();
         
@@ -258,6 +279,23 @@ function renderCommentsSection(postId, comments, container) {
             if (dateStr && !dateStr.endsWith('Z')) dateStr += 'Z';
             const date = new Date(dateStr);
             const timeStr = date.toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
+
+            // Like button logic
+            const isCommentAuthor = currentUsername && comment.username === currentUsername;
+            let likeBtn = '';
+            if (token) {
+                if (isCommentAuthor) {
+                    likeBtn = comment.likeCount > 0 ? `<span style="font-size:0.75rem; color:var(--text-muted); margin-left: 12px; vertical-align: middle;">❤️ ${comment.likeCount}</span>` : '';
+                } else {
+                    likeBtn = `
+                        <button class="comment-like-btn" id="like-comment-${comment.id}" onclick="handleLikeComment('${comment.id}', '${postId}', this)">
+                            ${comment.likedByMe ? '❤️' : '♡'} <span>${comment.likeCount || 0}</span>
+                        </button>
+                    `;
+                }
+            } else {
+                likeBtn = comment.likeCount > 0 ? `<span style="font-size:0.75rem; color:var(--text-muted); margin-left: 12px; vertical-align: middle;">❤️ ${comment.likeCount}</span>` : '';
+            }
             
             commentsListHTML += `
                 <div class="comment-item">
@@ -265,6 +303,7 @@ function renderCommentsSection(postId, comments, container) {
                         <div>
                             <span class="comment-author">${escapeHTML(comment.username)}</span>
                             <span class="comment-date" style="margin-left: 8px;">(${timeStr})</span>
+                            ${likeBtn}
                         </div>
                         ${deleteBtn}
                     </div>
@@ -437,3 +476,43 @@ function renderLatexText(text) {
     if (!text) return '';
     return parseLatexTextCommands(escapeHTML(text));
 }
+
+// Handle like comment
+async function handleLikeComment(commentId, postId, btn) {
+    const token = localStorage.getItem('smp_access_token');
+    if (!token) return;
+    
+    btn.disabled = true;
+    
+    try {
+        const response = await fetch(`${COMMENT_API_BASE}/api/comments/${commentId}/like`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.detail || 'Không thể tim bình luận.');
+        }
+        
+        const span = btn.querySelector('span');
+        if (data.liked) {
+            btn.style.borderColor = '#e74c3c';
+            btn.style.color = '#e74c3c';
+            btn.innerHTML = `❤️ <span>${data.likeCount}</span>`;
+        } else {
+            btn.style.borderColor = 'var(--border-light)';
+            btn.style.color = 'var(--text-muted)';
+            btn.innerHTML = `♡ <span>${data.likeCount}</span>`;
+        }
+    } catch (err) {
+        alert(err.message);
+    } finally {
+        btn.disabled = false;
+    }
+}
+
+window.handleLikeComment = handleLikeComment;
