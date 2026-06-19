@@ -218,6 +218,26 @@ function initSmpComments() {
             color: #e74c3c;
             background: rgba(231, 76, 60, 0.05);
         }
+        .comment-reply-btn {
+            background: none;
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+            padding: 3px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.72rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .comment-reply-btn:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            background: rgba(92, 225, 230, 0.05);
+        }
     `;
     const styleEl = document.createElement('style');
     styleEl.textContent = css;
@@ -296,6 +316,16 @@ function renderCommentsSection(postId, comments, container) {
             } else {
                 likeBtn = comment.likeCount > 0 ? `<span style="font-size:0.75rem; color:var(--text-muted); margin-left: 12px; vertical-align: middle;">❤️ ${comment.likeCount}</span>` : '';
             }
+
+            // Reply button logic
+            let replyBtn = '';
+            if (token && !isCommentAuthor) {
+                replyBtn = `
+                    <button class="comment-reply-btn" onclick="replyToCommentAuthor('${escapeHTML(comment.username)}')">
+                        ↩ Trả lời
+                    </button>
+                `;
+            }
             
             commentsListHTML += `
                 <div class="comment-item">
@@ -304,6 +334,7 @@ function renderCommentsSection(postId, comments, container) {
                             <span class="comment-author">${escapeHTML(comment.username)}</span>
                             <span class="comment-date" style="margin-left: 8px;">(${timeStr})</span>
                             ${likeBtn}
+                            ${replyBtn}
                         </div>
                         ${deleteBtn}
                     </div>
@@ -516,3 +547,14 @@ async function handleLikeComment(commentId, postId, btn) {
 }
 
 window.handleLikeComment = handleLikeComment;
+
+// Handle reply to author
+function replyToCommentAuthor(username) {
+    const textarea = document.getElementById('comment-textarea');
+    if (!textarea) return;
+    
+    textarea.value += (textarea.value ? ' ' : '') + '@' + username + ' ';
+    textarea.focus();
+}
+
+window.replyToCommentAuthor = replyToCommentAuthor;
