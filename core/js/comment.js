@@ -308,7 +308,8 @@ function renderCommentsSection(postId, comments, container) {
                     likeBtn = comment.likeCount > 0 ? `<span style="font-size:0.75rem; color:var(--text-muted); margin-left: 12px; vertical-align: middle;">❤️ ${comment.likeCount}</span>` : '';
                 } else {
                     likeBtn = `
-                        <button class="comment-like-btn" id="like-comment-${comment.id}" onclick="handleLikeComment('${comment.id}', '${postId}', this)">
+                        <button class="comment-like-btn" id="like-comment-${comment.id}" onclick="handleLikeComment('${comment.id}', '${postId}', this)"
+                            style="border-color: ${comment.likedByMe ? '#e74c3c' : 'var(--border-light)'}; color: ${comment.likedByMe ? '#e74c3c' : 'var(--text-muted)'};">
                             ${comment.likedByMe ? '❤️' : '♡'} <span>${comment.likeCount || 0}</span>
                         </button>
                     `;
