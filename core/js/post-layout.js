@@ -156,10 +156,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // 6. Nhúng các script giao diện theo thứ tự tuần tự để tránh race condition
     const scriptsToLoad = [
         depthPrefix + "core/js/sidebar-data.js?v=4",
-        depthPrefix + "core/js/layout.js?v=10",
-        depthPrefix + "core/js/shared.js?v=10",
-        depthPrefix + "core/js/saved.js?v=10",
-        depthPrefix + "core/js/comment.js?v=10"
+        depthPrefix + "core/js/layout.js?v=11",
+        depthPrefix + "core/js/shared.js?v=11",
+        depthPrefix + "core/js/saved.js?v=11",
+        depthPrefix + "core/js/comment.js?v=11"
     ];
 
     function loadScriptSequentially(index) {
