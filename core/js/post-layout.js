@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('link[href*="shared.css"]')) {
         const linkShared = document.createElement('link');
         linkShared.rel = 'stylesheet';
-        linkShared.href = depthPrefix + 'core/css/shared.css?v=4';
+        linkShared.href = depthPrefix + 'core/css/shared.css?v=5';
         head.appendChild(linkShared);
     }
     if (!document.querySelector('link[href*="post.css"]')) {
