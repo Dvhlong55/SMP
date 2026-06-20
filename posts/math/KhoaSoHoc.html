@@ -209,8 +209,43 @@
             .smp-dynamic-theme .topic-list > li {
                 background: var(--smp-topic-bg); border: var(--smp-topic-border); padding: 14px;
                 border-radius: 8px; color: var(--smp-topic-text); font-weight: 600; transition: all 0.2s;
+                line-height: 1.8;
             }
             .smp-dynamic-theme .topic-list > li:hover { background: var(--smp-topic-hover); }
+
+            /* Định dạng danh sách chuyên đề con dạng nút/bullet tròn */
+            .smp-dynamic-theme .topic-list li ol {
+                list-style: none;
+                padding-left: 28px !important;
+                margin-top: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .smp-dynamic-theme .topic-list li ol li {
+                position: relative;
+                font-weight: 500;
+                color: var(--smp-topic-subtext);
+                margin-bottom: 0;
+                line-height: 1.6;
+            }
+            .smp-dynamic-theme .topic-list li ol li::before {
+                content: "•";
+                position: absolute;
+                left: -28px;
+                top: 3px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: var(--smp-btn-bg);
+                color: #ffffff;
+                font-size: 0.85rem;
+                font-weight: bold;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
 
             .smp-dynamic-theme code {
                 font-family: inherit; background: var(--smp-ins-code-bg); color: var(--smp-ins-code-text);
