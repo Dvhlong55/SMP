@@ -216,22 +216,24 @@
             /* Định dạng danh sách chuyên đề con dạng nút/bullet tròn */
             .smp-dynamic-theme .topic-list li ol {
                 list-style: none;
-                padding-left: 0 !important;
+                padding-left: 28px !important;
                 margin-top: 10px;
                 display: flex;
                 flex-direction: column;
                 gap: 8px;
             }
             .smp-dynamic-theme .topic-list li ol li {
-                display: flex;
-                align-items: flex-start;
-                gap: 10px;
+                position: relative;
                 font-weight: 500;
                 color: var(--smp-topic-subtext);
                 margin-bottom: 0;
+                line-height: 1.6;
             }
             .smp-dynamic-theme .topic-list li ol li::before {
                 content: "•";
+                position: absolute;
+                left: -28px;
+                top: 3px;
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
@@ -242,8 +244,6 @@
                 color: #ffffff;
                 font-size: 0.85rem;
                 font-weight: bold;
-                flex-shrink: 0;
-                margin-top: 3px;
                 box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             }
 
@@ -389,7 +389,6 @@
                         <span>Dãy số và cấp số</span>
                         <ol style="padding-left: 18px; margin-top: 6px;">
                             <li>Định nghĩa dãy số</li>
-                            <li>Cách cho dãy số</li>
                             <li>Dãy số tăng, giảm và dãy số bị chặn</li>
                             <li>Cấp số cộng: Định nghĩa và tính chất</li>
                             <li>Cấp số nhân: Định nghĩa và tính chất</li>
