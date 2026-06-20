@@ -203,7 +203,7 @@
                 border-color: var(--smp-card-hover-border); box-shadow: var(--smp-card-hover-shadow); transform: translateY(-2px);
             }
 
-            .smp-dynamic-theme ul, .smp-dynamic-theme .topic-list ol { color: var(--smp-topic-subtext); }
+            .smp-dynamic-theme ul { color: var(--smp-topic-subtext); }
             .smp-dynamic-theme li { margin-bottom: 8px; }
 
             .smp-dynamic-theme .topic-list > li {
@@ -212,6 +212,40 @@
                 line-height: 1.8;
             }
             .smp-dynamic-theme .topic-list > li:hover { background: var(--smp-topic-hover); }
+
+            /* Định dạng danh sách chuyên đề con dạng nút/bullet tròn */
+            .smp-dynamic-theme .topic-list li ol {
+                list-style: none;
+                padding-left: 0 !important;
+                margin-top: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .smp-dynamic-theme .topic-list li ol li {
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+                font-weight: 500;
+                color: var(--smp-topic-subtext);
+                margin-bottom: 0;
+            }
+            .smp-dynamic-theme .topic-list li ol li::before {
+                content: "•";
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: var(--smp-btn-bg);
+                color: #ffffff;
+                font-size: 0.85rem;
+                font-weight: bold;
+                flex-shrink: 0;
+                margin-top: 3px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
 
             .smp-dynamic-theme code {
                 font-family: inherit; background: var(--smp-ins-code-bg); color: var(--smp-ins-code-text);
@@ -247,7 +281,7 @@
             /* Responsive Grid cho Nội dung chuyên đề */
             .smp-dynamic-theme .topic-list {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+                grid-template-columns: 1fr;
                 gap: 24px;
                 padding-left: 20px;
                 margin: 0;
@@ -316,7 +350,7 @@
             </button>
 
             <p style="font-size: 1.05rem; margin-top: 15px;">
-            Khóa học Giải tích chuyên sâu được thiết kế dành cho học sinh định hướng thi học sinh giỏi quốc gia (HSGQG) và Olympic Toán. Bản đề cương này sắc bén và mang tính ứng dụng cao, mở rộng giải tích sang các phân môn đại số, phương trình hàm và bất đẳng thức thể hiện tư duy nhìn nhận toán học rất toàn diện, một tố chất thực sự cần thiết khi chuẩn bị hệ thống bài giảng cho các trại hè toán học hay chắp bút cho những bài chuyên đề gửi các tạp chí chuyên ngành.
+            Khóa học Giải tích chuyên sâu được thiết kế dành cho học sinh định hướng thi HSGQG và Olympic Toán. Bản đề cương này mang tính ứng dụng cao, mở rộng giải tích sang các phân môn đại số, phương trình hàm và bất đẳng thức.
             </p>
 
             <div style="text-align: center; margin: 30px 0;">
@@ -325,9 +359,7 @@
                 </a>
             </div>
 
-            <h3>Về người dạy</h3>
 
-            <p>Đội ngũ giảng dạy gồm các cựu học sinh chuyên Toán với thành tích cao trong các kỳ thi học sinh giỏi quốc gia, đảm bảo chất lượng chuyên môn và định hướng bài bản.</p>
 
             <div class="instructor-container">
                 <div class="instructor-card">
@@ -346,7 +378,7 @@
                 </div>
             </div>
 
-            <h3>Về nội dung khóa học</h3>
+            <h3><b>VỀ NỘI DUNG KHÓA HỌC</b></h3>
 
             <p>Học viên được cung cấp hệ thống bài giảng và chuyên đề giải tích toàn diện từ cơ bản đến nâng cao. Khung chương trình chi tiết:</p>
 
@@ -438,7 +470,7 @@
                     <li>
                         <span>Ứng dụng trong Bất đẳng thức</span>
                         <ol style="padding-left: 18px; margin-top: 6px;">
-                            <li>Ứng dụng đạo hàm và khảo sát hàm số để tìm hằng số tốt nhất (Best constant)</li>
+                            <li>Ứng dụng đạo hàm và khảo sát hàm số để tìm hằng số tốt nhất</li>
                             <li>Đánh giá bất đẳng thức nhiều biến thông qua việc cố định biến và khảo sát hàm một biến</li>
                             <li>Kỹ thuật tiếp tuyến và ứng dụng tính lồi, lõm (Bất đẳng thức Jensen) trong đánh giá cực trị</li>
                         </ol>
@@ -452,7 +484,7 @@
                 <div class="info-card">
                     <b style="display: block; margin-bottom: 6px; border-bottom: 1px solid var(--smp-border-block); padding-bottom: 4px;">🎯 Mục tiêu khóa học</b>
                     <ul style="padding-left: 16px; margin: 0;">
-                        <li>Nắm vững các kỹ thuật giải tích cơ bản đến nâng cao</li>
+                        <li>Nắm vững các kỹ thuật giải tích</li>
                         <li>Giải quyết tốt bài toán HSG, TST cấp tỉnh và VMO</li>
                         <li>Làm quen với tư duy toán học chuyên sâu</li>
                     </ul>
@@ -461,7 +493,7 @@
                 <div class="info-card">
                     <b style="display: block; margin-bottom: 6px; border-bottom: 1px solid var(--smp-border-block); padding-bottom: 4px;">👥 Đối tượng</b>
                     <ul style="padding-left: 16px; margin: 0;">
-                        <li>Học sinh định hướng thi chọn đội tuyển HSG, Olympic</li>
+                        <li>Học sinh định hướng thi chọn đội tuyển, HSGQG</li>
                         <li>Học sinh muốn tìm kiếm tư duy đột phá về giải tích và các phân môn liên quan</li>
                     </ul>
                 </div>
@@ -470,14 +502,14 @@
                     <b style="display: block; margin-bottom: 6px; border-bottom: 1px solid var(--smp-border-block); padding-bottom: 4px;">📅 Lịch học & Khai giảng</b>
                     <p style="margin: 0 0 6px 0; font-weight: bold;">🚀 Khai giảng: Qua tháng 7</p>
                     <ul style="padding-left: 16px; margin: 0;">
-                        <li><b>Thứ 5:</b> 19h30 → 22h30 -- lý thuyết</li>
+                        <li><b>Thứ 5:</b> 19h30 → 22h30</li>
                     </ul>
                 </div>
 
                 <div class="info-card">
                     <b style="display: block; margin-bottom: 6px; border-bottom: 1px solid var(--smp-border-block); padding-bottom: 4px;">💰 Học phí & Chi tiết</b>
                     <p style="margin: 0 0 4px 0;">• Học phí: 200k/buổi (3 tiếng)</p>
-                    <p style="margin: 0 0 4px 0;">• Dự kiến có 30 buổi học hoặc hơn</p>
+                    <p style="margin: 0 0 4px 0;">• Định hướng thi HSGQG 2028</p>
                     <p style="margin: 0;">• Tài liệu: video record và lecture note sau mỗi buổi</p>
                 </div>
             </div>
