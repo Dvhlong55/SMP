@@ -113,13 +113,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     <div class="exam-meta fade-up" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <span class="exam-tag">${breadcrumbHtml}</span>
-                        <button id="save-post-btn"
-                            onclick="(function(btn){ if(window.toggleSavePost){ const postId = window.location.pathname.split('/').pop().replace('.html',''); const title = document.title.replace(' - SMP','').trim(); toggleSavePost(postId, title, window.location.href, btn); } else { alert('Vui lòng đăng nhập để lưu bài viết!'); } })(this)"
-                            style="display:inline-flex; align-items:center; gap:6px; background:none; border:1px solid var(--border-light); color:var(--text-muted); padding:6px 14px; border-radius:20px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.8rem; transition: all 0.2s;"
-                            onmouseover="this.style.borderColor='var(--accent-gold)'; this.style.color='var(--accent-gold)';"
-                            onmouseout="this.style.borderColor='var(--border-light)'; this.style.color='var(--text-muted)';">
-                            &#x2606; Lưu bài
-                        </button>
+                        <div style="display: inline-flex; align-items: center; gap: 14px;">
+                            <span id="post-view-count" style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">👁 -- lượt xem</span>
+                            <button id="save-post-btn"
+                                onclick="(function(btn){ if(window.toggleSavePost){ const postId = window.location.pathname.split('/').pop().replace('.html',''); const title = document.title.replace(' - SMP','').trim(); toggleSavePost(postId, title, window.location.href, btn); } else { alert('Vui lòng đăng nhập để lưu bài viết!'); } })(this)"
+                                style="display:inline-flex; align-items:center; gap:6px; background:none; border:1px solid var(--border-light); color:var(--text-muted); padding:6px 14px; border-radius:20px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.8rem; transition: all 0.2s;"
+                                onmouseover="this.style.borderColor='var(--accent-gold)'; this.style.color='var(--accent-gold)';"
+                                onmouseout="this.style.borderColor='var(--border-light)'; this.style.color='var(--text-muted)';">
+                                &#x2606; Lưu bài
+                            </button>
+                        </div>
                     </div>
 
                     <div class="exam-paper fade-up">

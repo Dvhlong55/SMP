@@ -832,6 +832,23 @@ function initShared() {
     PostViewer.init();
     addSaveButtonsToCards();
 
+    // Fetch and display view count for posts
+    const viewCountEl = document.getElementById('post-view-count');
+    if (viewCountEl) {
+        const postIdMeta = document.querySelector('meta[name="post-id"]');
+        const postId = postIdMeta ? postIdMeta.getAttribute('content') : null;
+        if (postId) {
+            fetch(`${API_BASE}/api/views/${postId}`, { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.views !== undefined) {
+                        viewCountEl.textContent = `👁 ${data.views} lượt xem`;
+                    }
+                })
+                .catch(err => console.error('Error fetching view count:', err));
+        }
+    }
+
     // === BACK BUTTON: dùng history.back() thay vì link cứng ===
     // Intercept tất cả .exam-back-btn để quay lại trang trước
     document.querySelectorAll('.exam-back-btn').forEach(btn => {
