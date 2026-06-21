@@ -54,6 +54,13 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '§ Ước Lượng Hàm Định Giá p-adic',
+        date: 'June 21, 2026',
+        url: '/posts/math/vmo/uoc-luong-ham-dinh-gia-p-adic.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: 'Bài Tập Về Hệ Thặng Dư -- Phương Trình Đồng Dư',
         date: 'June 17, 2026',
         url: '/posts/math/vmo/bai-tap-dong-du.html',
