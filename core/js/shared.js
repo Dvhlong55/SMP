@@ -54,6 +54,13 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '[Trường hè Vinh] Đề kiểm tra Trường hè Toán phổ thông Vinh năm 2026',
+        date: 'June 22, 2026',
+        url: '/posts/math/vmo/truong-he-vinh-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '§ Ước Lượng Hàm Định Giá p-adic',
         date: 'June 21, 2026',
         url: '/posts/math/vmo/uoc-luong-ham-dinh-gia-p-adic.html',
