@@ -1723,9 +1723,10 @@ body.embed-mode .main-content-layout {
         pointer-events: none; /* Let clicks pass through */
         z-index: 999999;
         transform: translate(-50%, -50%);
-        transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border 0.2s ease;
+        transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border 0.2s ease, opacity 0.15s ease;
         mix-blend-mode: difference;
         display: block;
+        opacity: 1;
     }
 
     /* Apply a different look when hovering over interactive elements */
@@ -1742,6 +1743,16 @@ body.embed-mode .main-content-layout {
 @media (pointer: coarse) {
     .custom-cursor {
         display: none !important;
+    }
+}
+
+/* Hide custom cursor when printing */
+@media print {
+    .custom-cursor {
+        display: none !important;
+    }
+    body, a, button, input, textarea, select, .sidebar-toggle, .custom-cursor-hover {
+        cursor: auto !important;
     }
 }
 

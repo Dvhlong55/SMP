@@ -929,6 +929,14 @@ function initCustomCursor() {
         cursor.style.top = e.clientY + 'px';
     });
 
+    document.addEventListener('mouseleave', () => {
+        cursor.style.opacity = '0';
+    });
+
+    document.addEventListener('mouseenter', () => {
+        cursor.style.opacity = '1';
+    });
+
     const attachHoverEvents = () => {
         const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .sidebar-toggle, .post-card, .custom-cursor-hover');
         interactiveElements.forEach(el => {
