@@ -1718,7 +1718,7 @@ body.embed-mode .main-content-layout {
     }
 
     /* Force cursor: none for interactive elements to enable custom cursor */
-    a, a *, button, button *, input, textarea, select, .sidebar-toggle, .custom-cursor-hover, .custom-cursor-hover * {
+    a, a *, button, button *, input, textarea, select, .sidebar-toggle, .custom-cursor-hover, .custom-cursor-hover *, .thread-item, .thread-item * {
         cursor: none !important;
     }
 

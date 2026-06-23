@@ -551,7 +551,7 @@ const PostViewer = {
             }
         });
 
-        // 2. Lắng nghe click link bài viết ngoài trang chủ
+        // 2. Lắng nghe click link bài viết ngoài trang chủ (chỉ can thiệp đối với các công cụ tools)
         document.addEventListener('click', async (e) => {
             // Xử lý khi ấn nút "Quay lại" bên trong bài viết
             const backBtn = e.target.closest('.exam-back-btn, .back-to-list-btn');
@@ -569,65 +569,32 @@ const PostViewer = {
             const url = link.getAttribute('href');
             if (!url || url.startsWith('http') || url.startsWith('#')) return;
 
-            e.preventDefault();
-            this._currentUrl = url;
-
-            try {
-                if (url.includes('/tools/')) {
-                    const embedUrl = url.split('#')[0] + (url.includes('?') ? '&' : '?') + 'embed=true' + (url.includes('#') ? '#' + url.split('#')[1] : '');
-                    const iframeHTML = `
-                        <style>
-                            #modal-body { padding: 0 !important; overflow: hidden !important; }
-                            .tool-iframe-wrapper {
-                                padding: 2px;
-                                background: linear-gradient(135deg, rgba(92,225,230,0.5) 0%, rgba(167,139,250,0.5) 100%);
-                                border-radius: 14px;
-                                box-shadow: 0 10px 40px -10px rgba(92, 225, 230, 0.25);
-                                height: 88vh;
-                                width: 100%;
-                                box-sizing: border-box;
-                            }
-                            .tool-iframe-wrapper iframe {
-                                width: 100%; height: 100%; display: block; border: none; border-radius: 12px;
-                            }
-                        </style>
-                        <div class="tool-iframe-wrapper">
-                            <iframe src="${embedUrl}"></iframe>
-                        </div>`;
-                    this.openHTML(iframeHTML);
-                    return;
-                }
-                const response = await fetch(url);
-                const htmlText = await response.text();
-                const doc = new DOMParser().parseFromString(htmlText, 'text/html');
-                
-                // BƯỚC QUAN TRỌNG: Rút trích cả thẻ <style> từ bài viết để giữ CSS bản đẹp
-                let extractedStyles = '';
-                if (!document.querySelector('link[href*="post.css"]')) {
-                    extractedStyles += '<link rel="stylesheet" href="/core/css/post.css">';
-                }
-                doc.querySelectorAll('style').forEach(s => extractedStyles += s.outerHTML);
-                doc.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
-                    if (!l.href.includes('shared.css') && !l.href.includes('post.css')) {
-                        extractedStyles += l.outerHTML;
-                    }
-                });
-
-                // Lấy nội dung bản dựng mới hoặc cột phải của bài viết gốc
-                const newPostContent = doc.getElementById('smp-post-content');
-                let realContent = '';
-                if (newPostContent) {
-                    realContent = '<div class="exam-paper fade-up">' + newPostContent.innerHTML + '</div>';
-                } else {
-                    realContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
-                }
-
-                // Gói gọn lại trong class .main-articles-body để CSS nhận diện chuẩn xác
-                const finalHTML = extractedStyles + '<div class="main-articles-body" style="padding:0; margin:0;">' + realContent + '</div>';
-                
-                this.openHTML(finalHTML);
-            } catch (error) {
-                console.error(error);
+            // Chỉ can thiệp mở modal với các URL công cụ (tools)
+            if (url.includes('/tools/')) {
+                e.preventDefault();
+                this._currentUrl = url;
+                const embedUrl = url.split('#')[0] + (url.includes('?') ? '&' : '?') + 'embed=true' + (url.includes('#') ? '#' + url.split('#')[1] : '');
+                const iframeHTML = `
+                    <style>
+                        #modal-body { padding: 0 !important; overflow: hidden !important; }
+                        .tool-iframe-wrapper {
+                            padding: 2px;
+                            background: linear-gradient(135deg, rgba(92,225,230,0.5) 0%, rgba(167,139,250,0.5) 100%);
+                            border-radius: 14px;
+                            box-shadow: 0 10px 40px -10px rgba(92, 225, 230, 0.25);
+                            height: 88vh;
+                            width: 100%;
+                            box-sizing: border-box;
+                        }
+                        .tool-iframe-wrapper iframe {
+                            width: 100%; height: 100%; display: block; border: none; border-radius: 12px;
+                        }
+                    </style>
+                    <div class="tool-iframe-wrapper">
+                        <iframe src="${embedUrl}"></iframe>
+                    </div>`;
+                this.openHTML(iframeHTML);
+                return;
             }
         });
     },
@@ -1000,7 +967,7 @@ function initCustomCursor() {
     });
 
     const attachHoverEvents = () => {
-        const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .sidebar-toggle, .post-card, .custom-cursor-hover');
+        const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .sidebar-toggle, .post-card, .custom-cursor-hover, .thread-item');
         interactiveElements.forEach(el => {
             if (!el.dataset.cursorAttached) {
                 el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
