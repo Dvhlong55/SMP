@@ -1708,7 +1708,17 @@ body.embed-mode .main-content-layout {
 
 /* Custom Cursor */
 @media (pointer: fine) {
-    body, a, button, input, textarea, select, .sidebar-toggle, .custom-cursor-hover {
+    body {
+        cursor: none !important;
+    }
+
+    /* Restore native I-beam cursor for readable text selection elements */
+    p, span, h1, h2, h3, h4, h5, h6, li, code, pre, blockquote, td, th, figcaption, .exam-paper {
+        cursor: text !important;
+    }
+
+    /* Force cursor: none for interactive elements to enable custom cursor */
+    a, a *, button, button *, input, textarea, select, .sidebar-toggle, .custom-cursor-hover, .custom-cursor-hover * {
         cursor: none !important;
     }
 
@@ -1736,6 +1746,11 @@ body.embed-mode .main-content-layout {
         background-color: rgba(92, 225, 230, 0.1); 
         border: 1px solid var(--accent-cyan);
         mix-blend-mode: normal;
+    }
+
+    /* Hide custom cursor when hovering over selectable text */
+    .custom-cursor.text-hovering {
+        opacity: 0 !important;
     }
 }
 

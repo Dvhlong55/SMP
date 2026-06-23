@@ -948,6 +948,24 @@ function initCustomCursor() {
         cursor.style.opacity = '1';
     });
 
+    document.addEventListener('mouseover', (e) => {
+        const target = e.target;
+        if (!target) return;
+
+        const isInteractive = target.closest('a, button, input, textarea, select, .sidebar-toggle, .custom-cursor-hover');
+        if (isInteractive) {
+            cursor.classList.remove('text-hovering');
+            return;
+        }
+
+        const isTextElement = target.closest('p, h1, h2, h3, h4, h5, h6, li, code, pre, blockquote, td, th, figcaption, .exam-paper');
+        if (isTextElement) {
+            cursor.classList.add('text-hovering');
+        } else {
+            cursor.classList.remove('text-hovering');
+        }
+    });
+
     const attachHoverEvents = () => {
         const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .sidebar-toggle, .post-card, .custom-cursor-hover');
         interactiveElements.forEach(el => {
