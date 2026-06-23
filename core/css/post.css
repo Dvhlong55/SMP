@@ -226,9 +226,12 @@ a:hover {
     overflow-y: hidden;
 }
 
-/* === FOCUS MODE STYLES === */
-body.focus-mode #sidebar-placeholder,
-body.focus-mode #topbar-placeholder,
+body.focus-mode #main-sidebar,
+body.focus-mode .sidebar,
+body.focus-mode .topbar,
+body.focus-mode header.topbar,
+body.focus-mode .sidebar-overlay,
+body.focus-mode .mobile-bottom-nav,
 body.focus-mode .tags-comment-sidebar,
 body.focus-mode .exam-back-btn,
 body.focus-mode .stats-strip,
