@@ -1,74 +1,49 @@
-# Khóa Giải Tích - Ôn Thi HSGQG
+# Kế Hoạch Tối Ưu Trải Nghiệm Đọc Và Theo Dõi Tiến Độ Học Tập (Readability & UX/UI)
 
-**Người dạy**: Đỗ Viết Hoàng Long (Admin SMP)
+Kế hoạch này nhằm nâng cấp tính năng đọc hiểu, SEO mạng xã hội, quản lý lưu bài và theo dõi tiến độ tự học dành cho học sinh ôn thi học sinh giỏi quốc gia (HSGQG).
 
-**Thành tích giảng viên**:
-- Admin page Toán SMP.
-- Giải Nhì kì thi chọn HSG Quốc Gia môn Toán.
-- Đạt hạng thứ 2 trong Bài giảng và bài viết về Toán học, mang tên Hoàng Tụy.
-- Đạt thành tích xuất sắc trong phong trào giải toán tạp chí Pi.
-- Đạt giải Nhất môn Toán cấp tỉnh.
-- Đạt 2 huy chương vàng Olympic 30-4.
-- Giám khảo kì thi hình học IGO.
+## 1. Focus Mode (Chế độ đọc tập trung)
+- **Mục tiêu**: Giảm thiểu xao nhãng khi học sinh đọc bài viết toán học dài và phức tạp.
+- **Giải pháp**:
+  - Thêm nút `🔍 Đọc tập trung` vào khu vực thông tin bài viết ở đầu trang.
+  - Khi click vào nút này, chuyển đổi class `.focus-mode` cho thẻ `body`.
+  - Thiết lập CSS ẩn Sidebar, Topbar, Widget, chân trang, và phần bình luận.
+  - Tự động căn giữa nội dung bài viết, phóng to chữ bài viết lên `1.25rem`, tăng line-height lên `1.9` để việc đọc thoải mái nhất.
+  - Hiển thị một nút nổi `Thoát tập trung ✕` cố định ở góc trên bên phải để người đọc có thể trở lại giao diện bình thường bất cứ lúc nào.
+  - Lưu trạng thái Focus Mode vào `localStorage` của trình duyệt để tự động kích hoạt lại khi học sinh chuyển trang.
 
-**Mô tả**: Bản đề cương này sắc bén và mang tính ứng dụng cao hơn rất nhiều. Việc mở rộng giải tích sang các phân môn đại số, phương trình hàm và bất đẳng thức thể hiện tư duy nhìn nhận toán học rất toàn diện, một tố chất thực sự cần thiết khi chuẩn bị hệ thống bài giảng cho các trại hè toán học hay chắp bút cho những bài chuyên đề gửi các tạp chí chuyên ngành.
+## 2. Chuẩn hóa SEO & Open Graph Tags
+- **Mục tiêu**: Tối ưu hóa hiển thị khi chia sẻ liên kết các bài viết, chuyên đề lên các nền tảng mạng xã hội như Facebook, Zalo, Telegram...
+- **Giải pháp**:
+  - Viết script Python tự động duyệt qua tất cả các tệp tin HTML của bài viết toán học trong `posts/math/`.
+  - Tự động trích xuất tiêu đề `<title>` để gán cho thẻ `<meta property="og:title">`.
+  - Phân tích đoạn mở đầu của bài viết để tự động gán mô tả ngắn cho thẻ `<meta property="og:description">` (giới hạn 150 ký tự). Nếu không có, dùng mô tả mặc định của SMP.
+  - Gán link ảnh preview (`og:image`) dựa trên tỉnh thành/thương hiệu của đề thi:
+    - File chứa `dhvinh` dùng `dhvinh_logo.png`
+    - File chứa `hanoi` dùng `hanoi_cyl.png`
+    - File chứa `hatinh` dùng `hatinh_rhombus.png`
+    - Các file còn lại dùng logo SMP mặc định `image_49b1a4.png`.
+  - Gán đường dẫn tuyệt đối `og:url` và thiết lập Twitter Card.
 
-## Nội dung khóa học
+## 3. Đồng Bộ Trạng Thái Lưu Bài Viết (Bookmark Sync)
+- **Mục tiêu**: Tránh hiển thị trạng thái sai lệch giữa bài đã lưu và chưa lưu khi người dùng duyệt web.
+- **Giải pháp**:
+  - Khi tải trang, nếu người dùng đã đăng nhập, gọi API `/api/users/saved` để tải về danh sách các bài viết đã lưu.
+  - Tự động thay đổi nhãn hiển thị của các nút lưu bài viết trên trang (từ card trang chủ, card chuyên mục cho đến nút Lưu bài ở đầu trang nội dung) từ "Lưu bài" sang "★ Đã lưu" có màu vàng đặc trưng nếu bài đó đã được bookmark trước đó.
+  - Chuyển toàn bộ CSS hover của nút Lưu bài từ inline style sang file CSS để hiển thị mượt mà.
 
-### PHẦN I: KIẾN THỨC NỀN TẢNG
-1. **Dãy số và cấp số**
-   - Định nghĩa dãy số
-   - Cách cho dãy số
-   - Dãy số tăng, giảm và dãy số bị chặn
-   - Cấp số cộng: Định nghĩa và tính chất
-   - Cấp số nhân: Định nghĩa và tính chất
-   - Ứng dụng cấp số cộng, cấp số nhân để tìm công thức tổng quát của dãy số
+## 4. Hệ thống theo dõi tiến độ tự học (Learning Progress Tracker)
+- **Mục tiêu**: Giúp học sinh tự đánh dấu những phần đã học xong trong các khóa học lớn (Giải tích, Số học) để không bị ngợp.
+- **Giải pháp**:
+  - Tự động phát hiện nếu bài viết chứa bảng chương trình học `ol.topic-list`.
+  - Hiển thị một khung tiến độ (`Progress Bar`) ở đầu trang thể hiện phần trăm bài học đã hoàn thành (Ví dụ: `25% - 2/8 bài đã học`).
+  - Thay thế các bullet point tròn tĩnh của từng bài học con bằng một checkbox tròn `.smp-progress-checkbox` có thể click được.
+  - Khi học sinh click hoàn thành bài học:
+    - Lưu trạng thái vào `localStorage` của trình duyệt với khóa riêng biệt theo ID bài học.
+    - Cập nhật hiệu ứng gạch ngang nhẹ/làm mờ tiêu đề bài học đó.
+    - Tự động tính toán lại và cập nhật thanh tiến độ phần trăm ở đầu chuyên đề.
 
-2. **Giới hạn cơ bản và tính liên tục**
-   - Giới hạn dãy số: Định nghĩa bằng ngôn ngữ $\varepsilon - N$ và các định lý về phép toán
-   - Giới hạn vô cực và các quy tắc tính
-   - Giới hạn hàm số: Định nghĩa bằng ngôn ngữ $\varepsilon - \delta$ và các dạng vô định cơ bản
-   - Tính liên tục: Hàm số liên tục tại điểm, trên khoảng và Định lý giá trị trung gian
-
-### PHẦN II: KỸ THUẬT NÂNG CAO
-3. **Xác định số hạng tổng quát của dãy số**
-   - Phương pháp sai phân tuyến tính: Bậc 1, bậc 2, bậc cao và hệ phương trình sai phân
-   - Dãy số phi tuyến: Dãy Homographic $x_{n+1} = \frac{ax_n+b}{cx_n+d}$
-   - Kỹ thuật lượng giác hóa
-   - Kỹ thuật sử dụng hàm sinh (Generating Functions)
-
-4. **Các phương pháp và định lí tính giới hạn**
-   - Tiêu chuẩn Weierstrass: Kỹ thuật chứng minh tính đơn điệu và tính bị chặn
-   - Nguyên lý kẹp và ước lượng: Đánh giá qua bất đẳng thức đại số và vận dụng hàm số siêu việt
-   - Các bổ đề giới hạn quan trọng
-   - Định lý Trung bình Stolz - Cesaro: Khử dạng vô định và giới hạn dạng tổng
-   - Tiêu chuẩn Cauchy cho dãy số
-
-5. **Dãy số xác định bởi hệ thức truy hồi $x_{n+1} = f(x_n)$**
-   - Hàm $f(x)$ đơn điệu tăng: Tính chất nghiệm và sự hội tụ
-   - Hàm $f(x)$ đơn điệu giảm: Phân tích dãy con $x_{2n}$ và $x_{2n+1}$
-   - Định lý điểm bất động
-   - Đánh giá sự hội tụ qua đạo hàm: Kỹ thuật ánh xạ co $|f'(x)| < 1$
-
-6. **Phương trình sinh bởi dãy số**
-   - Sự tồn tại và duy nhất nghiệm qua khảo sát hàm số
-   - Kỹ thuật tìm giới hạn của dãy nghiệm $\lim x_n$
-   - Đánh giá sai số và tiệm cận: Phân tích giới hạn dạng $n^\alpha(x_n - a)$
-
-### PHẦN III: ỨNG DỤNG CỦA GIẢI TÍCH
-7. **Ứng dụng trong Đa thức**
-   - Chứng minh sự tồn tại nghiệm của đa thức trên một khoảng
-   - Vận dụng định lý Rolle và Lagrange để đánh giá, thu hẹp miền nghiệm
-   - Đạo hàm và các kỹ thuật ước lượng bậc của đa thức
-   - Khảo sát sự biến thiên để đếm số nghiệm thực của đa thức
-
-8. **Ứng dụng trong Phương trình hàm**
-   - Khai thác tính đơn điệu và tính liên tục để xác định hàm
-   - Ứng dụng đạo hàm trong phương trình hàm có điều kiện khả vi
-   - Khai thác tính tuần hoàn và điểm bất động của hàm số
-   - Kỹ thuật xử lý các phương trình hàm trên tập rời rạc
-
-9. **Ứng dụng trong Bất đẳng thức**
-   - Ứng dụng đạo hàm và khảo sát hàm số để tìm hằng số tốt nhất (Best constant)
-   - Đánh giá bất đẳng thức nhiều biến thông qua việc cố định biến và khảo sát hàm một biến
-   - Kỹ thuật tiếp tuyến và ứng dụng tính lồi, lõm (Bất đẳng thức Jensen) trong đánh giá cực trị
+## 5. Kế hoạch kiểm thử (Verification)
+- Kiểm tra hiển thị của Chế độ tập trung trên các kích cỡ màn hình khác nhau (PC, Tablet, Mobile).
+- Kiểm tra tính ổn định của việc lưu trạng thái tiến độ học tập và chế độ tập trung khi F5 tải lại trang.
+- Xác nhận các thẻ Open Graph meta hiển thị đầy đủ trong phần mã nguồn HTML của các bài viết sau khi chạy script.

@@ -225,3 +225,128 @@ a:hover {
     overflow-x: auto;
     overflow-y: hidden;
 }
+
+/* === FOCUS MODE STYLES === */
+body.focus-mode #sidebar-placeholder,
+body.focus-mode #topbar-placeholder,
+body.focus-mode .tags-comment-sidebar,
+body.focus-mode .exam-back-btn,
+body.focus-mode .stats-strip,
+body.focus-mode .site-footer,
+body.focus-mode .exam-meta,
+body.focus-mode .giscus-section-outer {
+    display: none !important;
+}
+
+body.focus-mode .main-wrapper {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    transform: none !important;
+}
+
+body.focus-mode main {
+    padding: 40px 24px !important;
+    max-width: 850px !important;
+    margin: 0 auto !important;
+}
+
+body.focus-mode .main-content-layout {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    margin-top: 0 !important;
+}
+
+body.focus-mode .exam-paper {
+    font-size: 1.25rem !important;
+    line-height: 1.95 !important;
+    padding: 20px 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+body.focus-mode .exam-paper h3 {
+    font-size: 1.8rem !important;
+    margin-top: 40px !important;
+}
+
+/* Button styles in normal and hover states (removed inline styles) */
+#save-post-btn:hover {
+    border-color: var(--accent-gold) !important;
+    color: var(--accent-gold) !important;
+}
+#save-post-btn.saved-active {
+    color: var(--accent-gold) !important;
+    border-color: var(--accent-gold) !important;
+}
+
+#focus-mode-btn:hover {
+    border-color: var(--accent-cyan) !important;
+    color: var(--accent-cyan) !important;
+}
+body.focus-mode #focus-mode-btn {
+    border-color: var(--accent-cyan) !important;
+    color: var(--accent-cyan) !important;
+}
+
+/* === LEARNING PROGRESS TRACKER STYLES === */
+.progress-tracker-header {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.25s ease;
+}
+
+.smp-dynamic-theme .topic-list li ol li.has-progress-tracker {
+    position: relative !important;
+}
+
+.smp-dynamic-theme .topic-list li ol li.has-progress-tracker::before {
+    display: none !important; /* Hide static bullet point */
+}
+
+.smp-progress-checkbox {
+    position: absolute;
+    left: -28px;
+    top: 4px;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent-cyan);
+    background: transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.smp-progress-checkbox:checked {
+    background: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+}
+
+.smp-progress-checkbox:checked::after {
+    content: "✓";
+    color: #111;
+    font-size: 0.78rem;
+    font-weight: bold;
+    font-family: inherit;
+    line-height: 1;
+}
+
+body.dark-mode .smp-progress-checkbox:checked::after {
+    color: #111;
+}
+

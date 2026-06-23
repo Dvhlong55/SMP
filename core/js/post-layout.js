@@ -95,6 +95,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 5. Build the wrapper HTML
     const FULL_LAYOUT = `
+    <button id="exit-focus-btn" onclick="toggleFocusMode()" style="position: fixed; top: 20px; right: 20px; z-index: 100000; display: none; background: var(--accent-cyan); color: #111; border: none; padding: 10px 18px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; font-weight: bold; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.25);"
+        onmouseover="this.style.background='var(--accent-gold)';"
+        onmouseout="this.style.background='var(--accent-cyan)';">
+        Thoát tập trung ✕
+    </button>
+
     <div id="sidebar-placeholder"></div>
 
     <div class="main-wrapper">
@@ -115,11 +121,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         <span class="exam-tag">${breadcrumbHtml}</span>
                         <div style="display: inline-flex; align-items: center; gap: 14px;">
                             <span id="post-view-count" style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">👁 -- lượt xem</span>
+                            <button id="focus-mode-btn"
+                                onclick="toggleFocusMode()"
+                                style="display:inline-flex; align-items:center; gap:6px; background:none; border:1px solid var(--border-light); color:var(--text-muted); padding:6px 14px; border-radius:20px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.8rem; transition: all 0.2s;">
+                                🔍 Đọc tập trung
+                            </button>
                             <button id="save-post-btn"
                                 onclick="(function(btn){ if(window.toggleSavePost){ const postId = window.location.pathname.split('/').pop().replace('.html',''); const title = document.title.replace(' - SMP','').trim(); toggleSavePost(postId, title, window.location.href, btn); } else { alert('Vui lòng đăng nhập để lưu bài viết!'); } })(this)"
-                                style="display:inline-flex; align-items:center; gap:6px; background:none; border:1px solid var(--border-light); color:var(--text-muted); padding:6px 14px; border-radius:20px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.8rem; transition: all 0.2s;"
-                                onmouseover="this.style.borderColor='var(--accent-gold)'; this.style.color='var(--accent-gold)';"
-                                onmouseout="this.style.borderColor='var(--border-light)'; this.style.color='var(--text-muted)';">
+                                style="display:inline-flex; align-items:center; gap:6px; background:none; border:1px solid var(--border-light); color:var(--text-muted); padding:6px 14px; border-radius:20px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.8rem; transition: all 0.2s;">
                                 &#x2606; Lưu bài
                             </button>
                         </div>
@@ -164,6 +173,24 @@ document.addEventListener('DOMContentLoaded', function () {
         depthPrefix + "core/js/saved.js?v=11",
         depthPrefix + "core/js/comment.js?v=11"
     ];
+
+    window.toggleFocusMode = function() {
+        const isFocus = document.body.classList.toggle('focus-mode');
+        localStorage.setItem('smp-focus-mode', isFocus ? 'true' : 'false');
+        const exitBtn = document.getElementById('exit-focus-btn');
+        if (exitBtn) {
+            exitBtn.style.display = isFocus ? 'block' : 'none';
+        }
+    };
+
+    // Check local storage for focus mode
+    if (localStorage.getItem('smp-focus-mode') === 'true') {
+        document.body.classList.add('focus-mode');
+        setTimeout(() => {
+            const exitBtn = document.getElementById('exit-focus-btn');
+            if (exitBtn) exitBtn.style.display = 'block';
+        }, 50);
+    }
 
     function loadScriptSequentially(index) {
         if (index >= scriptsToLoad.length) {

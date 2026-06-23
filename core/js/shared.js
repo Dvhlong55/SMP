@@ -869,6 +869,8 @@ function initShared() {
 
     initCustomCursor();
     initFadeUpAnimation();
+    syncSavedPostsState();
+    initLearningProgressTracker();
 }
 
 // === TOGGLE SAVE POST GLOBAL LOGIC ===
@@ -900,9 +902,13 @@ window.toggleSavePost = async function(postId, postTitle, postUrl, btnElement) {
             if (data.saved) {
                 btnElement.innerHTML = '&#x2605; Đã lưu';
                 btnElement.classList.add('saved-active');
+                btnElement.style.color = 'var(--accent-gold)';
+                btnElement.style.borderColor = 'var(--accent-gold)';
             } else {
                 btnElement.innerHTML = '&#x2606; Lưu bài';
                 btnElement.classList.remove('saved-active');
+                btnElement.style.color = 'var(--text-muted)';
+                btnElement.style.borderColor = 'var(--border-light)';
             }
         } else {
             btnElement.innerText = originalText;
@@ -927,6 +933,11 @@ function initCustomCursor() {
     document.addEventListener('mousemove', (e) => {
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
+        if (e.clientX <= 1 || e.clientY <= 1 || e.clientX >= window.innerWidth - 1 || e.clientY >= window.innerHeight - 1) {
+            cursor.style.opacity = '0';
+        } else {
+            cursor.style.opacity = '1';
+        }
     });
 
     document.addEventListener('mouseleave', () => {
@@ -1022,3 +1033,133 @@ window.getUserId = function() {
     }
     return '';
 };
+
+// === SYNC SAVED POSTS STATE ===
+async function syncSavedPostsState() {
+    const token = localStorage.getItem('smp_access_token');
+    if (!token) return;
+
+    try {
+        const res = await fetch(`${API_BASE}/api/users/saved`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (!res.ok) return;
+        const savedList = await res.json();
+        const savedIds = new Set(savedList.map(p => p.postId));
+
+        // Update card buttons
+        document.querySelectorAll('.card, .featured-card').forEach(card => {
+            const link = card.querySelector('.card-link, .featured-link');
+            if (!link) return;
+            const url = link.getAttribute('href');
+            if (!url) return;
+            const postId = url.split('/').pop().replace('.html', '');
+            if (savedIds.has(postId)) {
+                const btn = card.querySelector('.card-save-btn');
+                if (btn) {
+                    btn.innerHTML = '&#x2605; Đã lưu';
+                    btn.classList.add('saved-active');
+                    btn.style.color = 'var(--accent-gold)';
+                    btn.style.borderColor = 'var(--accent-gold)';
+                }
+            }
+        });
+
+        // Update page-level save button if it exists
+        const pageSaveBtn = document.getElementById('save-post-btn');
+        if (pageSaveBtn) {
+            const postId = window.location.pathname.split('/').pop().replace('.html', '');
+            if (savedIds.has(postId)) {
+                pageSaveBtn.innerHTML = '&#x2605; Đã lưu';
+                pageSaveBtn.classList.add('saved-active');
+                pageSaveBtn.style.color = 'var(--accent-gold)';
+                pageSaveBtn.style.borderColor = 'var(--accent-gold)';
+            }
+        }
+    } catch (err) {
+        console.error('Error syncing saved posts state:', err);
+    }
+}
+
+// === LEARNING PROGRESS TRACKER ===
+function initLearningProgressTracker() {
+    const postIdMeta = document.querySelector('meta[name="post-id"]');
+    if (!postIdMeta) return;
+    const postId = postIdMeta.getAttribute('content');
+
+    const topicLists = document.querySelectorAll('ol.topic-list');
+    if (topicLists.length === 0) return;
+
+    const container = document.querySelector('.smp-dynamic-theme');
+    let progressBarContainer = null;
+    if (container) {
+        progressBarContainer = document.createElement('div');
+        progressBarContainer.className = 'progress-tracker-header fade-up';
+        progressBarContainer.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-family:'JetBrains Mono',monospace; font-size:0.85rem;">
+                <span style="color:var(--text-muted);">Tiến độ học tập chuyên đề</span>
+                <span id="smp-progress-percent" style="font-weight:bold; color:var(--accent-cyan);">0%</span>
+            </div>
+            <div style="width:100%; height:8px; background:var(--border-light); border-radius:4px; overflow:hidden;">
+                <div id="smp-progress-bar" style="width:0%; height:100%; background:linear-gradient(90deg, var(--accent-cyan), var(--accent-gold)); transition:width 0.3s ease;"></div>
+            </div>
+        `;
+        const headerBox = container.querySelector('.header-box');
+        if (headerBox) {
+            headerBox.parentNode.insertBefore(progressBarContainer, headerBox.nextSibling);
+        }
+    }
+
+    let totalItems = 0;
+    let checkedItems = 0;
+    const checkboxes = [];
+
+    function updateOverallProgress() {
+        checkedItems = checkboxes.filter(cb => cb.checked).length;
+        const percent = totalItems > 0 ? Math.round((checkedItems / totalItems) * 100) : 0;
+        const percentEl = document.getElementById('smp-progress-percent');
+        const barEl = document.getElementById('smp-progress-bar');
+        if (percentEl) percentEl.textContent = `${percent}% (${checkedItems}/${totalItems} bài hoàn thành)`;
+        if (barEl) barEl.style.width = `${percent}%`;
+    }
+
+    topicLists.forEach((list, listIdx) => {
+        const parentItems = list.querySelectorAll(':scope > li');
+        parentItems.forEach((parentItem, parentIdx) => {
+            const subItems = parentItem.querySelectorAll('ol > li');
+            subItems.forEach((subItem, subIdx) => {
+                totalItems++;
+                const key = `progress-${postId}-${listIdx}-${parentIdx}-${subIdx}`;
+                
+                subItem.classList.add('has-progress-tracker');
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'smp-progress-checkbox';
+                
+                const completed = localStorage.getItem(key) === 'true';
+                checkbox.checked = completed;
+                if (completed) {
+                    subItem.style.opacity = '0.65';
+                }
+                
+                checkbox.addEventListener('change', () => {
+                    localStorage.setItem(key, checkbox.checked ? 'true' : 'false');
+                    if (checkbox.checked) {
+                        subItem.style.opacity = '0.65';
+                    } else {
+                        subItem.style.opacity = '1';
+                    }
+                    updateOverallProgress();
+                });
+                
+                subItem.insertBefore(checkbox, subItem.firstChild);
+                checkboxes.push(checkbox);
+            });
+        });
+    });
+
+    updateOverallProgress();
+}
