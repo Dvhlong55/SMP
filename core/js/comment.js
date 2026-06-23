@@ -327,15 +327,31 @@ function renderCommentsSection(postId, comments, container) {
                     </button>
                 `;
             }
+
+            // Approve logic
+            const isApproved = comment.isApproved;
+            const approveHtml = isApproved ?
+                `<span style="background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3); padding: 3px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: bold; font-family:'JetBrains Mono', monospace; margin-left: 8px;">✓ Đã duyệt (+${comment.approvedPoints}đ)</span>` :
+                (currentUsername === 'SMP' ? `
+                    <select onchange="window.approveComment('${comment.id}', '${postId}', this.value)" style="background: rgba(201, 169, 110, 0.15); color: var(--accent-gold); border: 1px solid rgba(201,169,110,0.4); padding: 3px 8px; border-radius: 4px; font-size: 0.72rem; font-family:'JetBrains Mono', monospace; cursor: pointer; outline: none; margin-left: 8px;">
+                        <option value="">Chấm điểm...</option>
+                        <option value="1">Độ khó 1 (+1đ)</option>
+                        <option value="2">Độ khó 2 (+2đ)</option>
+                        <option value="3">Độ khó 3 (+3đ)</option>
+                        <option value="4">Độ khó 4 (+4đ)</option>
+                        <option value="5">Độ khó 5 (+5đ)</option>
+                    </select>
+                ` : '');
             
             commentsListHTML += `
-                <div class="comment-item">
+                <div class="comment-item" style="${isApproved ? 'border-left: 3px solid #2ecc71;' : ''}">
                     <div class="comment-meta">
                         <div>
                             <span class="comment-author">${escapeHTML(comment.username)}</span>
                             <span class="comment-date" style="margin-left: 8px;">(${timeStr})</span>
                             ${likeBtn}
                             ${replyBtn}
+                            ${approveHtml}
                         </div>
                         ${deleteBtn}
                     </div>
@@ -559,3 +575,37 @@ function replyToCommentAuthor(username) {
 }
 
 window.replyToCommentAuthor = replyToCommentAuthor;
+
+// Handle comment approval/grading
+window.approveComment = async function(commentId, postId, points) {
+    if (!points) return;
+    const token = localStorage.getItem('smp_access_token');
+    if (!token) return;
+    
+    if (!confirm(`Xác nhận chấm điểm cho lời giải/bình luận này với mức ${points}/5?`)) {
+        const wrapper = document.getElementById('smp-comments-wrapper') || document.getElementById('smp-comments-container') || document.getElementById('giscus-container');
+        await loadComments(postId, wrapper);
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${COMMENT_API_BASE}/api/comments/${commentId}/approve`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ points: parseInt(points) })
+        });
+        
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.detail || 'Không thể chấm điểm.');
+        }
+        
+        const wrapper = document.getElementById('smp-comments-wrapper') || document.getElementById('smp-comments-container') || document.getElementById('giscus-container');
+        await loadComments(postId, wrapper);
+    } catch (err) {
+        alert(err.message);
+    }
+};

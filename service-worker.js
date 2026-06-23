@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smp-cache-v29';
+const CACHE_NAME = 'smp-cache-v30';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -15,6 +15,7 @@ const urlsToCache = [
   '/core/js/layout.js',
   '/core/js/sidebar-data.js',
   '/core/js/post-layout.js',
+  '/core/js/comment.js',
   '/core/image/favicon.png',
   '/core/image/favicon-192.png',
   '/core/image/favicon-512.png',

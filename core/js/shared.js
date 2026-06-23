@@ -930,40 +930,73 @@ function initCustomCursor() {
     cursor.className = 'custom-cursor';
     document.body.appendChild(cursor);
 
+    function getDistanceToNearestChar(x, y) {
+        let range = null;
+        if (document.caretRangeFromPoint) {
+            range = document.caretRangeFromPoint(x, y);
+        } else if (document.caretPositionFromPoint) {
+            const position = document.caretPositionFromPoint(x, y);
+            if (position && position.offsetNode) {
+                range = document.createRange();
+                range.setStart(position.offsetNode, position.offset);
+                range.setEnd(position.offsetNode, position.offset);
+            }
+        }
+        if (range) {
+            const rects = range.getClientRects();
+            if (rects.length > 0) {
+                const rect = rects[0];
+                const dx = Math.max(rect.left - x, 0, x - rect.right);
+                const dy = Math.max(rect.top - y, 0, y - rect.bottom);
+                return Math.hypot(dx, dy);
+            }
+        }
+        return Infinity;
+    }
+
     document.addEventListener('mousemove', (e) => {
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
+        
+        // Hide at viewport boundary
         if (e.clientX <= 1 || e.clientY <= 1 || e.clientX >= window.innerWidth - 1 || e.clientY >= window.innerHeight - 1) {
             cursor.style.opacity = '0';
+            document.body.classList.remove('smp-text-cursor-active');
+            return;
+        }
+
+        const isTextInput = e.target && e.target.closest('input, textarea');
+        if (isTextInput) {
+            cursor.style.opacity = '0';
+            document.body.classList.remove('smp-text-cursor-active');
+            return;
+        }
+
+        const isInteractive = e.target && e.target.closest('a, button, select, .sidebar-toggle, .post-card, .custom-cursor-hover');
+        if (isInteractive) {
+            cursor.style.opacity = '1';
+            document.body.classList.remove('smp-text-cursor-active');
+            return;
+        }
+
+        // Distance to actual text characters (threshold: 15px)
+        const dist = getDistanceToNearestChar(e.clientX, e.clientY);
+        if (dist < 15) {
+            cursor.style.opacity = '0';
+            document.body.classList.add('smp-text-cursor-active');
         } else {
             cursor.style.opacity = '1';
+            document.body.classList.remove('smp-text-cursor-active');
         }
     });
 
     document.addEventListener('mouseleave', () => {
         cursor.style.opacity = '0';
+        document.body.classList.remove('smp-text-cursor-active');
     });
 
     document.addEventListener('mouseenter', () => {
         cursor.style.opacity = '1';
-    });
-
-    document.addEventListener('mouseover', (e) => {
-        const target = e.target;
-        if (!target) return;
-
-        const isInteractive = target.closest('a, button, input, textarea, select, .sidebar-toggle, .custom-cursor-hover');
-        if (isInteractive) {
-            cursor.classList.remove('text-hovering');
-            return;
-        }
-
-        const isTextElement = target.closest('p, h1, h2, h3, h4, h5, h6, li, code, pre, blockquote, td, th, figcaption, .exam-paper');
-        if (isTextElement) {
-            cursor.classList.add('text-hovering');
-        } else {
-            cursor.classList.remove('text-hovering');
-        }
     });
 
     const attachHoverEvents = () => {
