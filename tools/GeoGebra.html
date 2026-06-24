@@ -425,6 +425,63 @@
         @media (max-width: 600px) {
             .mode-selector { grid-template-columns: 1fr; }
         }
+
+        /* ── Studio Split-Pane Layout ── */
+        .studio-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .studio-pane {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        #tikz-preview {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(92,225,230,0.10);
+            border-radius: 0 0 10px 10px;
+            min-height: 350px;
+            height: calc(100% - 46px);
+            box-sizing: border-box;
+            position: relative;
+        }
+        body:not(.dark-mode) #tikz-preview {
+            background: #f1f5f9;
+            border-color: rgba(15,23,42,0.08);
+        }
+        .CodeMirror {
+            height: 350px !important;
+            border: 1px solid rgba(92,225,230,0.10);
+            border-radius: 0 0 10px 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+        }
+        body:not(.dark-mode) .CodeMirror {
+            border-color: rgba(15,23,42,0.08);
+        }
+        .tikz-loading {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(11, 17, 17, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            z-index: 10;
+            border-radius: 0 0 10px 10px;
+        }
+        body:not(.dark-mode) .tikz-loading {
+            background: rgba(255, 255, 255, 0.85);
+        }
+        @media (max-width: 800px) {
+            .studio-layout {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 <link rel="icon" type="image/png" href="/core/image/favicon.png">
 </head>
@@ -1542,9 +1599,18 @@ ${finalCode}
 
         var previewCode = code;
         
+        // Extract color definitions defined in the LaTeX document
+        let colorDefs = [];
+        let colorRegex = /\\definecolor\{[^}]+\}\{[^}]+\}\{[^}]+\}/g;
+        let match;
+        while ((match = colorRegex.exec(previewCode)) !== null) {
+            colorDefs.push(match[0]);
+        }
+        
         let tikzMatch = previewCode.match(/\\begin\{tikzpicture\}[\s\S]*?\\end\{tikzpicture\}/);
         if (tikzMatch) {
-            previewCode = tikzMatch[0];
+            // Include color definitions and tikz libraries (like calc)
+            previewCode = colorDefs.join('\n') + "\n\\usetikzlibrary{calc}\n" + tikzMatch[0];
         } else {
             return;
         }
@@ -1559,42 +1625,59 @@ ${finalCode}
         iframe.style.width = '100%';
         iframe.style.height = '100%';
         iframe.style.border = 'none';
-        previewContainer.appendChild(iframe);
         
-        var iframeDoc = iframe.contentWindow.document;
+        // Define srcdoc content to avoid about:blank race conditions
+        var srcdocContent = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <link rel="stylesheet" href="https://tikzjax.com/v1/fonts.css">
+                <style>
+                    body {
+                        margin: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        min-height: 100vh;
+                        background: transparent;
+                        overflow: auto;
+                    }
+                    svg {
+                        max-width: 100%;
+                        max-height: 100%;
+                    }
+                </style>
+                <script src="https://tikzjax.com/v1/tikzjax.js"><\/script>
+            </head>
+            <body>
+                <script type="text/tikz" data-show-console="true">
+                    ${previewCode}
+                <\/script>
+            </body>
+            </html>
+        `;
         
-        var link = iframeDoc.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://tikzjax.com/v1/fonts.css';
-        iframeDoc.head.appendChild(link);
-        
-        var style = iframeDoc.createElement('style');
-        style.textContent = 'body{margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh;background:transparent;} svg{max-width:100%;max-height:100%;}';
-        iframeDoc.head.appendChild(style);
-        
-        var tikzScript = iframeDoc.createElement('script');
-        tikzScript.type = 'text/tikz';
-        tikzScript.setAttribute('data-show-console', 'true');
-        tikzScript.text = previewCode;
-        iframeDoc.body.appendChild(tikzScript);
-        
-        var tikzJaxScript = iframeDoc.createElement('script');
-        tikzJaxScript.src = 'https://tikzjax.com/v1/tikzjax.js';
-        iframeDoc.head.appendChild(tikzJaxScript);
-
         iframe.onload = function() {
+            var iframeDoc = iframe.contentWindow.document;
             var checkSVGExist = setInterval(function() {
-                if (iframeDoc.querySelector('svg') || iframeDoc.body.innerHTML.includes('Error')) {
-                    loading.style.display = 'none'; 
-                    clearInterval(checkSVGExist);
+                try {
+                    if (iframeDoc.querySelector('svg') || iframeDoc.body.innerHTML.includes('Error')) {
+                        loading.style.display = 'none'; 
+                        clearInterval(checkSVGExist);
+                    }
+                } catch(e) {
+                    // Fail-safe in case of security restrictions
                 }
             }, 100);
             
             setTimeout(function() { 
                 loading.style.display = 'none'; 
                 clearInterval(checkSVGExist);
-            }, 5000);
+            }, 8000);
         };
+        
+        iframe.srcdoc = srcdocContent;
+        previewContainer.appendChild(iframe);
     }
 
     function copyTikZ() {
