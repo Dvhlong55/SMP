@@ -675,6 +675,16 @@
             });
         });
         themeObserver.observe(document.body, { attributes: true });
+
+        // Add global mouseup listener to reset iframe drag state
+        document.addEventListener('mouseup', function() {
+            var iframe = document.querySelector('#tikz-canvas iframe');
+            if (iframe && iframe.contentWindow && typeof iframe.contentWindow.resetDrag === 'function') {
+                try {
+                    iframe.contentWindow.resetDrag();
+                } catch(e) {}
+            }
+        });
     });
 
     function parseGGBId(url) {
@@ -1761,6 +1771,11 @@ ${finalCode}
                         user-select: none;
                         -webkit-user-select: none;
                         cursor: default;
+                        -ms-overflow-style: none;
+                        scrollbar-width: none;
+                    }
+                    body::-webkit-scrollbar {
+                        display: none;
                     }
                     svg {
                         margin: auto;
@@ -1788,11 +1803,22 @@ ${finalCode}
                             var svg = document.querySelector('svg');
                             if (!svg) return;
                             var isOverflowing = svg.clientWidth > window.innerWidth || svg.clientHeight > window.innerHeight;
+                            var cursorStyle = 'default';
                             if (isOverflowing) {
-                                body.style.cursor = isDown ? 'grabbing' : 'grab';
-                            } else {
-                                body.style.cursor = 'default';
+                                cursorStyle = isDown ? 'grabbing' : 'grab';
                             }
+                            body.style.cursor = cursorStyle;
+                            
+                            // Propagate cursor style to parent iframe elements to prevent glitches at boundary
+                            try {
+                                if (window.frameElement) {
+                                    window.frameElement.style.cursor = cursorStyle;
+                                    var parentCanvas = window.parent.document.getElementById('tikz-canvas');
+                                    if (parentCanvas) parentCanvas.style.cursor = cursorStyle;
+                                    var parentPreview = window.parent.document.getElementById('tikz-preview');
+                                    if (parentPreview) parentPreview.style.cursor = cursorStyle;
+                                }
+                            } catch(e) {}
                         }
 
                         body.addEventListener('mousedown', function(e) {
@@ -1876,6 +1902,14 @@ ${finalCode}
                             var walkY = (y - startY);
                             window.scrollTo(scrollLeft - walkX, scrollTop - walkY);
                         });
+
+                        // Expose reset drag globally to let the parent window reset dragging state on mouseup
+                        window.resetDrag = function() {
+                            if (isDown) {
+                                isDown = false;
+                                updateCursor();
+                            }
+                        };
                     })();
                 <\/script>
             </body>
