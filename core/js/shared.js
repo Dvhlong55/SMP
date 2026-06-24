@@ -653,7 +653,7 @@ const PostViewer = {
                 // Nhúng cả CSS và Nội dung vào cột phải trang chủ
                 let extractedStyles = '';
                 if (!document.querySelector('link[href*="post.css"]')) {
-                    extractedStyles += '<link rel="stylesheet" href="/core/css/post.css">';
+                    extractedStyles += '<link rel="stylesheet" href="/core/css/post.css?v=33">';
                 }
                 doc.querySelectorAll('style').forEach(s => extractedStyles += s.outerHTML);
                 doc.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
