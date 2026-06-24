@@ -439,17 +439,20 @@
             min-width: 0;
         }
         #tikz-preview {
-            background: rgba(255,255,255,0.025);
+            background: #ffffff; /* Default is white so drawings are visible in light mode */
             border: 1px solid rgba(92,225,230,0.10);
             border-radius: 0 0 10px 10px;
             min-height: 350px;
             height: calc(100% - 46px);
             box-sizing: border-box;
             position: relative;
+            transition: background-color 0.3s ease;
         }
-        body:not(.dark-mode) #tikz-preview {
-            background: #f1f5f9;
-            border-color: rgba(15,23,42,0.08);
+        #tikz-preview.preview-dark {
+            background: #0b1111;
+        }
+        body:not(.dark-mode) #tikz-preview.preview-dark {
+            background: #1e293b;
         }
         .CodeMirror {
             height: 350px !important;
@@ -581,7 +584,6 @@
                                         <button class="pane-btn" title="Thu nhỏ" style="padding: 6px 10px; font-size: 0.8rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--accent-cyan); border: 1px solid rgba(150,150,150,0.2); cursor: pointer; transition: all 0.2s;" onclick="zoomPreview(0.8)">➖</button>
                                         <button class="pane-btn" title="Đặt lại" style="padding: 6px 10px; font-size: 0.8rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--accent-cyan); border: 1px solid rgba(150,150,150,0.2); cursor: pointer; transition: all 0.2s;" onclick="resetZoom()">🏠</button>
                                         <span style="width: 1px; height: 16px; background: rgba(150,150,150,0.2); margin: 0 4px;"></span>
-                                        <button class="pane-btn" id="preview-theme-btn" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--accent-cyan); border: 1px solid rgba(150,150,150,0.2); cursor: pointer; transition: all 0.2s;" onclick="togglePreviewTheme()">🌙 Nền Tối</button>
                                         <button class="pane-btn" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 6px; background: rgba(92,225,230,0.15); color: var(--accent-cyan); border: 1px solid rgba(92,225,230,0.4); cursor: pointer; transition: all 0.2s;" onclick="renderPreview()">🔄 Tải Lại</button>
                                     </div>
                                 </div>
@@ -1617,37 +1619,21 @@ ${finalCode}
 
     function syncPreviewThemeWithBody() {
         var isDark = document.body.classList.contains('dark-mode');
-        var btn = document.getElementById('preview-theme-btn');
         var preview = document.getElementById('tikz-preview');
-        if (!btn || !preview) return;
+        if (!preview) return;
         
-        if (isDark) {
-            previewTheme = 'dark';
-            btn.textContent = '☀️ Nền Sáng';
+        var targetTheme = isDark ? 'dark' : 'light';
+        if (targetTheme === 'dark') {
             preview.classList.add('preview-dark');
         } else {
-            previewTheme = 'light';
-            btn.textContent = '🌙 Nền Tối';
             preview.classList.remove('preview-dark');
         }
-        window.lastRenderedCode = null; // Bypass duplicate check to apply filter style
-        renderPreview();
-    }
-
-    function togglePreviewTheme() {
-        var btn = document.getElementById('preview-theme-btn');
-        var preview = document.getElementById('tikz-preview');
-        if (previewTheme === 'light') {
-            previewTheme = 'dark';
-            btn.textContent = '☀️ Nền Sáng';
-            preview.classList.add('preview-dark');
-        } else {
-            previewTheme = 'light';
-            btn.textContent = '🌙 Nền Tối';
-            preview.classList.remove('preview-dark');
+        
+        if (previewTheme !== targetTheme) {
+            previewTheme = targetTheme;
+            window.lastRenderedCode = null; // Bypass duplicate check to apply filter style
+            renderPreview();
         }
-        window.lastRenderedCode = null; // Bypass duplicate check to apply filter style
-        renderPreview();
     }
 
     function zoomPreview(factor) {
@@ -1665,9 +1651,32 @@ ${finalCode}
         if (iframe && iframe.contentWindow) {
             var svg = iframe.contentWindow.document.querySelector('svg');
             if (svg) {
-                svg.style.transform = 'scale(' + zoomLevel + ')';
-                svg.style.transformOrigin = 'center center';
-                svg.style.transition = 'transform 0.2s ease';
+                // Store original dimensions if not yet stored
+                if (!svg.dataset.origWidth) {
+                    var wAttr = svg.getAttribute('width') || '100%';
+                    var hAttr = svg.getAttribute('height') || '100%';
+                    svg.dataset.origWidth = wAttr;
+                    svg.dataset.origHeight = hAttr;
+                }
+                
+                // Parse values and unit
+                var wVal = parseFloat(svg.dataset.origWidth);
+                var wUnit = svg.dataset.origWidth.replace(/^[0-9.-]+/g, '') || 'pt';
+                var hVal = parseFloat(svg.dataset.origHeight);
+                var hUnit = svg.dataset.origHeight.replace(/^[0-9.-]+/g, '') || 'pt';
+
+                if (!isNaN(wVal) && !isNaN(hVal)) {
+                    var newWidth = wVal * zoomLevel;
+                    var newHeight = hVal * zoomLevel;
+                    svg.style.width = newWidth + wUnit;
+                    svg.style.height = newHeight + hUnit;
+                    svg.style.maxWidth = 'none';
+                    svg.style.maxHeight = 'none';
+                } else {
+                    // Fallback to transform scale if width/height are not numbers
+                    svg.style.transform = 'scale(' + zoomLevel + ')';
+                    svg.style.transformOrigin = 'center center';
+                }
             }
         }
     }
@@ -1732,15 +1741,20 @@ ${finalCode}
                     body {
                         margin: 0;
                         display: flex;
-                        align-items: center;
-                        justify-content: center;
                         min-height: 100vh;
+                        min-width: 100vw;
                         background: transparent;
                         overflow: auto;
+                        box-sizing: border-box;
+                        user-select: none;
+                        -webkit-user-select: none;
+                        cursor: default;
                     }
                     svg {
+                        margin: auto;
                         max-width: 100%;
                         max-height: 100%;
+                        box-sizing: border-box;
                     }
                     ${filterStyle}
                 </style>
@@ -1749,6 +1763,97 @@ ${finalCode}
             <body>
                 <script type="text/tikz" data-show-console="true">
                     ${previewCode}
+                <\/script>
+                <script>
+                    (function() {
+                        var isDown = false;
+                        var startX, startY;
+                        var scrollLeft, scrollTop;
+                        var body = document.body;
+
+                        function updateCursor() {
+                            var svg = document.querySelector('svg');
+                            if (!svg) return;
+                            var isOverflowing = svg.clientWidth > window.innerWidth || svg.clientHeight > window.innerHeight;
+                            if (isOverflowing) {
+                                body.style.cursor = isDown ? 'grabbing' : 'grab';
+                            } else {
+                                body.style.cursor = 'default';
+                            }
+                        }
+
+                        body.addEventListener('mousedown', function(e) {
+                            if (e.button !== 0) return; // Left click only
+                            
+                            var svg = document.querySelector('svg');
+                            if (!svg) return;
+                            
+                            var isOverflowing = svg.clientWidth > window.innerWidth || svg.clientHeight > window.innerHeight;
+                            if (!isOverflowing) return;
+                            
+                            isDown = true;
+                            updateCursor();
+                            startX = e.pageX - body.offsetLeft;
+                            startY = e.pageY - body.offsetTop;
+                            scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+                            scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                        });
+
+                        body.addEventListener('mouseleave', function() {
+                            if (isDown) {
+                                isDown = false;
+                                updateCursor();
+                            }
+                        });
+
+                        body.addEventListener('mouseup', function() {
+                            if (isDown) {
+                                isDown = false;
+                                updateCursor();
+                            }
+                        });
+
+                        body.addEventListener('mousemove', function(e) {
+                            updateCursor();
+                            if (!isDown) return;
+                            
+                            e.preventDefault();
+                            var x = e.pageX - body.offsetLeft;
+                            var y = e.pageY - body.offsetTop;
+                            var walkX = (x - startX);
+                            var walkY = (y - startY);
+                            window.scrollTo(scrollLeft - walkX, scrollTop - walkY);
+                        });
+                        
+                        // Touch support
+                        body.addEventListener('touchstart', function(e) {
+                            var svg = document.querySelector('svg');
+                            if (!svg) return;
+                            
+                            var isOverflowing = svg.clientWidth > window.innerWidth || svg.clientHeight > window.innerHeight;
+                            if (!isOverflowing) return;
+
+                            isDown = true;
+                            startX = e.touches[0].pageX - body.offsetLeft;
+                            startY = e.touches[0].pageY - body.offsetTop;
+                            scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+                            scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                        });
+
+                        body.addEventListener('touchend', function() {
+                            isDown = false;
+                        });
+
+                        body.addEventListener('touchmove', function(e) {
+                            if (!isDown) return;
+                            e.preventDefault();
+                            var x = e.touches[0].pageX - body.offsetLeft;
+                            var y = e.touches[0].pageY - body.offsetTop;
+                            var walkX = (x - startX);
+                            var walkY = (y - startY);
+                            window.scrollTo(scrollLeft - walkX, scrollTop - walkY);
+                        });
+                    })();
                 <\/script>
             </body>
             </html>
