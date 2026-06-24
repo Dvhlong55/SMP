@@ -1784,21 +1784,15 @@ ${finalCode}
             <head>
                 <link rel="stylesheet" href="https://tikzjax.com/v1/fonts.css">
                 <style>
-                    html, body {
-                        margin: 0;
-                        padding: 0;
-                        width: 100%;
-                        height: 100%;
-                        scrollbar-width: none;
-                        -ms-overflow-style: none;
-                    }
-                    html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar {
-                        display: none;
+                    html {
+                        overflow: auto;
                     }
                     body {
+                        margin: 0;
                         display: flex;
+                        min-height: 100vh;
+                        min-width: 100vw;
                         background: transparent;
-                        overflow: auto;
                         box-sizing: border-box;
                         padding: 20px;
                         user-select: none;
@@ -1844,6 +1838,11 @@ ${finalCode}
                         body.addEventListener('mousedown', function(e) {
                             if (e.button !== 0) return; // Left click only
                             
+                            // Ignore clicks on scrollbar track
+                            if (e.clientX >= document.documentElement.clientWidth || e.clientY >= document.documentElement.clientHeight) {
+                                return;
+                            }
+                            
                             var svg = document.querySelector('svg');
                             if (!svg) return;
                             
@@ -1852,8 +1851,8 @@ ${finalCode}
                             
                             isDown = true;
                             updateCursor();
-                            startX = e.pageX - body.offsetLeft;
-                            startY = e.pageY - body.offsetTop;
+                            startX = e.pageX;
+                            startY = e.pageY;
                             scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
                             scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                         });
@@ -1887,8 +1886,8 @@ ${finalCode}
                             if (!isDown) return;
                             
                             e.preventDefault();
-                            var x = e.pageX - body.offsetLeft;
-                            var y = e.pageY - body.offsetTop;
+                            var x = e.pageX;
+                            var y = e.pageY;
                             var walkX = (x - startX);
                             var walkY = (y - startY);
                             window.scrollTo(scrollLeft - walkX, scrollTop - walkY);
@@ -1896,6 +1895,11 @@ ${finalCode}
                         
                         // Touch support
                         body.addEventListener('touchstart', function(e) {
+                            // Ignore touches on scrollbar
+                            if (e.touches[0].clientX >= document.documentElement.clientWidth || e.touches[0].clientY >= document.documentElement.clientHeight) {
+                                return;
+                            }
+
                             var svg = document.querySelector('svg');
                             if (!svg) return;
                             
@@ -1903,8 +1907,8 @@ ${finalCode}
                             if (!isOverflowing) return;
 
                             isDown = true;
-                            startX = e.touches[0].pageX - body.offsetLeft;
-                            startY = e.touches[0].pageY - body.offsetTop;
+                            startX = e.touches[0].pageX;
+                            startY = e.touches[0].pageY;
                             scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
                             scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                         });
@@ -1916,8 +1920,8 @@ ${finalCode}
                         body.addEventListener('touchmove', function(e) {
                             if (!isDown) return;
                             e.preventDefault();
-                            var x = e.touches[0].pageX - body.offsetLeft;
-                            var y = e.touches[0].pageY - body.offsetTop;
+                            var x = e.touches[0].pageX;
+                            var y = e.touches[0].pageY;
                             var walkX = (x - startX);
                             var walkY = (y - startY);
                             window.scrollTo(scrollLeft - walkX, scrollTop - walkY);
