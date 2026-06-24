@@ -576,7 +576,8 @@
                             <div class="studio-pane">
                                 <div class="studio-pane-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 10px; border-bottom: 1px solid rgba(150,150,150,0.1);">
                                     <span class="studio-pane-title">👁 Live Preview</span>
-                                    <div>
+                                    <div style="display: flex; gap: 8px;">
+                                        <button class="pane-btn" id="preview-theme-btn" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--accent-cyan); border: 1px solid rgba(150,150,150,0.2); cursor: pointer; transition: all 0.2s;" onclick="togglePreviewTheme()">🌙 Nền Tối</button>
                                         <button class="pane-btn" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 6px; background: rgba(92,225,230,0.15); color: var(--accent-cyan); border: 1px solid rgba(92,225,230,0.4); cursor: pointer; transition: all 0.2s;" onclick="renderPreview()">🔄 Tải Lại</button>
                                     </div>
                                 </div>
@@ -1592,6 +1593,23 @@ ${finalCode}
         }
     }
 
+    var previewTheme = 'light'; // default is light (white background)
+
+    function togglePreviewTheme() {
+        var btn = document.getElementById('preview-theme-btn');
+        var preview = document.getElementById('tikz-preview');
+        if (previewTheme === 'light') {
+            previewTheme = 'dark';
+            btn.textContent = '☀️ Nền Sáng';
+            preview.classList.add('preview-dark');
+        } else {
+            previewTheme = 'light';
+            btn.textContent = '🌙 Nền Tối';
+            preview.classList.remove('preview-dark');
+        }
+        renderPreview();
+    }
+
     function renderPreview() {
         if (!window.tikzEditor) return;
         var code = window.tikzEditor.getValue();
@@ -1626,6 +1644,11 @@ ${finalCode}
         iframe.style.height = '100%';
         iframe.style.border = 'none';
         
+        var filterStyle = '';
+        if (previewTheme === 'dark') {
+            filterStyle = 'svg { filter: invert(1); }';
+        }
+
         // Define srcdoc content to avoid about:blank race conditions
         var srcdocContent = `
             <!DOCTYPE html>
@@ -1646,6 +1669,7 @@ ${finalCode}
                         max-width: 100%;
                         max-height: 100%;
                     }
+                    ${filterStyle}
                 </style>
                 <script src="https://tikzjax.com/v1/tikzjax.js"><\/script>
             </head>
