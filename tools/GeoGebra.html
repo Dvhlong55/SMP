@@ -576,7 +576,11 @@
                             <div class="studio-pane">
                                 <div class="studio-pane-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 10px; border-bottom: 1px solid rgba(150,150,150,0.1);">
                                     <span class="studio-pane-title">👁 Live Preview</span>
-                                    <div style="display: flex; gap: 8px;">
+                                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                                        <button class="pane-btn" title="Phóng to" style="padding: 6px 10px; font-size: 0.8rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--accent-cyan); border: 1px solid rgba(150,150,150,0.2); cursor: pointer; transition: all 0.2s;" onclick="zoomPreview(1.25)">➕</button>
+                                        <button class="pane-btn" title="Thu nhỏ" style="padding: 6px 10px; font-size: 0.8rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--accent-cyan); border: 1px solid rgba(150,150,150,0.2); cursor: pointer; transition: all 0.2s;" onclick="zoomPreview(0.8)">➖</button>
+                                        <button class="pane-btn" title="Đặt lại" style="padding: 6px 10px; font-size: 0.8rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--accent-cyan); border: 1px solid rgba(150,150,150,0.2); cursor: pointer; transition: all 0.2s;" onclick="resetZoom()">🏠</button>
+                                        <span style="width: 1px; height: 16px; background: rgba(150,150,150,0.2); margin: 0 4px;"></span>
                                         <button class="pane-btn" id="preview-theme-btn" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--accent-cyan); border: 1px solid rgba(150,150,150,0.2); cursor: pointer; transition: all 0.2s;" onclick="togglePreviewTheme()">🌙 Nền Tối</button>
                                         <button class="pane-btn" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 6px; background: rgba(92,225,230,0.15); color: var(--accent-cyan); border: 1px solid rgba(92,225,230,0.4); cursor: pointer; transition: all 0.2s;" onclick="renderPreview()">🔄 Tải Lại</button>
                                     </div>
@@ -654,6 +658,21 @@
         });
         
         setupDragAndDrop();
+
+        // Sync preview theme initially
+        if (typeof syncPreviewThemeWithBody === 'function') {
+            syncPreviewThemeWithBody();
+        }
+        
+        // Observe body class changes to automatically toggle preview theme
+        var themeObserver = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'class' && typeof syncPreviewThemeWithBody === 'function') {
+                    syncPreviewThemeWithBody();
+                }
+            });
+        });
+        themeObserver.observe(document.body, { attributes: true });
     });
 
     function parseGGBId(url) {
@@ -1594,6 +1613,26 @@ ${finalCode}
     }
 
     var previewTheme = 'light'; // default is light (white background)
+    var zoomLevel = 1.0;
+
+    function syncPreviewThemeWithBody() {
+        var isDark = document.body.classList.contains('dark-mode');
+        var btn = document.getElementById('preview-theme-btn');
+        var preview = document.getElementById('tikz-preview');
+        if (!btn || !preview) return;
+        
+        if (isDark) {
+            previewTheme = 'dark';
+            btn.textContent = '☀️ Nền Sáng';
+            preview.classList.add('preview-dark');
+        } else {
+            previewTheme = 'light';
+            btn.textContent = '🌙 Nền Tối';
+            preview.classList.remove('preview-dark');
+        }
+        window.lastRenderedCode = null; // Bypass duplicate check to apply filter style
+        renderPreview();
+    }
 
     function togglePreviewTheme() {
         var btn = document.getElementById('preview-theme-btn');
@@ -1607,13 +1646,47 @@ ${finalCode}
             btn.textContent = '🌙 Nền Tối';
             preview.classList.remove('preview-dark');
         }
+        window.lastRenderedCode = null; // Bypass duplicate check to apply filter style
         renderPreview();
+    }
+
+    function zoomPreview(factor) {
+        zoomLevel *= factor;
+        applyZoom();
+    }
+
+    function resetZoom() {
+        zoomLevel = 1.0;
+        applyZoom();
+    }
+
+    function applyZoom() {
+        var iframe = document.querySelector('#tikz-canvas iframe');
+        if (iframe && iframe.contentWindow) {
+            var svg = iframe.contentWindow.document.querySelector('svg');
+            if (svg) {
+                svg.style.transform = 'scale(' + zoomLevel + ')';
+                svg.style.transformOrigin = 'center center';
+                svg.style.transition = 'transform 0.2s ease';
+            }
+        }
     }
 
     function renderPreview() {
         if (!window.tikzEditor) return;
         var code = window.tikzEditor.getValue();
         if (!code || code.trim() === '') return;
+
+        // Skip render if the output panel is not showing
+        if (!document.getElementById('ggb-output-panel').classList.contains('show')) return;
+
+        // Skip double rendering of identical code
+        if (window.lastRenderedCode === code) return;
+        window.lastRenderedCode = code;
+
+        // Clear any running check timers
+        if (window.checkSVGInterval) clearInterval(window.checkSVGInterval);
+        if (window.checkSVGTimeout) clearTimeout(window.checkSVGTimeout);
 
         var previewCode = code;
         
@@ -1676,27 +1749,28 @@ ${finalCode}
             <body>
                 <script type="text/tikz" data-show-console="true">
                     ${previewCode}
-                <\/script>
+                </script>
             </body>
             </html>
         `;
         
         iframe.onload = function() {
             var iframeDoc = iframe.contentWindow.document;
-            var checkSVGExist = setInterval(function() {
+            window.checkSVGInterval = setInterval(function() {
                 try {
                     if (iframeDoc.querySelector('svg') || iframeDoc.body.innerHTML.includes('Error')) {
                         loading.style.display = 'none'; 
-                        clearInterval(checkSVGExist);
+                        clearInterval(window.checkSVGInterval);
+                        applyZoom(); // Apply current zoom to newly rendered SVG
                     }
                 } catch(e) {
                     // Fail-safe in case of security restrictions
                 }
             }, 100);
             
-            setTimeout(function() { 
+            window.checkSVGTimeout = setTimeout(function() { 
                 loading.style.display = 'none'; 
-                clearInterval(checkSVGExist);
+                clearInterval(window.checkSVGInterval);
             }, 8000);
         };
         
