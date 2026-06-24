@@ -878,7 +878,9 @@
                 });
             }
             
+            clearTimeout(window.previewTimeout);
             window.tikzEditor.setValue(processedCode);
+            clearTimeout(window.previewTimeout);
             document.getElementById('ggb-output-panel').classList.add('show');
             document.getElementById('ggb-export-bar').style.display = 'flex';
             
@@ -1350,7 +1352,9 @@ ${finalCode}
                                     });
                                 }
                                 
+                                clearTimeout(window.previewTimeout);
                                 window.tikzEditor.setValue(processedCode);
+                                clearTimeout(window.previewTimeout);
                                 document.getElementById('ggb-output-panel').classList.add('show');
                                 document.getElementById('ggb-export-bar').style.display = 'flex';
                                 
@@ -1362,6 +1366,13 @@ ${finalCode}
                                 setStatus('success', `✓ Thành công!`);
                                 document.getElementById('ggb-extract-btn').disabled = false;
                                 document.getElementById('ggb-output-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                                // Destroy GeoGebra applet to free memory and CPU
+                                setTimeout(function() {
+                                    var container = document.getElementById('ggb-container');
+                                    if (container) container.innerHTML = '';
+                                    ggbApi = null;
+                                }, 1000);
                             });
                         } catch(e) {
                             setStatus('error', '✕ Lỗi khi trích xuất: ' + e.message);
@@ -1746,6 +1757,7 @@ ${finalCode}
                         background: transparent;
                         overflow: auto;
                         box-sizing: border-box;
+                        padding: 20px;
                         user-select: none;
                         -webkit-user-select: none;
                         cursor: default;
@@ -1755,6 +1767,7 @@ ${finalCode}
                         max-width: 100%;
                         max-height: 100%;
                         box-sizing: border-box;
+                        overflow: visible !important;
                     }
                     ${filterStyle}
                 </style>
@@ -1806,6 +1819,13 @@ ${finalCode}
                             }
                         });
 
+                        body.addEventListener('mouseenter', function(e) {
+                            if (isDown && (e.buttons & 1) === 0) {
+                                isDown = false;
+                                updateCursor();
+                            }
+                        });
+
                         body.addEventListener('mouseup', function() {
                             if (isDown) {
                                 isDown = false;
@@ -1814,6 +1834,9 @@ ${finalCode}
                         });
 
                         body.addEventListener('mousemove', function(e) {
+                            if (isDown && (e.buttons & 1) === 0) {
+                                isDown = false;
+                            }
                             updateCursor();
                             if (!isDown) return;
                             
