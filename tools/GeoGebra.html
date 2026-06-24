@@ -589,7 +589,7 @@
                                 </div>
                                 <div class="studio-pane-content" id="tikz-preview" style="position: relative;">
                                     <div class="tikz-loading" id="tikz-loading" style="display:none;">Đang biên dịch TikZ...</div>
-                                    <div id="tikz-canvas" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; overflow: auto;">
+                                    <div id="tikz-canvas" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; overflow: hidden !important;">
                                         <span style="color:#aaa; font-family:'JetBrains Mono',monospace; font-size:0.8rem; text-align: center;">Bản xem trước sẽ hiển thị ở đây<br><br><small style="opacity: 0.6;">(Hỗ trợ chuẩn PGF/TikZ cơ bản)</small></span>
                                     </div>
                                 </div>
@@ -646,8 +646,8 @@
     <script src="/core/js/sidebar-data.js?v=33"></script>
     <script src="/core/js/layout.js?v=33"></script>
     <script src="/core/js/shared.js?v=33"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/stex/stex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/stex/stex.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
     
@@ -797,20 +797,33 @@
         } else {
             var s = document.createElement('script');
             s.src = 'https://www.geogebra.org/apps/deployggb.js';
-            s.onload = function () {
-                ggbScriptLoaded = true;
-                loadApplet(id, currentBase64);
-            };
-            s.onerror = function () {
+            
+            var scriptTimeout = setTimeout(function() {
+                console.warn("GeoGebra script load timeout. Falling back...");
+                if (s.parentNode) s.parentNode.removeChild(s);
+                handleLoadFailure();
+            }, 5000); // 5 seconds timeout
+
+            function handleLoadFailure() {
                 if (currentBase64) {
                     setStatus('loading', '⚡ Máy chủ GeoGebra ngoại tuyến. Đang giải nén & trích xuất offline...');
                     setTimeout(function() {
                         tryOfflineExtraction(currentBase64);
                     }, 500);
                 } else {
-                    setStatus('error', '✕ Không thể tải thư viện GeoGebra. Kiểm tra kết nối mạng.');
+                    setStatus('error', '✕ Không thể tải thư viện GeoGebra. Vui lòng kiểm tra kết nối mạng.');
                     document.getElementById('ggb-extract-btn').disabled = false;
                 }
+            }
+
+            s.onload = function () {
+                clearTimeout(scriptTimeout);
+                ggbScriptLoaded = true;
+                loadApplet(id, currentBase64);
+            };
+            s.onerror = function () {
+                clearTimeout(scriptTimeout);
+                handleLoadFailure();
             };
             document.head.appendChild(s);
         }
@@ -877,6 +890,12 @@
             const xmlString = await extractGeogebraXML(arrayBuffer);
             const processedCode = convertXMLToTikZ(xmlString);
             
+            if (typeof CodeMirror === 'undefined') {
+                setStatus('error', '✕ Thư viện soạn thảo CodeMirror chưa được tải. Vui lòng kết nối internet và tải lại trang.');
+                document.getElementById('ggb-extract-btn').disabled = false;
+                return;
+            }
+
             if (!window.tikzEditor) {
                 window.tikzEditor = CodeMirror.fromTextArea(document.getElementById('tikz-output'), {
                     mode: 'stex', theme: 'dracula', lineNumbers: true, lineWrapping: true, matchBrackets: true
@@ -1351,6 +1370,12 @@ ${finalCode}
                                 
                                 var processedCode = processTikzCode(tikzCode, showGrid, showAxes, exactPoints, selectedMode);
                                 
+                                if (typeof CodeMirror === 'undefined') {
+                                    setStatus('error', '✕ Thư viện soạn thảo CodeMirror chưa được tải. Vui lòng kết nối internet và tải lại trang.');
+                                    document.getElementById('ggb-extract-btn').disabled = false;
+                                    return;
+                                }
+
                                 if (!window.tikzEditor) {
                                     window.tikzEditor = CodeMirror.fromTextArea(document.getElementById('tikz-output'), {
                                         mode: 'stex', theme: 'dracula', lineNumbers: true, lineWrapping: true, matchBrackets: true
