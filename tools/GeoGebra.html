@@ -679,11 +679,16 @@
         // Add global mouseup listener to reset iframe drag state
         document.addEventListener('mouseup', function() {
             var iframe = document.querySelector('#tikz-canvas iframe');
-            if (iframe && iframe.contentWindow && typeof iframe.contentWindow.resetDrag === 'function') {
-                try {
-                    iframe.contentWindow.resetDrag();
-                } catch(e) {}
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({ type: 'resetDrag' }, '*');
             }
+            // Explicitly reset parent cursors to prevent stuck states
+            try {
+                var canvas = document.getElementById('tikz-canvas');
+                if (canvas) canvas.style.cursor = 'default';
+                var preview = document.getElementById('tikz-preview');
+                if (preview) preview.style.cursor = 'default';
+            } catch(e) {}
         });
     });
 
@@ -1695,37 +1700,24 @@ ${finalCode}
     function applyZoom() {
         var iframe = document.querySelector('#tikz-canvas iframe');
         if (iframe && iframe.contentWindow) {
-            var svg = iframe.contentWindow.document.querySelector('svg');
-            if (svg) {
-                // Store original dimensions if not yet stored
-                if (!svg.dataset.origWidth) {
-                    var wAttr = svg.getAttribute('width') || '100%';
-                    var hAttr = svg.getAttribute('height') || '100%';
-                    svg.dataset.origWidth = wAttr;
-                    svg.dataset.origHeight = hAttr;
-                }
-                
-                // Parse values and unit
-                var wVal = parseFloat(svg.dataset.origWidth);
-                var wUnit = svg.dataset.origWidth.replace(/^[0-9.-]+/g, '') || 'pt';
-                var hVal = parseFloat(svg.dataset.origHeight);
-                var hUnit = svg.dataset.origHeight.replace(/^[0-9.-]+/g, '') || 'pt';
-
-                if (!isNaN(wVal) && !isNaN(hVal)) {
-                    var newWidth = wVal * zoomLevel;
-                    var newHeight = hVal * zoomLevel;
-                    svg.style.width = newWidth + wUnit;
-                    svg.style.height = newHeight + hUnit;
-                    svg.style.maxWidth = 'none';
-                    svg.style.maxHeight = 'none';
-                } else {
-                    // Fallback to transform scale if width/height are not numbers
-                    svg.style.transform = 'scale(' + zoomLevel + ')';
-                    svg.style.transformOrigin = 'center center';
-                }
-            }
+            iframe.contentWindow.postMessage({ type: 'zoom', zoomLevel: zoomLevel }, '*');
         }
     }
+
+    window.addEventListener('message', function(e) {
+        if (!e.data) return;
+        if (e.data.type === 'cursor') {
+            var canvas = document.getElementById('tikz-canvas');
+            if (canvas) canvas.style.cursor = e.data.cursor;
+            var preview = document.getElementById('tikz-preview');
+            if (preview) preview.style.cursor = e.data.cursor;
+        } else if (e.data.type === 'tikzDone') {
+            var loading = document.getElementById('tikz-loading');
+            if (loading) loading.style.display = 'none';
+            if (window.checkSVGTimeout) clearTimeout(window.checkSVGTimeout);
+            applyZoom();
+        }
+    });
 
     function renderPreview() {
         if (!window.tikzEditor) return;
@@ -1764,6 +1756,13 @@ ${finalCode}
         var previewContainer = document.getElementById('tikz-canvas');
         var loading = document.getElementById('tikz-loading');
         
+        // Reset parent cursors before destroying iframe
+        try {
+            previewContainer.style.cursor = 'default';
+            var parentPreview = document.getElementById('tikz-preview');
+            if (parentPreview) parentPreview.style.cursor = 'default';
+        } catch(e) {}
+        
         loading.style.display = 'flex';
         previewContainer.innerHTML = '';
         
@@ -1771,6 +1770,7 @@ ${finalCode}
         iframe.style.width = '100%';
         iframe.style.height = '100%';
         iframe.style.border = 'none';
+        iframe.sandbox = 'allow-scripts';
         
         var filterStyle = '';
         if (previewTheme === 'dark') {
@@ -1834,16 +1834,8 @@ ${finalCode}
                             }
                             body.style.cursor = cursorStyle;
                             
-                            // Propagate cursor style to parent iframe elements to prevent glitches at boundary
-                            try {
-                                if (window.frameElement) {
-                                    window.frameElement.style.cursor = cursorStyle;
-                                    var parentCanvas = window.parent.document.getElementById('tikz-canvas');
-                                    if (parentCanvas) parentCanvas.style.cursor = cursorStyle;
-                                    var parentPreview = window.parent.document.getElementById('tikz-preview');
-                                    if (parentPreview) parentPreview.style.cursor = cursorStyle;
-                                }
-                            } catch(e) {}
+                            // Propagate cursor style via postMessage to parent
+                            window.parent.postMessage({ type: 'cursor', cursor: cursorStyle }, '*');
                         }
 
                         body.addEventListener('mousedown', function(e) {
@@ -1928,13 +1920,50 @@ ${finalCode}
                             window.scrollTo(scrollLeft - walkX, scrollTop - walkY);
                         });
 
-                        // Expose reset drag globally to let the parent window reset dragging state on mouseup
-                        window.resetDrag = function() {
-                            if (isDown) {
-                                isDown = false;
-                                updateCursor();
+                        window.addEventListener('message', function(e) {
+                            if (e.data && e.data.type === 'resetDrag') {
+                                if (isDown) {
+                                    isDown = false;
+                                    updateCursor();
+                                }
+                            } else if (e.data && e.data.type === 'zoom') {
+                                var svg = document.querySelector('svg');
+                                if (!svg) return;
+                                var zoomLvl = e.data.zoomLevel;
+                                
+                                if (!svg.dataset.origWidth) {
+                                    var wAttr = svg.getAttribute('width') || '100%';
+                                    var hAttr = svg.getAttribute('height') || '100%';
+                                    svg.dataset.origWidth = wAttr;
+                                    svg.dataset.origHeight = hAttr;
+                                }
+                                
+                                var wVal = parseFloat(svg.dataset.origWidth);
+                                var wUnit = svg.dataset.origWidth.replace(/^[0-9.-]+/g, '') || 'pt';
+                                var hVal = parseFloat(svg.dataset.origHeight);
+                                var hUnit = svg.dataset.origHeight.replace(/^[0-9.-]+/g, '') || 'pt';
+
+                                if (!isNaN(wVal) && !isNaN(hVal)) {
+                                    var newWidth = wVal * zoomLvl;
+                                    var newHeight = hVal * zoomLvl;
+                                    svg.style.width = newWidth + wUnit;
+                                    svg.style.height = newHeight + hUnit;
+                                    svg.style.maxWidth = 'none';
+                                    svg.style.maxHeight = 'none';
+                                } else {
+                                    svg.style.transform = 'scale(' + zoomLvl + ')';
+                                    svg.style.transformOrigin = 'center center';
+                                }
                             }
-                        };
+                        });
+
+                        var observer = new MutationObserver(function(mutations) {
+                            if (document.querySelector('svg') || document.body.innerHTML.includes('Error')) {
+                                window.parent.postMessage({ type: 'tikzDone' }, '*');
+                                observer.disconnect();
+                            }
+                        });
+                        observer.observe(document.body, { childList: true, subtree: true });
                     })();
                 <\/script>
             </body>
@@ -1942,22 +1971,10 @@ ${finalCode}
         `;
         
         iframe.onload = function() {
-            var iframeDoc = iframe.contentWindow.document;
-            window.checkSVGInterval = setInterval(function() {
-                try {
-                    if (iframeDoc.querySelector('svg') || iframeDoc.body.innerHTML.includes('Error')) {
-                        loading.style.display = 'none'; 
-                        clearInterval(window.checkSVGInterval);
-                        applyZoom(); // Apply current zoom to newly rendered SVG
-                    }
-                } catch(e) {
-                    // Fail-safe in case of security restrictions
-                }
-            }, 100);
-            
+            // Safety timeout in case TikZJax completely fails or hangs
             window.checkSVGTimeout = setTimeout(function() { 
-                loading.style.display = 'none'; 
-                clearInterval(window.checkSVGInterval);
+                var loading = document.getElementById('tikz-loading');
+                if (loading) loading.style.display = 'none'; 
             }, 8000);
         };
         
