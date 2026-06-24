@@ -691,6 +691,15 @@
             return;
         }
 
+        // Direct offline fallback check if no internet is available
+        if (!navigator.onLine && currentBase64) {
+            setStatus('loading', '⚡ Chế độ ngoại tuyến: Đang trích xuất offline...');
+            setTimeout(function() {
+                tryOfflineExtraction(currentBase64);
+            }, 100);
+            return;
+        }
+
         document.getElementById('ggb-extract-btn').disabled = true;
         setStatus('loading', 'Đang tải thư viện GeoGebra...');
 
@@ -704,11 +713,493 @@
                 loadApplet(id, currentBase64);
             };
             s.onerror = function () {
-                setStatus('error', '✕ Không thể tải thư viện GeoGebra. Kiểm tra kết nối mạng.');
-                document.getElementById('ggb-extract-btn').disabled = false;
+                if (currentBase64) {
+                    setStatus('loading', '⚡ Máy chủ GeoGebra ngoại tuyến. Đang giải nén & trích xuất offline...');
+                    setTimeout(function() {
+                        tryOfflineExtraction(currentBase64);
+                    }, 500);
+                } else {
+                    setStatus('error', '✕ Không thể tải thư viện GeoGebra. Kiểm tra kết nối mạng.');
+                    document.getElementById('ggb-extract-btn').disabled = false;
+                }
             };
             document.head.appendChild(s);
         }
+    }
+
+    function base64ToArrayBuffer(base64) {
+        var binary_string = window.atob(base64);
+        var len = binary_string.length;
+        var bytes = new Uint8Array(len);
+        for (var i = 0; i < len; i++) {
+            bytes[i] = binary_string.charCodeAt(i);
+        }
+        return bytes.buffer;
+    }
+
+    async function extractGeogebraXML(arrayBuffer) {
+        const view = new DataView(arrayBuffer);
+        let offset = 0;
+        
+        while (offset < arrayBuffer.byteLength - 30) {
+            const sig = view.getUint32(offset, true);
+            if (sig === 0x04034b50) { // Local file header signature
+                const compMethod = view.getUint16(offset + 8, true);
+                const compSize = view.getUint32(offset + 18, true);
+                const uncompSize = view.getUint32(offset + 22, true);
+                const nameLen = view.getUint16(offset + 26, true);
+                const extraLen = view.getUint16(offset + 28, true);
+                
+                const nameBytes = new Uint8Array(arrayBuffer, offset + 30, nameLen);
+                const fileName = new TextDecoder().decode(nameBytes);
+                
+                const dataOffset = offset + 30 + nameLen + extraLen;
+                
+                if (fileName === 'geogebra.xml') {
+                    const compData = new Uint8Array(arrayBuffer, dataOffset, compSize);
+                    if (compMethod === 0) { // Stored (no compression)
+                        return new TextDecoder().decode(compData);
+                    } else if (compMethod === 8) { // DEFLATE
+                        // Decompress raw DEFLATE using native DecompressionStream
+                        const ds = new DecompressionStream('deflate-raw');
+                        const writer = ds.writable.getWriter();
+                        writer.write(compData);
+                        writer.close();
+                        
+                        const response = new Response(ds.readable);
+                        const decompressedBuffer = await response.arrayBuffer();
+                        return new TextDecoder().decode(decompressedBuffer);
+                    } else {
+                        throw new Error('Unsupported compression method: ' + compMethod);
+                    }
+                }
+                
+                offset = dataOffset + compSize;
+            } else {
+                break;
+            }
+        }
+        throw new Error('Không tìm thấy file geogebra.xml trong file .ggb');
+    }
+
+    async function tryOfflineExtraction(base64) {
+        try {
+            const arrayBuffer = base64ToArrayBuffer(base64);
+            const xmlString = await extractGeogebraXML(arrayBuffer);
+            const processedCode = convertXMLToTikZ(xmlString);
+            
+            if (!window.tikzEditor) {
+                window.tikzEditor = CodeMirror.fromTextArea(document.getElementById('tikz-output'), {
+                    mode: 'stex', theme: 'dracula', lineNumbers: true, lineWrapping: true, matchBrackets: true
+                });
+                window.tikzEditor.setSize("100%", "100%");
+                window.tikzEditor.on('change', function() {
+                    clearTimeout(window.previewTimeout);
+                    window.previewTimeout = setTimeout(renderPreview, 1000);
+                });
+            }
+            
+            window.tikzEditor.setValue(processedCode);
+            document.getElementById('ggb-output-panel').classList.add('show');
+            document.getElementById('ggb-export-bar').style.display = 'flex';
+            
+            setTimeout(function() {
+                window.tikzEditor.refresh();
+                renderPreview();
+            }, 100);
+
+            setStatus('success', `✓ Thành công! (Đang chạy ở chế độ Offline)`);
+            document.getElementById('ggb-extract-btn').disabled = false;
+            document.getElementById('ggb-output-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } catch (e) {
+            setStatus('error', '✕ Lỗi khi trích xuất offline: ' + e.message);
+            document.getElementById('ggb-extract-btn').disabled = false;
+        }
+    }
+
+    function convertXMLToTikZ(xmlString) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+        
+        const selectedMode = document.querySelector('input[name="extractMode"]:checked').value;
+        
+        function parseColor(elem) {
+            if (!elem) return [0, 0, 0];
+            const objColor = elem.getElementsByTagName('objColor')[0];
+            if (!objColor) return [0, 0, 0];
+            const r = parseInt(objColor.getAttribute('r') || 0);
+            const g = parseInt(objColor.getAttribute('g') || 0);
+            const b = parseInt(objColor.getAttribute('b') || 0);
+            return [r, g, b];
+        }
+        
+        function getLabelPos(elem) {
+            const offsetElem = elem.getElementsByTagName('labelOffset')[0];
+            if (!offsetElem) return 'above right';
+            const ox = parseFloat(offsetElem.getAttribute('x') || 0);
+            const oy = parseFloat(offsetElem.getAttribute('y') || 0);
+            if (ox > 5 && oy < -5) return 'above right';
+            if (ox > 5 && oy > 5) return 'below right';
+            if (ox < -5 && oy < -5) return 'above left';
+            if (ox < -5 && oy > 5) return 'below left';
+            if (Math.abs(ox) <= 5 && oy < -5) return 'above';
+            if (Math.abs(ox) <= 5 && oy > 5) return 'below';
+            if (ox > 5 && Math.abs(oy) <= 5) return 'right';
+            if (ox < -5 && Math.abs(oy) <= 5) return 'left';
+            return 'above right';
+        }
+        
+        function mapLineStyle(elem) {
+            const styleElem = elem.getElementsByTagName('lineStyle')[0];
+            if (!styleElem) return '';
+            const t = parseInt(styleElem.getAttribute('type') || 0);
+            if (t === 1) return 'dashed';
+            if (t === 2) return 'dotted';
+            if (t === 3) return 'dash dot';
+            if (t === 4) return 'dash dot dot';
+            return '';
+        }
+        
+        // Extract Numerics
+        const numerics = {};
+        const elementsList = xmlDoc.getElementsByTagName('element');
+        for (let i = 0; i < elementsList.length; i++) {
+            const elem = elementsList[i];
+            if (elem.getAttribute('type') === 'numeric') {
+                const label = elem.getAttribute('label');
+                const valueElem = elem.getElementsByTagName('value')[0];
+                if (label && valueElem) {
+                    numerics[label] = parseFloat(valueElem.getAttribute('val') || 0);
+                }
+            }
+        }
+        
+        // Extract Points
+        const points = {};
+        for (let i = 0; i < elementsList.length; i++) {
+            const elem = elementsList[i];
+            if (elem.getAttribute('type') === 'point') {
+                const label = elem.getAttribute('label');
+                const coords = elem.getElementsByTagName('coords')[0];
+                if (label && coords) {
+                    let x = parseFloat(coords.getAttribute('x') || 0);
+                    let y = parseFloat(coords.getAttribute('y') || 0);
+                    const z = parseFloat(coords.getAttribute('z') || 1);
+                    if (z !== 0) {
+                        x /= z;
+                        y /= z;
+                    }
+                    const color = parseColor(elem);
+                    const showElem = elem.getElementsByTagName('show')[0];
+                    const visible = showElem ? (showElem.getAttribute('object') !== 'false') : true;
+                    const labelVisible = showElem ? (showElem.getAttribute('label') !== 'false') : true;
+                    const labelPos = getLabelPos(elem);
+                    const ptSizeElem = elem.getElementsByTagName('pointSize')[0];
+                    const ptSize = ptSizeElem ? parseInt(ptSizeElem.getAttribute('val') || 5) : 5;
+                    
+                    points[label] = {
+                        x, y, color, visible, labelVisible, labelPos, ptSize
+                    };
+                }
+            }
+        }
+        
+        // Extract Commands
+        const commands = {};
+        const commandElems = xmlDoc.getElementsByTagName('command');
+        for (let i = 0; i < commandElems.length; i++) {
+            const cmd = commandElems[i];
+            const name = cmd.getAttribute('name');
+            const inputElem = cmd.getElementsByTagName('input')[0];
+            const outputElem = cmd.getElementsByTagName('output')[0];
+            if (name && inputElem && outputElem) {
+                const outLabel = outputElem.getAttribute('a0');
+                const args = [];
+                let idx = 0;
+                while (true) {
+                    const arg = inputElem.getAttribute('a' + idx);
+                    if (arg === null) break;
+                    args.push(arg);
+                    idx++;
+                }
+                commands[outLabel] = { name, args };
+            }
+        }
+        
+        // Extract Elements
+        const elements = {};
+        for (let i = 0; i < elementsList.length; i++) {
+            const elem = elementsList[i];
+            const label = elem.getAttribute('label');
+            const type = elem.getAttribute('type');
+            if (label && type && type !== 'point' && type !== 'numeric') {
+                const showElem = elem.getElementsByTagName('show')[0];
+                const visible = showElem ? (showElem.getAttribute('object') !== 'false') : true;
+                const color = parseColor(elem);
+                const styleElem = elem.getElementsByTagName('lineStyle')[0];
+                const thickness = styleElem ? parseInt(styleElem.getAttribute('thickness') || 5) : 5;
+                const style = mapLineStyle(elem);
+                
+                elements[label] = {
+                    type, visible, color, thickness, style, elem
+                };
+            }
+        }
+        
+        // Generate TikZ Lines
+        const tikz = [];
+        tikz.push("% ===========================================");
+        tikz.push("% Extracted Offline (Pure JS Parser)");
+        tikz.push("% ===========================================");
+        tikz.push("");
+        
+        // Define Colors
+        const colorsUsed = new Set();
+        const rgbKey = (rgb) => rgb.join(',');
+        
+        Object.values(points).forEach(pt => {
+            if (rgbKey(pt.color) !== '0,0,0') colorsUsed.add(rgbKey(pt.color));
+        });
+        Object.values(elements).forEach(el => {
+            if (rgbKey(el.color) !== '0,0,0') colorsUsed.add(rgbKey(el.color));
+        });
+        
+        const colorMap = {};
+        if (colorsUsed.size > 0) {
+            tikz.push("% --- Color Definitions ---");
+            let idx = 0;
+            colorsUsed.forEach(key => {
+                const colName = "ggbcolor" + idx;
+                colorMap[key] = colName;
+                tikz.push(`\\definecolor{${colName}}{RGB}{${key}}`);
+                idx++;
+            });
+            tikz.push("");
+        }
+        
+        // Bounding Box
+        let minX = -5.0, maxX = 5.0, minY = -5.0, maxY = 5.0;
+        const pts = Object.values(points);
+        if (pts.length > 0) {
+            const xs = pts.map(p => p.x);
+            const ys = pts.map(p => p.y);
+            minX = Math.min(...xs) - 1.0;
+            maxX = Math.max(...xs) + 1.0;
+            minY = Math.min(...ys) - 1.0;
+            maxY = Math.max(...ys) + 1.0;
+        }
+        
+        tikz.push("\\begin{tikzpicture}[scale=1.0, line cap=round, line join=round]");
+        if (selectedMode === 'autofit') {
+            tikz.push(`  \\clip (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});`);
+            tikz.push(`  \\useasboundingbox (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});`);
+            tikz.push("");
+        }
+        
+        // Coordinates
+        tikz.push("  % --- Coordinates ---");
+        Object.keys(points).forEach(label => {
+            const pt = points[label];
+            tikz.push(`  \\coordinate (${label}) at (${pt.x.toFixed(4)}, ${pt.y.toFixed(4)});`);
+        });
+        tikz.push("");
+        
+        // Helper style string
+        function getStyleStr(el) {
+            const styles = [];
+            const key = rgbKey(el.color);
+            if (key !== '0,0,0') {
+                styles.push(colorMap[key] || 'black');
+            }
+            if (el.thickness !== 5) {
+                styles.push(`line width=${(el.thickness * 0.25).toFixed(2)}pt`);
+            }
+            if (el.style) {
+                styles.push(el.style);
+            }
+            return styles.join(', ');
+        }
+        
+        // Polygons
+        const polyLines = [];
+        Object.keys(elements).forEach(label => {
+            const el = elements[label];
+            if (el.type === 'polygon' && el.visible) {
+                const cmd = commands[label];
+                if (cmd && cmd.name === 'Polygon') {
+                    const vertices = cmd.args;
+                    const styleStr = [];
+                    const objColor = el.elem.getElementsByTagName('objColor')[0];
+                    const alpha = objColor ? (parseFloat(objColor.getAttribute('alpha') || 50) / 255.0) : 0.15;
+                    const key = rgbKey(el.color);
+                    const col = colorMap[key] || 'black';
+                    
+                    styleStr.push(`fill=${col}`);
+                    styleStr.push(`fill opacity=${alpha.toFixed(2)}`);
+                    
+                    const borderStyle = getStyleStr(el);
+                    if (borderStyle) styleStr.push(borderStyle);
+                    
+                    const opt = styleStr.length > 0 ? `[${styleStr.join(', ')}]` : '';
+                    const vStr = vertices.map(v => `(${v})`).join(' -- ');
+                    polyLines.push(`  \\draw${opt} ${vStr} -- cycle;`);
+                }
+            }
+        });
+        
+        if (polyLines.length > 0) {
+            tikz.push("  % --- Polygons ---");
+            tikz.push(...polyLines);
+            tikz.push("");
+        }
+        
+        // Geometric shapes
+        const shapes = [];
+        Object.keys(elements).forEach(label => {
+            const el = elements[label];
+            if (!el.visible || el.type === 'polygon') return;
+            
+            const styleStr = getStyleStr(el);
+            const opt = styleStr ? `[${styleStr}]` : '';
+            
+            if (el.type === 'segment') {
+                const startElem = el.elem.getElementsByTagName('startPoint')[0];
+                const endElem = el.elem.getElementsByTagName('endPoint')[0];
+                if (startElem && endElem) {
+                    const p1 = startElem.getAttribute('exp');
+                    const p2 = endElem.getAttribute('exp');
+                    shapes.push(`  \\draw${opt} (${p1}) -- (${p2});`);
+                } else {
+                    const cmd = commands[label];
+                    if (cmd && cmd.args.length >= 2) {
+                        shapes.push(`  \\draw${opt} (${cmd.args[0]}) -- (${cmd.args[1]});`);
+                    }
+                }
+            } else if (el.type === 'line') {
+                const cmd = commands[label];
+                if (cmd && cmd.args.length >= 2) {
+                    shapes.push(`  \\draw${opt} ($(${cmd.args[0]})! -3 !(${cmd.args[1]})$) -- ($(${cmd.args[1]})! -3 !(${cmd.args[0]})$);`);
+                }
+            } else if (el.type === 'ray') {
+                const cmd = commands[label];
+                if (cmd && cmd.args.length >= 2) {
+                    shapes.push(`  \\draw${opt} (${cmd.args[0]}) -- ($(${cmd.args[0]})! 4 !(${cmd.args[1]})$);`);
+                }
+            } else if (el.type === 'vector') {
+                const vecStyles = [];
+                if (styleStr) vecStyles.push(styleStr);
+                vecStyles.push('->');
+                const vecOpt = `[${vecStyles.join(', ')}]`;
+                const cmd = commands[label];
+                if (cmd && cmd.args.length >= 2) {
+                    shapes.push(`  \\draw${vecOpt} (${cmd.args[0]}) -- (${cmd.args[1]});`);
+                } else {
+                    const coords = el.elem.getElementsByTagName('coords')[0];
+                    if (coords) {
+                        const vx = parseFloat(coords.getAttribute('x') || 0);
+                        const vy = parseFloat(coords.getAttribute('y') || 0);
+                        shapes.push(`  \\draw${vecOpt} (0,0) -- (${vx.toFixed(4)},${vy.toFixed(4)});`);
+                    }
+                }
+            } else if (el.type === 'circle') {
+                const cmd = commands[label];
+                if (cmd && cmd.args.length >= 2) {
+                    const center = cmd.args[0];
+                    const arg1 = cmd.args[1];
+                    if (points[arg1]) {
+                        const pc = points[center];
+                        const pr = points[arg1];
+                        const r = Math.hypot(pr.x - pc.x, pr.y - pc.y);
+                        shapes.push(`  \\draw${opt} (${center}) circle (${r.toFixed(4)});`);
+                    } else {
+                        let rVal = numerics[arg1];
+                        if (rVal === undefined) {
+                            rVal = parseFloat(arg1);
+                            if (isNaN(rVal)) rVal = 2.0;
+                        }
+                        shapes.push(`  \\draw${opt} (${center}) circle (${rVal.toFixed(4)});`);
+                    }
+                }
+            } else if (el.type === 'angle') {
+                const cmd = commands[label];
+                if (cmd && cmd.args.length >= 3) {
+                    const a = cmd.args[0], b = cmd.args[1], c = cmd.args[2];
+                    if (points[a] && points[b] && points[c]) {
+                        const pa = points[a], pb = points[b], pc = points[c];
+                        const angA = Math.atan2(pa.y - pb.y, pa.x - pb.x);
+                        const angC = Math.atan2(pc.y - pb.y, pc.x - pb.x);
+                        const degA = (angA * 180 / Math.PI) % 360;
+                        const degC = (angC * 180 / Math.PI) % 360;
+                        const colKey = rgbKey(el.color);
+                        const col = colorMap[colKey] || 'black';
+                        shapes.push(`  \\draw[color=${col}] (${b}) +(${degA.toFixed(1)}:0.40) arc (${degA.toFixed(1)}:${degC.toFixed(1)}:0.40);`);
+                    }
+                }
+            }
+        });
+        
+        if (shapes.length > 0) {
+            tikz.push("  % --- Geometric Shapes ---");
+            tikz.push(...shapes);
+            tikz.push("");
+        }
+        
+        // Points
+        tikz.push("  % --- Points Visuals ---");
+        Object.keys(points).forEach(label => {
+            const pt = points[label];
+            if (pt.visible) {
+                const key = rgbKey(pt.color);
+                const col = colorMap[key] || 'black';
+                const rPt = pt.ptSize * 0.3;
+                tikz.push(`  \\fill[${col}] (${label}) circle (${rPt.toFixed(2)}pt);`);
+            }
+            if (pt.labelVisible) {
+                tikz.push(`  \\draw (${label}) node[${pt.labelPos}] {$${label}$};`);
+            }
+        });
+        
+        tikz.push("\\end{tikzpicture}");
+        
+        let finalCode = tikz.join('\n');
+        if (selectedMode === 'standard') {
+            finalCode = `\\documentclass[a4paper]{article}
+\\usepackage[margin=2cm]{geometry}
+\\usepackage{tikz}
+\\usepackage{pgfplots}
+
+\\begin{document}
+\\pagestyle{empty}
+
+% Căn giữa hình bằng môi trường chuẩn của LaTeX
+\\begin{figure}[htbp]
+\\centering
+${finalCode}
+\\end{figure}
+
+\\end{document}`;
+        } else {
+            finalCode = `\\documentclass[a4paper]{article}
+\\usepackage[margin=2cm]{geometry}
+\\usepackage{tikz}
+\\usepackage{pgfplots}
+\\usetikzlibrary{calc}
+
+\\begin{document}
+\\pagestyle{empty}
+
+% Căn giữa dọc
+\\vspace*{\\fill}
+% Căn giữa ngang
+\\begin{center}
+${finalCode}
+\\end{center}
+\\vspace*{\\fill}
+
+\\end{document}`;
+        }
+        
+        return finalCode;
     }
 
     function loadApplet(materialId, base64) {
