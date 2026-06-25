@@ -1589,7 +1589,7 @@ ${finalCode}
             processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}');
             processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}');
             
-            processedCode = processedCode.replace(/\\clip\s*(\([^)]+\)\s*rectangle\s*\([^)]+\)\s*;)/, '\\useasboundingbox$1\n\\clip$1');
+            processedCode = processedCode.replace(/(\\clip\s*\([^)]+\)\s*rectangle\s*\([^)]+\)\s*;)/, '\\useasboundingbox$1\n$1');
 
             if (!showGrid) {
                 processedCode = processedCode.replace(/\\draw[^;]*?step=[^;]*?grid[^;]*?;/g, ''); 
@@ -1604,8 +1604,6 @@ ${finalCode}
 
             processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Khung bọc căn giữa hình\n\\begin{figure}[htbp]\n\\centering');
             processedCode = processedCode.replace(/\\end\{document\}/, '\\end{figure}\n\n\\end{document}');
-
-            processedCode = processedCode.replace(/\\begin\{tikzpicture\}\[(.*?)\]/, '\\begin{tikzpicture}[$1, scale=1.0]');
 
             return processedCode;
         }
