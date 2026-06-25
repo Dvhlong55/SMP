@@ -1266,7 +1266,7 @@
             if (pt.visible) {
                 const key = rgbKey(pt.color);
                 const col = colorMap[key] || 'black';
-                const rPt = pt.ptSize * 0.3;
+                const rPt = pt.ptSize * 0.5;
                 tikz.push(`  \\fill[${col}] (${label}) circle (${rPt.toFixed(2)}pt);`);
             }
             if (pt.labelVisible) {
@@ -1571,7 +1571,7 @@ ${finalCode}
                 });
             }
 
-            processedCode = processedCode.replace(/\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(([^)]+)\)\s*circle\s*\([^)]+pt\)/g, '\\fill[black] ($1) circle (1.5pt)');
+            processedCode = processedCode.replace(/\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(([^)]+)\)\s*circle\s*\([^)]+pt\)/g, '\\fill[black] ($1) circle (2.5pt)');
             
             let scaleStr = autoScale.toFixed(3);
             let tikzOptions = `shift={(${shiftX.toFixed(3)},${shiftY.toFixed(3)})}, scale=${scaleStr}`;
@@ -1655,7 +1655,7 @@ ${finalCode}
             }
 
             // 4. CHUẨN HÓA MÀU ĐIỂM
-            processedCode = processedCode.replace(/\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(([^)]+)\)\s*circle\s*\([^)]+pt\)/g, '\\fill[black] ($1) circle (1.5pt)');
+            processedCode = processedCode.replace(/\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(([^)]+)\)\s*circle\s*\([^)]+pt\)/g, '\\fill[black] ($1) circle (2.5pt)');
 
             // 5. BỌC FIGURE (Tuyệt chiêu Layout của bạn)
             processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Căn giữa hình bằng môi trường chuẩn của LaTeX\n\\begin{figure}[htbp]\n\\centering');

@@ -421,7 +421,7 @@ def main():
     for label, pt in points.items():
         if pt['visible']:
             col = color_map.get(pt['color'], 'black')
-            r_pt = pt['pt_size'] * 0.3 # scale down size
+            r_pt = pt['pt_size'] * 0.5 # scale down size
             tikz_lines.append(f"  \\fill[{col}] ({label}) circle ({r_pt:.2f}pt);")
             
         if pt['label_visible']:
