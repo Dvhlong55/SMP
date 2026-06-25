@@ -319,12 +319,14 @@
         }
 
         #ggb-container { 
-            position: absolute; 
-            top: -9999px; 
-            left: -9999px; 
-            width: 1920px; 
-            height: 1080px; 
-            visibility: hidden; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            z-index: -9999; 
+            opacity: 0.001;
+            pointer-events: none; 
         }
 
         .how-to {
@@ -1337,8 +1339,8 @@ ${finalCode}
         const selectedMode = document.querySelector('input[name="extractMode"]:checked').value;
 
         var params = {
-            width: 600,
-            height: 400,
+            width: window.innerWidth,
+            height: window.innerHeight,
             showToolBar: false,
             showAlgebraInput: false,
             showMenuBar: false,
