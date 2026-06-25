@@ -318,7 +318,14 @@
             box-shadow: 0 5px 16px rgba(92,225,230,0.1);
         }
 
-        #ggb-container { display: none; position: fixed; }
+        #ggb-container { 
+            position: absolute; 
+            top: -9999px; 
+            left: -9999px; 
+            width: 1920px; 
+            height: 1080px; 
+            visibility: hidden; 
+        }
 
         .how-to {
             background: var(--exam-paper-bg);
@@ -1584,13 +1591,19 @@ ${finalCode}
             return processedCode;
 
         } else {
+            // =========================================================
+            // CHẾ ĐỘ CHUẨN V3 (MỞ RỘNG MÀN HÌNH + CẮT VIỀN THÔNG MINH)
+            // =========================================================
             let processedCode = code;
 
+            // 1. CẬP NHẬT MÔI TRƯỜNG LATEX
             processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}');
             processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}');
             
-            processedCode = processedCode.replace(/(\\clip\s*\([^)]+\)\s*rectangle\s*\([^)]+\)\s*;)/, '\\useasboundingbox$1\n$1');
+            // 2. XÓA \clip CŨ CỦA GEOGEBRA (Vì nó đang bị rộng quá)
+            processedCode = processedCode.replace(/\\clip[\s\S]*?;/g, ''); 
 
+            // 3. DỌN RÁC TRỤC TỌA ĐỘ
             if (!showGrid) {
                 processedCode = processedCode.replace(/\\draw[^;]*?step=[^;]*?grid[^;]*?;/g, ''); 
             }
@@ -1602,6 +1615,31 @@ ${finalCode}
             }
             processedCode = processedCode.replace(/\\foreach[\s\S]*?;/g, ''); 
 
+            // 4. THUẬT TOÁN TÍNH TOÁN BOUNDING BOX (ÔM KHÍT HÌNH)
+            let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+            // Tìm tọa độ của tất cả các điểm và chữ (node)
+            let pointRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*(?:circle|node)/g;
+            let match;
+            let found = false;
+            
+            while ((match = pointRegex.exec(processedCode)) !== null) {
+                let px = parseFloat(match[1]); 
+                let py = parseFloat(match[2]);
+                minX = Math.min(minX, px); maxX = Math.max(maxX, px);
+                minY = Math.min(minY, py); maxY = Math.max(maxY, py);
+                found = true;
+            }
+
+            // Gắn khung cắt \clip mới sát với hình vẽ thực tế
+            if (found && minX !== Infinity) {
+                let pad = 1.5; // Khoảng cách từ hình đến viền
+                minX -= pad; maxX += pad; minY -= pad; maxY += pad;
+                
+                let newClip = `\\useasboundingbox (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});\n\\clip (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});`;
+                processedCode = processedCode.replace(/\\begin\{tikzpicture\}\[(.*?)\]/, `\\begin{tikzpicture}[$1]\n${newClip}`);
+            }
+
+            // 5. BỌC FIGURE (Môi trường chuẩn)
             processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Khung bọc căn giữa hình\n\\begin{figure}[htbp]\n\\centering');
             processedCode = processedCode.replace(/\\end\{document\}/, '\\end{figure}\n\n\\end{document}');
 
