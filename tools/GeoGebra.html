@@ -1585,13 +1585,14 @@ ${finalCode}
 
         } else {
             // =========================================================
-            // CHẾ ĐỘ CHUẨN (BẢN DUNG HỢP TIA THU NHỎ + CENTERING)
+            // CHẾ ĐỘ CHUẨN (ĐÃ FIX: Bỏ Tia Thu Nhỏ + Giữ nguyên tọa độ tuyệt đối)
             // =========================================================
             let processedCode = code;
 
             // 1. CẬP NHẬT MÔI TRƯỜNG LATEX
             processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}');
-            processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}');
+            // Thêm gói graphicx để hỗ trợ \resizebox chống tràn viền
+            processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}\n\\usepackage{graphicx}');
             
             // 🔥 XÓA LỆNH CLIP: Để \centering hoạt động chuẩn 100%
             processedCode = processedCode.replace(/\\clip[\s\S]*?;/g, ''); 
@@ -1608,57 +1609,15 @@ ${finalCode}
             }
             processedCode = processedCode.replace(/\\foreach[\s\S]*?;/g, ''); 
 
-            // 3. THUẬT TOÁN "TIA THU NHỎ" (Cứu tinh cho lỗi văng nhãn của showAllObjects)
-            let ndRegex = /\\draw\s*(?:\[color=[^\]]+\])?\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*node\s*(?:\[([^\]]*)\])?\s*\{([^}]+)\};/g;
-            let ndMatch;
-            let nodesArr = [];
-            while ((ndMatch = ndRegex.exec(processedCode)) !== null) {
-                nodesArr.push({
-                    x: parseFloat(ndMatch[1]), y: parseFloat(ndMatch[2]),
-                    text: ndMatch[4], matchStr: ndMatch[0]
-                });
-            }
+            // 3. THUẬT TOÁN "TIA THU NHỎ" ĐÃ BỊ XÓA BỎ
+            // Logic ép nhãn (dampening) đã được gỡ bỏ để giữ nguyên ý đồ đặt tọa độ điểm của tác giả trên GeoGebra.
 
-            let ptRegex = /\\(?:draw|fill)[^;]*?\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*circle\s*\(/g;
-            let ptMatch;
-            let canvasPoints = [];
-            while ((ptMatch = ptRegex.exec(processedCode)) !== null) {
-                canvasPoints.push({ x: parseFloat(ptMatch[1]), y: parseFloat(ptMatch[2]) });
-            }
-
-            if (nodesArr.length > 0 && canvasPoints.length > 0) {
-                nodesArr.forEach(node => {
-                    let closestPt = null;
-                    let minDist = Infinity;
-                    canvasPoints.forEach(pt => {
-                        let dist = Math.hypot(node.x - pt.x, node.y - pt.y);
-                        if (dist < minDist) {
-                            minDist = dist;
-                            closestPt = pt;
-                        }
-                    });
-
-                    if (closestPt) {
-                        let dx = node.x - closestPt.x;
-                        let dy = node.y - closestPt.y;
-                        
-                        // Hệ số kéo nhãn lại gần điểm (Thay đổi 0.25 nếu muốn nhãn xa/gần hơn chút xíu)
-                        let dampening = 0.25; 
-                        
-                        let fixedX = closestPt.x + (dx * dampening);
-                        let fixedY = closestPt.y + (dy * dampening);
-                        
-                        let replacement = `\\draw (${fixedX.toFixed(4)}, ${fixedY.toFixed(4)}) node[inner sep=1.5pt] {${node.text}};`;
-                        processedCode = processedCode.split(node.matchStr).join(replacement);
-                    }
-                });
-            }
-
-            // 4. CHUẨN HÓA MÀU ĐIỂM
+            // 4. CHUẨN HÓA MÀU ĐIỂM VÀ KÍCH THƯỚC ĐIỂM
             processedCode = processedCode.replace(/\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(([^)]+)\)\s*circle\s*\([^)]+pt\)/g, '\\fill[black] ($1) circle (2.5pt)');
 
-            // 5. BỌC FIGURE (Tuyệt chiêu Layout của bạn)
+            // 5. BỌC FIGURE (Môi trường chuẩn)
             processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Căn giữa hình bằng môi trường chuẩn của LaTeX\n\\begin{figure}[htbp]\n\\centering');
+
             processedCode = processedCode.replace(/\\end\{document\}/, '\\end{figure}\n\n\\end{document}');
 
             return processedCode;
