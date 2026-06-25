@@ -1593,19 +1593,13 @@ ${finalCode}
             return processedCode;
 
         } else {
-            // =========================================================
-            // CHẾ ĐỘ CHUẨN V4 (TỰ ĐỘNG TÍNH SCALE THÔNG MINH CHO A4)
-            // =========================================================
             let processedCode = code;
 
-            // 1. CẬP NHẬT MÔI TRƯỜNG LATEX
             processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}');
             processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}');
             
-            // 2. XÓA \clip CŨ CỦA GEOGEBRA
             processedCode = processedCode.replace(/\\clip[\s\S]*?;/g, ''); 
 
-            // 3. DỌN RÁC TRỤC TỌA ĐỘ
             if (!showGrid) {
                 processedCode = processedCode.replace(/\\draw[^;]*?step=[^;]*?grid[^;]*?;/g, ''); 
             }
@@ -1615,9 +1609,32 @@ ${finalCode}
                 processedCode = processedCode.replace(/\\draw[^;]*?\\footnotesize[^;]*?;/g, ''); 
                 processedCode = processedCode.replace(/\\draw[^;]*?node[^;]*?\{\$[xyO0]\$\};/g, ''); 
             }
-            processedCode = processedCode.replace(/\\foreach[\s\S]*?;/g, ''); 
+            processedCode = processedCode.replace(/\\foreach[\s\S]*?;/g, '');
+            if (exactPoints && exactPoints.length > 0) {
+                let exactMap = {};
+                exactPoints.forEach(p => { exactMap[p.name] = p; });
 
-            // 4. THUẬT TOÁN TÍNH TOÁN BOUNDING BOX VÀ TỰ ĐỘNG SCALE ĐÚNG TỶ LỆ
+                let stdNdRegex = /\\draw\s*(?:\[color=[^\]]+\])?\s*\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*node\s*(?:\[([^\]]*)\])?\s*\{([^}]+)\};/g;
+                let stdNdMatch;
+                let stdNodesArr = [];
+                while ((stdNdMatch = stdNdRegex.exec(processedCode)) !== null) {
+                    stdNodesArr.push({
+                        x: parseFloat(stdNdMatch[1]), y: parseFloat(stdNdMatch[2]),
+                        opts: stdNdMatch[3] || '', text: stdNdMatch[4], matchStr: stdNdMatch[0]
+                    });
+                }
+
+                stdNodesArr.forEach(node => {
+                    let cleanName = node.text.replace(/\$/g, '').trim();
+                    let exact = exactMap[cleanName];
+                    if (exact) {
+                        let anchor = node.opts && node.opts.trim() !== '' ? node.opts.trim() : 'above right';
+                        let replacement = `\\draw (${exact.x.toFixed(4)}, ${exact.y.toFixed(4)}) node[${anchor}] {${node.text}};`;
+                        processedCode = processedCode.split(node.matchStr).join(replacement);
+                    }
+                });
+            }
+
             let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
             let pointRegex = /\(\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\)\s*(?:circle|node)/g;
             let match;
@@ -1648,8 +1665,8 @@ ${finalCode}
                 
                 let newClip = `\\useasboundingbox (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});\n\\clip (${minX.toFixed(3)}, ${minY.toFixed(3)}) rectangle (${maxX.toFixed(3)}, ${maxY.toFixed(3)});`;
                 
-                // Ghi đè tham số scale tính toán tự động vào tùy chọn của tikzpicture
-                processedCode = processedCode.replace(/\\begin\{tikzpicture\}\[(.*?)\]/, `\\begin{tikzpicture}[$1, scale=${autoScale.toFixed(3)}]\n${newClip}`);
+                let scaleComment = `% ===================================================\n% SCALE = ${autoScale.toFixed(3)}  <-- chỉnh số này để thu/phóng hình (VD: 0.5 = thu nhỏ một nửa)\n% ===================================================`;
+                processedCode = processedCode.replace(/\\begin\{tikzpicture\}\[(.*?)\]/, `${scaleComment}\n\\begin{tikzpicture}[$1, scale=${autoScale.toFixed(3)}]\n${newClip}`);
             }
 
             processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Khung bọc căn giữa hình\n\\begin{figure}[htbp]\n\\centering');
@@ -1659,7 +1676,7 @@ ${finalCode}
         }
     }
 
-    var previewTheme = 'light'; // default is light (white background)
+    var previewTheme = 'light';
     var zoomLevel = 1.0;
 
     function syncPreviewThemeWithBody() {
