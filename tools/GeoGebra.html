@@ -1586,7 +1586,7 @@ ${finalCode}
         } else {
             let processedCode = code;
 
-            processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}');
+            processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}\n\\usepackage{graphicx}');
             processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}');
             
             processedCode = processedCode.replace(/\\clip[\s\S]*?;/g, ''); 
@@ -1600,11 +1600,9 @@ ${finalCode}
                 processedCode = processedCode.replace(/\\draw[^;]*?\\footnotesize[^;]*?;/g, ''); 
                 processedCode = processedCode.replace(/\\draw[^;]*?node[^;]*?\{\$[xyO0]\$\};/g, ''); 
             }
-            
-            processedCode = processedCode.replace(/\\foreach[\s\S]*?;/g, ''); 
-
-            processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Khung bọc căn giữa hình\n\\begin{figure}[htbp]\n\\centering');
-            processedCode = processedCode.replace(/\\end\{document\}/, '\\end{figure}\n\n\\end{document}');
+            processedCode = processedCode.replace(/\\foreach[\s\S]*?;/g, '');
+            processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Khung bọc căn giữa và thu phóng tỷ lệ chuẩn\n\\begin{figure}[htbp]\n\\centering\n\\resizebox{\\textwidth}{!}{%');
+            processedCode = processedCode.replace(/\\end\{document\}/, '}%\n\\end{figure}\n\n\\end{document}');
 
             return processedCode;
         }
