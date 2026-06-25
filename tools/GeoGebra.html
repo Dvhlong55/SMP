@@ -1584,20 +1584,13 @@ ${finalCode}
             return processedCode;
 
         } else {
-            // =========================================================
-            // CHẾ ĐỘ CHUẨN (ĐÃ FIX: Bỏ Tia Thu Nhỏ + Giữ nguyên tọa độ tuyệt đối)
-            // =========================================================
             let processedCode = code;
 
-            // 1. CẬP NHẬT MÔI TRƯỜNG LATEX
             processedCode = processedCode.replace(/\\documentclass\[.*?\]\{article\}/, '\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}');
-            // Thêm gói graphicx để hỗ trợ \resizebox chống tràn viền
-            processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}\n\\usepackage{graphicx}');
+            processedCode = processedCode.replace(/\\usepackage\{pgfplots\}/, '\\usepackage{tikz}\n\\usepackage{pgfplots}');
             
-            // 🔥 XÓA LỆNH CLIP: Để \centering hoạt động chuẩn 100%
             processedCode = processedCode.replace(/\\clip[\s\S]*?;/g, ''); 
 
-            // 2. DỌN RÁC TRỤC TỌA ĐỘ
             if (!showGrid) {
                 processedCode = processedCode.replace(/\\draw[^;]*?step=[^;]*?grid[^;]*?;/g, ''); 
             }
@@ -1607,17 +1600,10 @@ ${finalCode}
                 processedCode = processedCode.replace(/\\draw[^;]*?\\footnotesize[^;]*?;/g, ''); 
                 processedCode = processedCode.replace(/\\draw[^;]*?node[^;]*?\{\$[xyO0]\$\};/g, ''); 
             }
+            
             processedCode = processedCode.replace(/\\foreach[\s\S]*?;/g, ''); 
 
-            // 3. THUẬT TOÁN "TIA THU NHỎ" ĐÃ BỊ XÓA BỎ
-            // Logic ép nhãn (dampening) đã được gỡ bỏ để giữ nguyên ý đồ đặt tọa độ điểm của tác giả trên GeoGebra.
-
-            // 4. CHUẨN HÓA MÀU ĐIỂM VÀ KÍCH THƯỚC ĐIỂM
-            processedCode = processedCode.replace(/\\(?:draw|fill)\s*(?:\[[^\]]*\])?\s*\(([^)]+)\)\s*circle\s*\([^)]+pt\)/g, '\\fill[black] ($1) circle (2.5pt)');
-
-            // 5. BỌC FIGURE (Môi trường chuẩn)
-            processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Căn giữa hình bằng môi trường chuẩn của LaTeX\n\\begin{figure}[htbp]\n\\centering');
-
+            processedCode = processedCode.replace(/\\begin\{document\}/, '\\begin{document}\n\\pagestyle{empty}\n\n% Khung bọc căn giữa hình\n\\begin{figure}[htbp]\n\\centering');
             processedCode = processedCode.replace(/\\end\{document\}/, '\\end{figure}\n\n\\end{document}');
 
             return processedCode;
