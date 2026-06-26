@@ -2,7 +2,7 @@ const LEFT_TAGS_HTML = `
         <div class="side-widget fade-up">
             <ul class="side-widget-list">
                 <li><a href="/pages/toanhoc.html?filter=vmo">VMO <span>15</span></a></li>
-                <li><a href="/pages/toanhoc.html?filter=thcs">THCS <span>35</span></a></li>
+                <li><a href="/pages/toanhoc.html?filter=thcs">THCS <span>36</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=thpt">THPT <span>1</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=uni">Đại Học <span>1</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=challenge">Thách Thức <span>2</span></a></li>

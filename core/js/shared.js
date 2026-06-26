@@ -54,6 +54,13 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '[Quảng Ninh] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
+        date: 'June 26, 2026',
+        url: '/posts/math/dethichuyen/quangninh-chuyen-2026.html',
+        tags: ['Đề Thi', 'THCS'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '[Trường hè Vinh] Đề kiểm tra Trường hè Toán phổ thông Vinh năm 2026',
         date: 'June 22, 2026',
         url: '/posts/math/vmo/truong-he-vinh-2026.html',
@@ -653,7 +660,7 @@ const PostViewer = {
                 // Nhúng cả CSS và Nội dung vào cột phải trang chủ
                 let extractedStyles = '';
                 if (!document.querySelector('link[href*="post.css"]')) {
-                    extractedStyles += '<link rel="stylesheet" href="/core/css/post.css?v=33">';
+                    extractedStyles += '<link rel="stylesheet" href="/core/css/post.css?v=34">';
                 }
                 doc.querySelectorAll('style').forEach(s => extractedStyles += s.outerHTML);
                 doc.querySelectorAll('link[rel="stylesheet"]').forEach(l => {

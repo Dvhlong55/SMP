@@ -62,13 +62,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('link[href*="shared.css"]')) {
         const linkShared = document.createElement('link');
         linkShared.rel = 'stylesheet';
-        linkShared.href = depthPrefix + 'core/css/shared.css?v=33';
+        linkShared.href = depthPrefix + 'core/css/shared.css?v=34';
         head.appendChild(linkShared);
     }
     if (!document.querySelector('link[href*="post.css"]')) {
         const linkPost = document.createElement('link');
         linkPost.rel = 'stylesheet';
-        linkPost.href = depthPrefix + 'core/css/post.css?v=33';
+        linkPost.href = depthPrefix + 'core/css/post.css?v=34';
         head.appendChild(linkPost);
     }
     
@@ -167,11 +167,11 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // 6. Nhúng các script giao diện theo thứ tự tuần tự để tránh race condition
     const scriptsToLoad = [
-        depthPrefix + "core/js/sidebar-data.js?v=33",
-        depthPrefix + "core/js/layout.js?v=33",
-        depthPrefix + "core/js/shared.js?v=33",
-        depthPrefix + "core/js/saved.js?v=33",
-        depthPrefix + "core/js/comment.js?v=33"
+        depthPrefix + "core/js/sidebar-data.js?v=34",
+        depthPrefix + "core/js/layout.js?v=34",
+        depthPrefix + "core/js/shared.js?v=34",
+        depthPrefix + "core/js/saved.js?v=34",
+        depthPrefix + "core/js/comment.js?v=34"
     ];
 
     window.toggleFocusMode = function() {
