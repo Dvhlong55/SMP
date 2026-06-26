@@ -63,7 +63,7 @@ window.fetch = async function(...args) {
             return res;
         }
 
-        if (res.status === 401 || res.status === 403) {
+        if (res.status === 401 || (res.status === 403 && (!url || !url.includes('/api/admin/')))) {
             // Check if we are currently logged in to avoid intercepting non-logged-in requests
             if (localStorage.getItem('smp_access_token')) {
                 const debugUrl = typeof args[0] === 'string' ? args[0] : (args[0] && args[0].url);

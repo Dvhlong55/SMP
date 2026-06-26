@@ -60,7 +60,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     // Check admin access
-    checkAdminAccess(token, API_BASE_URL);
+    if (username && username.toUpperCase() === 'SMP') {
+        checkAdminAccess(token, API_BASE_URL);
+    }
 });
 
 function getPast365Days() {
