@@ -877,7 +877,7 @@ function initLayout() {
     // Load comments on any page that has the comment container
     if (document.getElementById('smp-comments-container') || document.getElementById('giscus-container')) {
         const script = document.createElement('script');
-        script.src = depthPrefix + 'core/js/comment.js?v=34';
+        script.src = depthPrefix + 'core/js/comment.js?v=35';
         document.body.appendChild(script);
     }
 

@@ -238,6 +238,20 @@ function initSmpComments() {
             color: var(--accent-cyan);
             background: rgba(92, 225, 230, 0.05);
         }
+        .latex-preview-toggle {
+            background: none; border: none; cursor: pointer;
+            font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-cyan); padding: 4px 0; margin-top: 6px; display: block;
+            opacity: 0.75; transition: opacity 0.2s;
+        }
+        .latex-preview-toggle:hover { opacity: 1; }
+        .latex-preview-box {
+            display: none; margin-top: 8px; background: rgba(92,225,230,0.04);
+            border: 1px solid rgba(92,225,230,0.15); border-radius: 8px;
+            padding: 14px 18px; line-height: 1.85; color: var(--text-dark); min-height: 50px;
+            max-width: 100%; overflow-x: auto; overflow-y: hidden;
+        }
+        .latex-preview-box.active { display: block; }
     `;
     const styleEl = document.createElement('style');
     styleEl.textContent = css;
@@ -368,6 +382,8 @@ function renderCommentsSection(postId, comments, container) {
             <div class="comment-error-msg" id="comment-form-error"></div>
             <form class="comment-form" onsubmit="handleSubmitComment(event, '${postId}')">
                 <textarea id="comment-textarea" placeholder="Nhập bình luận của bạn..." required></textarea>
+                <button type="button" class="latex-preview-toggle" onclick="toggleCommentPreview('comment-textarea', 'comment-preview')">Xem preview LaTeX</button>
+                <div class="latex-preview-box" id="comment-preview" style="margin-bottom: 12px;"></div>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 0.8rem; color: var(--text-muted);">Bình luận với tên: <strong style="color: var(--accent-cyan);">${escapeHTML(currentUsername)}</strong></span>
                     <button type="submit" class="comment-submit-btn">Gửi Bình Luận</button>
@@ -395,6 +411,14 @@ function renderCommentsSection(postId, comments, container) {
             </div>
         </div>
     `;
+    if (window.MathJax && window.MathJax.typesetClear && window.MathJax.typesetPromise) {
+        try {
+            window.MathJax.typesetClear([container]);
+            window.MathJax.typesetPromise([container]);
+        } catch (e) {
+            console.error("MathJax comment rendering error:", e);
+        }
+    }
 }
 
 // Handle submit new comment
@@ -609,3 +633,34 @@ window.approveComment = async function(commentId, postId, points) {
         alert(err.message);
     }
 };
+
+function toggleCommentPreview(textareaId, previewId) {
+    const box = document.getElementById(previewId);
+    const src = document.getElementById(textareaId);
+    if (!src || !box) return;
+    if (box.classList.contains('active')) {
+        box.classList.remove('active');
+        return;
+    }
+    box.classList.add('active');
+    const renderBox = () => {
+        const text = src.value.trim();
+        if (!text) {
+            box.innerHTML = '<span style="opacity:0.4;font-style:italic;font-size:0.85rem;">Bắt đầu gõ rồi bấm preview...</span>';
+        } else {
+            box.innerHTML = renderLatexText(text).replace(/\n/g, '<br>');
+            if (window.MathJax && window.MathJax.typesetClear && window.MathJax.typesetPromise) {
+                try {
+                    window.MathJax.typesetClear([box]);
+                    window.MathJax.typesetPromise([box]);
+                } catch (e) {
+                    console.error("MathJax preview error:", e);
+                }
+            }
+        }
+    };
+    renderBox();
+    src.oninput = () => { if (box.classList.contains('active')) renderBox(); };
+}
+
+window.toggleCommentPreview = toggleCommentPreview;
