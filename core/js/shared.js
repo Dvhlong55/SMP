@@ -538,6 +538,15 @@ const PostViewer = {
             this._currentUrl = null;
         });
 
+        // Hành động: Click ra ngoài để đóng modal xem trước bài viết
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+                setTimeout(() => { document.getElementById('modal-body').innerHTML = ''; }, 250);
+                this._currentUrl = null;
+            }
+        });
+
         // HÀNH ĐỘNG QUAN TRỌNG: Bấm nút ô vuông mũi tên
         document.getElementById('modal-open-new').addEventListener('click', () => {
             if (this._currentUrl) {
@@ -558,7 +567,7 @@ const PostViewer = {
             }
         });
 
-        // 2. Lắng nghe click link bài viết ngoài trang chủ (chỉ can thiệp đối với các công cụ tools)
+        // 2. Lắng nghe click link bài viết ngoài trang chủ
         document.addEventListener('click', async (e) => {
             // Xử lý khi ấn nút "Quay lại" bên trong bài viết
             const backBtn = e.target.closest('.exam-back-btn, .back-to-list-btn');
@@ -576,32 +585,66 @@ const PostViewer = {
             const url = link.getAttribute('href');
             if (!url || url.startsWith('http') || url.startsWith('#')) return;
 
-            // Chỉ can thiệp mở modal với các URL công cụ (tools)
-            if (url.includes('/tools/')) {
+            // Can thiệp mở modal với các URL công cụ (tools) hoặc bài viết (posts)
+            if (url.includes('/tools/') || url.includes('/posts/')) {
                 e.preventDefault();
                 this._currentUrl = url;
-                const embedUrl = url.split('#')[0] + (url.includes('?') ? '&' : '?') + 'embed=true' + (url.includes('#') ? '#' + url.split('#')[1] : '');
-                const iframeHTML = `
-                    <style>
-                        #modal-body { padding: 0 !important; overflow: hidden !important; }
-                        .tool-iframe-wrapper {
-                            padding: 2px;
-                            background: linear-gradient(135deg, rgba(92,225,230,0.5) 0%, rgba(167,139,250,0.5) 100%);
-                            border-radius: 14px;
-                            box-shadow: 0 10px 40px -10px rgba(92, 225, 230, 0.25);
-                            height: 88vh;
-                            width: 100%;
-                            box-sizing: border-box;
+
+                if (url.includes('/tools/')) {
+                    const embedUrl = url.split('#')[0] + (url.includes('?') ? '&' : '?') + 'embed=true' + (url.includes('#') ? '#' + url.split('#')[1] : '');
+                    const iframeHTML = `
+                        <style>
+                            #modal-body { padding: 0 !important; overflow: hidden !important; }
+                            .tool-iframe-wrapper {
+                                padding: 2px;
+                                background: linear-gradient(135deg, rgba(92,225,230,0.5) 0%, rgba(167,139,250,0.5) 100%);
+                                border-radius: 14px;
+                                box-shadow: 0 10px 40px -10px rgba(92, 225, 230, 0.25);
+                                height: 88vh;
+                                width: 100%;
+                                box-sizing: border-box;
+                            }
+                            .tool-iframe-wrapper iframe {
+                                width: 100%; height: 100%; display: block; border: none; border-radius: 12px;
+                            }
+                        </style>
+                        <div class="tool-iframe-wrapper">
+                            <iframe src="${embedUrl}"></iframe>
+                        </div>`;
+                    this.openHTML(iframeHTML);
+                    return;
+                }
+
+                // Đối với bài viết (posts), tải nội dung qua AJAX và hiển thị preview trong modal
+                try {
+                    const response = await fetch(url);
+                    const htmlText = await response.text();
+                    const doc = new DOMParser().parseFromString(htmlText, 'text/html');
+                    
+                    let extractedStyles = '';
+                    if (!document.querySelector('link[href*="post.css"]')) {
+                        extractedStyles += '<link rel="stylesheet" href="/core/css/post.css?v=35">';
+                    }
+                    doc.querySelectorAll('style').forEach(s => extractedStyles += s.outerHTML);
+                    doc.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
+                        if (!l.href.includes('shared.css') && !l.href.includes('post.css')) {
+                            extractedStyles += l.outerHTML;
                         }
-                        .tool-iframe-wrapper iframe {
-                            width: 100%; height: 100%; display: block; border: none; border-radius: 12px;
-                        }
-                    </style>
-                    <div class="tool-iframe-wrapper">
-                        <iframe src="${embedUrl}"></iframe>
-                    </div>`;
-                this.openHTML(iframeHTML);
-                return;
+                    });
+
+                    const newPostContent = doc.getElementById('smp-post-content');
+                    let realContent = '';
+                    if (newPostContent) {
+                        realContent = '<div class="exam-paper fade-up">' + newPostContent.innerHTML + '</div>';
+                    } else {
+                        realContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
+                    }
+
+                    const finalHTML = extractedStyles + '<div class="main-articles-body" style="padding:0; margin:0;">' + realContent + '</div>';
+                    this.openHTML(finalHTML);
+                } catch (error) {
+                    console.error(error);
+                }
             }
         });
     },

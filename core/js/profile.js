@@ -63,6 +63,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (username && username.toUpperCase() === 'SMP') {
         checkAdminAccess(token, API_BASE_URL);
     }
+
+    // Click outside to close admin inspector modal
+    const inspectorModal = document.getElementById('admin-inspector-modal');
+    if (inspectorModal) {
+        inspectorModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeUserInspector();
+            }
+        });
+    }
 });
 
 function getPast365Days() {
