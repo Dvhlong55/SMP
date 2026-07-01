@@ -44,12 +44,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const pagesIdx = segments.indexOf('pages');
     const postsIdx = segments.indexOf('posts');
     const toolsIdx = segments.indexOf('tools');
+    const challengesIdx = segments.indexOf('challenges');
     if (pagesIdx !== -1) {
         depth = segments.length - 1 - pagesIdx;
     } else if (postsIdx !== -1) {
         depth = segments.length - 1 - postsIdx;
     } else if (toolsIdx !== -1) {
         depth = segments.length - 1 - toolsIdx;
+    } else if (challengesIdx !== -1) {
+        depth = segments.length - 1 - challengesIdx;
     }
     if (depth > 0) {
         depthPrefix = '../'.repeat(depth);
