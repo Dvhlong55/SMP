@@ -40,7 +40,9 @@ function updateFileNames(files) {
         el.textContent = '';
     } else {
         el.innerHTML = files.map(f => {
-            const icon = f.type === 'application/pdf' ? '📄' : '🖼️';
+            const icon = f.type === 'application/pdf' 
+                ? `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>` 
+                : `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`;
             return `<span style="margin-right:12px">${icon} ${f.name}</span>`;
         }).join('<br>');
     }
@@ -118,9 +120,8 @@ async function sendSolution() {
     const icon = document.getElementById('sol-submit-icon');
     const text = document.getElementById('sol-submit-text');
 
-    // Loading state
     btn.disabled = true;
-    if (icon) icon.textContent = '⏳';
+    if (icon) icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; animation: spin360 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>';
     if (text) text.textContent = 'Đang tải file và gửi...';
     btn.style.opacity = '0.7';
 
@@ -176,7 +177,7 @@ async function sendSolution() {
         alert('❌ Đã xảy ra lỗi khi kết nối máy chủ!');
     } finally {
         btn.disabled = false;
-        if (icon) icon.textContent = '📨';
+        if (icon) icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>';
         if (text) text.textContent = 'Gửi Lời Giải (Đính Kèm Tự Động)';
         btn.style.opacity = '';
     }

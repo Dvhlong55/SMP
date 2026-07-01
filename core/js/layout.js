@@ -362,9 +362,9 @@
             
             <div class="topbar-actions" style="display: flex; gap: 10px; align-items: center;">
                 <div class="notif-wrapper" style="position: relative;">
-                    <button id="notif-toggle-btn" onclick="if(window.toggleNotificationDropdown) window.toggleNotificationDropdown(event)" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; transition:color 0.2s;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-muted)'" title="Thông báo">
-                        🔔
-                        <span id="top-notif-badge" style="display:none; position:absolute; top:0; right:0; background:var(--accent-red,#e74c3c); width:8px; height:8px; border-radius:50%;"></span>
+                    <button id="notif-toggle-btn" onclick="if(window.toggleNotificationDropdown) window.toggleNotificationDropdown(event)" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; display:inline-flex; align-items:center; justify-content:center; transition:color 0.2s;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-muted)'" title="Thông báo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block;"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                        <span id="top-notif-badge" style="display:none; position:absolute; top:-2px; right:-2px; background:var(--accent-red,#e74c3c); width:8px; height:8px; border-radius:50%;"></span>
                     </button>
                     <!-- Dropdown sẽ được inject qua notifications.js -->
                 </div>

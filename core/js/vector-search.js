@@ -89,15 +89,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="thread-item" onclick="openThread('${t.id}')" style="border-left: 3px solid var(--accent-purple);">
                     <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                         <div class="thread-item-title">${escapeHTML(t.title)}</div>
-                        <div style="font-size: 0.75rem; color: var(--accent-purple); background: rgba(185,117,255,0.1); padding: 3px 8px; border-radius: 12px; white-space: nowrap;">
-                            ✨ Độ khớp: ${similarity}%
+                        <div style="font-size: 0.75rem; color: var(--accent-purple); background: rgba(185,117,255,0.1); padding: 3px 8px; border-radius: 12px; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block;"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> Độ khớp: ${similarity}%
                         </div>
                     </div>
                     <div class="thread-item-meta" style="margin-top: 8px;">
-                        <span>✍️ ${escapeHTML(t.author_name || 'Ẩn danh')}</span>
-                        <span>👁 ${t.viewCount || 0} lượt xem</span>
-                        <span>💬 ${t.replyCount || 0} phản hồi</span>
-                        <span>🕐 ${window.formatDate ? window.formatDate(t.createdAt) : new Date(t.createdAt).toLocaleString()}</span>
+                        <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${escapeHTML(t.author_name || 'Ẩn danh')}</span>
+                        <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg> ${t.viewCount || 0} lượt xem</span>
+                        <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> ${t.replyCount || 0} phản hồi</span>
+                        <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${window.formatDate ? window.formatDate(t.createdAt) : new Date(t.createdAt).toLocaleString()}</span>
                     </div>
                     ${tagsHtml}
                 </div>

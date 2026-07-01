@@ -866,7 +866,7 @@ function initShared() {
                 .then(res => res.json())
                 .then(data => {
                     if (data.views !== undefined) {
-                        viewCountEl.textContent = `👁 ${data.views} lượt xem`;
+                        viewCountEl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg>${data.views} lượt xem`;
                     }
                 })
                 .catch(err => console.error('Error fetching view count:', err));

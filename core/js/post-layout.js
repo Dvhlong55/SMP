@@ -120,11 +120,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="exam-meta fade-up" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <span class="exam-tag">${breadcrumbHtml}</span>
                         <div style="display: inline-flex; align-items: center; gap: 14px;">
-                            <span id="post-view-count" style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">👁 -- lượt xem</span>
+                            <span id="post-view-count" style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; display: inline-flex; align-items: center; gap: 4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block;"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg> -- lượt xem</span>
                             <button id="focus-mode-btn"
                                 onclick="toggleFocusMode()"
                                 style="display:inline-flex; align-items:center; gap:6px; background:none; border:1px solid var(--border-light); color:var(--text-muted); padding:6px 14px; border-radius:20px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.8rem; transition: all 0.2s;">
-                                🔍 Đọc tập trung
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 2px;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Đọc tập trung
                             </button>
                             <button id="save-post-btn"
                                 onclick="(function(btn){ if(window.toggleSavePost){ const postId = window.location.pathname.split('/').pop().replace('.html',''); const title = document.title.replace(' - SMP','').trim(); toggleSavePost(postId, title, window.location.href, btn); } else { alert('Vui lòng đăng nhập để lưu bài viết!'); } })(this)"
