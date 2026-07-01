@@ -15,9 +15,9 @@ window.handleExpiredSession = function(errUrl) {
     // Show toast
     const toast = document.getElementById('auth-toast');
     if (toast) {
-        let msg = '⚠️ Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.';
+        let msg = 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.';
         if (errUrl) msg += ` (Lỗi tại: ${errUrl})`;
-        toast.textContent = msg;
+        toast.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>' + msg;
         toast.style.display = 'block';
         toast.style.background = 'rgba(231,76,60,0.95)';
         setTimeout(() => { toast.style.display = 'none'; toast.style.background = ''; }, 5000);
@@ -123,7 +123,10 @@ window.showAuthTab = function(tab) {
 function showMsg(id, text, isError = true) {
     const el = document.getElementById(id);
     if (!el) return;
-    el.innerText = text;
+    const icon = isError 
+        ? '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>' 
+        : '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><polyline points="20 6 9 17 4 12"/></svg>';
+    el.innerHTML = icon + text.replace(/^[✅❌]\s*/, '');
     el.style.display = 'block';
     el.className = 'auth-msg ' + (isError ? 'auth-msg-error' : 'auth-msg-success');
     setTimeout(() => { el.style.display = 'none'; }, 5000);
@@ -280,7 +283,7 @@ window.handleLogout = function() {
     // Show brief toast and reload page
     const toast = document.getElementById('auth-toast');
     if (toast) {
-        toast.textContent = '👋 Đã đăng xuất.';
+        toast.textContent = 'Đã đăng xuất.';
         toast.style.display = 'block';
         setTimeout(() => { 
             toast.style.display = 'none'; 
@@ -370,12 +373,12 @@ window.handleForgotPassword = async function(event) {
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || "Có lỗi xảy ra.");
         
-        msg.textContent = '✅ ' + data.message;
+        msg.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><polyline points="20 6 9 17 4 12"/></svg> ' + data.message;
         msg.className = 'auth-msg auth-msg-success';
         msg.style.display = 'block';
         document.getElementById('modal-forgot-email').value = '';
     } catch (err) {
-        msg.textContent = err.message;
+        msg.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg> ' + err.message;
         msg.className = 'auth-msg auth-msg-error';
         msg.style.display = 'block';
     } finally {
@@ -393,7 +396,7 @@ window.handleResetPassword = async function(event) {
     const msg = document.getElementById('modal-reset-msg');
     
     if (password !== confirm) {
-        msg.textContent = 'Mật khẩu xác nhận không khớp.';
+        msg.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg> Mật khẩu xác nhận không khớp.';
         msg.className = 'auth-msg auth-msg-error';
         msg.style.display = 'block';
         return;
@@ -411,7 +414,7 @@ window.handleResetPassword = async function(event) {
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || "Có lỗi xảy ra.");
         
-        msg.textContent = '✅ ' + data.message;
+        msg.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><polyline points="20 6 9 17 4 12"/></svg> ' + data.message;
         msg.className = 'auth-msg auth-msg-success';
         msg.style.display = 'block';
         
@@ -420,7 +423,7 @@ window.handleResetPassword = async function(event) {
             window.openAuthModal('login');
         }, 2000);
     } catch (err) {
-        msg.textContent = err.message;
+        msg.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg> ' + err.message;
         msg.className = 'auth-msg auth-msg-error';
         msg.style.display = 'block';
     } finally {

@@ -1,4 +1,4 @@
-    // 🚀 Init 🚀
+    // Init
     var cmEditor = null;
 
     document.addEventListener('DOMContentLoaded', function () {

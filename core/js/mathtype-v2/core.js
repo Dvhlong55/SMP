@@ -1,4 +1,4 @@
-﻿var mathFields = [];
+var mathFields = [];
 var activeMathField = null;
 
 // Undo/Redo System
@@ -280,7 +280,7 @@ function toggleZenMode() {
     var isZen = document.body.classList.contains('zen-mode');
     var t = document.getElementById('smp-toast');
     if (t) {
-        t.textContent = isZen ? '🌌 Đã bật Chế độ Zen' : '🌌 Đã tắt Chế độ Zen';
+        t.textContent = isZen ? 'Đã bật Chế độ Zen' : 'Đã tắt Chế độ Zen';
         t.style.opacity = '1';
         clearTimeout(t._t);
         t._t = setTimeout(function () { t.style.opacity = '0'; }, 2200);
@@ -303,7 +303,7 @@ function openInlineViInput() {
     
     var icon = document.createElement('span');
     icon.className = 'vi-icon';
-    icon.textContent = '🇻🇳';
+    icon.textContent = 'VI';
     
     var input = document.createElement('input');
     input.type = 'text';

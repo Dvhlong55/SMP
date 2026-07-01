@@ -319,17 +319,17 @@ function renderCommentsSection(postId, comments, container) {
             let likeBtn = '';
             if (token) {
                 if (isCommentAuthor) {
-                    likeBtn = comment.likeCount > 0 ? `<span style="font-size:0.75rem; color:var(--text-muted); margin-left: 12px; vertical-align: middle;">❤️ ${comment.likeCount}</span>` : '';
+                    likeBtn = comment.likeCount > 0 ? `<span style="font-size:0.75rem; color:#e74c3c; margin-left: 12px; vertical-align: middle;">♥ ${comment.likeCount}</span>` : '';
                 } else {
                     likeBtn = `
                         <button class="comment-like-btn" id="like-comment-${comment.id}" onclick="handleLikeComment('${comment.id}', '${postId}', this)"
                             style="border-color: ${comment.likedByMe ? '#e74c3c' : 'var(--border-light)'}; color: ${comment.likedByMe ? '#e74c3c' : 'var(--text-muted)'};">
-                            ${comment.likedByMe ? '❤️' : '♡'} <span>${comment.likeCount || 0}</span>
+                            ${comment.likedByMe ? '♥' : '♡'} <span>${comment.likeCount || 0}</span>
                         </button>
                     `;
                 }
             } else {
-                likeBtn = comment.likeCount > 0 ? `<span style="font-size:0.75rem; color:var(--text-muted); margin-left: 12px; vertical-align: middle;">❤️ ${comment.likeCount}</span>` : '';
+                likeBtn = comment.likeCount > 0 ? `<span style="font-size:0.75rem; color:#e74c3c; margin-left: 12px; vertical-align: middle;">♥ ${comment.likeCount}</span>` : '';
             }
 
             // Reply button logic
@@ -337,7 +337,7 @@ function renderCommentsSection(postId, comments, container) {
             if (token && !isCommentAuthor) {
                 replyBtn = `
                     <button class="comment-reply-btn" onclick="replyToCommentAuthor('${escapeHTML(comment.username)}')">
-                        ↩ Trả lời
+                        ↳ Trả lời
                     </button>
                 `;
             }
@@ -574,7 +574,7 @@ async function handleLikeComment(commentId, postId, btn) {
         if (data.liked) {
             btn.style.borderColor = '#e74c3c';
             btn.style.color = '#e74c3c';
-            btn.innerHTML = `❤️ <span>${data.likeCount}</span>`;
+            btn.innerHTML = `♥ <span>${data.likeCount}</span>`;
         } else {
             btn.style.borderColor = 'var(--border-light)';
             btn.style.color = 'var(--text-muted)';

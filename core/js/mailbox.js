@@ -110,7 +110,7 @@ async function sendSolution() {
     const fileInput = document.getElementById('sol-images');
 
     if (!name || !contact || !problem || !content || (fbEl && !fb)) {
-        alert('⚠ Vui lòng điền đầy đủ các trường bắt buộc (có dấu *)!');
+        alert('Vui lòng điền đầy đủ các trường bắt buộc (có dấu *)!');
         return;
     }
     
@@ -159,7 +159,7 @@ async function sendSolution() {
         const result = { status: 'success' };
         
         if (result.status === 'success') {
-            alert('✅ Lời giải và file đã được gửi thành công đến Google Drive của tác giả!');
+            alert('Lời giải và file đã được gửi thành công đến Google Drive của tác giả!');
             
             // Reset form
             document.getElementById('sol-name').value    = '';
@@ -169,12 +169,12 @@ async function sendSolution() {
             if (fileInput) fileInput.value = '';
             document.getElementById('file-names').innerHTML = '';
         } else {
-            alert('❌ Gửi thất bại: ' + result.message);
+            alert('Gửi thất bại: ' + result.message);
         }
 
     } catch (err) {
         console.error('GAS error:', err);
-        alert('❌ Đã xảy ra lỗi khi kết nối máy chủ!');
+        alert('Đã xảy ra lỗi khi kết nối máy chủ!');
     } finally {
         btn.disabled = false;
         if (icon) icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>';

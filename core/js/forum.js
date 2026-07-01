@@ -416,7 +416,7 @@ function applyFilters() {
         container.innerHTML = `
             <div style="text-align:center; padding:60px; border:1px dashed var(--border-light); border-radius:8px;">
                 <p style="color:var(--text-muted); font-size:1.1rem;">Không tìm thấy chủ đề nào phù hợp.</p>
-                <p style="color:var(--text-muted); font-size:0.85rem; margin-top:8px;">Hãy tạo chủ đề mới hoặc thử từ khóa khác! 🚀</p>
+                <p style="color:var(--text-muted); font-size:0.85rem; margin-top:8px;">Hãy tạo chủ đề mới hoặc thử từ khóa khác.</p>
             </div>`;
         return;
     }
@@ -496,8 +496,8 @@ async function openThread(threadId) {
                         ${!isAuthor && token ? `
                         <button id="like-thread-btn" onclick="toggleLikeThread('${thread.id}', this)"
                             style="background:none; border:1px solid ${thread.likedByMe ? '#e74c3c' : 'var(--border-light)'}; color:${thread.likedByMe ? '#e74c3c' : 'var(--text-muted)'}; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:0.8rem; transition:all 0.2s;">
-                            ${thread.likedByMe ? '❤️' : '♡'} <span id="like-thread-count">${thread.likeCount || 0}</span>
-                        </button>` : (thread.likeCount > 0 ? `<span style="font-size:0.8rem; color:var(--text-muted);">❤️ ${thread.likeCount}</span>` : '')}
+                            ${thread.likedByMe ? '♥' : '♡'} <span id="like-thread-count">${thread.likeCount || 0}</span>
+                        </button>` : (thread.likeCount > 0 ? `<span style="font-size:0.8rem; color:var(--text-muted);"><span style="color:#e74c3c; margin-right:4px;">♥</span>${thread.likeCount}</span>` : '')}
                         <button id="save-thread-btn"
                             data-id="${thread.id}"
                             data-title="${escapeHTML(thread.title)}"
@@ -544,8 +544,8 @@ async function openThread(threadId) {
                                 ${approveHtml}
                             </div>
                             <div class="post-actions">
-                                ${(!isReplyAuthor && token) ? `<button class="btn-like" id="like-reply-${r.id}" onclick="toggleLikeReply('${currentThreadId}','${r.id}',this)" style="background:none; border:1px solid ${r.likedByMe ? '#e74c3c' : 'var(--border-light)'}; color:${r.likedByMe ? '#e74c3c' : 'var(--text-muted)'}; padding:3px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem; transition:all 0.2s;">${r.likedByMe ? '❤️' : '♡'} <span>${r.likeCount || 0}</span></button>` : (r.likeCount > 0 ? `<span style="font-size:0.75rem;color:var(--text-muted);">❤️ ${r.likeCount}</span>` : '')}
-                                <button class="btn-secondary" onclick="replyToUser('${escapeHTML(r.author_name)}')" style="font-size:0.7rem; padding:3px 8px;">↩ Trả lời</button>
+                                ${(!isReplyAuthor && token) ? `<button class="btn-like" id="like-reply-${r.id}" onclick="toggleLikeReply('${currentThreadId}','${r.id}',this)" style="background:none; border:1px solid ${r.likedByMe ? '#e74c3c' : 'var(--border-light)'}; color:${r.likedByMe ? '#e74c3c' : 'var(--text-muted)'}; padding:3px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem; transition:all 0.2s;">${r.likedByMe ? '♥' : '♡'} <span>${r.likeCount || 0}</span></button>` : (r.likeCount > 0 ? `<span style="font-size:0.75rem;color:var(--text-muted);"><span style="color:#e74c3c; margin-right:4px;">♥</span> ${r.likeCount}</span>` : '')}
+                                <button class="btn-secondary" onclick="replyToUser('${escapeHTML(r.author_name)}')" style="font-size:0.7rem; padding:3px 8px;">↳ Trả lời</button>
                                 ${r.editHistory && r.editHistory.length > 0 ? `<button class="btn-secondary" onclick="showReplyHistory('${r.id}')" style="font-size:0.7rem;padding:3px 8px;display:inline-flex;align-items:center;justify-content:center;"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block;"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg></button>` : ''}
                                 ${isReplyAuthor ? `
                                     <button class="btn-secondary" style="font-size:0.7rem; padding:3px 8px;display:inline-flex;align-items:center;justify-content:center;" data-content="${escapeHTML(r.content)}" onclick="showEditReplyModal('${r.id}', this.dataset.content)"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block;"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
@@ -609,7 +609,7 @@ window.toggleLikeThread = async function(threadId, btn) {
         const data = await res.json();
         const countEl = btn.querySelector('span') || document.getElementById('like-thread-count');
         if (data.liked) {
-            btn.innerHTML = `❤️ <span>${data.likeCount}</span>`;
+            btn.innerHTML = `♥ <span>${data.likeCount}</span>`;
             btn.style.color = '#e74c3c';
             btn.style.borderColor = '#e74c3c';
         } else {
@@ -623,7 +623,7 @@ window.toggleLikeThread = async function(threadId, btn) {
 // ─── Like Reply ───────────────────────────────────────────────────────────
 window.toggleLikeReply = async function(threadId, replyId, btn) {
     const token = getToken();
-    if (!token) { alert('Vui lòng đăng nhập để tim bình luận!'); return; }
+    if (!token) { alert('Vui lòng đăng nhập để thích bình luận!'); return; }
     try {
         const res = await fetch(`${API_BASE}/api/forum/threads/${threadId}/replies/${replyId}/like`, {
             method: 'POST',
@@ -632,7 +632,7 @@ window.toggleLikeReply = async function(threadId, replyId, btn) {
         if (!res.ok) { const d = await res.json(); throw new Error(d.detail || 'Lỗi'); }
         const data = await res.json();
         if (data.liked) {
-            btn.innerHTML = `❤️ <span>${data.likeCount}</span>`;
+            btn.innerHTML = `♥ <span>${data.likeCount}</span>`;
             btn.style.color = '#e74c3c';
             btn.style.borderColor = '#e74c3c';
         } else {
