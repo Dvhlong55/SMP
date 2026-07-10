@@ -295,6 +295,28 @@
                 max-width: 100%;
             }
         }
+        
+        /* Layout cho Class Admin để Sidebar nằm khoảng trắng bên trái */
+        .class-admin-layout {
+            position: relative;
+            display: block;
+        }
+        .class-sidebar-container {
+            position: absolute;
+            top: 0;
+            right: 100%;
+            margin-right: 25px;
+            width: 250px;
+        }
+        @media (max-width: 1450px) {
+            .class-sidebar-container {
+                position: relative;
+                right: auto;
+                margin-right: 0;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -444,18 +466,20 @@
             
             <!-- Class Management Section -->
             <div id="class-admin-section" style="display: none;">
-                <div style="display: grid; grid-template-columns: 240px 1fr; gap: 20px; align-items: start;">
-                    <!-- Cột trái: Danh sách lớp -->
-                    <div class="settings-section" style="padding: 20px;">
-                        <h2 style="font-size: 1.1rem; margin-bottom: 15px;">Danh Sách Lớp</h2>
-                        <div id="class-list-container" style="display: flex; flex-direction: column; gap: 10px;">
-                            <!-- Class list renders here -->
+                <div class="class-admin-layout">
+                    <!-- Cột trái: Danh sách lớp (Absolute Positioned into the left whitespace) -->
+                    <div class="class-sidebar-container">
+                        <div class="settings-section" style="padding: 20px; margin-bottom: 0;">
+                            <h2 style="font-size: 1.1rem; margin-bottom: 15px;">Danh Sách Lớp</h2>
+                            <div id="class-list-container" style="display: flex; flex-direction: column; gap: 10px;">
+                                <!-- Class list renders here -->
+                            </div>
+                            <button class="btn-primary" style="margin-top: 15px; width: 100%; padding: 8px; font-size: 0.85rem;" onclick="promptCreateClass()">+ Lớp Mới</button>
                         </div>
-                        <button class="btn-primary" style="margin-top: 15px; width: 100%; padding: 8px; font-size: 0.85rem;" onclick="promptCreateClass()">+ Lớp Mới</button>
                     </div>
                     
                     <!-- Cột phải: Danh sách học viên rút gọn -->
-                    <div class="settings-section">
+                    <div class="settings-section" style="width: 100%; box-sizing: border-box;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                             <h2 style="margin: 0; border: none; padding: 0;" id="class-title-display">Chọn một lớp học</h2>
                             <button class="btn-primary" style="padding: 8px 16px; font-size: 0.85rem;" onclick="addNewStudentRow()">+ Học Viên</button>
@@ -528,9 +552,12 @@
                     </div>
                 </div>
 
-                <div style="text-align: right;">
-                    <button type="button" class="btn-primary" style="background: transparent; border: 1px solid var(--border-light); color: var(--text-muted); margin-right: 10px;" onclick="closeStudentModal()">Hủy</button>
-                    <button type="submit" class="btn-primary">Lưu Thay Đổi</button>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <button type="button" class="btn-primary" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.5); color: #ef4444;" onclick="deleteStudentFromModal()">Xóa Học Viên</button>
+                    <div>
+                        <button type="button" class="btn-primary" style="background: transparent; border: 1px solid var(--border-light); color: var(--text-muted); margin-right: 10px;" onclick="closeStudentModal()">Hủy</button>
+                        <button type="submit" class="btn-primary">Lưu Thay Đổi</button>
+                    </div>
                 </div>
             </form>
         </div>

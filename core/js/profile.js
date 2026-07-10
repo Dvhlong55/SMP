@@ -779,3 +779,31 @@ window.saveStudentFromModal = async function(e) {
         alert("Lỗi kết nối");
     }
 };
+
+window.deleteStudentFromModal = async function() {
+    const studentId = document.getElementById('modal-student-id').value;
+    if (!studentId) return;
+    
+    if (!confirm("Bạn có chắc chắn muốn xóa học viên này khỏi danh sách?")) {
+        return;
+    }
+    
+    const token = localStorage.getItem('smp_access_token');
+    const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
+    
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/admin/classes/students/${studentId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (res.ok) {
+            closeStudentModal();
+            fetchStudents(); // Refresh UI
+        } else {
+            alert("Lỗi khi xóa học viên");
+        }
+    } catch(err) {
+        alert("Lỗi kết nối khi xóa");
+    }
+};
