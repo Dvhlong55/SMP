@@ -283,20 +283,29 @@ async function checkAdminAccess(token, API_BASE_URL) {
 window.switchProfileTab = function(tab) {
     const userBtn = document.getElementById('tab-btn-user');
     const adminBtn = document.getElementById('tab-btn-admin');
+    const classBtn = document.getElementById('tab-btn-class');
     const userSec = document.getElementById('user-profile-section');
     const adminSec = document.getElementById('admin-dashboard-section');
+    const classSec = document.getElementById('class-admin-section');
+
+    userBtn.classList.remove('active');
+    adminBtn.classList.remove('active');
+    if(classBtn) classBtn.classList.remove('active');
+    userSec.style.display = 'none';
+    adminSec.style.display = 'none';
+    if(classSec) classSec.style.display = 'none';
 
     if (tab === 'user') {
         userBtn.classList.add('active');
-        adminBtn.classList.remove('active');
         userSec.style.display = 'block';
-        adminSec.style.display = 'none';
-    } else {
+    } else if (tab === 'admin') {
         adminBtn.classList.add('active');
-        userBtn.classList.remove('active');
         adminSec.style.display = 'block';
-        userSec.style.display = 'none';
         loadAdminDashboard();
+    } else if (tab === 'class') {
+        if(classBtn) classBtn.classList.add('active');
+        if(classSec) classSec.style.display = 'block';
+        loadClassDashboard();
     }
 };
 
@@ -528,3 +537,166 @@ async function adminPostRequest(endpoint, body) {
         alert("Lỗi kết nối.");
     }
 }
+
+// ============================================
+// CLASS ADMIN LOGIC
+// ============================================
+
+let currentClassId = null;
+let currentStudents = [];
+
+async function loadClassDashboard() {
+    const token = localStorage.getItem('smp_access_token');
+    const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
+    
+    try {
+        const classRes = await fetch(`${API_BASE_URL}/api/admin/classes`, { headers: { 'Authorization': `Bearer ${token}` } });
+        if (classRes.ok) {
+            const classes = await classRes.json();
+            if (classes.length > 0) {
+                currentClassId = classes[0].id;
+                await fetchStudents();
+            }
+        }
+    } catch (e) {
+        console.error("Failed to load class info", e);
+    }
+}
+
+async function fetchStudents() {
+    if (!currentClassId) return;
+    const token = localStorage.getItem('smp_access_token');
+    const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
+    
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/admin/classes/${currentClassId}/students`, { headers: { 'Authorization': `Bearer ${token}` } });
+        if (res.ok) {
+            currentStudents = await res.json();
+            renderClassTable();
+        }
+    } catch (e) {
+        console.error("Failed to fetch students", e);
+    }
+}
+
+function renderClassTable() {
+    const tbody = document.getElementById('class-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    
+    currentStudents.forEach(st => {
+        const tr = document.createElement('tr');
+        tr.dataset.id = st.id;
+        
+        const fr = st.fee_records || {};
+        const t6 = fr['6'] || '';
+        const t7 = fr['7'] || '';
+        const t8 = fr['8'] || '';
+        
+        // Tính tổng đã thu. Giả định nếu ô chứa chữ "đã đóng", ta cộng 800 (4 buổi x 200).
+        // Nếu ô chứa số tiền nợ, ví dụ "nợ 200", thì người ta thu 600.
+        // Đây chỉ là một ví dụ đơn giản.
+        let tong = 0;
+        ['6', '7', '8'].forEach(m => {
+            let val = (fr[m] || '').toLowerCase();
+            if (val.includes('đã đóng')) tong += 800;
+            else if (val.includes('nợ')) {
+                const match = val.match(/\d+/);
+                if (match) {
+                    tong += (800 - parseInt(match[0]));
+                }
+            } else if (val.includes('800')) {
+                tong += 800;
+            }
+        });
+        
+        tr.innerHTML = `
+            <td contenteditable="true" onblur="saveStudentCell(this, 'full_name')">${st.full_name}</td>
+            <td contenteditable="true" onblur="saveStudentCell(this, 'birth_year')">${st.birth_year || ''}</td>
+            <td contenteditable="true" onblur="saveStudentCell(this, 'phone')">${st.phone}</td>
+            <td contenteditable="true" onblur="saveStudentCell(this, 'email')">${st.email}</td>
+            <td contenteditable="true" style="background-color: ${t6.toLowerCase().includes('đã đóng') || t6.includes('800') ? '#ffeb3b' : 'transparent'}; color: #000;" onblur="saveStudentCell(this, 'fee_records.6')">${t6}</td>
+            <td contenteditable="true" style="background-color: ${t7.toLowerCase().includes('đã đóng') || t7.includes('800') ? '#ffeb3b' : 'transparent'}; color: #000;" onblur="saveStudentCell(this, 'fee_records.7')">${t7}</td>
+            <td contenteditable="true" style="background-color: ${t8.toLowerCase().includes('đã đóng') || t8.includes('800') ? '#ffeb3b' : 'transparent'}; color: #000;" onblur="saveStudentCell(this, 'fee_records.8')">${t8}</td>
+            <td style="font-weight: bold; color: var(--accent-cyan);">${tong}k</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+window.addNewStudentRow = async function() {
+    if (!currentClassId) return;
+    const token = localStorage.getItem('smp_access_token');
+    const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
+    
+    const newStudent = {
+        full_name: "Tên Học Viên Mới",
+        birth_year: 2010,
+        phone: "",
+        email: ""
+    };
+    
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/admin/classes/${currentClassId}/students`, {
+            method: 'POST',
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newStudent)
+        });
+        if (res.ok) {
+            await fetchStudents(); // reload
+        }
+    } catch(e) {}
+};
+
+window.saveStudentCell = async function(cell, field) {
+    const tr = cell.closest('tr');
+    const studentId = tr.dataset.id;
+    if (!studentId) return;
+    
+    let newValue = cell.innerText.trim();
+    
+    const token = localStorage.getItem('smp_access_token');
+    const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
+    
+    const st = currentStudents.find(x => x.id === studentId);
+    if (!st) return;
+    
+    const updatePayload = {};
+    
+    if (field.startsWith('fee_records.')) {
+        const month = field.split('.')[1];
+        if (!st.fee_records) st.fee_records = {};
+        st.fee_records[month] = newValue;
+        updatePayload.fee_records = st.fee_records;
+        
+        // Auto background update visually for instant feedback
+        if (newValue.toLowerCase().includes('đã đóng') || newValue.includes('800')) {
+            cell.style.backgroundColor = '#ffeb3b';
+            cell.style.color = '#000';
+        } else {
+            cell.style.backgroundColor = 'transparent';
+            cell.style.color = 'inherit';
+        }
+    } else {
+        if (field === 'birth_year') newValue = parseInt(newValue) || 0;
+        updatePayload[field] = newValue;
+    }
+    
+    try {
+        await fetch(`${API_BASE_URL}/api/admin/classes/students/${studentId}`, {
+            method: 'PUT',
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatePayload)
+        });
+        
+        // re-render to update the sum
+        fetchStudents();
+        
+    } catch(e) {}
+};
