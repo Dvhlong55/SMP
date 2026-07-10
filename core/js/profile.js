@@ -544,6 +544,7 @@ async function adminPostRequest(endpoint, body) {
 
 let currentClassId = null;
 let currentStudents = [];
+let allClasses = [];
 
 async function loadClassDashboard() {
     const token = localStorage.getItem('smp_access_token');
@@ -552,16 +553,72 @@ async function loadClassDashboard() {
     try {
         const classRes = await fetch(`${API_BASE_URL}/api/admin/classes`, { headers: { 'Authorization': `Bearer ${token}` } });
         if (classRes.ok) {
-            const classes = await classRes.json();
-            if (classes.length > 0) {
-                currentClassId = classes[0].id;
-                await fetchStudents();
+            allClasses = await classRes.json();
+            renderClassList();
+            if (allClasses.length > 0) {
+                selectClass(allClasses[0].id);
             }
         }
     } catch (e) {
         console.error("Failed to load class info", e);
     }
 }
+
+function renderClassList() {
+    const container = document.getElementById('class-list-container');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    allClasses.forEach(cls => {
+        const btn = document.createElement('button');
+        btn.className = `admin-tab-btn ${cls.id === currentClassId ? 'active' : ''}`;
+        btn.style.width = '100%';
+        btn.style.textAlign = 'left';
+        btn.style.padding = '12px 16px';
+        btn.style.display = 'block';
+        btn.style.marginBottom = '4px';
+        btn.textContent = cls.name;
+        btn.onclick = () => selectClass(cls.id);
+        container.appendChild(btn);
+    });
+}
+
+async function selectClass(classId) {
+    currentClassId = classId;
+    renderClassList(); // Update active state
+    
+    const cls = allClasses.find(c => c.id === classId);
+    if (cls) {
+        const title = document.getElementById('class-title-display');
+        if (title) title.textContent = `Danh sách: ${cls.name}`;
+    }
+    
+    await fetchStudents();
+}
+
+window.promptCreateClass = async function() {
+    const name = prompt("Nhập tên lớp học mới:");
+    if (!name || name.trim() === "") return;
+    
+    const token = localStorage.getItem('smp_access_token');
+    const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
+    
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/admin/classes`, {
+            method: 'POST',
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: name.trim() })
+        });
+        if (res.ok) {
+            loadClassDashboard();
+        }
+    } catch (e) {
+        alert("Lỗi khi tạo lớp");
+    }
+};
 
 async function fetchStudents() {
     if (!currentClassId) return;
@@ -579,46 +636,47 @@ async function fetchStudents() {
     }
 }
 
+function calculateTotalFee(fee_records) {
+    let tong = 0;
+    ['6', '7', '8'].forEach(m => {
+        let val = (fee_records[m] || '').toLowerCase();
+        if (val.includes('đã đóng')) tong += 800;
+        else if (val.includes('nợ')) {
+            const match = val.match(/\d+/);
+            if (match) {
+                tong += (800 - parseInt(match[0]));
+            }
+        } else if (val.includes('800')) {
+            tong += 800;
+        }
+    });
+    return tong;
+}
+
 function renderClassTable() {
     const tbody = document.getElementById('class-tbody');
     if (!tbody) return;
     tbody.innerHTML = '';
     
+    if (currentStudents.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 20px;">Chưa có học viên nào</td></tr>';
+        return;
+    }
+    
     currentStudents.forEach(st => {
+        const tong = calculateTotalFee(st.fee_records || {});
+        
         const tr = document.createElement('tr');
-        tr.dataset.id = st.id;
+        tr.style.cursor = 'pointer';
+        tr.onclick = () => window.openStudentModal(st.id);
         
-        const fr = st.fee_records || {};
-        const t6 = fr['6'] || '';
-        const t7 = fr['7'] || '';
-        const t8 = fr['8'] || '';
-        
-        // Tính tổng đã thu. Giả định nếu ô chứa chữ "đã đóng", ta cộng 800 (4 buổi x 200).
-        // Nếu ô chứa số tiền nợ, ví dụ "nợ 200", thì người ta thu 600.
-        // Đây chỉ là một ví dụ đơn giản.
-        let tong = 0;
-        ['6', '7', '8'].forEach(m => {
-            let val = (fr[m] || '').toLowerCase();
-            if (val.includes('đã đóng')) tong += 800;
-            else if (val.includes('nợ')) {
-                const match = val.match(/\d+/);
-                if (match) {
-                    tong += (800 - parseInt(match[0]));
-                }
-            } else if (val.includes('800')) {
-                tong += 800;
-            }
-        });
+        // Thêm hover effect
+        tr.onmouseover = () => { tr.style.backgroundColor = 'rgba(255,255,255,0.05)'; };
+        tr.onmouseout = () => { tr.style.backgroundColor = 'transparent'; };
         
         tr.innerHTML = `
-            <td contenteditable="true" onblur="saveStudentCell(this, 'full_name')">${st.full_name}</td>
-            <td contenteditable="true" onblur="saveStudentCell(this, 'birth_year')">${st.birth_year || ''}</td>
-            <td contenteditable="true" onblur="saveStudentCell(this, 'phone')">${st.phone}</td>
-            <td contenteditable="true" onblur="saveStudentCell(this, 'email')">${st.email}</td>
-            <td contenteditable="true" style="background-color: ${t6.toLowerCase().includes('đã đóng') || t6.includes('800') ? '#ffeb3b' : 'transparent'}; color: #000;" onblur="saveStudentCell(this, 'fee_records.6')">${t6}</td>
-            <td contenteditable="true" style="background-color: ${t7.toLowerCase().includes('đã đóng') || t7.includes('800') ? '#ffeb3b' : 'transparent'}; color: #000;" onblur="saveStudentCell(this, 'fee_records.7')">${t7}</td>
-            <td contenteditable="true" style="background-color: ${t8.toLowerCase().includes('đã đóng') || t8.includes('800') ? '#ffeb3b' : 'transparent'}; color: #000;" onblur="saveStudentCell(this, 'fee_records.8')">${t8}</td>
-            <td style="font-weight: bold; color: var(--accent-cyan);">${tong}k</td>
+            <td style="font-weight: bold; color: var(--text-dark);">${st.full_name}</td>
+            <td style="text-align: right; font-weight: bold; color: var(--accent-cyan);">${tong}k</td>
         `;
         tbody.appendChild(tr);
     });
@@ -651,52 +709,73 @@ window.addNewStudentRow = async function() {
     } catch(e) {}
 };
 
-window.saveStudentCell = async function(cell, field) {
-    const tr = cell.closest('tr');
-    const studentId = tr.dataset.id;
-    if (!studentId) return;
+window.openStudentModal = function(studentId) {
+    const st = currentStudents.find(x => x.id === studentId);
+    if (!st) return;
     
-    let newValue = cell.innerText.trim();
+    document.getElementById('modal-student-id').value = st.id;
+    document.getElementById('modal-full-name').value = st.full_name || '';
+    document.getElementById('modal-birth-year').value = st.birth_year || '';
+    document.getElementById('modal-phone').value = st.phone || '';
+    document.getElementById('modal-email').value = st.email || '';
+    
+    const fr = st.fee_records || {};
+    document.getElementById('modal-fee-6').value = fr['6'] || '';
+    document.getElementById('modal-fee-7').value = fr['7'] || '';
+    document.getElementById('modal-fee-8').value = fr['8'] || '';
+    
+    const modal = document.getElementById('student-detail-modal');
+    modal.style.display = 'flex';
+    void modal.offsetWidth; // trigger reflow
+    modal.style.opacity = '1';
+    modal.querySelector('div').style.transform = 'translateY(0)';
+};
+
+window.closeStudentModal = function() {
+    const modal = document.getElementById('student-detail-modal');
+    modal.style.opacity = '0';
+    modal.querySelector('div').style.transform = 'translateY(20px)';
+    setTimeout(() => { modal.style.display = 'none'; }, 300);
+};
+
+window.saveStudentFromModal = async function(e) {
+    e.preventDefault();
+    
+    const studentId = document.getElementById('modal-student-id').value;
+    if (!studentId) return;
     
     const token = localStorage.getItem('smp_access_token');
     const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
     
-    const st = currentStudents.find(x => x.id === studentId);
-    if (!st) return;
-    
-    const updatePayload = {};
-    
-    if (field.startsWith('fee_records.')) {
-        const month = field.split('.')[1];
-        if (!st.fee_records) st.fee_records = {};
-        st.fee_records[month] = newValue;
-        updatePayload.fee_records = st.fee_records;
-        
-        // Auto background update visually for instant feedback
-        if (newValue.toLowerCase().includes('đã đóng') || newValue.includes('800')) {
-            cell.style.backgroundColor = '#ffeb3b';
-            cell.style.color = '#000';
-        } else {
-            cell.style.backgroundColor = 'transparent';
-            cell.style.color = 'inherit';
+    const payload = {
+        full_name: document.getElementById('modal-full-name').value.trim(),
+        birth_year: parseInt(document.getElementById('modal-birth-year').value) || 0,
+        phone: document.getElementById('modal-phone').value.trim(),
+        email: document.getElementById('modal-email').value.trim(),
+        fee_records: {
+            '6': document.getElementById('modal-fee-6').value.trim(),
+            '7': document.getElementById('modal-fee-7').value.trim(),
+            '8': document.getElementById('modal-fee-8').value.trim()
         }
-    } else {
-        if (field === 'birth_year') newValue = parseInt(newValue) || 0;
-        updatePayload[field] = newValue;
-    }
+    };
     
     try {
-        await fetch(`${API_BASE_URL}/api/admin/classes/students/${studentId}`, {
+        const res = await fetch(`${API_BASE_URL}/api/admin/classes/students/${studentId}`, {
             method: 'PUT',
             headers: { 
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(updatePayload)
+            body: JSON.stringify(payload)
         });
         
-        // re-render to update the sum
-        fetchStudents();
-        
-    } catch(e) {}
+        if (res.ok) {
+            closeStudentModal();
+            fetchStudents(); // Refresh UI
+        } else {
+            alert("Lỗi khi lưu thông tin");
+        }
+    } catch(err) {
+        alert("Lỗi kết nối");
+    }
 };
