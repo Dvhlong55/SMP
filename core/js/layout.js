@@ -325,6 +325,7 @@
                 <a href="/index.html">&#x2302; Home</a>
                 <a href="/pages/toanhoc.html">&#x2211; Math</a>
                 <a href="/pages/nonmath.html">&#x2734; Non Math</a>
+                <a href="/pages/class.html">&#x1F4DA; Class</a>
                 <a href="/pages/forum.html">⧉ Forum</a>
                 <a href="/pages/saved.html">★ Saved</a>
                 <a href="#" id="sidebar-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">&#x2637; Login</a>
@@ -343,6 +344,7 @@
             <a href="/index.html">&#x2302; Home</a>
             <a href="/pages/toanhoc.html">&#x2211; Math</a>
             <a href="/pages/nonmath.html">&#x2734; Non Math</a>
+            <a href="/pages/class.html">&#x1F4DA; Class</a>
             <a href="/pages/forum.html">⧉ Forum</a>
             <a href="/pages/saved.html">★ Saved</a>
         </nav>
@@ -401,6 +403,10 @@
         <a href="/pages/nonmath.html">
             <span class="icon">&#x2734;</span>
             <span class="label">Non Math</span>
+        </a>
+        <a href="/pages/class.html">
+            <span class="icon">&#x1F4DA;</span>
+            <span class="label">Class</span>
         </a>
     </nav>`;
 

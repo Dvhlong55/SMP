@@ -335,7 +335,7 @@
             <div id="admin-tab-container" class="admin-tab-nav" style="display: none;">
                 <button class="admin-tab-btn active" id="tab-btn-user" onclick="switchProfileTab('user')">Hồ Sơ Của Tôi</button>
                 <button class="admin-tab-btn" id="tab-btn-admin" onclick="switchProfileTab('admin')">Quản Trị Hệ Thống</button>
-                <button class="admin-tab-btn" id="tab-btn-class" onclick="switchProfileTab('class')">Class</button>
+                <a class="admin-tab-btn" href="/pages/class.html" target="_blank" style="text-decoration: none; display: inline-block; box-sizing: border-box;">Class ↗</a>
             </div>
 
             <div id="user-profile-section">
@@ -464,104 +464,7 @@
                 </div>
             </div>
             
-            <!-- Class Management Section -->
-            <div id="class-admin-section" style="display: none;">
-                <div class="class-admin-layout">
-                    <!-- Cột trái: Danh sách lớp (Absolute Positioned into the left whitespace) -->
-                    <div class="class-sidebar-container">
-                        <div class="settings-section" style="padding: 20px; margin-bottom: 0;">
-                            <h2 style="font-size: 1.1rem; margin-bottom: 15px;">Danh Sách Lớp</h2>
-                            <div id="class-list-container" style="display: flex; flex-direction: column; gap: 10px;">
-                                <!-- Class list renders here -->
-                            </div>
-                            <button class="btn-primary" style="margin-top: 15px; width: 100%; padding: 8px; font-size: 0.85rem;" onclick="promptCreateClass()">+ Lớp Mới</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Cột phải: Danh sách học viên rút gọn -->
-                    <div class="settings-section" style="width: 100%; box-sizing: border-box;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                            <h2 style="margin: 0; border: none; padding: 0;" id="class-title-display">Chọn một lớp học</h2>
-                            <button class="btn-primary" style="padding: 8px 16px; font-size: 0.85rem;" onclick="addNewStudentRow()">+ Học Viên</button>
-                        </div>
-                        
-                        <div style="overflow-x: auto;">
-                            <table class="admin-users-table" id="class-table" style="min-width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th>Họ và Tên</th>
-                                        <th style="width: 150px; text-align: right;">Tổng Tiền</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="class-tbody">
-                                    <!-- Rendered dynamically -->
-                                    <tr><td colspan="2" style="text-align: center; color: var(--text-muted);">Vui lòng chọn lớp</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-
-    <!-- Student Detail Modal (Form) -->
-    <div id="student-detail-modal" style="display: none; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.75); z-index: 9999; opacity: 0; transition: opacity 0.3s; padding: 20px; box-sizing: border-box; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);">
-        <div style="background: var(--card-bg, #0b1111); border: 1px solid var(--border-light, #222); border-radius: 12px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 35px; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.6); transform: translateY(20px); transition: transform 0.3s;">
-            <button onclick="closeStudentModal()" style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.05); border: none; color: var(--text-muted); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: background 0.2s;">&times;</button>
-            <h2 style="font-family: 'Playfair Display', serif; color: var(--text-dark); margin-top: 0; margin-bottom: 25px; text-align: center; font-size: 1.5rem;">Sơ Yếu Lý Lịch Học Viên</h2>
-            
-            <form id="student-detail-form" onsubmit="saveStudentFromModal(event)">
-                <input type="hidden" id="modal-student-id">
-                
-                <h3 style="color: var(--accent-cyan); margin-bottom: 15px; font-size: 1.1rem; border-bottom: 1px solid rgba(92,225,230,0.2); padding-bottom: 5px;">Thông tin cá nhân</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
-                    <div class="form-group" style="grid-column: span 2; margin-bottom: 0;">
-                        <label>Họ và Tên</label>
-                        <input type="text" id="modal-full-name" required>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label>Năm sinh</label>
-                        <input type="number" id="modal-birth-year">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label>Số điện thoại Zalo</label>
-                        <input type="text" id="modal-phone">
-                    </div>
-                    <div class="form-group" style="grid-column: span 2; margin-bottom: 0;">
-                        <label>Email</label>
-                        <input type="email" id="modal-email">
-                    </div>
-                </div>
-
-                <h3 style="color: var(--accent-gold); margin-bottom: 15px; font-size: 1.1rem; border-bottom: 1px solid rgba(201,169,110,0.2); padding-bottom: 5px;">Lịch sử học phí</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Ghi "đã đóng" hoặc "800" để tính tổng. Ghi "nợ 200" để tự động trừ tiền.</p>
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px;">
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label>Tháng 6</label>
-                        <input type="text" id="modal-fee-6">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label>Tháng 7</label>
-                        <input type="text" id="modal-fee-7">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label>Tháng 8</label>
-                        <input type="text" id="modal-fee-8">
-                    </div>
-                </div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <button type="button" class="btn-primary" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.5); color: #ef4444;" onclick="deleteStudentFromModal()">Xóa Học Viên</button>
-                    <div>
-                        <button type="button" class="btn-primary" style="background: transparent; border: 1px solid var(--border-light); color: var(--text-muted); margin-right: 10px;" onclick="closeStudentModal()">Hủy</button>
-                        <button type="submit" class="btn-primary">Lưu Thay Đổi</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+            <!-- Class Admin and Modal moved to class.html -->
             
         </div>
     </div>
