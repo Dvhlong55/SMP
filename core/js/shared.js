@@ -23,6 +23,7 @@ window.DarkMode = {
         const saved = localStorage.getItem('smp-dark-mode');
         if (saved === 'true') this.enable(false);
         else if (saved === 'false') this.disable(false);
+        else this.disable(false); // explicitly default to light mode
         this.bindToggle();
     },
     enable(save = true) {

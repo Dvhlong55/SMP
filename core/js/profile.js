@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Set theme toggle button
             const themeToggleBtn = document.getElementById('profile-dark-toggle');
             if (themeToggleBtn) {
-                const theme = user.theme_preference || 'dark';
+                const theme = user.theme_preference || 'light';
                 if (window.DarkMode) {
                     if (theme === 'dark') {
                         window.DarkMode.enable(false);
