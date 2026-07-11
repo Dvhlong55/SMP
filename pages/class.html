@@ -105,8 +105,12 @@
 
         <main>
             <div class="class-container">
-                <div class="hero-header fade-up" style="margin-bottom: 30px;">
-                    <h1>Hệ Thống Quản Lý Lớp Học</h1>
+                <div class="hero-header fade-up" style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <h1 style="margin: 0;">Hệ Thống Quản Lý Lớp Học</h1>
+                    <div style="background: var(--card-bg); padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border-light); box-shadow: var(--shadow-soft); display: flex; align-items: center; gap: 10px;">
+                        <span style="color: var(--text-muted); font-size: 0.95rem;">Tổng tiền chưa thu:</span>
+                        <span id="global-total-debt" style="font-size: 1.4rem; font-weight: bold; color: var(--accent-gold); font-family: 'JetBrains Mono', monospace;">0k</span>
+                    </div>
                 </div>
 
                 <div id="class-admin-section">

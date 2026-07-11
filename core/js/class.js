@@ -32,6 +32,7 @@ async function loadClassDashboard() {
             if (allClasses.length > 0) {
                 selectClass(allClasses[0].id);
             }
+            updateGlobalDebt();
         } else {
             console.error("Failed to load classes (not admin?)");
             document.querySelector('.class-container').innerHTML = '<div style="text-align:center; padding: 50px; color: #ef4444;">Bạn không có quyền truy cập trang này.</div>';
@@ -100,6 +101,35 @@ window.promptCreateClass = async function() {
         alert("Lỗi khi tạo lớp");
     }
 };
+
+async function updateGlobalDebt() {
+    const token = localStorage.getItem('smp_access_token');
+    const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
+    let globalDebt = 0;
+    
+    const debtEl = document.getElementById('global-total-debt');
+    if (!debtEl) return;
+    debtEl.innerHTML = '<span style="font-size: 0.8rem; color: var(--text-muted);">Đang tính...</span>';
+    
+    for (const cls of allClasses) {
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/admin/classes/${cls.id}/students`, { headers: { 'Authorization': `Bearer ${token}` } });
+            if (res.ok) {
+                const students = await res.json();
+                students.forEach(st => {
+                    const debt = calculateTotalDebt(st.fee_transactions);
+                    if (debt > 0) {
+                        globalDebt += debt;
+                    }
+                });
+            }
+        } catch (e) {
+            console.error("Failed to fetch students for class", cls.id);
+        }
+    }
+    
+    debtEl.innerHTML = (globalDebt / 1000) + 'k';
+}
 
 async function fetchStudents() {
     if (!currentClassId) return;
@@ -182,6 +212,7 @@ window.addNewStudentRow = async function() {
         });
         if (res.ok) {
             await fetchStudents(); // reload
+            updateGlobalDebt();
         }
     } catch(e) {}
 };
@@ -327,6 +358,7 @@ window.saveStudentFromModal = async function(e) {
         if (res.ok) {
             closeStudentModal();
             fetchStudents(); // Refresh UI
+            updateGlobalDebt();
         } else {
             alert("Lỗi khi lưu thông tin");
         }
@@ -355,6 +387,7 @@ window.deleteStudentFromClass = async function() {
         if (res.ok) {
             closeStudentModal();
             fetchStudents(); // Refresh UI
+            updateGlobalDebt();
         } else {
             alert("Lỗi khi xóa học viên");
         }

@@ -322,7 +322,7 @@
                 </a>
             </div>
             <nav class="sidebar-nav">
-                <a href="/index.html">&#x2302; Home</a>
+                <a href="/home.html">&#x2302; Home</a>
                 <a href="/pages/toanhoc.html">&#x2211; Math</a>
                 <a href="/pages/nonmath.html">&#x2734; Non Math</a>
                 <a href="/pages/forum.html">⧉ Forum</a>
@@ -340,7 +340,7 @@
         <a href="/pages/vetoi.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s; margin-right: 20px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Tôi">SMP</a>
         
         <nav class="topbar-nav" style="flex: 1; justify-content: flex-start; gap: 20px;">
-            <a href="/index.html">&#x2302; Home</a>
+            <a href="/home.html">&#x2302; Home</a>
             <a href="/pages/toanhoc.html">&#x2211; Math</a>
             <a href="/pages/nonmath.html">&#x2734; Non Math</a>
             <a href="/pages/forum.html">⧉ Forum</a>
@@ -382,7 +382,7 @@
 
     const MOBILE_BOTTOM_NAV_HTML = `
     <nav class="mobile-bottom-nav">
-        <a href="/index.html">
+        <a href="/home.html">
             <span class="icon">&#x2302;</span>
             <span class="label">Home</span>
         </a>

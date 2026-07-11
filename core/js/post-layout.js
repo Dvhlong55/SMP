@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     const postId = postIdMeta ? postIdMeta.getAttribute('content') : document.title.replace(/[^a-zA-Z0-9]/g, '');
     const catName = catNameMeta ? catNameMeta.getAttribute('content') : 'HOME';
-    const catUrl = catUrlMeta ? catUrlMeta.getAttribute('content') : '/index.html';
+    const catUrl = catUrlMeta ? catUrlMeta.getAttribute('content') : '/home.html';
     const subName = subNameMeta ? subNameMeta.getAttribute('content') : '';
     const subFilter = subFilterMeta ? subFilterMeta.getAttribute('content') : '';
 

@@ -472,9 +472,9 @@ setInterval(function() {
 // === HIGHLIGHT ACTIVE NAV LINK ===
 function setActiveNav() {
     let current = window.location.pathname;
-    // Normalise trailing slash to /index.html
-    if (current === '/' || current === '') current = '/index.html';
-    if (current === '/SMP' || current === '/') current = '/index.html';
+    // Normalise trailing slash to /home.html
+    if (current === '/' || current === '') current = '/home.html';
+    if (current === '/SMP' || current === '/') current = '/home.html';
     document.querySelectorAll('.sidebar-nav a, .mobile-bottom-nav a').forEach(a => {
         a.classList.toggle('active', a.getAttribute('href') === current);
     });

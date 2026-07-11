@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Redirect if not logged in
     if (!token) {
-        const path = window.location.pathname.includes('/SMP/') ? '/SMP/index.html' : '/index.html';
+        const path = window.location.pathname.includes('/SMP/') ? '/SMP/home.html' : '/home.html';
         window.location.href = path;
         return;
     }
