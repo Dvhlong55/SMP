@@ -55,6 +55,27 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '§ Mở Đầu Cơ Bản Về Cấp',
+        date: 'July 28, 2026',
+        url: '/posts/math/vmo/mo-dau-co-ban-ve-cap.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '§ Căn Nguyên Thủy & Ứng Dụng',
+        date: 'July 28, 2026',
+        url: '/posts/math/vmo/can-nguyen-thuy-va-ung-dung.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '§ Kĩ thuật xử lý Lũy thừa \\in \\mathcal{P}',
+        date: 'July 28, 2026',
+        url: '/posts/math/vmo/ki-thuat-xu-ly-luy-thua-in-p.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '[Quảng Ninh] Đề thi tuyển sinh lớp 10 môn Toán (Chuyên) năm 2026',
         date: 'June 26, 2026',
         url: '/posts/math/dethichuyen/quangninh-chuyen-2026.html',
