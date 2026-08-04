@@ -55,6 +55,13 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: 'Lịch Sử Phát Triển Của Số Carmichael',
+        date: 'August 04, 2026',
+        url: '/posts/math/phieuluu/lich-su-so-carmichael.html',
+        tags: ['Phiêu Lưu', 'Toán Học'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '§ Mở Đầu Cơ Bản Về Cấp',
         date: 'July 28, 2026',
         url: '/posts/math/vmo/mo-dau-co-ban-ve-cap.html',
