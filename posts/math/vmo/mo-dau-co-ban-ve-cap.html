@@ -51,6 +51,12 @@
 
         <h3>Bài 2</h3>
         <p>Cho hai số nguyên dương $a, b$ nguyên tố cùng nhau. Đặt $A = a^{2^n} + b^{2^n}$ với $n$ là số nguyên dương. Chứng minh rằng mọi ước lẻ của $A$ có dạng $2^{n+1}k + 1$ trong đó $k$ là số nguyên dương.</p>
+        <p>Ta xét số nguyên tố $p$ là ước của $F_n = 2^{2^n} + 1$, với $n \ge 3$. Khi đó tương tự như trên ta thu được $2^{n + 1} \mid p - 1$, tuy nhiên ta còn có thể thu được một kết quả mạnh hơn, đó là $2^{n + 2} \mid p - 1$.</p>
+        <p>Các bạn hãy thử tự chứng minh kết quả này như một bài tập, ở đây mình xin gợi ý để nâng bậc như sau: Chỉ ra số nguyên $u$ sao cho $u^2 \equiv 2 \pmod{p}$.</p>
+        <ul>
+            <li>Sử dụng bổ đề Gauss với chú ý $p \equiv 1 \pmod 8$.</li>
+            <li>Chỉ ra một số $g$ thỏa $\text{ord}_p(g) = 8$ và xét $u = g^3 + g$.</li>
+        </ul>
 
         <h3>Bài 3</h3>
         <p>Có bao nhiêu số nguyên dương chia hết cho 1001 có thể biểu diễn được dưới dạng $10^j - 10^i$ với $0 \leq i < j \leq 99$.</p>
