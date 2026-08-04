@@ -53,10 +53,16 @@
         <p>Cho hai số nguyên dương $a, b$ nguyên tố cùng nhau. Đặt $A = a^{2^n} + b^{2^n}$ với $n$ là số nguyên dương. Chứng minh rằng mọi ước lẻ của $A$ có dạng $2^{n+1}k + 1$ trong đó $k$ là số nguyên dương.</p>
         <p>Ta xét số nguyên tố $p$ là ước của $F_n = 2^{2^n} + 1$, với $n \ge 3$. Khi đó tương tự như trên ta thu được $2^{n + 1} \mid p - 1$, tuy nhiên ta còn có thể thu được một kết quả mạnh hơn, đó là $2^{n + 2} \mid p - 1$.</p>
         <p>Các bạn hãy thử tự chứng minh kết quả này như một bài tập, ở đây mình xin gợi ý để nâng bậc như sau: Chỉ ra số nguyên $u$ sao cho $u^2 \equiv 2 \pmod{p}$.</p>
-        <ul>
-            <li>Sử dụng bổ đề Gauss với chú ý $p \equiv 1 \pmod 8$.</li>
-            <li>Chỉ ra một số $g$ thỏa $\text{ord}_p(g) = 8$ và xét $u = g^3 + g$.</li>
-        </ul>
+        <div style="display: flex; gap: 15px; margin-top: 15px; margin-bottom: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px; padding: 15px; background: rgba(92, 225, 230, 0.08); border: 1px solid rgba(92, 225, 230, 0.3); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <b style="color: #5ce1e6; display: block; margin-bottom: 8px; font-size: 0.95em; text-transform: uppercase; letter-spacing: 0.5px;">Cách 1</b> 
+                Sử dụng bổ đề Gauss với chú ý $p \equiv 1 \pmod 8$.
+            </div>
+            <div style="flex: 1; min-width: 250px; padding: 15px; background: rgba(167, 139, 250, 0.08); border: 1px solid rgba(167, 139, 250, 0.3); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <b style="color: #a78bfa; display: block; margin-bottom: 8px; font-size: 0.95em; text-transform: uppercase; letter-spacing: 0.5px;">Cách 2</b> 
+                Chỉ ra một số $g$ thỏa $\text{ord}_p(g) = 8$ và xét $u = g^3 + g$.
+            </div>
+        </div>
 
         <h3>Bài 3</h3>
         <p>Có bao nhiêu số nguyên dương chia hết cho 1001 có thể biểu diễn được dưới dạng $10^j - 10^i$ với $0 \leq i < j \leq 99$.</p>
