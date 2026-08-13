@@ -55,10 +55,31 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '[Trường hè Đà Nẵng] Đề kiểm tra Trường hè Toán học Đà Nẵng năm 2026',
+        date: 'August 09, 2026',
+        url: '/posts/math/vmo/truong-he-da-nang-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Trại hè Hùng Vương] Kỳ thi Olympic Trại hè Hùng Vương lần thứ XX, năm 2026 - Lớp 10',
+        date: 'August 05, 2026',
+        url: '/posts/math/vmo/trai-he-hung-vuong-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: 'Lịch Sử Phát Triển Của Số Carmichael',
         date: 'August 04, 2026',
         url: '/posts/math/phieuluu/lich-su-so-carmichael.html',
         tags: ['Phiêu Lưu', 'Toán Học'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Trường hè Phú Thọ] Đề kiểm tra Trường hè Toán học Phú Thọ năm 2026',
+        date: 'July 24, 2026',
+        url: '/posts/math/vmo/truong-he-phu-tho-2026.html',
+        tags: ['Đề Thi', 'VMO'],
         page: '/pages/toanhoc.html'
     },
     {
