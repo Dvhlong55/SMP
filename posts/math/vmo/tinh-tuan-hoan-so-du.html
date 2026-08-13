@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Tính Tuần Hoàn Số Dư</title>
+    
+    <meta name="post-id" content="TinhTuanHoanSoDu">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề về Tính Tuần Hoàn Số Dư của dãy số nguyên.">
+    <meta property="og:title" content="SMP — Tính Tuần Hoàn Số Dư">
+    <meta property="og:description" content="Chuyên đề về Tính Tuần Hoàn Số Dư của dãy số nguyên.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/tinh-tuan-hoan-so-du.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Tính Tuần Hoàn Số Dư">
+    <meta name="twitter:description" content="Chuyên đề về Tính Tuần Hoàn Số Dư của dãy số nguyên.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        
+        <div class="header-box">
+            <h1>$\S$ Tính Tuần Hoàn Số Dư</h1>
+            <p style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles</p>
+            <p style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Ngày 11 tháng 8 năm 2026</p>
+        </div>
+
+        <button class="pdf-download-btn" onclick="window.print()" title="Tải xuống hoặc In bài viết này">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Tải bản PDF
+        </button>
+
+        <h3>N1.</h3>
+        <p>Cho dãy số $(x_n)$ xác định bởi:
+        $$\begin{cases}
+        x_1 = 630, \quad x_2 = 102 \\
+        x_{n+2} = x_{n+1} + x_n + 2\sqrt{x_n \cdot x_{n+1} - 2}, \quad \forall n \geq 1
+        \end{cases}$$</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng mọi số hạng của dãy đều là số nguyên dương.</p>
+        <p style="padding-left: 20px;">2. Chứng minh có vô số số nguyên dương n sao cho $x_n$ có bốn chữ số tận cùng là 2003.</p>
+        <p style="padding-left: 20px;">3. Chứng minh không tồn tại số nguyên dương n sao cho $x_n$ có bốn chữ số tận cùng là 2004.</p>
+
+        <h3>N2.</h3>
+        <p>Cho dãy số $(u_n)$ nguyên thỏa mãn $u_{n+2} = u_{n+1}^2 - u_n$ với mọi $n$ tự nhiên. Giả sử $u_0 = 39, u_1 = 45$. Chứng minh có vô hạn số hạng của dãy $(u_n)$ chia hết cho 1986.</p>
+
+        <h3>N3.</h3>
+        <p>Cho số nguyên tố lẻ $p$ và dãy số $(a_n)$ xác định bởi : $a_1 = 1, a_2 = 2$ và
+        $$a_{n+2} = 2a_{n+1} + 3a_n, \quad \forall n \geq 1.$$
+        Chứng minh rằng luôn tồn tại số nguyên dương $k$ sao cho với mọi số nguyên dương $n$ thì $a_n \not\equiv k \pmod p$.</p>
+
+        <h3>N4.</h3>
+        <p>Cho $p$ là một số nguyên tố lẻ, xét dãy số $(u_n)$ xác định bởi:
+        $$\begin{cases}
+        u_1 = a, \quad u_2 = b \quad (a, b \in \mathbb{Z}^+, p \nmid ab) \\
+        u_{n+1} = x u_n + y u_{n-1}, \quad \forall n \geq 2
+        \end{cases}$$</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng: Dãy số $(u_n)$ có số dư tuần hoàn theo mod $p$.</p>
+        <p style="padding-left: 20px;">2. Nếu $p \mid y a^2 + xab - b^2$, tìm chu kỳ cơ sở của dãy này.</p>
+
+        <h3>N5.</h3>
+        <p>Cho $k \in \mathbb{Z}^+$ thỏa mãn: $\forall m \in \mathbb{Z}^+, \exists n \in \mathbb{Z}^+$ mà $k \equiv F_n \pmod m$. Với $(F_i)_{i\in\mathbb{N}}$ là dãy Fibonacci xác định bởi:
+        $$\begin{cases}
+        F_0 = 0, \quad F_1 = 1 \\
+        F_{n+2} = F_{n+1} + F_n, \quad \forall n \in \mathbb{N}
+        \end{cases}$$
+        Chứng minh rằng: $k$ là một số hạng của dãy Fibonacci.</p>
+
+        <h3>N6.</h3>
+        <p>Cho dãy số $(u_n)$ xác định bởi: $u_1 = 52$ và $u_{n+1} = u_n^2 + 9u_n$ với mọi $n \geq 1$.</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng tồn tại vô hạn số nguyên tố $p$ sao cho $p$ là ước của ít nhất một số hạng nào đó của dãy $(u_n)$.</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng mọi số hạng của dãy này đều không phải là số chính phương, nhưng tồn tại vô số số hạng của dãy khi chia cho $2^{2023}$ có số dư là số chính phương.</p>
+
+        <h3>N7.</h3>
+        <p>Cho dãy số nguyên dương $(x_n)$ thỏa mãn $0 \leq x_0 < x_1 \leq 100$ và
+        $$x_{n+2} = 7x_{n+1} - x_n + 280, \quad \forall n \geq 0.$$</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng nếu $x_0 = 2, x_1 = 3$ thì với mỗi số nguyên dương $n$, tổng các ước nguyên dương của $x_n x_{n+1} + x_{n+1} x_{n+2} + x_{n+2} x_{n+3} + 2018$ thì chia hết cho 24.</p>
+        <p style="padding-left: 20px;">2. Tìm tất cả các cặp số $(x_0, x_1)$ để số $x_n x_{n+1} + 2019$ là số chính phương với vô số số $n$.</p>
+
+        <h3>N8.</h3>
+        <p>Cho các số nguyên $a, b, c, \alpha, \beta$ và dãy số $(u_n)$ xác định bởi
+        $$u_1 = \alpha, \quad u_2 = \beta, \quad u_{n+2} = a u_{n+1} + b u_n + c \quad \text{với mọi } n \geq 1.$$</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng nếu $a = 3, b = -2, c = -1$ thì có vô số cặp số nguyên $(\alpha; \beta)$ để $u_{2023} = 2^{2022}$.</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng tồn tại số nguyên dương $n_0$ sao cho có duy nhất một trong hai khẳng định sau là đúng:</p>
+        <p style="padding-left: 40px;">a) Có vô số số nguyên dương $m$ để $u_{n_0} u_{n_0+1} \dots u_{n_0+m}$ chia hết cho $7^{2023}$ hoặc $17^{2023}$;</p>
+        <p style="padding-left: 40px;">b) Có vô số số nguyên dương $k$ để $u_{n_0} u_{n_0+1} \dots u_{n_0+k} - 1$ chia hết cho 2023.</p>
+
+        <p class="exam-end"><b>─── HẾT ───</b></p>
+    </div>
+</body>
+</html>

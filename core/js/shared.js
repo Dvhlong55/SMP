@@ -55,6 +55,27 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '§ Nhiều hơn về CTTQ',
+        date: 'August 11, 2026',
+        url: '/posts/math/vmo/nhieu-hon-ve-cttq.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '§ Tính Tuần Hoàn Số Dư',
+        date: 'August 11, 2026',
+        url: '/posts/math/vmo/tinh-tuan-hoan-so-du.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '§ Phương Trình Đặc Trưng',
+        date: 'August 10, 2026',
+        url: '/posts/math/vmo/phuong-trinh-dac-trung.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '[Trường hè Đà Nẵng] Đề kiểm tra Trường hè Toán học Đà Nẵng năm 2026',
         date: 'August 09, 2026',
         url: '/posts/math/vmo/truong-he-da-nang-2026.html',
