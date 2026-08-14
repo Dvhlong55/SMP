@@ -55,6 +55,20 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '[An Giang] Đề thi chọn đội tuyển thi HSGQG tỉnh An Giang năm 2026',
+        date: 'August 14, 2026',
+        url: '/posts/math/vmo/angiang-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[VIASM] Đề thi Olympic Toán học Miền Trung - Tây Nguyên năm 2026',
+        date: 'August 13, 2026',
+        url: '/posts/math/vmo/mientrung-taynguyen-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '§ Nhiều hơn về CTTQ',
         date: 'August 11, 2026',
         url: '/posts/math/vmo/nhieu-hon-ve-cttq.html',
