@@ -6,8 +6,8 @@ function initSmpComments() {
     const mainEl = document.querySelector('main');
     if (!mainEl) return;
 
-    // Lấy postId từ tên file html hiện tại
-    const path = window.location.pathname;
+    // Lấy postId từ tên file html hiện tại (giải mã URI để đồng bộ tiếng Việt có dấu)
+    const path = decodeURIComponent(window.location.pathname);
     const postId = path.split('/').pop().replace('.html', '') || 'homepage';
     
     // Tìm container Giscus hoặc smp có sẵn để thay thế

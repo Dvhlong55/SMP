@@ -878,7 +878,7 @@ function addSaveButtonsToCards() {
 
         if (!url || url.startsWith('http') || url.startsWith('#') || url.includes('forum.html')) return;
 
-        const postId = url.split('/').pop().replace('.html', '');
+        const postId = decodeURIComponent(url.split('/').pop().replace('.html', ''));
 
         const saveBtn = document.createElement('button');
         saveBtn.className = 'card-save-btn';
@@ -1157,7 +1157,7 @@ async function syncSavedPostsState() {
             if (!link) return;
             const url = link.getAttribute('href');
             if (!url) return;
-            const postId = url.split('/').pop().replace('.html', '');
+            const postId = decodeURIComponent(url.split('/').pop().replace('.html', ''));
             if (savedIds.has(postId)) {
                 const btn = card.querySelector('.card-save-btn');
                 if (btn) {
@@ -1172,7 +1172,7 @@ async function syncSavedPostsState() {
         // Update page-level save button if it exists
         const pageSaveBtn = document.getElementById('save-post-btn');
         if (pageSaveBtn) {
-            const postId = window.location.pathname.split('/').pop().replace('.html', '');
+            const postId = decodeURIComponent(window.location.pathname.split('/').pop().replace('.html', ''));
             if (savedIds.has(postId)) {
                 pageSaveBtn.innerHTML = '&#x2605; Đã lưu';
                 pageSaveBtn.classList.add('saved-active');
