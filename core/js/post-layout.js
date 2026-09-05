@@ -81,6 +81,13 @@ document.addEventListener('DOMContentLoaded', function () {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            chtml: {
+                scale: 1,
+                matchFontHeight: false
+            },
+            options: {
+                enableMenu: false
             }
         };
         const scriptMathJax = document.createElement('script');

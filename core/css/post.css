@@ -140,8 +140,6 @@ body.light-mode .side-widget-title {
 }
 
 .exam-paper {
-    font-size: 1.5rem;
-    line-height: 1.8;
     background: var(--exam-paper-bg);
     border: 1px solid var(--exam-paper-border);
     border-radius: 12px;
@@ -150,7 +148,7 @@ body.light-mode .side-widget-title {
     font-family: "Times New Roman", Times, serif;
     color: var(--exam-text-color);
     line-height: 1.85;
-    font-size: 1.01rem;
+    font-size: 1.03rem;
     overflow-wrap: break-word;
     word-break: break-word;
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
@@ -170,17 +168,41 @@ body.light-mode .side-widget-title {
     margin: 7px 0;
     transition: color 0.3s ease;
 }
-.exam-paper h1 { font-size: 2.4rem; letter-spacing: 0.5px; }
-.exam-paper h2 { font-size: 1.8rem; font-weight: normal; }
+.exam-paper h1 { font-size: 2.2rem; letter-spacing: 0.5px; }
+.exam-paper h2 { font-size: 1.6rem; font-weight: normal; }
 
-.exam-paper h3 { font-size: 1.6rem;
+.exam-paper h3 { 
+    font-size: 1.35rem;
     color: var(--accent-cyan, #5ce1e6);
-    margin-top: 34px;
-    margin-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 12px;
     font-family: "Times New Roman", Times, serif;
     border-left: 3px solid var(--accent-cyan, #5ce1e6);
     padding-left: 12px;
 }
+
+/* === LATEX & MATHJAX SIZING & ALIGNMENT === */
+.exam-paper mjx-container[jax="CHTML"] {
+    font-size: 100% !important;
+    outline: none !important;
+    color: inherit;
+}
+
+.exam-paper mjx-container[jax="CHTML"]:not([display="true"]) {
+    font-size: 0.98em !important;
+    padding: 0 1.5px;
+}
+
+.exam-paper mjx-container[jax="CHTML"][display="true"] {
+    font-size: 1.02em !important;
+    margin: 1em 0 !important;
+    padding: 2px 0;
+}
+
+.exam-paper h1 mjx-container[jax="CHTML"] { font-size: 0.85em !important; }
+.exam-paper h2 mjx-container[jax="CHTML"] { font-size: 0.88em !important; }
+.exam-paper h3 mjx-container[jax="CHTML"] { font-size: 0.92em !important; }
+.exam-paper h4 mjx-container[jax="CHTML"] { font-size: 0.95em !important; }
 
 .exam-paper p   { margin: 10px 0; }
 .exam-paper ol,
@@ -262,8 +284,8 @@ body.focus-mode .main-content-layout {
 }
 
 body.focus-mode .exam-paper {
-    font-size: 1.25rem !important;
-    line-height: 1.95 !important;
+    font-size: 1.15rem !important;
+    line-height: 1.9 !important;
     padding: 20px 0 !important;
     box-shadow: none !important;
     border: none !important;
@@ -271,8 +293,8 @@ body.focus-mode .exam-paper {
 }
 
 body.focus-mode .exam-paper h3 {
-    font-size: 1.6rem !important;
-    margin-top: 40px !important;
+    font-size: 1.4rem !important;
+    margin-top: 34px !important;
 }
 
 /* Button styles in normal and hover states (removed inline styles) */

@@ -72,6 +72,7 @@ body {
 mjx-container {
     max-width: 100%;
     box-sizing: border-box;
+    outline: none !important;
 }
 
 mjx-container:not([display="true"]) {
