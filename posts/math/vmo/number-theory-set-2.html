@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Number Theory Set 2</title>
+    
+    <meta name="post-id" content="NumberTheorySet2">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Tuyển tập 10 bài toán Số học chuyên sâu (Number Theory Set 2) từ Secrets of Mathematical Principles.">
+    <meta property="og:title" content="SMP — Number Theory Set 2">
+    <meta property="og:description" content="Tuyển tập 10 bài toán Số học chuyên sâu (Number Theory Set 2) từ Secrets of Mathematical Principles.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/number-theory-set-2.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Number Theory Set 2">
+    <meta name="twitter:description" content="Tuyển tập 10 bài toán Số học chuyên sâu (Number Theory Set 2) từ Secrets of Mathematical Principles.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        
+        <div class="header-box">
+            <h1>$\S$ Number Theory Set 2</h1>
+            <p style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles</p>
+            <p style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Ngày 5 tháng 9 năm 2026</p>
+        </div>
+
+        <button class="pdf-download-btn" onclick="window.print()" title="Tải xuống hoặc In bài viết này">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Tải bản PDF
+        </button>
+
+        <h3>Bài 1.</h3>
+        <p>Cho $m, n$ là các số nguyên lẻ sao cho $(n^2 - 1)$ chia hết cho $m^2 + 1 - n^2$. Chứng minh rằng $|m^2 + 1 - n^2|$ là một số chính phương.</p>
+
+        <h3>Bài 2.</h3>
+        <p>Tìm tất cả các hàm số $f: \mathbb{Z} \to \mathbb{Z}$ thỏa mãn:
+        $$f(2m + f(m) + f(m)f(n)) = nf(m) + m$$
+        với mọi số nguyên $m, n$.</p>
+
+        <h3>Bài 3.</h3>
+        <p>Cho $k$ là một số nguyên dương. Chứng minh rằng tồn tại các số nguyên $x, y$, trong đó không có số nào chia hết cho 7, sao cho $x^2 + 6y^2 = 7^k$.</p>
+
+        <h3>Bài 4.</h3>
+        <p>Dãy số Fibonacci được xác định bởi:
+        $$\begin{cases}
+        f_1 = 1, \quad f_2 = 2, \\
+        f_{n+1} = f_n + f_{n-1}, \quad n \geq 2.
+        \end{cases}$$</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng mọi số nguyên dương đều có thể biểu diễn dưới dạng tổng của một số số Fibonacci đôi một phân biệt.</p>
+        <p style="padding-left: 20px;">2. Một số nguyên dương được gọi là <i>Fib-unique</i> nếu cách biểu diễn nó dưới dạng tổng của một số số Fibonacci đôi một phân biệt là duy nhất.<br>
+        Ví dụ: 13 không phải là Fib-unique vì $13 = 13 = 8 + 5 = 8 + 3 + 2$.<br>
+        Tìm tất cả các số Fib-unique.</p>
+
+        <h3>Bài 5.</h3>
+        <p>Tìm tất cả các số nguyên tố $p$ sao cho $\frac{3^{p-1} - 1}{p}$ là một số chính phương.</p>
+
+        <h3>Bài 6.</h3>
+        <p>Giải phương trình sau trên tập các số nguyên dương $x, y$:
+        $$x^{2017} - 1 = (x - 1)(y^{2015} - 1).$$</p>
+
+        <h3>Bài 7.</h3>
+        <p>Chứng minh rằng chỉ có hữu hạn bộ bốn số nguyên dương $(a, b, c, n)$ thỏa mãn:
+        $$n! = a^{n-1} + b^{n-1} + c^{n-1}.$$</p>
+
+        <h3>Bài 8.</h3>
+        <p>Tìm tất cả các số nguyên dương $n$ có tính chất sau: $k$ ước nguyên dương của $n$ có một hoán vị $(d_1, d_2, \dots, d_k)$ sao cho với mọi $i = 1, 2, \dots, k$, tổng $d_1 + d_2 + \dots + d_i$ là một số chính phương.</p>
+
+        <h3>Bài 9.</h3>
+        <p>Gọi $a$ là nghiệm dương của phương trình $x + \frac{1}{x} = 675$. Chứng minh rằng:
+        $$\varphi\left(2023(a^{2^n} + a^{-2^n})\right) > 2 \cdot \varphi\left(2022(a^{2^n} + a^{-2^n})\right)$$
+        với mọi $n \in \mathbb{Z}^+$.</p>
+
+        <h3>Bài 10.</h3>
+        <p>Xét dãy số $(u_n)$ với $u_0 = 0, u_1 = 1$ và
+        $$u_{n+2} = 2u_{n+1} + 2u_n, \quad \forall n \geq 0.$$
+        Chứng minh rằng với mọi $n \geq 1$, ta có $v_3(u_n) = v_3(n)$.</p>
+
+        <p class="exam-end"><b>─── HẾT ───</b></p>
+    </div>
+</body>
+</html>

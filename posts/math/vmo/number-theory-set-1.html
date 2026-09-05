@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Number Theory Set 1</title>
+    
+    <meta name="post-id" content="NumberTheorySet1">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Tuyển tập 18 bài toán Số học chuyên sâu (Number Theory Set 1) từ Secrets of Mathematical Principles.">
+    <meta property="og:title" content="SMP — Number Theory Set 1">
+    <meta property="og:description" content="Tuyển tập 18 bài toán Số học chuyên sâu (Number Theory Set 1) từ Secrets of Mathematical Principles.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/number-theory-set-1.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Number Theory Set 1">
+    <meta name="twitter:description" content="Tuyển tập 18 bài toán Số học chuyên sâu (Number Theory Set 1) từ Secrets of Mathematical Principles.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        
+        <div class="header-box">
+            <h1>$\S$ Number Theory Set 1</h1>
+            <p style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles</p>
+            <p style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Ngày 12 tháng 8 năm 2026</p>
+        </div>
+
+        <button class="pdf-download-btn" onclick="window.print()" title="Tải xuống hoặc In bài viết này">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Tải bản PDF
+        </button>
+
+        <h3>Bài 1.</h3>
+        <p style="padding-left: 20px;">1. Cho $a, b, c$ là ba số nguyên dương sao cho với mọi hoán vị $(x, y, z)$ của $(a, b, c)$, ta đều có:
+        $$a + [y, z] = b + [z, x] = c + [x, y].$$
+        Chứng minh rằng $a = b = c$.</p>
+        <p style="padding-left: 20px;">2. Tìm tất cả các bộ ba số nguyên dương $a, b, c$ sao cho tồn tại một hoán vị $(x, y, z)$ của $(a, b, c)$ thỏa mãn:
+        $$a + [y, z] = b + [z, x] = c + [x, y].$$
+        (Ở đây $[m, n]$ ký hiệu bội chung nhỏ nhất của hai số nguyên $m, n$.)</p>
+
+        <h3>Bài 2.</h3>
+        <p>Cho $a, b$ là hai số thực dương sao cho $a + b$ và $ab$ đều là các số nguyên; hơn nữa $\lfloor a^3 + 3a^2 b \rfloor + \lfloor b^3 + 3ab^2 \rfloor$ là lập phương của một số nguyên dương. Chứng minh rằng $a$ và $b$ đều là các số nguyên (trong đó $\lfloor x \rfloor$ ký hiệu số nguyên lớn nhất không vượt quá $x$).</p>
+
+        <h3>Bài 3.</h3>
+        <p>Cho $a, k$ là hai số nguyên dương nguyên tố cùng nhau. Chứng minh rằng tồn tại vô số số nguyên dương $n$ sao cho tồn tại số nguyên dương $m$ thỏa mãn hệ:
+        $$\begin{cases}
+        \left\lfloor \frac{n}{10^m} \right\rfloor \equiv 2024 \pmod{10^4} \\
+        a^{n+2025} \equiv 1 \pmod k
+        \end{cases}$$
+        trong đó $\lfloor x \rfloor$ ký hiệu số nguyên lớn nhất không vượt quá $x$.</p>
+
+        <h3>Bài 4.</h3>
+        <p>Một số tự nhiên $n$ được gọi là một <i>số đẹp</i> nếu tồn tại các số tự nhiên $x, y, z$ sao cho $n = \text{lcm}(x, y) + \text{lcm}(y, z) + \text{lcm}(z, x)$, trong đó $\text{lcm}(a, b)$ ký hiệu bội chung nhỏ nhất của $a$ và $b$.</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng mọi số tự nhiên lẻ đều là một số đẹp.</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng $n = 2^{2017}$ không phải là một số đẹp.</p>
+
+        <h3>Bài 5.</h3>
+        <p>Chứng minh rằng không tồn tại các số nguyên $a, b$ đồng thời thỏa mãn tất cả các điều kiện sau:</p>
+        <p style="padding-left: 20px;">1. $16a - 9b$ là một số nguyên tố.</p>
+        <p style="padding-left: 20px;">2. $ab$ là một số chính phương.</p>
+        <p style="padding-left: 20px;">3. $a + b$ cũng là một số chính phương.</p>
+
+        <h3>Bài 6.</h3>
+        <p>Chứng minh rằng có vô số số nguyên dương $n$ sao cho $n!$ chia hết cho $n^3 - 1$.</p>
+
+        <h3>Bài 7.</h3>
+        <p>Cho $p, q$ là các số nguyên tố cho trước và dãy số $(p_n)_{n \geq 1}$ được xác định truy hồi như sau: $p_1 = p, p_2 = q$ và $p_{n+2}$ là ước nguyên tố lớn nhất của số $(p_n + p_{n+1} + 2016)$ với mọi $n \geq 1$. Chứng minh rằng dãy số này bị chặn, tức là tồn tại một số thực dương $M$ sao cho $p_n < M$ với mọi số nguyên dương $n$.</p>
+
+        <h3>Bài 8.</h3>
+        <p>Với mỗi số nguyên dương $n$, chứng minh rằng tồn tại một số nguyên dương $m$ sao cho $n$ là ước của $2016^m + m$.</p>
+
+        <h3>Bài 9.</h3>
+        <p>Cho $x, y$ là hai số thực dương nhỏ hơn 1. Biết rằng $x$ là số có chữ số thứ $n$ sau dấu phẩy là chữ số thứ $n^n$ sau dấu phẩy của $y$, với $n = 1, 2, \dots$. Chứng minh rằng nếu $y$ là một số hữu tỉ thì $x$ cũng là một số hữu tỉ.</p>
+
+        <h3>Bài 10.</h3>
+        <p>Cho $p$ là một số nguyên tố cho trước. Với mỗi số nguyên tố $r$, ta định nghĩa hàm số:
+        $$F(r) = \frac{(p^{rp} - 1)(p - 1)}{(p^r - 1)(p^p - 1)}.$$</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng $F(r)$ là một số nguyên dương với mọi số nguyên tố $r \neq p$.</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng $F(r)$ và $F(s)$ nguyên tố cùng nhau với mọi cặp số nguyên tố $r, s$ thỏa mãn $r \neq p, s \neq p$ và $r \neq s$.</p>
+        <p style="padding-left: 20px;">3. Với một số nguyên tố $r \neq p$ cố định. Chứng minh rằng tồn tại một ước nguyên tố $q$ của $F(r)$ sao cho $p \mid (q - 1)$ nhưng $p^2 \nmid (q - 1)$.</p>
+
+        <h3>Bài 11.</h3>
+        <p>Cho $n$ là một số nguyên dương. Chứng minh rằng tồn tại vô số cặp số nguyên dương $(a, b)$ với $a, b > n$ sao cho:
+        $$\prod_{i=1}^{2015} (a + i) \mid b(b + 2016); \quad \prod_{i=1}^{2015} (a + i) \nmid b; \quad \prod_{i=1}^{2015} (a + i) \nmid (b + 2016).$$</p>
+
+        <h3>Bài 12.</h3>
+        <p>Tìm tất cả các số nguyên dương $n$ sao cho tồn tại một hoán vị $(a_1, a_2, \dots, a_n)$ của $(1, 2, 3, \dots, n)$ thỏa mãn điều kiện:
+        $$a_1 + a_2 + \dots + a_k \text{ chia hết cho } k \text{ với mỗi } k = 1, 2, 3, \dots, n.$$</p>
+
+        <h3>Bài 13.</h3>
+        <p>Cho số nguyên $n \geq 4$. Giả sử có $n$ số nguyên dương được xếp trên một đường tròn sao cho:</p>
+        <p style="padding-left: 20px;">1. Tích của hai số bất kỳ không kề nhau đều chia hết cho $2015 \cdot 2016$;</p>
+        <p style="padding-left: 20px;">2. Tích của hai số bất kỳ kề nhau đều không chia hết cho $2015 \cdot 2016$.</p>
+        <p>Tìm giá trị lớn nhất có thể của $n$.</p>
+
+        <h3>Bài 14.</h3>
+        <p>Cho $a$ là một số nguyên dương. Tìm tất cả các số nguyên tố $p$ thỏa mãn tính chất sau: tồn tại đúng $p$ cặp có thứ tự $(x, y)$, với $0 \leq x, y \leq p - 1$, sao cho $p$ chia hết $y^2 - x^3 - a^2 x$.</p>
+
+        <h3>Bài 15.</h3>
+        <p>Tìm số nguyên dương nhỏ nhất $n$ không thể biểu diễn dưới dạng $n = \frac{2^a - 2^b}{2^c - 2^d}$ với $a, b, c, d$ là các số nguyên dương.</p>
+
+        <h3>Bài 16.</h3>
+        <p>Tìm tất cả các số nguyên dương $n$ sao cho $\varphi(n) \mid (n^2 + 3)$.</p>
+
+        <h3>Bài 17.</h3>
+        <p>Xét một dãy số nguyên dương tăng nghiêm ngặt $(a_n)$ thỏa mãn:</p>
+        <p style="padding-left: 20px;">1. Các số hạng trong dãy đôi một nguyên tố cùng nhau.</p>
+        <p style="padding-left: 20px;">2. Tổng $\frac{1}{\sqrt{a_1 a_2}} + \frac{1}{\sqrt{a_2 a_3}} + \frac{1}{\sqrt{a_3 a_4}} + \dots$ là không bị chặn (phân kỳ).</p>
+        <p>Chứng minh rằng dãy số này chứa vô số số nguyên tố.</p>
+
+        <h3>Bài 18.</h3>
+        <p>Cho $a, b, c$ là ba số nguyên dương phân biệt đôi một thỏa mãn $\gcd(a, b, c) = 1$ và:
+        $$a \mid (b - c)^2, \quad b \mid (c - a)^2, \quad c \mid (a - b)^2.$$
+        Chứng minh rằng không tồn tại tam giác không suy biến nào có độ dài ba cạnh là $a, b, c$.</p>
+
+        <p class="exam-end"><b>─── HẾT ───</b></p>
+    </div>
+</body>
+</html>

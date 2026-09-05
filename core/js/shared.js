@@ -55,6 +55,13 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '§ Number Theory Set 2',
+        date: 'September 05, 2026',
+        url: '/posts/math/vmo/number-theory-set-2.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '[An Giang] Đề thi chọn đội tuyển thi HSGQG tỉnh An Giang năm 2026',
         date: 'August 14, 2026',
         url: '/posts/math/vmo/angiang-hsgqg-2026.html',
@@ -66,6 +73,13 @@ const ALL_POSTS = [
         date: 'August 13, 2026',
         url: '/posts/math/vmo/mientrung-taynguyen-2026.html',
         tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '§ Number Theory Set 1',
+        date: 'August 12, 2026',
+        url: '/posts/math/vmo/number-theory-set-1.html',
+        tags: ['Số Học', 'VMO'],
         page: '/pages/toanhoc.html'
     },
     {
