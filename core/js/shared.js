@@ -76,6 +76,13 @@ const ALL_POSTS = [
         page: '/pages/toanhoc.html'
     },
     {
+        title: '[Vĩnh Long] Đề thi chọn đội tuyển thi HSGQG tỉnh Vĩnh Long năm 2026',
+        date: 'September 11, 2026',
+        url: '/posts/math/vmo/vinhlong-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '§ Number Theory Set 2',
         date: 'September 05, 2026',
         url: '/posts/math/vmo/number-theory-set-2.html',
