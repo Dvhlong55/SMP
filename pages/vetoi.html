@@ -37,102 +37,157 @@
             color: var(--accent-gold);
             font-weight: 600;
         }
-        
-        /* --- PHẦN KHUNG DONATE --- */
-        .donate-container {
-            background: var(--card-bg);
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 40px;
-            margin-bottom: 36px;
+
+        /* --- NÚT CÀ PHÊ KẾ BÊN TÊN TÁC GIẢ --- */
+        .profile-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
         }
-        .donate-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 16px;
-            color: var(--text-dark);
+        .coffee-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(201, 169, 110, 0.1);
+            border: 1px solid rgba(201, 169, 110, 0.35);
+            color: var(--accent-gold);
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-size: 0.82rem;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            line-height: 1;
         }
-        .donate-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            margin-bottom: 32px;
-            text-align: justify; /* MỚI: Căn đều 2 bên mép trái/phải cho văn bản */
+        .coffee-btn:hover {
+            background: var(--accent-gold);
+            color: #121212;
+            border-color: var(--accent-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(201, 169, 110, 0.3);
+        }
+        .coffee-btn svg {
+            transition: transform 0.2s;
+        }
+        .coffee-btn:hover svg {
+            transform: scale(1.1);
         }
 
-        /* --- PHẦN THẺ NGÂN HÀNG NẰM NGANG --- */
-        .donate-methods {
+        /* --- MODAL CÀ PHÊ NHẸ NHÀNG, TINH TẾ --- */
+        .coffee-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
             display: flex;
-            gap: 24px;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
+            z-index: 99999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 16px;
         }
-        .donate-card {
-            background: transparent;
+        .coffee-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .coffee-modal-box {
+            background: var(--card-bg, #1a1a1a);
             border: 1px solid var(--border-light);
-            border-radius: 12px;
-            padding: 32px;
+            border-radius: 16px;
+            padding: 28px 24px;
+            max-width: 350px;
             width: 100%;
-            max-width: 100%; /* MỚI: Đổi thành 100% để thẻ ngân hàng tràn đều lề ngang bằng với khung trên */
-            max-width: 600px;
-            
-            /* Dùng Grid để chia 2 cột */
-            display: grid;
-            grid-template-columns: 160px 1fr; 
-            column-gap: 32px; 
-            align-items: center; 
-            text-align: left; 
-            
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+            position: relative;
+            transform: translateY(15px) scale(0.96);
+            transition: transform 0.3s ease;
         }
-        .donate-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-gold);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        .coffee-modal-overlay.active .coffee-modal-box {
+            transform: translateY(0) scale(1);
         }
-        .qr-image {
-            width: 100%;
+        .coffee-modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            line-height: 1;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: color 0.2s;
+        }
+        .coffee-modal-close:hover {
+            color: var(--accent-cyan);
+        }
+        .coffee-modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            margin: 0 0 6px 0;
+        }
+        .coffee-modal-sub {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+        .coffee-modal-qr {
+            width: 155px;
+            height: 155px;
+            object-fit: contain;
             border-radius: 8px;
             border: 1px solid var(--border-light);
-            grid-column: 1;
-            grid-row: 1 / span 4;
-            margin: 0; 
+            background: #fff;
+            padding: 4px;
+            margin: 0 auto 16px auto;
+            display: block;
         }
-        .donate-card h3 {
-            grid-column: 2;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            color: var(--text-dark);
-            margin: 0 0 12px 0;
-            align-self: end;
-        }
-        .donate-card p {
-            grid-column: 2;
-            font-size: 1rem;
+        .coffee-modal-info {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            margin: 0 0 8px 0;
-            line-height: 1.5;
+            text-align: left;
+            margin-bottom: 16px;
+            line-height: 1.6;
         }
-        .donate-card p:last-child {
+        .coffee-modal-info div {
+            margin-bottom: 2px;
+        }
+        .coffee-modal-info div:last-child {
             margin-bottom: 0;
         }
-
-        /* Giao diện trên điện thoại */
-        @media (max-width: 600px) {
-            .donate-card {
-                grid-template-columns: 1fr;
-                text-align: center;
-                padding: 24px;
-            }
-            .qr-image {
-                grid-column: 1;
-                grid-row: auto;
-                max-width: 160px;
-                margin: 0 auto 20px auto;
-            }
-            .donate-card h3, .donate-card p {
-                grid-column: 1;
-            }
+        .coffee-modal-info strong {
+            color: var(--text-dark);
+        }
+        .copy-stk-btn {
+            width: 100%;
+            background: var(--accent-gold);
+            color: #121212;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-stk-btn:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 4px 12px rgba(201, 169, 110, 0.3);
         }
     </style>
 <link rel="icon" type="image/png" href="/core/image/favicon.png">
@@ -163,7 +218,13 @@
             </div>
 
             <div class="profile-container fade-up">
-                <h2 class="profile-title">Xin chào, tôi là Hoàng Long</h2>
+                <h2 class="profile-title">
+                    <span>Xin chào, tôi là Hoàng Long</span>
+                    <button class="coffee-btn" id="open-coffee-btn" title="Mời Hoàng Long một ly cà phê ☕" aria-label="Mời Hoàng Long một ly cà phê">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                        <span>Cà phê ☕</span>
+                    </button>
+                </h2>
                 <div class="profile-content">
                     <p>Chào mừng bạn đã ghé thăm <span class="highlight-text">Secret of Mathematical Principles (SMP)</span> — không gian lưu trữ và chia sẻ nhỏ của tôi trên con đường học thuật.</p>
                     <p>Tôi có niềm đam mê sâu sắc với Toán học thuần túy (Đặc biệt là Số học, Hình học phẳng và Tổ hợp). Với tôi, mỗi bài toán đẹp hay một thuật toán tối ưu đều mang một nét thơ rất riêng, đúng như tinh thần tinh hoa tư duy mà Albert Einstein từng ca ngợi.</p>
@@ -172,22 +233,23 @@
                 </div>
             </div>
 
-            <div class="profile-container donate-container fade-up">
-                <h2 class="donate-title">☕ Ủng hộ dự án</h2>
-                <p class="donate-desc">
-                    SMP là một dự án hoàn toàn phi lợi nhuận. Mọi nội dung, công cụ và tài liệu trên web đều được chia sẻ miễn phí. Nếu bạn thấy website hữu ích, bạn có thể mời mình một ly cà phê. Sự ủng hộ của bạn là động lực to lớn để mình tiếp tục phát triển dự án!
-                </p>
-                
-                <div class="donate-methods">
-                    <div class="donate-card">
-                        <img src="/core/image/link_anh_qr_ngan_hang.png" alt="QR Ngân Hàng" class="qr-image">
-                        <h3>Chuyển khoản</h3>
-                        <p>Ngân hàng: <strong>VietinBank</strong></p> <p>STK: <strong>100877874401</strong></p> <p>Tên: DO VIET HOANG LONG</p>
-                    </div>
-                </div>
-            </div>
-
         </main>
+    </div>
+
+    <!-- Modal Cà Phê Nhỏ Gọn -->
+    <div id="coffee-modal" class="coffee-modal-overlay" aria-hidden="true">
+        <div class="coffee-modal-box">
+            <button class="coffee-modal-close" id="close-coffee-btn" aria-label="Đóng">&times;</button>
+            <h3 class="coffee-modal-title">☕ Mời một ly cà phê</h3>
+            <p class="coffee-modal-sub">Cảm ơn bạn đã ghé thăm và đồng hành cùng SMP!</p>
+            <img src="/core/image/link_anh_qr_ngan_hang.png" alt="QR VietinBank" class="coffee-modal-qr">
+            <div class="coffee-modal-info">
+                <div>Ngân hàng: <strong>VietinBank</strong></div>
+                <div>STK: <strong id="stk-number">100877874401</strong></div>
+                <div>Tên: <strong>DO VIET HOANG LONG</strong></div>
+            </div>
+            <button class="copy-stk-btn" id="copy-stk-btn">Sao chép số tài khoản</button>
+        </div>
     </div>
 
     <script src="/core/js/sidebar-data.js?v=36"></script>
@@ -195,7 +257,54 @@
     <script src="/core/js/shared.js?v=36"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // No comments
+            const openBtn = document.getElementById('open-coffee-btn');
+            const closeBtn = document.getElementById('close-coffee-btn');
+            const modal = document.getElementById('coffee-modal');
+            const copyBtn = document.getElementById('copy-stk-btn');
+
+            if (openBtn && modal) {
+                openBtn.addEventListener('click', () => {
+                    modal.classList.add('active');
+                    modal.setAttribute('aria-hidden', 'false');
+                });
+            }
+
+            if (closeBtn && modal) {
+                closeBtn.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                    modal.setAttribute('aria-hidden', 'true');
+                });
+            }
+
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                        modal.setAttribute('aria-hidden', 'true');
+                    }
+                });
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+                    modal.classList.remove('active');
+                    modal.setAttribute('aria-hidden', 'true');
+                }
+            });
+
+            if (copyBtn) {
+                copyBtn.addEventListener('click', () => {
+                    navigator.clipboard.writeText('100877874401').then(() => {
+                        const origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Đã sao chép STK!';
+                        setTimeout(() => {
+                            copyBtn.textContent = origText;
+                        }, 2000);
+                    }).catch(() => {
+                        copyBtn.textContent = 'STK: 100877874401';
+                    });
+                });
+            }
         });
     </script>
 </body>
