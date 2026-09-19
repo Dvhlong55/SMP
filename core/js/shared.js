@@ -76,6 +76,55 @@ const ALL_POSTS = [
         page: '/pages/toanhoc.html'
     },
     {
+        title: '[Ninh Bình] Đề thi chọn đội tuyển thi HSGQG tỉnh Ninh Bình năm 2026',
+        date: 'September 16, 2026',
+        url: '/posts/math/vmo/ninhbinh-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Lào Cai] Đề thi chọn đội tuyển thi HSGQG tỉnh Lào Cai năm 2026',
+        date: 'September 16, 2026',
+        url: '/posts/math/vmo/laocai-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Hà Nội] Đề thi chọn đội tuyển thi HSGQG TP Hà Nội năm 2026 (Bảng B)',
+        date: 'September 15, 2026',
+        url: '/posts/math/vmo/hanoi-bangb-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Hải Phòng] Đề thi chọn đội tuyển thi HSGQG TP Hải Phòng năm 2026',
+        date: 'September 15, 2026',
+        url: '/posts/math/vmo/haiphong-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Lâm Đồng] Đề thi chọn đội tuyển thi HSGQG tỉnh Lâm Đồng năm 2026',
+        date: 'September 15, 2026',
+        url: '/posts/math/vmo/lamdong-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Thanh Hóa] Đề thi chọn đội tuyển thi HSGQG tỉnh Thanh Hóa năm 2026',
+        date: 'September 12, 2026',
+        url: '/posts/math/vmo/thanhhoa-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Quảng Ninh] Đề thi chọn đội tuyển thi HSGQG tỉnh Quảng Ninh năm 2026',
+        date: 'September 12, 2026',
+        url: '/posts/math/vmo/quangninh-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '[Vĩnh Long] Đề thi chọn đội tuyển thi HSGQG tỉnh Vĩnh Long năm 2026',
         date: 'September 11, 2026',
         url: '/posts/math/vmo/vinhlong-hsgqg-2026.html',
