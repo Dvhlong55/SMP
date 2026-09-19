@@ -55,6 +55,20 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '[Phú Thọ] Đề thi chọn đội tuyển thi HSGQG tỉnh Phú Thọ năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/phutho-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Quảng Ngãi] Đề thi chọn đội tuyển thi HSGQG tỉnh Quảng Ngãi năm 2026',
+        date: 'September 18, 2026',
+        url: '/posts/math/vmo/quangngai-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '§ Number Theory Set 2',
         date: 'September 05, 2026',
         url: '/posts/math/vmo/number-theory-set-2.html',
