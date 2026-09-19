@@ -104,6 +104,13 @@ const ALL_POSTS = [
         page: '/pages/toanhoc.html'
     },
     {
+        title: 'Tổng hợp Một số dạng Toán khác TST Tỉnh 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/tong-hop-toan-khac-tst-tinh-2026.html',
+        tags: ['Khác', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '[KHTN] Đề thi chọn đội tuyển thi HSGQG Trường THPT Chuyên KHTN năm 2026',
         date: 'September 19, 2026',
         url: '/posts/math/vmo/khtn-hsgqg-2026.html',
