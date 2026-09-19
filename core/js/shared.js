@@ -55,6 +55,55 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: 'Tổng hợp Số Học TST Tỉnh 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/tong-hop-so-hoc-tst-tinh-2026.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Tổng hợp Giải Tích & Dãy Số TST Tỉnh 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/tong-hop-day-so-tst-tinh-2026.html',
+        tags: ['Dãy Số', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Tổng hợp Hình Học TST Tỉnh 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/tong-hop-hinh-hoc-tst-tinh-2026.html',
+        tags: ['Hình Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Tổng hợp Tổ Hợp TST Tỉnh 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/tong-hop-to-hop-tst-tinh-2026.html',
+        tags: ['Tổ Hợp', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Tổng hợp Đa Thức TST Tỉnh 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/tong-hop-da-thuc-tst-tinh-2026.html',
+        tags: ['Đa Thức', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Tổng hợp Phương Trình Hàm TST Tỉnh 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/tong-hop-phuong-trinh-ham-tst-tinh-2026.html',
+        tags: ['Phương Trình Hàm', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Tổng hợp Bất Đẳng Thức TST Tỉnh 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/tong-hop-bat-dang-thuc-tst-tinh-2026.html',
+        tags: ['Bất Đẳng Thức', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '[KHTN] Đề thi chọn đội tuyển thi HSGQG Trường THPT Chuyên KHTN năm 2026',
         date: 'September 19, 2026',
         url: '/posts/math/vmo/khtn-hsgqg-2026.html',
