@@ -55,6 +55,90 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '[KHTN] Đề thi chọn đội tuyển thi HSGQG Trường THPT Chuyên KHTN năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/khtn-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Nghệ An] Đề thi chọn đội tuyển thi HSGQG tỉnh Nghệ An năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/nghean-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Thái Nguyên] Đề thi chọn đội tuyển thi HSGQG tỉnh Thái Nguyên năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/thainguyen-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[ĐH Vinh] Đề thi chọn đội tuyển thi HSGQG Trường Đại học Vinh năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/dh-vinh-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Đồng Nai] Đề thi lập đội tuyển HSGQG tỉnh Đồng Nai năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/dongnai-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Lam Sơn] Đề khảo sát chọn học sinh dự thi đội tuyển HSGQG Chuyên Lam Sơn năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/chuyen-lam-son-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Hà Tĩnh] Đề thi chọn đội tuyển thi HSGQG tỉnh Hà Tĩnh năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/hatinh-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[PTNK] Đề thi chọn đội tuyển thi HSGQG Trường PTNK năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/ptnk-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Hưng Yên] Đề thi chọn đội tuyển thi HSGQG tỉnh Hưng Yên năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/hungyen-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Cần Thơ] Đề thi chọn đội tuyển thi HSGQG TP Cần Thơ năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/cantho-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Lạng Sơn] Đề thi chọn đội tuyển thi HSGQG tỉnh Lạng Sơn năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/langson-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Cà Mau] Đề thi chọn đội tuyển thi HSGQG tỉnh Cà Mau năm 2026',
+        date: 'September 19, 2026',
+        url: '/posts/math/vmo/camau-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '[Phú Thọ] Đề thi chọn đội tuyển thi HSGQG tỉnh Phú Thọ năm 2026',
         date: 'September 19, 2026',
         url: '/posts/math/vmo/phutho-hsgqg-2026.html',
