@@ -7,6 +7,205 @@ var redoStack = [];
 var isUndoRedoAction = false;
 var saveStateTimeout = null;
 
+// ── Hàm chuẩn hóa & gỡ bỏ math delimiters bao bọc ngoài cùng ──
+function stripOuterMathDelimiters(str) {
+    if (!str) return '';
+    str = str.trim();
+    var changed = true;
+    while (changed) {
+        changed = false;
+        // \[ ... \]
+        if (str.startsWith('\\[') && str.endsWith('\\]') && str.length >= 4) {
+            var inner = str.substring(2, str.length - 2);
+            if (inner.indexOf('\\]') === -1) {
+                str = inner.trim();
+                changed = true;
+                continue;
+            }
+        }
+        // $$ ... $$
+        if (str.startsWith('$$') && str.endsWith('$$') && str.length >= 4) {
+            var inner = str.substring(2, str.length - 2);
+            if (inner.indexOf('$$') === -1) {
+                str = inner.trim();
+                changed = true;
+                continue;
+            }
+        }
+        // \( ... \)
+        if (str.startsWith('\\(') && str.endsWith('\\)') && str.length >= 4) {
+            var inner = str.substring(2, str.length - 2);
+            if (inner.indexOf('\\)') === -1) {
+                str = inner.trim();
+                changed = true;
+                continue;
+            }
+        }
+        // $ ... $ (không phải escaped \$)
+        if (str.startsWith('$') && !str.startsWith('$$') && str.endsWith('$') && !str.endsWith('$$') && str.length >= 2) {
+            var inner = str.substring(1, str.length - 1);
+            if (inner.replace(/\\\$/g, '').indexOf('$') === -1) {
+                str = inner.trim();
+                changed = true;
+                continue;
+            }
+        }
+    }
+    return str;
+}
+
+// ── Hàm phân tích cú pháp TeX nhận diện từ công cụ khác ──
+function parseTransferredLatex(raw) {
+    if (!raw || typeof raw !== 'string') return [];
+    var str = raw.trim();
+    if (!str) return [];
+
+    // Chuẩn hóa xuống dòng
+    str = str.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+    // Chuyển đổi các môi trường căn lề văn bản không thuộc math mode
+    str = str.replace(/\\begin\{center\}/gi, '')
+             .replace(/\\end\{center\}/gi, '')
+             .replace(/\\centering\b/gi, '')
+             .replace(/\\begin\{flushleft\}/gi, '')
+             .replace(/\\end\{flushleft\}/gi, '')
+             .replace(/\\begin\{flushright\}/gi, '')
+             .replace(/\\end\{flushright\}/gi, '')
+             .replace(/\\fbox\b/g, '\\boxed');
+
+    // Gỡ bỏ delimiters ngoài cùng bao bọc toàn bộ chuỗi
+    str = stripOuterMathDelimiters(str);
+    if (!str) return [];
+
+    // Phân tách các khối dòng ở cấp ngoài cùng
+    var chunks = [];
+    var lastIdx = 0;
+    var braceDepth = 0;
+    var envDepth = 0;
+    var mathDepth = 0;
+    var inDoubleDollar = false;
+    var i = 0;
+    var n = str.length;
+
+    while (i < n) {
+        if (str.substr(i, 2) === '$$') {
+            inDoubleDollar = !inDoubleDollar;
+            i += 2;
+            continue;
+        }
+        if (str.substr(i, 2) === '\\[' || str.substr(i, 2) === '\\(') {
+            mathDepth++;
+            i += 2;
+            continue;
+        }
+        if (str.substr(i, 2) === '\\]' || str.substr(i, 2) === '\\)') {
+            if (mathDepth > 0) mathDepth--;
+            i += 2;
+            continue;
+        }
+        if (str.substr(i, 7) === '\\begin{') {
+            var cb = str.indexOf('}', i + 7);
+            if (cb !== -1) {
+                envDepth++;
+                i = cb + 1;
+                continue;
+            }
+        }
+        if (str.substr(i, 5) === '\\end{') {
+            var cb = str.indexOf('}', i + 5);
+            if (cb !== -1) {
+                if (envDepth > 0) envDepth--;
+                i = cb + 1;
+                continue;
+            }
+        }
+        if (str[i] === '{' && (i === 0 || str[i - 1] !== '\\')) {
+            braceDepth++;
+            i++;
+            continue;
+        }
+        if (str[i] === '}' && (i === 0 || str[i - 1] !== '\\')) {
+            if (braceDepth > 0) braceDepth--;
+            i++;
+            continue;
+        }
+
+        if (braceDepth === 0 && envDepth === 0 && mathDepth === 0 && !inDoubleDollar) {
+            if (str.substr(i, 2) === '\\\\') {
+                var nextChar = str.substr(i + 2, 1);
+                if (nextChar !== '[' && nextChar !== ']' && nextChar !== '(' && nextChar !== ')' && nextChar !== '\\') {
+                    var chunk = str.substring(lastIdx, i).trim();
+                    if (chunk) chunks.push(chunk);
+                    i += 2;
+                    while (i < n && (str[i] === ' ' || str[i] === '\t' || str[i] === '\n')) {
+                        i++;
+                    }
+                    lastIdx = i;
+                    continue;
+                }
+            } else if (str[i] === '\n') {
+                var chunk = str.substring(lastIdx, i).trim();
+                if (chunk) chunks.push(chunk);
+                i++;
+                while (i < n && (str[i] === ' ' || str[i] === '\t' || str[i] === '\n')) {
+                    i++;
+                }
+                lastIdx = i;
+                continue;
+            }
+        }
+        i++;
+    }
+
+    var tail = str.substring(lastIdx).trim();
+    if (tail) chunks.push(tail);
+
+    var lines = [];
+    chunks.forEach(function(c) {
+        var cleanLine = stripOuterMathDelimiters(c);
+        if (cleanLine) lines.push(cleanLine);
+    });
+
+    return lines.length > 0 ? lines : [str];
+}
+
+// ── Kiểm tra và nạp công thức chuyển từ công cụ khác (LaTeX-OCR, LaTeX Editor) ──
+function checkAndLoadTransferredLatex() {
+    var transferData = localStorage.getItem('smp_latex_transfer');
+    if (!transferData) return false;
+
+    localStorage.removeItem('smp_latex_transfer');
+    try {
+        var lines = parseTransferredLatex(transferData);
+        if (lines && lines.length > 0) {
+            // Lưu trạng thái trước đó vào undoStack nếu có để có thể hoàn tác
+            var prevAutosave = localStorage.getItem('smp_mathtype_autosave');
+            if (prevAutosave) {
+                try {
+                    var prevParsed = JSON.parse(prevAutosave);
+                    if (Array.isArray(prevParsed) && prevParsed.length > 0) {
+                        undoStack.push(prevParsed);
+                    }
+                } catch(e) {}
+            }
+
+            restoreState(lines);
+            localStorage.setItem('smp_mathtype_autosave', JSON.stringify(lines));
+            saveState();
+
+            setTimeout(function() {
+                if (typeof showToast === 'function') {
+                    showToast('✓ Đã nạp công thức toán vào MathType');
+                }
+            }, 150);
+            return true;
+        }
+    } catch (err) {
+        console.error('Error importing transferred LaTeX:', err);
+    }
+    return false;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     // Cấu hình MathLive ẩn bàn phím ảo (giữ UI giống MathQuill)
     if (window.mathVirtualKeyboard) {
@@ -19,17 +218,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Auto-save logic: Khôi phục nếu có
-    var savedState = localStorage.getItem('smp_mathtype_autosave');
-    if (savedState) {
-        try {
-            var state = JSON.parse(savedState);
-            restoreState(state);
-        } catch(e) {
+    // 1. Kiểm tra công thức chuyển từ OCR hoặc LaTeX tool
+    var transferred = checkAndLoadTransferredLatex();
+
+    // 2. Nếu không có dữ liệu chuyển giao, khôi phục từ auto-save
+    if (!transferred) {
+        var savedState = localStorage.getItem('smp_mathtype_autosave');
+        if (savedState) {
+            try {
+                var state = JSON.parse(savedState);
+                restoreState(state);
+            } catch(e) {
+                createNewMathFieldAfter(-1);
+            }
+        } else {
             createNewMathFieldAfter(-1);
         }
-    } else {
-        createNewMathFieldAfter(-1);
     }
 
     // Lắng nghe sự kiện toàn cục
@@ -58,6 +262,13 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('smp_mathtype_autosave', JSON.stringify(latexStrings));
         }
     }, 10000);
+});
+
+// Hỗ trợ khôi phục khi quay lại trang qua bfcache
+window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+        checkAndLoadTransferredLatex();
+    }
 });
 
 function saveState() {
@@ -99,6 +310,7 @@ function restoreState(stateArray) {
     activeMathField = mathFields[mathFields.length - 1];
     setTimeout(function() { if(activeMathField) activeMathField.focus(); }, 50);
     updateLatexOutput();
+    setTimeout(updateLatexOutput, 60);
 }
 
 function performUndo() {

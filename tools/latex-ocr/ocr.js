@@ -640,7 +640,7 @@
 
     // ── Mở Trong Trình Soạn Thảo LaTeX (Tool 1) ─────────────
     window.sendToLatexEditor = function() {
-        const text = latexOutput.value || currentLatex;
+        const text = (latexOutput && latexOutput.value.trim().length > 0) ? latexOutput.value.trim() : (currentLatex || '').trim();
         if (!text) return;
 
         localStorage.setItem('smp_latex_transfer', text);
@@ -652,7 +652,7 @@
 
     // ── Mở Trong MathType (Tool 2) ─────────────────────────
     window.sendToMathType = function() {
-        const text = latexOutput.value || currentLatex;
+        const text = (latexOutput && latexOutput.value.trim().length > 0) ? latexOutput.value.trim() : (currentLatex || '').trim();
         if (!text) return;
 
         localStorage.setItem('smp_latex_transfer', text);
