@@ -127,6 +127,7 @@
             previewContainer.style.display = 'flex';
             clearImgBtn.style.display = 'inline-block';
             scanBtn.disabled = false;
+            if (scanBtnText) scanBtnText.textContent = 'Quét Công Thức';
 
             const name = customName || file.name || 'Ảnh đã chọn';
             const sizeKB = (file.size ? (file.size / 1024).toFixed(1) + ' KB' : '');
@@ -147,6 +148,7 @@
         previewContainer.style.display = 'none';
         clearImgBtn.style.display = 'none';
         scanBtn.disabled = true;
+        if (scanBtnText) scanBtnText.textContent = 'Quét Công Thức';
         fileInput.value = '';
 
         imgStatus.innerHTML = `<span class="status-dot"></span>Chưa có ảnh nào được chọn`;
@@ -205,6 +207,7 @@
         previewContainer.style.display = 'flex';
         clearImgBtn.style.display = 'inline-block';
         scanBtn.disabled = false;
+        if (scanBtnText) scanBtnText.textContent = 'Quét Công Thức';
 
         imgStatus.innerHTML = `<span class="status-dot green"></span>Ảnh mẫu: Tích phân Dirichlet`;
         imgMeta.textContent = 'Mẫu SMP';
@@ -259,19 +262,21 @@
         } catch (error) {
             console.error('OCR Error:', error);
             ocrStatus.innerHTML = `<span class="status-dot red"></span>Hệ thống bận`;
-            mathPreview.className = '';
+            mathPreview.className = 'error-state';
             mathPreview.innerHTML = `
-                <div style="color: #f87171; text-align: center; padding: 20px; font-family: 'JetBrains Mono', monospace;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:10px;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                    <p style="font-weight: 600; margin: 0 0 6px 0; font-size: 0.85rem;">Không thể nhận diện ảnh</p>
-                    <p style="font-size: 0.78rem; opacity: 0.8; margin: 0;">Lỗi hệ thống: Vui lòng thử lại sau giây lát.</p>
+                <div class="ocr-error-box">
+                    <div class="ocr-error-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                    </div>
+                    <p class="ocr-error-title">Không thể nhận diện ảnh</p>
+                    <p class="ocr-error-desc">Lỗi hệ thống: Vui lòng thử lại sau giây lát.</p>
                 </div>
             `;
             showToast('⚠️ Hệ thống đang bận, vui lòng thử lại sau.');
         } finally {
             isProcessing = false;
             scanBtn.disabled = !currentBase64;
-            scanBtnText.innerHTML = 'Quét Lại';
+            if (scanBtnText) scanBtnText.textContent = 'Quét Lại';
         }
     };
 

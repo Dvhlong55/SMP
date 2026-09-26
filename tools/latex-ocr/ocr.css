@@ -408,6 +408,16 @@ body:not(.dark-mode) .side-widget-title {
     background: rgba(0, 158, 179, 0.06);
 }
 
+.drop-zone-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+}
+
 .upload-icon-circle {
     width: 56px;
     height: 56px;
@@ -417,8 +427,9 @@ body:not(.dark-mode) .side-widget-title {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 12px;
+    margin: 0 auto 14px auto;
     transition: transform 0.25s;
+    flex-shrink: 0;
 }
 .drop-zone:hover .upload-icon-circle {
     transform: scale(1.08);
@@ -431,6 +442,8 @@ body:not(.dark-mode) .side-widget-title {
     color: var(--title-color);
     margin: 0 0 6px 0;
     letter-spacing: 0.2px;
+    text-align: center;
+    width: 100%;
 }
 .highlight-link {
     color: var(--accent-cyan);
@@ -443,6 +456,8 @@ body:not(.dark-mode) .side-widget-title {
     font-size: 0.76rem;
     color: var(--text-muted);
     margin: 0 0 14px 0;
+    text-align: center;
+    width: 100%;
 }
 .drop-text-sub kbd {
     background: var(--badge-bg);
@@ -459,6 +474,8 @@ body:not(.dark-mode) .side-widget-title {
     gap: 6px;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    margin: 0 auto;
 }
 .drop-badges .badge {
     font-family: 'JetBrains Mono', monospace;
@@ -552,20 +569,70 @@ body.dark-mode .btn-scan {
     box-sizing: border-box;
 }
 
-#math-preview.empty-state {
+#math-preview.empty-state,
+#math-preview.error-state {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
+    white-space: normal !important;
+    height: 100%;
+    min-height: 280px;
+    padding: 30px 24px;
+    box-sizing: border-box;
+}
+
+#math-preview.empty-state {
     color: var(--text-muted);
     opacity: 0.6;
     font-family: 'JetBrains Mono', monospace;
     font-style: normal;
     font-size: 0.82rem;
-    padding: 30px 24px;
     line-height: 1.6;
-    white-space: normal !important;
-    height: 100%;
+}
+
+.ocr-error-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    margin: auto;
+}
+
+.ocr-error-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px auto;
+    color: #f87171;
+}
+
+.ocr-error-icon svg {
+    display: block;
+    margin: 0 auto;
+}
+
+.ocr-error-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+    font-size: 0.90rem;
+    color: #f87171;
+    text-align: center;
+    width: 100%;
+}
+
+.ocr-error-desc {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    opacity: 0.85;
+    margin: 0;
+    color: #f87171;
+    text-align: center;
+    width: 100%;
 }
 
 #latex-output {
