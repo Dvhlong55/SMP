@@ -22,7 +22,7 @@
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link class="theme-link" rel="stylesheet" href="/core/css/shared.css?v=36">
-    <link rel="stylesheet" href="/tools/latex-ocr/ocr.css?v=1">
+    <link rel="stylesheet" href="/tools/latex-ocr/ocr.css?v=2">
     <link rel="icon" type="image/png" href="/core/image/favicon.png">
 </head>
 <body>
@@ -34,30 +34,26 @@
         <main>
             <div class="main-content-layout">
 
-                <aside class="tags-comment-sidebar">
-                    <div id="left-sidebar-placeholder"></div>
-                </aside>
-
                 <div class="main-articles-body">
 
-                    <a href="javascript:history.back()" class="exam-back-btn fade-up">&#8592; Quay L&#7841;i</a>
+                    <a href="javascript:history.back()" class="exam-back-btn fade-up">&#8592; Quay Lại</a>
 
                     <div class="exam-meta fade-up">
                         <span class="exam-tag">
-                            <a href="/pages/toanhoc.html" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">MATH</a> 
+                            <a href="/pages/toanhoc.html" style="color: inherit; text-decoration: none;">MATH</a> 
                             &nbsp;&gt;&nbsp; 
-                            <a href="/pages/toanhoc.html?filter=tools" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Công Cụ</a> 
+                            <a href="/pages/toanhoc.html?filter=tools" style="color: inherit; text-decoration: none;">Công Cụ</a> 
                             &nbsp;&gt;&nbsp; LaTeX-OCR Nhận Diện Từ Ảnh
                         </span>
                     </div>
 
                     <div class="latex-hero fade-up">
-                        <h1 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--exam-title-color);margin:0 0 5px 0;">
+                        <h1>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 8px; margin-top: -3px; color: var(--accent-cyan);"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
                             LaTeX-OCR — Nhận Diện Công Thức Từ Ảnh
                         </h1>
-                        <p style="font-size:0.88rem;color:var(--exam-text-color);opacity:0.75;margin:0;line-height:1.5;">
-                            Dán ảnh (<kbd style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:0.8rem;border:1px solid rgba(255,255,255,0.2);">Ctrl + V</kbd>) hoặc tải ảnh chụp đề toán, công thức — AI tự động chuyển thành mã $\LaTeX$ chuẩn xác trong 1-2 giây.
+                        <p>
+                            Dán ảnh (<kbd>Ctrl + V</kbd>) hoặc tải ảnh chứa công thức toán — AI tự động chuyển thành mã $\LaTeX$ chuẩn xác trong 1-2 giây.
                         </p>
                     </div>
 
@@ -78,31 +74,28 @@
                             </div>
 
                             <div class="ocr-body">
-                                <!-- Vùng Drag & Drop / Paste -->
                                 <div class="drop-zone" id="drop-zone">
                                     <input type="file" id="file-input" accept="image/*" style="display: none;">
                                     
                                     <div class="drop-zone-prompt" id="drop-prompt">
                                         <div class="upload-icon-circle">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-cyan);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-cyan);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
                                         </div>
                                         <p class="drop-text-main">Kéo thả ảnh hoặc <span class="highlight-link">Bấm để chọn file</span></p>
-                                        <p class="drop-text-sub">Hỗ trợ phím tắt dán trực tiếp <kbd>Ctrl + V</kbd> từ ảnh chụp màn hình</p>
+                                        <p class="drop-text-sub">Hỗ trợ phím tắt dán trực tiếp <kbd>Ctrl + V</kbd></p>
                                         <div class="drop-badges">
                                             <span class="badge">PNG</span>
                                             <span class="badge">JPG</span>
                                             <span class="badge">WEBP</span>
-                                            <span class="badge">Chụp Màn Hình</span>
+                                            <span class="badge">Screenshot</span>
                                         </div>
                                     </div>
 
-                                    <!-- Khung xem trước ảnh khi đã chọn -->
                                     <div class="preview-img-container" id="preview-img-container" style="display: none;">
                                         <img id="selected-image" alt="Ảnh công thức toán cần nhận diện">
                                     </div>
                                 </div>
 
-                                <!-- Thanh nút bấm hành động nhận diện -->
                                 <div class="ocr-scan-action-row">
                                     <button class="btn-scan" id="scan-btn" onclick="processOCR()" disabled>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
@@ -112,7 +105,7 @@
                             </div>
 
                             <div class="status-bar">
-                                <span id="img-status"><span class="status-dot"></span>Chưa có ảnh nào được chọn</span>
+                                <span id="img-status"><span class="status-dot"></span>Chưa có ảnh</span>
                                 <span id="img-meta"></span>
                             </div>
                         </div>
@@ -121,7 +114,7 @@
                         <div class="ocr-pane">
                             <div class="pane-header">
                                 <span class="pane-title">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"/></svg>
                                     Kết Quả Nhận Diện
                                 </span>
                                 <div class="pane-actions">
@@ -131,14 +124,12 @@
                             </div>
 
                             <div class="ocr-body">
-                                <!-- Khung Preview MathJax -->
                                 <div id="ocr-preview-view" class="result-view-panel">
                                     <div id="math-preview" class="empty-state">
                                         Kết quả render công thức toán học sẽ hiển thị tại đây sau khi quét ảnh...
                                     </div>
                                 </div>
 
-                                <!-- Khung Mã LaTeX Thô (Textarea) -->
                                 <div id="ocr-raw-view" class="result-view-panel" style="display: none;">
                                     <textarea id="latex-output" spellcheck="false" placeholder="Mã LaTeX trích xuất sẽ hiển thị ở đây..."></textarea>
                                 </div>
@@ -152,7 +143,7 @@
 
                     </div>
 
-                    <!-- Thanh nút hành động chuyển đổi (Export / Transfer Bar) -->
+                    <!-- Thanh nút hành động chuyển đổi -->
                     <div class="export-bar fade-up">
                         <button class="export-btn" id="btn-copy-latex" onclick="copyLatex()" disabled>
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
@@ -174,35 +165,14 @@
 
                 </div>
             </div>
-
-            <!-- Thảo Luận & Góp Ý (Giscus) -->
-            <div class="giscus-section-outer fade-up" style="max-width: 900px; margin: 48px auto; padding: 48px 24px 0 24px; border-top: 1px solid var(--border-light);">
-                <h2 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 24px; color: var(--text-main);">Thảo Luận &amp; Góp Ý</h2>
-                <div id="giscus-container"></div>
-            </div>
-
-            <div class="stats-strip fade-up">
-                <div class="stat-item"><div class="stat-number">$\Sigma$</div><div class="stat-label">Bài Viết</div></div>
-                <div class="stat-item"><div class="stat-number">$\Phi$</div><div class="stat-label">Chủ Đề</div></div>
-                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
-                <div class="stat-item"><div class="stat-number">$\infty$</div><div class="stat-label">Đam Mê</div></div>
-            </div>
-
-            <footer class="site-footer fade-up">
-                <div class="footer-divider"></div>
-                <div class="footer-bottom">
-                    <p>&copy; 2026 <span class="footer-brand">SMP</span> — Secrets of Mathematical Principles. All rights reserved.</p>
-                </div>
-            </footer>
         </main>
     </div>
 
-    <!-- Toast notification -->
     <div id="ocr-toast" class="ocr-toast"></div>
 
     <script src="/core/js/sidebar-data.js?v=36"></script>
     <script src="/core/js/layout.js?v=36"></script>
     <script src="/core/js/shared.js?v=36"></script>
-    <script src="/tools/latex-ocr/ocr.js?v=1"></script>
+    <script src="/tools/latex-ocr/ocr.js?v=2"></script>
 </body>
 </html>

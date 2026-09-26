@@ -15,6 +15,25 @@
     let currentLatex = '';
     let isProcessing = false;
 
+    // Đồng bộ Theme (Dark/Light) và Embed Mode
+    function syncThemeAndEmbed() {
+        if (window.location.search.includes('embed=true')) {
+            document.body.classList.add('embed-mode');
+        }
+        try {
+            if (window.parent && window.parent.document && window.parent.document.body.classList.contains('dark-mode')) {
+                document.body.classList.add('dark-mode');
+            } else if (localStorage.getItem('smp-dark-mode') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+        } catch (e) {
+            if (localStorage.getItem('smp-dark-mode') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+        }
+    }
+    syncThemeAndEmbed();
+
     // Các phần tử DOM
     const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('file-input');
