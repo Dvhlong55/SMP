@@ -141,7 +141,9 @@
             { text: "\\subset", displayText: "\\subset - Tập con", offset: 0 },
             { text: "\\cup", displayText: "\\cup - Hợp", offset: 0 },
             { text: "\\cap", displayText: "\\cap - Giao", offset: 0 },
-            { text: "\\emptyset", displayText: "\\emptyset - Tập rỗng", offset: 0 }
+            { text: "\\emptyset", displayText: "\\emptyset - Tập rỗng", offset: 0 },
+            { text: "\\begin{center}\n  \n\\end{center}", displayText: "\\begin{center} - Căn giữa nội dung", offset: 13 },
+            { text: "\\fbox{}", displayText: "\\fbox{} - Đóng khung viền", offset: 1 }
         ];
 
         function latexHint(cm) {
@@ -231,25 +233,124 @@
         renderTimer = setTimeout(doRender, 500);
     }
 
-    // ── Hàm chuyển đổi thô (Render các định dạng LaTeX thông thường sang HTML) ──
-    function latexToHtml(src) {
-        var tempSrc = src
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/\\textbf\{([^}]*)\}/g, '<b>$1</b>')
-            .replace(/\\textit\{([^}]*)\}/g, '<i>$1</i>')
-            .replace(/\\underline\{([^}]*)\}/g, '<u>$1</u>')
-            .replace(/\\emph\{([^}]*)\}/g, '<em>$1</em>')
-            .replace(/\\title\{([^}]*)\}/g, '<h1>$1</h1>')
-            .replace(/\\author\{([^}]*)\}/g, '<h2>$1</h2>')
-            .replace(/\\section\{([^}]*)\}/g, '<h2>$1</h2>')
-            .replace(/\\subsection\{([^}]*)\}/g, '<h3>$1</h3>')
-            .replace(/\\item\s/g, '• ')
-            .replace(/\\noindent\s*/g, '')
-            .replace(/\\(medskip|bigskip|smallskip)/g, '<br>');
+    // ── Xử lý \fbox, \framebox và \boxed có hỗ trợ ngoặc nhọn lồng nhau ──
+    function parseLatexFbox(str) {
+        if (!str || (!str.includes('\\fbox') && !str.includes('\\framebox') && !str.includes('\\boxed'))) return str;
+        var keywords = ['\\fbox', '\\framebox', '\\boxed'];
+        for (var k = 0; k < keywords.length; k++) {
+            var kw = keywords[k];
+            var pos = 0;
+            while ((pos = str.indexOf(kw, pos)) !== -1) {
+                var braceStart = pos + kw.length;
+                while (braceStart < str.length && str[braceStart] === ' ') braceStart++;
+                // Bỏ qua các đối số tùy chọn [width][pos]
+                if (braceStart < str.length && str[braceStart] === '[') {
+                    var optEnd = str.indexOf(']', braceStart);
+                    if (optEnd !== -1) {
+                        braceStart = optEnd + 1;
+                        while (braceStart < str.length && str[braceStart] === ' ') braceStart++;
+                        if (braceStart < str.length && str[braceStart] === '[') {
+                            var optEnd2 = str.indexOf(']', braceStart);
+                            if (optEnd2 !== -1) {
+                                braceStart = optEnd2 + 1;
+                                while (braceStart < str.length && str[braceStart] === ' ') braceStart++;
+                            }
+                        }
+                    }
+                }
+                if (braceStart >= str.length || str[braceStart] !== '{') {
+                    pos += kw.length;
+                    continue;
+                }
 
-        return tempSrc;
+                var start = braceStart + 1;
+                var depth = 1;
+                var i = start;
+                while (i < str.length && depth > 0) {
+                    var ch = str[i];
+                    var prev = str[i - 1];
+                    if (ch === '{' && prev !== '\\') depth++;
+                    else if (ch === '}' && prev !== '\\') depth--;
+                    i++;
+                }
+
+                if (depth === 0) {
+                    var inner = str.substring(start, i - 1);
+                    var processedInner = parseLatexFbox(inner);
+                    // Nếu bên trong có lệnh toán học mà chưa có delimiter, tự bọc $ để MathJax render chuẩn
+                    if (/\\(frac|sqrt|sum|prod|int|alpha|beta|gamma|Delta|pi|le|ge|neq|equiv|forall|exists|in|subset|times|div)\b/.test(processedInner) && !processedInner.includes('$')) {
+                        processedInner = '$' + processedInner + '$';
+                    }
+                    var replacement = '<span class="latex-fbox">' + processedInner + '</span>';
+                    str = str.substring(0, pos) + replacement + str.substring(i);
+                    pos += replacement.length;
+                } else {
+                    pos += kw.length;
+                }
+            }
+        }
+        return str;
+    }
+
+    // ── Xử lý văn bản bên ngoài chế độ toán học để không làm hỏng công thức math ──
+    function processOutsideMath(src, fn) {
+        var mathRegex = /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\begin\{(?:cases|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|aligned|gathered|array|equation|align|gather|multline)\*?\}[\s\S]*?\\end\{(?:cases|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|aligned|gathered|array|equation|align|gather|multline)\*?\}|(?<!\\)\$[\s\S]*?(?<!\\)\$|\\\([\s\S]*?\\\))/g;
+
+        var result = '';
+        var lastIndex = 0;
+        var match;
+
+        while ((match = mathRegex.exec(src)) !== null) {
+            var textPart = src.substring(lastIndex, match.index);
+            result += fn(textPart);
+            result += match[0];
+            lastIndex = mathRegex.lastIndex;
+        }
+
+        var tail = src.substring(lastIndex);
+        result += fn(tail);
+        return result;
+    }
+
+    // ── Hàm chuyển đổi định dạng LaTeX thông thường sang HTML ──
+    function latexToHtml(src) {
+        if (!src) return '';
+
+        // Tách biệt giữa phần văn bản và phần công thức toán học
+        var processed = processOutsideMath(src, function(text) {
+            // 1. Chuyển đổi môi trường căn lề văn bản
+            var t = text
+                .replace(/\\begin\{center\}/gi, '<div class="latex-center">')
+                .replace(/\\end\{center\}/gi, '</div>')
+                .replace(/\\begin\{flushleft\}/gi, '<div class="latex-flushleft">')
+                .replace(/\\end\{flushleft\}/gi, '</div>')
+                .replace(/\\begin\{flushright\}/gi, '<div class="latex-flushright">')
+                .replace(/\\end\{flushright\}/gi, '</div>')
+                .replace(/\\centering\b/gi, '<div class="latex-center">');
+
+            // 2. Chuyển đổi \fbox, \framebox, \boxed trong chế độ văn bản
+            t = parseLatexFbox(t);
+
+            // 3. Chuyển đổi các định dạng văn bản chuẩn
+            t = t
+                .replace(/\\textbf\{([^}]*)\}/g, '<b>$1</b>')
+                .replace(/\\textit\{([^}]*)\}/g, '<i>$1</i>')
+                .replace(/\\underline\{([^}]*)\}/g, '<u>$1</u>')
+                .replace(/\\emph\{([^}]*)\}/g, '<em>$1</em>')
+                .replace(/\\title\{([^}]*)\}/g, '<h1>$1</h1>')
+                .replace(/\\author\{([^}]*)\}/g, '<h2>$1</h2>')
+                .replace(/\\section\{([^}]*)\}/g, '<h2>$1</h2>')
+                .replace(/\\subsection\{([^}]*)\}/g, '<h3>$1</h3>')
+                .replace(/\\subsubsection\{([^}]*)\}/g, '<h4>$1</h4>')
+                .replace(/\\item\s/g, '• ')
+                .replace(/\\noindent\s*/g, '')
+                .replace(/\\\\(?![a-zA-Z])/g, '<br>')
+                .replace(/\\(medskip|bigskip|smallskip)/g, '<br>');
+
+            return t;
+        });
+
+        return processed;
     }
 
     var renderedBlocks = [];

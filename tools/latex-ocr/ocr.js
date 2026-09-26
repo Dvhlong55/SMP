@@ -280,13 +280,95 @@
         }
     };
 
+    // ── Xử lý \fbox, \framebox và \boxed có hỗ trợ ngoặc nhọn lồng nhau ──
+    function parseLatexFbox(str) {
+        if (!str || (!str.includes('\\fbox') && !str.includes('\\framebox') && !str.includes('\\boxed'))) return str;
+        var keywords = ['\\fbox', '\\framebox', '\\boxed'];
+        for (var k = 0; k < keywords.length; k++) {
+            var kw = keywords[k];
+            var pos = 0;
+            while ((pos = str.indexOf(kw, pos)) !== -1) {
+                var braceStart = pos + kw.length;
+                while (braceStart < str.length && str[braceStart] === ' ') braceStart++;
+                if (braceStart < str.length && str[braceStart] === '[') {
+                    var optEnd = str.indexOf(']', braceStart);
+                    if (optEnd !== -1) {
+                        braceStart = optEnd + 1;
+                        while (braceStart < str.length && str[braceStart] === ' ') braceStart++;
+                        if (braceStart < str.length && str[braceStart] === '[') {
+                            var optEnd2 = str.indexOf(']', braceStart);
+                            if (optEnd2 !== -1) {
+                                braceStart = optEnd2 + 1;
+                                while (braceStart < str.length && str[braceStart] === ' ') braceStart++;
+                            }
+                        }
+                    }
+                }
+                if (braceStart >= str.length || str[braceStart] !== '{') {
+                    pos += kw.length;
+                    continue;
+                }
+
+                var start = braceStart + 1;
+                var depth = 1;
+                var i = start;
+                while (i < str.length && depth > 0) {
+                    var ch = str[i];
+                    var prev = str[i - 1];
+                    if (ch === '{' && prev !== '\\') depth++;
+                    else if (ch === '}' && prev !== '\\') depth--;
+                    i++;
+                }
+
+                if (depth === 0) {
+                    var inner = str.substring(start, i - 1);
+                    var processedInner = parseLatexFbox(inner);
+                    // Nếu bên trong có lệnh toán học mà chưa có delimiter, tự bọc $ để MathJax render chuẩn
+                    if (/\\(frac|sqrt|sum|prod|int|alpha|beta|gamma|Delta|pi|le|ge|neq|equiv|forall|exists|in|subset|times|div)\b/.test(processedInner) && !processedInner.includes('$')) {
+                        processedInner = '$' + processedInner + '$';
+                    }
+                    var replacement = '<span class="latex-fbox">' + processedInner + '</span>';
+                    str = str.substring(0, pos) + replacement + str.substring(i);
+                    pos += replacement.length;
+                } else {
+                    pos += kw.length;
+                }
+            }
+        }
+        return str;
+    }
+
+    // ── Xử lý văn bản bên ngoài chế độ toán học để tránh làm hỏng công thức math ──
+    function processOutsideMath(src, fn) {
+        var mathRegex = /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\begin\{(?:cases|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|aligned|gathered|array|equation|align|gather|multline)\*?\}[\s\S]*?\\end\{(?:cases|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|aligned|gathered|array|equation|align|gather|multline)\*?\}|(?<!\\)\$[\s\S]*?(?<!\\)\$|\\\([\s\S]*?\\\))/g;
+
+        var result = '';
+        var lastIndex = 0;
+        var match;
+
+        while ((match = mathRegex.exec(src)) !== null) {
+            var textPart = src.substring(lastIndex, match.index);
+            result += fn(textPart);
+            result += match[0];
+            lastIndex = mathRegex.lastIndex;
+        }
+
+        var tail = src.substring(lastIndex);
+        result += fn(tail);
+        return result;
+    }
+
     // ── Hàm chuẩn bị định dạng LaTeX để xem Preview trực tiếp ──
     function formatLatexForPreview(raw) {
         if (!raw || !raw.trim()) return '';
 
         let text = raw.trim();
 
-        // 1. Kiểm tra xem đã có math delimiters ($...$, $$...$$, \[...\], \(...\))
+        // 1. Kiểm tra môi trường cấu trúc văn bản (center, flushleft, fbox, section, v.v.)
+        const hasTextEnvironments = /\\begin\{(?:center|flushleft|flushright|document)\}/i.test(text) ||
+                                    /\\(section|subsection|title|author|fbox|framebox)/i.test(text);
+
+        // 2. Kiểm tra xem đã có math delimiters ($...$, $$...$$, \[...\], \(...\))
         // hoặc các môi trường display math độc lập (equation, align, gather, multline)
         const hasTopLevelDelimiters = text.includes('$') || 
                                      text.includes('\\[') || 
@@ -297,30 +379,50 @@
                                      text.startsWith('\\begin{gather') || 
                                      text.startsWith('\\begin{multline');
 
-        // 2. Nếu chuỗi hoàn toàn KHÔNG có delimiter nào:
+        // 3. Nếu chuỗi KHÔNG có text environments VÀ hoàn toàn KHÔNG có math delimiter nào:
         // Đa số là công thức toán thuần túy (\frac, x^2, \begin{cases}, \begin{pmatrix}, v.v.)
         // Ta bọc toàn bộ trong \[ ... \] để MathJax render toán học chuẩn xác
-        if (!hasTopLevelDelimiters) {
+        if (!hasTextEnvironments && !hasTopLevelDelimiters) {
             return `\\[ ${text} \\]`;
         }
 
-        // 3. Nếu chuỗi đã có delimiter hoặc văn bản kèm công thức:
-        // Đảm bảo các sub-environments như \begin{cases}, \begin{matrix}, \begin{pmatrix}, \begin{aligned}
+        // 4. Đảm bảo các sub-environments như \begin{cases}, \begin{matrix}, \begin{pmatrix}, \begin{aligned}
         // nếu đứng ngoài math mode thì được bọc trong \[ ... \]
         text = text.replace(/(?<![\$\\])(\\begin\{(?:cases|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|aligned|gathered|array)\}[\s\S]*?\\end\{(?:cases|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|aligned|gathered|array)\})/g, function(match) {
             return `\\[ ${match} \\]`;
         });
 
-        // Chuyển đổi định dạng chữ LaTeX thông dụng sang HTML (tương thích như latex-v2)
-        text = text
-            .replace(/\\textbf\{([^}]*)\}/g, '<b>$1</b>')
-            .replace(/\\textit\{([^}]*)\}/g, '<i>$1</i>')
-            .replace(/\\underline\{([^}]*)\}/g, '<u>$1</u>')
-            .replace(/\\emph\{([^}]*)\}/g, '<em>$1</em>')
-            .replace(/\\item\s+/g, '• ')
-            .replace(/\\noindent\s*/g, '')
-            .replace(/\\(medskip|bigskip|smallskip)/g, '<br>')
-            .replace(/\n\s*\n/g, '<br><br>');
+        // 5. Xử lý các định dạng chữ và căn lề văn bản bên ngoài math mode
+        text = processOutsideMath(text, function(t) {
+            var res = t
+                .replace(/\\begin\{center\}/gi, '<div class="latex-center">')
+                .replace(/\\end\{center\}/gi, '</div>')
+                .replace(/\\begin\{flushleft\}/gi, '<div class="latex-flushleft">')
+                .replace(/\\end\{flushleft\}/gi, '</div>')
+                .replace(/\\begin\{flushright\}/gi, '<div class="latex-flushright">')
+                .replace(/\\end\{flushright\}/gi, '</div>')
+                .replace(/\\centering\b/gi, '<div class="latex-center">');
+
+            res = parseLatexFbox(res);
+
+            res = res
+                .replace(/\\textbf\{([^}]*)\}/g, '<b>$1</b>')
+                .replace(/\\textit\{([^}]*)\}/g, '<i>$1</i>')
+                .replace(/\\underline\{([^}]*)\}/g, '<u>$1</u>')
+                .replace(/\\emph\{([^}]*)\}/g, '<em>$1</em>')
+                .replace(/\\title\{([^}]*)\}/g, '<h1>$1</h1>')
+                .replace(/\\author\{([^}]*)\}/g, '<h2>$1</h2>')
+                .replace(/\\section\{([^}]*)\}/g, '<h2>$1</h2>')
+                .replace(/\\subsection\{([^}]*)\}/g, '<h3>$1</h3>')
+                .replace(/\\subsubsection\{([^}]*)\}/g, '<h4>$1</h4>')
+                .replace(/\\item\s+/g, '• ')
+                .replace(/\\noindent\s*/g, '')
+                .replace(/\\\\(?![a-zA-Z])/g, '<br>')
+                .replace(/\\(medskip|bigskip|smallskip)/g, '<br>')
+                .replace(/\n\s*\n/g, '<br><br>');
+
+            return res;
+        });
 
         return text;
     }
