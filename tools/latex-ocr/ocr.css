@@ -7,10 +7,14 @@ body {
     overflow-x: hidden;
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     background-color: var(--body-bg);
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button, input, textarea, select {
+    font-family: 'JetBrains Mono', monospace;
 }
 
 /* ── Light Mode (Default) ── */
@@ -39,6 +43,9 @@ body {
     --widget-badge-bg: rgba(0, 0, 0, 0.05);
     --widget-badge-color: #475569;
     --border-light: rgba(15, 23, 42, 0.08);
+    --exam-title-color: #1e293b;
+    --exam-text-color: #334155;
+    --exam-divider-color: rgba(15, 23, 42, 0.08);
 }
 
 /* ── Dark Mode ── */
@@ -67,6 +74,9 @@ body.dark-mode {
     --widget-badge-bg: rgba(255, 255, 255, 0.05);
     --widget-badge-color: #aaa;
     --border-light: rgba(255, 255, 255, 0.1);
+    --exam-title-color: #f0f0f0;
+    --exam-text-color: #ddd;
+    --exam-divider-color: rgba(92, 225, 230, 0.1);
 }
 
 /* ── Base Layout ── */
@@ -242,22 +252,22 @@ body:not(.dark-mode) .side-widget-title {
 
 /* ── Hero Header ── */
 .latex-hero {
-    margin-bottom: 20px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--divider-color);
+    margin-bottom: 22px;
 }
 .latex-hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.55rem;
-    color: var(--title-color);
-    margin: 0 0 6px 0;
+    font-size: 1.6rem;
+    color: var(--exam-title-color, var(--title-color));
+    margin: 0 0 5px 0;
     line-height: 1.3;
 }
 .latex-hero p {
-    font-size: 0.88rem;
-    color: var(--text-muted);
+    font-size: 0.85rem;
+    color: var(--exam-text-color, var(--text-muted));
+    opacity: 0.7;
     margin: 0;
-    line-height: 1.5;
+    line-height: 1.6;
+    font-family: 'JetBrains Mono', monospace;
 }
 .latex-hero kbd {
     background: var(--badge-bg);
@@ -266,7 +276,7 @@ body:not(.dark-mode) .side-widget-title {
     padding: 2px 6px;
     border-radius: 4px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
+    font-size: 0.75rem;
 }
 
 /* ── OCR Workspace Layout (2 Cột Đều) ── */
@@ -415,10 +425,12 @@ body:not(.dark-mode) .side-widget-title {
 }
 
 .drop-text-main {
-    font-size: 0.98rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.90rem;
     font-weight: 600;
     color: var(--title-color);
-    margin: 0 0 5px 0;
+    margin: 0 0 6px 0;
+    letter-spacing: 0.2px;
 }
 .highlight-link {
     color: var(--accent-cyan);
@@ -427,7 +439,8 @@ body:not(.dark-mode) .side-widget-title {
 }
 
 .drop-text-sub {
-    font-size: 0.80rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.76rem;
     color: var(--text-muted);
     margin: 0 0 14px 0;
 }
@@ -543,11 +556,12 @@ body.dark-mode .btn-scan {
     justify-content: center;
     color: var(--text-muted);
     opacity: 0.6;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-style: italic;
-    font-size: 0.88rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    font-size: 0.82rem;
     text-align: center;
     padding: 30px;
+    line-height: 1.6;
 }
 
 #latex-output {

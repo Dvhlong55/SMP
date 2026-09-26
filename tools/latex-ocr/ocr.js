@@ -250,10 +250,10 @@
             console.error('OCR Error:', error);
             ocrStatus.innerHTML = `<span class="status-dot red"></span>Thất bại`;
             mathPreview.innerHTML = `
-                <div style="color: #f87171; text-align: center; padding: 20px;">
+                <div style="color: #f87171; text-align: center; padding: 20px; font-family: 'JetBrains Mono', monospace;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:10px;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                    <p style="font-weight: 600; margin: 0 0 6px 0;">Không thể xử lý ảnh</p>
-                    <p style="font-size: 0.85rem; opacity: 0.8; margin: 0;">${error.message}</p>
+                    <p style="font-weight: 600; margin: 0 0 6px 0; font-size: 0.85rem;">Không thể xử lý ảnh</p>
+                    <p style="font-size: 0.78rem; opacity: 0.8; margin: 0;">${error.message}</p>
                 </div>
             `;
             showToast(`⚠️ Lỗi: ${error.message}`);
