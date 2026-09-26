@@ -47,17 +47,20 @@ function copyForMathType() {
 
 function copyWord() {
     var text = document.getElementById('latex-output').value;
-    if(!text) {
+    if(!text || !text.trim()) {
         showToast('Chưa có công thức để copy!');
         return;
     }
+    
+    // Loại bỏ placeholder để tránh lỗi MathJax
+    var cleanText = text.replace(/\\placeholder\{\}/g, '');
     
     if (!window.MathJax || !MathJax.tex2mmlPromise) {
         showToast('Đang tải công cụ chuyển đổi, vui lòng đợi...');
         return;
     }
     
-    MathJax.tex2mmlPromise(text).then(function(mml) {
+    MathJax.tex2mmlPromise(cleanText).then(function(mml) {
         // Fix thần thánh cho MS Word (DOM Parser chống vỡ XML khi có ma trận lồng nhau)
         try {
             var parser = new DOMParser();
@@ -93,29 +96,10 @@ function copyWord() {
         // Thêm XML header để MS Word nhận diện đây là một phương trình (Equation)
         var wordMathML = '<?xml version="1.0"?>\n' + mml;
         
-        // Hỗ trợ ghi đa định dạng (text/plain & text/html) cho độ tương thích cao nhất
-        if (navigator.clipboard && window.ClipboardItem) {
-            try {
-                var plainBlob = new Blob([wordMathML], { type: 'text/plain' });
-                var htmlBlob = new Blob([mml], { type: 'text/html' });
-                navigator.clipboard.write([
-                    new ClipboardItem({
-                        'text/plain': plainBlob,
-                        'text/html': htmlBlob
-                    })
-                ]).then(function() {
-                    showToast('✓ Đã copy cho Word! Dán (Ctrl + V) vào tài liệu.');
-                }).catch(function() {
-                    navigator.clipboard.writeText(wordMathML).then(function() {
-                        showToast('✓ Đã copy cho Word! Dán (Ctrl + V) vào tài liệu.');
-                    });
-                });
-                return;
-            } catch(e) {}
-        }
-
+        // CHỈ ghi plain text thuần: Word chỉ tự động render công thức MathML khi ở dạng text/plain
+        // Tuyệt đối không nhét text/html vì Word sẽ ưu tiên HTML và giáng cấp MathML thành text LaTeX!
         navigator.clipboard.writeText(wordMathML).then(function() {
-            showToast('✓ Đã copy cho Word! Dán (Ctrl + V) vào tài liệu.');
+            showToast('✓ Đã copy cho Word! Dán (Ctrl + V) vào Word.');
         }).catch(function(err) {
             showToast('Lỗi copy: ' + err.message);
         });
