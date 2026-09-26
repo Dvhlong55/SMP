@@ -1,4 +1,4 @@
-﻿
+
         body { overflow-x: hidden; }
 
         :root {
@@ -330,4 +330,194 @@ body.zen-mode .latex-workspace {
 @keyframes viPopup {
     0% { opacity: 0; transform: translateY(15px) scale(0.9); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Nút Nổi Bật & Nút Trợ Giúp ── */
+.pane-btn.btn-highlight {
+    background: rgba(92,225,230,0.18) !important;
+    border-color: rgba(92,225,230,0.55) !important;
+    color: var(--accent-cyan, #5ce1e6) !important;
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(92,225,230,0.12);
+}
+.pane-btn.btn-highlight:hover {
+    background: rgba(92,225,230,0.30) !important;
+    border-color: rgba(92,225,230,0.85) !important;
+    box-shadow: 0 0 14px rgba(92,225,230,0.25);
+}
+
+.pane-btn-help {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 2px 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.70rem;
+    color: var(--exam-text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+    outline: none;
+}
+.pane-btn-help:hover {
+    background: rgba(92,225,230,0.15);
+    border-color: var(--accent-cyan, #5ce1e6);
+    color: var(--accent-cyan, #5ce1e6);
+}
+
+/* ── Modal Hướng Dẫn MathType Trực Quan ── */
+.guide-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    padding: 16px;
+}
+.guide-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.guide-modal-box {
+    background: var(--body-bg, #0b1111);
+    border: 1px solid rgba(92,225,230,0.25);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 620px;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.65);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(15px) scale(0.97);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.guide-modal-overlay.active .guide-modal-box {
+    transform: translateY(0) scale(1);
+}
+body:not(.dark-mode) .guide-modal-box {
+    background: #ffffff;
+    border-color: rgba(15,23,42,0.15);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+}
+
+.guide-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(92,225,230,0.12);
+}
+.guide-modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.12rem;
+    color: var(--exam-bold-color, #fff);
+    display: flex;
+    align-items: center;
+}
+.guide-modal-close {
+    background: transparent;
+    border: none;
+    font-size: 1.6rem;
+    color: var(--exam-text-color);
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity 0.2s, color 0.2s;
+}
+.guide-modal-close:hover {
+    opacity: 1;
+    color: var(--accent-cyan, #5ce1e6);
+}
+
+.guide-modal-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: var(--exam-text-color);
+    line-height: 1.6;
+}
+
+.guide-step-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 14px 16px;
+}
+body:not(.dark-mode) .guide-step-card {
+    background: #f8fafc;
+    border-color: rgba(15,23,42,0.08);
+}
+
+.guide-step-card.highlight {
+    background: rgba(92,225,230,0.04);
+    border-color: rgba(92,225,230,0.30);
+}
+body:not(.dark-mode) .guide-step-card.highlight {
+    background: rgba(0,158,179,0.05);
+    border-color: rgba(0,158,179,0.25);
+}
+
+.guide-step-card .step-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.70rem;
+    color: var(--accent-cyan, #5ce1e6);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.guide-step-card h4 {
+    margin: 0 0 6px 0;
+    font-size: 0.95rem;
+    color: var(--exam-bold-color, #fff);
+    font-weight: 600;
+}
+.guide-step-card ol {
+    margin: 6px 0 0 18px;
+    padding: 0;
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.guide-step-card kbd {
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.76rem;
+    color: var(--exam-bold-color, #fff);
+    display: inline-block;
+    vertical-align: middle;
+}
+body:not(.dark-mode) .guide-step-card kbd {
+    background: #e2e8f0;
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+.guide-step-card kbd.kbd-accent {
+    background: rgba(92,225,230,0.16);
+    border-color: rgba(92,225,230,0.6);
+    color: var(--accent-cyan, #5ce1e6);
+    font-weight: bold;
+}
+
+.guide-modal-footer {
+    padding: 12px 20px;
+    border-top: 1px solid rgba(92,225,230,0.12);
+    display: flex;
+    justify-content: flex-end;
 }
