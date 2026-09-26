@@ -71,6 +71,10 @@ function parseTransferredLatex(raw) {
              .replace(/\\end\{flushleft\}/gi, '')
              .replace(/\\begin\{flushright\}/gi, '')
              .replace(/\\end\{flushright\}/gi, '')
+             .replace(/\\begin\{tikzpicture\}[\s\S]*?\\end\{tikzpicture\}/gi, '')
+             .replace(/\\vspace\*?\{[^}]*\}/gi, '')
+             .replace(/\\hspace\*?\{[^}]*\}/gi, '')
+             .replace(/\\hfill\b/gi, '')
              .replace(/\\fbox\b/g, '\\boxed');
 
     // Gỡ bỏ delimiters ngoài cùng bao bọc toàn bộ chuỗi

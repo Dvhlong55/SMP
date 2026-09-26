@@ -458,19 +458,244 @@
         });
     }
 
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    var smpTikzCounter = 0;
+    function parseLatexTikz(str) {
+        if (!str || !str.includes('\\begin{tikzpicture}')) return str;
+
+        var globalDefs = [];
+        var colorMatches = str.match(/\\definecolor\{[^}]+\}\{[^}]+\}\{[^}]+\}/g);
+        if (colorMatches) globalDefs = globalDefs.concat(colorMatches);
+        var libMatches = str.match(/\\usetikzlibrary\{[^}]+\}/g);
+        if (libMatches) globalDefs = globalDefs.concat(libMatches);
+        var globalPrefix = globalDefs.join('\n');
+
+        var isDark = true;
+        if (typeof document !== 'undefined' && document.body) {
+            isDark = !document.body.classList.contains('light-theme') && !document.body.classList.contains('light-mode');
+        }
+        var filterCss = isDark ? 'svg { filter: invert(1); }' : '';
+
+        var tikzRegex = /\\begin\{tikzpicture\}(?:\[[\s\S]*?\])?[\s\S]*?\\end\{tikzpicture\}/gi;
+
+        return str.replace(tikzRegex, function(match) {
+            smpTikzCounter++;
+            var frameId = 'smp-tikz-' + smpTikzCounter + '-' + Math.random().toString(36).substring(2, 7);
+            var safeCode = match.trim();
+            var escapedCode = encodeURIComponent(safeCode);
+
+            var fullCode = (globalPrefix ? globalPrefix + '\n' : '') + safeCode;
+
+            var iframeSrc = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://tikzjax.com/v1/fonts.css">
+<style>
+  html, body {
+    margin: 0;
+    padding: 8px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+    overflow: visible !important;
+  }
+  ${filterCss}
+  .tikz-err {
+    color: #f87171;
+    font-size: 0.78rem;
+    font-family: monospace;
+    padding: 6px 10px;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+</style>
+<script src="https://tikzjax.com/v1/tikzjax.js"><\/script>
+</head>
+<body>
+<script type="text/tikz" data-show-console="false">
+\\usetikzlibrary{calc,arrows.meta,positioning}
+${fullCode}
+<\/script>
+<script>
+  (function() {
+    function notifyParent() {
+      var svg = document.querySelector('svg');
+      if (svg) {
+        var rect = svg.getBoundingClientRect();
+        var h = Math.ceil(Math.max(rect.height, svg.clientHeight || 0, 60)) + 24;
+        window.parent.postMessage({ type: 'smpTikzResize', id: '${frameId}', height: h }, '*');
+      }
+    }
+    var observer = new MutationObserver(function() {
+      if (document.querySelector('svg')) {
+        notifyParent();
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener('load', function() {
+      setTimeout(notifyParent, 400);
+      setTimeout(notifyParent, 1200);
+      setTimeout(notifyParent, 3000);
+    });
+  })();
+<\/script>
+</body>
+</html>`;
+
+            var cardHtml = '<div class="latex-tikz-card" id="card-' + frameId + '">'
+                + '<div class="latex-tikz-header">'
+                + '  <span class="latex-tikz-badge">'
+                + '    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>'
+                + '    Hình vẽ TikZ'
+                + '  </span>'
+                + '  <div class="latex-tikz-actions">'
+                + '    <button type="button" class="latex-tikz-btn" onclick="copyTikzCode(\'' + frameId + '\')">Sao chép</button>'
+                + '    <button type="button" class="latex-tikz-btn" onclick="toggleTikzRaw(\'' + frameId + '\')">Mã TikZ</button>'
+                + '    <a href="/tools/GeoGebra.html" target="_blank" class="latex-tikz-btn" title="Mở bộ trích xuất & xem TikZ">GeoGebra →</a>'
+                + '  </div>'
+                + '</div>'
+                + '<div class="latex-tikz-viewport">'
+                + '  <iframe id="' + frameId + '" class="latex-tikz-iframe" srcdoc="' + iframeSrc.replace(/"/g, '&quot;') + '" frameborder="0" scrolling="no"></iframe>'
+                + '  <pre id="raw-' + frameId + '" class="latex-tikz-raw" style="display:none;" data-code="' + escapedCode + '"><code>' + escapeHtml(safeCode) + '</code></pre>'
+                + '</div>'
+                + '</div>';
+
+            return cardHtml;
+        });
+    }
+
+    // ── Xử lý khoảng cách dọc \vspace{...} ──
+    function parseLatexVspace(str) {
+        if (!str || !str.includes('\\vspace')) return str;
+        return str.replace(/\\vspace\*?\{([^}]+)\}/gi, function(match, val) {
+            var trimmed = val.trim();
+            if (/baselineskip/i.test(trimmed)) {
+                var multMatch = trimmed.match(/([0-9.]+)\s*\\?baselineskip/i);
+                var mult = multMatch ? parseFloat(multMatch[1]) : 1;
+                var emVal = (mult * 1.3).toFixed(2);
+                return '<div class="latex-vspace" style="height:' + emVal + 'em;"></div>';
+            }
+            var dimMatch = trimmed.match(/^(-?[0-9.]+)\s*(cm|mm|in|pt|em|ex|px)?$/i);
+            if (dimMatch) {
+                var num = parseFloat(dimMatch[1]);
+                var unit = (dimMatch[2] || 'pt').toLowerCase();
+                if (num < 0) {
+                    return '<div class="latex-vspace negative" style="margin-top:' + num + unit + '; height:0;"></div>';
+                } else {
+                    return '<div class="latex-vspace" style="height:' + num + unit + ';"></div>';
+                }
+            }
+            return '<div class="latex-vspace" style="height:0.5em;"></div>';
+        });
+    }
+
+    // ── Xử lý khoảng cách ngang \hspace{...} ──
+    function parseLatexHspace(str) {
+        if (!str || !str.includes('\\hspace')) return str;
+        return str.replace(/\\hspace\*?\{([^}]+)\}/gi, function(match, val) {
+            var trimmed = val.trim();
+            var dimMatch = trimmed.match(/^(-?[0-9.]+)\s*(cm|mm|in|pt|em|ex|px)?$/i);
+            if (dimMatch) {
+                var num = parseFloat(dimMatch[1]);
+                var unit = (dimMatch[2] || 'pt').toLowerCase();
+                if (num < 0) {
+                    return '<span class="latex-hspace" style="margin-left:' + num + unit + ';"></span>';
+                } else {
+                    return '<span class="latex-hspace" style="width:' + num + unit + ';"></span>';
+                }
+            }
+            return '<span class="latex-hspace" style="width:1em;"></span>';
+        });
+    }
+
+    // ── Xử lý căn lề / giãn đều hàng ngang \hfill ──
+    function parseLatexHfill(str) {
+        if (!str || !str.includes('\\hfill')) return str;
+        var lines = str.split(/(<br\s*\/?>|\n)/gi);
+        for (var i = 0; i < lines.length; i++) {
+            var line = lines[i];
+            if (line.includes('\\hfill')) {
+                var rawParts = line.split(/\\hfill/g);
+                var partsHtml = rawParts.map(function(p) {
+                    var trimmed = p.trim();
+                    return '<div class="hfill-part' + (trimmed === '' ? ' empty' : '') + '">' + trimmed + '</div>';
+                }).join('');
+                lines[i] = '<div class="latex-line-hfill">' + partsHtml + '</div>';
+            }
+        }
+        var res = lines.join('');
+        res = res.replace(/<br\s*\/?>\s*(<div class="latex-line-hfill">)/gi, '$1')
+                 .replace(/(<\/div>)\s*<br\s*\/?>/gi, '$1');
+        return res;
+    }
+
+    // Các hàm tương tác toàn cục cho card TikZ
+    window.copyTikzCode = function(frameId) {
+        var rawEl = document.getElementById('raw-' + frameId);
+        if (!rawEl) return;
+        var code = decodeURIComponent(rawEl.getAttribute('data-code') || '');
+        if (!code) code = rawEl.textContent;
+        navigator.clipboard.writeText(code).then(function() {
+            if (typeof showToast === 'function') {
+                showToast('✓ Đã sao chép mã TikZ vào Clipboard');
+            }
+        });
+    };
+
+    window.toggleTikzRaw = function(frameId) {
+        var rawEl = document.getElementById('raw-' + frameId);
+        if (rawEl) {
+            rawEl.style.display = (rawEl.style.display === 'none') ? 'block' : 'none';
+        }
+    };
+
+    window.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'smpTikzResize' && e.data.id && e.data.height) {
+            var frame = document.getElementById(e.data.id);
+            if (frame) {
+                frame.style.height = Math.max(e.data.height, 100) + 'px';
+            }
+        }
+    });
+
     // ── Hàm chuyển đổi định dạng LaTeX thông thường sang HTML ──
     function latexToHtml(src) {
         if (!src) return '';
 
-        // 1. Chuyển đổi môi trường table & tabular trước tiên
-        var s = src
+        // 1. Chuyển đổi môi trường TikZ trước tiên để ngăn MathJax báo lỗi "Unknown environment 'tikzpicture'"
+        var s = parseLatexTikz(src);
+
+        // 2. Chuyển đổi môi trường table & tabular
+        s = s
             .replace(/\\begin\{table\}(?:\[[^\]]*\])?/gi, '<div class="latex-table-container">')
             .replace(/\\end\{table\}/gi, '</div>')
             .replace(/\\caption\{([^}]*)\}/gi, '<div class="latex-table-caption">$1</div>');
 
         s = parseLatexTabular(s);
 
-        // 2. Tách biệt giữa phần văn bản và phần công thức toán học
+        // 3. Tách biệt giữa phần văn bản và phần công thức toán học
         var processed = processOutsideMath(s, function(text) {
             // Chuyển đổi môi trường căn lề văn bản
             var t = text
@@ -484,6 +709,10 @@
 
             // Chuyển đổi \fbox, \framebox, \boxed trong chế độ văn bản
             t = parseLatexFbox(t);
+
+            // Chuyển đổi \vspace và \hspace
+            t = parseLatexVspace(t);
+            t = parseLatexHspace(t);
 
             // Chuyển đổi các định dạng văn bản chuẩn
             t = t
@@ -499,10 +728,14 @@
                 .replace(/\\item\s/g, '• ')
                 .replace(/\\noindent\s*/g, '')
                 .replace(/\\\\(?![a-zA-Z])/g, '<br>')
-                .replace(/\\(medskip|bigskip|smallskip)/g, '<br>');
+                .replace(/\\(medskip|bigskip|smallskip)/g, '<br>')
+                .replace(/\n\s*\n/g, '<br><br>');
 
             return t;
         });
+
+        // 4. Chuyển đổi \hfill trên toàn dòng
+        processed = parseLatexHfill(processed);
 
         return processed;
     }

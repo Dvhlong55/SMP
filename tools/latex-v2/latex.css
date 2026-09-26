@@ -318,6 +318,159 @@
             color: var(--text-muted, #888);
         }
 
+        /* ── LaTeX Spacing & Alignment (\vspace, \hspace, \hfill) ── */
+        .latex-vspace {
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            clear: both;
+        }
+        .latex-vspace.negative {
+            margin-bottom: 0;
+        }
+        .latex-hspace {
+            display: inline-block;
+            vertical-align: baseline;
+        }
+        .latex-line-hfill {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            width: 100%;
+            margin: 4px 0;
+            box-sizing: border-box;
+            clear: both;
+        }
+        .latex-line-hfill .hfill-part {
+            flex: 0 1 auto;
+        }
+        .latex-line-hfill .hfill-part.empty {
+            flex: 0 0 0;
+        }
+        .latex-line-hfill .hfill-part:first-child.empty + .hfill-part {
+            margin-left: auto;
+        }
+
+        /* ── LaTeX TikZ Diagram Card & Viewport ── */
+        .latex-tikz-card {
+            margin: 16px auto;
+            border: 1px solid rgba(92, 225, 230, 0.28);
+            background: rgba(18, 26, 26, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 100%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            clear: both;
+        }
+        .latex-tikz-card:hover {
+            border-color: rgba(92, 225, 230, 0.5);
+            box-shadow: 0 6px 24px rgba(92, 225, 230, 0.12);
+        }
+        .latex-tikz-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 14px;
+            background: rgba(11, 17, 17, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .latex-tikz-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: #5ce1e6;
+            letter-spacing: 0.5px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .latex-tikz-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .latex-tikz-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+            font-size: 0.72rem;
+            padding: 3px 9px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-family: 'JetBrains Mono', monospace;
+            display: inline-flex;
+            align-items: center;
+        }
+        .latex-tikz-btn:hover {
+            background: rgba(92, 225, 230, 0.18);
+            color: #5ce1e6;
+            border-color: rgba(92, 225, 230, 0.4);
+        }
+        .latex-tikz-viewport {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            min-height: 100px;
+            position: relative;
+        }
+        .latex-tikz-iframe {
+            width: 100%;
+            min-height: 120px;
+            border: none;
+            background: transparent;
+            display: block;
+        }
+        .latex-tikz-raw {
+            margin: 10px 0 0 0;
+            padding: 12px;
+            width: 100%;
+            box-sizing: border-box;
+            background: #0d1117;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            font-size: 0.78rem;
+            color: #a5d6ff;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        /* Light mode overrides for TikZ Card */
+        body.light-mode .latex-tikz-card,
+        body:not(.dark-mode) .latex-tikz-card {
+            background: #ffffff;
+            border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+        body.light-mode .latex-tikz-header,
+        body:not(.dark-mode) .latex-tikz-header {
+            background: #f8fafc;
+            border-bottom-color: rgba(0, 0, 0, 0.08);
+        }
+        body.light-mode .latex-tikz-badge,
+        body:not(.dark-mode) .latex-tikz-badge {
+            color: #0284c7;
+        }
+        body.light-mode .latex-tikz-btn,
+        body:not(.dark-mode) .latex-tikz-btn {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #334155;
+        }
+        body.light-mode .latex-tikz-btn:hover,
+        body:not(.dark-mode) .latex-tikz-btn:hover {
+            background: #e0f2fe;
+            border-color: #0284c7;
+            color: #0284c7;
+        }
+
         .status-bar {
             display: flex; align-items: center; justify-content: space-between;
             margin-top: 8px;
