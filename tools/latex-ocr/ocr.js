@@ -208,9 +208,7 @@
         isProcessing = true;
         scanBtn.disabled = true;
         scanBtnText.innerHTML = '<span class="spinner"></span> Đang nhận diện...';
-        ocrStatus.innerHTML = '<span class="status-dot"></span>Đang phân tích bằng Gemini AI...';
-
-        const startTime = performance.now();
+        ocrStatus.innerHTML = '<span class="status-dot"></span>Đang xử lý...';
 
         try {
             const response = await fetch(`${API_BASE}/api/tools/ocr`, {
@@ -245,9 +243,8 @@
             btnSendLatex.disabled = false;
             btnSendMathType.disabled = false;
 
-            const duration = ((performance.now() - startTime) / 1000).toFixed(1);
-            ocrStatus.innerHTML = `<span class="status-dot green"></span>✓ Hoàn thành trong ${duration}s`;
-            showToast(`✓ Đã nhận diện xong (${duration}s)!`);
+            ocrStatus.innerHTML = '<span class="status-dot green"></span>✓ Hoàn thành';
+            showToast('✓ Hoàn thành!');
 
         } catch (error) {
             console.error('OCR Error:', error);
@@ -263,7 +260,7 @@
         } finally {
             isProcessing = false;
             scanBtn.disabled = !currentBase64;
-            scanBtnText.innerHTML = 'Quét Lại Bằng AI';
+            scanBtnText.innerHTML = 'Quét Lại';
         }
     };
 
