@@ -143,7 +143,9 @@
             { text: "\\cap", displayText: "\\cap - Giao", offset: 0 },
             { text: "\\emptyset", displayText: "\\emptyset - Tập rỗng", offset: 0 },
             { text: "\\begin{center}\n  \n\\end{center}", displayText: "\\begin{center} - Căn giữa nội dung", offset: 13 },
-            { text: "\\fbox{}", displayText: "\\fbox{} - Đóng khung viền", offset: 1 }
+            { text: "\\fbox{}", displayText: "\\fbox{} - Đóng khung viền", offset: 1 },
+            { text: "\\begin{tabular}{ll}\n  & \\\\\n  &\n\\end{tabular}", displayText: "\\begin{tabular}{ll} - Bảng 2 cột", offset: 19 },
+            { text: "\\begin{tabular}{|c|c|}\n\\hline\n  & \\\\\n\\hline\n  & \\\\\n\\hline\n\\end{tabular}", displayText: "\\begin{tabular}{|c|c|} - Bảng có viền", offset: 32 }
         ];
 
         function latexHint(cm) {
@@ -312,13 +314,165 @@
         return result;
     }
 
+    // ── Phân tách các ô trong một dòng của bảng LaTeX (&) ──
+    function splitTableCells(rowStr) {
+        var cells = [];
+        var current = '';
+        var inMath = false;
+        var depth = 0;
+
+        for (var i = 0; i < rowStr.length; i++) {
+            var ch = rowStr[i];
+            var prev = i > 0 ? rowStr[i - 1] : '';
+
+            if (ch === '$' && prev !== '\\') {
+                inMath = !inMath;
+            } else if (ch === '{' && prev !== '\\') {
+                depth++;
+            } else if (ch === '}' && prev !== '\\') {
+                if (depth > 0) depth--;
+            }
+
+            if (ch === '&' && !inMath && depth === 0) {
+                cells.push(current);
+                current = '';
+            } else {
+                current += ch;
+            }
+        }
+        cells.push(current);
+        return cells;
+    }
+
+    // ── Xử lý môi trường bảng \begin{tabular}{...} ... \end{tabular} ──
+    function parseLatexTabular(str) {
+        if (!str || !str.includes('\\begin{tabular')) return str;
+
+        // Bỏ bọc ngoài nếu người dùng vô tình đặt \begin{tabular} trong \[ ... \]
+        str = str.replace(/\\\[\s*(\\begin\{tabular\}[\s\S]*?\\end\{tabular\})\s*\\\]/gi, '$1');
+
+        var regex = /\\begin\{tabular\}(?:\[[^\]]*\])?\{([^}]*)\}([\s\S]*?)\\end\{tabular\}/gi;
+
+        return str.replace(regex, function(match, colSpec, tableBody) {
+            var colDefs = [];
+            var cleanColSpec = colSpec.replace(/\s+/g, '');
+            // Mở rộng lặp lại *{n}{spec} (ví dụ *{3}{|c|} -> |c||c||c|)
+            cleanColSpec = cleanColSpec.replace(/\*\{(\d+)\}\{([^}]+)\}/g, function(_, count, spec) {
+                return spec.repeat(parseInt(count, 10));
+            });
+
+            var hasLeftBorder = false;
+            if (cleanColSpec.startsWith('|')) {
+                hasLeftBorder = true;
+                cleanColSpec = cleanColSpec.replace(/^\|+/, '');
+            }
+
+            for (var c = 0; c < cleanColSpec.length; c++) {
+                var ch = cleanColSpec[c];
+                if (ch === 'l' || ch === 'c' || ch === 'r' || ch === 'p') {
+                    var align = ch === 'r' ? 'right' : (ch === 'c' ? 'center' : 'left');
+                    var borderRight = false;
+                    if (c + 1 < cleanColSpec.length && cleanColSpec[c + 1] === '|') {
+                        borderRight = true;
+                    }
+                    colDefs.push({ align: align, borderRight: borderRight });
+                }
+            }
+
+            // Tách các hàng của bảng
+            var rawRows = tableBody.split(/\\\\(?:\[[^\]]*\])?/);
+            var htmlRows = [];
+
+            for (var r = 0; r < rawRows.length; r++) {
+                var rowStr = rawRows[r].trim();
+                if (!rowStr) continue;
+
+                var hasTopBorder = false;
+                var hasBottomBorder = false;
+
+                while (rowStr.startsWith('\\hline')) {
+                    hasTopBorder = true;
+                    rowStr = rowStr.replace(/^\\hline\s*/, '').trim();
+                }
+
+                while (rowStr.endsWith('\\hline')) {
+                    hasBottomBorder = true;
+                    rowStr = rowStr.replace(/\\hline\s*$/, '').trim();
+                }
+
+                if (rowStr.includes('\\hline')) {
+                    hasTopBorder = true;
+                    rowStr = rowStr.replace(/\\hline/g, '').trim();
+                }
+
+                if (!rowStr) continue;
+
+                var cells = splitTableCells(rowStr);
+                var trHtml = '<tr' + (hasTopBorder ? ' class="border-top"' : '') + (hasBottomBorder ? ' class="border-bottom"' : '') + '>';
+                var currentColIndex = 0;
+
+                for (var colIdx = 0; colIdx < cells.length; colIdx++) {
+                    var rawCell = cells[colIdx].trim();
+                    var cellContent = rawCell;
+                    var colSpan = 1;
+                    var cellAlign = null;
+                    var cellBorderRight = false;
+                    var cellBorderLeft = false;
+
+                    // Hỗ trợ \multicolumn{num}{align}{content}
+                    var multiMatch = cellContent.match(/^\\multicolumn\{(\d+)\}\{([^}]*)\}\{([\s\S]*)\}$/);
+                    if (multiMatch) {
+                        colSpan = parseInt(multiMatch[1], 10);
+                        var multiAlignSpec = multiMatch[2].trim();
+                        cellContent = multiMatch[3].trim();
+                        if (multiAlignSpec.includes('r')) cellAlign = 'right';
+                        else if (multiAlignSpec.includes('c')) cellAlign = 'center';
+                        else cellAlign = 'left';
+
+                        if (multiAlignSpec.startsWith('|')) cellBorderLeft = true;
+                        if (multiAlignSpec.endsWith('|')) cellBorderRight = true;
+                    }
+
+                    var colDef = colDefs[currentColIndex] || { align: 'left', borderRight: false };
+                    var finalAlign = cellAlign || colDef.align;
+                    var borderClass = [];
+
+                    if ((currentColIndex === 0 && hasLeftBorder) || cellBorderLeft) borderClass.push('border-left');
+                    if (colDef.borderRight || cellBorderRight) borderClass.push('border-right');
+                    if (hasTopBorder) borderClass.push('border-top');
+                    if (hasBottomBorder) borderClass.push('border-bottom');
+
+                    var spanAttr = colSpan > 1 ? ' colspan="' + colSpan + '"' : '';
+                    var classAttr = borderClass.length ? ' class="' + borderClass.join(' ') + '"' : '';
+                    var styleAttr = ' style="text-align: ' + finalAlign + ';"';
+
+                    trHtml += '<td' + spanAttr + classAttr + styleAttr + '>' + cellContent + '</td>';
+                    currentColIndex += colSpan;
+                }
+
+                trHtml += '</tr>';
+                htmlRows.push(trHtml);
+            }
+
+            return '<div class="latex-table-wrapper"><table class="latex-table">' + htmlRows.join('') + '</table></div>';
+        });
+    }
+
     // ── Hàm chuyển đổi định dạng LaTeX thông thường sang HTML ──
     function latexToHtml(src) {
         if (!src) return '';
 
-        // Tách biệt giữa phần văn bản và phần công thức toán học
-        var processed = processOutsideMath(src, function(text) {
-            // 1. Chuyển đổi môi trường căn lề văn bản
+        // 1. Chuyển đổi môi trường table & tabular trước tiên
+        var s = src
+            .replace(/\\begin\{table\}(?:\[[^\]]*\])?/gi, '<div class="latex-table-container">')
+            .replace(/\\end\{table\}/gi, '</div>')
+            .replace(/\\caption\{([^}]*)\}/gi, '<div class="latex-table-caption">$1</div>');
+
+        s = parseLatexTabular(s);
+
+        // 2. Tách biệt giữa phần văn bản và phần công thức toán học
+        var processed = processOutsideMath(s, function(text) {
+            // Chuyển đổi môi trường căn lề văn bản
             var t = text
                 .replace(/\\begin\{center\}/gi, '<div class="latex-center">')
                 .replace(/\\end\{center\}/gi, '</div>')
@@ -328,10 +482,10 @@
                 .replace(/\\end\{flushright\}/gi, '</div>')
                 .replace(/\\centering\b/gi, '<div class="latex-center">');
 
-            // 2. Chuyển đổi \fbox, \framebox, \boxed trong chế độ văn bản
+            // Chuyển đổi \fbox, \framebox, \boxed trong chế độ văn bản
             t = parseLatexFbox(t);
 
-            // 3. Chuyển đổi các định dạng văn bản chuẩn
+            // Chuyển đổi các định dạng văn bản chuẩn
             t = t
                 .replace(/\\textbf\{([^}]*)\}/g, '<b>$1</b>')
                 .replace(/\\textit\{([^}]*)\}/g, '<i>$1</i>')
@@ -367,8 +521,13 @@
         }
         preview.className = '';
         
+        // Tránh ngắt block bên trong các môi trường bảng hoặc môi trường nhiều dòng
+        var protectedSrc = src.replace(/(\\begin\{(?:tabular|table)\}[\s\S]*?\\end\{(?:tabular|table)\})/gi, function(match) {
+            return match.replace(/\n\s*\n/g, '\n');
+        });
+
         // Split theo block (cách nhau bằng dòng trống)
-        var blocks = src.split(/\n\s*\n/);
+        var blocks = protectedSrc.split(/\n\s*\n/);
         var fragment = document.createDocumentFragment();
         var newRenderedBlocks = [];
         var blocksToMathJax = [];

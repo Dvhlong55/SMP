@@ -582,6 +582,42 @@ body.dark-mode .btn-scan {
     vertical-align: middle;
 }
 
+/* ── LaTeX Tabular / Table Styles ── */
+.latex-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 14px 0;
+    display: flex;
+    justify-content: center;
+}
+.latex-table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-family: inherit;
+    font-size: 0.95em;
+    color: var(--text-color, inherit);
+}
+.latex-table td, 
+.latex-table th {
+    padding: 6px 14px;
+    vertical-align: middle;
+    line-height: 1.5;
+}
+.latex-table td.border-top,
+.latex-table tr.border-top td { border-top: 1px solid currentColor; }
+.latex-table td.border-bottom,
+.latex-table tr.border-bottom td { border-bottom: 1px solid currentColor; }
+.latex-table td.border-left { border-left: 1px solid currentColor; }
+.latex-table td.border-right { border-right: 1px solid currentColor; }
+.latex-table-container { margin: 16px 0; text-align: center; width: 100%; }
+.latex-table-caption {
+    font-weight: 600;
+    margin-top: 8px;
+    font-size: 0.9em;
+    text-align: center;
+    color: var(--text-muted, #888);
+}
+
 #math-preview.empty-state,
 #math-preview.error-state {
     display: flex;
