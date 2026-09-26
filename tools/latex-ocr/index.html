@@ -16,13 +16,14 @@
         window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                packages: {'[+]': ['noerrors', 'noundefined', 'amsmath', 'ams', 'newcommand', 'mathtools', 'physics']}
             }
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link class="theme-link" rel="stylesheet" href="/core/css/shared.css?v=36">
-    <link rel="stylesheet" href="/tools/latex-ocr/ocr.css?v=5">
+    <link rel="stylesheet" href="/tools/latex-ocr/ocr.css?v=6">
     <link rel="icon" type="image/png" href="/core/image/favicon.png">
 </head>
 <body>
@@ -128,9 +129,7 @@
 
                             <div class="ocr-body">
                                 <div id="ocr-preview-view" class="result-view-panel">
-                                    <div id="math-preview" class="empty-state">
-                                        Kết quả render công thức toán học sẽ hiển thị tại đây sau khi quét ảnh...
-                                    </div>
+                                    <div id="math-preview" class="empty-state">Kết quả render công thức toán học sẽ hiển thị tại đây sau khi quét ảnh...</div>
                                 </div>
 
                                 <div id="ocr-raw-view" class="result-view-panel" style="display: none;">
@@ -190,6 +189,6 @@
     <script src="/core/js/sidebar-data.js?v=36"></script>
     <script src="/core/js/layout.js?v=36"></script>
     <script src="/core/js/shared.js?v=36"></script>
-    <script src="/tools/latex-ocr/ocr.js?v=5"></script>
+    <script src="/tools/latex-ocr/ocr.js?v=6"></script>
 </body>
 </html>

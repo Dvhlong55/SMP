@@ -534,13 +534,15 @@ body.dark-mode .btn-scan {
     flex: 1;
     display: flex;
     flex-direction: column;
-    min-height: 350px;
+    min-height: 380px;
+    height: 100%;
     box-sizing: border-box;
 }
 
 #math-preview {
     flex: 1;
-    padding: 20px;
+    width: 100%;
+    padding: 22px 24px;
     font-family: "Times New Roman", Times, serif;
     font-size: 1.15rem;
     line-height: 1.8;
@@ -554,14 +556,16 @@ body.dark-mode .btn-scan {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     color: var(--text-muted);
     opacity: 0.6;
     font-family: 'JetBrains Mono', monospace;
     font-style: normal;
     font-size: 0.82rem;
-    text-align: center;
-    padding: 30px;
+    padding: 30px 24px;
     line-height: 1.6;
+    white-space: normal !important;
+    height: 100%;
 }
 
 #latex-output {

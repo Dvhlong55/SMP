@@ -60,11 +60,12 @@
             setTimeout(doRender, 100);
         }
 
-        // Check for transfer from MathType
+        // Check for transfer from MathType or LaTeX-OCR
         var transferData = localStorage.getItem('smp_latex_transfer');
         if (transferData) {
             var curr = cmEditor.getValue();
-            cmEditor.setValue(curr + (curr ? '\n\n' : '') + '\\[' + transferData + '\\]');
+            var contentToAdd = transferData.trim();
+            cmEditor.setValue(curr ? (curr + '\n\n' + contentToAdd) : contentToAdd);
             localStorage.removeItem('smp_latex_transfer');
             setTimeout(doRender, 100);
         }

@@ -151,6 +151,16 @@
 
         imgStatus.innerHTML = `<span class="status-dot"></span>Chưa có ảnh nào được chọn`;
         imgMeta.textContent = '';
+
+        // Reset kết quả & preview
+        currentLatex = '';
+        if (latexOutput) latexOutput.value = '';
+        if (charMeta) charMeta.textContent = '0 ký tự';
+        renderLatexPreview('');
+        if (btnCopy) btnCopy.disabled = true;
+        if (btnSendLatex) btnSendLatex.disabled = true;
+        if (btnSendMathType) btnSendMathType.disabled = true;
+        if (ocrStatus) ocrStatus.innerHTML = `<span class="status-dot green"></span>Sẵn sàng`;
     };
 
     // ── Tải Ảnh Mẫu Để Trải Nghiệm ─────────────────────────
@@ -248,15 +258,16 @@
 
         } catch (error) {
             console.error('OCR Error:', error);
-            ocrStatus.innerHTML = `<span class="status-dot red"></span>Thất bại`;
+            ocrStatus.innerHTML = `<span class="status-dot red"></span>Hệ thống bận`;
+            mathPreview.className = '';
             mathPreview.innerHTML = `
                 <div style="color: #f87171; text-align: center; padding: 20px; font-family: 'JetBrains Mono', monospace;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:10px;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                    <p style="font-weight: 600; margin: 0 0 6px 0; font-size: 0.85rem;">Không thể xử lý ảnh</p>
-                    <p style="font-size: 0.78rem; opacity: 0.8; margin: 0;">${error.message}</p>
+                    <p style="font-weight: 600; margin: 0 0 6px 0; font-size: 0.85rem;">Không thể nhận diện ảnh</p>
+                    <p style="font-size: 0.78rem; opacity: 0.8; margin: 0;">Lỗi hệ thống: Vui lòng thử lại sau giây lát.</p>
                 </div>
             `;
-            showToast(`⚠️ Lỗi: ${error.message}`);
+            showToast('⚠️ Hệ thống đang bận, vui lòng thử lại sau.');
         } finally {
             isProcessing = false;
             scanBtn.disabled = !currentBase64;
@@ -264,24 +275,73 @@
         }
     };
 
-    // ── Render Preview MathJax ────────────────────────────
-    function renderLatexPreview(latexText) {
-        mathPreview.classList.remove('empty-state');
+    // ── Hàm chuẩn bị định dạng LaTeX để xem Preview trực tiếp ──
+    function formatLatexForPreview(raw) {
+        if (!raw || !raw.trim()) return '';
 
-        let formatted = latexText;
-        // Nếu chuỗi chưa có ký hiệu toán học $ hoặc \[, bọc vào khối display math nếu cần
-        const hasDelimiters = latexText.includes('$') || latexText.includes('\\[') || latexText.includes('\\begin{');
-        if (!hasDelimiters) {
-            formatted = `\\[ ${latexText} \\]`;
+        let text = raw.trim();
+
+        // 1. Kiểm tra xem đã có math delimiters ($...$, $$...$$, \[...\], \(...\))
+        // hoặc các môi trường display math độc lập (equation, align, gather, multline)
+        const hasTopLevelDelimiters = text.includes('$') || 
+                                     text.includes('\\[') || 
+                                     text.includes('$$') || 
+                                     text.includes('\\(') ||
+                                     text.startsWith('\\begin{align') || 
+                                     text.startsWith('\\begin{equation') || 
+                                     text.startsWith('\\begin{gather') || 
+                                     text.startsWith('\\begin{multline');
+
+        // 2. Nếu chuỗi hoàn toàn KHÔNG có delimiter nào:
+        // Đa số là công thức toán thuần túy (\frac, x^2, \begin{cases}, \begin{pmatrix}, v.v.)
+        // Ta bọc toàn bộ trong \[ ... \] để MathJax render toán học chuẩn xác
+        if (!hasTopLevelDelimiters) {
+            return `\\[ ${text} \\]`;
         }
 
-        // Chuyển ký tự xuống dòng thành thẻ ngắt dòng
-        mathPreview.innerHTML = formatted;
+        // 3. Nếu chuỗi đã có delimiter hoặc văn bản kèm công thức:
+        // Đảm bảo các sub-environments như \begin{cases}, \begin{matrix}, \begin{pmatrix}, \begin{aligned}
+        // nếu đứng ngoài math mode thì được bọc trong \[ ... \]
+        text = text.replace(/(?<![\$\\])(\\begin\{(?:cases|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|aligned|gathered|array)\}[\s\S]*?\\end\{(?:cases|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|aligned|gathered|array)\})/g, function(match) {
+            return `\\[ ${match} \\]`;
+        });
+
+        // Chuyển đổi định dạng chữ LaTeX thông dụng sang HTML (tương thích như latex-v2)
+        text = text
+            .replace(/\\textbf\{([^}]*)\}/g, '<b>$1</b>')
+            .replace(/\\textit\{([^}]*)\}/g, '<i>$1</i>')
+            .replace(/\\underline\{([^}]*)\}/g, '<u>$1</u>')
+            .replace(/\\emph\{([^}]*)\}/g, '<em>$1</em>')
+            .replace(/\\item\s+/g, '• ')
+            .replace(/\\noindent\s*/g, '')
+            .replace(/\\(medskip|bigskip|smallskip)/g, '<br>')
+            .replace(/\n\s*\n/g, '<br><br>');
+
+        return text;
+    }
+
+    // ── Render Preview MathJax ────────────────────────────
+    function renderLatexPreview(latexText) {
+        if (!latexText || !latexText.trim()) {
+            mathPreview.className = 'empty-state';
+            mathPreview.innerHTML = 'Kết quả render công thức toán học sẽ hiển thị tại đây sau khi quét ảnh...';
+            return;
+        }
+
+        mathPreview.className = '';
+        mathPreview.innerHTML = formatLatexForPreview(latexText);
 
         if (window.MathJax && window.MathJax.typesetPromise) {
-            window.MathJax.typesetPromise([mathPreview]).catch(err => {
-                console.warn('MathJax typeset error:', err);
-            });
+            try {
+                if (window.MathJax.typesetClear) {
+                    window.MathJax.typesetClear([mathPreview]);
+                }
+                window.MathJax.typesetPromise([mathPreview]).catch(err => {
+                    console.warn('MathJax preview warning:', err);
+                });
+            } catch (e) {
+                console.warn('MathJax error:', e);
+            }
         }
     }
 
@@ -356,6 +416,20 @@
         toastTimeout = setTimeout(() => {
             toast.classList.remove('show');
         }, 3000);
+    }
+
+    // ── Lắng nghe chỉnh sửa trực tiếp trên ô Mã LaTeX để cập nhật realtime Preview ──
+    if (latexOutput) {
+        latexOutput.addEventListener('input', () => {
+            const val = latexOutput.value;
+            currentLatex = val;
+            if (charMeta) charMeta.textContent = `${val.length} ký tự`;
+            renderLatexPreview(val);
+            const hasVal = val.trim().length > 0;
+            if (btnCopy) btnCopy.disabled = !hasVal;
+            if (btnSendLatex) btnSendLatex.disabled = !hasVal;
+            if (btnSendMathType) btnSendMathType.disabled = !hasVal;
+        });
     }
 
 })();
