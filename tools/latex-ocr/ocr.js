@@ -42,6 +42,7 @@
     const selectedImage = document.getElementById('selected-image');
     const scanBtn = document.getElementById('scan-btn');
     const scanBtnText = document.getElementById('scan-btn-text');
+    const scanEnterBadge = document.getElementById('scan-enter-badge');
     const clearImgBtn = document.getElementById('clear-img-btn');
     const imgStatus = document.getElementById('img-status');
     const imgMeta = document.getElementById('img-meta');
@@ -128,6 +129,8 @@
             clearImgBtn.style.display = 'inline-block';
             scanBtn.disabled = false;
             if (scanBtnText) scanBtnText.textContent = 'Quét Công Thức';
+            if (scanEnterBadge) scanEnterBadge.style.display = 'inline-flex';
+            setTimeout(() => { if (scanBtn) scanBtn.focus(); }, 80);
 
             const name = customName || file.name || 'Ảnh đã chọn';
             const sizeKB = (file.size ? (file.size / 1024).toFixed(1) + ' KB' : '');
@@ -149,6 +152,7 @@
         clearImgBtn.style.display = 'none';
         scanBtn.disabled = true;
         if (scanBtnText) scanBtnText.textContent = 'Quét Công Thức';
+        if (scanEnterBadge) scanEnterBadge.style.display = 'inline-flex';
         fileInput.value = '';
 
         imgStatus.innerHTML = `<span class="status-dot"></span>Chưa có ảnh nào được chọn`;
@@ -208,6 +212,8 @@
         clearImgBtn.style.display = 'inline-block';
         scanBtn.disabled = false;
         if (scanBtnText) scanBtnText.textContent = 'Quét Công Thức';
+        if (scanEnterBadge) scanEnterBadge.style.display = 'inline-flex';
+        setTimeout(() => { if (scanBtn) scanBtn.focus(); }, 80);
 
         imgStatus.innerHTML = `<span class="status-dot green"></span>Ảnh mẫu: Tích phân Dirichlet`;
         imgMeta.textContent = 'Mẫu SMP';
@@ -221,6 +227,7 @@
         isProcessing = true;
         scanBtn.disabled = true;
         scanBtnText.innerHTML = '<span class="spinner"></span> Đang nhận diện...';
+        if (scanEnterBadge) scanEnterBadge.style.display = 'none';
         ocrStatus.innerHTML = '<span class="status-dot"></span>Đang xử lý...';
 
         try {
@@ -277,8 +284,25 @@
             isProcessing = false;
             scanBtn.disabled = !currentBase64;
             if (scanBtnText) scanBtnText.textContent = 'Quét Lại';
+            if (scanEnterBadge) scanEnterBadge.style.display = 'inline-flex';
         }
     };
+
+    // ── Lắng nghe phím Enter để Quét Công Thức ───────────────
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const activeTag = (document.activeElement && document.activeElement.tagName) ? document.activeElement.tagName.toLowerCase() : '';
+            // Không can thiệp nếu đang gõ trong ô văn bản textarea hoặc text input
+            if (activeTag === 'textarea' || (activeTag === 'input' && document.activeElement.type === 'text')) {
+                return;
+            }
+
+            if (currentBase64 && !isProcessing && scanBtn && !scanBtn.disabled) {
+                e.preventDefault();
+                processOCR();
+            }
+        }
+    });
 
     // ── Xử lý \fbox, \framebox và \boxed có hỗ trợ ngoặc nhọn lồng nhau ──
     function parseLatexFbox(str) {

@@ -545,6 +545,32 @@ body.dark-mode .btn-scan {
     cursor: not-allowed;
     border-color: var(--panel-border);
 }
+.scan-enter-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 7px;
+    margin-left: 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    font-size: 0.70rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: none;
+    color: currentColor;
+    vertical-align: middle;
+    transition: all 0.2s ease;
+}
+.btn-scan:hover:not(:disabled) .scan-enter-badge {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+}
+.btn-scan:disabled .scan-enter-badge {
+    opacity: 0.45;
+}
 
 /* ── Result Views ── */
 .result-view-panel {

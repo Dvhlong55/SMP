@@ -30,7 +30,7 @@
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link class="theme-link" rel="stylesheet" href="/core/css/shared.css?v=37">
-    <link rel="stylesheet" href="/tools/latex-ocr/ocr.css?v=10">
+    <link rel="stylesheet" href="/tools/latex-ocr/ocr.css?v=11">
     <link rel="icon" type="image/png" href="/core/image/favicon.png">
 </head>
 <body>
@@ -93,7 +93,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-cyan);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
                                         </div>
                                         <p class="drop-text-main">Kéo thả ảnh hoặc <span class="highlight-link">Bấm để chọn file</span></p>
-                                        <p class="drop-text-sub">Hỗ trợ phím tắt dán trực tiếp <kbd>Ctrl + V</kbd></p>
+                                        <p class="drop-text-sub">Dán trực tiếp <kbd>Ctrl + V</kbd> rồi nhấn <kbd>Enter ↵</kbd> để quét</p>
                                         <div class="drop-badges">
                                             <span class="badge">PNG</span>
                                             <span class="badge">JPG</span>
@@ -108,9 +108,10 @@
                                 </div>
 
                                 <div class="ocr-scan-action-row">
-                                    <button class="btn-scan" id="scan-btn" onclick="processOCR()" disabled>
+                                    <button class="btn-scan" id="scan-btn" onclick="processOCR()" disabled title="Nhấn Enter để quét ảnh">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                                         <span id="scan-btn-text">Quét Công Thức</span>
+                                        <kbd class="scan-enter-badge" id="scan-enter-badge">Enter ↵</kbd>
                                     </button>
                                 </div>
                             </div>
@@ -196,6 +197,6 @@
     <script src="/core/js/sidebar-data.js?v=37"></script>
     <script src="/core/js/layout.js?v=37"></script>
     <script src="/core/js/shared.js?v=37"></script>
-    <script src="/tools/latex-ocr/ocr.js?v=11"></script>
+    <script src="/tools/latex-ocr/ocr.js?v=12"></script>
 </body>
 </html>
