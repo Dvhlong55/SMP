@@ -786,14 +786,7 @@ ${fullCode}
             .replace(/\\caption\{([^}]*)\}/gi, '<div class="latex-table-caption">$1</div>');
 
         text = parseLatexTabular(text);
-
-        // 6. Đảm bảo các sub-environments như \begin{cases}, \begin{matrix}, \begin{pmatrix}, \begin{aligned}
-        // nếu đứng ngoài math mode thì được bọc trong \[ ... \]
-        text = text.replace(/(?<![\$\\])(\\begin\{(?:cases|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|aligned|gathered|array)\}[\s\S]*?\\end\{(?:cases|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|aligned|gathered|array)\})/g, function(match) {
-            return `\\[ ${match} \\]`;
-        });
-
-        // 7. Xử lý các định dạng chữ và căn lề văn bản bên ngoài math mode
+        // 6. Xử lý các định dạng chữ và căn lề văn bản bên ngoài math mode
         text = processOutsideMath(text, function(t) {
             var res = t
                 .replace(/\\begin\{center\}/gi, '<div class="latex-center">')
