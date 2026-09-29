@@ -167,6 +167,20 @@ const ALL_POSTS = [
         page: '/pages/toanhoc.html'
     },
     {
+        title: '[Đồng Tháp] Đề thi chọn đội tuyển thi HSGQG tỉnh Đồng Tháp năm 2026',
+        date: 'September 29, 2026',
+        url: '/posts/math/vmo/dongthap-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Chuyên ĐH Sư Phạm] Đề thi chọn đội tuyển thi HSGQG Trường THPT Chuyên ĐH Sư Phạm Hà Nội năm 2026',
+        date: 'September 29, 2026',
+        url: '/posts/math/vmo/supham-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '[KHTN] Đề thi chọn đội tuyển thi HSGQG Trường THPT Chuyên KHTN năm 2026',
         date: 'September 19, 2026',
         url: '/posts/math/vmo/khtn-hsgqg-2026.html',
