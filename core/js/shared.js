@@ -111,6 +111,62 @@ const ALL_POSTS = [
         page: '/pages/toanhoc.html'
     },
     {
+        title: '[Tuyên Quang] Đề thi chọn đội tuyển thi HSGQG tỉnh Tuyên Quang năm 2026',
+        date: 'September 29, 2026',
+        url: '/posts/math/vmo/tuyenquang-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Tây Ninh] Đề thi chọn học sinh giỏi THPT dự thi cấp quốc gia tỉnh Tây Ninh năm 2026',
+        date: 'September 29, 2026',
+        url: '/posts/math/vmo/tayninh-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Quảng Trị] Đề thi chọn đội tuyển dự thi HSGQG tỉnh Quảng Trị năm 2026',
+        date: 'September 29, 2026',
+        url: '/posts/math/vmo/quangtri-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Đà Nẵng] Đề thi chọn đội tuyển dự thi HSG Quốc gia TP. Đà Nẵng năm 2026',
+        date: 'September 29, 2026',
+        url: '/posts/math/vmo/danang-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[TP. Hồ Chí Minh] Đề thi chọn đội tuyển HSGQG TP. Hồ Chí Minh năm 2026',
+        date: 'September 29, 2026',
+        url: '/posts/math/vmo/hcm-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Khánh Hòa] Đề thi chọn học sinh giỏi THPT dự thi cấp quốc gia tỉnh Khánh Hòa năm 2026',
+        date: 'September 29, 2026',
+        url: '/posts/math/vmo/khanhhoa-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Đắk Lắk] Đề thi chọn đội tuyển HSGQG tỉnh Đắk Lắk năm 2026',
+        date: 'September 29, 2026',
+        url: '/posts/math/vmo/daklak-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Sơn La] Đề thi chọn đội tuyển HSGQG tỉnh Sơn La năm 2026',
+        date: 'September 29, 2026',
+        url: '/posts/math/vmo/sonla-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '[KHTN] Đề thi chọn đội tuyển thi HSGQG Trường THPT Chuyên KHTN năm 2026',
         date: 'September 19, 2026',
         url: '/posts/math/vmo/khtn-hsgqg-2026.html',
