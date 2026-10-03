@@ -97,7 +97,7 @@ const ALL_POSTS = [
         page: '/pages/toanhoc.html'
     },
     {
-        title: 'Phương Trình & Hệ Phương Trình Đồng Dư',
+        title: 'Định Lý Thặng Dư Trung Hoa',
         date: 'May 18, 2026',
         url: '/posts/math/vmo/phuong-trinh-he-phuong-trinh-dong-du.html',
         tags: ['Số Học', 'VMO'],

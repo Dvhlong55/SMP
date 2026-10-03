@@ -28,7 +28,7 @@ window.SMP_ROADMAP_SOHOC = {
         {
             id: 1, phase: 1, icon: 'mod',
             title: 'Hệ thặng dư',
-            desc: 'Phép chia có dư, hệ thặng dư đầy đủ – thu gọn và phương trình đồng dư: viên gạch đầu tiên của Số học.',
+            desc: 'Phép chia có dư, hệ thặng dư đầy đủ – thu gọn và định lý thặng dư Trung Hoa: viên gạch đầu tiên của Số học.',
             tiles: [
                 {
                     title: 'Hệ thặng dư đầy đủ & thu gọn',
@@ -36,14 +36,9 @@ window.SMP_ROADMAP_SOHOC = {
                     kind: 'Lý thuyết', count: 11, url: '/posts/math/vmo/he-thang-du-day-du-va-thu-gon.html'
                 },
                 {
-                    title: 'Phương trình đồng dư',
-                    desc: 'Phần tử nghịch đảo, phương trình đồng dư tuyến tính bậc nhất và tiếp cận phương trình đồng dư bậc hai đơn giản.',
+                    title: 'Định lý thặng dư Trung Hoa',
+                    desc: 'Phương trình đồng dư tuyến tính, định lý thặng dư Trung Hoa (CRT) và các bài toán tồn tại hệ đồng dư.',
                     kind: 'Lý thuyết', count: 9, url: '/posts/math/vmo/phuong-trinh-he-phuong-trinh-dong-du.html'
-                },
-                {
-                    title: 'Bài tập Hệ thặng dư — Phương trình đồng dư',
-                    desc: 'Tuyển chọn bài tập về đồng dư thức và số mũ lớn trích từ khóa Số học Olympic 2026, kèm gợi ý chi tiết.',
-                    kind: 'Bài tập', count: 11, url: '/posts/math/vmo/bai-tap-dong-du.html'
                 }
             ]
         },
@@ -52,17 +47,12 @@ window.SMP_ROADMAP_SOHOC = {
         {
             id: 2, phase: 1, icon: 'theorem',
             title: 'Các định lý cơ bản',
-            desc: 'Bộ tứ kinh điển Fermat – Euler – Wilson – Thặng dư Trung Hoa và cách khai thác chúng trong bài thi.',
+            desc: 'Bộ ba định lý kinh điển Fermat – Euler – Wilson và cách khai thác chúng trong bài thi Olympic.',
             tiles: [
                 {
                     title: 'Định lý Fermat nhỏ, Euler & Wilson',
                     desc: 'Chứng minh qua hệ thặng dư, các hệ quả thường dùng và kỹ thuật hạ bậc lũy thừa theo modulo.',
                     kind: 'Lý thuyết', count: 10, url: '/posts/math/vmo/wilson-fermat-euler.html'
-                },
-                {
-                    title: 'Định lý thặng dư Trung Hoa',
-                    desc: 'Ứng dụng trong bài toán tồn tại, hệ phương trình đồng dư, kết hợp số Fermat và đa thức hệ số nguyên.',
-                    kind: 'Lý thuyết', url: null
                 },
                 {
                     title: 'Số học trong đề VIMONI 2026',

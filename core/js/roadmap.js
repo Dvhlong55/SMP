@@ -177,7 +177,8 @@
                     ${track}
                 </div>
                 <div class="rm-finish rm-reveal">
-                    “Học Số học như leo núi — mỗi chặng là một tầm nhìn mới.”
+                    “Toán học là nữ hoàng của các ngành khoa học, và Số học là nữ hoàng của Toán học.”
+                    <span style="display: block; font-size: 0.85rem; font-style: normal; margin-top: 6px; letter-spacing: 1px; opacity: 0.85;">— Carl Friedrich Gauss —</span>
                     <small>Các ô viền nét đứt sẽ sớm được cập nhật</small>
                 </div>
             </div>`;
