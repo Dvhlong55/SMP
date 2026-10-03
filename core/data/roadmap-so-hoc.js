@@ -13,7 +13,7 @@
 
 window.SMP_ROADMAP_SOHOC = {
     title: 'Lộ Trình Số Học Olympic',
-    subtitle: 'Từ hệ thặng dư đến đa thức số học — 11 chặng chinh phục Số học thi HSG Quốc gia (VMO).',
+    subtitle: 'Từ hệ thặng dư đến đa thức số học — 10 chặng chinh phục Số học thi HSG Quốc gia (VMO).',
 
     phases: [
         { id: 1, name: 'Nền tảng',   desc: 'Đồng dư, các định lý kinh điển và số mũ đúng' },
@@ -28,7 +28,7 @@ window.SMP_ROADMAP_SOHOC = {
         {
             id: 1, phase: 1, icon: 'mod',
             title: 'Hệ thặng dư',
-            desc: 'Phép chia có dư, hệ thặng dư đầy đủ – thu gọn và định lý thặng dư Trung Hoa: viên gạch đầu tiên của Số học.',
+            desc: 'Phép chia có dư, hệ thặng dư đầy đủ – thu gọn, định lý thặng dư Trung Hoa và các định lý Fermat, Euler, Wilson.',
             tiles: [
                 {
                     title: 'Hệ thặng dư đầy đủ & thu gọn',
@@ -39,32 +39,18 @@ window.SMP_ROADMAP_SOHOC = {
                     title: 'Định lý thặng dư Trung Hoa',
                     desc: 'Phương trình đồng dư tuyến tính, định lý thặng dư Trung Hoa (CRT) và các bài toán tồn tại hệ đồng dư.',
                     kind: 'Lý thuyết', count: 9, url: '/posts/math/vmo/phuong-trinh-he-phuong-trinh-dong-du.html'
+                },
+                {
+                    title: 'Định lý Fermat nhỏ, Euler & Wilson',
+                    desc: 'Chứng minh qua hệ thặng dư, các hệ quả thường dùng và kỹ thuật hạ bậc lũy thừa theo modulo.',
+                    kind: 'Lý thuyết', count: 10, url: '/posts/math/vmo/wilson-fermat-euler.html'
                 }
             ]
         },
 
         /* ------------------------------------------------------------ 2 */
         {
-            id: 2, phase: 1, icon: 'theorem',
-            title: 'Các định lý cơ bản',
-            desc: 'Bộ ba định lý kinh điển Fermat – Euler – Wilson và cách khai thác chúng trong bài thi Olympic.',
-            tiles: [
-                {
-                    title: 'Định lý Fermat nhỏ, Euler & Wilson',
-                    desc: 'Chứng minh qua hệ thặng dư, các hệ quả thường dùng và kỹ thuật hạ bậc lũy thừa theo modulo.',
-                    kind: 'Lý thuyết', count: 10, url: '/posts/math/vmo/wilson-fermat-euler.html'
-                },
-                {
-                    title: 'Số học trong đề VIMONI 2026',
-                    desc: 'Lời giải chi tiết bài toán chia hết liên quan tới số nguyên tố, vận dụng trực tiếp định lý Fermat nhỏ.',
-                    kind: 'Lời giải', url: '/posts/math/vimoni-2026.html'
-                }
-            ]
-        },
-
-        /* ------------------------------------------------------------ 3 */
-        {
-            id: 3, phase: 1, icon: 'lte',
+            id: 2, phase: 1, icon: 'lte',
             title: 'LTE & số mũ đúng $v_p$',
             desc: 'Hàm định giá $p$-adic, bổ đề LTE và công thức Legendre — vũ khí xử lý lũy thừa và giai thừa.',
             tiles: [
@@ -86,9 +72,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 4 */
+        /* ------------------------------------------------------------ 3 */
         {
-            id: 4, phase: 2, icon: 'cycle',
+            id: 3, phase: 2, icon: 'cycle',
             title: 'Cấp số nguyên & căn nguyên thủy',
             desc: 'Cấp của một số theo modulo, lũy thừa là số nguyên tố và căn nguyên thủy — cấu trúc nhân của $\\mathbb{Z}_n$.',
             tiles: [
@@ -110,9 +96,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 5 */
+        /* ------------------------------------------------------------ 4 */
         {
-            id: 5, phase: 2, icon: 'sequence',
+            id: 4, phase: 2, icon: 'sequence',
             title: 'Dãy số nguyên',
             desc: 'Tính chất số học của dãy: tuần hoàn số dư, truy hồi tuyến tính, dãy nguyên và số chính phương.',
             tiles: [
@@ -139,9 +125,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 6 */
+        /* ------------------------------------------------------------ 5 */
         {
-            id: 6, phase: 2, icon: 'function',
+            id: 5, phase: 2, icon: 'function',
             title: 'Hàm số học',
             desc: 'Các hàm nhân tính kinh điển $\\varphi(n)$, $\\tau(n)$, $\\sigma(n)$ và hàm tổng chữ số $S(n)$.',
             tiles: [
@@ -163,9 +149,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 7 */
+        /* ------------------------------------------------------------ 6 */
         {
-            id: 7, phase: 3, icon: 'star',
+            id: 6, phase: 3, icon: 'star',
             title: 'Số đặc biệt',
             desc: 'Những họ số mang tên các nhà toán học: Fermat, Mersenne và số hoàn hảo.',
             tiles: [
@@ -187,9 +173,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 8 */
+        /* ------------------------------------------------------------ 7 */
         {
-            id: 8, phase: 3, icon: 'binom',
+            id: 7, phase: 3, icon: 'binom',
             title: 'Số học nhị thức',
             desc: 'Tính chất số học của hệ số nhị thức $\\binom{n}{k}$ và những định lý đồng dư đẹp nhất.',
             tiles: [
@@ -211,9 +197,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 9 */
+        /* ------------------------------------------------------------ 8 */
         {
-            id: 9, phase: 3, icon: 'square',
+            id: 8, phase: 3, icon: 'square',
             title: 'Thặng dư bậc hai',
             desc: 'Khi nào $x^2 \\equiv a \\pmod p$ có nghiệm? Kí hiệu Legendre, luật tương hỗ và bổ đề Thue.',
             tiles: [
@@ -235,9 +221,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 10 */
+        /* ------------------------------------------------------------ 9 */
         {
-            id: 10, phase: 4, icon: 'equation',
+            id: 9, phase: 4, icon: 'equation',
             title: 'Phương trình nghiệm nguyên',
             desc: 'Từ phương pháp cơ bản đến bước nhảy Viète và phương trình Pell — đỉnh cao ứng dụng của Số học.',
             tiles: [
@@ -274,9 +260,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 11 */
+        /* ------------------------------------------------------------ 10 */
         {
-            id: 11, phase: 4, icon: 'poly',
+            id: 10, phase: 4, icon: 'poly',
             title: 'Đa thức số học',
             desc: 'Đa thức hệ số nguyên dưới góc nhìn Số học: chia hết, ước nguyên tố và đồng dư đa thức.',
             tiles: [
@@ -300,7 +286,7 @@ window.SMP_ROADMAP_SOHOC = {
 
         /* ------------------------------------------------------------ ★ */
         {
-            id: 12, phase: 5, icon: 'trophy', label: '★',
+            id: 11, phase: 5, icon: 'trophy', label: '★',
             title: 'Luyện tập tổng hợp',
             desc: 'Tổng hợp kiến thức qua các bộ đề chọn lọc và đề thi chọn đội tuyển các tỉnh.',
             tiles: [
