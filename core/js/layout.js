@@ -327,6 +327,7 @@
                 <a href="/pages/nonmath.html">&#x2734; Non Math</a>
                 <a href="/pages/forum.html">⧉ Forum</a>
                 <a href="/pages/saved.html">★ Saved</a>
+                <a href="/pages/toanhoc.html?filter=vmo&sub=so-hoc&view=roadmap" style="color: var(--accent-cyan);">&#x25CE; Roadmap</a>
                 <a href="#" id="sidebar-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">&#x2637; Login</a>
             </nav>
         </div>
@@ -345,6 +346,7 @@
             <a href="/pages/nonmath.html">&#x2734; Non Math</a>
             <a href="/pages/forum.html">⧉ Forum</a>
             <a href="/pages/saved.html">★ Saved</a>
+            <a href="/pages/toanhoc.html?filter=vmo&sub=so-hoc&view=roadmap" style="color: var(--accent-cyan);">&#x25CE; Roadmap</a>
         </nav>
 
         <div class="topbar-controls" style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
