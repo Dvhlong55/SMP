@@ -21,11 +21,11 @@ const LEFT_TAGS_HTML = `
             <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin: 16px 0;">
 
             <div style="font-size: 0.72rem; color: var(--accent-gold, #c9a96e); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; font-weight: 600;">
-                🗺 Lộ Trình / Roadmap
+                Roadmap
             </div>
             <ul class="side-widget-list">
                 <li>
-                    <a href="/pages/toanhoc.html?filter=vmo&sub=so-hoc&view=roadmap" style="color: var(--accent-cyan, #5ce1e6); font-weight: 500;">
+                    <a href="/pages/roadmap.html" style="color: var(--accent-cyan, #5ce1e6); font-weight: 500;">
                         Số Học Olympic <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; background: rgba(92,225,230,0.15); color: #5ce1e6; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(92,225,230,0.3);">12 Chặng</span>
                     </a>
                 </li>

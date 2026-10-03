@@ -92,11 +92,6 @@ window.SMP_ROADMAP_SOHOC = {
                     title: 'Ước lượng hàm định giá $p$-adic',
                     desc: 'Bộ bài nâng cao thử thách tư duy về đánh giá $v_p$ trong các biểu thức lũy thừa và giai thừa.',
                     kind: 'Bài tập', count: 10, url: '/posts/math/vmo/uoc-luong-ham-dinh-gia-p-adic.html'
-                },
-                {
-                    title: 'A Number Theory Problem from Poland TST',
-                    desc: 'Phân tích lời giải bài Ba Lan TST, phối hợp nhuần nhuyễn tính chất của cấp và định lý LTE.',
-                    kind: 'Lời giải', url: '/posts/math/polandNumber.html'
                 }
             ]
         },
@@ -150,11 +145,6 @@ window.SMP_ROADMAP_SOHOC = {
                     title: 'Dãy số & số chính phương',
                     desc: 'Chứng minh một dãy là dãy nguyên, các bài toán dãy liên quan đến số chính phương.',
                     kind: 'Chuyên đề', count: 7, url: '/posts/math/vmo/bien-doi-dai-so-voi-day-so.html'
-                },
-                {
-                    title: 'Phần nguyên & nhị thức Newton',
-                    desc: 'Dãy nguyên sinh bởi phần nguyên, số vô tỉ bậc hai và khai triển nhị thức Newton.',
-                    kind: 'Chuyên đề', url: null
                 }
             ]
         },
@@ -187,7 +177,7 @@ window.SMP_ROADMAP_SOHOC = {
         {
             id: 7, phase: 3, icon: 'star',
             title: 'Số đặc biệt',
-            desc: 'Những họ số mang tên các nhà toán học: Fermat, Mersenne, số hoàn hảo và số Carmichael.',
+            desc: 'Những họ số mang tên các nhà toán học: Fermat, Mersenne và số hoàn hảo.',
             tiles: [
                 {
                     title: 'Số Fermat',
@@ -195,14 +185,14 @@ window.SMP_ROADMAP_SOHOC = {
                     kind: 'Chuyên đề', url: null
                 },
                 {
-                    title: 'Số Mersenne & số hoàn hảo',
-                    desc: 'Ước nguyên tố của $2^p - 1$ và định lý Euclid – Euler về số hoàn hảo chẵn.',
+                    title: 'Số Mersenne',
+                    desc: 'Ước nguyên tố của $2^p - 1$, số nguyên tố Mersenne và các bài toán chia hết liên quan.',
                     kind: 'Chuyên đề', url: null
                 },
                 {
-                    title: 'Lịch sử phát triển của số Carmichael',
-                    desc: 'Hành trình khám phá số giả Fermat, tiêu chuẩn Korselt và các định lý xoay quanh.',
-                    kind: 'Phiêu lưu', url: '/posts/math/phieuluu/lich-su-so-carmichael.html'
+                    title: 'Số hoàn hảo',
+                    desc: 'Định lý Euclid – Euler về số hoàn hảo chẵn và bài toán về ước số của số hoàn hảo.',
+                    kind: 'Chuyên đề', url: null
                 }
             ]
         },
@@ -251,11 +241,6 @@ window.SMP_ROADMAP_SOHOC = {
                     title: 'Bổ đề Thue & biểu diễn số nguyên tố',
                     desc: 'Công cụ chứng minh tồn tại nghiệm đồng dư; định lý Fermat về tổng hai bình phương.',
                     kind: 'Chuyên đề', url: '/posts/math/BoDeThueVaBieuDienSoNguyenTo.html'
-                },
-                {
-                    title: 'Thách Thức Số 2 — 2026',
-                    desc: 'Bộ bài nâng cao xoay quanh bổ đề Thue, tổng hai bình phương và biểu diễn số nguyên tố.',
-                    kind: 'Thách thức', count: 11, url: '/challenges/ThachThucKiNaySo22026.html'
                 }
             ]
         },
