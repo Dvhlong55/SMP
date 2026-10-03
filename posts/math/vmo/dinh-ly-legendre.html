@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Về Định Lý Legendre</title>
+    
+    <meta name="post-id" content="DinhLyLegendre">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Số học: Công thức Legendre tính số mũ đúng của số nguyên tố trong n! và các bài toán chia hết giai thừa nâng cao.">
+    <meta property="og:title" content="SMP — Về Định Lý Legendre">
+    <meta property="og:description" content="Chuyên đề Số học: Công thức Legendre tính số mũ đúng của số nguyên tố trong n! và các bài toán chia hết giai thừa nâng cao.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/dinh-ly-legendre.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Về Định Lý Legendre">
+    <meta name="twitter:description" content="Chuyên đề Số học: Công thức Legendre tính số mũ đúng của số nguyên tố trong n! và các bài toán chia hết giai thừa nâng cao.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        
+        <div class="header-box">
+            <h1>$\S$ Về Định Lý Legendre</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">June 29, 2026</h2>
+        </div>
+
+        <button class="pdf-download-btn" onclick="window.print()" title="Tải xuống hoặc In bài viết này">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Tải bản PDF
+        </button>
+
+        <h3>N 1.</h3>
+        <p>Chứng minh rằng với mọi số nguyên dương $n$ thì $n!$ là ước của tích sau:
+        $$(2^n - 1)(2^n - 2)\dots (2^n - 2^{n-1}).$$</p>
+
+        <h3>N 2.</h3>
+        <p>Tìm tất cả cặp số nguyên dương $(k, n)$ sao cho:
+        $$k! = (2^n - 1)(2^n - 2)\dots (2^n - 2^{n-1}).$$</p>
+
+        <h3>N 3.</h3>
+        <p>Tìm tất cả các cặp số nguyên dương $(k, m)$ sao cho với mọi số tự nhiên $n$ tích
+        $$(n + m)(n + 2m)\dots (n + km)$$
+        chia hết cho $k!$.</p>
+
+        <h3>N 4.</h3>
+        <p>Chứng minh rằng với $n$ nguyên dương và hai số nguyên $a$ và $b$ thì $n!$ chia hết
+        $$A = a(a + b)(a + 2b)\dots (a + (n - 1)b)b^{n-1}.$$</p>
+
+        <h3>N 5.</h3>
+        <p>Chứng minh rằng với mọi số nguyên $n \ge 3$ thì ta có:
+        $$n!(n + 1)!(n + 2)! \mid (3n)!.$$</p>
+
+        <h3>N 6.</h3>
+        <p>Cho số tự nhiên $m, n$. Chứng minh rằng:
+        $$m!n!(m + n)! \mid (2n)!(2m)!.$$</p>
+
+        <h3>N 7.</h3>
+        <p>Tìm tất cả số nguyên dương $k$ thỏa mãn với mỗi số nguyên dương $n$ thì $2^{(k-1)n+1}$ không là ước của $\dfrac{(kn)!}{n!}$.</p>
+
+        <h3>N 8.</h3>
+        <p>Tìm số nguyên dương $k$ lớn nhất sao cho $(1994!)^{1995} \;\vdots\; 1995^k$.</p>
+
+        <h3>N 9.</h3>
+        <p>Chứng minh rằng tích của tất cả các số nguyên từ $2^{1917} + 1$ đến $2^{1991} - 1$ không là số chính phương.</p>
+
+        <h3>N 10.</h3>
+        <p>Cho $a, b, c$ là các số nguyên dương và $a!b! \mid c!$. Chứng minh rằng:
+        $$2^{a+b-c-2} \ge c^2.$$</p>
+
+        <h3>N 11.</h3>
+        <p>Chứng minh rằng $C_{2n}^n$ chia hết cho $n + 1$.</p>
+
+        <p class="exam-end"><b>─── HẾT ───</b></p>
+    </div>
+</body>
+</html>

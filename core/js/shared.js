@@ -55,6 +55,62 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: 'Hàm Phi Euler',
+        date: 'September 15, 2026',
+        url: '/posts/math/vmo/ham-phi-euler.html',
+        tags: ['Số Học', 'Hàm Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Biến Đổi Đại Số Với Dãy Số',
+        date: 'September 3, 2026',
+        url: '/posts/math/vmo/bien-doi-dai-so-voi-day-so.html',
+        tags: ['Số Học', 'Dãy Số', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Problem Set 1 (Số Học)',
+        date: 'August 2, 2026',
+        url: '/posts/math/vmo/problem-set-1.html',
+        tags: ['Số Học', 'VMO', 'Luyện Tập'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Định Lý Legendre',
+        date: 'July 1, 2026',
+        url: '/posts/math/vmo/dinh-ly-legendre.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Bổ Đề Nâng Số Mũ (LTE)',
+        date: 'June 20, 2026',
+        url: '/posts/math/vmo/bo-de-nang-so-mu-lte.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Định Lý Wilson, Fermat & Euler',
+        date: 'June 5, 2026',
+        url: '/posts/math/vmo/wilson-fermat-euler.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Phương Trình & Hệ Phương Trình Đồng Dư',
+        date: 'May 18, 2026',
+        url: '/posts/math/vmo/phuong-trinh-he-phuong-trinh-dong-du.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Hệ Thặng Dư Đầy Đủ & Thu Gọn',
+        date: 'May 11, 2026',
+        url: '/posts/math/vmo/he-thang-du-day-du-va-thu-gon.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: 'Tổng hợp Số Học TST Tỉnh 2026',
         date: 'September 19, 2026',
         url: '/posts/math/vmo/tong-hop-so-hoc-tst-tinh-2026.html',

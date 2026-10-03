@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Bổ Đề Nâng Số Mũ – LTE</title>
+    
+    <meta name="post-id" content="BoDeNangSoMuLTE">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Số học: Bổ đề nâng số mũ LTE (Lifting The Exponent Lemma), kỹ thuật ước lượng số mũ đúng và ứng dụng trong phương trình nghiệm nguyên.">
+    <meta property="og:title" content="SMP — Bổ Đề Nâng Số Mũ – LTE">
+    <meta property="og:description" content="Chuyên đề Số học: Bổ đề nâng số mũ LTE (Lifting The Exponent Lemma), kỹ thuật ước lượng số mũ đúng và ứng dụng trong phương trình nghiệm nguyên.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/bo-de-nang-so-mu-lte.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Bổ Đề Nâng Số Mũ – LTE">
+    <meta name="twitter:description" content="Chuyên đề Số học: Bổ đề nâng số mũ LTE (Lifting The Exponent Lemma), kỹ thuật ước lượng số mũ đúng và ứng dụng trong phương trình nghiệm nguyên.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        
+        <div class="header-box">
+            <h1>$\S$ Bổ Đề Nâng Số Mũ – LTE</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">July 14, 2026</h2>
+        </div>
+
+        <button class="pdf-download-btn" onclick="window.print()" title="Tải xuống hoặc In bài viết này">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Tải bản PDF
+        </button>
+
+        <p style="font-style: italic; color: var(--text-muted); margin-bottom: 24px;">Chúng ta sẽ đề cập lại về LTE một lần nữa khi học về cấp và sự kết hợp giữa chúng. Vốn rất mạnh để giải quyết các bài toán dạng $a^m - 1$.</p>
+
+        <h2 style="font-size: 1.15rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 30px;">I. Sử dụng LTE để ước lượng</h2>
+
+        <h3>N 1.</h3>
+        <p>Tìm số tự nhiên $n$ lớn nhất sao cho $5^n \mid 7^{1000} - 2^{1000}$.</p>
+
+        <h3>N 2.</h3>
+        <p>Tìm tất cả số nguyên dương $n$ thỏa mãn $v_2(n^{n-1} - 1) = 2025$.</p>
+
+        <h3>N 3.</h3>
+        <p>Cho $n$ là số nguyên dương. Chứng minh rằng tồn tại số nguyên dương $k$ sao cho $2^n \mid 51^k - 17$.</p>
+
+        <h2 style="font-size: 1.15rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 30px;">II. Giải quyết phương trình nghiệm nguyên</h2>
+
+        <h3>N 4.</h3>
+        <p>Tìm tất cả các số nguyên dương $n$ sao cho
+        $$\frac{10^n}{n^3 + n^2 + n + 1} \in \mathbb{Z}.$$</p>
+
+        <h3>N 5.</h3>
+        <p>Tìm tất cả các số nguyên tố $p > 3$, số nguyên dương lẻ $k$ và số nguyên dương $a$ sao cho
+        $$(p - 1)! + a^{p-1} = p^k.$$</p>
+
+        <h3>N 6.</h3>
+        <p>Tìm bộ ba các số nguyên dương $(p, n, k)$ thỏa mãn $p$ là số nguyên tố Fermat ($F_m = 2^{2^m} + 1$) và
+        $$p^n + n = (n + 1)^k.$$</p>
+
+        <h3>N 7.</h3>
+        <p>Tìm tất cả số tự nhiên $k$ sao cho với $k$ số nguyên tố đầu tiên $p_1, p_2, \dots, p_k$ thì tồn tại hai số tự nhiên $a, n$ ($n > 1$) thỏa
+        $$p_1p_2\dots p_k - 1 = a^n.$$</p>
+
+        <h3>N 8.</h3>
+        <p>Tìm tất cả các bộ bốn số nguyên dương $(x, r, p, n)$ sao cho $p$ là số nguyên tố, $n, r > 1$ và
+        $$x^r - 1 = p^n.$$</p>
+
+        <h2 style="font-size: 1.15rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 30px;">III. Gọi ước nguyên tố và dùng LTE đánh giá</h2>
+
+        <h3>N 9 (HW).</h3>
+        <p style="padding-left: 20px;">1. Tìm tất cả số nguyên dương $n$ thỏa mãn $n^3 \mid 3^n - 1$.</p>
+        <p style="padding-left: 20px;">2. Tìm tất cả số nguyên dương $n$ thỏa mãn $n \cdot (2n + 1)^2 \mid 7^n + 1$.</p>
+
+        <h3>N 10.</h3>
+        <p>Xác định tất cả các số nguyên $n > 1$ thỏa mãn
+        $$\frac{2^n + 1}{n^2} \in \mathbb{Z}.$$</p>
+
+        <h3>N 11.</h3>
+        <p>Tìm tất cả các số nguyên $a, b > 1$ thỏa mãn $b^a \mid a^b - 1$.</p>
+
+        <h3>N 12.</h3>
+        <p style="padding-left: 20px;">1. Tìm tất cả các số nguyên dương $a$ sao cho tồn tại vô hạn số tự nhiên $n$ thỏa mãn $n \mid a^n - 1$.</p>
+        <p style="padding-left: 20px;">2. Cho $n$ là số nguyên dương thỏa mãn điều kiện: Với mọi $a$ nguyên dương lẻ và nguyên tố cùng nhau với $n$ thì $2n^2 \mid a^n - 1$. Chứng minh $n$ là số square-free (không chứa ước chính phương nào lớn hơn 1).</p>
+
+        <h3>N 13.</h3>
+        <p>Cho $a, b$ là các số thực phân biệt sao cho các số
+        $$a - b, \quad a^2 - b^2, \quad a^3 - b^3, \quad \dots$$
+        đều là số nguyên. Chứng minh rằng $a, b$ đều là số nguyên.</p>
+
+        <h3>N 14.</h3>
+        <p>Cho $a > b > 1$ là các số nguyên dương và $b$ là số lẻ, $n$ là số nguyên dương. Nếu $b^n \mid a^n - 1$, thì hãy chứng minh rằng
+        $$a^b > \frac{3^n}{n}.$$</p>
+
+        <h3>N 15.</h3>
+        <p>Cho $p$ là số nguyên tố, $p \ne 3$, và các số nguyên $a, b$ sao cho $p \mid a + b, p^2 \mid a^3 + b^3$. Chứng minh rằng
+        $$p^2 \mid a + b \quad \text{hoặc} \quad p^3 \mid a^3 + b^3.$$</p>
+
+        <h3>N 16.</h3>
+        <p>Cho $m$ và $n$ là các số nguyên dương. Chứng minh rằng nếu với mỗi số nguyên dương $l$ có vô số số nguyên tố $p$ sao cho $p^m \equiv 1 \pmod{b^m}$ thì $b^{m-1} \mid n$.</p>
+
+        <h3>N 17.</h3>
+        <p>Tìm tất cả các số nguyên $b \ge 9$ sao cho với mọi $n$, số
+        $$\underbrace{11\dots 1}_{n-1 \text{ chữ số 1}} 0 \underbrace{77\dots 7}_{n-1 \text{ chữ số 7}} 8 \underbrace{11\dots 1}_{n-1 \text{ chữ số 1}}$$
+        khi biểu diễn trong hệ cơ số $b$ là một số lập phương khi chuyển sang hệ cơ số 10.</p>
+
+        <h3>N 18.</h3>
+        <p>Cho $n$ là số square-free. Chứng minh rằng không tồn tại cặp số nguyên dương $(x, y)$ nguyên tố cùng nhau sao cho
+        $$(x + y)^3 \mid (x^n + y^n).$$</p>
+
+        <h3>N 19.</h3>
+        <p>Tìm các số nguyên dương $a, m, n$ với $a > 1, m > n$ sao cho mọi ước nguyên tố của $a^m - 1$ đều là ước của $a^n - 1$.</p>
+
+        <p class="exam-end"><b>─── HẾT ───</b></p>
+    </div>
+</body>
+</html>

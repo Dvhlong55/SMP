@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Hàm Phi Euler</title>
+    
+    <meta name="post-id" content="HamPhiEuler">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Số học: Hàm phi Euler (Euler's Totient Function), tính chất nhân tính, hệ thức Gauss và các bài toán Olympic nâng cao.">
+    <meta property="og:title" content="SMP — Hàm Phi Euler">
+    <meta property="og:description" content="Chuyên đề Số học: Hàm phi Euler (Euler's Totient Function), tính chất nhân tính, hệ thức Gauss và các bài toán Olympic nâng cao.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/ham-phi-euler.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Hàm Phi Euler">
+    <meta name="twitter:description" content="Chuyên đề Số học: Hàm phi Euler (Euler's Totient Function), tính chất nhân tính, hệ thức Gauss và các bài toán Olympic nâng cao.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        
+        <div class="header-box">
+            <h1>$\S$ Hàm Phi Euler</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles • Long Do</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">September 15, 2026</h2>
+        </div>
+
+        <button class="pdf-download-btn" onclick="window.print()" title="Tải xuống hoặc In bài viết này">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Tải bản PDF
+        </button>
+
+        <h3>Bài 1</h3>
+        <p>Giả sử số nguyên dương $n$ được viết dưới dạng chính tắc là $p_1^{\alpha_1} p_2^{\alpha_2} \dots p_k^{\alpha_k}$, trong đó $p_i \in \mathbb{P}, \alpha_i \in \mathbb{N}^*, \forall i = \overline{1, k}$. Hãy chứng minh rằng:</p>
+        <p style="padding-left: 20px;">1. $\varphi(p^k) = p^{k-1}(p - 1)$ với mọi số nguyên tố $p$.</p>
+        <p style="padding-left: 20px;">2. Nếu $m, n$ là hai số nguyên dương và nguyên tố cùng nhau thì $\varphi(m)\varphi(n) = \varphi(mn)$.</p>
+        <p style="padding-left: 20px;">3. $\varphi(n) = n\left(1 - \dfrac{1}{p_1}\right)\left(1 - \dfrac{1}{p_2}\right)\dots\left(1 - \dfrac{1}{p_k}\right)$.</p>
+
+        <h3>Bài 2</h3>
+        <p style="padding-left: 20px;">1. Chứng minh rằng $\varphi(m)\varphi(n) \le \varphi(mn) \le m\varphi(n)$ với mọi số nguyên dương $m, n$. Khi nào đẳng thức xảy ra ở mỗi bất đẳng thức?</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng nếu $n$ là một hợp số thì $\varphi(n) \le n - \sqrt{n}$.</p>
+        <p style="padding-left: 20px;">3. Chứng minh rằng với mọi số nguyên dương $n \ne 2$ và $n \ne 6$ thì $\varphi(n) \ge \sqrt{n/2}$. Đặc biệt với $n > 6$ thì $\varphi(n) \ge \sqrt{n}$.</p>
+
+        <h3>Bài 3</h3>
+        <p style="padding-left: 20px;">1. Chứng minh hệ thức Gauss: với mọi số nguyên dương $n$,</p>
+        $$\sum_{d \mid n} \varphi(d) = n$$
+        <p style="padding-left: 20px;">2. Với mỗi số nguyên $n \ge 2$, gọi $s(n)$ là tổng các số nguyên dương không vượt quá $n$ và nguyên tố cùng nhau với $n$. Chứng minh rằng</p>
+        $$s(n) = \frac{n\varphi(n)}{2}$$
+        <p style="padding-left: 20px;">3. Chứng minh rằng với mọi số nguyên dương $n$:</p>
+        $$\sum_{k=1}^n \varphi(k) \left\lfloor \frac{n}{k} \right\rfloor = \frac{n(n + 1)}{2}$$
+
+        <h3>Bài 4</h3>
+        <p>Cho $n, k$ là các số nguyên dương sao cho $n - 1 = k\varphi(n)$. Giả sử $n > 2$ và $n$ là hợp số.</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng $n$ là số square-free (không chứa ước chính phương nào lớn hơn 1) và $n$ có ít nhất 3 ước nguyên tố phân biệt.</p>
+        <p style="padding-left: 20px;">2. Giả sử $n$ có không quá 6 ước nguyên tố phân biệt. Chứng minh rằng $k \ge 2$, và nếu $k$ chẵn thì $n$ phải là số lẻ.</p>
+
+        <h3>Bài 5</h3>
+        <p>Với mỗi số nguyên $n \ge 2$, gọi $s(n)$ là tổng các số nguyên dương không vượt quá $n$ và nguyên tố cùng nhau với $n$. Chứng minh rằng không tồn tại số nguyên dương $n \ge 2$ thỏa mãn:</p>
+        $$s(n) = s(n + 2021)$$
+
+        <h3>Bài 6</h3>
+        <p>Với mỗi cặp số nguyên dương $(n, m)$ thỏa mãn $n < m$, gọi $s(n, m)$ là số các số nguyên dương thuộc đoạn $[n, m]$ và nguyên tố cùng nhau với $m$. Tìm tất cả các số nguyên dương $m \ge 2$ thỏa mãn đồng thời hai điều kiện sau:</p>
+        <p style="padding-left: 20px;">1. $\dfrac{s(n, m)}{m - n} \ge \dfrac{s(1, m)}{m}$ với mọi $n = 1, 2, \dots, m - 1$;</p>
+        <p style="padding-left: 20px;">2. $2022^m + 1$ chia hết cho $m^2$.</p>
+
+        <h3>Bài 7</h3>
+        <p style="padding-left: 20px;">1. Tìm tất cả các số nguyên dương $n$ sao cho $\varphi(n) \mid n$.</p>
+        <p style="padding-left: 20px;">2. Tìm tất cả các cặp số nguyên dương $(m, n)$ thỏa mãn:</p>
+        $$\varphi(mn) = \varphi(m) + \varphi(n)$$
+
+        <h3>Bài 8</h3>
+        <p>Với số nguyên $n \ge 1$, ta đặt $\mu(1) = 1$; $\mu(n) = (-1)^k$ nếu $n = p_1 p_2 \dots p_k$ ($p_1, p_2, \dots, p_k$ là các số nguyên tố phân biệt) và $\mu(n) = 0$ trong các trường hợp còn lại của $n$.</p>
+        <p style="padding-left: 20px;">1. Chứng minh:</p>
+        $$\frac{n}{\varphi(n)} = \sum_{d \mid n} \frac{\mu^2(d)}{\varphi(d)}$$
+        <p style="padding-left: 20px;">với $\varphi(n)$ là số các số nguyên dương không vượt quá $n$ và nguyên tố cùng nhau với $n$.</p>
+        <p style="padding-left: 20px;">2. Gọi $f$ là hàm số xác định trên tập các số nguyên dương thỏa mãn $f(mn) = f(m)f(n)$, với $m, n$ nguyên tố cùng nhau. Chứng minh rằng nếu $\dfrac{n}{\varphi(n)} = \sum_{d \mid n} f(d)$ thì $f(n) = \dfrac{\mu^2(n)}{\varphi(n)}$ với mọi $n$ nguyên dương.</p>
+
+        <h3>Bài 9</h3>
+        <p>Giả sử $a, b, c$ là các số nguyên dương thỏa mãn hệ phương trình sau:</p>
+        $$\begin{cases} 21a = 43\varphi(b) \\ 21b = 43\varphi(c) \\ 21c = 43\varphi(a) \end{cases}$$
+        <p>Chứng minh rằng $a = b = c$.</p>
+
+        <h3>Bài 10</h3>
+        <p>Gọi $S$ là tập hợp tất cả các số nguyên dương. Với mỗi số nguyên dương $c$, xét hàm số $g_c: S \to S$ xác định bởi $g_c(n) = \sum_{i=1}^c \varphi(n + i)$ trong đó với $k \in S$ thì $\varphi(k)$ là số các số nguyên dương không vượt quá $k$ và nguyên tố cùng nhau với $k$.</p>
+        <p style="padding-left: 20px;">1. Tìm tất cả các số nguyên dương $n$ để $g_4(n) = 10$.</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng với mỗi số nguyên dương $c$ thì không tồn tại $T \in S$ để $g_c(n)$ nhận mọi giá trị nguyên thuộc $(T; +\infty)$.</p>
+
+        <h3>Bài 11</h3>
+        <p>Cho $n > 1$ và lấy $S(n)$ là tập các số nguyên dương $k$ sao cho phần thập phân của $\dfrac{n}{k}$ ít nhất là $\dfrac{1}{2}$. Chứng minh:</p>
+        $$\sum_{k \in S(n)} \varphi(k) = n^2$$
+
+        <h3>Bài 12</h3>
+        <p>Kí hiệu $\varphi(n)$ là số các số nguyên dương nhỏ hơn $n$ mà nguyên tố cùng nhau với $n$. Chứng minh tồn tại số nguyên dương $m$ sao cho phương trình $\varphi(n) = m$ có ít nhất 2015 nghiệm nguyên dương $n$.</p>
+
+        <h3>Bài 13</h3>
+        <p>Lấy $n$ là một số nguyên lớn hơn 1 sao cho $n$ là ước của $2^{\varphi(n)} + 3^{\varphi(n)} + \dots + n^{\varphi(n)}$. Nếu $p_1, \dots, p_k$ là tất cả các ước nguyên tố của $n$ và $n$ không có ước chính phương khác 1, chứng minh:</p>
+        $$\frac{1}{p_1} + \frac{1}{p_2} + \dots + \frac{1}{p_k} + \frac{1}{p_1 p_2 \dots p_k}$$
+        <p>là số nguyên.</p>
+
+        <h3>Bài 14</h3>
+        <p>Cho dãy $(a_n)_{n \ge 1}$ là dãy số nguyên thoả mãn:</p>
+        $$\sum_{d \mid n} a_d = 2^n$$
+        <p>với mọi $n$. Chứng minh $n$ chia hết $a_n$ với mọi $n$.</p>
+
+    </div>
+</body>
+</html>
