@@ -112,6 +112,26 @@
             border: 1px solid rgba(92,225,230,0.22);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
             position: relative;
+            /* Card luôn nền tối → ép chữ sáng ở cả 2 chế độ */
+            color: #e5e5e5;
+            --exam-text-color: #e5e5e5;
+        }
+        .home-challenge-box .solution-mailbox,
+        .home-challenge-box .mailbox-subtitle,
+        .home-challenge-box .mailbox-hint,
+        .home-challenge-box .mailbox-file-label,
+        .home-challenge-box .mailbox-note,
+        .home-challenge-box .latex-preview-toggle {
+            color: #e5e5e5 !important;
+        }
+        .home-challenge-box .mailbox-file-label strong { color: #fff; }
+        .home-challenge-box .mailbox-input::placeholder,
+        .home-challenge-box .mailbox-textarea::placeholder {
+            color: rgba(229, 229, 229, 0.45);
+        }
+        .home-challenge-box .mailbox-select option {
+            background: #1a1a1a;
+            color: #e5e5e5;
         }
         .home-challenge-box .challenge-card::before {
             content: '∑';
@@ -168,7 +188,7 @@
         }
         body:not(.dark-mode) .home-challenge-box .challenge-answer {
             background: rgba(92,225,230,0.08);
-            color: #1e293b;
+            color: #e5e5e5;
         }
 
         /* Scoped Form Mailbox inside Home 50% Column */
@@ -273,7 +293,7 @@
         body:not(.dark-mode) .home-challenge-box .mailbox-select,
         body:not(.dark-mode) .home-challenge-box .mailbox-textarea {
             background: rgba(255, 105, 180, 0.05);
-            color: #1e293b;
+            color: #e5e5e5;
         }
         .home-challenge-box .mailbox-input:focus,
         .home-challenge-box .mailbox-select:focus,
@@ -902,7 +922,7 @@
 
     <script src="/core/js/sidebar-data.js?v=36"></script>
     <script src="/core/js/layout.js?v=36"></script>
-    <script src="/core/js/shared.js?v=36"></script>
+    <script src="/core/js/shared.js?v=37"></script>
     <script src="/core/js/mailbox.js"></script>
     <script>
         // === DAILY CHALLENGE INTERACTION ===

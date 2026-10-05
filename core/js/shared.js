@@ -36,9 +36,58 @@ window.DarkMode = {
         if (save) localStorage.setItem('smp-dark-mode', 'false');
         this.updateBtn('☽ Tối');
     },
-    toggle() {
-        if (document.body.classList.contains('dark-mode')) this.disable();
-        else this.enable();
+    toggle(evt) {
+        const goDark = !document.body.classList.contains('dark-mode');
+        const apply = () => { if (goDark) this.enable(); else this.disable(); };
+        const root = document.documentElement;
+
+        this.injectTransitionStyles();
+
+        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Fallback: đổi tức thì, tắt transition để không bị giật
+        if (!document.startViewTransition || reduceMotion) {
+            root.classList.add('theme-switching');
+            apply();
+            requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('theme-switching')));
+            return;
+        }
+
+        // Tâm làn sóng: vị trí nút bấm (hoặc góc trên phải nếu không có event)
+        let x = window.innerWidth - 40, y = 40;
+        if (evt && typeof evt.clientX === 'number' && (evt.clientX || evt.clientY)) {
+            x = evt.clientX; y = evt.clientY;
+        } else if (evt && evt.currentTarget && evt.currentTarget.getBoundingClientRect) {
+            const r = evt.currentTarget.getBoundingClientRect();
+            x = r.left + r.width / 2; y = r.top + r.height / 2;
+        }
+        const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+
+        root.classList.add('theme-switching');
+        const transition = document.startViewTransition(apply);
+        transition.ready.then(() => {
+            root.animate(
+                { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+                { duration: 650, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', pseudoElement: '::view-transition-new(root)' }
+            );
+        }).catch(() => {});
+        transition.finished.finally(() => root.classList.remove('theme-switching'));
+    },
+    injectTransitionStyles() {
+        if (document.getElementById('smp-theme-transition-css')) return;
+        const s = document.createElement('style');
+        s.id = 'smp-theme-transition-css';
+        s.textContent = `
+            ::view-transition-old(root), ::view-transition-new(root) {
+                animation: none; mix-blend-mode: normal;
+            }
+            ::view-transition-new(root) { z-index: 9999; }
+            ::view-transition-old(root) { z-index: 1; }
+            html.theme-switching *, html.theme-switching *::before, html.theme-switching *::after {
+                transition: none !important;
+            }
+        `;
+        document.head.appendChild(s);
     },
     updateBtn(text) {
         const btn = document.getElementById('dark-toggle');
@@ -47,7 +96,7 @@ window.DarkMode = {
     bindToggle() {
         const btn = document.getElementById('dark-toggle');
         if (btn) {
-            btn.addEventListener('click', () => this.toggle());
+            btn.addEventListener('click', (e) => this.toggle(e));
             this.updateBtn(document.body.classList.contains('dark-mode') ? '☀ Sáng' : '☽ Tối');
         }
     }
