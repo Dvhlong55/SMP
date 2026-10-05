@@ -5,7 +5,7 @@
 
 var API_BASE = 'https://smp-backend-kcwn.onrender.com';
 
-// === EARLY DARK MODE APPLY (áp dụng ngay lập tức trước bất kì render nào) ===
+// === EARLY DARK MODE & SIDEBAR APPLY (áp dụng ngay lập tức trước bất kì render nào) ===
 (function() {
     if (localStorage.getItem('smp-dark-mode') === 'true') {
         document.documentElement.classList.add('dark-mode');
@@ -18,6 +18,9 @@ var API_BASE = 'https://smp-backend-kcwn.onrender.com';
                 }
             }, { once: true });
         }
+    }
+    if (localStorage.getItem('smp-sidebar-collapsed') === 'true') {
+        document.documentElement.classList.add('sidebar-collapsed');
     }
 })();
 

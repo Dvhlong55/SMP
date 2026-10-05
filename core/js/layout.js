@@ -42,8 +42,6 @@
         /* Sidebar must be fixed (shared.css already does this) */
         .sidebar {
             overflow: visible !important; /* let the toggle tab peek outside */
-            transition: width 0.35s cubic-bezier(.4,0,.2,1),
-                        padding 0.35s cubic-bezier(.4,0,.2,1);
         }
 
         /* Scrollable inner panel */
@@ -57,9 +55,21 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: opacity 0.25s ease, transform 0.35s cubic-bezier(.4,0,.2,1);
         }
         .sidebar-inner::-webkit-scrollbar { display: none; }
+
+        /* Chỉ animate khi người dùng chủ động bấm toggle kéo ra/vô — triệt tiêu giật lag khi chuyển trang */
+        body.sidebar-animating .sidebar {
+            transition: width 0.35s cubic-bezier(.4,0,.2,1),
+                        padding 0.35s cubic-bezier(.4,0,.2,1) !important;
+        }
+        body.sidebar-animating .sidebar-inner {
+            transition: opacity 0.25s ease, transform 0.35s cubic-bezier(.4,0,.2,1) !important;
+        }
+        body.sidebar-animating .main-wrapper {
+            transition: margin-left 0.35s cubic-bezier(.4,0,.2,1),
+                        width 0.35s cubic-bezier(.4,0,.2,1) !important;
+        }
 
         #smp-logo-canvas {
             position: relative;
@@ -134,19 +144,26 @@
         }
 
         /* ── Collapsed state ── */
-        .sidebar.collapsed {
+        .sidebar.collapsed,
+        html.sidebar-collapsed .sidebar {
             width: 0 !important;
             padding: 0 !important;
-            pointer-events: none; /* sidebar bị thu lại không click được */
+            pointer-events: none !important; /* sidebar bị thu lại không click được */
         }
         /* Nhưng nút toggle VẪN phải click được kể cả khi sidebar đóng */
-        .sidebar.collapsed .sidebar-toggle {
+        .sidebar.collapsed .sidebar-toggle,
+        html.sidebar-collapsed .sidebar .sidebar-toggle {
             pointer-events: auto !important;
         }
-        .sidebar.collapsed .sidebar-inner {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateX(-16px);
+        .sidebar.collapsed .sidebar-inner,
+        html.sidebar-collapsed .sidebar .sidebar-inner {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transform: translateX(-16px) !important;
+        }
+        html.sidebar-collapsed .main-wrapper {
+            margin-left: 0 !important;
+            width: 100% !important;
         }
 
         /* Mobile Floating Action Button for sidebar toggle */
@@ -158,8 +175,7 @@
 
         /* Shift main-wrapper to match sidebar width */
         .main-wrapper {
-            transition: margin-left 0.35s cubic-bezier(.4,0,.2,1),
-                        width 0.35s cubic-bezier(.4,0,.2,1);
+            margin-left: 0;
         }
 
         /* One-line socials */
@@ -301,9 +317,17 @@
     styleEl.textContent = TOGGLE_CSS;
     document.head.appendChild(styleEl);
 
+    const STORAGE_KEY  = 'smp-sidebar-collapsed';
+    const isInitialCollapsed = localStorage.getItem(STORAGE_KEY) === 'true';
+    if (isInitialCollapsed) {
+        document.documentElement.classList.add('sidebar-collapsed');
+    }
+    const initialSidebarClass = isInitialCollapsed ? 'sidebar collapsed' : 'sidebar';
+    const initialToggleIcon = isInitialCollapsed ? '&#x00BB;' : '&#x00AB;';
+
     // ── HTML templates ───────────────────────────────────────────────────────
     const SIDEBAR_HTML = `
-    <aside class="sidebar" id="main-sidebar">
+    <aside class="${initialSidebarClass}" id="main-sidebar">
         <div class="sidebar-inner">
             <a href="/demo.html" style="display: block; cursor: pointer; border: none; outline: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" title="Xem tính năng hệ sinh thái">
                 <img src="/core/image/image_49b1a4.png" alt="SMP Logo" class="sidebar-logo">
@@ -332,7 +356,7 @@
             </nav>
         </div>
         <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle sidebar" aria-label="Toggle sidebar">
-            <span class="toggle-icon">&#x00AB;</span>
+            <span class="toggle-icon">${initialToggleIcon}</span>
         </button>
     </aside>`;
 
@@ -445,12 +469,12 @@
 
         
         function setCollapsed(collapsed, animate) {
-            if (!animate) {
-                sidebar.style.transition = 'none';
-                if (wrapper) wrapper.style.transition = 'none';
+            if (animate) {
+                document.body.classList.add('sidebar-animating');
             }
 
             sidebar.classList.toggle('collapsed', collapsed);
+            document.documentElement.classList.toggle('sidebar-collapsed', collapsed);
 
             // Drive margin-left and width of .main-wrapper directly
             if (wrapper) {
@@ -469,30 +493,28 @@
 
             iconEl.innerHTML = collapsed ? '&#x00BB;' : '&#x00AB;';
 
-            localStorage.setItem(STORAGE_KEY, collapsed);
+            localStorage.setItem(STORAGE_KEY, collapsed ? 'true' : 'false');
 
-            if (!animate) {
-                requestAnimationFrame(() => {
-                    sidebar.style.transition = '';
-                    if (wrapper) wrapper.style.transition = '';
-                });
+            if (animate) {
+                setTimeout(() => {
+                    document.body.classList.remove('sidebar-animating');
+                }, 380);
             }
         }
 
-        // Restore state on load — no animation
+        // Restore state on load — không kích hoạt animation
         const savedCollapsed = localStorage.getItem(STORAGE_KEY) === 'true';
         setCollapsed(savedCollapsed, false);
 
         toggleBtn.addEventListener('click', function() {
-            setCollapsed(!sidebar.classList.contains('collapsed'), true);
+            const isCurrentlyCollapsed = document.documentElement.classList.contains('sidebar-collapsed') ||
+                                         sidebar.classList.contains('collapsed');
+            setCollapsed(!isCurrentlyCollapsed, true);
         });
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initSidebar);
-    } else {
-        initSidebar();
-    }
+    // Chạy initSidebar ngay lập tức sau khi inject, không đợi DOMContentLoaded để tránh giật giao diện
+    initSidebar();
 
 })();
 
