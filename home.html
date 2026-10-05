@@ -21,6 +21,7 @@
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="/core/css/shared.css?v=36">
+    <link rel="stylesheet" href="/core/css/mailbox.css">
     <style>
         /* Featured post hero */
         .featured-hero {
@@ -75,17 +76,337 @@
         }
         .featured-link:hover { background: var(--accent-gold); transform: translateX(3px); }
 
-        /* Daily Challenge on home */
+        /* Daily Challenge & Latest Posts 50/50 Layout */
         .home-challenge-row {
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 24px;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
             align-items: start;
         }
         .home-challenge-row > div {
             min-width: 0;
         }
-        @media (max-width: 900px) { .home-challenge-row { grid-template-columns: 1fr; } }
+        @media (max-width: 992px) {
+            .home-challenge-row {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+        }
+
+        .home-posts-column .card {
+            padding: 22px 24px;
+        }
+        .home-posts-column .card p {
+            margin-bottom: 14px;
+        }
+        .all-posts-link:hover {
+            color: var(--accent-gold) !important;
+            transform: translateX(4px);
+        }
+
+        /* Redesigned Daily Challenge Card */
+        .home-challenge-box .challenge-card {
+            padding: 26px 26px;
+            margin-bottom: 0;
+            background: linear-gradient(135deg, rgba(26,26,26,0.95), rgba(15,26,26,0.95));
+            border: 1px solid rgba(92,225,230,0.22);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+        .home-challenge-box .challenge-card::before {
+            content: '∑';
+            position: absolute;
+            right: 20px; top: 16px;
+            font-size: 4.5rem;
+            color: rgba(92,225,230,0.04);
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+            pointer-events: none;
+        }
+        .home-challenge-box .challenge-problem {
+            padding: 16px 18px;
+            margin-bottom: 18px;
+            font-size: 0.92rem;
+            line-height: 1.8;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-cyan);
+            border-radius: 0 8px 8px 0;
+            color: #ddd;
+        }
+        .home-challenge-box .challenge-problem p {
+            margin: 0;
+        }
+        .home-challenge-box .challenge-problem p + p {
+            margin-top: 10px;
+        }
+        .home-challenge-box .challenge-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .challenge-btn-submit {
+            border-color: var(--accent-pink, #ff69b4) !important;
+            color: var(--accent-pink, #ff69b4) !important;
+        }
+        .challenge-btn-submit:hover,
+        .challenge-btn-submit.active {
+            background: var(--accent-pink, #ff69b4) !important;
+            color: #111 !important;
+            box-shadow: 0 0 16px rgba(255, 105, 180, 0.35);
+        }
+        .home-challenge-box .challenge-answer {
+            margin-top: 16px;
+            background: rgba(92,225,230,0.06);
+            border: 1px solid rgba(92,225,230,0.25);
+            border-radius: 8px;
+            padding: 16px 18px;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #ddd;
+            overflow-x: auto;
+        }
+        body:not(.dark-mode) .home-challenge-box .challenge-answer {
+            background: rgba(92,225,230,0.08);
+            color: #1e293b;
+        }
+
+        /* Scoped Form Mailbox inside Home 50% Column */
+        .home-challenge-box .solution-mailbox {
+            margin-top: 18px;
+            padding: 20px 18px;
+            border-radius: 10px;
+            background: linear-gradient(145deg, rgba(255, 105, 180, 0.04), rgba(255, 20, 147, 0.015));
+            border: 1px solid rgba(255, 105, 180, 0.22);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+        .home-challenge-box .mailbox-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+        .home-challenge-box .mailbox-header-main {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .home-challenge-box .mailbox-icon {
+            font-size: 1.25rem;
+            color: var(--accent-pink, #ff69b4);
+            display: flex;
+            align-items: center;
+        }
+        .home-challenge-box .mailbox-title {
+            font-size: 1.2rem;
+            color: var(--accent-pink, #ff69b4);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        .mailbox-close-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            color: var(--accent-pink, #ff69b4);
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .mailbox-close-btn:hover {
+            background: var(--accent-pink, #ff69b4);
+            color: #111;
+        }
+        .home-challenge-box .mailbox-subtitle {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            padding-left: 0;
+            margin-bottom: 14px;
+            opacity: 0.82;
+        }
+        .home-challenge-box .mailbox-form {
+            gap: 12px;
+        }
+        .home-challenge-box .mailbox-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        @media (max-width: 600px) {
+            .home-challenge-box .mailbox-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .home-challenge-box .mailbox-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .home-challenge-box .mailbox-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.8px;
+            color: var(--accent-pink, #ff69b4);
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+        }
+        .home-challenge-box .mailbox-input,
+        .home-challenge-box .mailbox-select,
+        .home-challenge-box .mailbox-textarea {
+            padding: 8px 10px;
+            font-size: 0.86rem;
+            border-radius: 6px;
+            background: rgba(255, 105, 180, 0.03);
+            border: 1px solid rgba(255, 105, 180, 0.22);
+            color: var(--exam-text-color, #ddd);
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        body:not(.dark-mode) .home-challenge-box .mailbox-input,
+        body:not(.dark-mode) .home-challenge-box .mailbox-select,
+        body:not(.dark-mode) .home-challenge-box .mailbox-textarea {
+            background: rgba(255, 105, 180, 0.05);
+            color: #1e293b;
+        }
+        .home-challenge-box .mailbox-input:focus,
+        .home-challenge-box .mailbox-select:focus,
+        .home-challenge-box .mailbox-textarea:focus {
+            border-color: var(--accent-pink, #ff69b4);
+            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.15);
+        }
+        .home-challenge-box .mailbox-textarea {
+            min-height: 100px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            resize: vertical;
+        }
+        .home-challenge-box .mailbox-hint {
+            font-size: 0.72rem;
+            opacity: 0.7;
+        }
+        .home-challenge-box .latex-preview-wrap {
+            margin-top: 6px;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .home-challenge-box .latex-preview-toggle {
+            width: 100%;
+            background: rgba(255, 105, 180, 0.12);
+            color: var(--exam-text-color, #ddd);
+            border: none;
+            padding: 6px 10px;
+            text-align: left;
+            font-size: 0.74rem;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            transition: background 0.2s;
+        }
+        .home-challenge-box .latex-preview-toggle:hover {
+            background: rgba(255, 105, 180, 0.25);
+            color: #fff;
+        }
+        .home-challenge-box .latex-preview-box {
+            display: none;
+            padding: 10px 12px;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            background: #fff;
+            color: #111;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        .home-challenge-box .latex-preview-box.active {
+            display: block;
+        }
+        .home-challenge-box .mailbox-file-zone {
+            padding: 12px 10px;
+            border: 1.5px dashed rgba(255, 105, 180, 0.35);
+            border-radius: 8px;
+            background: rgba(255, 105, 180, 0.04);
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .home-challenge-box .mailbox-file-zone:hover {
+            border-color: var(--accent-pink, #ff69b4);
+            background: rgba(255, 105, 180, 0.08);
+        }
+        .home-challenge-box .mailbox-file-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .home-challenge-box .mailbox-file-icon {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+            display: inline-block;
+            opacity: 0.8;
+            color: var(--accent-pink, #ff69b4);
+        }
+        .home-challenge-box .mailbox-file-label {
+            font-size: 0.76rem;
+            margin: 0;
+            opacity: 0.88;
+        }
+        .home-challenge-box .mailbox-file-names {
+            margin-top: 6px;
+            font-size: 0.76rem;
+            color: var(--accent-pink, #ff69b4);
+            background: rgba(0,0,0,0.3);
+            padding: 6px 8px;
+            border-radius: 4px;
+            text-align: left;
+            display: none;
+        }
+        .home-challenge-box .mailbox-file-names:not(:empty) {
+            display: flex;
+        }
+        .home-challenge-box .mailbox-send-btn {
+            background: rgba(255, 105, 180, 0.15);
+            border: 1px solid var(--accent-pink, #ff69b4);
+            color: var(--accent-pink, #ff69b4);
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            padding: 9px 18px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.25s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+        .home-challenge-box .mailbox-send-btn:hover {
+            background: var(--accent-pink, #ff69b4);
+            color: #111;
+            box-shadow: 0 0 16px rgba(255, 105, 180, 0.35);
+        }
+        .home-challenge-box .mailbox-note {
+            font-size: 0.72rem;
+            color: var(--exam-text-color, #888);
+            opacity: 0.55;
+            font-style: italic;
+            margin: 3px 0 0 0;
+            text-align: center;
+        }
 
         /* Stats strip */
         .stats-strip {
@@ -375,129 +696,190 @@
                         <a href="/pages/roadmap.html" class="featured-link">Khám Phá Lộ Trình ↗</a>
                     </div>
 
-                    <div class="section-label">Bài Đăng Mới Nhất</div>
                     <div class="home-challenge-row">
-                        <div class="grid-container" style="grid-template-columns: 1fr; gap: 16px;">
-                            <div class="card fade-up">
-                                <div class="card-date">September 15, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>Hàm Phi Euler</h3>
-                                <p>Chuyên đề Hàm phi Euler: Định nghĩa, tính chất nhân tính, hệ thức Gauss và 14 bài toán chọn lọc nâng cao Olympic.</p>
-                                <a href="/posts/math/vmo/ham-phi-euler.html" class="card-link">READ MORE</a>
+                        <!-- Cột Trái: 5 Bài Đăng Mới Nhất -->
+                        <div class="home-posts-column">
+                            <div class="section-label">Bài Đăng Mới Nhất</div>
+                            <div class="grid-container" style="grid-template-columns: 1fr; gap: 16px;">
+                                <div class="card fade-up">
+                                    <div class="card-date">September 15, 2026</div>
+                                    <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
+                                    <h3>Hàm Phi Euler</h3>
+                                    <p>Chuyên đề Hàm phi Euler: Định nghĩa, tính chất nhân tính, hệ thức Gauss và 14 bài toán chọn lọc nâng cao Olympic.</p>
+                                    <a href="/posts/math/vmo/ham-phi-euler.html" class="card-link">READ MORE</a>
+                                </div>
+                                <div class="card fade-up">
+                                    <div class="card-date">September 3, 2026</div>
+                                    <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
+                                    <h3>Biến Đổi Đại Số Với Dãy Số</h3>
+                                    <p>Tuyển tập 7 bài toán đặc sắc về biến đổi đại số, dãy sai phân và tính chất số chính phương trong các kỳ thi học sinh giỏi.</p>
+                                    <a href="/posts/math/vmo/bien-doi-dai-so-voi-day-so.html" class="card-link">READ MORE</a>
+                                </div>
+                                <div class="card fade-up">
+                                    <div class="card-date">August 2, 2026</div>
+                                    <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
+                                    <h3>Problem Set 1 (Số Học)</h3>
+                                    <p>Bộ đề luyện tập tổng hợp gồm 15 bài toán Số học đa dạng từ đồng dư, phương trình nghiệm nguyên đến tính chất chia hết.</p>
+                                    <a href="/posts/math/vmo/problem-set-1.html" class="card-link">READ MORE</a>
+                                </div>
+                                <div class="card fade-up">
+                                    <div class="card-date">June 20, 2026</div>
+                                    <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
+                                    <h3>Bổ Đề Nâng Số Mũ (LTE)</h3>
+                                    <p>Chuyên đề Bổ đề nâng số mũ (Lifting The Exponent Lemma - LTE) và 19 bài toán rèn luyện phương trình mũ và chia hết.</p>
+                                    <a href="/posts/math/vmo/bo-de-nang-so-mu-lte.html" class="card-link">READ MORE</a>
+                                </div>
+                                <div class="card fade-up">
+                                    <div class="card-date">September 19, 2026</div>
+                                    <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
+                                    <h3>Tổng hợp Số Học TST Tỉnh 2026</h3>
+                                    <p>Tuyển tập và phân loại toàn bộ 43 bài toán Số học từ các kỳ thi chọn đội tuyển HSGQG (TST Tỉnh) năm học 2026-2027 trên cả nước.</p>
+                                    <a href="/posts/math/vmo/tong-hop-so-hoc-tst-tinh-2026.html" class="card-link">READ MORE</a>
+                                </div>
                             </div>
-                            <div class="card fade-up">
-                                <div class="card-date">September 3, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>Biến Đổi Đại Số Với Dãy Số</h3>
-                                <p>Tuyển tập 7 bài toán đặc sắc về biến đổi đại số, dãy sai phân và tính chất số chính phương trong các kỳ thi học sinh giỏi.</p>
-                                <a href="/posts/math/vmo/bien-doi-dai-so-voi-day-so.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">August 2, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>Problem Set 1 (Số Học)</h3>
-                                <p>Bộ đề luyện tập tổng hợp gồm 15 bài toán Số học đa dạng từ đồng dư, phương trình nghiệm nguyên đến tính chất chia hết.</p>
-                                <a href="/posts/math/vmo/problem-set-1.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">June 20, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>Bổ Đề Nâng Số Mũ (LTE)</h3>
-                                <p>Chuyên đề Bổ đề nâng số mũ (Lifting The Exponent Lemma - LTE) và 19 bài toán rèn luyện phương trình mũ và chia hết.</p>
-                                <a href="/posts/math/vmo/bo-de-nang-so-mu-lte.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">September 19, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>Tổng hợp Số Học TST Tỉnh 2026</h3>
-                                <p>Tuyển tập và phân loại toàn bộ 43 bài toán Số học từ các kỳ thi chọn đội tuyển HSGQG (TST Tỉnh) năm học 2026-2027 trên cả nước.</p>
-                                <a href="/posts/math/vmo/tong-hop-so-hoc-tst-tinh-2026.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">September 19, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>Tổng hợp Giải Tích & Dãy Số TST Tỉnh 2026</h3>
-                                <p>Tuyển tập và phân loại toàn bộ 29 bài toán Dãy số và Giải tích từ các kỳ thi chọn đội tuyển HSGQG (TST Tỉnh) năm học 2026-2027 trên cả nước.</p>
-                                <a href="/posts/math/vmo/tong-hop-day-so-tst-tinh-2026.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">September 19, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>Tổng hợp Hình Học TST Tỉnh 2026</h3>
-                                <p>Tuyển tập và phân loại toàn bộ 57 bài toán Hình học phẳng từ các kỳ thi chọn đội tuyển HSGQG (TST Tỉnh) năm học 2026-2027 trên cả nước.</p>
-                                <a href="/posts/math/vmo/tong-hop-hinh-hoc-tst-tinh-2026.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">September 19, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>Tổng hợp Tổ Hợp TST Tỉnh 2026</h3>
-                                <p>Tuyển tập và phân loại toàn bộ 42 bài toán Tổ hợp và Rời rạc từ các kỳ thi chọn đội tuyển HSGQG (TST Tỉnh) năm học 2026-2027 trên cả nước.</p>
-                                <a href="/posts/math/vmo/tong-hop-to-hop-tst-tinh-2026.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">September 19, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>Tổng hợp Đa Thức TST Tỉnh 2026</h3>
-                                <p>Tuyển tập và phân loại toàn bộ 25 bài toán Đa thức từ các kỳ thi chọn đội tuyển HSGQG (TST Tỉnh) năm học 2026-2027 trên cả nước.</p>
-                                <a href="/posts/math/vmo/tong-hop-da-thuc-tst-tinh-2026.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">September 19, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>Tổng hợp Phương Trình Hàm TST Tỉnh 2026</h3>
-                                <p>Tuyển tập và phân loại toàn bộ 25 bài toán Phương trình hàm từ các kỳ thi chọn đội tuyển HSGQG (TST Tỉnh) năm học 2026-2027 trên cả nước.</p>
-                                <a href="/posts/math/vmo/tong-hop-phuong-trinh-ham-tst-tinh-2026.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">September 19, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>Tổng hợp Bất Đẳng Thức TST Tỉnh 2026</h3>
-                                <p>Tuyển tập và phân loại toàn bộ 13 bài toán Bất đẳng thức và Cực trị từ các kỳ thi chọn đội tuyển HSGQG (TST Tỉnh) năm học 2026-2027 trên cả nước.</p>
-                                <a href="/posts/math/vmo/tong-hop-bat-dang-thuc-tst-tinh-2026.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">September 19, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>Tổng hợp Một số dạng Toán khác TST Tỉnh 2026</h3>
-                                <p>Tuyển tập và phân loại toàn bộ 2 bài toán Phương trình, Hệ phương trình và Hình học giải tích từ các kỳ thi chọn đội tuyển HSGQG (TST Tỉnh) năm học 2026-2027 trên cả nước.</p>
-                                <a href="/posts/math/vmo/tong-hop-toan-khac-tst-tinh-2026.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">September 19, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>[KHTN] Đề thi chọn đội tuyển thi HSGQG Trường THPT Chuyên KHTN năm 2026</h3>
-                                <p>Đề thi chọn đội tuyển dự thi học sinh giỏi quốc gia THPT môn Toán Trường THPT Chuyên KHTN năm học 2026-2027 gồm 12 câu hỏi qua 4 ngày thi.</p>
-                                <a href="/posts/math/vmo/khtn-hsgqg-2026.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">September 19, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>[Nghệ An] Đề thi chọn đội tuyển thi HSGQG tỉnh Nghệ An năm 2026</h3>
-                                <p>Đề thi chọn đội tuyển dự thi học sinh giỏi quốc gia THPT môn Toán tỉnh Nghệ An năm học 2026-2027 gồm 7 bài toán chia thành 2 ngày thi.</p>
-                                <a href="/posts/math/vmo/nghean-hsgqg-2026.html" class="card-link">READ MORE</a>
-                            </div>
-                            <div class="card fade-up">
-                                <div class="card-date">September 19, 2026</div>
-                                <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                <h3>[Thái Nguyên] Đề thi chọn đội tuyển thi HSGQG tỉnh Thái Nguyên năm 2026</h3>
-                                <p>Đề thi chọn đội tuyển học sinh giỏi dự thi quốc gia môn Toán tỉnh Thái Nguyên năm học 2026-2027 gồm 6 bài toán chính thức.</p>
-                                <a href="/posts/math/vmo/thainguyen-hsgqg-2026.html" class="card-link">READ MORE</a>
+                            <div style="margin-top: 16px; text-align: right;">
+                                <a href="/pages/toanhoc.html" class="all-posts-link" style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--accent-cyan); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; letter-spacing: 0.5px; transition: all 0.2s;">
+                                    Xem tất cả bài viết <span>→</span>
+                                </a>
                             </div>
                         </div>
 
-                        <div>
-                            <div class="challenge-card">
-                                <div class="challenge-badge">Câu Đố Trong Ngày</div>
-                                <h3>Bài Toán Số Học</h3>
-                                <div class="challenge-problem" id="challenge-problem">
-                                    Đang tải câu đố...
+                        <!-- Cột Phải: Câu Đố Trong Ngày -->
+                        <div class="home-challenge-box">
+                            <div class="section-label">Câu Đố Trong Ngày</div>
+                            <div class="challenge-card fade-up">
+                                <div class="challenge-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 8px;">
+                                    <div class="challenge-badge" style="margin-bottom: 0;">Câu Đố Trong Ngày</div>
+                                    <span class="challenge-level" style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent-gold); background: rgba(201,169,110,0.1); border: 1px solid rgba(201,169,110,0.25); padding: 3px 8px; border-radius: 4px; white-space: nowrap;">Olympic / VMO</span>
                                 </div>
-                                <button class="challenge-btn" id="show-answer-btn" onclick="toggleAnswer()">Xem Đáp Án</button>
-                                <div class="challenge-answer" id="challenge-answer"></div>
-                                <button class="challenge-btn" style="margin-top: 10px; border-color: var(--accent-gold); color: var(--accent-gold);" onclick="loadChallenge()">Câu Khác ↻</button>
+                                <h3 style="font-size: 1.25rem; margin-bottom: 14px; color: #fff; line-height: 1.4;">Ước Nguyên Tố Của Dãy Số</h3>
+                                <div class="challenge-problem" id="challenge-problem">
+                                    <p>Cho dãy số nguyên dương $(u_n)$ không là dãy hằng và thỏa mãn $(u_m - u_n)$ chia hết cho $(m - n)$, với mọi số nguyên dương $m, n$ phân biệt.</p>
+                                    <p style="margin-top: 10px; font-weight: 500; color: #e5e5e5;">
+                                        <strong>Chứng minh rằng:</strong> Tập hợp các số nguyên tố xuất hiện trong các phân tích thừa số nguyên tố của các số hạng của dãy số $(u_n)$ là vô hạn.
+                                    </p>
+                                </div>
+                                
+                                <div class="challenge-actions">
+                                    <button type="button" class="challenge-btn" id="show-answer-btn" onclick="toggleAnswer()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                        <span id="show-answer-text">Xem Lời Giải</span>
+                                    </button>
+                                    <button type="button" class="challenge-btn challenge-btn-submit" id="toggle-solution-btn" onclick="toggleSolutionForm()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px;"><path d="M12 5v14M5 12h14"/></svg>
+                                        <span id="toggle-solution-text">Thêm Lời Giải Mới</span>
+                                    </button>
+                                </div>
+
+                                <div class="challenge-answer" id="challenge-answer">
+                                    <div style="font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--accent-cyan); font-weight: 600; margin-bottom: 12px; border-bottom: 1px solid rgba(92,225,230,0.15); padding-bottom: 6px;">
+                                        Lời Giải Tham Khảo
+                                    </div>
+                                    <div style="line-height: 1.8; color: #ddd;">
+                                        <p>Giả sử chỉ có hữu hạn ước nguyên tố xuất hiện trong phân tích tiêu chuẩn của các số hạng của dãy \((u_n)\), đó là:</p>
+                                        \[
+                                        S = \{p_1, p_2, \ldots, p_s\}.
+                                        \]
+                                        <p>Trước hết ta viết \(u_1 = \prod_{i = 1}^s p_i^{\alpha_i}\), trong đó \(\alpha_i \in \mathbb{N}, \; \forall i = \overline{1, s}\). Đặt \(P = \prod_{i = 1}^s p_i^{\alpha_i + 1}\). Theo giả thiết bài toán:</p>
+                                        \[
+                                        P \mid (kP + 1) - 1 \mid u_{kP + 1} - u_1 \implies v_p(u_{kP + 1} - u_1) \ge v_p(P) = \alpha + 1,
+                                        \]
+                                        <p>trong đó \(p \in S\) và ứng với \(u_1\) có số mũ tương ứng là \(\alpha\), tức \(p^\alpha \parallel u_1 \implies p^{\alpha+1} \parallel P\). Giả sử \(v_p(u_{kP + 1}) \neq v_p(u_1)\), dẫn đến:</p>
+                                        \[
+                                        \alpha + 1 \le v_p(u_{kP + 1} - u_1) = \min\{v_p(u_{kP + 1}), v_p(u_1)\} \le v_p(u_1) \le \alpha.
+                                        \]
+                                        <p>Đây là một mâu thuẫn hiển nhiên.</p>
+                                        <p>Như vậy với mọi \(p \mid u_1 \implies v_p(u_{kP + 1}) = v_p(u_1)\), mà \(u_{kP + 1}\) cũng chỉ chứa các ước nguyên tố trong \(S\). Do đó:</p>
+                                        \[
+                                        u_{kP + 1} = u_1, \quad \forall k \in \mathbb{Z}^+.
+                                        \]
+                                        <p>Với mỗi chỉ số \(n\), xét:</p>
+                                        \[
+                                        kP + 1 - n \mid u_{kP + 1} - u_n = u_1 - u_n,
+                                        \]
+                                        <p>cho \(k \to +\infty\), ta buộc phải có \(u_n = u_1\). Nói cách khác \((u_n)\) là dãy hằng, mâu thuẫn với giả thiết ban đầu.</p>
+                                        <p>Vậy giả sử phản chứng là sai, suy ra tập hợp các số nguyên tố xuất hiện trong phân tích thừa số nguyên tố của các số hạng của dãy \((u_n)\) là vô hạn. $\blacksquare$</p>
+                                    </div>
+                                </div>
+
+                                <!-- Biểu mẫu Gửi Lời Giải Của Bạn (tinh chỉnh gọn gàng) -->
+                                <div id="solution-mailbox-wrap" style="display: none;">
+                                    <div class="solution-mailbox">
+                                        <div class="mailbox-header">
+                                            <div class="mailbox-header-main">
+                                                <div class="mailbox-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+                                                <div class="mailbox-title">Gửi Lời Giải Của Bạn</div>
+                                            </div>
+                                            <button type="button" class="mailbox-close-btn" onclick="toggleSolutionForm()" title="Đóng biểu mẫu">✕</button>
+                                        </div>
+                                        <p class="mailbox-subtitle">
+                                            Nếu bạn có lời giải cho câu đố này hoặc cách tiếp cận mới, hãy gửi cho chúng tôi — lời giải sẽ được <em>đăng lên hệ thống</em> và ghi nhận đóng góp của bạn!
+                                        </p>
+
+                                        <div class="mailbox-form" id="solution-form">
+                                            <div class="mailbox-row">
+                                                <div class="mailbox-field">
+                                                    <label class="mailbox-label" for="sol-name">Họ &amp; Tên <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
+                                                    <input type="text" id="sol-name" class="mailbox-input" placeholder="Nguyễn Văn A...">
+                                                </div>
+                                                <div class="mailbox-field">
+                                                    <label class="mailbox-label" for="sol-contact">Email <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
+                                                    <input type="text" id="sol-contact" class="mailbox-input" placeholder="Nhập địa chỉ email...">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mailbox-row">
+                                                <div class="mailbox-field">
+                                                    <label class="mailbox-label" for="sol-problem">Bài toán <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
+                                                    <select id="sol-problem" class="mailbox-input mailbox-select">
+                                                        <option value="Câu đố trong ngày: Ước nguyên tố của dãy số" selected>Câu đố trong ngày: Ước nguyên tố của dãy số</option>
+                                                        <option value="Đóng góp câu đố mới">Đóng góp câu đố mới</option>
+                                                        <option value="Đóng góp bài toán khác">Đóng góp bài toán khác</option>
+                                                        <option value="" style="display:none;"></option>
+                                                    </select>
+                                                </div>
+                                                <div class="mailbox-field">
+                                                    <label class="mailbox-label" for="sol-fb">Facebook / Nickname <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
+                                                    <input type="text" id="sol-fb" class="mailbox-input" placeholder="Tên hiển thị trên web...">
+                                                </div>
+                                            </div>
+
+                                            <div class="mailbox-field">
+                                                <label class="mailbox-label" for="sol-content">Nội dung lời giải <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
+                                                <textarea id="sol-content" class="mailbox-textarea"
+                                                    placeholder="Viết lời giải của bạn tại đây. Hỗ trợ gõ LaTeX như $x^2 + y^2 = z^2$ hoặc \[ \sum_{k=1}^n k = \frac{n(n+1)}{2} \]..."></textarea>
+                                                <span class="mailbox-hint">Hỗ trợ LaTeX inline <code>$ ... $</code> và display <code>\[ ... \]</code></span>
+                                                <div class="latex-preview-wrap">
+                                                    <button type="button" class="latex-preview-toggle" id="preview-toggle" onclick="togglePreview()">▶ Xem preview LaTeX</button>
+                                                    <div class="latex-preview-box" id="latex-preview">
+                                                        <span class="latex-preview-empty">Bắt đầu gõ để xem preview...</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mailbox-field">
+                                                <label class="mailbox-label">Đính kèm ảnh / tài liệu (tuỳ chọn)</label>
+                                                <div class="mailbox-file-zone" id="file-drop-zone">
+                                                    <input type="file" id="sol-images" accept="image/*,.pdf" multiple>
+                                                    <span class="mailbox-file-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-bottom: 2px;"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span>
+                                                    <p class="mailbox-file-label"><strong>Nhấn để chọn file</strong> hoặc kéo &amp; thả vào đây</p>
+                                                    <p class="mailbox-file-label" style="margin-top:2px; font-size:0.75rem; opacity: 0.7;">Hỗ trợ ảnh (PNG, JPG...) và PDF</p>
+                                                    <div class="mailbox-file-names" id="file-names"></div>
+                                                </div>
+                                            </div>
+
+                                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                                <button type="button" class="mailbox-send-btn" id="sol-send-btn" onclick="sendSolution()">
+                                                    <span id="sol-submit-icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+                                                    <span id="sol-submit-text">Gửi Lời Giải (Đính Kèm Tự Động)</span>
+                                                </button>
+                                            </div>
+                                            <p class="mailbox-note">Lời giải và toàn bộ file đính kèm sẽ được nén và đẩy thẳng đến tác giả!</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
                     </div>
 
                 </div>
@@ -521,71 +903,52 @@
     <script src="/core/js/sidebar-data.js?v=36"></script>
     <script src="/core/js/layout.js?v=36"></script>
     <script src="/core/js/shared.js?v=36"></script>
+    <script src="/core/js/mailbox.js"></script>
     <script>
-        // === DAILY CHALLENGE DATA ===
-        const CHALLENGES = [
-            {
-                problem: 'Tìm tất cả các số nguyên dương $n$ sao cho $n^2 + 3n + 2$ chia hết cho $n + 1$.',
-                answer: 'Vì $n^2 + 3n + 2 = (n+1)(n+2)$, biểu thức này luôn chia hết cho $(n+1)$ với mọi $n \\in \\mathbb{Z}^+$. Vậy đáp án là mọi số nguyên dương $n$.'
-            },
-            {
-                problem: 'Cho $p$ là số nguyên tố. Chứng minh rằng $p^2 - 1$ chia hết cho 24 với mọi $p > 3$.',
-                answer: '$p^2 - 1 = (p-1)(p+1)$. Vì $p > 3$ là số nguyên tố, $p$ lẻ và không chia hết cho 3. Khi đó $(p-1), p, (p+1)$ là 3 số liên tiếp nên $(p-1)(p+1)$ chia hết cho 8 (hai số chẵn liên tiếp) và chia hết cho 3. Do đó chia hết cho 24.'
-            },
-            {
-                problem: 'Tìm tất cả số nguyên tố $p$ sao cho $p^2 + 2$ cũng là số nguyên tố.',
-                answer: 'Thử $p = 3$: $3^2 + 2 = 11$ là số nguyên tố ✓. Với $p \\neq 3$, $p \\equiv 1$ hoặc $2 \\pmod{3}$, suy ra $p^2 \\equiv 1 \\pmod{3}$, nên $p^2 + 2 \\equiv 0 \\pmod{3}$. Vậy $p^2 + 2$ chia hết cho 3 và lớn hơn 3, không là số nguyên tố. Đáp án duy nhất: $p = 3$.'
-            },
-            {
-                problem: 'Có bao nhiêu cặp số nguyên $(x, y)$ thỏa mãn $x^2 - y^2 = 2026$?',
-                answer: '$x^2 - y^2 = (x+y)(x-y) = 2026 = 2 \\times 1013$. Vì $1013$ là số nguyên tố, $2026 = 1 \\times 2026 = 2 \\times 1013$. Hai nhân tử cùng tính chẵn lẻ. Trường hợp $2 \\times 1013$: $x+y = 1013, x-y = 2$ cho $x = 507.5$ (loại). Không có nghiệm nguyên. Đáp án: $\\mathbf{0}$ cặp.'
-            },
-            {
-                problem: 'Cho dãy số Fibonacci: $F_1=1, F_2=1, F_{n+2}=F_n+F_{n+1}$. Chứng minh $\\gcd(F_m, F_n) = F_{\\gcd(m,n)}$.',
-                answer: 'Bổ đề: $\\gcd(F_m, F_n) = F_{\\gcd(m,n)}$. Dùng tính chất: $F_{m+n} = F_m F_{n+1} + F_{m-1} F_n$. Từ đó suy ra $\\gcd(F_m, F_n) = \\gcd(F_m, F_{n-m}) = \\ldots = \\gcd(F_{\\gcd(m,n)}, F_0) = F_{\\gcd(m,n)}$.'
-            }
-        ];
-
-        let currentChallenge = 0;
+        // === DAILY CHALLENGE INTERACTION ===
         let answerVisible = false;
-
-        function loadChallenge() {
-            const el = document.getElementById('challenge-problem');
-            if (!el) return;
-            currentChallenge = Math.floor(Math.random() * CHALLENGES.length);
-            const ch = CHALLENGES[currentChallenge];
-            el.innerHTML = ch.problem;
-            const ans = document.getElementById('challenge-answer');
-            if (ans) { ans.innerHTML = ''; ans.classList.remove('show'); }
-            const btn = document.getElementById('show-answer-btn');
-            if (btn) btn.textContent = 'Xem Đáp Án';
-            answerVisible = false;
-            if (window.MathJax && window.MathJax.startup && window.MathJax.startup.promise) {
-                MathJax.startup.promise.then(() => MathJax.typesetPromise());
-            }
-        }
 
         function toggleAnswer() {
             const ans = document.getElementById('challenge-answer');
+            const btnText = document.getElementById('show-answer-text');
             const btn = document.getElementById('show-answer-btn');
-            if (!ans || !btn) return;
-            if (answerVisible) {
-                ans.classList.remove('show');
-                btn.textContent = 'Xem Đáp Án';
-            } else {
-                ans.innerHTML = CHALLENGES[currentChallenge].answer;
-                ans.classList.add('show');
-                btn.textContent = 'Ẩn Đáp Án';
-                if (window.MathJax && window.MathJax.startup && window.MathJax.startup.promise) {
-                    MathJax.startup.promise.then(() => MathJax.typesetPromise([ans]));
-                }
-            }
+            if (!ans) return;
+            
             answerVisible = !answerVisible;
+            if (answerVisible) {
+                ans.classList.add('show');
+                if (btnText) btnText.textContent = 'Ẩn Lời Giải';
+                if (btn) btn.classList.add('active');
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                    MathJax.typesetPromise([ans]).catch(e => console.warn('MathJax:', e));
+                }
+            } else {
+                ans.classList.remove('show');
+                if (btnText) btnText.textContent = 'Xem Lời Giải';
+                if (btn) btn.classList.remove('active');
+            }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadChallenge();
-        });
+        function toggleSolutionForm() {
+            const box = document.getElementById('solution-mailbox-wrap');
+            const btn = document.getElementById('toggle-solution-btn');
+            const btnText = document.getElementById('toggle-solution-text');
+            if (!box) return;
+            
+            const isHidden = window.getComputedStyle(box).display === 'none';
+            if (isHidden) {
+                box.style.display = 'block';
+                if (btnText) btnText.textContent = 'Đóng Biểu Mẫu';
+                if (btn) btn.classList.add('active');
+                setTimeout(() => {
+                    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 50);
+            } else {
+                box.style.display = 'none';
+                if (btnText) btnText.textContent = 'Thêm Lời Giải Mới';
+                if (btn) btn.classList.remove('active');
+            }
+        }
     </script>
 </body>
 </html>
