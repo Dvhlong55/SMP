@@ -34,18 +34,15 @@
     function renderTile(st, tile, idx) {
         const code = `${st.label || st.id}.${idx + 1}`;
         const ready = !!tile.url;
-        const kind = tile.kind ? `<span class="rm-kind">${esc(tile.kind)}</span>` : '';
-        const count = tile.count ? `<span class="rm-count">${tile.count} bài</span>` : '<span class="rm-count"></span>';
 
         const foot = ready
-            ? `${count}<a href="${esc(tile.url)}" class="card-link rm-tile-link" aria-label="Đọc bài: ${esc(tile.title.replace(/\$/g, ''))}">Đọc bài</a>`
+            ? `<a href="${esc(tile.url)}" class="card-link rm-tile-link" aria-label="Đọc bài: ${esc(tile.title.replace(/\$/g, ''))}">Đọc bài</a>`
             : `<span class="rm-soon-badge">Đang cập nhật</span>`;
 
         return `
             <article class="rm-tile rm-reveal ${ready ? 'is-ready' : 'is-soon'}" ${ready ? '' : 'aria-disabled="true"'}>
                 <div class="rm-tile-top">
                     <span class="rm-tile-code">${esc(code)}</span>
-                    ${kind}
                 </div>
                 <h4>${tile.title}</h4>
                 <p>${tile.desc || ''}</p>
@@ -71,10 +68,8 @@
                         <span class="rm-status ${status.soon ? 'is-soon' : ''}">${status.text}</span>
                     </div>
                     <h3>${st.title}</h3>
-                    <p>${st.desc || ''}</p>
                     <div class="rm-progress">
                         <div class="rm-progress-bar"><span data-w="${Math.round(stats.ratio * 100)}"></span></div>
-                        <small>${stats.ready}/${stats.total} bài đã có</small>
                     </div>
                 </header>
                 <div class="rm-tiles">
@@ -115,7 +110,7 @@
                     <div class="rm-hero-text">
                         <div class="rm-kicker">VMO · Số Học</div>
                         <h2 class="rm-title">${esc(data.title || 'Lộ trình')}</h2>
-                        <p class="rm-subtitle">${data.subtitle || ''}</p>
+                        ${data.subtitle ? `<p class="rm-subtitle">${data.subtitle}</p>` : ''}
                     </div>
                     <div class="rm-ring" role="img" aria-label="Đã có ${readyTiles}/${totalTiles} chủ đề">
                         <svg viewBox="0 0 132 132">
@@ -133,12 +128,6 @@
                         </svg>
                         <div class="rm-ring-label"><b>${pct}%</b><small>hoàn thiện</small></div>
                     </div>
-                </div>
-                <div class="rm-stats">
-                    <span class="rm-stat"><b>${mainStations}</b> chuyên đề</span>
-                    <span class="rm-stat"><i></i><b>${readyTiles}</b> bài viết đã có</span>
-                    <span class="rm-stat is-soon"><i></i><b>${soonTiles}</b> chủ đề đang cập nhật</span>
-                    ${problemCount ? `<span class="rm-stat"><b>${problemCount}+</b> bài tập</span>` : ''}
                 </div>
                 <nav class="rm-index" aria-label="Mục lục lộ trình">
                     ${stations.map((st, i) => {
