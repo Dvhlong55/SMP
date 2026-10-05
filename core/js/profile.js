@@ -152,15 +152,9 @@ function calculateStreak(activities) {
     document.getElementById('stat-streak').textContent = streak;
 }
 
-window.toggleProfileTheme = async function() {
+window.toggleProfileTheme = function(evt) {
     if (window.DarkMode) {
-        window.DarkMode.toggle();
-        const isDark = document.body.classList.contains('dark-mode');
-        const themeToggleBtn = document.getElementById('profile-dark-toggle');
-        if (themeToggleBtn) {
-            themeToggleBtn.textContent = isDark ? '☀ Chuyển chế độ sáng' : '☽ Chuyển chế độ tối';
-        }
-        await updateThemePreference(isDark ? 'dark' : 'light');
+        window.DarkMode.toggle(evt);
     }
 };
 

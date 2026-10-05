@@ -30,7 +30,7 @@
 }
 
 /* DARK MODE */
-html.dark-mode, html.dark-mode-pre, body.dark-mode {
+html.dark-mode, body.dark-mode {
     --sidebar-bg: #111111;
     --sidebar-text: #e8e8e8;
     --sidebar-title: #ffffff;
@@ -48,12 +48,12 @@ html.dark-mode, html.dark-mode-pre, body.dark-mode {
     --shadow-hover: 0 12px 40px rgba(0,0,0,0.5);
 }
 
-html.dark-mode, html.dark-mode-pre {
+html.dark-mode {
     background-color: #141414;
     color: #e8e8e8;
 }
 
-html.dark-mode body, html.dark-mode-pre body {
+html.dark-mode body {
     background-color: #141414;
     color: #e8e8e8;
 }

@@ -1,7 +1,6 @@
 // Áp dụng ngay lập tức trước khi parse/render để triệt tiêu chớp nháy trắng
 if (localStorage.getItem('smp-dark-mode') === 'true') {
     document.documentElement.classList.add('dark-mode');
-    document.documentElement.classList.add('dark-mode-pre');
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -185,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const scriptsToLoad = [
         depthPrefix + "core/js/sidebar-data.js?v=35",
         depthPrefix + "core/js/layout.js?v=35",
-        depthPrefix + "core/js/shared.js?v=37",
+        depthPrefix + "core/js/shared.js?v=38",
         depthPrefix + "core/js/saved.js?v=35",
         depthPrefix + "core/js/comment.js?v=35"
     ];

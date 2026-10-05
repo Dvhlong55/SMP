@@ -9,13 +9,13 @@ var API_BASE = 'https://smp-backend-kcwn.onrender.com';
 (function() {
     if (localStorage.getItem('smp-dark-mode') === 'true') {
         document.documentElement.classList.add('dark-mode');
-        document.documentElement.classList.add('dark-mode-pre');
         if (document.body) {
             document.body.classList.add('dark-mode');
         } else {
             document.addEventListener('DOMContentLoaded', function() {
-                document.body.classList.add('dark-mode');
-                document.documentElement.classList.remove('dark-mode-pre');
+                if (localStorage.getItem('smp-dark-mode') === 'true') {
+                    document.body.classList.add('dark-mode');
+                }
             }, { once: true });
         }
     }
@@ -32,7 +32,7 @@ window.DarkMode = {
     },
     enable(save = true) {
         document.documentElement.classList.add('dark-mode');
-        document.body.classList.add('dark-mode');
+        if (document.body) document.body.classList.add('dark-mode');
         if (save) {
             localStorage.setItem('smp-dark-mode', 'true');
             this.syncRemoteTheme('dark');
@@ -41,7 +41,11 @@ window.DarkMode = {
     },
     disable(save = true) {
         document.documentElement.classList.remove('dark-mode');
-        document.body.classList.remove('dark-mode');
+        document.documentElement.classList.remove('dark-mode-pre');
+        if (document.body) {
+            document.body.classList.remove('dark-mode');
+            document.body.classList.remove('dark-mode-pre');
+        }
         if (save) {
             localStorage.setItem('smp-dark-mode', 'false');
             this.syncRemoteTheme('light');
@@ -66,7 +70,9 @@ window.DarkMode = {
         }
     },
     toggle(evt) {
-        const goDark = !document.body.classList.contains('dark-mode');
+        const isCurrentDark = document.documentElement.classList.contains('dark-mode') || 
+                              (document.body && document.body.classList.contains('dark-mode'));
+        const goDark = !isCurrentDark;
         const apply = () => { if (goDark) this.enable(); else this.disable(); };
         const root = document.documentElement;
 
@@ -74,7 +80,7 @@ window.DarkMode = {
 
         const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // Fallback: đổi tức thì, tắt transition để không bị giật
+        // Fallback: đổi tức thì nếu không hỗ trợ view transition hoặc prefers-reduced-motion
         if (!document.startViewTransition || reduceMotion) {
             root.classList.add('theme-switching');
             apply();
@@ -82,25 +88,43 @@ window.DarkMode = {
             return;
         }
 
-        // Tâm làn sóng: vị trí nút bấm (hoặc góc trên phải nếu không có event)
-        let x = window.innerWidth - 40, y = 40;
+        // Tâm làn sóng: vị trí click chuột hoặc tâm của nút bấm
+        let x = window.innerWidth / 2, y = window.innerHeight / 2;
         if (evt && typeof evt.clientX === 'number' && (evt.clientX || evt.clientY)) {
             x = evt.clientX; y = evt.clientY;
         } else if (evt && evt.currentTarget && evt.currentTarget.getBoundingClientRect) {
             const r = evt.currentTarget.getBoundingClientRect();
             x = r.left + r.width / 2; y = r.top + r.height / 2;
+        } else {
+            const btn = document.getElementById('profile-dark-toggle') || document.getElementById('dark-toggle');
+            if (btn) {
+                const r = btn.getBoundingClientRect();
+                x = r.left + r.width / 2; y = r.top + r.height / 2;
+            }
         }
         const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
 
         root.classList.add('theme-switching');
-        const transition = document.startViewTransition(apply);
-        transition.ready.then(() => {
-            root.animate(
-                { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
-                { duration: 650, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', pseudoElement: '::view-transition-new(root)' }
-            );
-        }).catch(() => {});
-        transition.finished.finally(() => root.classList.remove('theme-switching'));
+        try {
+            const transition = document.startViewTransition(apply);
+            transition.ready.then(() => {
+                const anim = root.animate(
+                    { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+                    { duration: 550, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', pseudoElement: '::view-transition-new(root)' }
+                );
+                anim.addEventListener('finish', () => {
+                    root.classList.remove('theme-switching');
+                });
+            }).catch(() => {
+                // Nếu Web Animations API trên pseudo-element gặp lỗi, hủy transition ngay để hiển thị DOM thật
+                if (transition.skipTransition) transition.skipTransition();
+                root.classList.remove('theme-switching');
+            });
+            transition.finished.finally(() => root.classList.remove('theme-switching'));
+        } catch (e) {
+            apply();
+            root.classList.remove('theme-switching');
+        }
     },
     injectTransitionStyles() {
         if (document.getElementById('smp-theme-transition-css')) return;
@@ -123,7 +147,8 @@ window.DarkMode = {
         if (btn) btn.textContent = text;
         const profileBtn = document.getElementById('profile-dark-toggle');
         if (profileBtn) {
-            const isDark = document.body.classList.contains('dark-mode') || document.documentElement.classList.contains('dark-mode');
+            const isDark = document.documentElement.classList.contains('dark-mode') || 
+                           (document.body && document.body.classList.contains('dark-mode'));
             profileBtn.textContent = isDark ? '☀ Chuyển chế độ sáng' : '☽ Chuyển chế độ tối';
         }
     },
@@ -131,7 +156,12 @@ window.DarkMode = {
         const btn = document.getElementById('dark-toggle');
         if (btn) {
             btn.addEventListener('click', (e) => this.toggle(e));
-            this.updateBtn(document.body.classList.contains('dark-mode') ? '☀ Sáng' : '☽ Tối');
+        }
+        const profileBtn = document.getElementById('profile-dark-toggle');
+        if (profileBtn) {
+            const isDark = document.documentElement.classList.contains('dark-mode') || 
+                           (document.body && document.body.classList.contains('dark-mode'));
+            profileBtn.textContent = isDark ? '☀ Chuyển chế độ sáng' : '☽ Chuyển chế độ tối';
         }
     }
 };
