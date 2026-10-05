@@ -23,17 +23,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('stat-points').textContent = user.points || 0;
             
             // Set theme toggle button
+            // Set theme toggle button based on current active state
             const themeToggleBtn = document.getElementById('profile-dark-toggle');
             if (themeToggleBtn) {
-                const theme = user.theme_preference || 'light';
-                if (window.DarkMode) {
-                    if (theme === 'dark') {
-                        window.DarkMode.enable(false);
-                        themeToggleBtn.textContent = '☀ Chuyển chế độ sáng';
-                    } else {
-                        window.DarkMode.disable(false);
-                        themeToggleBtn.textContent = '☽ Chuyển chế độ tối';
+                const isDark = document.body.classList.contains('dark-mode') || 
+                               document.documentElement.classList.contains('dark-mode') || 
+                               localStorage.getItem('smp-dark-mode') === 'true';
+                themeToggleBtn.textContent = isDark ? '☀ Chuyển chế độ sáng' : '☽ Chuyển chế độ tối';
+
+                const localTheme = localStorage.getItem('smp-dark-mode');
+                if (localTheme === null && user.theme_preference) {
+                    if (window.DarkMode) {
+                        if (user.theme_preference === 'dark') window.DarkMode.enable(true);
+                        else window.DarkMode.disable(true);
                     }
+                } else if (localTheme !== null && user.theme_preference !== (isDark ? 'dark' : 'light')) {
+                    updateThemePreference(isDark ? 'dark' : 'light');
                 }
             }
         }

@@ -19,8 +19,9 @@
             }
         };
     </script>
+    <script>if(localStorage.getItem('smp-dark-mode')==='true')document.documentElement.classList.add('dark-mode');</script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="stylesheet" href="/core/css/shared.css?v=36">
+    <link rel="stylesheet" href="/core/css/shared.css?v=38">
     <link rel="stylesheet" href="/core/css/mailbox.css">
     <style>
         /* Featured post hero */
@@ -640,7 +641,7 @@
         </div>
         <style>
             #smp-splash-screen { background: #fafaf8; }
-            html.dark-mode-pre #smp-splash-screen, body.dark-mode #smp-splash-screen { background: #121212 !important; }
+            html.dark-mode #smp-splash-screen, html.dark-mode-pre #smp-splash-screen, body.dark-mode #smp-splash-screen { background: #121212 !important; }
             @keyframes pulseLogo {
                 0%, 100% { transform: scale(0.98); opacity: 0.95; }
                 50% { transform: scale(1.02); opacity: 1; }

@@ -1,3 +1,9 @@
+// Áp dụng ngay lập tức trước khi parse/render để triệt tiêu chớp nháy trắng
+if (localStorage.getItem('smp-dark-mode') === 'true') {
+    document.documentElement.classList.add('dark-mode');
+    document.documentElement.classList.add('dark-mode-pre');
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     // 1. Get configurations from meta tags
     const postIdMeta = document.querySelector('meta[name="post-id"]');

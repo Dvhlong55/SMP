@@ -11,7 +11,9 @@
     <meta name="apple-mobile-web-app-title" content="SMP">
     <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
     <title>SMP — Về Tôi</title>
-    <link rel="stylesheet" href="/core/css/shared.css?v=36">
+    <!-- Early Dark Mode Apply -->
+    <script>if(localStorage.getItem('smp-dark-mode')==='true')document.documentElement.classList.add('dark-mode');</script>
+    <link rel="stylesheet" href="/core/css/shared.css?v=38">
     <style>
         .profile-container {
             background: var(--card-bg);

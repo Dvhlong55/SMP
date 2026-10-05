@@ -5,15 +5,19 @@
 
 var API_BASE = 'https://smp-backend-kcwn.onrender.com';
 
-// === EARLY DARK MODE APPLY (trước DOMContentLoaded để tránh flash màu sai) ===
-// Áp class ngay khi script được parse, không cần đợi DOM ready
+// === EARLY DARK MODE APPLY (áp dụng ngay lập tức trước bất kì render nào) ===
 (function() {
     if (localStorage.getItem('smp-dark-mode') === 'true') {
+        document.documentElement.classList.add('dark-mode');
         document.documentElement.classList.add('dark-mode-pre');
-        document.addEventListener('DOMContentLoaded', function() {
+        if (document.body) {
             document.body.classList.add('dark-mode');
-            document.documentElement.classList.remove('dark-mode-pre');
-        }, { once: true });
+        } else {
+            document.addEventListener('DOMContentLoaded', function() {
+                document.body.classList.add('dark-mode');
+                document.documentElement.classList.remove('dark-mode-pre');
+            }, { once: true });
+        }
     }
 })();
 
@@ -23,18 +27,43 @@ window.DarkMode = {
         const saved = localStorage.getItem('smp-dark-mode');
         if (saved === 'true') this.enable(false);
         else if (saved === 'false') this.disable(false);
-        else this.disable(false); // explicitly default to light mode
+        else this.disable(false); // mặc định sáng
         this.bindToggle();
     },
     enable(save = true) {
+        document.documentElement.classList.add('dark-mode');
         document.body.classList.add('dark-mode');
-        if (save) localStorage.setItem('smp-dark-mode', 'true');
+        if (save) {
+            localStorage.setItem('smp-dark-mode', 'true');
+            this.syncRemoteTheme('dark');
+        }
         this.updateBtn('☀ Sáng');
     },
     disable(save = true) {
+        document.documentElement.classList.remove('dark-mode');
         document.body.classList.remove('dark-mode');
-        if (save) localStorage.setItem('smp-dark-mode', 'false');
+        if (save) {
+            localStorage.setItem('smp-dark-mode', 'false');
+            this.syncRemoteTheme('light');
+        }
         this.updateBtn('☽ Tối');
+    },
+    async syncRemoteTheme(theme) {
+        const token = localStorage.getItem('smp_access_token');
+        if (!token) return;
+        const apiBase = window.API_BASE || 'https://smp-backend-kcwn.onrender.com';
+        try {
+            await fetch(`${apiBase}/api/activity/settings/theme`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ theme })
+            });
+        } catch (e) {
+            // Không chặn giao diện nếu lỗi mạng
+        }
     },
     toggle(evt) {
         const goDark = !document.body.classList.contains('dark-mode');
@@ -92,6 +121,11 @@ window.DarkMode = {
     updateBtn(text) {
         const btn = document.getElementById('dark-toggle');
         if (btn) btn.textContent = text;
+        const profileBtn = document.getElementById('profile-dark-toggle');
+        if (profileBtn) {
+            const isDark = document.body.classList.contains('dark-mode') || document.documentElement.classList.contains('dark-mode');
+            profileBtn.textContent = isDark ? '☀ Chuyển chế độ sáng' : '☽ Chuyển chế độ tối';
+        }
     },
     bindToggle() {
         const btn = document.getElementById('dark-toggle');
