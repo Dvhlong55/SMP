@@ -229,7 +229,21 @@ Kết hợp suy ra:
         }
     });
 
-    // Tự động load mẫu ban đầu để giao diện trực quan ngay khi mở
+    function renderStatsStrip() {
+        const stats = document.querySelector('.stats-strip');
+        if (stats && typeof renderMathInElement === 'function') {
+            renderMathInElement(stats, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false }
+                ],
+                throwOnError: false
+            });
+        }
+    }
+
+    // Tự động render ký hiệu toán thanh thống kê và load mẫu ban đầu
+    renderStatsStrip();
     loadUserSample();
 
 })();
