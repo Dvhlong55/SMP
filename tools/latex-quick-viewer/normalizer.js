@@ -406,21 +406,22 @@
         s = s.replace(/\blim\s+([a-zA-Z0-9_]+(?:\([a-zA-Z0-9_]+\))?)/g, '\\lim $1');
 
         // 7. Hàm lượng giác & chữ Hy Lạp
-        s = s.replace(/\b(?:sin|Sin)\s*([A-Za-z0-9_']*)/g, '\\sin $1');
-        s = s.replace(/\b(?:cos|Cos)\s*([A-Za-z0-9_']*)/g, '\\cos $1');
-        s = s.replace(/\b(?:tan|Tan)\s*([A-Za-z0-9_']*)/g, '\\tan $1');
-        s = s.replace(/\b(?:cot|Cot)\s*([A-Za-z0-9_']*)/g, '\\cot $1');
+        s = s.replace(/(?<!\\)\b(?:sin|Sin)\s*([A-Za-z0-9_']*)/g, '\\sin $1');
+        s = s.replace(/(?<!\\)\b(?:cos|Cos)\s*([A-Za-z0-9_']*)/g, '\\cos $1');
+        s = s.replace(/(?<!\\)\b(?:tan|Tan)\s*([A-Za-z0-9_']*)/g, '\\tan $1');
+        s = s.replace(/(?<!\\)\b(?:cot|Cot)\s*([A-Za-z0-9_']*)/g, '\\cot $1');
 
-        s = s.replace(/\b(?:pi|Pi)\b/g, '\\pi');
-        s = s.replace(/\b(?:phi|Phi)\b/g, '\\phi');
-        s = s.replace(/\b(?:alpha|Alpha)\b/g, '\\alpha');
-        s = s.replace(/\b(?:beta|Beta)\b/g, '\\beta');
-        s = s.replace(/\b(?:gamma|Gamma)\b/g, '\\gamma');
-        s = s.replace(/\b(?:delta|Delta)\b/g, '\\delta');
-        s = s.replace(/\b(?:theta|Theta)\b/g, '\\theta');
-        s = s.replace(/\b(?:lambda|Lambda)\b/g, '\\lambda');
-        s = s.replace(/\b(?:sigma|Sigma)\b/g, '\\sigma');
-        s = s.replace(/\b(?:omega|Omega)\b/g, '\\omega');
+        s = s.replace(/(?<!\\)\b(?:pi|Pi)\b/g, '\\pi');
+        s = s.replace(/(?<!\\)\b(?:phi|Phi)\b/g, '\\phi');
+        s = s.replace(/(?<!\\)\b(?:alpha|Alpha)\b/g, '\\alpha');
+        s = s.replace(/(?<!\\)\b(?:beta|Beta)\b/g, '\\beta');
+        s = s.replace(/(?<!\\)\b(?:gamma|Gamma)\b/g, '\\gamma');
+        s = s.replace(/(?<!\\)\b(?:delta|Delta)\b/g, '\\delta');
+        s = s.replace(/(?<!\\)\b(?:theta|Theta)\b/g, '\\theta');
+        s = s.replace(/(?<!\\)\b(?:lambda|Lambda)\b/g, '\\lambda');
+        s = s.replace(/(?<!\\)\b(?:sigma)\b/g, '\\sigma');
+        s = s.replace(/(?<!\\)\b(?:Sigma)\b/g, '\\sum');
+        s = s.replace(/(?<!\\)\b(?:omega|Omega)\b/g, '\\omega');
 
         // 8. Căn thức (sqrt, cbrt)
         s = replaceBalancedFunc(s, 'sqrt', '\\sqrt');
