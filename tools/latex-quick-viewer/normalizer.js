@@ -2,8 +2,7 @@
  * ==============================================================================
  * SMP LaTeX Quick Viewer — Math Context Parser & Normalization Pipeline
  * ==============================================================================
- * Phiên bản: 1.4.0
- * Đặc tả: Đề án Kỹ thuật LaTeX Quick Viewer (MathContext-Parser)
+ * Phiên bản: 2.0.0 — Hoàn thiện chuẩn hóa ngữ cảnh và Typographic Formatting
  * ==============================================================================
  */
 
@@ -137,9 +136,9 @@
         s = s.replace(/(?:vô cùng|vocung|vô cực|vocuc)/gi, '\\infty');
 
         // Nhận diện và đóng gói trước các khoảng / đoạn số học chuẩn
-        // Ví dụ: ( 0, +\infty ) -> $(0, +\infty)$
+        // Ví dụ: ( 0, + vô cùng ) -> $(0, +\infty)$
         s = s.replace(/([(\[])\s*([+\-]?[0-9a-zA-Z\\]+)\s*,\s*([+\-]?[0-9a-zA-Z\\]+)\s*([)\]])/g, function(_, open, a, b, close) {
-            return `$${open}${a.trim()}, ${b.trim()}${close}$`;
+            return ` $${open}${a.trim()}, ${b.trim()}${close}$ `;
         });
 
         return s;
@@ -350,26 +349,97 @@
         }
 
         flushSegment();
+        return segments.join('');
+    }
 
-        let joined = segments.join('');
+    /**
+     * Hậu xử lý văn bản cuối cùng (Typographic & Delimiter Cleansing)
+     */
+    function cleanAndFormatFinalTypography(text) {
+        if (!text) return '';
 
-        // Làm sạch khoảng trắng bên trong $...$
-        joined = joined.replace(/\$\s+([^$]+?)\s+\$/g, '$$$1$$');
-        joined = joined.replace(/\$\s+([^$]+?)\$/g, '$$$1$$');
-        joined = joined.replace(/\$([^$]+?)\s+\$/g, '$$$1$$');
+        // Tách thành các đoạn LATEX và TEXT
+        const SPLIT_REGEX = /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\$[^\$\n]+?\$|\\\([\s\S]*?\\\)|\\begin\{[a-z*]+\}[\s\S]*?\\end\{[a-z*]+\})/g;
+        const tokens = [];
+        let lastIdx = 0;
+        let match;
 
-        // Đảm bảo sau dấu ngắt câu có dấu cách
-        joined = joined.replace(/([.,;:?!])([a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])/gi, '$1 $2');
-        joined = joined.replace(/([.,;:?!])(\$)/g, '$1 $2');
+        while ((match = SPLIT_REGEX.exec(text)) !== null) {
+            if (match.index > lastIdx) {
+                tokens.push({ type: 'TEXT', val: text.substring(lastIdx, match.index) });
+            }
+            tokens.push({ type: 'MATH', val: match[0] });
+            lastIdx = match.index + match[0].length;
+        }
+        if (lastIdx < text.length) {
+            tokens.push({ type: 'TEXT', val: text.substring(lastIdx) });
+        }
 
-        // Đảm bảo khoảng trắng cách biệt giữa từ ngữ và dấu $
-        joined = joined.replace(/([a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])(\$)/gi, '$1 $2');
-        joined = joined.replace(/(\$)([a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])/gi, '$1 $2');
+        // Xử lý các đoạn TEXT
+        for (let k = 0; k < tokens.length; k++) {
+            if (tokens[k].type === 'TEXT') {
+                let t = tokens[k].val;
+
+                // Xử lý dấu ngoặc mở: trước '(' có chữ/số thì cách ra, sau '(' bỏ cách
+                t = t.replace(/([0-9a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])\(/gi, '$1 (');
+                t = t.replace(/\(\s+/g, '(');
+
+                // Xử lý dấu ngoặc đóng: trước ')' bỏ cách, sau ')' theo sau là chữ thì cách ra
+                t = t.replace(/\s+\)/g, ')');
+                t = t.replace(/\)\s+([.,;:?!])/g, ')$1');
+                t = t.replace(/\)([a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])/gi, ') $1');
+
+                // Dấu câu: trước bỏ cách, sau có cách
+                t = t.replace(/\s+([.,;:?!])/g, '$1');
+                t = t.replace(/([.,;:?!])([a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])/gi, '$1 $2');
+
+                tokens[k].val = t;
+            } else if (tokens[k].type === 'MATH') {
+                // Làm sạch bên trong $...$
+                let m = tokens[k].val;
+                if (m.startsWith('$') && m.endsWith('$') && !m.startsWith('$$')) {
+                    const inner = m.slice(1, -1).trim();
+                    tokens[k].val = `$${inner}$`;
+                }
+            }
+        }
+
+        // Ghép nối và đảm bảo khoảng cách giữa TEXT và MATH
+        let result = '';
+        for (let k = 0; k < tokens.length; k++) {
+            const curr = tokens[k];
+            const next = tokens[k + 1];
+
+            result += curr.val;
+
+            if (next) {
+                // Nếu TEXT liền kề MATH
+                if (curr.type === 'TEXT' && next.type === 'MATH') {
+                    // Nếu cuối TEXT không có dấu cách hoặc '('
+                    if (!/[\s(\[]$/.test(curr.val)) {
+                        result += ' ';
+                    }
+                }
+                // Nếu MATH liền kề TEXT
+                else if (curr.type === 'MATH' && next.type === 'TEXT') {
+                    // Nếu đầu TEXT không có dấu cách, ')', '.', ',', ':', ';'
+                    if (!/^[\s)\].,;:?!]/.test(next.val)) {
+                        result += ' ';
+                    }
+                }
+                // Nếu hai khối MATH liền kề nhau
+                else if (curr.type === 'MATH' && next.type === 'MATH') {
+                    result += ' ';
+                }
+            }
+        }
 
         // Chuẩn hóa khoảng trắng dư thừa
-        joined = joined.replace(/[ \t]{2,}/g, ' ');
+        result = result.replace(/[ \t]{2,}/g, ' ');
+        // Bỏ dấu $ rỗng
+        result = result.replace(/\$\s*\$/g, '');
 
-        return joined;
+        return result.trim();
     }
 
     /**
@@ -427,16 +497,17 @@
                 const lines = part.content.split('\n');
                 const processedLines = lines.map(processRawTextLine);
                 const resText = processedLines.join('\n');
-                const mathMatches = resText.match(/\$[^\$]+?\$/g);
-                if (mathMatches) totalMathCount += mathMatches.length;
                 return resText;
             }
         });
 
-        let finalResult = processedParts.join('');
+        let joined = processedParts.join('');
 
-        // Làm sạch các lỗi bọc lặp $ rỗng: $$ -> bỏ
-        finalResult = finalResult.replace(/\$\s*\$/g, '');
+        // 6. Hậu xử lý Typographic và Delimiter
+        let finalResult = cleanAndFormatFinalTypography(joined);
+
+        const allMaths = finalResult.match(/\$[^\$]+?\$|\\\[[\s\S]*?\\\]|\$\$[\s\S]*?\$\$/g);
+        totalMathCount = allMaths ? allMaths.length : 0;
 
         return {
             raw: rawText,

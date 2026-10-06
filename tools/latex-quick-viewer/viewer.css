@@ -12,17 +12,47 @@
     --accent-glow: rgba(92, 225, 230, 0.25);
     --btn-bg: rgba(92, 225, 230, 0.1);
     --btn-hover: rgba(92, 225, 230, 0.2);
+    --exam-paper-bg: rgba(255, 255, 255, 0.025);
+    --exam-paper-border: rgba(92, 225, 230, 0.12);
+    --exam-text-color: #e2e8f0;
 }
 
 body:not(.dark-mode) {
     --pane-bg: #ffffff;
-    --pane-border: rgba(0, 158, 179, 0.25);
+    --pane-border: rgba(0, 158, 179, 0.22);
     --input-bg: #f8fafc;
     --text-primary: #1e293b;
     --text-secondary: #64748b;
     --accent-glow: rgba(0, 158, 179, 0.15);
     --btn-bg: rgba(0, 158, 179, 0.08);
     --btn-hover: rgba(0, 158, 179, 0.16);
+    --exam-paper-bg: #ffffff;
+    --exam-paper-border: rgba(15, 23, 42, 0.08);
+    --exam-text-color: #273444;
+}
+
+/* ── Typography & Nới rộng chữ (Spacious Typography) ──── */
+.latex-hero {
+    margin-bottom: 24px;
+}
+
+.latex-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    color: var(--exam-title-color, #f0f0f0);
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+    line-height: 1.35;
+}
+
+.latex-hero p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    letter-spacing: 0.02em;
+    word-spacing: 0.04em;
+    margin: 0;
 }
 
 /* ── Install Extension Hero Card ────────────────────────── */
@@ -30,14 +60,14 @@ body:not(.dark-mode) {
     background: linear-gradient(135deg, rgba(92, 225, 230, 0.08) 0%, rgba(201, 169, 110, 0.05) 100%);
     border: 1px solid var(--pane-border);
     border-radius: 12px;
-    padding: 20px 24px;
-    margin-bottom: 24px;
+    padding: 22px 28px;
+    margin-bottom: 28px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 18px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    gap: 20px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
     position: relative;
     overflow: hidden;
 }
@@ -61,15 +91,16 @@ body:not(.dark-mode) {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .install-badge {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
-    padding: 3px 8px;
+    padding: 3px 9px;
     border-radius: 4px;
     background: rgba(92, 225, 230, 0.15);
     color: var(--accent-cyan);
@@ -83,26 +114,31 @@ body:not(.dark-mode) {
 }
 
 .install-title {
-    font-size: 1.15rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
+    letter-spacing: 0.02em;
 }
 
 .install-desc {
-    font-size: 0.85rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.92rem;
     color: var(--text-secondary);
-    line-height: 1.5;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    word-spacing: 0.03em;
     margin: 0;
 }
 
 .install-actions {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
@@ -113,31 +149,33 @@ body:not(.dark-mode) {
     background: linear-gradient(135deg, var(--accent-cyan) 0%, #00b4d8 100%);
     color: #0b1111;
     font-weight: 700;
-    font-size: 0.85rem;
-    padding: 10px 18px;
+    font-size: 0.88rem;
+    letter-spacing: 0.02em;
+    padding: 11px 20px;
     border-radius: 8px;
     border: none;
     cursor: pointer;
     text-decoration: none;
-    box-shadow: 0 4px 14px rgba(92, 225, 230, 0.3);
+    box-shadow: 0 4px 16px rgba(92, 225, 230, 0.35);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-download-ext:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(92, 225, 230, 0.45);
+    box-shadow: 0 6px 24px rgba(92, 225, 230, 0.5);
     color: #000;
 }
 
 .btn-guide-ext {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
     background: rgba(255, 255, 255, 0.05);
     color: var(--text-primary);
     font-weight: 600;
-    font-size: 0.82rem;
-    padding: 9px 14px;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    padding: 10px 16px;
     border-radius: 8px;
     border: 1px solid var(--pane-border);
     cursor: pointer;
@@ -154,8 +192,8 @@ body:not(.dark-mode) {
 .viewer-workspace {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 24px;
+    gap: 24px;
+    margin-bottom: 28px;
 }
 
 @media (max-width: 960px) {
@@ -171,14 +209,14 @@ body:not(.dark-mode) {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
 
 .pane-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 16px;
+    padding: 13px 18px;
     background: rgba(0, 0, 0, 0.15);
     border-bottom: 1px solid var(--pane-border);
 }
@@ -188,6 +226,7 @@ body:not(.dark-mode) .pane-header {
 }
 
 .pane-title {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-primary);
@@ -195,7 +234,7 @@ body:not(.dark-mode) .pane-header {
     align-items: center;
     gap: 8px;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.08em;
 }
 
 .pane-actions {
@@ -208,12 +247,13 @@ body:not(.dark-mode) .pane-header {
     background: var(--btn-bg);
     border: 1px solid var(--pane-border);
     color: var(--text-secondary);
-    font-size: 0.75rem;
-    padding: 5px 10px;
+    font-size: 0.78rem;
+    padding: 6px 12px;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s ease;
     font-family: inherit;
+    letter-spacing: 0.02em;
 }
 
 .pane-btn:hover {
@@ -239,7 +279,7 @@ body:not(.dark-mode) .pane-header {
     flex: 1;
     display: flex;
     flex-direction: column;
-    min-height: 380px;
+    min-height: 420px;
     position: relative;
 }
 
@@ -247,65 +287,76 @@ body:not(.dark-mode) .pane-header {
 #raw-input {
     width: 100%;
     height: 100%;
-    min-height: 380px;
-    padding: 16px;
+    min-height: 420px;
+    padding: 22px 24px;
     border: none;
     outline: none;
     background: var(--input-bg);
     color: var(--text-primary);
     font-family: 'JetBrains Mono', Consolas, monospace;
-    font-size: 0.88rem;
-    line-height: 1.6;
+    font-size: 0.96rem;
+    line-height: 1.85;
+    letter-spacing: 0.025em;
+    word-spacing: 0.05em;
     resize: vertical;
     box-sizing: border-box;
 }
 
 #raw-input::placeholder {
     color: var(--text-secondary);
-    opacity: 0.5;
+    opacity: 0.45;
 }
 
 /* Output Views */
 .output-view-panel {
     width: 100%;
     height: 100%;
-    min-height: 380px;
-    padding: 16px;
+    min-height: 420px;
     box-sizing: border-box;
     overflow-y: auto;
     background: var(--input-bg);
 }
 
+/* BẢNG RENDER TOÁN CHUẨN ĐỒNG NHẤT VỚI LATEX V2 & LATEX OCR */
 #preview-view {
-    color: var(--text-primary);
-    font-size: 0.95rem;
-    line-height: 1.85;
+    font-family: "Times New Roman", Times, serif !important;
+    font-size: 1.20rem !important;
+    line-height: 2.2 !important;
+    letter-spacing: 0.025em !important;
+    word-spacing: 0.06em !important;
+    color: var(--exam-text-color, #e2e8f0);
+    padding: 26px 30px;
     white-space: pre-wrap;
     word-break: break-word;
 }
 
+/* Đồng màu ký hiệu toán với văn bản, sắc nét và tự nhiên */
 #preview-view .katex {
-    color: var(--accent-cyan);
-    font-size: 1.12em;
+    font-size: 1.05em;
+    color: inherit;
 }
 
 #preview-view .katex-display {
-    margin: 1em 0;
-    padding: 8px 0;
+    margin: 1.2em 0;
+    padding: 10px 0;
     overflow-x: auto;
+    overflow-y: hidden;
 }
 
 #raw-view textarea {
     width: 100%;
     height: 100%;
-    min-height: 350px;
+    min-height: 420px;
+    padding: 22px 24px;
+    box-sizing: border-box;
     border: none;
     outline: none;
     background: transparent;
-    color: #a5f3fc;
+    color: #5ce1e6;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.88rem;
-    line-height: 1.6;
+    font-size: 0.94rem;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
     resize: none;
 }
 
@@ -314,10 +365,12 @@ body:not(.dark-mode) .pane-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 16px;
-    background: rgba(0, 0, 0, 0.1);
+    padding: 10px 18px;
+    background: rgba(0, 0, 0, 0.12);
     border-top: 1px solid var(--pane-border);
-    font-size: 0.74rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.03em;
     color: var(--text-secondary);
 }
 
@@ -340,7 +393,7 @@ body:not(.dark-mode) .status-bar {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
 }
 
 .export-btn {
@@ -350,9 +403,10 @@ body:not(.dark-mode) .status-bar {
     background: var(--btn-bg);
     border: 1px solid var(--pane-border);
     color: var(--text-primary);
-    font-size: 0.82rem;
+    font-size: 0.84rem;
     font-weight: 600;
-    padding: 9px 16px;
+    letter-spacing: 0.02em;
+    padding: 10px 18px;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -431,36 +485,40 @@ body:not(.dark-mode) .guide-modal {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 20px;
+    padding: 16px 22px;
     border-bottom: 1px solid var(--pane-border);
     background: rgba(0, 0, 0, 0.1);
 }
 
 .guide-title {
-    font-size: 1.1rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 8px;
     color: var(--text-primary);
+    letter-spacing: 0.02em;
 }
 
 .guide-body {
-    padding: 20px;
+    padding: 22px;
     overflow-y: auto;
-    font-size: 0.88rem;
-    line-height: 1.6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.90rem;
+    line-height: 1.65;
+    letter-spacing: 0.015em;
 }
 
 .guide-step {
     display: flex;
     gap: 14px;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
 .step-number {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: rgba(92, 225, 230, 0.2);
     color: var(--accent-cyan);
@@ -477,9 +535,10 @@ body:not(.dark-mode) .guide-modal {
 }
 
 .step-content h4 {
-    font-size: 0.95rem;
+    font-size: 0.98rem;
     margin-bottom: 4px;
     color: var(--text-primary);
+    letter-spacing: 0.01em;
 }
 
 .step-content p {
@@ -502,7 +561,7 @@ body:not(.dark-mode) .guide-modal {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 20px;
+    padding: 14px 22px;
     border-top: 1px solid var(--pane-border);
     background: rgba(0, 0, 0, 0.05);
 }

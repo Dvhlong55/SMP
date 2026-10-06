@@ -19,10 +19,10 @@
 
     <!-- SMP Shared Styles -->
     <link class="theme-link" rel="stylesheet" href="/core/css/shared.css?v=38">
-    <!-- KaTeX CSS -->
-    <link rel="stylesheet" href="/tools/latex-quick-viewer/extension/katex/katex.min.css">
+    <!-- KaTeX CSS (Offline Bundle) -->
+    <link rel="stylesheet" href="./extension/katex/katex.min.css">
     <!-- Tool Specific CSS -->
-    <link rel="stylesheet" href="/tools/latex-quick-viewer/viewer.css?v=1">
+    <link rel="stylesheet" href="./viewer.css?v=2">
     <link rel="icon" type="image/png" href="/core/image/favicon.png">
 </head>
 <body>
@@ -53,11 +53,11 @@
 
                     <!-- Hero Banner -->
                     <div class="latex-hero fade-up">
-                        <h1 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--exam-title-color);margin:0 0 5px 0;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -3px; color: var(--accent-cyan);"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> LaTeX Quick Viewer — Dịch &amp; Biên Dịch Toán Bình Luận
+                        <h1 style="font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--exam-title-color);margin:0 0 6px 0;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -3px; color: var(--accent-cyan);"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> LaTeX Quick Viewer — Dịch &amp; Biên Dịch Toán Bình Luận
                         </h1>
-                        <p style="font-size:0.86rem;color:var(--exam-text-color);opacity:0.7;margin:0;">
-                            Dán bình luận hoặc đoạn thảo luận toán gõ ẩu từ mạng xã hội (Facebook, VOZ, diễn đàn) — công cụ tự động nhận diện ký hiệu, bọc môi trường $\LaTeX$ ($...$) và hiển thị trực quan siêu tốc qua KaTeX.
+                        <p style="font-size:0.92rem;color:var(--exam-text-color);opacity:0.8;margin:0;">
+                            Dán bình luận hoặc đoạn thảo luận toán gõ ẩu từ mạng xã hội (Facebook, VOZ, diễn đàn) — công cụ tự động nhận diện ký hiệu, bọc môi trường LaTeX ($...$) và hiển thị trực quan siêu tốc qua KaTeX.
                         </p>
                     </div>
 
@@ -78,7 +78,7 @@
                             </p>
                         </div>
                         <div class="install-actions">
-                            <a href="/tools/latex-quick-viewer/smp-latex-quick-viewer.zip" download="smp-latex-quick-viewer.zip" class="btn-download-ext" id="btn-download-zip">
+                            <a href="./smp-latex-quick-viewer.zip" download="smp-latex-quick-viewer.zip" class="btn-download-ext" id="btn-download-zip">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                                 Tải Tiện Ích (.ZIP)
                             </a>
@@ -108,7 +108,7 @@
                             </div>
 
                             <div class="pane-body">
-                                <textarea id="raw-input" spellcheck="false" placeholder="Dán đoạn thảo luận toán gõ ẩu hoặc công thức thô vào đây...&#10;&#10;Ví dụ:&#10;Dạ em xin góp câu 1 ạ: Xét f_n(x) = 1/x+1 +...+ 1/n(x+n) -1 thì f_n(x) nghịch biến trên ( 0, + vô cùng ) và lim f_n(x) ^( x ->0+) =... > 0 và lim f_n(x)^(x -> - vô cùng) <0..."></textarea>
+                                <textarea id="raw-input" spellcheck="false" placeholder="Dán đoạn thảo luận toán gõ ẩu hoặc công thức thô vào đây...&#10;&#10;Ví dụ:&#10;Dạ em xin góp câu 1 ạ: a) Xét f_n(x) = 1/x+1 +...+ 1/n(x+n) -1 thì f_n(x) nghịch biến trên ( 0, + vô cùng ) và lim f_n(x) ^( x ->0+) =... > 0 và lim f_n(x)^(x -> - vô cùng) <0..."></textarea>
                             </div>
 
                             <div class="status-bar">
@@ -131,7 +131,7 @@
                             </div>
 
                             <div class="pane-body">
-                                <!-- Tab 1: Preview qua KaTeX -->
+                                <!-- Tab 1: Preview qua KaTeX (Font Times New Roman chuẩn) -->
                                 <div id="preview-view" class="output-view-panel">
                                     <span style="color: var(--text-secondary); opacity: 0.6; font-style: italic;">Kết quả biên dịch hiển thị tại đây khi bạn nhập văn bản bên trái...</span>
                                 </div>
@@ -217,7 +217,7 @@
 
                     <div class="guide-footer">
                         <span style="font-size: 0.78rem; color: var(--text-secondary);">Phím tắt nhanh: <kbd style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;">Alt + Shift + X</kbd></span>
-                        <a href="/tools/latex-quick-viewer/smp-latex-quick-viewer.zip" download="smp-latex-quick-viewer.zip" class="btn-download-ext" style="padding: 6px 14px; font-size: 0.8rem;">
+                        <a href="./smp-latex-quick-viewer.zip" download="smp-latex-quick-viewer.zip" class="btn-download-ext" style="padding: 6px 14px; font-size: 0.8rem;">
                             Tải File ZIP Ngay
                         </a>
                     </div>
@@ -251,12 +251,12 @@
     <script src="/core/js/layout.js?v=37"></script>
     <script src="/core/js/shared.js?v=38"></script>
 
-    <!-- KaTeX & Normalizer -->
-    <script src="/tools/latex-quick-viewer/extension/katex/katex.min.js"></script>
-    <script src="/tools/latex-quick-viewer/extension/katex/contrib/auto-render.min.js"></script>
-    <script src="/tools/latex-quick-viewer/normalizer.js"></script>
+    <!-- KaTeX & Normalizer (Local relative paths) -->
+    <script src="./extension/katex/katex.min.js"></script>
+    <script src="./extension/katex/contrib/auto-render.min.js"></script>
+    <script src="./normalizer.js"></script>
 
     <!-- Tool Client Script -->
-    <script src="/tools/latex-quick-viewer/viewer.js?v=1"></script>
+    <script src="./viewer.js?v=2"></script>
 </body>
 </html>

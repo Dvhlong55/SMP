@@ -193,16 +193,19 @@
                 border-radius: 3px;
             }
             .smp-render-view {
+                font-family: "Times New Roman", Times, serif;
                 color: #f1f5f9;
-                font-size: 15px;
-                line-height: 1.8;
+                font-size: 16px;
+                line-height: 2.1;
+                letter-spacing: 0.025em;
+                word-spacing: 0.05em;
                 white-space: pre-wrap;
                 word-break: break-word;
             }
-            /* Định dạng công thức KaTeX sắc nét */
+            /* Định dạng công thức KaTeX tự nhiên chuẩn sách giáo khoa */
             .smp-render-view .katex {
-                font-size: 1.15em;
-                color: #67e8f9;
+                font-size: 1.05em;
+                color: inherit;
             }
             .smp-render-view .katex-display {
                 margin: 0.8em 0;
