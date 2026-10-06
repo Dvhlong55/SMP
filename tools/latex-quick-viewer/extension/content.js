@@ -2,12 +2,12 @@
  * ==============================================================================
  * SMP LaTeX Quick Viewer & Composer — Content Script (Shadow DOM Sandbox UI)
  * ==============================================================================
- * Hoạt động độc lập trong Shadow DOM, không bị ảnh hưởng bởi CSS của Facebook,
- * VOZ, VMF, hay bất kỳ diễn đàn nào.
- * Tích hợp đầy đủ:
- * - Soạn thảo công thức trực tiếp song song với xem trước
- * - Biên dịch nhanh văn bản toán học từ mạng xã hội
- * - Xuất và sao chép ảnh công thức (PNG nét cao) vào Clipboard
+ * Tích hợp hệ thống LaTeX từ SMP LaTeX Editor:
+ * - 8 nhóm ký hiệu & snippet đầy đủ từ SMP LaTeX Editor (render ký hiệu trực quan)
+ * - Gợi ý tự động (Autocomplete Hint) khi gõ dấu \ với phím mũi tên & Enter
+ * - Hai chế độ Sáng / Tối (Light Mode & Dark Mode) chuyển đổi 1-click
+ * - Soạn thảo song song realtime (Live Preview) kèm đếm ký tự, từ, dòng
+ * - Xuất và chép ảnh công thức PNG độ nét cao vào Clipboard (Ctrl + V dán vào FB)
  * - Chèn trực tiếp công thức vào ô bình luận Facebook / diễn đàn
  * ==============================================================================
  */
@@ -24,6 +24,70 @@
     let modalInitialTop = 0;
     let lastActiveEditable = null;
     let currentActiveTab = 'compose'; // 'compose' | 'translate' | 'raw'
+    let activeHintIndex = 0;
+    let filteredHints = [];
+    let currentEditorTarget = null; // Textarea đang nhận autocomplete
+
+    // Danh sách gợi ý lệnh quen thuộc chuẩn SMP LaTeX Editor
+    const LATEX_SNIPPETS = [
+        { text: "\\frac{}{}", displayText: "\\frac{}{} — Phân số", offset: 3 },
+        { text: "\\sqrt{}", displayText: "\\sqrt{} — Căn bậc hai", offset: 1 },
+        { text: "\\sqrt[]{}", displayText: "\\sqrt[]{} — Căn bậc n", offset: 3 },
+        { text: "^{}", displayText: "^{} — Số mũ", offset: 1 },
+        { text: "_{}", displayText: "_{} — Chỉ số dưới", offset: 1 },
+        { text: "\\sum_{i=1}^{n}", displayText: "\\sum — Tổng sigma", offset: 0 },
+        { text: "\\prod_{i=1}^{n}", displayText: "\\prod — Tích", offset: 0 },
+        { text: "\\int_{a}^{b}", displayText: "\\int — Tích phân", offset: 0 },
+        { text: "\\lim_{x \\to \\infty}", displayText: "\\lim — Giới hạn", offset: 0 },
+        { text: "\\infty", displayText: "\\infty — Vô cực", offset: 0 },
+        { text: "\\le", displayText: "\\le — Nhỏ hơn hoặc bằng (<=)", offset: 0 },
+        { text: "\\ge", displayText: "\\ge — Lớn hơn hoặc bằng (>=)", offset: 0 },
+        { text: "\\neq", displayText: "\\neq — Khác (!=)", offset: 0 },
+        { text: "\\equiv", displayText: "\\equiv — Đồng dư", offset: 0 },
+        { text: "\\pmod{}", displayText: "\\pmod{} — Modulo", offset: 1 },
+        { text: "\\mid", displayText: "\\mid — Chia hết cho", offset: 0 },
+        { text: "\\nmid", displayText: "\\nmid — Không chia hết cho", offset: 0 },
+        { text: "\\Rightarrow", displayText: "\\Rightarrow — Suy ra (=>)", offset: 0 },
+        { text: "\\Leftrightarrow", displayText: "\\Leftrightarrow — Tương đương (<=>)", offset: 0 },
+        { text: "\\forall", displayText: "\\forall — Với mọi", offset: 0 },
+        { text: "\\exists", displayText: "\\exists — Tồn tại", offset: 0 },
+        { text: "\\in", displayText: "\\in — Thuộc tập hợp", offset: 0 },
+        { text: "\\notin", displayText: "\\notin — Không thuộc", offset: 0 },
+        { text: "\\subset", displayText: "\\subset — Tập con", offset: 0 },
+        { text: "\\cup", displayText: "\\cup — Phép hợp", offset: 0 },
+        { text: "\\cap", displayText: "\\cap — Phép giao", offset: 0 },
+        { text: "\\emptyset", displayText: "\\emptyset — Tập rỗng", offset: 0 },
+        { text: "\\mathbb{R}", displayText: "\\mathbb{R} — Tập số thực R", offset: 0 },
+        { text: "\\mathbb{N}", displayText: "\\mathbb{N} — Tập số tự nhiên N", offset: 0 },
+        { text: "\\mathbb{Z}", displayText: "\\mathbb{Z} — Tập số nguyên Z", offset: 0 },
+        { text: "\\mathbb{Q}", displayText: "\\mathbb{Q} — Tập số hữu tỉ Q", offset: 0 },
+        { text: "\\mathbb{C}", displayText: "\\mathbb{C} — Tập số phức C", offset: 0 },
+        { text: "\\alpha", displayText: "\\alpha — Alpha", offset: 0 },
+        { text: "\\beta", displayText: "\\beta — Beta", offset: 0 },
+        { text: "\\gamma", displayText: "\\gamma — Gamma", offset: 0 },
+        { text: "\\delta", displayText: "\\delta — Delta", offset: 0 },
+        { text: "\\Delta", displayText: "\\Delta — Delta hoa", offset: 0 },
+        { text: "\\pi", displayText: "\\pi — Pi", offset: 0 },
+        { text: "\\varphi", displayText: "\\varphi — Phi", offset: 0 },
+        { text: "\\sigma", displayText: "\\sigma — Sigma", offset: 0 },
+        { text: "\\omega", displayText: "\\omega — Omega", offset: 0 },
+        { text: "\\Omega", displayText: "\\Omega — Omega hoa", offset: 0 },
+        { text: "\\vec{}", displayText: "\\vec{} — Vectơ", offset: 1 },
+        { text: "\\overline{}", displayText: "\\overline{} — Đoạn thẳng", offset: 1 },
+        { text: "\\binom{n}{k}", displayText: "\\binom{n}{k} — Hệ số nhị thức / Tổ hợp", offset: 0 },
+        { text: "\\gcd(,)", displayText: "\\gcd(,) — Ước chung lớn nhất", offset: 2 },
+        { text: "\\lfloor \\rfloor", displayText: "\\lfloor \\rfloor — Phần nguyên dưới", offset: 8 },
+        { text: "\\lceil \\rceil", displayText: "\\lceil \\rceil — Phần nguyên trên", offset: 7 },
+        { text: "\\begin{cases}\n  & \\\\\n  &\n\\end{cases}", displayText: "\\begin{cases} — Hệ phương trình", offset: 22 },
+        { text: "\\begin{pmatrix}\n  & \\\\\n  &\n\\end{pmatrix}", displayText: "\\begin{pmatrix} — Ma trận ngoặc tròn", offset: 19 },
+        { text: "\\begin{align*}\n  \n\\end{align*}", displayText: "\\begin{align*} — Căn lề nhiều dòng", offset: 13 },
+        { text: "\\textbf{}", displayText: "\\textbf{} — Chữ in đậm", offset: 1 },
+        { text: "\\textit{}", displayText: "\\textit{} — Chữ in nghiêng", offset: 1 },
+        { text: "\\textbf{Bài toán.} ", displayText: "Bài toán. — Đề mục bài toán", offset: 0 },
+        { text: "\\textbf{Lời giải.} ", displayText: "Lời giải. — Đề mục lời giải", offset: 0 },
+        { text: "\\textbf{Bổ đề.} ", displayText: "Bổ đề. — Đề mục bổ đề", offset: 0 },
+        { text: "\\textbf{Định lý.} ", displayText: "Định lý. — Đề mục định lý", offset: 0 }
+    ];
 
     // Bắt và lưu vết ô nhập liệu / ô bình luận người dùng đang tương tác
     document.addEventListener('contextmenu', (e) => {
@@ -52,7 +116,7 @@
             modalHost.style.left = '0';
             modalHost.style.width = '0';
             modalHost.style.height = '0';
-            modalHost.style.zIndex = '2147483647'; // Luôn nổi trên cùng
+            modalHost.style.zIndex = '2147483647';
             document.body.appendChild(modalHost);
 
             shadowRoot = modalHost.attachShadow({ mode: 'open' });
@@ -72,7 +136,7 @@
     }
 
     /**
-     * CSS đóng gói bên trong Shadow DOM
+     * CSS đóng gói bên trong Shadow DOM (Bao gồm chế độ Sáng và Tối)
      */
     function getModalStyles() {
         return `
@@ -92,7 +156,7 @@
                 left: 0;
                 width: 100vw;
                 height: 100vh;
-                background: rgba(0, 0, 0, 0.45);
+                background: rgba(0, 0, 0, 0.48);
                 backdrop-filter: blur(2px);
                 display: flex;
                 align-items: center;
@@ -105,21 +169,23 @@
                 opacity: 1;
                 pointer-events: auto;
             }
+
+            /* --- CHẾ ĐỘ TỐI (MẶC ĐỊNH) --- */
             .smp-dialog {
                 position: absolute;
-                width: 780px;
-                max-width: 95vw;
-                max-height: 88vh;
-                background: #14181a;
+                width: 860px;
+                max-width: 96vw;
+                max-height: 90vh;
+                background: #0f1416;
                 color: #e2e8f0;
                 border-radius: 12px;
-                border: 1px solid rgba(92, 225, 230, 0.3);
-                box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 24px rgba(92, 225, 230, 0.15);
+                border: 1px solid rgba(92, 225, 230, 0.25);
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 24px rgba(92, 225, 230, 0.12);
                 display: flex;
                 flex-direction: column;
                 overflow: hidden;
                 transform: scale(0.96) translateY(8px);
-                transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+                transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, background 0.25s, color 0.25s;
             }
             .smp-backdrop.active .smp-dialog {
                 transform: scale(1) translateY(0);
@@ -129,7 +195,7 @@
                 align-items: center;
                 justify-content: space-between;
                 padding: 10px 16px;
-                background: #182024;
+                background: #161d20;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.08);
                 cursor: move;
                 user-select: none;
@@ -162,7 +228,7 @@
             }
             .smp-tab-btn {
                 background: transparent;
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.12);
                 color: #94a3b8;
                 font-size: 11px;
                 font-weight: 500;
@@ -179,6 +245,23 @@
             .smp-tab-btn:hover:not(.active) {
                 background: rgba(255, 255, 255, 0.05);
                 color: #e2e8f0;
+            }
+            .smp-icon-btn {
+                background: transparent;
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                color: #94a3b8;
+                font-size: 13px;
+                padding: 4px 8px;
+                border-radius: 6px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.15s ease;
+            }
+            .smp-icon-btn:hover {
+                background: rgba(255, 255, 255, 0.08);
+                color: #f8fafc;
             }
             .smp-close-btn {
                 background: transparent;
@@ -198,14 +281,15 @@
                 background: rgba(239, 68, 68, 0.2);
                 color: #ef4444;
             }
+
             .smp-body {
-                padding: 14px 16px;
+                padding: 12px 16px;
                 overflow-y: auto;
-                max-height: calc(88vh - 110px);
-                background: #0f1315;
+                max-height: calc(90vh - 110px);
+                background: #0b1012;
                 display: flex;
                 flex-direction: column;
-                gap: 12px;
+                gap: 10px;
             }
             .smp-body::-webkit-scrollbar {
                 width: 6px;
@@ -216,66 +300,115 @@
                 border-radius: 3px;
             }
 
-            /* --- Thanh Ký Hiệu Toán (Snippet Toolbar) --- */
-            .smp-toolbar {
+            /* --- THANH NHÓM KÝ HIỆU TOÁN CHUẨN SMP LATEX EDITOR --- */
+            .smp-snippet-toolbar {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                padding: 8px 12px;
+                background: #141b1e;
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 8px;
+                max-height: 145px;
+                overflow-y: auto;
+            }
+            .smp-snip-row {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                flex-wrap: wrap;
+            }
+            .smp-snip-label {
+                font-size: 10px;
+                font-family: 'JetBrains Mono', monospace;
+                letter-spacing: 0.8px;
+                text-transform: uppercase;
+                color: #5ce1e6;
+                opacity: 0.85;
+                min-width: 90px;
+                margin-right: 4px;
+            }
+            .smp-snip-btns {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 4px;
-                padding: 8px 10px;
-                background: #14191c;
-                border: 1px solid rgba(255, 255, 255, 0.07);
-                border-radius: 8px;
-                max-height: 110px;
-                overflow-y: auto;
+                flex: 1;
             }
-            .smp-tool-btn {
-                background: #1a2226;
-                border: 1px solid rgba(255, 255, 255, 0.1);
+            .smp-snip-btn {
+                background: rgba(92, 225, 230, 0.08);
+                border: 1px solid rgba(92, 225, 230, 0.18);
                 color: #e2e8f0;
                 font-size: 11px;
                 padding: 3px 8px;
-                border-radius: 4px;
+                border-radius: 5px;
                 cursor: pointer;
-                transition: all 0.12s ease;
+                transition: all 0.15s ease;
                 white-space: nowrap;
-                font-family: inherit;
+                font-family: "Times New Roman", serif;
+                line-height: 1.2;
             }
-            .smp-tool-btn:hover {
-                background: rgba(92, 225, 230, 0.18);
+            .smp-snip-btn:hover {
+                background: rgba(92, 225, 230, 0.22);
                 border-color: #5ce1e6;
                 color: #5ce1e6;
                 transform: translateY(-1px);
             }
-
-            /* --- Giao diện Soạn Thảo Song Song (2 Cột) --- */
-            .smp-compose-wrap {
-                display: flex;
-                gap: 12px;
-                min-height: 220px;
+            .smp-snip-btn .katex {
+                font-size: 0.95em;
             }
-            .smp-compose-pane {
-                flex: 1;
+
+            /* --- GIAO DIỆN SOẠN THẢO SONG SONG (2 CỘT) --- */
+            .smp-workspace {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                min-height: 240px;
+                position: relative;
+            }
+            @media (max-width: 720px) {
+                .smp-workspace { grid-template-columns: 1fr; }
+            }
+            .smp-pane {
                 display: flex;
                 flex-direction: column;
                 min-width: 0;
+                position: relative;
             }
-            .smp-pane-label {
-                font-size: 11px;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                color: #64748b;
-                margin-bottom: 5px;
+            .smp-pane-header {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                padding: 6px 10px;
+                background: #141c20;
+                border: 1px solid rgba(92, 225, 230, 0.15);
+                border-bottom: none;
+                border-radius: 8px 8px 0 0;
             }
-            .smp-compose-textarea {
+            .smp-pane-title {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                color: #5ce1e6;
+            }
+            .smp-pane-meta {
+                font-size: 10px;
+                color: #64748b;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .smp-editor-box {
+                position: relative;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+            .smp-textarea {
                 width: 100%;
                 flex: 1;
-                min-height: 200px;
-                background: #080b0c;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 8px;
+                min-height: 220px;
+                background: #070a0b;
+                border: 1px solid rgba(92, 225, 230, 0.15);
+                border-radius: 0 0 8px 8px;
                 color: #a5f3fc;
                 font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
                 font-size: 13px;
@@ -283,21 +416,21 @@
                 outline: none;
                 resize: vertical;
                 box-sizing: border-box;
-                line-height: 1.5;
+                line-height: 1.6;
             }
-            .smp-compose-textarea:focus {
+            .smp-textarea:focus {
                 border-color: #5ce1e6;
             }
-            .smp-compose-preview {
+            .smp-preview-box {
                 width: 100%;
                 flex: 1;
-                min-height: 200px;
-                max-height: 380px;
+                min-height: 220px;
+                max-height: 420px;
                 overflow-y: auto;
-                background: #080b0c;
-                border: 1px solid rgba(92, 225, 230, 0.2);
-                border-radius: 8px;
-                padding: 12px;
+                background: #070a0b;
+                border: 1px solid rgba(92, 225, 230, 0.15);
+                border-radius: 0 0 8px 8px;
+                padding: 14px 16px;
                 color: #f1f5f9;
                 font-family: "Times New Roman", Times, serif;
                 font-size: 16px;
@@ -308,7 +441,46 @@
                 word-break: break-word;
             }
 
-            /* --- Giao diện Biên Dịch & Mã Thô --- */
+            /* --- GỢI Ý TỰ ĐỘNG (AUTOCOMPLETE POPUP) --- */
+            .smp-autocomplete-popup {
+                position: absolute;
+                top: 40px;
+                left: 10px;
+                max-width: 380px;
+                max-height: 200px;
+                overflow-y: auto;
+                background: #141c20;
+                border: 1px solid #5ce1e6;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+                border-radius: 6px;
+                z-index: 50;
+                display: none;
+            }
+            .smp-autocomplete-popup.show {
+                display: block;
+            }
+            .smp-hint-item {
+                padding: 6px 10px;
+                font-size: 12px;
+                font-family: 'JetBrains Mono', monospace;
+                color: #cbd5e1;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+            .smp-hint-item:hover, .smp-hint-item.active {
+                background: rgba(92, 225, 230, 0.2);
+                color: #5ce1e6;
+            }
+            .smp-hint-badge {
+                font-size: 10px;
+                opacity: 0.7;
+                margin-left: 8px;
+            }
+
+            /* --- TAB BIÊN DỊCH & MÃ NGUỒN --- */
             .smp-translate-view {
                 font-family: "Times New Roman", Times, serif;
                 color: #f1f5f9;
@@ -318,14 +490,14 @@
                 word-spacing: 0.05em;
                 white-space: pre-wrap;
                 word-break: break-word;
-                min-height: 160px;
-                padding: 8px;
+                min-height: 180px;
+                padding: 10px;
             }
             .smp-raw-textarea {
                 width: 100%;
-                min-height: 200px;
-                background: #080b0c;
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                min-height: 220px;
+                background: #070a0b;
+                border: 1px solid rgba(255, 255, 255, 0.12);
                 border-radius: 8px;
                 color: #a5f3fc;
                 font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
@@ -334,13 +506,13 @@
                 outline: none;
                 resize: vertical;
                 box-sizing: border-box;
-                line-height: 1.5;
+                line-height: 1.6;
             }
             .smp-raw-textarea:focus {
                 border-color: #5ce1e6;
             }
 
-            /* --- Định dạng KaTeX --- */
+            /* --- ĐỊNH DẠNG KATEX --- */
             .katex {
                 font-size: 1.05em;
                 color: inherit;
@@ -352,13 +524,13 @@
                 padding: 6px 0;
             }
 
-            /* --- Thanh Chân Trang (Footer Actions) --- */
+            /* --- CHÂN TRANG (FOOTER ACTIONS) --- */
             .smp-footer {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 padding: 10px 16px;
-                background: #14181a;
+                background: #141a1c;
                 border-top: 1px solid rgba(255, 255, 255, 0.08);
                 font-size: 11px;
                 color: #64748b;
@@ -411,19 +583,19 @@
                 background: #0284c7;
             }
 
-            /* --- Toast Thông Báo --- */
+            /* --- TOAST THÔNG BÁO --- */
             .smp-toast {
                 position: absolute;
                 bottom: 50px;
                 left: 50%;
                 transform: translateX(-50%) translateY(10px);
-                background: rgba(15, 23, 42, 0.95);
+                background: rgba(15, 23, 42, 0.96);
                 border: 1px solid rgba(92, 225, 230, 0.5);
                 color: #5ce1e6;
-                padding: 8px 16px;
+                padding: 8px 18px;
                 border-radius: 8px;
                 font-size: 12px;
-                box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+                box-shadow: 0 8px 24px rgba(0,0,0,0.6);
                 opacity: 0;
                 pointer-events: none;
                 transition: all 0.2s ease;
@@ -434,11 +606,141 @@
                 opacity: 1;
                 transform: translateX(-50%) translateY(0);
             }
+
+            /* ==============================================================
+             * CHẾ ĐỘ SÁNG (LIGHT MODE)
+             * ============================================================== */
+            .smp-dialog.light-theme {
+                background: #ffffff;
+                color: #1e293b;
+                border-color: rgba(0, 0, 0, 0.15);
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18), 0 0 20px rgba(0, 158, 179, 0.1);
+            }
+            .smp-dialog.light-theme .smp-header {
+                background: #f8fafc;
+                border-bottom-color: #e2e8f0;
+            }
+            .smp-dialog.light-theme .smp-badge {
+                background: rgba(0, 158, 179, 0.1);
+                color: #009eb3;
+                border-color: rgba(0, 158, 179, 0.3);
+            }
+            .smp-dialog.light-theme .smp-title {
+                color: #0f172a;
+            }
+            .smp-dialog.light-theme .smp-tab-btn {
+                border-color: #cbd5e1;
+                color: #64748b;
+            }
+            .smp-dialog.light-theme .smp-tab-btn.active {
+                background: rgba(0, 158, 179, 0.12);
+                border-color: #009eb3;
+                color: #009eb3;
+            }
+            .smp-dialog.light-theme .smp-tab-btn:hover:not(.active) {
+                background: #f1f5f9;
+                color: #0f172a;
+            }
+            .smp-dialog.light-theme .smp-icon-btn {
+                border-color: #cbd5e1;
+                color: #475569;
+            }
+            .smp-dialog.light-theme .smp-icon-btn:hover {
+                background: #f1f5f9;
+                color: #0f172a;
+            }
+            .smp-dialog.light-theme .smp-body {
+                background: #f8fafc;
+            }
+            .smp-dialog.light-theme .smp-snippet-toolbar {
+                background: #ffffff;
+                border-color: #e2e8f0;
+            }
+            .smp-dialog.light-theme .smp-snip-label {
+                color: #009eb3;
+            }
+            .smp-dialog.light-theme .smp-snip-btn {
+                background: #f1f5f9;
+                border-color: #e2e8f0;
+                color: #334155;
+            }
+            .smp-dialog.light-theme .smp-snip-btn:hover {
+                background: rgba(0, 158, 179, 0.15);
+                border-color: #009eb3;
+                color: #009eb3;
+            }
+            .smp-dialog.light-theme .smp-pane-header {
+                background: #f1f5f9;
+                border-color: #cbd5e1;
+            }
+            .smp-dialog.light-theme .smp-pane-title {
+                color: #009eb3;
+            }
+            .smp-dialog.light-theme .smp-textarea {
+                background: #ffffff;
+                border-color: #cbd5e1;
+                color: #0f172a;
+            }
+            .smp-dialog.light-theme .smp-textarea:focus {
+                border-color: #009eb3;
+            }
+            .smp-dialog.light-theme .smp-preview-box {
+                background: #ffffff;
+                border-color: #cbd5e1;
+                color: #1e293b;
+            }
+            .smp-dialog.light-theme .smp-translate-view {
+                color: #1e293b;
+            }
+            .smp-dialog.light-theme .smp-raw-textarea {
+                background: #ffffff;
+                border-color: #cbd5e1;
+                color: #0f172a;
+            }
+            .smp-dialog.light-theme .smp-raw-textarea:focus {
+                border-color: #009eb3;
+            }
+            .smp-dialog.light-theme .smp-autocomplete-popup {
+                background: #ffffff;
+                border-color: #009eb3;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            }
+            .smp-dialog.light-theme .smp-hint-item {
+                color: #334155;
+                border-bottom-color: #f1f5f9;
+            }
+            .smp-dialog.light-theme .smp-hint-item:hover,
+            .smp-dialog.light-theme .smp-hint-item.active {
+                background: rgba(0, 158, 179, 0.12);
+                color: #009eb3;
+            }
+            .smp-dialog.light-theme .smp-footer {
+                background: #f8fafc;
+                border-top-color: #e2e8f0;
+            }
+            .smp-dialog.light-theme .smp-action-btn {
+                background: rgba(0, 158, 179, 0.09);
+                border-color: rgba(0, 158, 179, 0.3);
+                color: #009eb3;
+            }
+            .smp-dialog.light-theme .smp-action-btn:hover {
+                background: rgba(0, 158, 179, 0.2);
+            }
+            .smp-dialog.light-theme .smp-action-btn.btn-primary {
+                background: #009eb3;
+                border-color: #008799;
+                color: #ffffff;
+            }
+            .smp-dialog.light-theme .smp-toast {
+                background: #0f172a;
+                color: #38bdf8;
+                border-color: #38bdf8;
+            }
         `;
     }
 
     /**
-     * Tạo markup hộp thoại
+     * Tạo markup hộp thoại hoàn chỉnh
      */
     function createModalDom() {
         const root = ensureModalHost();
@@ -452,98 +754,171 @@
                     <div class="smp-header" id="smp-drag-header">
                         <div class="smp-title-wrap">
                             <span class="smp-badge">SMP</span>
-                            <span class="smp-title" id="smp-modal-title">Soạn Thảo & Biên Dịch</span>
+                            <span class="smp-title" id="smp-modal-title">Trình Soạn Thảo & Biên Dịch</span>
                         </div>
                         <div class="smp-header-actions">
                             <button class="smp-tab-btn" id="smp-btn-tab-compose">Soạn Thảo</button>
                             <button class="smp-tab-btn" id="smp-btn-tab-translate">Biên Dịch</button>
                             <button class="smp-tab-btn" id="smp-btn-tab-raw">Mã Công Thức</button>
+                            <button class="smp-icon-btn" id="smp-btn-theme-toggle" title="Chuyển chế độ Sáng / Tối">🌙</button>
                             <button class="smp-close-btn" id="smp-btn-close" title="Đóng (Esc)">✕</button>
                         </div>
                     </div>
 
                     <div class="smp-body">
-                        <!-- 1. Giao diện Soạn Thảo Song Song -->
-                        <div id="smp-panel-compose" style="display: flex; flex-direction: column; gap: 10px;">
-                            <div class="smp-toolbar" id="smp-toolbar">
-                                <!-- Nhóm nút nhanh lấy cảm hứng từ SMP LaTeX Editor -->
-                                <button class="smp-tool-btn" data-snip="\\frac{a}{b}">\\frac{a}{b}</button>
-                                <button class="smp-tool-btn" data-snip="\\sqrt{x}">\\sqrt{x}</button>
-                                <button class="smp-tool-btn" data-snip="\\sqrt[n]{x}">\\sqrt[n]{x}</button>
-                                <button class="smp-tool-btn" data-snip="^{n}">x^{n}</button>
-                                <button class="smp-tool-btn" data-snip="_{n}">x_{n}</button>
-                                <button class="smp-tool-btn" data-snip="\\sum_{i=1}^{n}">\\sum</button>
-                                <button class="smp-tool-btn" data-snip="\\prod_{i=1}^{n}">\\prod</button>
-                                <button class="smp-tool-btn" data-snip="\\int_{a}^{b}">\\int</button>
-                                <button class="smp-tool-btn" data-snip="\\lim_{x \\to \\infty}">lim</button>
-                                <button class="smp-tool-btn" data-snip="\\infty">\\infty</button>
-                                <button class="smp-tool-btn" data-snip="\\le">\\le</button>
-                                <button class="smp-tool-btn" data-snip="\\ge">\\ge</button>
-                                <button class="smp-tool-btn" data-snip="\\neq">\\neq</button>
-                                <button class="smp-tool-btn" data-snip="\\equiv">\\equiv</button>
-                                <button class="smp-tool-btn" data-snip="\\pmod{m}">pmod</button>
-                                <button class="smp-tool-btn" data-snip="\\mid">\\mid</button>
-                                <button class="smp-tool-btn" data-snip="\\Rightarrow">\\Rightarrow</button>
-                                <button class="smp-tool-btn" data-snip="\\Leftrightarrow">\\Leftrightarrow</button>
-                                <button class="smp-tool-btn" data-snip="\\forall">\\forall</button>
-                                <button class="smp-tool-btn" data-snip="\\exists">\\exists</button>
-                                <button class="smp-tool-btn" data-snip="\\mathbb{R}">\\mathbb{R}</button>
-                                <button class="smp-tool-btn" data-snip="\\mathbb{N}">\\mathbb{N}</button>
-                                <button class="smp-tool-btn" data-snip="\\mathbb{Z}">\\mathbb{Z}</button>
-                                <button class="smp-tool-btn" data-snip="\\in">\\in</button>
-                                <button class="smp-tool-btn" data-snip="\\subset">\\subset</button>
-                                <button class="smp-tool-btn" data-snip="\\cup">\\cup</button>
-                                <button class="smp-tool-btn" data-snip="\\cap">\\cap</button>
-                                <button class="smp-tool-btn" data-snip="\\emptyset">\\emptyset</button>
-                                <button class="smp-tool-btn" data-snip="\\alpha">\\alpha</button>
-                                <button class="smp-tool-btn" data-snip="\\beta">\\beta</button>
-                                <button class="smp-tool-btn" data-snip="\\pi">\\pi</button>
-                                <button class="smp-tool-btn" data-snip="\\varphi">\\varphi</button>
-                                <button class="smp-tool-btn" data-snip="\\vec{v}">\\vec{v}</button>
-                                <button class="smp-tool-btn" data-snip="\\binom{n}{k}">\\binom{n}{k}</button>
-                                <button class="smp-tool-btn" data-snip="\\begin{cases}\n  & \\\\\n  &\n\\end{cases}">cases</button>
-                                <button class="smp-tool-btn" data-snip="\\begin{pmatrix}\na & b \\\\\nc & d\n\\end{pmatrix}">matrix</button>
-                                <button class="smp-tool-btn" data-snip="\\begin{align*}\n  \n\\end{align*}">align</button>
-                            </div>
-                            <div class="smp-compose-wrap">
-                                <div class="smp-compose-pane">
-                                    <div class="smp-pane-label">
-                                        <span>Soạn thảo công thức</span>
-                                        <span id="smp-char-count">0 ký tự</span>
+                        <!-- 1. GIAO DIỆN SOẠN THẢO SONG SONG VỚI BỘ KÝ HIỆU CHUẨN SMP -->
+                        <div id="smp-panel-compose" style="display: flex; flex-direction: column; gap: 8px;">
+                            <!-- Thanh Ký Hiệu Đầy Đủ 8 Nhóm Từ SMP LaTeX Editor -->
+                            <div class="smp-snippet-toolbar" id="smp-snippet-toolbar">
+                                <div class="smp-snip-row">
+                                    <span class="smp-snip-label">Phân số & Căn</span>
+                                    <div class="smp-snip-btns">
+                                        <button class="smp-snip-btn" data-snip="\\frac{a}{b}">$\\frac{a}{b}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\sqrt{x}">$\\sqrt{x}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\sqrt[n]{x}">$\\sqrt[n]{x}$</button>
+                                        <button class="smp-snip-btn" data-snip="^{n}">$x^{n}$</button>
+                                        <button class="smp-snip-btn" data-snip="_{n}">$x_{n}$</button>
                                     </div>
-                                    <textarea class="smp-compose-textarea" id="smp-compose-input" placeholder="Gõ công thức hoặc nội dung thảo luận tại đây...&#10;&#10;Ví dụ:&#10;Theo BĐT AM-GM ta có:&#10;$$ \\frac{a}{b+c} + \\frac{b}{c+a} + \\frac{c}{a+b} \\ge \\frac{3}{2} $$"></textarea>
                                 </div>
-                                <div class="smp-compose-pane">
-                                    <div class="smp-pane-label">
-                                        <span>Xem trước trực tiếp</span>
+                                <div class="smp-snip-row">
+                                    <span class="smp-snip-label">Tổng & Tích phân</span>
+                                    <div class="smp-snip-btns">
+                                        <button class="smp-snip-btn" data-snip="\\sum_{i=1}^{n}">$\\sum_{i=1}^{n}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\prod_{i=1}^{n}">$\\prod_{i=1}^{n}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\int_{a}^{b}">$\\int_{a}^{b}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\lim_{x \\to \\infty}">lim</button>
+                                        <button class="smp-snip-btn" data-snip="\\infty">$\\infty$</button>
                                     </div>
-                                    <div class="smp-compose-preview" id="smp-compose-preview"></div>
+                                </div>
+                                <div class="smp-snip-row">
+                                    <span class="smp-snip-label">BĐT & Logic</span>
+                                    <div class="smp-snip-btns">
+                                        <button class="smp-snip-btn" data-snip="\\le">$\\le$</button>
+                                        <button class="smp-snip-btn" data-snip="\\ge">$\\ge$</button>
+                                        <button class="smp-snip-btn" data-snip="\\neq">$\\neq$</button>
+                                        <button class="smp-snip-btn" data-snip="\\equiv">$\\equiv$</button>
+                                        <button class="smp-snip-btn" data-snip="\\pmod{m}">$\\pmod{m}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\forall">$\\forall$</button>
+                                        <button class="smp-snip-btn" data-snip="\\exists">$\\exists$</button>
+                                        <button class="smp-snip-btn" data-snip="\\mid">$\\mid$</button>
+                                        <button class="smp-snip-btn" data-snip="\\nmid">$\\nmid$</button>
+                                    </div>
+                                </div>
+                                <div class="smp-snip-row">
+                                    <span class="smp-snip-label">Tập hợp</span>
+                                    <div class="smp-snip-btns">
+                                        <button class="smp-snip-btn" data-snip="\\mathbb{N}">$\\mathbb{N}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\mathbb{Z}">$\\mathbb{Z}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\mathbb{Q}">$\\mathbb{Q}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\mathbb{R}">$\\mathbb{R}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\mathbb{C}">$\\mathbb{C}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\in">$\\in$</button>
+                                        <button class="smp-snip-btn" data-snip="\\notin">$\\notin$</button>
+                                        <button class="smp-snip-btn" data-snip="\\subset">$\\subset$</button>
+                                        <button class="smp-snip-btn" data-snip="\\cup">$\\cup$</button>
+                                        <button class="smp-snip-btn" data-snip="\\cap">$\\cap$</button>
+                                        <button class="smp-snip-btn" data-snip="\\emptyset">$\\emptyset$</button>
+                                    </div>
+                                </div>
+                                <div class="smp-snip-row">
+                                    <span class="smp-snip-label">Chữ Hy Lạp</span>
+                                    <div class="smp-snip-btns">
+                                        <button class="smp-snip-btn" data-snip="\\alpha">$\\alpha$</button>
+                                        <button class="smp-snip-btn" data-snip="\\beta">$\\beta$</button>
+                                        <button class="smp-snip-btn" data-snip="\\gamma">$\\gamma$</button>
+                                        <button class="smp-snip-btn" data-snip="\\delta">$\\delta$</button>
+                                        <button class="smp-snip-btn" data-snip="\\varphi">$\\varphi$</button>
+                                        <button class="smp-snip-btn" data-snip="\\pi">$\\pi$</button>
+                                        <button class="smp-snip-btn" data-snip="\\theta">$\\theta$</button>
+                                        <button class="smp-snip-btn" data-snip="\\lambda">$\\lambda$</button>
+                                        <button class="smp-snip-btn" data-snip="\\mu">$\\mu$</button>
+                                        <button class="smp-snip-btn" data-snip="\\sigma">$\\sigma$</button>
+                                        <button class="smp-snip-btn" data-snip="\\omega">$\\omega$</button>
+                                        <button class="smp-snip-btn" data-snip="\\Omega">$\\Omega$</button>
+                                    </div>
+                                </div>
+                                <div class="smp-snip-row">
+                                    <span class="smp-snip-label">Môi trường</span>
+                                    <div class="smp-snip-btns">
+                                        <button class="smp-snip-btn" data-snip="\\begin{align*}\n  \n\\end{align*}">align</button>
+                                        <button class="smp-snip-btn" data-snip="\\begin{cases}\n  & \\\\\n  &\n\\end{cases}">cases</button>
+                                        <button class="smp-snip-btn" data-snip="\\begin{pmatrix}\na & b \\\\\nc & d\n\\end{pmatrix}">matrix</button>
+                                    </div>
+                                </div>
+                                <div class="smp-snip-row">
+                                    <span class="smp-snip-label">Cấu trúc</span>
+                                    <div class="smp-snip-btns">
+                                        <button class="smp-snip-btn" data-snip="\\left( \\right)">( )</button>
+                                        <button class="smp-snip-btn" data-snip="\\left[ \\right]">[ ]</button>
+                                        <button class="smp-snip-btn" data-snip="\\overline{AB}">$\\overline{AB}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\vec{v}">$\\vec{v}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\binom{n}{k}">$\\binom{n}{k}$</button>
+                                        <button class="smp-snip-btn" data-snip="\\gcd(a,b)">gcd</button>
+                                        <button class="smp-snip-btn" data-snip="\\lfloor x \\rfloor">$\\lfloor x \\rfloor$</button>
+                                        <button class="smp-snip-btn" data-snip="\\lceil x \\rceil">$\\lceil x \\rceil$</button>
+                                    </div>
+                                </div>
+                                <div class="smp-snip-row">
+                                    <span class="smp-snip-label">Định dạng</span>
+                                    <div class="smp-snip-btns">
+                                        <button class="smp-snip-btn" data-snip="\\Rightarrow">$\\Rightarrow$</button>
+                                        <button class="smp-snip-btn" data-snip="\\Leftarrow">$\\Leftarrow$</button>
+                                        <button class="smp-snip-btn" data-snip="\\textbf{}"><b>B</b></button>
+                                        <button class="smp-snip-btn" data-snip="\\textit{}"><i>I</i></button>
+                                        <button class="smp-snip-btn" data-snip="\\textbf{Bài toán.} ">Bài Toán</button>
+                                        <button class="smp-snip-btn" data-snip="\\textbf{Lời giải.} ">Lời Giải</button>
+                                        <button class="smp-snip-btn" data-snip="\\textbf{Bổ đề.} ">Bổ Đề</button>
+                                        <button class="smp-snip-btn" data-snip="\\textbf{Định lý.} ">Định Lý</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Workspace 2 Cột: Input bên trái & Preview bên phải -->
+                            <div class="smp-workspace">
+                                <div class="smp-pane">
+                                    <div class="smp-pane-header">
+                                        <span class="smp-pane-title">Soạn Thảo (Gõ \ để gợi ý lệnh)</span>
+                                        <span class="smp-pane-meta" id="smp-char-meta">0 ký tự | 0 từ | 0 dòng</span>
+                                    </div>
+                                    <div class="smp-editor-box">
+                                        <textarea class="smp-textarea" id="smp-compose-input" spellcheck="false" placeholder="Gõ công thức tại đây (ví dụ: gõ \\fr rồi ấn Enter ra phân số)...&#10;&#10;Theo BĐT AM-GM ta có:&#10;$$ \\frac{a}{b+c} + \\frac{b}{c+a} + \\frac{c}{a+b} \\ge \\frac{3}{2} $$"></textarea>
+                                        <!-- Danh sách popup gợi ý lệnh tự động -->
+                                        <div class="smp-autocomplete-popup" id="smp-autocomplete-popup"></div>
+                                    </div>
+                                </div>
+                                <div class="smp-pane">
+                                    <div class="smp-pane-header">
+                                        <span class="smp-pane-title">Xem Trước Trực Tiếp</span>
+                                    </div>
+                                    <div class="smp-preview-box" id="smp-compose-preview"></div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- 2. Giao diện Biên Dịch (Từ đoạn bôi đen) -->
+                        <!-- 2. GIAO DIỆN BIÊN DỊCH VĂN BẢN TỪ BÌNH LUẬN BÔI ĐEN -->
                         <div id="smp-panel-translate" style="display: none;">
                             <div class="smp-translate-view" id="smp-translate-view"></div>
                         </div>
 
-                        <!-- 3. Giao diện Mã Công Thức -->
+                        <!-- 3. GIAO DIỆN MÃ CÔNG THỨC -->
                         <div id="smp-panel-raw" style="display: none;">
-                            <textarea class="smp-raw-textarea" id="smp-raw-textarea" placeholder="Nhập hoặc chỉnh sửa mã công thức tại đây..."></textarea>
+                            <div class="smp-editor-box">
+                                <textarea class="smp-raw-textarea" id="smp-raw-textarea" spellcheck="false" placeholder="Nhập hoặc chỉnh sửa mã công thức tại đây (hỗ trợ gợi ý khi gõ \\)..."></textarea>
+                            </div>
                         </div>
                     </div>
 
                     <div class="smp-footer">
                         <div class="smp-footer-left">
                             <span class="smp-status-dot"></span>
-                            <span id="smp-status-text">Sẵn sàng</span>
+                            <span id="smp-status-text">Thời gian thực</span>
                         </div>
                         <div class="smp-footer-actions">
                             <button class="smp-action-btn btn-primary" id="smp-btn-insert" title="Chèn trực tiếp vào ô bình luận đang chọn">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
                                 <span>Chèn Vào Bình Luận</span>
                             </button>
-                            <button class="smp-action-btn" id="smp-btn-copy-image" title="Chép ảnh công thức vào Clipboard để bấm Ctrl + V dán ảnh vào bình luận">
+                            <button class="smp-action-btn" id="smp-btn-copy-image" title="Chép ảnh công thức nét cao vào Clipboard (nhấn Ctrl+V để dán ảnh vào Facebook)">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
                                 <span>Chép Ảnh</span>
                             </button>
@@ -558,8 +933,34 @@
             `;
             root.appendChild(backdrop);
             bindModalEvents(backdrop);
+            initThemePreference(backdrop);
         }
         return backdrop;
+    }
+
+    /**
+     * Khởi tạo và đồng bộ chế độ Sáng / Tối
+     */
+    function initThemePreference(backdrop) {
+        const dialog = backdrop.querySelector('#smp-dialog');
+        const themeBtn = backdrop.querySelector('#smp-btn-theme-toggle');
+        const savedTheme = localStorage.getItem('smp_latex_theme') || 'dark';
+
+        if (savedTheme === 'light') {
+            dialog.classList.add('light-theme');
+            if (themeBtn) themeBtn.textContent = '☀️';
+        } else {
+            dialog.classList.remove('light-theme');
+            if (themeBtn) themeBtn.textContent = '🌙';
+        }
+
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const isLight = dialog.classList.toggle('light-theme');
+                themeBtn.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('smp_latex_theme', isLight ? 'light' : 'dark');
+            });
+        }
     }
 
     /**
@@ -596,6 +997,24 @@
     }
 
     /**
+     * Render các công thức trên nút thanh công cụ
+     */
+    function renderToolbarMath(backdrop) {
+        const toolbar = backdrop.querySelector('#smp-snippet-toolbar');
+        if (toolbar && !toolbar._mathRendered) {
+            toolbar._mathRendered = true;
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(toolbar, {
+                    delimiters: [
+                        { left: '$', right: '$', display: false }
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+    }
+
+    /**
      * Chuyển Tab (Soạn Thảo / Biên Dịch / Mã Công Thức)
      */
     function switchTab(root, tab) {
@@ -613,7 +1032,6 @@
         const translateView = root.querySelector('#smp-translate-view');
         const rawTextarea = root.querySelector('#smp-raw-textarea');
 
-        // Bỏ active tất cả nút
         [btnCompose, btnTranslate, btnRaw].forEach(btn => btn && btn.classList.remove('active'));
         [panelCompose, panelTranslate, panelRaw].forEach(p => p && (p.style.display = 'none'));
 
@@ -624,19 +1042,18 @@
                 renderLatexContent(composePreview, composeInput.value);
                 composeInput.focus();
             }
+            renderToolbarMath(root);
         } else if (tab === 'translate') {
             btnTranslate.classList.add('active');
             panelTranslate.style.display = 'block';
-            // Đồng bộ từ ô raw hoặc nội dung dịch
             if (rawTextarea && translateView) {
                 renderLatexContent(translateView, rawTextarea.value);
             }
         } else {
             btnRaw.classList.add('active');
             panelRaw.style.display = 'block';
-            // Cập nhật giá trị vào ô raw tùy thuộc tab trước đó
             if (rawTextarea) {
-                if (composeInput && composeInput.value.trim()) {
+                if (composeInput && composeInput.value.trim() && !rawTextarea.value.trim()) {
                     rawTextarea.value = composeInput.value;
                 }
                 rawTextarea.focus();
@@ -671,7 +1088,7 @@
     }
 
     /**
-     * Mở hộp thoại ở chế độ Soạn Thảo (khi bấm chuột phải vào ô cmt hoặc phím tắt)
+     * Mở hộp thoại ở chế độ Soạn Thảo (chuột phải ô cmt hoặc phím tắt)
      */
     function showComposerModal() {
         const root = ensureModalHost();
@@ -680,7 +1097,7 @@
         const composeInput = root.querySelector('#smp-compose-input');
         const composePreview = root.querySelector('#smp-compose-preview');
 
-        // Khôi phục nháp đã lưu nếu có
+        // Khôi phục nháp đã lưu
         if (composeInput && !composeInput.value) {
             const savedDraft = localStorage.getItem('smp_composer_draft');
             if (savedDraft) {
@@ -690,6 +1107,7 @@
 
         if (composeInput && composePreview) {
             renderLatexContent(composePreview, composeInput.value);
+            updateMetaCounts(backdrop, composeInput.value);
         }
 
         switchTab(root, 'compose');
@@ -697,7 +1115,20 @@
         requestAnimationFrame(() => {
             backdrop.classList.add('active');
             if (composeInput) composeInput.focus();
+            renderToolbarMath(backdrop);
         });
+    }
+
+    /**
+     * Cập nhật số ký tự, từ, dòng chuẩn SMP LaTeX Editor
+     */
+    function updateMetaCounts(backdrop, text) {
+        const charMeta = backdrop.querySelector('#smp-char-meta');
+        if (!charMeta) return;
+        const val = text || '';
+        const words = val.trim().split(/\s+/).filter(x => x.length > 0).length;
+        const lines = val.length === 0 ? 0 : val.split('\n').length;
+        charMeta.textContent = `${val.length} ký tự | ${words} từ | ${lines} dòng`;
     }
 
     /**
@@ -713,11 +1144,14 @@
         let insertVal = snipText;
         let cursorOffset = insertVal.length;
 
-        // Tự động bọc nếu người dùng đã bôi đen chữ
         if (snipText.includes('{a}') || snipText.includes('{x}')) {
             if (sel) {
                 insertVal = snipText.replace('{a}', `{${sel}}`).replace('{x}', `{${sel}}`);
             }
+        } else if (snipText === '^{n}' && sel) {
+            insertVal = `^{${sel}}`;
+        } else if (snipText === '_{n}' && sel) {
+            insertVal = `_{${sel}}`;
         } else if (sel) {
             insertVal = snipText + sel;
         }
@@ -727,12 +1161,78 @@
         textarea.value = before + insertVal + after;
         textarea.selectionStart = textarea.selectionEnd = start + cursorOffset;
 
-        // Kích hoạt sự kiện input để live render
         textarea.dispatchEvent(new Event('input', { bubbles: true }));
     }
 
     /**
-     * Xuất và sao chép ảnh công thức vào Clipboard (PNG chất lượng cao)
+     * Quản lý Autocomplete Hint khi gõ \
+     */
+    function handleAutocompleteInput(textarea, popupEl) {
+        currentEditorTarget = textarea;
+        const cur = textarea.selectionStart;
+        const textBefore = textarea.value.slice(0, cur);
+        const match = textBefore.match(/\\[a-zA-Z]*$/);
+
+        if (!match) {
+            popupEl.classList.remove('show');
+            filteredHints = [];
+            return;
+        }
+
+        const query = match[0];
+        filteredHints = LATEX_SNIPPETS.filter(item => item.text.startsWith(query));
+
+        if (filteredHints.length === 0) {
+            popupEl.classList.remove('show');
+            return;
+        }
+
+        activeHintIndex = 0;
+        renderHintList(popupEl);
+        popupEl.classList.add('show');
+    }
+
+    function renderHintList(popupEl) {
+        popupEl.innerHTML = '';
+        filteredHints.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = `smp-hint-item ${index === activeHintIndex ? 'active' : ''}`;
+            div.innerHTML = `
+                <span>${item.displayText}</span>
+                <span class="smp-hint-badge">Enter ↵</span>
+            `;
+            div.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                applyHint(item);
+            });
+            popupEl.appendChild(div);
+        });
+    }
+
+    function applyHint(item) {
+        if (!currentEditorTarget) return;
+        const cur = currentEditorTarget.selectionStart;
+        const textBefore = currentEditorTarget.value.slice(0, cur);
+        const match = textBefore.match(/\\[a-zA-Z]*$/);
+        if (!match) return;
+
+        const start = cur - match[0].length;
+        const after = currentEditorTarget.value.slice(cur);
+        const before = currentEditorTarget.value.slice(0, start);
+
+        currentEditorTarget.value = before + item.text + after;
+        const newCur = start + item.text.length - (item.offset || 0);
+        currentEditorTarget.selectionStart = currentEditorTarget.selectionEnd = newCur;
+
+        const popupEl = shadowRoot.querySelector('#smp-autocomplete-popup');
+        if (popupEl) popupEl.classList.remove('show');
+
+        currentEditorTarget.dispatchEvent(new Event('input', { bubbles: true }));
+        currentEditorTarget.focus();
+    }
+
+    /**
+     * Xuất và sao chép ảnh công thức vào Clipboard (PNG độ nét cao 2.5x)
      */
     async function copyFormulaImage(backdrop) {
         let previewEl = null;
@@ -747,10 +1247,9 @@
             return;
         }
 
-        showToast(backdrop, 'Đang tạo ảnh công thức...');
+        showToast(backdrop, 'Đang tạo ảnh công thức sắc nét...');
 
         try {
-            // Tạo card sạch để chụp ảnh sắc nét (nền trắng, chữ đen chuẩn để dán lên FB rõ đẹp)
             const clone = previewEl.cloneNode(true);
             clone.style.position = 'fixed';
             clone.style.left = '-9999px';
@@ -781,7 +1280,7 @@
 
             const canvas = await html2canvas(clone, {
                 backgroundColor: '#ffffff',
-                scale: 2.5, // 2.5x Độ nét cao
+                scale: 2.5,
                 logging: false,
                 useCORS: true
             });
@@ -806,7 +1305,6 @@
                     }
                 }
 
-                // Tải xuống file ảnh nếu trình duyệt chặn ClipboardItem
                 const a = document.createElement('a');
                 a.href = URL.createObjectURL(blob);
                 a.download = 'cong-thuc.png';
@@ -821,7 +1319,7 @@
     }
 
     /**
-     * Chèn nội dung vào ô bình luận hoặc ô nhập liệu đang tương tác
+     * Chèn nội dung vào ô bình luận hoặc ô nhập liệu
      */
     function insertTextIntoCommentBox(backdrop) {
         let textToInsert = '';
@@ -851,7 +1349,6 @@
             }
             showToast(backdrop, '✓ Đã chèn vào ô bình luận!');
         } else {
-            // Nếu không tìm thấy ô bình luận nào, copy vào clipboard và báo người dùng
             navigator.clipboard.writeText(textToInsert).then(() => {
                 showToast(backdrop, '✓ Đã sao chép! Hãy nhấp vào ô bình luận và bấm Ctrl + V.');
             });
@@ -859,7 +1356,7 @@
     }
 
     /**
-     * Gắn các sự kiện (kéo thả, đóng, copy, chèn, phím Esc)
+     * Gắn các sự kiện (kéo thả, đóng, copy, gợi ý, phím tắt)
      */
     function bindModalEvents(backdrop) {
         const dialog = backdrop.querySelector('#smp-dialog');
@@ -873,17 +1370,17 @@
         const composeInput = backdrop.querySelector('#smp-compose-input');
         const composePreview = backdrop.querySelector('#smp-compose-preview');
         const rawTextarea = backdrop.querySelector('#smp-raw-textarea');
-        const charCount = backdrop.querySelector('#smp-char-count');
+        const autocompletePopup = backdrop.querySelector('#smp-autocomplete-popup');
 
         const btnInsert = backdrop.querySelector('#smp-btn-insert');
         const btnCopyImage = backdrop.querySelector('#smp-btn-copy-image');
         const btnCopyCode = backdrop.querySelector('#smp-btn-copy-code');
         const copyCodeText = backdrop.querySelector('#smp-copy-code-text');
-        const toolbar = backdrop.querySelector('#smp-toolbar');
+        const toolbar = backdrop.querySelector('#smp-snippet-toolbar');
 
-        // Đóng modal
         function closeModal() {
             backdrop.classList.remove('active');
+            if (autocompletePopup) autocompletePopup.classList.remove('show');
         }
 
         btnClose.addEventListener('click', closeModal);
@@ -896,24 +1393,50 @@
         btnTabTranslate.addEventListener('click', () => switchTab(backdrop, 'translate'));
         btnTabRaw.addEventListener('click', () => switchTab(backdrop, 'raw'));
 
-        // Sự kiện gõ trực tiếp trong ô Soạn Thảo (Live Render realtime)
+        // Sự kiện gõ trực tiếp trong ô Soạn Thảo (Live Render realtime & Autocomplete)
         if (composeInput) {
             let composeDebounce = null;
             composeInput.addEventListener('input', () => {
                 const val = composeInput.value;
-                if (charCount) charCount.textContent = `${val.length} ký tự`;
+                updateMetaCounts(backdrop, val);
 
                 // Lưu nháp tự động
                 localStorage.setItem('smp_composer_draft', val);
 
+                // Kích hoạt gợi ý lệnh nếu vừa gõ \
+                handleAutocompleteInput(composeInput, autocompletePopup);
+
                 clearTimeout(composeDebounce);
                 composeDebounce = setTimeout(() => {
                     renderLatexContent(composePreview, val);
-                }, 40);
+                }, 35);
             });
 
-            // Tự động đóng cặp dấu ngoặc và $
+            // Xử lý phím mũi tên & Enter cho Autocomplete & Tự đóng ngoặc
             composeInput.addEventListener('keydown', (e) => {
+                if (autocompletePopup && autocompletePopup.classList.contains('show') && filteredHints.length > 0) {
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        activeHintIndex = (activeHintIndex + 1) % filteredHints.length;
+                        renderHintList(autocompletePopup);
+                        return;
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        activeHintIndex = (activeHintIndex - 1 + filteredHints.length) % filteredHints.length;
+                        renderHintList(autocompletePopup);
+                        return;
+                    } else if (e.key === 'Enter' || e.key === 'Tab') {
+                        e.preventDefault();
+                        applyHint(filteredHints[activeHintIndex]);
+                        return;
+                    } else if (e.key === 'Escape') {
+                        e.preventDefault();
+                        autocompletePopup.classList.remove('show');
+                        return;
+                    }
+                }
+
+                // Tự động đóng cặp dấu ngoặc và $
                 if (e.key === '$') {
                     const start = composeInput.selectionStart;
                     const end = composeInput.selectionEnd;
@@ -945,27 +1468,34 @@
             });
         }
 
-        // Sự kiện click nút công thức trên thanh công cụ
+        // Sự kiện trên ô Mã Công Thức
+        if (rawTextarea) {
+            rawTextarea.addEventListener('input', () => {
+                handleAutocompleteInput(rawTextarea, autocompletePopup);
+            });
+        }
+
+        // Click nút công thức trên thanh công cụ
         if (toolbar) {
             toolbar.addEventListener('click', (e) => {
-                const btn = e.target.closest('.smp-tool-btn');
+                const btn = e.target.closest('.smp-snip-btn');
                 if (btn && btn.dataset.snip) {
                     insertSnippet(composeInput, btn.dataset.snip);
                 }
             });
         }
 
-        // Sự kiện nút Chèn Vào Bình Luận
+        // Nút Chèn Vào Bình Luận
         btnInsert.addEventListener('click', () => {
             insertTextIntoCommentBox(backdrop);
         });
 
-        // Sự kiện nút Chép Ảnh
+        // Nút Chép Ảnh
         btnCopyImage.addEventListener('click', () => {
             copyFormulaImage(backdrop);
         });
 
-        // Sự kiện nút Sao Chép Mã
+        // Nút Sao Chép Mã
         btnCopyCode.addEventListener('click', () => {
             let textToCopy = '';
             if (currentActiveTab === 'compose') {
@@ -1015,7 +1545,7 @@
             isDragging = false;
         });
 
-        // Phím tắt Esc để đóng modal
+        // Phím tắt Esc
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && backdrop.classList.contains('active')) {
                 closeModal();
@@ -1054,5 +1584,5 @@
         }
     });
 
-    console.log('[SMP] Tiện ích Soạn Thảo & Biên Dịch đã sẵn sàng.');
+    console.log('[SMP] Trình Soạn Thảo & Biên Dịch đã sẵn sàng.');
 })();
