@@ -325,7 +325,7 @@
                     <div class="smp-body">
                         <div class="smp-render-view" id="smp-render-view"></div>
                         <div class="smp-raw-view" id="smp-raw-view">
-                            <textarea class="smp-raw-textarea" id="smp-raw-textarea" readonly></textarea>
+                            <textarea class="smp-raw-textarea" id="smp-raw-textarea" placeholder="Nhập hoặc chỉnh sửa mã LaTeX tại đây..."></textarea>
                         </div>
                     </div>
 
@@ -348,24 +348,12 @@
         const renderView = root.querySelector('#smp-render-view');
         const rawTextarea = root.querySelector('#smp-raw-textarea');
 
-        if (renderView) {
-            renderView.innerText = normalized.cleanLatex;
-            // Render trực tiếp qua KaTeX
-            if (typeof renderMathInElement === 'function') {
-                renderMathInElement(renderView, {
-                    delimiters: [
-                        { left: '$$', right: '$$', display: true },
-                        { left: '$', right: '$', display: false },
-                        { left: '\\(', right: '\\)', display: false },
-                        { left: '\\[', right: '\\]', display: true }
-                    ],
-                    throwOnError: false
-                });
-            }
-        }
-
         if (rawTextarea) {
             rawTextarea.value = normalized.cleanLatex;
+        }
+
+        if (renderView) {
+            renderLatexContent(renderView, normalized.cleanLatex);
         }
 
         // Đưa về tab Render mặc định
@@ -378,6 +366,25 @@
     }
 
     /**
+     * Render KaTeX vào phần tử hiển thị từ chuỗi LaTeX
+     */
+    function renderLatexContent(element, latexText) {
+        if (!element) return;
+        element.innerText = latexText || '';
+        if (typeof renderMathInElement === 'function') {
+            renderMathInElement(element, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                throwOnError: false
+            });
+        }
+    }
+
+    /**
      * Chuyển tab Render / Mã Raw
      */
     function switchTab(root, tab) {
@@ -385,10 +392,15 @@
         const btnRaw = root.querySelector('#smp-btn-tab-raw');
         const renderView = root.querySelector('#smp-render-view');
         const rawView = root.querySelector('#smp-raw-view');
+        const rawTextarea = root.querySelector('#smp-raw-textarea');
 
         if (tab === 'render') {
             btnRender.classList.add('active');
             btnRaw.classList.remove('active');
+            // Tự động re-render KaTeX nếu người dùng đã chỉnh sửa mã LaTeX trong tab Mã LaTeX
+            if (rawTextarea && renderView) {
+                renderLatexContent(renderView, rawTextarea.value);
+            }
             renderView.style.display = 'block';
             rawView.style.display = 'none';
         } else {
@@ -396,6 +408,9 @@
             btnRender.classList.remove('active');
             rawView.style.display = 'block';
             renderView.style.display = 'none';
+            if (rawTextarea) {
+                rawTextarea.focus();
+            }
         }
     }
 
