@@ -225,9 +225,14 @@
         // Hệ số nhị thức dạng binom(n, k) -> \binom{n}{k}
         s = s.replace(/\bbinom\s*\(\s*([^,()]+)\s*,\s*([^()]+)\s*\)/gi, '\\binom{$1}{$2}');
 
-        // Ký hiệu tổng sigma: nếu là hàm số sigma(...) -> \sigma(...), nếu là toán tử tổng -> \sum
-        s = s.replace(/\bsigma\s*\(([^()]+)\)/gi, '\\sigma($1)');
-        s = s.replace(/\b(?:sigma|Sigma)\b/g, '\\sum');
+        // Toán tử tổng: sum, Sigma -> \sum
+        s = s.replace(/\b(?:sum|Sigma)\b(?!\s+(?:họp|suê|vầy|tụ))/g, '\\sum');
+
+        // Toán tử tích: prod, Prod -> \prod
+        s = s.replace(/\b(?:prod|Prod)\b/g, '\\prod');
+
+        // Ký hiệu Hy Lạp / hàm số học sigma: sigma -> \sigma
+        s = s.replace(/\bsigma\b/g, '\\sigma');
 
         // Định giá p-adic: vpi(...) -> v_{p_i}(...), vp(...) -> v_p(...)
         s = s.replace(/\bvpi\s*\(([^()]+)\)/gi, 'v_{p_i}($1)');
@@ -263,7 +268,7 @@
         // Biến ai, bi, ci khi đi kèm toán tử hoặc trong biểu thức
         s = s.replace(/\b([abc])([ikjmn])\b(?=\s*[+\-*.\/=<>^~|])/g, '$1_{$2}');
         s = s.replace(/(?<=[+\-*.\/=<>^~|\\]\s*)\b([abc])([ikjmn])\b/g, '$1_{$2}');
-        s = s.replace(/(?<=\\sum\s+)\b([abc])([ikjmn])\b/g, '$1_{$2}');
+        s = s.replace(/(?<=(?:\\sum|\\prod|\\sigma)\s+)\b([abc])([ikjmn])\b/g, '$1_{$2}');
 
         // Tách biến số trước từ tiếng Việt: p^k k đủ lớn -> p^k, k đủ lớn
         s = s.replace(/([a-zA-Z]\^[0-9a-zA-Z{}]+)\s+([a-zA-Z])\s+([a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]{2,})/g, '$1, $2 $3');
@@ -466,8 +471,8 @@
         });
         // e3) Dạng tử số đơn / mẫu có ngoặc: 1/(...)
         s = s.replace(/([0-9]+|[a-zA-Z](?:_\{?[^{}]+\}?|_[0-9a-zA-Z]+)?)\s*\/\s*\(([^()]+)\)/g, '\\frac{$1}{$2}');
-        // f) Dạng phân số đơn giản giữa biến số/chỉ số hoặc số nguyên: 1/p, 1/u_n, 1/u_{n+1}, 1/x, 1/2, a/b
-        s = s.replace(/(?<![a-zA-Z0-9_\\])([0-9]+|[a-zA-Z](?:_\{?[a-zA-Z0-9\+\-]+\}?|_[a-zA-Z0-9]+)?)\s*\/\s*([0-9]+|[a-zA-Z](?:_\{?[a-zA-Z0-9\+\-]+\}?|_[a-zA-Z0-9]+)?)(?![a-zA-Z0-9_\/])/g, '\\frac{$1}{$2}');
+        // f) Dạng phân số đơn giản giữa biến số/chỉ số hoặc số nguyên: 1/p, 1/k^2, 1/u_n, 1/u_{n+1}, 1/x, 1/2, a/b
+        s = s.replace(/(?<![a-zA-Z0-9_\\])([0-9]+|[a-zA-Z](?:_\{?[a-zA-Z0-9\+\-]+\}?|_[a-zA-Z0-9]+)?)\s*\/\s*([0-9]+|[a-zA-Z](?:_\{?[a-zA-Z0-9\+\-]+\}?|_[a-zA-Z0-9]+)?(?:\^[0-9a-zA-Z]+|\^\{[^{}]+\})?)(?![a-zA-Z0-9_\/\^])/g, '\\frac{$1}{$2}');
         // g) Dạng đại số: 1/x+1, 1/n(x+n)
         s = s.replace(/([0-9]+|[a-zA-Z])\/([a-zA-Z][\+\-][0-9a-zA-Z]+)(?=\s*[\+\-\=]|$)/g, '\\frac{$1}{$2}');
         s = s.replace(/([0-9]+|[a-zA-Z])\/([a-zA-Z]\([^\)]+\))(?=\s*[\+\-\=]|$)/g, '\\frac{$1}{$2}');
