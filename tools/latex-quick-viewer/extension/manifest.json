@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "SMP — LaTeX Quick Viewer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Biên dịch và chuẩn hóa tức thì văn bản toán học thô từ mạng xã hội",
   "author": "SMP — Secrets of Mathematical Principles",
   "icons": {

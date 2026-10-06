@@ -71,6 +71,16 @@
         const clean = word.toLowerCase().replace(/^[(\["'«`]+|[)\]"'».,:;?!`]+$/g, '').trim();
         if (!clean) return false;
 
+        // Từ ghép có dấu gạch chéo: segments/khúc, đoạn/khúc, và/hoặc
+        if (/^[a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]{2,}\/[a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]{2,}$/i.test(clean)) {
+            return true;
+        }
+
+        // Từ ghép có gạch nối: subset-sum, set-theoretic, non-empty, trade-off
+        if (/^[a-zA-Z]{3,}-[a-zA-Z]{3,}$/i.test(clean)) {
+            return true;
+        }
+
         // Chuỗi chứa toán tử toán học hoặc dấu ngoặc bên trong KHÔNG BAO GIỜ là một từ ngôn ngữ tự nhiên đơn lẻ
         if (/[=<>\/\\^|~_]|<=|>=|!=|->|=>/.test(clean)) {
             return false;
@@ -209,11 +219,28 @@
             return `${op.toUpperCase()}_{${n}}^{${k}}`;
         });
 
-        // Tổ hợp, chỉnh hợp dạng biến nCk, nCr, nAk (bắt buộc viết hoa C, A)
-        s = s.replace(/\b([a-zA-Z])\s*([CA])\s*([a-zA-Z0-9])\b/g, '$2_{$1}^{$3}');
+        // Tổ hợp, chỉnh hợp dạng biến nCk, nCr, nAk (chỉ áp dụng cho các biến số chỉ số n, k, r, m)
+        s = s.replace(/\b([nkm])\s*([CA])\s*([0-9krmn])\b/g, '$2_{$1}^{$3}');
 
         // Hệ số nhị thức dạng binom(n, k) -> \binom{n}{k}
         s = s.replace(/\bbinom\s*\(\s*([^,()]+)\s*,\s*([^()]+)\s*\)/gi, '\\binom{$1}{$2}');
+
+        // Ký hiệu Hy Lạp: eps, epsilon, esp
+        s = s.replace(/\b(?:eps|epsilon|esp)\b/gi, '\\epsilon');
+
+        // Biến số kèm chỉ số chữ: xk, xi, xj, xn, uk, un, vk, vn, w1, w2
+        s = s.replace(/\b([xuvw])([kijnm])\b/g, '$1_{$2}');
+        s = s.replace(/\b([xuvw])([0-9]+)\b/g, '$1_{$2}');
+
+        // Dấu ba chấm liền kề toán tử hoặc danh sách
+        s = s.replace(/([+\-])\s*\.\.\.(?!\.)/g, '$1 \\dots');
+        s = s.replace(/>=\s*\.\.\.\s*>=/g, '>= \\dots >=');
+        s = s.replace(/<=\s*\.\.\.\s*<=/g, '<= \\dots <=');
+        s = s.replace(/,\s*\.\.\.\s*,/g, ', \\dots, ');
+        s = s.replace(/([0-9a-zA-Z\)])\s*,\s*\.\.\./g, '$1, \\dots');
+
+        // Tách dấu chấm kết thúc câu dính liền mở ngoặc: C.(khúc -> C. (khúc
+        s = s.replace(/([0-9a-zA-Z\)])\.\s*\(/g, '$1. (');
 
         // Thoát dấu ngoặc nhọn tập hợp trong văn bản: {1, 2, ..., 2026} -> \{1, 2, ..., 2026\}
         // Không thoát nếu đứng sau _, ^, \, }, hoặc ký tự định danh (như M_{-1}, A_{H_0}, x^{2}, \frac{1}{2})
@@ -323,6 +350,9 @@
             cleanSub = cleanSub.replace(/([0-9\+\-\\infty]+)\s*([+\-])$/, '$1^{$2}');
             return `\\lim_{${cleanSub}} ${fn}`;
         });
+
+        // 6b. Các toán tử chuẩn: sum, prod, lim, min, max, sup, inf (không dùng \\b sau vì _ là ký tự word)
+        s = s.replace(/(?<!\\)\b(sum|prod|lim|min|max|inf|sup)(?=[_^({]|\s+[a-zA-Z0-9(\\])/gi, '\\$1');
         s = s.replace(/lim_\s*\(\s*([^)]+)\s*\)\s*([a-zA-Z0-9_\(\)]+)/g, function(_, sub, fn) {
             let cleanSub = sub.replace(/->/g, '\\to').replace(/\s+/g, ' ').trim();
             cleanSub = cleanSub.replace(/([0-9\+\-\\infty]+)\s*([+\-])$/, '$1^{$2}');
@@ -361,6 +391,19 @@
         s = s.replace(/(?<![\\_a-zA-Z0-9])([a-zA-Z])([0-9]+)\b/g, '$1_{$2}');
         s = s.replace(/(?<![\\_a-zA-Z0-9])([A-Z]{2})([0-9]+)\b/g, '$1_{$2}');
 
+        // Bọc từ tiếng Việt có dấu bên trong chỉ số ngoặc nhọn _{...} bằng \text{...}
+        s = s.replace(/_\{([^}]+)\}/g, function(_, inner) {
+            if (VI_ACCENTS_REGEX.test(inner)) {
+                const parts = inner.split(/(\s+)/);
+                const wrapped = parts.map(p => {
+                    if (VI_ACCENTS_REGEX.test(p)) return `\\text{${p}}`;
+                    return p;
+                }).join('');
+                return `_{${wrapped}}`;
+            }
+            return `_{${inner}}`;
+        });
+
         // 10. Phân số (Fractions)
         // a) Dạng hàm số / biến số: \phi(n)/n, f(x)/x, P(n)/n (ưu tiên xử lý trước)
         s = s.replace(/(\\[a-zA-Z]+|[a-zA-Z][a-zA-Z0-9_]*)\s*\(([^()]+)\)\s*\/\s*([a-zA-Z0-9_]+|\\[a-zA-Z]+)/g, '\\frac{$1($2)}{$3}');
@@ -375,10 +418,13 @@
             return `\\frac{${num}}{(${den})${exp || ''}}`;
         });
         s = s.replace(/\(([^()]+)\)\s*\/\s*([0-9a-zA-Z_]+|\\[a-zA-Z]+(?:\{[^}]+\})*)/g, '\\frac{$1}{$2}');
-        // e) Dạng tử số đơn / mẫu có ngoặc mũ: 1/(u_{n+1})^2
+        // e1) Dạng tử số có luỹ thừa / mũ: 2^n/(2^{n+1}-1), 2^{i-1}/(...), x^2/(x+1)
+        s = s.replace(/((?:[0-9]+|[a-zA-Z](?:_\{?[^{}]+\}?|_[0-9a-zA-Z]+)?)(?:\^[0-9a-zA-Z]+|\^\{[^{}]+\}))\s*\/\s*\(([^()]+)\)/g, '\\frac{$1}{$2}');
+        // e2) Dạng tử số đơn / mẫu có ngoặc mũ: 1/(u_{n+1})^2
         s = s.replace(/([0-9]+|[a-zA-Z](?:_\{?[^{}]+\}?|_[0-9a-zA-Z]+)?)\s*\/\s*\(([^()]+)\)(\^([0-9a-zA-Z_]+|\{[^}]+\}))/g, function(_, num, den, fullExp, exp) {
             return `\\frac{${num}}{(${den})^{${exp}}}`;
         });
+        // e3) Dạng tử số đơn / mẫu có ngoặc: 1/(...)
         s = s.replace(/([0-9]+|[a-zA-Z](?:_\{?[^{}]+\}?|_[0-9a-zA-Z]+)?)\s*\/\s*\(([^()]+)\)/g, '\\frac{$1}{$2}');
         // f) Dạng phân số đơn giản giữa biến số/chỉ số hoặc số nguyên: 1/p, 1/u_n, 1/u_{n+1}, 1/x, 1/2, a/b
         s = s.replace(/(?<![a-zA-Z0-9_\\])([0-9]+|[a-zA-Z](?:_\{?[a-zA-Z0-9\+\-]+\}?|_[a-zA-Z0-9]+)?)\s*\/\s*([0-9]+|[a-zA-Z](?:_\{?[a-zA-Z0-9\+\-]+\}?|_[a-zA-Z0-9]+)?)(?![a-zA-Z0-9_\/])/g, '\\frac{$1}{$2}');
@@ -548,6 +594,8 @@
             }
         }
 
+        let braceDepth = 0;
+
         for (let i = 0; i < words.length; i++) {
             const token = words[i];
             if (/^\s+$/.test(token)) {
@@ -555,9 +603,22 @@
                 continue;
             }
 
+            const wasInBraces = braceDepth > 0;
+            // Cập nhật độ sâu dấu ngoặc nhọn nhóm LaTeX
+            const openBraces = (token.match(/\{/g) || []).length;
+            const closeBraces = (token.match(/\}/g) || []).length;
+            braceDepth += openBraces - closeBraces;
+            if (braceDepth < 0) braceDepth = 0;
+
+            if (wasInBraces) {
+                // Token này nằm trong hoặc vừa đóng nhóm ngoặc nhọn LaTeX
+                currentTokens.push(token);
+                continue;
+            }
+
             const isNat = isNaturalLanguageWord(token);
 
-            if (isNat) {
+            if (isNat && braceDepth === 0) {
                 if (currentType === 'MATH') {
                     flushSegment();
                 }
