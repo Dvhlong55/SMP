@@ -1,0 +1,60 @@
+{
+  "manifest_version": 3,
+  "name": "SMP — LaTeX Quick Viewer",
+  "version": "1.0.0",
+  "description": "Biên dịch và chuẩn hóa tức thì văn bản toán học thô/gõ ẩu từ mạng xã hội (Facebook, VOZ, VMF...) sang LaTeX trực quan qua KaTeX.",
+  "author": "SMP — Secrets of Mathematical Principles",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SMP — LaTeX Quick Viewer",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "scripting"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "katex/katex.min.js",
+        "katex/contrib/auto-render.min.js",
+        "normalizer.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "katex/katex.min.css",
+        "katex/fonts/*",
+        "icons/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "commands": {
+    "translate-latex": {
+      "suggested_key": {
+        "default": "Alt+Shift+X",
+        "mac": "Alt+Shift+X"
+      },
+      "description": "SMP — Dịch văn bản toán học bôi đen sang LaTeX"
+    }
+  }
+}

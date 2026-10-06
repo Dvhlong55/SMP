@@ -53,11 +53,18 @@
             }
         });
 
-        // Auto-restore from localStorage
-        var savedData = localStorage.getItem('smp_latex_autosave');
-        if (savedData) {
-            cmEditor.setValue(savedData);
+        // Auto-restore from localStorage or import from Quick Viewer
+        var importedData = localStorage.getItem('smp_latex_editor_import');
+        if (importedData) {
+            cmEditor.setValue(importedData);
+            localStorage.removeItem('smp_latex_editor_import');
             setTimeout(doRender, 100);
+        } else {
+            var savedData = localStorage.getItem('smp_latex_autosave');
+            if (savedData) {
+                cmEditor.setValue(savedData);
+                setTimeout(doRender, 100);
+            }
         }
 
         // Check for transfer from MathType or LaTeX-OCR
