@@ -24,7 +24,8 @@
   "permissions": [
     "contextMenus",
     "activeTab",
-    "scripting"
+    "scripting",
+    "clipboardWrite"
   ],
   "content_scripts": [
     {
@@ -32,6 +33,7 @@
       "js": [
         "katex/katex.min.js",
         "katex/contrib/auto-render.min.js",
+        "html2canvas.min.js",
         "normalizer.js",
         "content.js"
       ],
@@ -54,7 +56,14 @@
         "default": "Alt+Shift+X",
         "mac": "Alt+Shift+X"
       },
-      "description": "SMP — Dịch văn bản toán học bôi đen sang LaTeX"
+      "description": "SMP — Biên dịch văn bản toán học bôi đen"
+    },
+    "compose-latex": {
+      "suggested_key": {
+        "default": "Alt+Shift+C",
+        "mac": "Alt+Shift+C"
+      },
+      "description": "SMP — Soạn thảo công thức toán trực tiếp"
     }
   }
 }
