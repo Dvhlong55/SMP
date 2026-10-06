@@ -314,13 +314,9 @@
                     <div class="smp-header" id="smp-drag-header">
                         <div class="smp-title-wrap">
                             <span class="smp-badge">SMP</span>
-                            <span class="smp-title">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5ce1e6" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
-                                Dịch LaTeX Ngữ Cảnh
-                            </span>
                         </div>
                         <div class="smp-header-actions">
-                            <button class="smp-tab-btn active" id="smp-btn-tab-render">Xem Đẹp</button>
+                            <button class="smp-tab-btn active" id="smp-btn-tab-render">Biên Dịch</button>
                             <button class="smp-tab-btn" id="smp-btn-tab-raw">Mã LaTeX</button>
                             <button class="smp-close-btn" id="smp-btn-close" title="Đóng (Esc)">✕</button>
                         </div>
@@ -334,9 +330,7 @@
                     </div>
 
                     <div class="smp-footer">
-                        <div class="smp-footer-left">
-                            <span style="color: #64748b; font-size: 11px;">SMP LaTeX Quick Viewer</span>
-                        </div>
+                        <div class="smp-footer-left"></div>
                         <div class="smp-footer-actions">
                             <button class="smp-action-btn" id="smp-btn-copy-tex">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
