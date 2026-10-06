@@ -483,7 +483,16 @@
      */
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         if (request.action === 'SMP_TRANSLATE_SELECTION') {
-            const text = request.text || window.getSelection().toString();
+            let text = '';
+            try {
+                const domSelection = window.getSelection() ? window.getSelection().toString() : '';
+                if (domSelection && domSelection.trim()) {
+                    text = domSelection;
+                }
+            } catch (e) {}
+            if (!text) {
+                text = request.text || '';
+            }
             showTranslateModal(text);
             sendResponse({ success: true });
         } else if (request.action === 'SMP_TRANSLATE_HOTKEY') {

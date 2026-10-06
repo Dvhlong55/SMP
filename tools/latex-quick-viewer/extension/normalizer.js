@@ -225,12 +225,48 @@
         // Hệ số nhị thức dạng binom(n, k) -> \binom{n}{k}
         s = s.replace(/\bbinom\s*\(\s*([^,()]+)\s*,\s*([^()]+)\s*\)/gi, '\\binom{$1}{$2}');
 
+        // Ký hiệu tổng sigma: nếu là hàm số sigma(...) -> \sigma(...), nếu là toán tử tổng -> \sum
+        s = s.replace(/\bsigma\s*\(([^()]+)\)/gi, '\\sigma($1)');
+        s = s.replace(/\b(?:sigma|Sigma)\b/g, '\\sum');
+
+        // Định giá p-adic: vpi(...) -> v_{p_i}(...), vp(...) -> v_p(...)
+        s = s.replace(/\bvpi\s*\(([^()]+)\)/gi, 'v_{p_i}($1)');
+        s = s.replace(/\bvp_i\s*\(([^()]+)\)/gi, 'v_{p_i}($1)');
+        s = s.replace(/\bvp\s*\(([^()]+)\)/gi, 'v_p($1)');
+
+        // Tích các biến số hoặc số nguyên tố viết liền: p1p2...pk, a1a2...an, x1x2...xn
+        s = s.replace(/\b([a-zA-Z])1\s*([a-zA-Z])2\s*(?:\.{2,}|\\dots)\s*([a-zA-Z])([kijnm0-9]+)\b/gi, function(_, v1, v2, v3, idx) {
+            return `${v1}_1 ${v2}_2 \\dots ${v3}_{${idx}}`;
+        });
+
+        // Biến kèm chỉ số và số mũ: ai^n -> a_i^n, xi^2 -> x_i^2, ak^n -> a_k^n
+        s = s.replace(/\b([a-zA-Z])([ikjmn])\^([0-9a-zA-Z{}]+)\b/g, '$1_{$2}^{$3}');
+
         // Ký hiệu Hy Lạp: eps, epsilon, esp
         s = s.replace(/\b(?:eps|epsilon|esp)\b/gi, '\\epsilon');
 
-        // Biến số kèm chỉ số chữ: xk, xi, xj, xn, uk, un, vk, vn, w1, w2
-        s = s.replace(/\b([xuvw])([kijnm])\b/g, '$1_{$2}');
-        s = s.replace(/\b([xuvw])([0-9]+)\b/g, '$1_{$2}');
+        // Biến số kèm chỉ số số: p1, p2, u1, u2, a1, x1, w1
+        s = s.replace(/\b([a-zA-Z])([0-9]+)\b/g, '$1_{$2}');
+
+        // Biến số kèm chỉ số chữ: xk, xi, xj, xn, uk, un, um, vk, vn, vm, pk, pm, pn, pj
+        s = s.replace(/\b([uxyzw])([kijnm])\b/g, '$1_{$2}');
+        s = s.replace(/\b([v])([kjnm])\b/g, '$1_{$2}');
+        s = s.replace(/\b([p])([kjnm])\b/g, '$1_{$2}');
+
+        // Chuyển pi thành p_i khi trong ngữ cảnh chỉ số số nguyên tố hoặc đi sau với mọi/mọi/các
+        s = s.replace(/(?<=\b(?:với mọi|mọi|các|tồn tại)\s+)pi\b/gi, 'p_i');
+        s = s.replace(/\bpi\b(?=\s*(?:thuộc|\in|=|!=|<|>|<=|>=|\mid|chia hết))/gi, 'p_i');
+        if (/\b(?:ưnt|vpi|p_\d+|p_[kjnm]|p\d+)\b/i.test(s) || /p_1\s*,\s*p_2/i.test(s)) {
+            s = s.replace(/(?<![0-9\\a-zA-Z])pi(?![0-9a-zA-Z\(\\])/g, 'p_i');
+        }
+
+        // Biến ai, bi, ci khi đi kèm toán tử hoặc trong biểu thức
+        s = s.replace(/\b([abc])([ikjmn])\b(?=\s*[+\-*.\/=<>^~|])/g, '$1_{$2}');
+        s = s.replace(/(?<=[+\-*.\/=<>^~|\\]\s*)\b([abc])([ikjmn])\b/g, '$1_{$2}');
+        s = s.replace(/(?<=\\sum\s+)\b([abc])([ikjmn])\b/g, '$1_{$2}');
+
+        // Tách biến số trước từ tiếng Việt: p^k k đủ lớn -> p^k, k đủ lớn
+        s = s.replace(/([a-zA-Z]\^[0-9a-zA-Z{}]+)\s+([a-zA-Z])\s+([a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]{2,})/g, '$1, $2 $3');
 
         // Dấu ba chấm liền kề toán tử hoặc danh sách
         s = s.replace(/([+\-])\s*\.\.\.(?!\.)/g, '$1 \\dots');
@@ -332,9 +368,13 @@
         s = s.replace(/(?<=[a-zA-Z0-9_\)\]\}])\s*\.{3,}\s*(?=[a-zA-Z0-9_\(\[\{])/g, ' \\dots ');
         s = s.replace(/\.{3,}/g, ' \\dots ');
 
-        // 4. Modulo: = 1 mod p -> \equiv 1 \pmod{p}
-        s = s.replace(/=\s*([0-9a-zA-Z_]+)\s*mod\s*([0-9a-zA-Z_]+)/gi, '\\equiv $1 \\pmod{$2}');
-        s = s.replace(/\bmod\s+([0-9a-zA-Z_]+)/gi, '\\pmod{$1}');
+        // 4. Modulo: = 1 mod (p1p2...pk)^T, = 1 mod p, m = 1 mod ...
+        s = s.replace(/=\s*([0-9a-zA-Z_]+)\s*mod\s*\(([^()]+)\)(\^[a-zA-Z0-9{}]+)?/gi, '\\equiv $1 \\pmod{($2)$3}');
+        s = s.replace(/=\s*([0-9a-zA-Z_]+)\s*mod\s*([0-9a-zA-Z_\^\\]+(?:\{[^{}]+\})?)/gi, '\\equiv $1 \\pmod{$2}');
+        s = s.replace(/=\s*([0-9a-zA-Z_]+)\s*mod\s*(\.{2,}|\\dots)/gi, '\\equiv $1 \\pmod{\\dots}');
+        s = s.replace(/\bmod\s*\(([^()]+)\)(\^[a-zA-Z0-9{}]+)?/gi, '\\pmod{($1)$2}');
+        s = s.replace(/\bmod\s+([0-9a-zA-Z_\^\\]+(?:\{[^{}]+\})?)/gi, '\\pmod{$1}');
+        s = s.replace(/\bmod\s*(\.{2,}|\\dots)/gi, '\\pmod{\\dots}');
 
         // 5. Quan hệ chia hết: p | P(n) -> p \mid P(n), p|n -> p \mid n
         s = s.replace(/([a-zA-Z0-9_]+)\s*\|\s*([a-zA-Z0-9_]+(?:\([a-zA-Z0-9_]+\))?)/g, '$1 \\mid $2');
@@ -550,12 +590,20 @@
             if (currentType === 'MATH') {
                 let cleanMath = str.trim();
 
-                // 1. Tách dấu câu cuối: .,;:?!
+                // 1. Tách dấu câu cuối: .,;:?! (nhưng bảo tồn dấu 3 chấm \dots)
                 let trailingPunct = '';
                 const matchPunct = cleanMath.match(/([.,;:?!]+)$/);
                 if (matchPunct) {
-                    trailingPunct = matchPunct[1];
-                    cleanMath = cleanMath.slice(0, -trailingPunct.length).trim();
+                    const p = matchPunct[1];
+                    if (/^\.{3,}$/.test(p)) {
+                        if (p.length > 3) {
+                            trailingPunct = p.slice(3);
+                            cleanMath = cleanMath.slice(0, -trailingPunct.length).trim();
+                        }
+                    } else {
+                        trailingPunct = p;
+                        cleanMath = cleanMath.slice(0, -trailingPunct.length).trim();
+                    }
                 }
 
                 // Khoảng số học giữ nguyên ngoặc
@@ -573,10 +621,21 @@
                     }
 
                     let leadingPunct = '';
-                    if (openP > closeP && cleanMath.startsWith('(')) {
-                        const diff = openP - closeP;
-                        leadingPunct = '('.repeat(diff);
-                        cleanMath = cleanMath.slice(diff).trim();
+                    if (openP > closeP) {
+                        const matchTrailingParen = cleanMath.match(/\s*\(\s*([a-zA-Z0-9_]*)$/);
+                        if (matchTrailingParen) {
+                            cleanMath = cleanMath.slice(0, -matchTrailingParen[0].length).trim();
+                            const innerVar = matchTrailingParen[1];
+                            if (innerVar) {
+                                trailingPunct = ` ($${innerVar}$` + trailingPunct;
+                            } else {
+                                trailingPunct = ` (` + trailingPunct;
+                            }
+                        } else if (cleanMath.startsWith('(')) {
+                            const diff = openP - closeP;
+                            leadingPunct = '('.repeat(diff);
+                            cleanMath = cleanMath.slice(diff).trim();
+                        }
                     }
 
                     if (cleanMath) {
@@ -628,7 +687,7 @@
             }
 
             // Nhận diện toán tử, biến số, khoảng số học và hình học
-            const isMathOp = /[=<>+\-*/\\^_|{}~]|\\infty|\\sqrt|\\triangle|\\prod|\\sum|\b(?:lim|sum|int|sqrt|sin|cos|tan)\b/.test(token);
+            const isMathOp = /[=<>+\-*/\\^_|{}~]|\\infty|\\sqrt|\\triangle|\\prod|\\sum|\b(?:lim|sum|prod|int|sqrt|sin|cos|tan|cot|ln|log|exp|mod|pmod|equiv|min|max|inf|sup)\b/i.test(token);
             const isVarPattern = /[a-zA-Z]_[a-zA-Z0-9]+|[a-zA-Z]\([a-zA-Z0-9,]+\)|\b[a-zA-Z]\d+\b|\b\d+[a-zA-Z]+\b|\b\d+[CAca]\d+\b|\b[A-Z]{2,4}\d*\b/.test(token);
             const isCirclePattern = /^\([A-Z]{1,4}\)$/.test(token);
             const isIntervalPattern = /^[(\[][+\-]?[0-9a-zA-Z\\]+,\s*[+\-]?[0-9a-zA-Z\\]+[)\]]$/.test(token);
