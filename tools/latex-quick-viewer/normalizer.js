@@ -2,7 +2,7 @@
  * ==============================================================================
  * SMP LaTeX Quick Viewer — Math Context Parser & Normalization Pipeline
  * ==============================================================================
- * Phiên bản: 2.0.0 — Hoàn thiện chuẩn hóa ngữ cảnh và Typographic Formatting
+ * Phiên bản: 3.0.0 — Chuẩn hóa hoàn thiện ngữ cảnh, biểu thức và Typographic Formatting
  * ==============================================================================
  */
 
@@ -22,39 +22,140 @@
 
     // Danh sách từ tiếng Việt & thuật ngữ toán thông dụng (kể cả không dấu / viết tắt)
     const VIETNAMESE_WORDS = new Set([
-        'da', 'em', 'xin', 'gop', 'cau', 'a', 'xet', 'thi', 'va', 'hoac', 'khi', 'do',
+        'da', 'em', 'xin', 'gop', 'cau', 'xet', 'thi', 'va', 'hoac', 'khi', 'do',
         'ta', 'co', 'suy', 'ra', 'nen', 'ket', 'hop', 'voi', 'nghiem', 'duy', 'nhat',
-        'dung', 'danh', 'gia', 'mot', 'ti', 'tim', 'duoc', 'cm', 'dc', 'dpcm', 'bai',
+        'dung', 'danh', 'gia', 'mot', 'ti', 'tim', 'duoc', 'cm', 'dc', 'dpcm', 'cmtt', 'bai',
         'toan', 'loi', 'giai', 'dinh', 'ly', 'bo', 'de', 'he', 'so', 'lien', 'tuc',
-        'dong', 'bien', 'nghich', 'tren', 'duoi', 'trong', 'ngoai', 'gia', 'su', 'dat',
-        'tuong', 'duong', 'nhu', 'vay', 'do', 'vo', 'ly', 'mau', 'thuan', 'thoa', 'man',
+        'dong', 'bien', 'nghich', 'tren', 'duoi', 'trong', 'trog', 'ngoai', 'gia', 'su', 'dat',
+        'tuong', 'duong', 'nhu', 'vay', 'vo', 'ly', 'mau', 'thuan', 'thoa', 'man',
         'dieu', 'kien', 'tiep', 'tuyen', 'dao', 'ham', 'nguyen', 'tich', 'phan', 'tong',
-        'hieu', 'ti', 'chung', 'minh', 'lagrange', 'cauchy', 'schwarz', 'bernoulli',
+        'hieu', 'chung', 'minh', 'lagrange', 'cauchy', 'schwarz', 'bernoulli',
         'chebyshev', 'jensen', 'theo', 'gia', 'thiet', 'de', 'thay', 'mat', 'khac',
         'tuong', 'tu', 'lai', 'goi', 'la', 'diem', 'duong', 'thang', 'mat', 'phang',
-        'tam', 'giac', 'hinh', 'vuong', 'chu', 'nhat', 'tro', 'sau', 'day', 'truong',
+        'tam', 'giac', 'tu', 'giac', 'hinh', 'vuong', 'chu', 'nhat', 'tro', 'sau', 'day', 'truong',
         'hop', 'th1', 'th2', 'khoang', 'doan', 'nua', 'nho', 'hon', 'lon', 'bang', 'khac',
-        'phan', 'buoc', 'muc'
+        'phan', 'buoc', 'muc', 'sao', 'cho', 'hay', 'neu', 'ma', 'roi', 'cung', 'cac', 'nhung',
+        'hai', 'ba', 'bon', 'nam', 'sau', 'bay', 'tam', 'chin', 'muoi', 'khong', 'rat',
+        'se', 'dang', 'bi', 'boi', 'cua', 've', 'tai', 'tu', 'den', 'luon', 'chi', 'moi',
+        'tat', 'ca', 'ai', 'nao', 'dau', 'biet', 'tuc', 'chia', 'het', 'du', 'trung', 'modulo',
+        'giao', 'tap', 'con', 'rong', 'hoan', 'vi', 'chan', 'le', 'tang', 'dan', 'giam',
+        'vo', 'han', 'huu', 'da', 'thuc', 'luy', 'thua', 'bac', 'hang', 'tu', 'dong', 'quy',
+        'vien', 'thang', 'hang', 'vi', 'tu', 'nghich', 'dao', 'phuong', 'tich', 'truc',
+        'dang', 'trung', 'chieu', 'tiep', 'xuc', 'cat', 'nhau', 'nhan', 'that', 'dan', 'toi',
+        'ket', 'luan', 'yeu', 'cau', 'goc', 'canh', 'day', 'ban', 'kinh', 'chu', 'vi', 'dien',
+        'the', 'bat', 'chua', 'nguoc', 'quy', 'nap', 'manh', 'gia', 'tri', 'ham', 'nham',
+        'thoi', 'viet', 'nho', 'giai', 'thich', 'kho', 'bieu', 'dien', 'lap', 'y',
+        'tuong', 'nhan', 'thu', 'phia', 'chu', 'quan', 'trong', 'goi', 'y', 'the', 'hinh',
+        'ben', 'con', 'truong', 'canh', 'bien', 'duong', 'tron', 'euler', 'quen', 'thuoc',
+        'trung', 'diem', 'dinh', 'nghia', 'bo', 'diem', 'phep', 'dang', 'thuc', 'dung',
+        'truc', 'phuong', 'dan', 'toi', 'noi', 'giao', 'cach', 'hinh', 'chieu', 'bien',
+        'co', 'doi', 'chua', 'it', 'ghep', 'chu', 'y', 'de', 'dang', 'xac', 'dinh', 'phan',
+        'tu', 'lon', 'nho', 'xuat', 'hien', 'dang', 'ghep', 'vi', 'tri', 'khong', 'the',
+        'chua', 'tat', 'ca', 'ton', 'tai', 'bat', 'ky', 'bat', 'ki', 'co', 'dinh',
+        'thoa', 'gia', 'tri', 'nghiem', 'phuong', 'trinh', 'bat', 'dang', 'thuc'
+    ]);
+
+    // Các hàm toán học chuẩn (không coi là từ tự nhiên)
+    const MATH_FUNCTIONS = new Set([
+        'sin', 'cos', 'tan', 'cot', 'sec', 'csc', 'lim', 'ln', 'log', 'exp',
+        'sqrt', 'cbrt', 'max', 'min', 'gcd', 'deg', 'det', 'dim', 'ker', 'arg',
+        'inf', 'sup', 'mod'
     ]);
 
     /**
      * Kiểm tra một từ có phải từ tiếng Việt/văn bản thường
      */
-    function isNaturalLanguageWord(word) {
+    function isNaturalLanguageWord(word, isLineStart = false) {
         if (!word) return false;
         const clean = word.toLowerCase().replace(/^[(\["'«]+|[)\]"'».,:;?!]+$/g, '').trim();
         if (!clean) return false;
 
+        // Nhãn danh sách ở đầu dòng: a), b), (i), (ii), 1)
+        if (isLineStart && /^(?:[a-z0-9]\)|\([a-z0-9]+\)|\([ivx]+\))$/i.test(word.trim())) {
+            return true;
+        }
+
+        // Ký tự đơn (a, b, x, y, A, B...) luôn là biến số toán học
+        if (clean.length === 1 && /^[a-zA-Z]$/.test(clean)) {
+            return false;
+        }
+
         // Có dấu tiếng Việt
         if (VI_ACCENTS_REGEX.test(clean)) return true;
 
-        // Từ trong từ điển
+        // Từ trong từ điển tiếng Việt / thuật ngữ
         if (VIETNAMESE_WORDS.has(clean)) return true;
 
-        // Nhãn danh sách như a), b), c), 1)
-        if (/^[a-z0-9]\)$/i.test(word.trim())) return true;
+        // Từ gồm các chữ cái latin thuần túy dài từ 2 ký tự trở lên:
+        if (/^[a-zA-Z]+$/.test(clean)) {
+            if (clean.length >= 2) {
+                if (MATH_FUNCTIONS.has(clean)) return false;
+                // Các điểm hình học viết hoa (ABC, XYZ, MN, SB)
+                if (/^[A-Z]{2,4}$/.test(word.replace(/^[(\["'«]+|[)\]"'».,:;?!]+$/g, ''))) {
+                    return false;
+                }
+                return true;
+            }
+        }
 
         return false;
+    }
+
+    /**
+     * Kiểm tra dòng có chứa từ tự nhiên hay không
+     */
+    function lineHasNaturalLanguage(line) {
+        const words = line.trim().split(/\s+/);
+        for (let i = 0; i < words.length; i++) {
+            if (isNaturalLanguageWord(words[i], i === 0)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Tiền xử lý văn bản thô
+     */
+    function preSanitize(text) {
+        if (!text) return '';
+        let s = text;
+
+        // Bỏ URL theo dõi Facebook hoặc link bọc biến: [GX.GA](https://l.facebook.com/...) -> GX.GA
+        s = s.replace(/\[([^\]]+)\]\(https?:\/\/(?:[a-zA-Z0-9.\-]+\.)?(?:facebook\.com|fb\.com|l\.facebook\.com)\/[^\)]*\)/gi, '$1');
+        s = s.replace(/\[([A-Za-z0-9_.'\+\-\*\/\^\=]+)\]\(https?:\/\/[^\)]+\)/g, '$1');
+
+        // Bỏ dấu $ cô lập ở cuối dòng nếu có
+        s = s.replace(/([^$])\$\s*$/gm, '$1');
+
+        // Tách hàm lượng giác dính liền điểm: sinXGB -> sin XGB, cosA -> cos A
+        s = s.replace(/\b(sin|cos|tan|cot|ln|log|exp|sqrt|cbrt)([A-Z][a-zA-Z0-9_']*)\b/gi, '$1 $2');
+
+        // Thoát dấu ngoặc nhọn tập hợp trong văn bản: {1, 2, ..., 2026} -> \{1, 2, ..., 2026\}
+        s = s.replace(/\{([^{}\n]*[0-9a-zA-Z_\+\-\.\,][^{}\n]*)\}/g, '\\{$1\\}');
+
+        // Ký hiệu hình học Unicode
+        s = s.replace(/[∆Δ]\s*([A-Z]{3,4})/g, '\\triangle $1');
+        s = s.replace(/[∆Δ]/g, '\\triangle ');
+        s = s.replace(/∠\s*([A-Z]{3})/g, '\\widehat{$1}');
+
+        // Căn thức
+        s = s.replace(/(?:căn|can)\s*\(([^)]+)\)/gi, '\\sqrt{$1}');
+        s = s.replace(/(?:căn|can)\s+([a-zA-Z0-9]+)/gi, '\\sqrt{$1}');
+
+        // Vô cùng
+        s = s.replace(/([+\-])\s*(?:vô cùng|vocung|vô cực|vocuc)/gi, '$1\\infty');
+        s = s.replace(/(?:vô cùng|vocung|vô cực|vocuc)/gi, '\\infty');
+
+        // Khoảng / đoạn số học: ( 0, + vô cùng ) -> $(0, +\infty)$
+        s = s.replace(/([(\[])\s*([+\-]?[0-9a-zA-Z\\]+)\s*,\s*([+\-]?[0-9a-zA-Z\\]+)\s*([)\]])/g, function(_, open, a, b, close) {
+            return ` $${open}${a.trim()}, ${b.trim()}${close}$ `;
+        });
+
+        // Đảm bảo dấu phẩy trong danh sách công thức có khoảng trắng sau nó
+        s = s.replace(/([0-9a-zA-Z\)])\s*,\s*([0-9a-zA-Z])/g, '$1, $2');
+
+        return s;
     }
 
     /**
@@ -64,7 +165,10 @@
         if (!mathStr) return '';
         let s = mathStr.trim();
 
-        // 1. Phép so sánh và mũi tên
+        // 1. Phương tích điểm đối với đường tròn: P_(S/(BXZ)) -> Shielded placeholder
+        s = s.replace(/P_\(?\s*([A-Za-z0-9_]+)\s*\/\s*\(?([A-Za-z0-9_]+)\)?\)?/gi, '___POWPOINT___$1___$2___');
+
+        // 2. Phép so sánh và mũi tên
         s = s.replace(/<=>/g, ' \\Leftrightarrow ');
         s = s.replace(/=>/g, ' \\Rightarrow ');
         s = s.replace(/->/g, ' \\to ');
@@ -74,13 +178,22 @@
         s = s.replace(/!=/g, ' \\ne ');
         s = s.replace(/~=/g, ' \\approx ');
 
-        // 2. Dấu chấm lửng
+        // 3. Dấu chấm lửng
         s = s.replace(/\+\s*\.{2,}\s*\+/g, ' + \\dots + ');
         s = s.replace(/\-\s*\.{2,}\s*\-/g, ' - \\dots - ');
         s = s.replace(/=\s*\.{2,}/g, ' = \\dots ');
-        s = s.replace(/(?<=[a-zA-Z0-9_\)\]])\s*\.{3,}\s*(?=[a-zA-Z0-9_\(\[])/g, ' \\dots ');
+        s = s.replace(/,\s*\.{2,}\s*,/g, ', \\dots, ');
+        s = s.replace(/(?<=[a-zA-Z0-9_\)\]\}])\s*\.{3,}\s*(?=[a-zA-Z0-9_\(\[\{])/g, ' \\dots ');
+        s = s.replace(/\.{3,}/g, ' \\dots ');
 
-        // 3. Giới hạn lim:
+        // 4. Modulo: a = b mod m -> a \equiv b \pmod{m}
+        s = s.replace(/=\s*([0-9a-zA-Z_]+)\s*mod\s*([0-9a-zA-Z_]+)/gi, '\\equiv $1 \\pmod{$2}');
+        s = s.replace(/\bmod\s+([0-9a-zA-Z_]+)/gi, '\\pmod{$1}');
+
+        // 5. Quan hệ chia hết: p | P(p) -> p \mid P(p)
+        s = s.replace(/([a-zA-Z0-9_]+)\s*\|\s*([a-zA-Z0-9_]+(?:\([a-zA-Z0-9_]+\))?)/g, '$1 \\mid $2');
+
+        // 6. Giới hạn lim:
         s = s.replace(/lim\s+([a-zA-Z0-9_\(\)]+)\s*\^\s*\(\s*([^)]+)\s*\)/g, function(_, fn, sub) {
             let cleanSub = sub.replace(/->/g, '\\to').replace(/\s+/g, ' ').trim();
             cleanSub = cleanSub.replace(/([0-9\+\-\\infty]+)\s*([+\-])$/, '$1^{$2}');
@@ -98,25 +211,56 @@
         });
         s = s.replace(/\blim\s+([a-zA-Z0-9_]+(?:\([a-zA-Z0-9_]+\))?)/g, '\\lim $1');
 
-        // 4. Phân số:
-        s = s.replace(/([a-zA-Z0-9_]+)\/\(([^)]+)\)/g, '\\frac{$1}{$2}');
-        s = s.replace(/\(([^)]+)\)\/\(([^)]+)\)/g, '\\frac{$1}{$2}');
-        s = s.replace(/([0-9]+|[a-zA-Z])\/([a-zA-Z0-9_]+(?:\([a-zA-Z0-9\+\-\*\/_\s]+\))+)/g, '\\frac{$1}{$2}');
+        // 7. Hàm lượng giác chuẩn hóa
+        s = s.replace(/\b(?:sin|Sin)\s*([A-Za-z0-9_']*)/g, '\\sin $1');
+        s = s.replace(/\b(?:cos|Cos)\s*([A-Za-z0-9_']*)/g, '\\cos $1');
+        s = s.replace(/\b(?:tan|Tan)\s*([A-Za-z0-9_']*)/g, '\\tan $1');
+        s = s.replace(/\b(?:cot|Cot)\s*([A-Za-z0-9_']*)/g, '\\cot $1');
+
+        // 8. Phân số:
+        // a) Tỉ số lượng giác: \sin XGB / \sin XGC
+        s = s.replace(/\\sin\s*([A-Za-z0-9_']+)\s*\/\s*\\sin\s*([A-Za-z0-9_']+)/gi, '\\frac{\\sin $1}{\\sin $2}');
+        s = s.replace(/\\cos\s*([A-Za-z0-9_']+)\s*\/\s*\\cos\s*([A-Za-z0-9_']+)/gi, '\\frac{\\cos $1}{\\cos $2}');
+        // b) Tỉ số đoạn thẳng hình học: XF/XE, SA'/RA', A_0F/A_0E
+        s = s.replace(/([A-Z][a-zA-Z0-9_']*(?:')?)\s*\/\s*([A-Z][a-zA-Z0-9_']*(?:')?)/g, '\\frac{$1}{$2}');
+        // c) Phân số có ngoặc:
+        s = s.replace(/\(([^)]+)\)\s*\/\s*\(([^)]+)\)/g, '\\frac{$1}{$2}');
+        s = s.replace(/([0-9a-zA-Z_]+)\s*\/\s*\(([^)]+)\)/g, '\\frac{$1}{$2}');
+        s = s.replace(/\(([^)]+)\)\s*\/\s*([0-9a-zA-Z_]+)/g, '\\frac{$1}{$2}');
+        // d) Dạng số học/đại số đơn giản: 1/x+1, 1/n(x+n)
         s = s.replace(/([0-9]+|[a-zA-Z])\/([a-zA-Z][\+\-][0-9a-zA-Z]+)(?=\s*[\+\-\=]|$)/g, '\\frac{$1}{$2}');
 
-        // 5. Căn bậc hai, căn bậc ba
-        s = s.replace(/sqrt\(([^)]+)\)/g, '\\sqrt{$1}');
-        s = s.replace(/cbrt\(([^)]+)\)/g, '\\sqrt[3]{$1}');
+        // 9. Phép nhân: dấu chấm '.' và '*'
+        s = s.replace(/\s*\*\s*/g, ' \\cdot ');
+        s = s.replace(/\s+\.\s+/g, ' \\cdot ');
+        s = s.replace(/([A-Za-z0-9_'\\]+|\})\s*\.\s*(\\frac|[A-Za-z0-9_'\\]+)/g, function(match, p1, p2) {
+            if (/^\d+$/.test(p1) && /^\d+$/.test(p2)) return match;
+            return `${p1} \\cdot ${p2}`;
+        });
 
-        // 6. Luỹ thừa và chỉ số dưới: x^(n+1) -> x^{n+1}
-        s = s.replace(/([a-zA-Z0-9_\)]+)\^\(([^)]+)\)/g, '{$1}^{$2}');
-        s = s.replace(/([a-zA-Z0-9_\)]+)\_\(([^)]+)\)/g, '{$1}_{$2}');
+        // 10. Luỹ thừa và số mũ:
+        s = s.replace(/(\([^)]+\))\^\(([^)]+)\)/g, '$1^{$2}');
+        s = s.replace(/(\([^)]+\))\^([a-zA-Z0-9_]+)/g, '$1^{$2}');
+        s = s.replace(/([a-zA-Z0-9_]+)\^\(([^)]+)\)/g, '$1^{$2}');
+        s = s.replace(/([a-zA-Z0-9_]+)\^([a-zA-Z0-9_]+)/g, function(match, base, exp) {
+            return `${base}^{${exp}}`;
+        });
 
-        // 7. Vector
-        s = s.replace(/(?:vecto|vt)\s*\(([a-zA-Z]+)\)/g, '\\vec{$1}');
-        s = s.replace(/(?:vecto|vt)\s+([A-Z]{1,2})/g, '\\vec{$1}');
+        // 11. Chỉ số dưới (subscript) trên biến số và đoạn thẳng:
+        // Đoạn thẳng ghép 2 chỉ số: C1C2 -> C_1C_2, B_0C_0 -> B_0C_0
+        s = s.replace(/\b([A-Z])([0-9]+)([A-Z])([0-9]+)\b/g, '$1_{$2}$3_{$4}');
+        s = s.replace(/\b([A-Z])_([0-9]+)([A-Z])_([0-9]+)\b/g, '$1_{$2}$3_{$4}');
+        // Biến có ngoặc dưới: a_(i+1) -> a_{i+1}, a_(k+1) -> a_{k+1}
+        s = s.replace(/([a-zA-Z0-9\)])\_\(([^)]+)\)/g, '$1_{$2}');
+        s = s.replace(/([a-zA-Z0-9\)])\_([a-zA-Z0-9]+)/g, '$1_{$2}');
+        // Ký hiệu biến đơn có số: a1 -> a_1, a2026 -> a_{2026}, c1 -> c_1, p1 -> p_1, pr -> p_r
+        s = s.replace(/(?<![\\_a-zA-Z0-9])([a-zA-Z])([0-9]+)\b/g, '$1_{$2}');
+        s = s.replace(/(?<![\\_a-zA-Z0-9])([A-Z]{2})([0-9]+)\b/g, '$1_{$2}');
 
-        // 8. Định dạng khoảng trắng các dấu toán tử
+        // Khôi phục ký hiệu phương tích đã che chắn
+        s = s.replace(/___POWPOINT___([A-Za-z0-9_]+)___([A-Za-z0-9_]+)___/g, '\\mathcal{P}_{$1/($2)}');
+
+        // 12. Định dạng khoảng trắng các phép so sánh
         s = s.replace(/([<>=])\s*(?=[0-9a-zA-Z\-\\+])/g, '$1 ');
         s = s.replace(/(?<=[0-9a-zA-Z\)])\s*([<>=])/g, ' $1');
 
@@ -125,25 +269,8 @@
     }
 
     /**
-     * BƯỚC 1: Tiền xử lý vô cùng và khoảng số học
+     * Chuyển đổi môi trường giả lập (Hệ phương trình, Tuyển, Chuỗi tương đương)
      */
-    function preSanitize(text) {
-        if (!text) return '';
-        let s = text;
-
-        // Vô cùng (Infinity)
-        s = s.replace(/([+\-])\s*(?:vô cùng|vocung|vô cực|vocuc)/gi, '$1\\infty');
-        s = s.replace(/(?:vô cùng|vocung|vô cực|vocuc)/gi, '\\infty');
-
-        // Nhận diện và đóng gói trước các khoảng / đoạn số học chuẩn
-        // Ví dụ: ( 0, + vô cùng ) -> $(0, +\infty)$
-        s = s.replace(/([(\[])\s*([+\-]?[0-9a-zA-Z\\]+)\s*,\s*([+\-]?[0-9a-zA-Z\\]+)\s*([)\]])/g, function(_, open, a, b, close) {
-            return ` $${open}${a.trim()}, ${b.trim()}${close}$ `;
-        });
-
-        return s;
-    }
-
     function convertPseudoEnvironments(text) {
         if (!text) return '';
         const lines = text.split('\n');
@@ -160,7 +287,7 @@
                 }
                 if (casesLines.length > 0) {
                     const inner = casesLines.map(l => formatMathSegment(preSanitize(l))).join(' \\\\\n  ');
-                    outputLines.push(`\\begin{cases}\n  ${inner}\n\\end{cases}`);
+                    outputLines.push(`$\\begin{cases}\n  ${inner}\n\\end{cases}$`);
                     continue;
                 }
             }
@@ -174,22 +301,7 @@
                 }
                 if (arrayLines.length > 0) {
                     const inner = arrayLines.map(l => formatMathSegment(preSanitize(l))).join(' \\\\\n  ');
-                    outputLines.push(`\\left[\\begin{array}{l}\n  ${inner}\n\\end{array}\\right.`);
-                    continue;
-                }
-            }
-
-            // Chuỗi tương đương: bắt đầu bằng '<=>' hoặc '=>'
-            if (/^\s*(?:<=>|=>)\s*/.test(lines[i])) {
-                const alignLines = [];
-                while (i < lines.length && /^\s*(?:<=>|=>)\s*/.test(lines[i])) {
-                    const arrow = lines[i].match(/^\s*(<=>|=>)/)[1];
-                    const content = lines[i].replace(/^\s*(?:<=>|=>)\s*/, '').trim();
-                    alignLines.push(`&${arrow === '<=>' ? '\\Leftrightarrow' : '\\Rightarrow'} ${formatMathSegment(preSanitize(content))}`);
-                    i++;
-                }
-                if (alignLines.length > 0) {
-                    outputLines.push(`\\begin{aligned}\n  ${alignLines.join(' \\\\\n  ')}\n\\end{aligned}`);
+                    outputLines.push(`$\\left[\\begin{array}{l}\n  ${inner}\n\\end{array}\\right.$`);
                     continue;
                 }
             }
@@ -202,38 +314,40 @@
     }
 
     /**
-     * Đếm số ký tự trong chuỗi
-     */
-    function countChar(str, char) {
-        let count = 0;
-        for (let i = 0; i < str.length; i++) {
-            if (str[i] === char) count++;
-        }
-        return count;
-    }
-
-    /**
-     * Thuật toán phân đoạn ranh giới Văn bản vs Toán học (Tokenization & Segmentation)
+     * Phân tích và biên dịch một dòng văn bản thô
      */
     function processRawTextLine(line) {
         if (!line.trim()) return line;
-
         if (/^\\begin\{(?:cases|array|aligned|matrix|pmatrix)\}/.test(line.trim())) {
             return line;
+        }
+
+        // Bảo toàn tiền tố danh sách dạng đầu mục (*, -, •)
+        let prefix = '';
+        const bulletMatch = line.match(/^(\s*[*•-]\s+)/);
+        if (bulletMatch) {
+            prefix = bulletMatch[1];
+            line = line.slice(prefix.length);
+        }
+
+        // Bảo toàn tiền tố nhãn câu: a) b) (i)
+        let labelPrefix = '';
+        const labelMatch = line.match(/^(\s*(?:[a-zA-Z0-9]\)|\([a-zA-Z0-9]+\)|\([ivx]+\))\s+)/i);
+        if (labelMatch) {
+            labelPrefix = labelMatch[1];
+            line = line.slice(labelPrefix.length);
+        }
+
+        // DÒNG TOÁN HỌC THUẦN TÚY: Không có bất kỳ từ tự nhiên nào và chứa toán tử/biểu thức toán
+        if (!lineHasNaturalLanguage(line) && /[=<>+\-*/\\^_|]|\\infty|\\sqrt|\\triangle|\b[a-zA-Z]\d+\b/.test(line)) {
+            const formatted = formatMathSegment(line);
+            return prefix + labelPrefix + `$${formatted}$`;
         }
 
         const words = line.split(/(\s+)/);
         const segments = [];
         let currentType = null;
         let currentTokens = [];
-
-        function getNextNonSpaceWord(index) {
-            for (let j = index + 1; j < words.length; j++) {
-                const w = words[j].trim();
-                if (w) return w;
-            }
-            return '';
-        }
 
         function flushSegment() {
             if (currentTokens.length === 0) return;
@@ -244,7 +358,7 @@
             if (currentType === 'MATH') {
                 let cleanMath = str.trim();
 
-                // 1. Tách dấu ngắt câu cuối dòng: .,;:?!
+                // 1. Tách dấu câu cuối: .,;:?!
                 let trailingPunct = '';
                 const matchPunct = cleanMath.match(/([.,;:?!]+)$/);
                 if (matchPunct) {
@@ -252,32 +366,28 @@
                     cleanMath = cleanMath.slice(0, -trailingPunct.length).trim();
                 }
 
-                // 2. Tách ngoặc đóng dư thừa ở cuối nếu không cân bằng
-                const openParens = countChar(cleanMath, '(');
-                const closeParens = countChar(cleanMath, ')');
-                if (closeParens > openParens && cleanMath.endsWith(')')) {
-                    const diff = closeParens - openParens;
+                // 2. Cân bằng dấu ngoặc đơn ở hai đầu biểu thức
+                let openP = 0, closeP = 0;
+                for (let c of cleanMath) {
+                    if (c === '(') openP++;
+                    else if (c === ')') closeP++;
+                }
+                if (closeP > openP && cleanMath.endsWith(')')) {
+                    const diff = closeP - openP;
                     trailingPunct = ')'.repeat(diff) + trailingPunct;
                     cleanMath = cleanMath.slice(0, -diff).trim();
                 }
 
-                // 3. Tách ngoặc mở dư thừa ở đầu nếu không cân bằng
                 let leadingPunct = '';
-                const openLeft = countChar(cleanMath, '(');
-                const closeRight = countChar(cleanMath, ')');
-                if (openLeft > closeRight && cleanMath.startsWith('(')) {
-                    const diff = openLeft - closeRight;
+                if (openP > closeP && cleanMath.startsWith('(')) {
+                    const diff = openP - closeP;
                     leadingPunct = '('.repeat(diff);
                     cleanMath = cleanMath.slice(diff).trim();
                 }
 
                 if (cleanMath) {
                     const formatted = formatMathSegment(cleanMath);
-                    let result = '';
-                    if (leadingPunct) result += leadingPunct;
-                    result += `$${formatted.trim()}$`;
-                    if (trailingPunct) result += trailingPunct;
-                    segments.push(result);
+                    segments.push(`${leadingPunct}$${formatted.trim()}$${trailingPunct}`);
                 } else {
                     segments.push(str);
                 }
@@ -288,28 +398,15 @@
 
         for (let i = 0; i < words.length; i++) {
             const token = words[i];
-
             if (/^\s+$/.test(token)) {
                 currentTokens.push(token);
                 continue;
             }
 
-            // Dấu ngoặc mở theo sau bởi từ tự nhiên: ví dụ "( xét ..."
-            if (token === '(' || token === '[' || token === '{') {
-                const nextWord = getNextNonSpaceWord(i);
-                if (nextWord && isNaturalLanguageWord(nextWord)) {
-                    if (currentType === 'MATH') {
-                        flushSegment();
-                    }
-                    currentType = 'TEXT';
-                    currentTokens.push(token);
-                    continue;
-                }
-            }
+            const isStart = (i === 0 || (i === 2 && /^\s+$/.test(words[1])));
+            const isNat = isNaturalLanguageWord(token, isStart);
 
-            // Số thứ tự sau từ 'câu', 'bài', 'phần', 'mục'
-            const prevWord = (i >= 2) ? words[i - 2].trim().toLowerCase() : '';
-            if (/^\d+$/.test(token.replace(/[.,;:?!]/g, '')) && ['cau', 'câu', 'bai', 'bài', 'phan', 'phần', 'buoc', 'bước', 'muc', 'mục'].includes(prevWord)) {
+            if (isNat) {
                 if (currentType === 'MATH') {
                     flushSegment();
                 }
@@ -318,38 +415,41 @@
                 continue;
             }
 
-            // Từ tiếng Việt / ngôn ngữ tự nhiên
-            if (isNaturalLanguageWord(token)) {
-                if (currentType === 'MATH') {
-                    flushSegment();
-                }
-                currentType = 'TEXT';
-                currentTokens.push(token);
-                continue;
-            }
+            // Nhận diện toán tử, biến số và hình học
+            const isMathOp = /[=<>+\-*/\\^_|]|\\infty|\\sqrt|\\triangle|\b(?:lim|sum|int|sqrt|sin|cos|tan)\b/.test(token);
+            const isVarPattern = /[a-zA-Z]_[a-zA-Z0-9]+|[a-zA-Z]\([a-zA-Z0-9,]+\)|\b[a-zA-Z]\d+\b|\b[A-Z]{2,4}\d*\b/.test(token);
+            const isCirclePattern = /^\([A-Z]{1,4}\)$/.test(token);
+            const isSingleLetterVar = /^[a-zA-Z]$/.test(token.replace(/[.,;:?!()\[\]]/g, ''));
+            const isPureNumber = /^\d+[,.]?\d*$/.test(token.replace(/[.,;:?!()\[\]]/g, ''));
 
-            // Token toán:
-            const isMath = /[=<>+\-*/\\^_]|\\infty|\b(?:lim|sum|int|sqrt|sin|cos|tan)\b|[a-zA-Z]_[a-zA-Z0-9]+|[a-zA-Z]\([a-zA-Z0-9,]+\)/.test(token);
-
-            if (isMath) {
+            if (isMathOp || isVarPattern || isCirclePattern) {
                 if (currentType === 'TEXT') {
                     flushSegment();
                 }
                 currentType = 'MATH';
                 currentTokens.push(token);
-            } else if (/^[a-zA-Z]$/.test(token.replace(/[.,;:?!()\[\]]/g, ''))) {
-                if (currentType === null) currentType = 'MATH';
+            } else if (isSingleLetterVar) {
+                if (currentType === null) {
+                    currentType = 'MATH';
+                }
                 currentTokens.push(token);
-            } else if (/^\d+[,.]?\d*$/.test(token.replace(/[.,;:?!()\[\]]/g, '')) && currentType === 'MATH') {
+            } else if (isPureNumber && currentType === 'MATH') {
                 currentTokens.push(token);
             } else {
+                if (currentType === 'MATH') {
+                    if (/^[.,;:?!]+$/.test(token)) {
+                        currentTokens.push(token);
+                        continue;
+                    }
+                    flushSegment();
+                }
                 if (!currentType) currentType = 'TEXT';
                 currentTokens.push(token);
             }
         }
 
         flushSegment();
-        return segments.join('');
+        return prefix + labelPrefix + segments.join('');
     }
 
     /**
@@ -358,7 +458,6 @@
     function cleanAndFormatFinalTypography(text) {
         if (!text) return '';
 
-        // Tách thành các đoạn LATEX và TEXT
         const SPLIT_REGEX = /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\$[^\$\n]+?\$|\\\([\s\S]*?\\\)|\\begin\{[a-z*]+\}[\s\S]*?\\end\{[a-z*]+\})/g;
         const tokens = [];
         let lastIdx = 0;
@@ -375,27 +474,18 @@
             tokens.push({ type: 'TEXT', val: text.substring(lastIdx) });
         }
 
-        // Xử lý các đoạn TEXT
         for (let k = 0; k < tokens.length; k++) {
             if (tokens[k].type === 'TEXT') {
                 let t = tokens[k].val;
-
-                // Xử lý dấu ngoặc mở: trước '(' có chữ/số thì cách ra, sau '(' bỏ cách
                 t = t.replace(/([0-9a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])\(/gi, '$1 (');
                 t = t.replace(/\(\s+/g, '(');
-
-                // Xử lý dấu ngoặc đóng: trước ')' bỏ cách, sau ')' theo sau là chữ thì cách ra
                 t = t.replace(/\s+\)/g, ')');
                 t = t.replace(/\)\s+([.,;:?!])/g, ')$1');
                 t = t.replace(/\)([a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])/gi, ') $1');
-
-                // Dấu câu: trước bỏ cách, sau có cách
                 t = t.replace(/\s+([.,;:?!])/g, '$1');
                 t = t.replace(/([.,;:?!])([a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])/gi, '$1 $2');
-
                 tokens[k].val = t;
             } else if (tokens[k].type === 'MATH') {
-                // Làm sạch bên trong $...$
                 let m = tokens[k].val;
                 if (m.startsWith('$') && m.endsWith('$') && !m.startsWith('$$')) {
                     const inner = m.slice(1, -1).trim();
@@ -404,7 +494,6 @@
             }
         }
 
-        // Ghép nối và đảm bảo khoảng cách giữa TEXT và MATH
         let result = '';
         for (let k = 0; k < tokens.length; k++) {
             const curr = tokens[k];
@@ -413,32 +502,22 @@
             result += curr.val;
 
             if (next) {
-                // Nếu TEXT liền kề MATH
                 if (curr.type === 'TEXT' && next.type === 'MATH') {
-                    // Nếu cuối TEXT không có dấu cách hoặc '('
                     if (!/[\s(\[]$/.test(curr.val)) {
                         result += ' ';
                     }
-                }
-                // Nếu MATH liền kề TEXT
-                else if (curr.type === 'MATH' && next.type === 'TEXT') {
-                    // Nếu đầu TEXT không có dấu cách, ')', '.', ',', ':', ';'
+                } else if (curr.type === 'MATH' && next.type === 'TEXT') {
                     if (!/^[\s)\].,;:?!]/.test(next.val)) {
                         result += ' ';
                     }
-                }
-                // Nếu hai khối MATH liền kề nhau
-                else if (curr.type === 'MATH' && next.type === 'MATH') {
+                } else if (curr.type === 'MATH' && next.type === 'MATH') {
                     result += ' ';
                 }
             }
         }
 
-        // Chuẩn hóa khoảng trắng dư thừa
         result = result.replace(/[ \t]{2,}/g, ' ');
-        // Bỏ dấu $ rỗng
         result = result.replace(/\$\s*\$/g, '');
-
         return result.trim();
     }
 
@@ -453,61 +532,30 @@
         // 1. Đồng bộ ngắt dòng
         let text = rawText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
-        // 2. Tiền xử lý vô cùng và khoảng
+        // 2. Tiền xử lý vô cùng, khoảng số học, URLs
         text = preSanitize(text);
 
-        // 3. Xử lý môi trường giả lập nhiều dòng
+        // 3. Xử lý môi trường giả lập nhiều dòng (cases, array)
         text = convertPseudoEnvironments(text);
 
-        // 4. Tách các khối đã có sẵn dấu delimit LaTeX: $...$, $$...$$, \(...\), \[...\]
-        const DELIMITER_REGEX = /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\$[^\$\n]+?\$|\\\([\s\S]*?\\\)|\\begin\{[a-z*]+\}[\s\S]*?\\end\{[a-z*]+\})/gi;
-
-        let parts = [];
-        let lastIndex = 0;
-        let match;
-
-        while ((match = DELIMITER_REGEX.exec(text)) !== null) {
-            if (match.index > lastIndex) {
-                parts.push({
-                    type: 'TEXT',
-                    content: text.substring(lastIndex, match.index)
-                });
+        // 4. Xử lý từng dòng
+        const lines = text.split('\n');
+        const processedLines = lines.map(line => {
+            if (/^\s*(?:<=>|=>)\s*/.test(line)) {
+                const arrow = line.match(/^\s*(<=>|=>)/)[1];
+                const content = line.replace(/^\s*(?:<=>|=>)\s*/, '').trim();
+                return `$${arrow === '<=>' ? '\\Leftrightarrow' : '\\Rightarrow'} ${formatMathSegment(content)}$`;
             }
-            parts.push({
-                type: 'LATEX',
-                content: match[0]
-            });
-            lastIndex = match.index + match[0].length;
-        }
-
-        if (lastIndex < text.length) {
-            parts.push({
-                type: 'TEXT',
-                content: text.substring(lastIndex)
-            });
-        }
-
-        // 5. Xử lý từng phần
-        let totalMathCount = 0;
-        const processedParts = parts.map(part => {
-            if (part.type === 'LATEX') {
-                totalMathCount++;
-                return part.content;
-            } else {
-                const lines = part.content.split('\n');
-                const processedLines = lines.map(processRawTextLine);
-                const resText = processedLines.join('\n');
-                return resText;
-            }
+            return processRawTextLine(line);
         });
 
-        let joined = processedParts.join('');
+        let joined = processedLines.join('\n');
 
-        // 6. Hậu xử lý Typographic và Delimiter
+        // 5. Hậu xử lý Typographic và Delimiter
         let finalResult = cleanAndFormatFinalTypography(joined);
 
         const allMaths = finalResult.match(/\$[^\$]+?\$|\\\[[\s\S]*?\\\]|\$\$[\s\S]*?\$\$/g);
-        totalMathCount = allMaths ? allMaths.length : 0;
+        const totalMathCount = allMaths ? allMaths.length : 0;
 
         return {
             raw: rawText,
