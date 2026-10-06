@@ -178,8 +178,46 @@
         // Tách hàm lượng giác dính liền điểm: sinXGB -> sin XGB, cosA -> cos A
         s = s.replace(/\b(sin|cos|tan|cot|ln|log|exp)([A-Z][a-zA-Z0-9_']*)\b/gi, '$1 $2');
 
+        // Chuẩn hóa khoảng trắng quanh _{ và ^{
+        s = s.replace(/([_^\\])\s*\{/g, '$1{');
+
+        // Tổ hợp, chỉnh hợp dạng C^k_n, C_n^k, A^k_n, A_n^k, C^1013_2026
+        s = s.replace(/\b([CA])\^(?:\{([^{}]+)\}|([0-9a-zA-Z]+))\_(?:\{([^{}]+)\}|([0-9a-zA-Z]+))/g, function(_, op, exp1, exp2, sub1, sub2) {
+            const k = exp1 || exp2;
+            const n = sub1 || sub2;
+            return `${op}_{${n}}^{${k}}`;
+        });
+        s = s.replace(/\b([CA])\_(?:\{([^{}]+)\}|([0-9a-zA-Z]+))\^(?:\{([^{}]+)\}|([0-9a-zA-Z]+))/g, function(_, op, sub1, sub2, exp1, exp2) {
+            const n = sub1 || sub2;
+            const k = exp1 || exp2;
+            return `${op}_{${n}}^{${k}}`;
+        });
+
+        // Tổ hợp có biểu thức ngoặc: (n+1)Ck, nC(k+1), (n)C(k)
+        s = s.replace(/(\([^\)]+\))\s*([CA])\s*(\([^\)]+\)|\d+|[a-z])/g, function(_, n, op, k) {
+            const cleanN = n.replace(/^\(|\)$/g, '').trim();
+            const cleanK = k.replace(/^\(|\)$/g, '').trim();
+            return `${op}_{${cleanN}}^{${cleanK}}`;
+        });
+        s = s.replace(/(\d+|[a-z])\s*([CA])\s*(\([^\)]+\))/g, function(_, n, op, k) {
+            const cleanK = k.replace(/^\(|\)$/g, '').trim();
+            return `${op}_{${n}}^{${cleanK}}`;
+        });
+
+        // Tổ hợp, chỉnh hợp dạng số nCk, nAk (2026C1013, 10C3, 2026 C 1013, 2026c1013)
+        s = s.replace(/(?<![a-zA-Z0-9_])(\d+)\s*([CAca])\s*(\d+)(?![a-zA-Z0-9_])/g, function(_, n, op, k) {
+            return `${op.toUpperCase()}_{${n}}^{${k}}`;
+        });
+
+        // Tổ hợp, chỉnh hợp dạng biến nCk, nCr, nAk (bắt buộc viết hoa C, A)
+        s = s.replace(/\b([a-zA-Z])\s*([CA])\s*([a-zA-Z0-9])\b/g, '$2_{$1}^{$3}');
+
+        // Hệ số nhị thức dạng binom(n, k) -> \binom{n}{k}
+        s = s.replace(/\bbinom\s*\(\s*([^,()]+)\s*,\s*([^()]+)\s*\)/gi, '\\binom{$1}{$2}');
+
         // Thoát dấu ngoặc nhọn tập hợp trong văn bản: {1, 2, ..., 2026} -> \{1, 2, ..., 2026\}
-        s = s.replace(/\{([^{}\n]*[0-9a-zA-Z_\+\-\.\,][^{}\n]*)\}/g, '\\{$1\\}');
+        // Không thoát nếu đứng sau _, ^, \, }, hoặc ký tự định danh (như M_{-1}, A_{H_0}, x^{2}, \frac{1}{2})
+        s = s.replace(/(?<![\\_a-zA-Z0-9^}])\{([^{}\n]*[0-9a-zA-Z_\+\-\.\,][^{}\n]*)\}/g, '\\{$1\\}');
 
         // Ký hiệu hình học Unicode
         s = s.replace(/[∆Δ]\s*([A-Z]{3,4})/g, '\\triangle $1');
@@ -319,7 +357,7 @@
         s = s.replace(/([a-zA-Z0-9\)])\_\(\s*([^)]+?)\s*\)/g, function(_, base, sub) {
             return `${base}_{${sub.replace(/\s+/g, '')}}`;
         });
-        s = s.replace(/([a-zA-Z0-9\)])\_([a-zA-Z0-9]+)/g, '$1_{$2}');
+        s = s.replace(/([a-zA-Z0-9\)])\_([\+\-]?[a-zA-Z0-9]+)/g, '$1_{$2}');
         s = s.replace(/(?<![\\_a-zA-Z0-9])([a-zA-Z])([0-9]+)\b/g, '$1_{$2}');
         s = s.replace(/(?<![\\_a-zA-Z0-9])([A-Z]{2})([0-9]+)\b/g, '$1_{$2}');
 
@@ -530,7 +568,7 @@
 
             // Nhận diện toán tử, biến số, khoảng số học và hình học
             const isMathOp = /[=<>+\-*/\\^_|{}~]|\\infty|\\sqrt|\\triangle|\\prod|\\sum|\b(?:lim|sum|int|sqrt|sin|cos|tan)\b/.test(token);
-            const isVarPattern = /[a-zA-Z]_[a-zA-Z0-9]+|[a-zA-Z]\([a-zA-Z0-9,]+\)|\b[a-zA-Z]\d+\b|\b\d+[a-zA-Z]+\b|\b[A-Z]{2,4}\d*\b/.test(token);
+            const isVarPattern = /[a-zA-Z]_[a-zA-Z0-9]+|[a-zA-Z]\([a-zA-Z0-9,]+\)|\b[a-zA-Z]\d+\b|\b\d+[a-zA-Z]+\b|\b\d+[CAca]\d+\b|\b[A-Z]{2,4}\d*\b/.test(token);
             const isCirclePattern = /^\([A-Z]{1,4}\)$/.test(token);
             const isIntervalPattern = /^[(\[][+\-]?[0-9a-zA-Z\\]+,\s*[+\-]?[0-9a-zA-Z\\]+[)\]]$/.test(token);
             const isSingleLetterVar = /^[a-zA-Z]$/.test(token.replace(/[.,;:?!()\[\]]/g, ''));
