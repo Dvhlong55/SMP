@@ -335,8 +335,7 @@
 
                     <div class="smp-footer">
                         <div class="smp-footer-left">
-                            <span class="smp-status-dot"></span>
-                            <span id="smp-status-text">KaTeX Render: ${normalized.mathCount} công thức (${elapsed} ms)</span>
+                            <span style="color: #64748b; font-size: 11px;">SMP LaTeX Quick Viewer</span>
                         </div>
                         <div class="smp-footer-actions">
                             <button class="smp-action-btn" id="smp-btn-copy-tex">
@@ -354,7 +353,6 @@
         // Cập nhật nội dung
         const renderView = root.querySelector('#smp-render-view');
         const rawTextarea = root.querySelector('#smp-raw-textarea');
-        const statusText = root.querySelector('#smp-status-text');
 
         if (renderView) {
             renderView.innerText = normalized.cleanLatex;
@@ -374,10 +372,6 @@
 
         if (rawTextarea) {
             rawTextarea.value = normalized.cleanLatex;
-        }
-
-        if (statusText) {
-            statusText.textContent = `KaTeX Render: ${normalized.mathCount} công thức (${elapsed} ms)`;
         }
 
         // Đưa về tab Render mặc định

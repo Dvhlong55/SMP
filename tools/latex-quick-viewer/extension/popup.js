@@ -19,15 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = inputText.value;
         if (!text.trim()) {
             previewBox.innerHTML = '<span style="color: #64748b; font-style: italic;">Nhập hoặc dán văn bản phía trên để xem kết quả biên dịch...</span>';
-            statInfo.textContent = '0 ký tự';
             currentLatex = '';
             return;
         }
 
-        const t0 = performance.now();
         const res = SMPNormalizer.normalizeMathText(text);
         currentLatex = res.cleanLatex;
-        const elapsed = (performance.now() - t0).toFixed(1);
 
         previewBox.innerText = res.cleanLatex;
         if (typeof renderMathInElement === 'function') {
@@ -41,8 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 throwOnError: false
             });
         }
-
-        statInfo.textContent = `${res.mathCount} công thức (${elapsed} ms)`;
     }
 
     inputText.addEventListener('input', doRender);

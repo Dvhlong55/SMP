@@ -15,9 +15,7 @@
     const latexOutput = document.getElementById('latex-output');
     const tabPreviewBtn = document.getElementById('tab-preview-btn');
     const tabRawBtn = document.getElementById('tab-raw-btn');
-    const inputChars = document.getElementById('input-chars');
-    const mathCountEl = document.getElementById('math-count');
-    const renderSpeedEl = document.getElementById('render-speed');
+    const btnBackPreview = document.getElementById('btn-back-preview');
     const guideModal = document.getElementById('guide-modal');
     const btnCopyLatex = document.getElementById('btn-copy-latex');
     const copyLatexLabel = document.getElementById('copy-latex-label');
@@ -27,52 +25,19 @@
     // Mẫu ví dụ thực tế theo yêu cầu người dùng
     const USER_SAMPLE = `Dạ em xin góp câu 1 ạ: a) Xét f_n(x) = 1/x+1 +...+ 1/n(x+n) -1 thì f_n(x) nghịch biến trên ( 0, + vô cùng ) và lim f_n(x) ^( x ->0+) =... > 0 và lim f_n(x)^(x -> - vô cùng) <0 nên kết hợp với f_n(x) nghịch biến thì suy ra có nghiệm duy nhất x_n. b) Ta cm đc: x_n < 1 ( xét f_n(1) <0 = f_n(x_n)) . Khi đó dùng Lagrange rồi đánh giá một tí thì tìm được lim y_n = 0`;
 
-    const CASES_SAMPLE = `Giải hệ phương trình và biện luận nghiệm:
-{ x + y = 3
-{ 2x - y = 1
-
-Khi đó ta có:
-<=> 3x = 4
-<=> x = 4/3
-
-Kết hợp suy ra:
-[ x = 1
-[ x = -2`;
-
     let debounceTimer = null;
     let currentCleanLatex = '';
 
     /**
-     * Thực hiện biên dịch và hiển thị
+     * Render công thức KaTeX vào tab Preview từ chuỗi LaTeX
      */
-    function processTranslation() {
-        const text = rawInput.value;
-
-        // Cập nhật thống kê input
-        const charLen = text.length;
-        const wordLen = text.trim() ? text.trim().split(/\s+/).length : 0;
-        inputChars.textContent = `${charLen} ký tự • ${wordLen} từ`;
-
-        if (!text.trim()) {
+    function renderPreviewFromLatex(tex) {
+        if (!tex || !tex.trim()) {
             previewView.innerHTML = '<span style="color: var(--text-secondary); opacity: 0.6; font-style: italic;">Kết quả biên dịch hiển thị tại đây khi bạn nhập văn bản bên trái...</span>';
-            latexOutput.value = '';
-            mathCountEl.textContent = '0 công thức toán';
-            renderSpeedEl.textContent = '< 1 ms';
-            currentCleanLatex = '';
             return;
         }
 
-        const startTime = performance.now();
-
-        // 1. Chạy Normalization Pipeline
-        const result = window.SMPNormalizer ? window.SMPNormalizer.normalizeMathText(text) : { cleanLatex: text, mathCount: 0 };
-        currentCleanLatex = result.cleanLatex;
-
-        // 2. Điền mã LaTeX sạch vào tab Raw
-        latexOutput.value = currentCleanLatex;
-
-        // 3. Render KaTeX vào tab Preview
-        previewView.innerText = currentCleanLatex;
+        previewView.innerText = tex;
         if (typeof renderMathInElement === 'function') {
             renderMathInElement(previewView, {
                 delimiters: [
@@ -84,14 +49,34 @@ Kết hợp suy ra:
                 throwOnError: false
             });
         }
-
-        const duration = (performance.now() - startTime).toFixed(1);
-        renderSpeedEl.textContent = `${duration} ms`;
-        mathCountEl.textContent = `${result.mathCount} công thức toán`;
     }
 
     /**
-     * Debounce nhập liệu realtime
+     * Thực hiện biên dịch và hiển thị
+     */
+    function processTranslation() {
+        const text = rawInput.value;
+
+        if (!text.trim()) {
+            previewView.innerHTML = '<span style="color: var(--text-secondary); opacity: 0.6; font-style: italic;">Kết quả biên dịch hiển thị tại đây khi bạn nhập văn bản bên trái...</span>';
+            latexOutput.value = '';
+            currentCleanLatex = '';
+            return;
+        }
+
+        // 1. Chạy Normalization Pipeline
+        const result = window.SMPNormalizer ? window.SMPNormalizer.normalizeMathText(text) : { cleanLatex: text, mathCount: 0 };
+        currentCleanLatex = result.cleanLatex;
+
+        // 2. Điền mã LaTeX sạch vào tab Raw
+        latexOutput.value = currentCleanLatex;
+
+        // 3. Render KaTeX vào tab Preview
+        renderPreviewFromLatex(currentCleanLatex);
+    }
+
+    /**
+     * Debounce nhập liệu realtime từ ô Văn Bản
      */
     rawInput.addEventListener('input', () => {
         clearTimeout(debounceTimer);
@@ -99,17 +84,30 @@ Kết hợp suy ra:
     });
 
     /**
-     * Chuyển tab Preview <-> Raw TeX
+     * Cho phép người dùng trực tiếp sửa mã LaTeX ở Tab Mã LaTeX
+     */
+    if (latexOutput) {
+        latexOutput.addEventListener('input', () => {
+            currentCleanLatex = latexOutput.value;
+        });
+    }
+
+    /**
+     * Chuyển tab Biên Dịch <-> Mã LaTeX (Kèm nút Quay Lại)
      */
     window.switchTab = function (tab) {
         if (tab === 'preview') {
             tabPreviewBtn.classList.add('active');
             tabRawBtn.classList.remove('active');
+            if (btnBackPreview) btnBackPreview.style.display = 'none';
             previewView.style.display = 'block';
             rawView.style.display = 'none';
+            // Đồng bộ kết quả nếu người dùng vừa sửa trực tiếp ở tab Mã LaTeX
+            renderPreviewFromLatex(currentCleanLatex);
         } else {
             tabRawBtn.classList.add('active');
             tabPreviewBtn.classList.remove('active');
+            if (btnBackPreview) btnBackPreview.style.display = 'inline-flex';
             rawView.style.display = 'block';
             previewView.style.display = 'none';
         }
@@ -120,15 +118,6 @@ Kết hợp suy ra:
      */
     window.loadUserSample = function () {
         rawInput.value = USER_SAMPLE;
-        processTranslation();
-        window.switchTab('preview');
-    };
-
-    /**
-     * Thử hệ phương trình và ngoặc
-     */
-    window.loadCasesSample = function () {
-        rawInput.value = CASES_SAMPLE;
         processTranslation();
         window.switchTab('preview');
     };
