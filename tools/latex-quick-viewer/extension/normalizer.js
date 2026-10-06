@@ -2,7 +2,7 @@
  * ==============================================================================
  * SMP LaTeX Quick Viewer — Math Context Parser & Normalization Pipeline
  * ==============================================================================
- * Phiên bản: 3.2.0 — Tối ưu bóc tách công thức dính chữ, ký hiệu tích/tổng, chữ Hy Lạp & hàm số
+ * Phiên bản: 3.3.0 — Khắc phục lỗi đảo cực $ do chèn sớm khoảng số học, tách sạch từ nối
  * ==============================================================================
  */
 
@@ -66,7 +66,7 @@
     /**
      * Kiểm tra một từ có phải từ tiếng Việt/văn bản thường
      */
-    function isNaturalLanguageWord(word, isLineStart = false) {
+    function isNaturalLanguageWord(word) {
         if (!word) return false;
         const clean = word.toLowerCase().replace(/^[(\["'«`]+|[)\]"'».,:;?!`]+$/g, '').trim();
         if (!clean) return false;
@@ -79,8 +79,8 @@
             return false;
         }
 
-        // Nhãn danh sách ở đầu dòng: a), b), (i), (ii), 1)
-        if (isLineStart && /^(?:[a-z0-9]\)|\([a-z0-9]+\)|\([ivx]+\))$/i.test(word.trim())) {
+        // Nhãn danh sách câu: a), b), (i), (ii), 1) dù ở đầu dòng hay giữa dòng
+        if (/^(?:[a-z0-9]\)|\([a-z0-9]+\)|\([ivx]+\))$/i.test(word.trim())) {
             return true;
         }
 
@@ -116,7 +116,7 @@
     function lineHasNaturalLanguage(line) {
         const words = line.trim().split(/\s+/);
         for (let i = 0; i < words.length; i++) {
-            if (isNaturalLanguageWord(words[i], i === 0)) {
+            if (isNaturalLanguageWord(words[i])) {
                 return true;
             }
         }
@@ -211,7 +211,6 @@
         });
 
         // Chuyển đổi ký hiệu tích và tổng tốc ký (tích, tổng)
-        // Dạng có điều kiện bên dưới: tích(1-1/p)(p|n) -> \prod_{p|n} (1-1/p)
         s = s.replace(/tích\s*\(([^)]+)\)\s*\(([a-zA-Z0-9_\\|\s]+)\)/gi, '\\prod_{$2} ($1)');
         s = s.replace(/tích\s*\(([^)]+)\)/gi, '\\prod ($1)');
         s = s.replace(/tổng\s*\(([^)]+)\)\s*\(([a-zA-Z0-9_\\|\s]+)\)/gi, '\\sum_{$2} ($1)');
@@ -228,9 +227,10 @@
             return match;
         });
 
-        // Khoảng / đoạn số học: ( 0, + vô cùng ) -> $(0, +\infty)$
+        // Chuẩn hóa khoảng/đoạn số học dạng liền khối: (0,+\infty) hoặc [1,100] (KHÔNG CHÈN DẤU $)
+        // Giữ liền khối để trở thành 1 token đơn lẻ và được nhận diện là MATH mà không phá vỡ cân bằng $
         s = s.replace(/([(\[])\s*([+\-]?[0-9a-zA-Z\\]+)\s*,\s*([+\-]?[0-9a-zA-Z\\]+)\s*([)\]])/g, function(_, open, a, b, close) {
-            return ` $${open}${a.trim()}, ${b.trim()}${close}$ `;
+            return ` ${open}${a.trim()},${b.trim()}${close} `;
         });
 
         // Đảm bảo dấu phẩy trong danh sách công thức có khoảng trắng sau nó
@@ -324,7 +324,7 @@
         s = s.replace(/(?<![\\_a-zA-Z0-9])([A-Z]{2})([0-9]+)\b/g, '$1_{$2}');
 
         // 10. Phân số (Fractions)
-        // a) Dạng hàm số / biến số: \phi(n)/n, f(x)/x, P(n)/n (ưu tiên xử lý trước để không bị ăn vào mẫu số ngoặc)
+        // a) Dạng hàm số / biến số: \phi(n)/n, f(x)/x, P(n)/n (ưu tiên xử lý trước)
         s = s.replace(/(\\[a-zA-Z]+|[a-zA-Z][a-zA-Z0-9_]*)\s*\(([^()]+)\)\s*\/\s*([a-zA-Z0-9_]+|\\[a-zA-Z]+)/g, '\\frac{$1($2)}{$3}');
 
         // b) Tỉ số lượng giác: \sin XGB / \sin XGC
@@ -367,7 +367,10 @@
         // Khôi phục ký hiệu phương tích đã che chắn
         s = s.replace(/___POWPOINT___([A-Za-z0-9_]+)___([A-Za-z0-9_]+)___/g, '\\mathcal{P}_{$1/($2)}');
 
-        // 13. Khoảng cách toán tử so sánh
+        // 13. Khoảng cách dấu phẩy trong khoảng số học: (0,+\infty) -> (0, +\infty)
+        s = s.replace(/([(\[][+\-]?[0-9a-zA-Z\\]+),\s*([+\-]?[0-9a-zA-Z\\]+[)\]])/g, '$1, $2');
+
+        // 14. Khoảng cách toán tử so sánh
         s = s.replace(/([<>=])\s*(?=[0-9a-zA-Z\-\\+])/g, '$1 ');
         s = s.replace(/(?<=[0-9a-zA-Z\)])\s*([<>=])/g, ' $1');
 
@@ -471,30 +474,36 @@
                     cleanMath = cleanMath.slice(0, -trailingPunct.length).trim();
                 }
 
-                // 2. Cân bằng dấu ngoặc đơn ở hai đầu biểu thức
-                let openP = 0, closeP = 0;
-                for (let c of cleanMath) {
-                    if (c === '(') openP++;
-                    else if (c === ')') closeP++;
-                }
-                if (closeP > openP && cleanMath.endsWith(')')) {
-                    const diff = closeP - openP;
-                    trailingPunct = ')'.repeat(diff) + trailingPunct;
-                    cleanMath = cleanMath.slice(0, -diff).trim();
-                }
+                // Khoảng số học giữ nguyên ngoặc
+                const isInterval = /^[(\[][+\-]?[0-9a-zA-Z\\_,\s]+[)\]]$/.test(cleanMath);
+                if (!isInterval) {
+                    let openP = 0, closeP = 0;
+                    for (let c of cleanMath) {
+                        if (c === '(') openP++;
+                        else if (c === ')') closeP++;
+                    }
+                    if (closeP > openP && cleanMath.endsWith(')')) {
+                        const diff = closeP - openP;
+                        trailingPunct = ')'.repeat(diff) + trailingPunct;
+                        cleanMath = cleanMath.slice(0, -diff).trim();
+                    }
 
-                let leadingPunct = '';
-                if (openP > closeP && cleanMath.startsWith('(')) {
-                    const diff = openP - closeP;
-                    leadingPunct = '('.repeat(diff);
-                    cleanMath = cleanMath.slice(diff).trim();
-                }
+                    let leadingPunct = '';
+                    if (openP > closeP && cleanMath.startsWith('(')) {
+                        const diff = openP - closeP;
+                        leadingPunct = '('.repeat(diff);
+                        cleanMath = cleanMath.slice(diff).trim();
+                    }
 
-                if (cleanMath) {
-                    const formatted = formatMathSegment(cleanMath);
-                    segments.push(`${leadingPunct}$${formatted.trim()}$${trailingPunct}`);
+                    if (cleanMath) {
+                        const formatted = formatMathSegment(cleanMath);
+                        segments.push(`${leadingPunct}$${formatted.trim()}$${trailingPunct}`);
+                    } else {
+                        segments.push(str);
+                    }
                 } else {
-                    segments.push(str);
+                    const formatted = formatMathSegment(cleanMath);
+                    segments.push(`$${formatted.trim()}$${trailingPunct}`);
                 }
             } else {
                 segments.push(str);
@@ -508,8 +517,7 @@
                 continue;
             }
 
-            const isStart = (i === 0 || (i === 2 && /^\s+$/.test(words[1])));
-            const isNat = isNaturalLanguageWord(token, isStart);
+            const isNat = isNaturalLanguageWord(token);
 
             if (isNat) {
                 if (currentType === 'MATH') {
@@ -520,14 +528,15 @@
                 continue;
             }
 
-            // Nhận diện toán tử, biến số và hình học
+            // Nhận diện toán tử, biến số, khoảng số học và hình học
             const isMathOp = /[=<>+\-*/\\^_|{}~]|\\infty|\\sqrt|\\triangle|\\prod|\\sum|\b(?:lim|sum|int|sqrt|sin|cos|tan)\b/.test(token);
             const isVarPattern = /[a-zA-Z]_[a-zA-Z0-9]+|[a-zA-Z]\([a-zA-Z0-9,]+\)|\b[a-zA-Z]\d+\b|\b\d+[a-zA-Z]+\b|\b[A-Z]{2,4}\d*\b/.test(token);
             const isCirclePattern = /^\([A-Z]{1,4}\)$/.test(token);
+            const isIntervalPattern = /^[(\[][+\-]?[0-9a-zA-Z\\]+,\s*[+\-]?[0-9a-zA-Z\\]+[)\]]$/.test(token);
             const isSingleLetterVar = /^[a-zA-Z]$/.test(token.replace(/[.,;:?!()\[\]]/g, ''));
             const isPureNumber = /^\d+[,.]?\d*$/.test(token.replace(/[.,;:?!()\[\]]/g, ''));
 
-            if (isMathOp || isVarPattern || isCirclePattern) {
+            if (isMathOp || isVarPattern || isCirclePattern || isIntervalPattern) {
                 if (currentType === 'TEXT') {
                     flushSegment();
                 }
@@ -540,7 +549,6 @@
                 currentType = 'MATH';
                 currentTokens.push(token);
 
-                // Nếu biến số đơn có dấu ngoặc đóng dư (ví dụ "n)"), ngắt segment ngay để ngoặc đóng nằm ở văn bản ngoài
                 let op = 0, cp = 0;
                 for (let c of token) {
                     if (c === '(') op++;
