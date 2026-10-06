@@ -53,7 +53,8 @@
         'tu', 'lon', 'nho', 'xuat', 'hien', 'dang', 'ghep', 'vi', 'tri', 'khong', 'the',
         'chua', 'tat', 'ca', 'ton', 'tai', 'bat', 'ky', 'bat', 'ki', 'co', 'dinh',
         'thoa', 'gia', 'tri', 'nghiem', 'phuong', 'trinh', 'bat', 'dang', 'thuc',
-        'ghhh', 'day', 'so', 'ban', 'dau', 'bien', 'doi', 'xac', 'suat', 'ko', 'vuot', 'qua'
+        'ghhh', 'day', 'so', 'ban', 'dau', 'bien', 'doi', 'xac', 'suat', 'ko', 'vuot', 'qua',
+        'c/m', 'cm', 'lhdg', 'tdp', 'tđp', 'pgiac', 'tt', 'dt', 'đt', 'dtron', 'đtron', 'đtròn', 'đpcm', 'dpcm'
     ]);
 
     // Các hàm toán học chuẩn và ký tự Hy Lạp (không coi là từ tự nhiên)
@@ -71,9 +72,21 @@
         const clean = word.toLowerCase().replace(/^[(\["'«`]+|[)\]"'».,:;?!`]+$/g, '').trim();
         if (!clean) return false;
 
-        // Từ ghép có dấu gạch chéo: segments/khúc, đoạn/khúc, và/hoặc
-        if (/^[a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]{2,}\/[a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]{2,}$/i.test(clean)) {
+        // Viết tắt toán học tiếng Việt thông dụng
+        if (clean === 'c/m' || clean === 'c\\m' || clean === 'đpcm' || clean === 'dpcm' || clean === 'tđp' || clean === 'lhdg') {
             return true;
+        }
+
+        // Từ ghép có dấu gạch chéo: chỉ áp dụng khi có dấu tiếng Việt hoặc cả 2 vế là từ tiếng Việt thực sự
+        const slashParts = clean.split('/');
+        if (slashParts.length === 2) {
+            const p1 = slashParts[0].trim();
+            const p2 = slashParts[1].trim();
+            if (!MATH_FUNCTIONS.has(p1) && !MATH_FUNCTIONS.has(p2) &&
+                !/^[a-z]{1,4}\d*$/i.test(p1) && !/^[a-z]{1,4}\d*$/i.test(p2) &&
+                (VI_ACCENTS_REGEX.test(clean) || (VIETNAMESE_WORDS.has(p1) && VIETNAMESE_WORDS.has(p2)))) {
+                return true;
+            }
         }
 
         // Từ ghép có gạch nối: subset-sum, set-theoretic, non-empty, trade-off
@@ -185,33 +198,96 @@
         // Bỏ dấu $ cô lập ở cuối dòng nếu có
         s = s.replace(/([^$])\$\s*$/gm, '$1');
 
+        // Sửa lỗi gõ =< thành <=
+        s = s.replace(/=</g, '<=');
+
+        // Tách dấu hai chấm sau từ tiếng Việt nối liền công thức: hồi:S_n -> hồi: S_n
+        s = s.replace(/([a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]):([A-Za-z0-9_])/g, '$1: $2');
+
+        // Che chắn ký hiệu phương tích hình học sớm: P_(H/(A,0)), P_(H/(T)), P_(S/(BXZ)), P_(S/(BXZ)=
+        s = s.replace(/\bP_\(\s*([A-Za-z0-9_']+)\s*\/\s*(\([A-Za-z0-9_,\s.]+\)|[A-Za-z0-9_']+)\s*\)?/gi, function(_, pt, circle) {
+            let cleanCircle = circle.trim();
+            if (!cleanCircle.startsWith('(')) {
+                cleanCircle = `(${cleanCircle})`;
+            }
+            cleanCircle = cleanCircle.replace(/,/g, '§COMMA§');
+            return `___POWPOINT___${pt}___${cleanCircle}___`;
+        });
+
+        // Hàm phần nguyên: phần nguyên(1000/11) -> \left\lfloor \frac{1000}{11} \right\rfloor
+        s = s.replace(/\b(?:phần\s+nguyên|phan\s+nguyen)\s*\(([^()]+)\)/gi, function(_, inner) {
+            return `\\left\\lfloor ${inner.trim()} \\right\\rfloor`;
+        });
+
+        // Hàm phi Euler: phi(n), 4phi(n), \phi(n) -> \varphi(n)
+        s = s.replace(/(\d*)\s*(?:\\phi|phi)\s*\(([^()]+)\)/gi, function(_, coef, n) {
+            const prefix = coef ? `${coef}` : '';
+            return `${prefix}\\varphi(${n.trim()})`;
+        });
+
+        // Dãy số kèm chỉ số điều kiện: (a_n)_(n>=1) hoặc (a_n)_(n\ge 1) -> (a_n)_{n \ge 1}
+        s = s.replace(/(\([a-zA-Z0-9_]+\))\s*\_(?:\(([^()]+)\)|\{([^{}]+)\})/g, function(_, base, sub1, sub2) {
+            let sub = (sub1 || sub2).replace(/>=/g, '\\ge ').replace(/<=/g, '\\le ').trim();
+            return `${base}_{${sub}}`;
+        });
+
+        // Tích và tổng hàm số: Prod(i=1,k,expr), Sigma(i=1,k,expr)
+        s = s.replace(/\bProd\s*\(\s*([^,()]+)\s*,\s*([^,()]+)\s*,\s*([^()]+)\s*\)/g, function(_, lower, upper, expr) {
+            const cleanExpr = expr.trim();
+            if (cleanExpr.startsWith('(') && cleanExpr.endsWith(')')) {
+                return `\\prod_{${lower.trim()}}^{${upper.trim()}} ${cleanExpr}`;
+            }
+            return `\\prod_{${lower.trim()}}^{${upper.trim()}} (${cleanExpr})`;
+        });
+        s = s.replace(/\b(?:Sigma|sum)\s*\(\s*([^,()]+)\s*,\s*([^,()]+)\s*,\s*([^()]+)\s*\)/g, function(_, lower, upper, expr) {
+            return `\\sum_{${lower.trim()}}^{${upper.trim()}} ${expr.trim()}`;
+        });
+
+        // Tích hình học dạng pi(FA_1/EA_1), pi(MP'/MN') -> \prod \left(\frac{FA_1}{EA_1}\right)
+        s = s.replace(/\bpi\s*\(([^()]*[A-Z][^()]*\/[^()]*)\)/g, function(_, inner) {
+            return `\\prod \\left(${inner.trim()}\\right)`;
+        });
+
+        // Căn bậc k: sqrt[k]{...} hoặc sqrt[k](...)
+        s = s.replace(/(?:\\)?sqrt\s*\[([^\]]+)\]/gi, '\\sqrt[$1]');
+        s = s.replace(/\\sqrt\s*\[([^\]]+)\]\s*\(([^()]+)\)/gi, '\\sqrt[$1]{$2}');
+
+        // deg viết liền biến và chỉ số: dega200 -> deg a_{200}, degb91 -> deg b_{91}, degb2 -> deg b_{2}
+        s = s.replace(/\bdeg\s*([a-zA-Z])([0-9]+)\b/gi, 'deg $1_{$2}');
+        s = s.replace(/\bdeg([a-zA-Z])([0-9]+)\b/gi, 'deg $1_{$2}');
+        s = s.replace(/\bdeg([a-zA-Z])\b/gi, 'deg $1');
+        s = s.replace(/\bsiama\b/gi, 'sigma');
+
         // Tách hàm lượng giác dính liền điểm: sinXGB -> sin XGB, cosA -> cos A
         s = s.replace(/\b(sin|cos|tan|cot|ln|log|exp)([A-Z][a-zA-Z0-9_']*)\b/gi, '$1 $2');
 
         // Chuẩn hóa khoảng trắng quanh _{ và ^{
         s = s.replace(/([_^\\])\s*\{/g, '$1{');
 
-        // Tổ hợp, chỉnh hợp dạng C^k_n, C_n^k, A^k_n, A_n^k, C^1013_2026
-        s = s.replace(/\b([CA])\^(?:\{([^{}]+)\}|([0-9a-zA-Z]+))\_(?:\{([^{}]+)\}|([0-9a-zA-Z]+))/g, function(_, op, exp1, exp2, sub1, sub2) {
-            const k = exp1 || exp2;
-            const n = sub1 || sub2;
+        // Tổ hợp, chỉnh hợp dạng C^k_n, C_n^k, C^n_(2n), C^(p-1)_(p-2)
+        const COMBI_PARAM = '(?:\\{([^{}]+)\\}|\\(([^()]+)\\)|([0-9a-zA-Z]+))';
+        const combiRegex1 = new RegExp(`\\b([CA])\\^${COMBI_PARAM}\\_${COMBI_PARAM}`, 'g');
+        s = s.replace(combiRegex1, function(_, op, e1, e2, e3, s1, s2, s3) {
+            const k = (e1 || e2 || e3 || '').trim();
+            const n = (s1 || s2 || s3 || '').trim();
             return `${op}_{${n}}^{${k}}`;
         });
-        s = s.replace(/\b([CA])\_(?:\{([^{}]+)\}|([0-9a-zA-Z]+))\^(?:\{([^{}]+)\}|([0-9a-zA-Z]+))/g, function(_, op, sub1, sub2, exp1, exp2) {
-            const n = sub1 || sub2;
-            const k = exp1 || exp2;
+        const combiRegex2 = new RegExp(`\\b([CA])\\_${COMBI_PARAM}\\^${COMBI_PARAM}`, 'g');
+        s = s.replace(combiRegex2, function(_, op, s1, s2, s3, e1, e2, e3) {
+            const n = (s1 || s2 || s3 || '').trim();
+            const k = (e1 || e2 || e3 || '').trim();
             return `${op}_{${n}}^{${k}}`;
         });
 
-        // Tổ hợp có biểu thức ngoặc: (n+1)Ck, nC(k+1), (n)C(k)
-        s = s.replace(/(\([^\)]+\))\s*([CA])\s*(\([^\)]+\)|\d+|[a-z])/g, function(_, n, op, k) {
-            const cleanN = n.replace(/^\(|\)$/g, '').trim();
-            const cleanK = k.replace(/^\(|\)$/g, '').trim();
-            return `${op}_{${cleanN}}^{${cleanK}}`;
+        // Tổ hợp có biểu thức ngoặc: (2n)Cn, (6n)C(3n), (6n+6)C(3n+3)
+        s = s.replace(/\(([^()]+)\)\s*([CA])\s*\(([^()]+)\)/g, function(_, n, op, k) {
+            return `${op}_{${n.trim()}}^{${k.trim()}}`;
         });
-        s = s.replace(/(\d+|[a-z])\s*([CA])\s*(\([^\)]+\))/g, function(_, n, op, k) {
-            const cleanK = k.replace(/^\(|\)$/g, '').trim();
-            return `${op}_{${n}}^{${cleanK}}`;
+        s = s.replace(/\(([^()]+)\)\s*([CA])\s*([0-9a-z]+)\b/g, function(_, n, op, k) {
+            return `${op}_{${n.trim()}}^{${k.trim()}}`;
+        });
+        s = s.replace(/(?<![A-Za-z0-9_])([0-9a-z]+)\s*([CA])\s*\(([^()]+)\)/g, function(_, n, op, k) {
+            return `${op}_{${n.trim()}}^{${k.trim()}}`;
         });
 
         // Tổ hợp, chỉnh hợp dạng số nCk, nAk (2026C1013, 10C3, 2026 C 1013, 2026c1013)
@@ -226,10 +302,10 @@
         s = s.replace(/\bbinom\s*\(\s*([^,()]+)\s*,\s*([^()]+)\s*\)/gi, '\\binom{$1}{$2}');
 
         // Toán tử tổng: sum, Sigma -> \sum
-        s = s.replace(/\b(?:sum|Sigma)\b(?!\s+(?:họp|suê|vầy|tụ))/g, '\\sum');
+        s = s.replace(/(?<!\\)\b(?:sum|Sigma)\b(?!\s+(?:họp|suê|vầy|tụ))/g, '\\sum');
 
         // Toán tử tích: prod, Prod -> \prod
-        s = s.replace(/\b(?:prod|Prod)\b/g, '\\prod');
+        s = s.replace(/(?<!\\)\b(?:prod|Prod)\b/g, '\\prod');
 
         // Ký hiệu Hy Lạp / hàm số học sigma: sigma -> \sigma
         s = s.replace(/\bsigma\b/g, '\\sigma');
@@ -284,8 +360,8 @@
         s = s.replace(/([0-9a-zA-Z\)])\.\s*\(/g, '$1. (');
 
         // Thoát dấu ngoặc nhọn tập hợp trong văn bản: {1, 2, ..., 2026} -> \{1, 2, ..., 2026\}
-        // Không thoát nếu đứng sau _, ^, \, }, hoặc ký tự định danh (như M_{-1}, A_{H_0}, x^{2}, \frac{1}{2})
-        s = s.replace(/(?<![\\_a-zA-Z0-9^}])\{([^{}\n]*[0-9a-zA-Z_\+\-\.\,][^{}\n]*)\}/g, '\\{$1\\}');
+        // Không thoát nếu đứng sau _, ^, \, }, ], hoặc ký tự định danh (như M_{-1}, A_{H_0}, x^{2}, \frac{1}{2}, \sqrt[k]{...})
+        s = s.replace(/(?<![\\_a-zA-Z0-9^}\]])\{([^{}\n]*[0-9a-zA-Z_\+\-\.\,][^{}\n]*)\}/g, '\\{$1\\}');
 
         // Ký hiệu hình học Unicode
         s = s.replace(/[∆Δ]\s*([A-Z]{3,4})/g, '\\triangle $1');
@@ -396,8 +472,9 @@
             return `\\lim_{${cleanSub}} ${fn}`;
         });
 
-        // 6b. Các toán tử chuẩn: sum, prod, lim, min, max, sup, inf (không dùng \\b sau vì _ là ký tự word)
-        s = s.replace(/(?<!\\)\b(sum|prod|lim|min|max|inf|sup)(?=[_^({]|\s+[a-zA-Z0-9(\\])/gi, '\\$1');
+        // 6b. Các toán tử chuẩn: sum, prod, lim, min, max, sup, inf, deg (không dùng \\b sau vì _ là ký tự word)
+        s = s.replace(/(?<!\\)\b(sum|prod|lim|min|max|inf|sup|deg)(?=[_^({]|\s+[a-zA-Z0-9(\\])/gi, '\\$1');
+        s = s.replace(/(?<!\\)\bdeg\s+([a-zA-Z0-9_]+)/gi, '\\deg $1');
         s = s.replace(/lim_\s*\(\s*([^)]+)\s*\)\s*([a-zA-Z0-9_\(\)]+)/g, function(_, sub, fn) {
             let cleanSub = sub.replace(/->/g, '\\to').replace(/\s+/g, ' ').trim();
             cleanSub = cleanSub.replace(/([0-9\+\-\\infty]+)\s*([+\-])$/, '$1^{$2}');
@@ -428,6 +505,8 @@
         s = replaceBalancedFunc(s, 'cbrt', '\\sqrt[3]');
 
         // 9. Chỉ số dưới (subscript) trên biến số và đoạn thẳng (thực hiện TRƯỚC phân số để 1/u_n thành 1/u_{n})
+        s = s.replace(/\b([A-Z])_([0-9]+)([A-Z])\b/g, '$1_{$2}$3');
+        s = s.replace(/\b([A-Z])([0-9]+)([A-Z])\b/g, '$1_{$2}$3');
         s = s.replace(/\b([A-Z])([0-9]+)([A-Z])([0-9]+)\b/g, '$1_{$2}$3_{$4}');
         s = s.replace(/\b([A-Z])_([0-9]+)([A-Z])_([0-9]+)\b/g, '$1_{$2}$3_{$4}');
         s = s.replace(/([a-zA-Z0-9\)])\_\(\s*([^)]+?)\s*\)/g, function(_, base, sub) {
@@ -454,16 +533,19 @@
         // a) Dạng hàm số / biến số: \phi(n)/n, f(x)/x, P(n)/n (ưu tiên xử lý trước)
         s = s.replace(/(\\[a-zA-Z]+|[a-zA-Z][a-zA-Z0-9_]*)\s*\(([^()]+)\)\s*\/\s*([a-zA-Z0-9_]+|\\[a-zA-Z]+)/g, '\\frac{$1($2)}{$3}');
 
-        // b) Tỉ số lượng giác: \sin XGB / \sin XGC
-        s = s.replace(/\\sin\s*([A-Za-z0-9_']+)\s*\/\s*\\sin\s*([A-Za-z0-9_']+)/gi, '\\frac{\\sin $1}{\\sin $2}');
-        s = s.replace(/\\cos\s*([A-Za-z0-9_']+)\s*\/\s*\\cos\s*([A-Za-z0-9_']+)/gi, '\\frac{\\cos $1}{\\cos $2}');
-        // c) Tỉ số đoạn thẳng hình học: XF/XE, SA'/RA', A_0F/A_0E
-        s = s.replace(/([A-Z][a-zA-Z0-9_']*(?:')?)\s*\/\s*([A-Z][a-zA-Z0-9_']*(?:')?)/g, '\\frac{$1}{$2}');
+        // b) Tỉ số lượng giác: \sin XGB / \sin XGC, TB / \sin TIB, \sin TIB / TB
+        s = s.replace(/\\(sin|cos|tan|cot)\s*([A-Za-z0-9_']+(?:\{[^{}]+\})?)\s*\/\s*\\(sin|cos|tan|cot)\s*([A-Za-z0-9_']+(?:\{[^{}]+\})?)/gi, '\\frac{\\$1 $2}{\\$3 $4}');
+        s = s.replace(/([A-Z][a-zA-Z0-9_']*(?:')?)\s*\/\s*\\(sin|cos|tan|cot)\s*([A-Za-z0-9_']+(?:\{[^{}]+\})?)/gi, '\\frac{$1}{\\$2 $3}');
+        s = s.replace(/\\(sin|cos|tan|cot)\s*([A-Za-z0-9_']+(?:\{[^{}]+\})?)\s*\/\s*([A-Z][a-zA-Z0-9_']*(?:')?)/gi, '\\frac{\\$1 $2}{$3}');
+
+        // c) Tỉ số đoạn thẳng hình học: XF/XE, SA'/RA', A_0F/A_0E, C_0A/C_0B, FA_1/EA_1
+        const GEOM_SEG = '([A-Z][a-zA-Z0-9\']*(?:_\\{[^{}]+\\}|_[0-9a-zA-Z]+)?[A-Z]?[a-zA-Z0-9\']*(?:_\\{[^{}]+\\}|_[0-9a-zA-Z]+)?(?:\')*)';
+        s = s.replace(new RegExp(`${GEOM_SEG}\\s*\\/\\s*${GEOM_SEG}`, 'g'), '\\frac{$1}{$2}');
         // d) Phân số có ngoặc: (sqrt(...) + L)/2, (A)/(B)^2
         s = s.replace(/\(([^()]+)\)\s*\/\s*\(([^()]+)\)(\^([0-9a-zA-Z_]+|\{[^}]+\}))?/g, function(_, num, den, exp) {
             return `\\frac{${num}}{(${den})${exp || ''}}`;
         });
-        s = s.replace(/\(([^()]+)\)\s*\/\s*([0-9a-zA-Z_]+|\\[a-zA-Z]+(?:\{[^}]+\})*)/g, '\\frac{$1}{$2}');
+        s = s.replace(/\(([^()]+)\)\s*\/\s*([0-9a-zA-Z_]+(?:!)?|\\[a-zA-Z]+(?:\{[^}]+\})*(?:!)?)/g, '\\frac{$1}{$2}');
         // e1) Dạng tử số có luỹ thừa / mũ: 2^n/(2^{n+1}-1), 2^{i-1}/(...), x^2/(x+1)
         s = s.replace(/((?:[0-9]+|[a-zA-Z](?:_\{?[^{}]+\}?|_[0-9a-zA-Z]+)?)(?:\^[0-9a-zA-Z]+|\^\{[^{}]+\}))\s*\/\s*\(([^()]+)\)/g, '\\frac{$1}{$2}');
         // e2) Dạng tử số đơn / mẫu có ngoặc mũ: 1/(u_{n+1})^2
@@ -472,8 +554,8 @@
         });
         // e3) Dạng tử số đơn / mẫu có ngoặc: 1/(...)
         s = s.replace(/([0-9]+|[a-zA-Z](?:_\{?[^{}]+\}?|_[0-9a-zA-Z]+)?)\s*\/\s*\(([^()]+)\)/g, '\\frac{$1}{$2}');
-        // f) Dạng phân số đơn giản giữa biến số/chỉ số hoặc số nguyên: 1/p, 1/k^2, 1/u_n, 1/u_{n+1}, 1/x, 1/2, a/b
-        s = s.replace(/(?<![a-zA-Z0-9_\\])([0-9]+|[a-zA-Z](?:_\{?[a-zA-Z0-9\+\-]+\}?|_[a-zA-Z0-9]+)?)\s*\/\s*([0-9]+|[a-zA-Z](?:_\{?[a-zA-Z0-9\+\-]+\}?|_[a-zA-Z0-9]+)?(?:\^[0-9a-zA-Z]+|\^\{[^{}]+\})?)(?![a-zA-Z0-9_\/\^])/g, '\\frac{$1}{$2}');
+        // f) Dạng phân số đơn giản giữa biến số/chỉ số hoặc số nguyên: 1/p, 1/k^2, 1/u_n, 1/u_{n+1}, 1/x, 1/2, a/b (không biến c/m thành phân số)
+        s = s.replace(/(?<![a-zA-Z0-9_\\])(?!\b[cC]\/[mM]\b)([0-9]+|[a-zA-Z](?:_\{?[a-zA-Z0-9\+\-]+\}?|_[a-zA-Z0-9]+)?)\s*\/\s*([0-9]+|[a-zA-Z](?:_\{?[a-zA-Z0-9\+\-]+\}?|_[a-zA-Z0-9]+)?(?:!)?(?:\^[0-9a-zA-Z]+|\^\{[^{}]+\})?)(?![a-zA-Z0-9_\/\^])/g, '\\frac{$1}{$2}');
         // g) Dạng đại số: 1/x+1, 1/n(x+n)
         s = s.replace(/([0-9]+|[a-zA-Z])\/([a-zA-Z][\+\-][0-9a-zA-Z]+)(?=\s*[\+\-\=]|$)/g, '\\frac{$1}{$2}');
         s = s.replace(/([0-9]+|[a-zA-Z])\/([a-zA-Z]\([^\)]+\))(?=\s*[\+\-\=]|$)/g, '\\frac{$1}{$2}');
@@ -487,15 +569,25 @@
         });
 
         // 12. Luỹ thừa và số mũ:
-        s = s.replace(/(\([^)]+\))\^\(([^)]+)\)/g, '$1^{$2}');
+        s = s.replace(/([a-zA-Z0-9_\)]+)\^\(([^()]+(?:\([^()]*\)[^()]*)*)\)/g, '$1^{$2}');
         s = s.replace(/(\([^)]+\))\^([a-zA-Z0-9_]+)/g, '$1^{$2}');
-        s = s.replace(/([a-zA-Z0-9_]+)\^\(([^)]+)\)/g, '$1^{$2}');
         s = s.replace(/([a-zA-Z0-9_]+)\^([a-zA-Z0-9_]+)/g, function(match, base, exp) {
             return `${base}^{${exp}}`;
         });
 
         // Khôi phục ký hiệu phương tích đã che chắn
-        s = s.replace(/___POWPOINT___([A-Za-z0-9_]+)___([A-Za-z0-9_]+)___/g, '\\mathcal{P}_{$1/($2)}');
+        s = s.replace(/___POWPOINT___([A-Za-z0-9_']+)___([^\n_]+)___/g, function(_, pt, circle) {
+            let cleanCircle = circle.replace(/§COMMA§/g, ', ').trim();
+            if (!cleanCircle.startsWith('(')) {
+                cleanCircle = `(${cleanCircle})`;
+            }
+            return `\\mathcal{P}_{${pt}/${cleanCircle}}`;
+        });
+
+        // Chuẩn hóa modulo bỏ ngoặc kép ( \pmod{p} )
+        s = s.replace(/\(\s*\\?pmod\s*\(([^()]+)\)\s*\)/gi, '\\pmod{$1}');
+        s = s.replace(/\(\s*\\?pmod\{([^}]+)\}\s*\)/gi, '\\pmod{$1}');
+        s = s.replace(/\(\s*\\?mod\s+([^()]+)\s*\)/gi, '\\pmod{$1}');
 
         // 13. Khoảng cách dấu phẩy trong khoảng số học: (0,+\infty) -> (0, +\infty)
         s = s.replace(/([(\[][+\-]?[0-9a-zA-Z\\]+),\s*([+\-]?[0-9a-zA-Z\\]+[)\]])/g, '$1, $2');
@@ -596,9 +688,12 @@
             if (currentType === 'MATH') {
                 let cleanMath = str.trim();
 
-                // 1. Tách dấu câu cuối: .,;:?! (nhưng bảo tồn dấu 3 chấm \dots)
+                // 1. Tách dấu câu cuối: .,;:?! (nhưng bảo tồn dấu 3 chấm \dots và giai thừa n!, k!)
                 let trailingPunct = '';
-                const matchPunct = cleanMath.match(/([.,;:?!]+)$/);
+                let matchPunct = cleanMath.match(/([.,;:?]+)$/);
+                if (!matchPunct && /(?<![a-zA-Z0-9\)\]])!+$/.test(cleanMath)) {
+                    matchPunct = cleanMath.match(/(!+)$/);
+                }
                 if (matchPunct) {
                     const p = matchPunct[1];
                     if (/^\.{3,}$/.test(p)) {
@@ -693,8 +788,8 @@
             }
 
             // Nhận diện toán tử, biến số, khoảng số học và hình học
-            const isMathOp = /[=<>+\-*/\\^_|{}~]|\\infty|\\sqrt|\\triangle|\\prod|\\sum|\b(?:lim|sum|prod|int|sqrt|sin|cos|tan|cot|ln|log|exp|mod|pmod|equiv|min|max|inf|sup)\b/i.test(token);
-            const isVarPattern = /[a-zA-Z]_[a-zA-Z0-9]+|[a-zA-Z]\([a-zA-Z0-9,]+\)|\b[a-zA-Z]\d+\b|\b\d+[a-zA-Z]+\b|\b\d+[CAca]\d+\b|\b[A-Z]{2,4}\d*\b/.test(token);
+            const isMathOp = /[=<>+\-*/\\^_|{}~]|\\infty|\\sqrt|\\triangle|\\prod|\\sum|\b(?:lim|sum|prod|int|sqrt|sin|cos|tan|cot|ln|log|exp|mod|pmod|equiv|min|max|inf|sup|deg)\b/i.test(token);
+            const isVarPattern = /[a-zA-Z]_[a-zA-Z0-9]+|[a-zA-Z]\([a-zA-Z0-9,]+\)|\b[a-zA-Z]\d+\b|\b\d+[a-zA-Z]+\b|\b\d+[CAca]\d+\b|\b[A-Z]{2,4}\d*\b|___POWPOINT___/.test(token);
             const isCirclePattern = /^\([A-Z]{1,4}\)$/.test(token);
             const isIntervalPattern = /^[(\[][+\-]?[0-9a-zA-Z\\]+,\s*[+\-]?[0-9a-zA-Z\\]+[)\]]$/.test(token);
             const isSingleLetterVar = /^[a-zA-Z]$/.test(token.replace(/[.,;:?!()\[\]]/g, ''));
