@@ -231,8 +231,8 @@
         }
     }
 
-    // Tự động render ký hiệu toán thanh thống kê và load mẫu ban đầu
+    // Tự động render ký hiệu toán thanh thống kê và khởi tạo giao diện trống
     renderStatsStrip();
-    loadUserSample();
+    processTranslation();
 
 })();
