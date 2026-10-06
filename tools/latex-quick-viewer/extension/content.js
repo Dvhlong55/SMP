@@ -1436,34 +1436,68 @@
                     }
                 }
 
-                // Tự động đóng cặp dấu ngoặc và $
+                // Tự động đóng cặp dấu ngoặc chuẩn LaTeX (Chuẩn SMP LaTeX Editor)
+                const start = composeInput.selectionStart;
+                const end = composeInput.selectionEnd;
+                const val = composeInput.value;
+
                 if (e.key === '$') {
-                    const start = composeInput.selectionStart;
-                    const end = composeInput.selectionEnd;
                     if (start !== end) {
                         e.preventDefault();
-                        const sel = composeInput.value.substring(start, end);
+                        const sel = val.substring(start, end);
                         composeInput.setRangeText(`$${sel}$`, start, end, 'select');
-                    } else {
-                        e.preventDefault();
-                        composeInput.setRangeText('$$', start, start, 'end');
-                        composeInput.selectionStart = composeInput.selectionEnd = start + 1;
+                        composeInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        return;
                     }
+                    if (val[start] === '$') {
+                        e.preventDefault();
+                        composeInput.selectionStart = composeInput.selectionEnd = start + 1;
+                        return;
+                    }
+                    e.preventDefault();
+                    composeInput.setRangeText('$$', start, start, 'end');
+                    composeInput.selectionStart = composeInput.selectionEnd = start + 1;
                     composeInput.dispatchEvent(new Event('input', { bubbles: true }));
-                } else if (e.key === '(' || e.key === '[' || e.key === '{') {
-                    const closePair = e.key === '(' ? ')' : (e.key === '[' ? ']' : '}');
-                    const start = composeInput.selectionStart;
-                    const end = composeInput.selectionEnd;
+                    return;
+                } else if (e.key === '[' || e.key === '(' || e.key === '{') {
+                    const isEscaped = start > 0 && val[start - 1] === '\\';
+                    if (isEscaped) {
+                        // Gõ \[ -> tự động đóng \], gõ \( -> \), gõ \{ -> \}
+                        e.preventDefault();
+                        const closePair = e.key === '[' ? '\\]' : (e.key === '(' ? '\\)' : '\\}');
+                        if (start !== end) {
+                            const sel = val.substring(start, end);
+                            composeInput.setRangeText(`${e.key}${sel}${closePair}`, start, end, 'select');
+                        } else {
+                            composeInput.setRangeText(`${e.key}${closePair}`, start, start, 'end');
+                            composeInput.selectionStart = composeInput.selectionEnd = start + 1;
+                        }
+                        composeInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        return;
+                    }
+
+                    // Ký tự ngoặc thông thường
+                    const closePair = e.key === '[' ? ']' : (e.key === '(' ? ')' : '}');
                     if (start !== end) {
                         e.preventDefault();
-                        const sel = composeInput.value.substring(start, end);
+                        const sel = val.substring(start, end);
                         composeInput.setRangeText(`${e.key}${sel}${closePair}`, start, end, 'select');
-                    } else {
-                        e.preventDefault();
-                        composeInput.setRangeText(`${e.key}${closePair}`, start, start, 'end');
-                        composeInput.selectionStart = composeInput.selectionEnd = start + 1;
+                        composeInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        return;
                     }
+
+                    e.preventDefault();
+                    composeInput.setRangeText(`${e.key}${closePair}`, start, start, 'end');
+                    composeInput.selectionStart = composeInput.selectionEnd = start + 1;
                     composeInput.dispatchEvent(new Event('input', { bubbles: true }));
+                    return;
+                } else if (e.key === ']' || e.key === ')' || e.key === '}') {
+                    // Nếu ký tự ngay sau con trỏ đã là dấu đóng tương ứng, nhảy qua
+                    if (start === end && val[start] === e.key) {
+                        e.preventDefault();
+                        composeInput.selectionStart = composeInput.selectionEnd = start + 1;
+                        return;
+                    }
                 }
             });
         }
@@ -1472,6 +1506,68 @@
         if (rawTextarea) {
             rawTextarea.addEventListener('input', () => {
                 handleAutocompleteInput(rawTextarea, autocompletePopup);
+            });
+
+            rawTextarea.addEventListener('keydown', (e) => {
+                const start = rawTextarea.selectionStart;
+                const end = rawTextarea.selectionEnd;
+                const val = rawTextarea.value;
+
+                if (e.key === '$') {
+                    if (start !== end) {
+                        e.preventDefault();
+                        const sel = val.substring(start, end);
+                        rawTextarea.setRangeText(`$${sel}$`, start, end, 'select');
+                        rawTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+                        return;
+                    }
+                    if (val[start] === '$') {
+                        e.preventDefault();
+                        rawTextarea.selectionStart = rawTextarea.selectionEnd = start + 1;
+                        return;
+                    }
+                    e.preventDefault();
+                    rawTextarea.setRangeText('$$', start, start, 'end');
+                    rawTextarea.selectionStart = rawTextarea.selectionEnd = start + 1;
+                    rawTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+                    return;
+                } else if (e.key === '[' || e.key === '(' || e.key === '{') {
+                    const isEscaped = start > 0 && val[start - 1] === '\\';
+                    if (isEscaped) {
+                        e.preventDefault();
+                        const closePair = e.key === '[' ? '\\]' : (e.key === '(' ? '\\)' : '\\}');
+                        if (start !== end) {
+                            const sel = val.substring(start, end);
+                            rawTextarea.setRangeText(`${e.key}${sel}${closePair}`, start, end, 'select');
+                        } else {
+                            rawTextarea.setRangeText(`${e.key}${closePair}`, start, start, 'end');
+                            rawTextarea.selectionStart = rawTextarea.selectionEnd = start + 1;
+                        }
+                        rawTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+                        return;
+                    }
+
+                    const closePair = e.key === '[' ? ']' : (e.key === '(' ? ')' : '}');
+                    if (start !== end) {
+                        e.preventDefault();
+                        const sel = val.substring(start, end);
+                        rawTextarea.setRangeText(`${e.key}${sel}${closePair}`, start, end, 'select');
+                        rawTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+                        return;
+                    }
+
+                    e.preventDefault();
+                    rawTextarea.setRangeText(`${e.key}${closePair}`, start, start, 'end');
+                    rawTextarea.selectionStart = rawTextarea.selectionEnd = start + 1;
+                    rawTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+                    return;
+                } else if (e.key === ']' || e.key === ')' || e.key === '}') {
+                    if (start === end && val[start] === e.key) {
+                        e.preventDefault();
+                        rawTextarea.selectionStart = rawTextarea.selectionEnd = start + 1;
+                        return;
+                    }
+                }
             });
         }
 
