@@ -2,7 +2,7 @@
  * ==============================================================================
  * SMP LaTeX Quick Viewer — Math Context Parser & Normalization Pipeline
  * ==============================================================================
- * Phiên bản: 3.0.0 — Chuẩn hóa hoàn thiện ngữ cảnh, biểu thức và Typographic Formatting
+ * Phiên bản: 3.1.0 — Chuẩn hóa hoàn thiện phân số, căn thức lồng nhau, dãy số & vô cùng
  * ==============================================================================
  */
 
@@ -52,7 +52,8 @@
         'co', 'doi', 'chua', 'it', 'ghep', 'chu', 'y', 'de', 'dang', 'xac', 'dinh', 'phan',
         'tu', 'lon', 'nho', 'xuat', 'hien', 'dang', 'ghep', 'vi', 'tri', 'khong', 'the',
         'chua', 'tat', 'ca', 'ton', 'tai', 'bat', 'ky', 'bat', 'ki', 'co', 'dinh',
-        'thoa', 'gia', 'tri', 'nghiem', 'phuong', 'trinh', 'bat', 'dang', 'thuc'
+        'thoa', 'gia', 'tri', 'nghiem', 'phuong', 'trinh', 'bat', 'dang', 'thuc',
+        'ghhh', 'day', 'so', 'ban', 'dau', 'bien', 'doi'
     ]);
 
     // Các hàm toán học chuẩn (không coi là từ tự nhiên)
@@ -67,7 +68,7 @@
      */
     function isNaturalLanguageWord(word, isLineStart = false) {
         if (!word) return false;
-        const clean = word.toLowerCase().replace(/^[(\["'«]+|[)\]"'».,:;?!]+$/g, '').trim();
+        const clean = word.toLowerCase().replace(/^[(\["'«`]+|[)\]"'».,:;?!`]+$/g, '').trim();
         if (!clean) return false;
 
         // Nhãn danh sách ở đầu dòng: a), b), (i), (ii), 1)
@@ -91,7 +92,7 @@
             if (clean.length >= 2) {
                 if (MATH_FUNCTIONS.has(clean)) return false;
                 // Các điểm hình học viết hoa (ABC, XYZ, MN, SB)
-                if (/^[A-Z]{2,4}$/.test(word.replace(/^[(\["'«]+|[)\]"'».,:;?!]+$/g, ''))) {
+                if (/^[A-Z]{2,4}$/.test(word.replace(/^[(\["'«`]+|[)\]"'».,:;?!`]+$/g, ''))) {
                     return false;
                 }
                 return true;
@@ -115,11 +116,50 @@
     }
 
     /**
+     * Thay thế hàm toán học có ngoặc cân bằng độ sâu (depth-counting)
+     * Giúp xử lý các biểu thức lồng nhau như sqrt(L^2 + 4L) chuẩn xác mà không bị cắt cụt.
+     */
+    function replaceBalancedFunc(str, funcNameRegex, latexCmd) {
+        const pattern = new RegExp(`(?:\\\\)?(?:${funcNameRegex})\\s*\\(`, 'gi');
+        let match;
+        let s = str;
+        while ((match = pattern.exec(s)) !== null) {
+            const startIdx = match.index;
+            const openParenIdx = startIdx + match[0].length - 1;
+            let depth = 1;
+            let closeParenIdx = -1;
+            for (let i = openParenIdx + 1; i < s.length; i++) {
+                if (s[i] === '(') depth++;
+                else if (s[i] === ')') {
+                    depth--;
+                    if (depth === 0) {
+                        closeParenIdx = i;
+                        break;
+                    }
+                }
+            }
+            if (closeParenIdx !== -1) {
+                const inner = s.substring(openParenIdx + 1, closeParenIdx);
+                const replaced = `${latexCmd}{${inner}}`;
+                s = s.substring(0, startIdx) + replaced + s.substring(closeParenIdx + 1);
+                pattern.lastIndex = startIdx + replaced.length;
+            } else {
+                break;
+            }
+        }
+        return s;
+    }
+
+    /**
      * Tiền xử lý văn bản thô
      */
     function preSanitize(text) {
         if (!text) return '';
         let s = text;
+
+        // Bỏ backticks bọc quanh công thức: `u_n > 0` -> u_n > 0
+        s = s.replace(/`([^`\n]+)`/g, '$1');
+        s = s.replace(/`/g, '');
 
         // Bỏ URL theo dõi Facebook hoặc link bọc biến: [GX.GA](https://l.facebook.com/...) -> GX.GA
         s = s.replace(/\[([^\]]+)\]\(https?:\/\/(?:[a-zA-Z0-9.\-]+\.)?(?:facebook\.com|fb\.com|l\.facebook\.com)\/[^\)]*\)/gi, '$1');
@@ -129,7 +169,7 @@
         s = s.replace(/([^$])\$\s*$/gm, '$1');
 
         // Tách hàm lượng giác dính liền điểm: sinXGB -> sin XGB, cosA -> cos A
-        s = s.replace(/\b(sin|cos|tan|cot|ln|log|exp|sqrt|cbrt)([A-Z][a-zA-Z0-9_']*)\b/gi, '$1 $2');
+        s = s.replace(/\b(sin|cos|tan|cot|ln|log|exp)([A-Z][a-zA-Z0-9_']*)\b/gi, '$1 $2');
 
         // Thoát dấu ngoặc nhọn tập hợp trong văn bản: {1, 2, ..., 2026} -> \{1, 2, ..., 2026\}
         s = s.replace(/\{([^{}\n]*[0-9a-zA-Z_\+\-\.\,][^{}\n]*)\}/g, '\\{$1\\}');
@@ -139,13 +179,15 @@
         s = s.replace(/[∆Δ]/g, '\\triangle ');
         s = s.replace(/∠\s*([A-Z]{3})/g, '\\widehat{$1}');
 
-        // Căn thức
-        s = s.replace(/(?:căn|can)\s*\(([^)]+)\)/gi, '\\sqrt{$1}');
-        s = s.replace(/(?:căn|can)\s+([a-zA-Z0-9]+)/gi, '\\sqrt{$1}');
+        // Căn thức (sử dụng balanced parenthesis)
+        s = replaceBalancedFunc(s, 'sqrt|căn|can', '\\sqrt');
+        s = replaceBalancedFunc(s, 'cbrt', '\\sqrt[3]');
+        s = s.replace(/(?:\\sqrt|căn|can)\s+([a-zA-Z0-9]+)\b/gi, '\\sqrt{$1}');
 
-        // Vô cùng
-        s = s.replace(/([+\-])\s*(?:vô cùng|vocung|vô cực|vocuc)/gi, '$1\\infty');
-        s = s.replace(/(?:vô cùng|vocung|vô cực|vocuc)/gi, '\\infty');
+        // Vô cùng: oo, +oo, -oo, vô cùng, vocung
+        s = s.replace(/([+\-])\s*(?:oo|vô cùng|vocung|vô cực|vocuc)\b/gi, '$1\\infty');
+        s = s.replace(/(?:vô cùng|vocung|vô cực|vocuc)\b/gi, '\\infty');
+        s = s.replace(/(?<=[=><\(\[\{,\s]|\b|->|\\to)\s*oo\b/gi, '\\infty');
 
         // Khoảng / đoạn số học: ( 0, + vô cùng ) -> $(0, +\infty)$
         s = s.replace(/([(\[])\s*([+\-]?[0-9a-zA-Z\\]+)\s*,\s*([+\-]?[0-9a-zA-Z\\]+)\s*([)\]])/g, function(_, open, a, b, close) {
@@ -178,7 +220,7 @@
         s = s.replace(/!=/g, ' \\ne ');
         s = s.replace(/~=/g, ' \\approx ');
 
-        // 3. Dấu chấm lửng
+        // 3. Dấu ba chấm \dots
         s = s.replace(/\+\s*\.{2,}\s*\+/g, ' + \\dots + ');
         s = s.replace(/\-\s*\.{2,}\s*\-/g, ' - \\dots - ');
         s = s.replace(/=\s*\.{2,}/g, ' = \\dots ');
@@ -186,14 +228,14 @@
         s = s.replace(/(?<=[a-zA-Z0-9_\)\]\}])\s*\.{3,}\s*(?=[a-zA-Z0-9_\(\[\{])/g, ' \\dots ');
         s = s.replace(/\.{3,}/g, ' \\dots ');
 
-        // 4. Modulo: a = b mod m -> a \equiv b \pmod{m}
+        // 4. Modulo: = 1 mod p -> \equiv 1 \pmod{p}
         s = s.replace(/=\s*([0-9a-zA-Z_]+)\s*mod\s*([0-9a-zA-Z_]+)/gi, '\\equiv $1 \\pmod{$2}');
         s = s.replace(/\bmod\s+([0-9a-zA-Z_]+)/gi, '\\pmod{$1}');
 
-        // 5. Quan hệ chia hết: p | P(p) -> p \mid P(p)
+        // 5. Quan hệ chia hết: p | P(n) -> p \mid P(n)
         s = s.replace(/([a-zA-Z0-9_]+)\s*\|\s*([a-zA-Z0-9_]+(?:\([a-zA-Z0-9_]+\))?)/g, '$1 \\mid $2');
 
-        // 6. Giới hạn lim:
+        // 6. Giới hạn (Limits): lim f_n(x) ^( x ->0+) -> \lim_{x \to 0^+} f_n(x)
         s = s.replace(/lim\s+([a-zA-Z0-9_\(\)]+)\s*\^\s*\(\s*([^)]+)\s*\)/g, function(_, fn, sub) {
             let cleanSub = sub.replace(/->/g, '\\to').replace(/\s+/g, ' ').trim();
             cleanSub = cleanSub.replace(/([0-9\+\-\\infty]+)\s*([+\-])$/, '$1^{$2}');
@@ -211,34 +253,57 @@
         });
         s = s.replace(/\blim\s+([a-zA-Z0-9_]+(?:\([a-zA-Z0-9_]+\))?)/g, '\\lim $1');
 
-        // 7. Hàm lượng giác chuẩn hóa
+        // 7. Hàm lượng giác: sin BAX -> \sin BAX
         s = s.replace(/\b(?:sin|Sin)\s*([A-Za-z0-9_']*)/g, '\\sin $1');
         s = s.replace(/\b(?:cos|Cos)\s*([A-Za-z0-9_']*)/g, '\\cos $1');
         s = s.replace(/\b(?:tan|Tan)\s*([A-Za-z0-9_']*)/g, '\\tan $1');
         s = s.replace(/\b(?:cot|Cot)\s*([A-Za-z0-9_']*)/g, '\\cot $1');
 
-        // 8. Phân số:
+        // 8. Căn thức (sqrt, cbrt)
+        s = replaceBalancedFunc(s, 'sqrt', '\\sqrt');
+        s = replaceBalancedFunc(s, 'cbrt', '\\sqrt[3]');
+
+        // 9. Chỉ số dưới (subscript) trên biến số và đoạn thẳng (thực hiện TRƯỚC phân số để 1/u_n thành 1/u_{n})
+        s = s.replace(/\b([A-Z])([0-9]+)([A-Z])([0-9]+)\b/g, '$1_{$2}$3_{$4}');
+        s = s.replace(/\b([A-Z])_([0-9]+)([A-Z])_([0-9]+)\b/g, '$1_{$2}$3_{$4}');
+        s = s.replace(/([a-zA-Z0-9\)])\_\(\s*([^)]+?)\s*\)/g, function(_, base, sub) {
+            return `${base}_{${sub.replace(/\s+/g, '')}}`;
+        });
+        s = s.replace(/([a-zA-Z0-9\)])\_([a-zA-Z0-9]+)/g, '$1_{$2}');
+        s = s.replace(/(?<![\\_a-zA-Z0-9])([a-zA-Z])([0-9]+)\b/g, '$1_{$2}');
+        s = s.replace(/(?<![\\_a-zA-Z0-9])([A-Z]{2})([0-9]+)\b/g, '$1_{$2}');
+
+        // 10. Phân số (Fractions)
         // a) Tỉ số lượng giác: \sin XGB / \sin XGC
         s = s.replace(/\\sin\s*([A-Za-z0-9_']+)\s*\/\s*\\sin\s*([A-Za-z0-9_']+)/gi, '\\frac{\\sin $1}{\\sin $2}');
         s = s.replace(/\\cos\s*([A-Za-z0-9_']+)\s*\/\s*\\cos\s*([A-Za-z0-9_']+)/gi, '\\frac{\\cos $1}{\\cos $2}');
         // b) Tỉ số đoạn thẳng hình học: XF/XE, SA'/RA', A_0F/A_0E
         s = s.replace(/([A-Z][a-zA-Z0-9_']*(?:')?)\s*\/\s*([A-Z][a-zA-Z0-9_']*(?:')?)/g, '\\frac{$1}{$2}');
-        // c) Phân số có ngoặc:
-        s = s.replace(/\(([^)]+)\)\s*\/\s*\(([^)]+)\)/g, '\\frac{$1}{$2}');
-        s = s.replace(/([0-9a-zA-Z_]+)\s*\/\s*\(([^)]+)\)/g, '\\frac{$1}{$2}');
-        s = s.replace(/\(([^)]+)\)\s*\/\s*([0-9a-zA-Z_]+)/g, '\\frac{$1}{$2}');
-        // d) Dạng số học/đại số đơn giản: 1/x+1, 1/n(x+n)
+        // c) Phân số có ngoặc: (sqrt(...) + L)/2, (A)/(B)^2
+        s = s.replace(/\(([^()]+)\)\s*\/\s*\(([^()]+)\)(\^([0-9a-zA-Z_]+|\{[^}]+\}))?/g, function(_, num, den, exp) {
+            return `\\frac{${num}}{(${den})${exp || ''}}`;
+        });
+        s = s.replace(/\(([^()]+)\)\s*\/\s*([0-9a-zA-Z_]+|\\[a-zA-Z]+(?:\{[^}]+\})*)/g, '\\frac{$1}{$2}');
+        // d) Dạng tử số đơn / mẫu có ngoặc mũ: 1/(u_{n+1})^2
+        s = s.replace(/([0-9]+|[a-zA-Z](?:_\{?[^{}]+\}?|_[0-9a-zA-Z]+)?)\s*\/\s*\(([^()]+)\)(\^([0-9a-zA-Z_]+|\{[^}]+\}))/g, function(_, num, den, fullExp, exp) {
+            return `\\frac{${num}}{(${den})^{${exp}}}`;
+        });
+        s = s.replace(/([0-9]+|[a-zA-Z](?:_\{?[^{}]+\}?|_[0-9a-zA-Z]+)?)\s*\/\s*\(([^()]+)\)/g, '\\frac{$1}{$2}');
+        // e) Dạng phân số đơn giản giữa biến số/chỉ số hoặc số nguyên: 1/u_n, 1/u_{n+1}, 1/x, 1/2, a/b
+        s = s.replace(/(?<![a-zA-Z0-9_\\])([0-9]+|[a-zA-Z](?:_\{?[a-zA-Z0-9\+\-]+\}?|_[a-zA-Z0-9]+)?)\s*\/\s*([0-9]+|[a-zA-Z](?:_\{?[a-zA-Z0-9\+\-]+\}?|_[a-zA-Z0-9]+)?)(?![a-zA-Z0-9_\/])/g, '\\frac{$1}{$2}');
+        // f) Dạng đại số: 1/x+1, 1/n(x+n)
         s = s.replace(/([0-9]+|[a-zA-Z])\/([a-zA-Z][\+\-][0-9a-zA-Z]+)(?=\s*[\+\-\=]|$)/g, '\\frac{$1}{$2}');
+        s = s.replace(/([0-9]+|[a-zA-Z])\/([a-zA-Z]\([^\)]+\))(?=\s*[\+\-\=]|$)/g, '\\frac{$1}{$2}');
 
-        // 9. Phép nhân: dấu chấm '.' và '*'
+        // 11. Phép nhân: dấu chấm '.' và '*'
         s = s.replace(/\s*\*\s*/g, ' \\cdot ');
         s = s.replace(/\s+\.\s+/g, ' \\cdot ');
-        s = s.replace(/([A-Za-z0-9_'\\]+|\})\s*\.\s*(\\frac|[A-Za-z0-9_'\\]+)/g, function(match, p1, p2) {
+        s = s.replace(/([A-Za-z0-9_'\\]+|\}|\))\s*\.\s*([A-Za-z0-9_'\\]+|\(|\{)/g, function(match, p1, p2) {
             if (/^\d+$/.test(p1) && /^\d+$/.test(p2)) return match;
             return `${p1} \\cdot ${p2}`;
         });
 
-        // 10. Luỹ thừa và số mũ:
+        // 12. Luỹ thừa và số mũ:
         s = s.replace(/(\([^)]+\))\^\(([^)]+)\)/g, '$1^{$2}');
         s = s.replace(/(\([^)]+\))\^([a-zA-Z0-9_]+)/g, '$1^{$2}');
         s = s.replace(/([a-zA-Z0-9_]+)\^\(([^)]+)\)/g, '$1^{$2}');
@@ -246,21 +311,10 @@
             return `${base}^{${exp}}`;
         });
 
-        // 11. Chỉ số dưới (subscript) trên biến số và đoạn thẳng:
-        // Đoạn thẳng ghép 2 chỉ số: C1C2 -> C_1C_2, B_0C_0 -> B_0C_0
-        s = s.replace(/\b([A-Z])([0-9]+)([A-Z])([0-9]+)\b/g, '$1_{$2}$3_{$4}');
-        s = s.replace(/\b([A-Z])_([0-9]+)([A-Z])_([0-9]+)\b/g, '$1_{$2}$3_{$4}');
-        // Biến có ngoặc dưới: a_(i+1) -> a_{i+1}, a_(k+1) -> a_{k+1}
-        s = s.replace(/([a-zA-Z0-9\)])\_\(([^)]+)\)/g, '$1_{$2}');
-        s = s.replace(/([a-zA-Z0-9\)])\_([a-zA-Z0-9]+)/g, '$1_{$2}');
-        // Ký hiệu biến đơn có số: a1 -> a_1, a2026 -> a_{2026}, c1 -> c_1, p1 -> p_1, pr -> p_r
-        s = s.replace(/(?<![\\_a-zA-Z0-9])([a-zA-Z])([0-9]+)\b/g, '$1_{$2}');
-        s = s.replace(/(?<![\\_a-zA-Z0-9])([A-Z]{2})([0-9]+)\b/g, '$1_{$2}');
-
         // Khôi phục ký hiệu phương tích đã che chắn
         s = s.replace(/___POWPOINT___([A-Za-z0-9_]+)___([A-Za-z0-9_]+)___/g, '\\mathcal{P}_{$1/($2)}');
 
-        // 12. Định dạng khoảng trắng các phép so sánh
+        // 13. Khoảng cách toán tử so sánh
         s = s.replace(/([<>=])\s*(?=[0-9a-zA-Z\-\\+])/g, '$1 ');
         s = s.replace(/(?<=[0-9a-zA-Z\)])\s*([<>=])/g, ' $1');
 
@@ -269,7 +323,7 @@
     }
 
     /**
-     * Chuyển đổi môi trường giả lập (Hệ phương trình, Tuyển, Chuỗi tương đương)
+     * Chuyển đổi môi trường nhiều dòng dạng ngoặc nhọn hoặc ngoặc vuông
      */
     function convertPseudoEnvironments(text) {
         if (!text) return '';
@@ -278,7 +332,6 @@
         let i = 0;
 
         while (i < lines.length) {
-            // Hệ phương trình: dòng bắt đầu bằng '{'
             if (/^\s*\{\s*/.test(lines[i])) {
                 const casesLines = [];
                 while (i < lines.length && /^\s*\{\s*/.test(lines[i])) {
@@ -292,7 +345,6 @@
                 }
             }
 
-            // Tuyển: dòng bắt đầu bằng '['
             if (/^\s*\[\s*/.test(lines[i])) {
                 const arrayLines = [];
                 while (i < lines.length && /^\s*\[\s*/.test(lines[i])) {
@@ -416,8 +468,8 @@
             }
 
             // Nhận diện toán tử, biến số và hình học
-            const isMathOp = /[=<>+\-*/\\^_|]|\\infty|\\sqrt|\\triangle|\b(?:lim|sum|int|sqrt|sin|cos|tan)\b/.test(token);
-            const isVarPattern = /[a-zA-Z]_[a-zA-Z0-9]+|[a-zA-Z]\([a-zA-Z0-9,]+\)|\b[a-zA-Z]\d+\b|\b[A-Z]{2,4}\d*\b/.test(token);
+            const isMathOp = /[=<>+\-*/\\^_|{}~]|\\infty|\\sqrt|\\triangle|\b(?:lim|sum|int|sqrt|sin|cos|tan)\b/.test(token);
+            const isVarPattern = /[a-zA-Z]_[a-zA-Z0-9]+|[a-zA-Z]\([a-zA-Z0-9,]+\)|\b[a-zA-Z]\d+\b|\b\d+[a-zA-Z]+\b|\b[A-Z]{2,4}\d*\b/.test(token);
             const isCirclePattern = /^\([A-Z]{1,4}\)$/.test(token);
             const isSingleLetterVar = /^[a-zA-Z]$/.test(token.replace(/[.,;:?!()\[\]]/g, ''));
             const isPureNumber = /^\d+[,.]?\d*$/.test(token.replace(/[.,;:?!()\[\]]/g, ''));
@@ -429,9 +481,10 @@
                 currentType = 'MATH';
                 currentTokens.push(token);
             } else if (isSingleLetterVar) {
-                if (currentType === null) {
-                    currentType = 'MATH';
+                if (currentType === 'TEXT') {
+                    flushSegment();
                 }
+                currentType = 'MATH';
                 currentTokens.push(token);
             } else if (isPureNumber && currentType === 'MATH') {
                 currentTokens.push(token);
@@ -453,7 +506,7 @@
     }
 
     /**
-     * Hậu xử lý văn bản cuối cùng (Typographic & Delimiter Cleansing)
+     * Chuẩn hóa Typographic và Delimiter
      */
     function cleanAndFormatFinalTypography(text) {
         if (!text) return '';
@@ -477,6 +530,7 @@
         for (let k = 0; k < tokens.length; k++) {
             if (tokens[k].type === 'TEXT') {
                 let t = tokens[k].val;
+                // Khoảng trắng quanh dấu ngoặc văn bản
                 t = t.replace(/([0-9a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])\(/gi, '$1 (');
                 t = t.replace(/\(\s+/g, '(');
                 t = t.replace(/\s+\)/g, ')');
@@ -517,7 +571,8 @@
         }
 
         result = result.replace(/[ \t]{2,}/g, ' ');
-        result = result.replace(/\$\s*\$/g, '');
+        // Xóa dấu $ rỗng nhưng bảo tồn ngắt dòng giữa các dòng
+        result = result.replace(/\$[ \t]*\$/g, '');
         return result.trim();
     }
 
@@ -532,7 +587,7 @@
         // 1. Đồng bộ ngắt dòng
         let text = rawText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
-        // 2. Tiền xử lý vô cùng, khoảng số học, URLs
+        // 2. Tiền xử lý vô cùng, căn thức, khoảng số học, URLs
         text = preSanitize(text);
 
         // 3. Xử lý môi trường giả lập nhiều dòng (cases, array)
@@ -541,11 +596,6 @@
         // 4. Xử lý từng dòng
         const lines = text.split('\n');
         const processedLines = lines.map(line => {
-            if (/^\s*(?:<=>|=>)\s*/.test(line)) {
-                const arrow = line.match(/^\s*(<=>|=>)/)[1];
-                const content = line.replace(/^\s*(?:<=>|=>)\s*/, '').trim();
-                return `$${arrow === '<=>' ? '\\Leftrightarrow' : '\\Rightarrow'} ${formatMathSegment(content)}$`;
-            }
             return processRawTextLine(line);
         });
 
