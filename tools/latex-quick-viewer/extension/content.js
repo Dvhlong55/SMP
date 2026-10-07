@@ -170,7 +170,7 @@
                 pointer-events: auto;
             }
 
-            /* --- CHẾ ĐỘ TỐI (MẶC ĐỊNH) --- */
+            /* --- GIAO DIỆN HỘP THOẠI & HIỆU ỨNG CHUYỂN MƯỢT MÀ --- */
             .smp-dialog {
                 position: absolute;
                 width: 860px;
@@ -185,11 +185,43 @@
                 flex-direction: column;
                 overflow: hidden;
                 transform: scale(0.96) translateY(8px);
-                transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, background 0.25s, color 0.25s;
+                transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                            opacity 0.2s ease,
+                            background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                            color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                            border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                            box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             }
             .smp-backdrop.active .smp-dialog {
                 transform: scale(1) translateY(0);
             }
+
+            /* Chuyển đổi màu sắc lan dần mượt mà trên tất cả thành phần */
+            .smp-dialog,
+            .smp-header,
+            .smp-body,
+            .smp-footer,
+            .smp-pane-header,
+            .smp-pane-title,
+            .smp-textarea,
+            .smp-preview-box,
+            .smp-snippet-toolbar,
+            .smp-snip-btn,
+            .smp-tab-btn,
+            .smp-action-btn,
+            .smp-raw-textarea,
+            .smp-translate-view,
+            .smp-badge,
+            .smp-snip-label,
+            .smp-close-btn,
+            .smp-switch-track,
+            .smp-switch-handle {
+                transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                            color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                            border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                            box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
             .smp-header {
                 display: flex;
                 align-items: center;
@@ -235,7 +267,6 @@
                 padding: 4px 10px;
                 border-radius: 6px;
                 cursor: pointer;
-                transition: all 0.15s ease;
             }
             .smp-tab-btn.active {
                 background: rgba(92, 225, 230, 0.2);
@@ -246,23 +277,91 @@
                 background: rgba(255, 255, 255, 0.05);
                 color: #e2e8f0;
             }
-            .smp-icon-btn {
-                background: transparent;
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                color: #94a3b8;
-                font-size: 13px;
-                padding: 4px 8px;
-                border-radius: 6px;
+
+            /* --- CẦN GẠT CHUYỂN SÁNG / TỐI (THEME TOGGLE SWITCH) --- */
+            .smp-theme-switch {
+                position: relative;
+                display: inline-flex;
+                align-items: center;
+                width: 48px;
+                height: 24px;
                 cursor: pointer;
+                user-select: none;
+                margin: 0 4px;
+            }
+            .smp-theme-switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+                position: absolute;
+                margin: 0;
+                pointer-events: none;
+            }
+            .smp-switch-track {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #cbd5e1;
+                border: 1px solid #94a3b8;
+                border-radius: 24px;
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                transition: all 0.15s ease;
+                justify-content: space-between;
+                padding: 0 5px;
+                box-sizing: border-box;
             }
-            .smp-icon-btn:hover {
-                background: rgba(255, 255, 255, 0.08);
-                color: #f8fafc;
+            .smp-switch-icon {
+                font-size: 10px;
+                line-height: 1;
+                z-index: 1;
+                pointer-events: none;
+                transition: opacity 0.3s ease, transform 0.3s ease;
             }
+            .smp-icon-sun {
+                opacity: 1;
+                transform: scale(1);
+            }
+            .smp-icon-moon {
+                opacity: 0.35;
+                transform: scale(0.85);
+            }
+            .smp-switch-handle {
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: #ffffff;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
+                transition: transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1),
+                            background-color 0.32s ease,
+                            box-shadow 0.32s ease;
+                z-index: 2;
+            }
+
+            /* Khi gạt sang (checked = Tối) */
+            .smp-theme-switch input:checked + .smp-switch-track {
+                background: #0d161a;
+                border-color: rgba(92, 225, 230, 0.55);
+                box-shadow: 0 0 10px rgba(92, 225, 230, 0.22);
+            }
+            .smp-theme-switch input:checked + .smp-switch-track .smp-icon-sun {
+                opacity: 0.35;
+                transform: scale(0.85);
+            }
+            .smp-theme-switch input:checked + .smp-switch-track .smp-icon-moon {
+                opacity: 1;
+                transform: scale(1);
+            }
+            .smp-theme-switch input:checked + .smp-switch-track .smp-switch-handle {
+                transform: translateX(24px);
+                background: #5ce1e6;
+                box-shadow: 0 0 8px rgba(92, 225, 230, 0.65);
+            }
+
             .smp-close-btn {
                 background: transparent;
                 border: none;
@@ -275,7 +374,6 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                transition: all 0.15s ease;
             }
             .smp-close-btn:hover {
                 background: rgba(239, 68, 68, 0.2);
@@ -427,18 +525,67 @@
                 min-height: 220px;
                 max-height: 420px;
                 overflow-y: auto;
-                background: #070a0b;
-                border: 1px solid rgba(92, 225, 230, 0.15);
+                background: #091218;
+                border: 1px solid rgba(92, 225, 230, 0.22);
                 border-radius: 0 0 8px 8px;
-                padding: 14px 16px;
-                color: #f1f5f9;
-                font-family: "Times New Roman", Times, serif;
+                padding: 14px 18px;
+                color: #e2e8f0;
+                font-family: "Times New Roman", Times, Georgia, serif;
                 font-size: 16px;
-                line-height: 2.1;
-                letter-spacing: 0.025em;
-                word-spacing: 0.05em;
-                white-space: pre-wrap;
+                line-height: 1.95;
+                letter-spacing: 0.015em;
+                white-space: normal;
                 word-break: break-word;
+                box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+            }
+            .smp-preview-box b, .smp-preview-box strong {
+                color: #5ce1e6;
+                font-weight: 700;
+            }
+            .smp-preview-box h2 {
+                color: #f8fafc;
+                font-family: "Times New Roman", serif;
+                text-align: center;
+                margin: 10px 0;
+                font-size: 1.3rem;
+            }
+            .smp-preview-box h3 {
+                color: #5ce1e6;
+                font-family: "Times New Roman", serif;
+                border-left: 3px solid #5ce1e6;
+                padding-left: 8px;
+                margin: 14px 0 8px 0;
+                font-size: 1.1rem;
+            }
+            .smp-preview-box h4 {
+                color: #38bdf8;
+                font-family: "Times New Roman", serif;
+                margin: 10px 0 6px 0;
+                font-size: 1.02rem;
+            }
+            .smp-preview-box h5 {
+                color: #94a3b8;
+                font-family: "Times New Roman", serif;
+                margin: 8px 0 4px 0;
+                font-size: 0.95rem;
+            }
+            .smp-preview-box .latex-fbox {
+                display: inline-block;
+                border: 1.5px solid #5ce1e6;
+                color: #5ce1e6;
+                padding: 2px 7px;
+                border-radius: 4px;
+                margin: 2px 4px;
+                line-height: normal;
+                vertical-align: middle;
+            }
+            .smp-preview-box .latex-bullet {
+                color: #5ce1e6;
+                font-weight: bold;
+                margin-right: 6px;
+            }
+            .smp-preview-box u {
+                text-underline-offset: 3px;
             }
 
             /* --- GỢI Ý TỰ ĐỘNG (AUTOCOMPLETE POPUP) --- */
@@ -482,17 +629,93 @@
 
             /* --- TAB BIÊN DỊCH & MÃ NGUỒN --- */
             .smp-translate-view {
-                font-family: "Times New Roman", Times, serif;
-                color: #f1f5f9;
+                font-family: "Times New Roman", Times, Georgia, serif;
+                color: #e2e8f0;
                 font-size: 16px;
-                line-height: 2.1;
-                letter-spacing: 0.025em;
-                word-spacing: 0.05em;
-                white-space: pre-wrap;
+                line-height: 1.95;
+                letter-spacing: 0.015em;
+                white-space: normal;
                 word-break: break-word;
                 min-height: 180px;
-                padding: 10px;
+                padding: 14px 18px;
+                background: #091218;
+                border: 1px solid rgba(92, 225, 230, 0.22);
+                border-radius: 8px;
             }
+            .smp-translate-view b, .smp-translate-view strong {
+                color: #5ce1e6;
+                font-weight: 700;
+            }
+            .smp-translate-view h2 {
+                color: #f8fafc;
+                font-family: "Times New Roman", serif;
+                text-align: center;
+                margin: 10px 0;
+            }
+            .smp-translate-view h3 {
+                color: #5ce1e6;
+                font-family: "Times New Roman", serif;
+                border-left: 3px solid #5ce1e6;
+                padding-left: 8px;
+                margin: 14px 0 8px 0;
+            }
+            .smp-translate-view h4 {
+                color: #38bdf8;
+                font-family: "Times New Roman", serif;
+                margin: 10px 0 6px 0;
+            }
+            .smp-translate-view .latex-fbox {
+                display: inline-block;
+                border: 1.5px solid #5ce1e6;
+                color: #5ce1e6;
+                padding: 2px 7px;
+                border-radius: 4px;
+                margin: 2px 4px;
+                line-height: normal;
+                vertical-align: middle;
+            }
+            .smp-translate-view .latex-bullet {
+                color: #5ce1e6;
+                font-weight: bold;
+                margin-right: 6px;
+            }
+            .latex-par-spacer {
+                height: 12px;
+            }
+            .latex-center {
+                text-align: center;
+                margin: 8px 0;
+            }
+            .latex-flushleft {
+                text-align: left;
+                margin: 8px 0;
+            }
+            .latex-flushright {
+                text-align: right;
+                margin: 8px 0;
+            }
+            .latex-table-wrapper {
+                width: 100%;
+                overflow-x: auto;
+                margin: 10px 0;
+                display: flex;
+                justify-content: center;
+            }
+            .latex-table {
+                border-collapse: collapse;
+                margin: 0 auto;
+                font-family: inherit;
+                font-size: 0.95em;
+            }
+            .latex-table td, .latex-table th {
+                padding: 5px 12px;
+                vertical-align: middle;
+                line-height: 1.5;
+            }
+            .latex-table td.border-top, .latex-table tr.border-top td { border-top: 1px solid currentColor; }
+            .latex-table td.border-bottom, .latex-table tr.border-bottom td { border-bottom: 1px solid currentColor; }
+            .latex-table td.border-left { border-left: 1px solid currentColor; }
+            .latex-table td.border-right { border-right: 1px solid currentColor; }
             .smp-raw-textarea {
                 width: 100%;
                 min-height: 220px;
@@ -641,13 +864,13 @@
                 background: #f1f5f9;
                 color: #0f172a;
             }
-            .smp-dialog.light-theme .smp-icon-btn {
+            .smp-dialog.light-theme .smp-switch-track {
+                background: #e2e8f0;
                 border-color: #cbd5e1;
-                color: #475569;
             }
-            .smp-dialog.light-theme .smp-icon-btn:hover {
-                background: #f1f5f9;
-                color: #0f172a;
+            .smp-dialog.light-theme .smp-theme-switch input:checked + .smp-switch-track {
+                background: #0d161a;
+                border-color: rgba(92, 225, 230, 0.55);
             }
             .smp-dialog.light-theme .smp-body {
                 background: #f8fafc;
@@ -684,13 +907,49 @@
             .smp-dialog.light-theme .smp-textarea:focus {
                 border-color: #009eb3;
             }
-            .smp-dialog.light-theme .smp-preview-box {
+            .smp-dialog.light-theme .smp-preview-box,
+            .smp-dialog.light-theme .smp-translate-view {
                 background: #ffffff;
                 border-color: #cbd5e1;
                 color: #1e293b;
+                box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.05);
             }
-            .smp-dialog.light-theme .smp-translate-view {
-                color: #1e293b;
+            .smp-dialog.light-theme .smp-preview-box b,
+            .smp-dialog.light-theme .smp-preview-box strong,
+            .smp-dialog.light-theme .smp-translate-view b,
+            .smp-dialog.light-theme .smp-translate-view strong {
+                color: #0f172a;
+                font-weight: 700;
+            }
+            .smp-dialog.light-theme .smp-preview-box h2,
+            .smp-dialog.light-theme .smp-translate-view h2 {
+                color: #0f172a;
+            }
+            .smp-dialog.light-theme .smp-preview-box h3,
+            .smp-dialog.light-theme .smp-translate-view h3 {
+                color: #009eb3;
+                border-left-color: #009eb3;
+            }
+            .smp-dialog.light-theme .smp-preview-box h4,
+            .smp-dialog.light-theme .smp-translate-view h4 {
+                color: #0284c7;
+            }
+            .smp-dialog.light-theme .smp-preview-box h5,
+            .smp-dialog.light-theme .smp-translate-view h5 {
+                color: #475569;
+            }
+            .smp-dialog.light-theme .smp-preview-box .latex-fbox,
+            .smp-dialog.light-theme .smp-translate-view .latex-fbox {
+                border-color: #009eb3;
+                color: #009eb3;
+            }
+            .smp-dialog.light-theme .smp-preview-box .latex-bullet,
+            .smp-dialog.light-theme .smp-translate-view .latex-bullet {
+                color: #009eb3;
+            }
+            .smp-dialog.light-theme .smp-preview-box .katex,
+            .smp-dialog.light-theme .smp-translate-view .katex {
+                color: #0f172a;
             }
             .smp-dialog.light-theme .smp-raw-textarea {
                 background: #ffffff;
@@ -754,13 +1013,20 @@
                     <div class="smp-header" id="smp-drag-header">
                         <div class="smp-title-wrap">
                             <span class="smp-badge">SMP</span>
-                            <span class="smp-title" id="smp-modal-title">Trình Soạn Thảo & Biên Dịch</span>
+                            <span class="smp-title" id="smp-modal-title"></span>
                         </div>
                         <div class="smp-header-actions">
                             <button class="smp-tab-btn" id="smp-btn-tab-compose">Soạn Thảo</button>
                             <button class="smp-tab-btn" id="smp-btn-tab-translate">Biên Dịch</button>
                             <button class="smp-tab-btn" id="smp-btn-tab-raw">Mã Công Thức</button>
-                            <button class="smp-icon-btn" id="smp-btn-theme-toggle" title="Chuyển chế độ Sáng / Tối">🌙</button>
+                            <label class="smp-theme-switch" title="Chuyển chế độ Sáng / Tối" id="smp-theme-toggle-label">
+                                <input type="checkbox" id="smp-theme-toggle-input" aria-label="Chuyển chế độ Sáng / Tối">
+                                <span class="smp-switch-track">
+                                    <span class="smp-switch-icon smp-icon-sun" title="Chế độ Sáng">☀️</span>
+                                    <span class="smp-switch-icon smp-icon-moon" title="Chế độ Tối">🌙</span>
+                                    <span class="smp-switch-handle"></span>
+                                </span>
+                            </label>
                             <button class="smp-close-btn" id="smp-btn-close" title="Đóng (Esc)">✕</button>
                         </div>
                     </div>
@@ -877,7 +1143,7 @@
                             <div class="smp-workspace">
                                 <div class="smp-pane">
                                     <div class="smp-pane-header">
-                                        <span class="smp-pane-title">Soạn Thảo (Gõ \ để gợi ý lệnh)</span>
+                                        <span class="smp-pane-title">Soạn Thảo</span>
                                         <span class="smp-pane-meta" id="smp-char-meta">0 ký tự | 0 từ | 0 dòng</span>
                                     </div>
                                     <div class="smp-editor-box">
@@ -911,7 +1177,7 @@
                     <div class="smp-footer">
                         <div class="smp-footer-left">
                             <span class="smp-status-dot"></span>
-                            <span id="smp-status-text">Thời gian thực</span>
+                            <span id="smp-status-text"></span>
                         </div>
                         <div class="smp-footer-actions">
                             <button class="smp-action-btn btn-primary" id="smp-btn-insert" title="Chèn trực tiếp vào ô bình luận đang chọn">
@@ -939,26 +1205,45 @@
     }
 
     /**
-     * Khởi tạo và đồng bộ chế độ Sáng / Tối
+     * Khởi tạo và đồng bộ chế độ Sáng / Tối (Mặc định là Sáng, gạt sang là Tối)
      */
     function initThemePreference(backdrop) {
         const dialog = backdrop.querySelector('#smp-dialog');
-        const themeBtn = backdrop.querySelector('#smp-btn-theme-toggle');
-        const savedTheme = localStorage.getItem('smp_latex_theme') || 'dark';
+        const toggleInput = backdrop.querySelector('#smp-theme-toggle-input');
+        
+        // Mặc định ban đầu là Sáng (light)
+        const savedTheme = localStorage.getItem('smp_latex_theme') || 'light';
 
-        if (savedTheme === 'light') {
-            dialog.classList.add('light-theme');
-            if (themeBtn) themeBtn.textContent = '☀️';
-        } else {
-            dialog.classList.remove('light-theme');
-            if (themeBtn) themeBtn.textContent = '🌙';
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                dialog.classList.remove('light-theme');
+                if (toggleInput) toggleInput.checked = true;
+            } else {
+                dialog.classList.add('light-theme');
+                if (toggleInput) toggleInput.checked = false;
+            }
         }
 
-        if (themeBtn) {
-            themeBtn.addEventListener('click', () => {
-                const isLight = dialog.classList.toggle('light-theme');
-                themeBtn.textContent = isLight ? '☀️' : '🌙';
-                localStorage.setItem('smp_latex_theme', isLight ? 'light' : 'dark');
+        applyTheme(savedTheme);
+
+        if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+            chrome.storage.local.get(['smp_latex_theme'], (res) => {
+                if (res && res.smp_latex_theme) {
+                    applyTheme(res.smp_latex_theme);
+                    localStorage.setItem('smp_latex_theme', res.smp_latex_theme);
+                }
+            });
+        }
+
+        if (toggleInput) {
+            toggleInput.addEventListener('change', () => {
+                const isDark = toggleInput.checked;
+                const newTheme = isDark ? 'dark' : 'light';
+                applyTheme(newTheme);
+                localStorage.setItem('smp_latex_theme', newTheme);
+                if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+                    chrome.storage.local.set({ smp_latex_theme: newTheme });
+                }
             });
         }
     }
@@ -978,20 +1263,454 @@
     }
 
     /**
-     * Render KaTeX vào phần tử hiển thị từ chuỗi LaTeX
+     * Escape các ký tự HTML nguy hiểm bên ngoài công thức toán
+     */
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
+    /**
+     * Tách biệt các vùng văn bản bên ngoài chế độ toán học để xử lý an toàn
+     */
+    function processOutsideMath(src, fn) {
+        if (!src) return '';
+        const mathRegex = /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\begin\{(?:cases|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|aligned|gathered|array|equation|align|gather|multline)\*?\}[\s\S]*?\\end\{(?:cases|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|aligned|gathered|array|equation|align|gather|multline)\*?\}|(?<!\\)\$[\s\S]*?(?<!\\)\$|\\\([\s\S]*?\\\))/g;
+
+        let result = '';
+        let lastIndex = 0;
+        let match;
+
+        while ((match = mathRegex.exec(src)) !== null) {
+            const textPart = src.substring(lastIndex, match.index);
+            result += fn(textPart);
+            result += match[0];
+            lastIndex = mathRegex.lastIndex;
+        }
+
+        const tail = src.substring(lastIndex);
+        result += fn(tail);
+        return result;
+    }
+
+    /**
+     * Thay thế lệnh có cặp ngoặc nhọn lồng nhau an toàn (vd \textbf{...}, \textit{...})
+     */
+    function replaceBracedCommand(str, cmd, openTag, closeTag) {
+        if (!str || !str.includes(cmd)) return str;
+        let pos = 0;
+        while ((pos = str.indexOf(cmd, pos)) !== -1) {
+            let braceStart = pos + cmd.length;
+            while (braceStart < str.length && str[braceStart] === ' ') braceStart++;
+            if (braceStart >= str.length || str[braceStart] !== '{') {
+                pos += cmd.length;
+                continue;
+            }
+
+            const start = braceStart + 1;
+            let depth = 1;
+            let i = start;
+            while (i < str.length && depth > 0) {
+                const ch = str[i];
+                const prev = i > 0 ? str[i - 1] : '';
+                if (ch === '{' && prev !== '\\') depth++;
+                else if (ch === '}' && prev !== '\\') depth--;
+                i++;
+            }
+
+            if (depth === 0) {
+                const inner = str.substring(start, i - 1);
+                const processedInner = replaceBracedCommand(inner, cmd, openTag, closeTag);
+                const replacement = openTag + processedInner + closeTag;
+                str = str.substring(0, pos) + replacement + str.substring(i);
+                pos += replacement.length;
+            } else {
+                pos += cmd.length;
+            }
+        }
+        return str;
+    }
+
+    /**
+     * Xử lý lệnh đổi màu \textcolor{color}{text}
+     */
+    function replaceTextColor(str) {
+        if (!str || !str.includes('\\textcolor')) return str;
+        let pos = 0;
+        while ((pos = str.indexOf('\\textcolor', pos)) !== -1) {
+            let brace1 = pos + 10;
+            while (brace1 < str.length && str[brace1] === ' ') brace1++;
+            if (brace1 >= str.length || str[brace1] !== '{') { pos += 10; continue; }
+            const close1 = str.indexOf('}', brace1);
+            if (close1 === -1) { pos += 10; continue; }
+            const color = str.substring(brace1 + 1, close1).trim();
+
+            let brace2 = close1 + 1;
+            while (brace2 < str.length && str[brace2] === ' ') brace2++;
+            if (brace2 >= str.length || str[brace2] !== '{') { pos += 10; continue; }
+
+            const start = brace2 + 1;
+            let depth = 1;
+            let i = start;
+            while (i < str.length && depth > 0) {
+                const ch = str[i];
+                const prev = i > 0 ? str[i - 1] : '';
+                if (ch === '{' && prev !== '\\') depth++;
+                else if (ch === '}' && prev !== '\\') depth--;
+                i++;
+            }
+
+            if (depth === 0) {
+                const inner = str.substring(start, i - 1);
+                const replacement = `<span style="color:${color}">${inner}</span>`;
+                str = str.substring(0, pos) + replacement + str.substring(i);
+                pos += replacement.length;
+            } else {
+                pos += 10;
+            }
+        }
+        return str;
+    }
+
+    /**
+     * Xử lý hộp màu nền \colorbox{bg}{text}
+     */
+    function replaceColorBox(str) {
+        if (!str || !str.includes('\\colorbox')) return str;
+        let pos = 0;
+        while ((pos = str.indexOf('\\colorbox', pos)) !== -1) {
+            let brace1 = pos + 9;
+            while (brace1 < str.length && str[brace1] === ' ') brace1++;
+            if (brace1 >= str.length || str[brace1] !== '{') { pos += 9; continue; }
+            const close1 = str.indexOf('}', brace1);
+            if (close1 === -1) { pos += 9; continue; }
+            const bg = str.substring(brace1 + 1, close1).trim();
+
+            let brace2 = close1 + 1;
+            while (brace2 < str.length && str[brace2] === ' ') brace2++;
+            if (brace2 >= str.length || str[brace2] !== '{') { pos += 9; continue; }
+
+            const start = brace2 + 1;
+            let depth = 1;
+            let i = start;
+            while (i < str.length && depth > 0) {
+                const ch = str[i];
+                const prev = i > 0 ? str[i - 1] : '';
+                if (ch === '{' && prev !== '\\') depth++;
+                else if (ch === '}' && prev !== '\\') depth--;
+                i++;
+            }
+
+            if (depth === 0) {
+                const inner = str.substring(start, i - 1);
+                const replacement = `<span style="background-color:${bg}; padding: 2px 4px; border-radius: 3px;">${inner}</span>`;
+                str = str.substring(0, pos) + replacement + str.substring(i);
+                pos += replacement.length;
+            } else {
+                pos += 9;
+            }
+        }
+        return str;
+    }
+
+    /**
+     * Xử lý \fbox, \framebox, \boxed
+     */
+    function parseLatexFbox(str) {
+        if (!str || (!str.includes('\\fbox') && !str.includes('\\framebox') && !str.includes('\\boxed'))) return str;
+        const keywords = ['\\fbox', '\\framebox', '\\boxed'];
+        for (let k = 0; k < keywords.length; k++) {
+            const kw = keywords[k];
+            let pos = 0;
+            while ((pos = str.indexOf(kw, pos)) !== -1) {
+                let braceStart = pos + kw.length;
+                while (braceStart < str.length && str[braceStart] === ' ') braceStart++;
+                if (braceStart < str.length && str[braceStart] === '[') {
+                    const optEnd = str.indexOf(']', braceStart);
+                    if (optEnd !== -1) {
+                        braceStart = optEnd + 1;
+                        while (braceStart < str.length && str[braceStart] === ' ') braceStart++;
+                    }
+                }
+                if (braceStart >= str.length || str[braceStart] !== '{') {
+                    pos += kw.length;
+                    continue;
+                }
+
+                const start = braceStart + 1;
+                let depth = 1;
+                let i = start;
+                while (i < str.length && depth > 0) {
+                    const ch = str[i];
+                    const prev = i > 0 ? str[i - 1] : '';
+                    if (ch === '{' && prev !== '\\') depth++;
+                    else if (ch === '}' && prev !== '\\') depth--;
+                    i++;
+                }
+
+                if (depth === 0) {
+                    let inner = str.substring(start, i - 1);
+                    inner = parseLatexFbox(inner);
+                    if (/\\(frac|sqrt|sum|prod|int|alpha|beta|gamma|Delta|pi|le|ge|neq|equiv|forall|exists|in|subset)\b/.test(inner) && !inner.includes('$')) {
+                        inner = '$' + inner + '$';
+                    }
+                    const replacement = '<span class="latex-fbox">' + inner + '</span>';
+                    str = str.substring(0, pos) + replacement + str.substring(i);
+                    pos += replacement.length;
+                } else {
+                    pos += kw.length;
+                }
+            }
+        }
+        return str;
+    }
+
+    /**
+     * Tách các ô trong hàng bảng (&)
+     */
+    function splitTableCells(rowStr) {
+        const cells = [];
+        let current = '';
+        let inMath = false;
+        let depth = 0;
+
+        for (let i = 0; i < rowStr.length; i++) {
+            const ch = rowStr[i];
+            const prev = i > 0 ? rowStr[i - 1] : '';
+
+            if (ch === '$' && prev !== '\\') {
+                inMath = !inMath;
+            } else if (ch === '{' && prev !== '\\') {
+                depth++;
+            } else if (ch === '}' && prev !== '\\') {
+                if (depth > 0) depth--;
+            }
+
+            if (ch === '&' && !inMath && depth === 0) {
+                cells.push(current);
+                current = '';
+            } else {
+                current += ch;
+            }
+        }
+        cells.push(current);
+        return cells;
+    }
+
+    /**
+     * Xử lý môi trường bảng \begin{tabular}{...} ... \end{tabular}
+     */
+    function parseLatexTabular(str) {
+        if (!str || !str.includes('\\begin{tabular')) return str;
+
+        str = str.replace(/\\\[\s*(\\begin\{tabular\}[\s\S]*?\\end\{tabular\})\s*\\\]/gi, '$1');
+
+        const regex = /\\begin\{tabular\}(?:\[[^\]]*\])?\{([^}]*)\}([\s\S]*?)\\end\{tabular\}/gi;
+
+        return str.replace(regex, function(match, colSpec, tableBody) {
+            const colDefs = [];
+            let cleanColSpec = colSpec.replace(/\s+/g, '');
+            cleanColSpec = cleanColSpec.replace(/\*\{(\d+)\}\{([^}]+)\}/g, function(_, count, spec) {
+                return spec.repeat(parseInt(count, 10));
+            });
+
+            let hasLeftBorder = false;
+            if (cleanColSpec.startsWith('|')) {
+                hasLeftBorder = true;
+                cleanColSpec = cleanColSpec.replace(/^\|+/, '');
+            }
+
+            for (let c = 0; c < cleanColSpec.length; c++) {
+                const ch = cleanColSpec[c];
+                if (ch === 'l' || ch === 'c' || ch === 'r' || ch === 'p') {
+                    const align = ch === 'r' ? 'right' : (ch === 'c' ? 'center' : 'left');
+                    let borderRight = false;
+                    if (c + 1 < cleanColSpec.length && cleanColSpec[c + 1] === '|') {
+                        borderRight = true;
+                    }
+                    colDefs.push({ align: align, borderRight: borderRight });
+                }
+            }
+
+            const rawRows = tableBody.split(/\\\\(?:\[[^\]]*\])?/);
+            const htmlRows = [];
+
+            for (let r = 0; r < rawRows.length; r++) {
+                let rowStr = rawRows[r].trim();
+                if (!rowStr) continue;
+
+                let hasTopBorder = false;
+                let hasBottomBorder = false;
+
+                while (rowStr.startsWith('\\hline')) {
+                    hasTopBorder = true;
+                    rowStr = rowStr.replace(/^\\hline\s*/, '').trim();
+                }
+
+                while (rowStr.endsWith('\\hline')) {
+                    hasBottomBorder = true;
+                    rowStr = rowStr.replace(/\\hline\s*$/, '').trim();
+                }
+
+                if (rowStr.includes('\\hline')) {
+                    hasTopBorder = true;
+                    rowStr = rowStr.replace(/\\hline/g, '').trim();
+                }
+
+                if (!rowStr) continue;
+
+                const cells = splitTableCells(rowStr);
+                let trHtml = '<tr' + (hasTopBorder ? ' class="border-top"' : '') + (hasBottomBorder ? ' class="border-bottom"' : '') + '>';
+                let currentColIndex = 0;
+
+                for (let colIdx = 0; colIdx < cells.length; colIdx++) {
+                    const rawCell = cells[colIdx].trim();
+                    let cellContent = rawCell;
+                    let colSpan = 1;
+                    let cellAlign = null;
+                    let cellBorderRight = false;
+                    let cellBorderLeft = false;
+
+                    const multiMatch = cellContent.match(/^\\multicolumn\{(\d+)\}\{([^}]*)\}\{([\s\S]*)\}$/);
+                    if (multiMatch) {
+                        colSpan = parseInt(multiMatch[1], 10);
+                        const multiAlignSpec = multiMatch[2].trim();
+                        cellContent = multiMatch[3].trim();
+                        if (multiAlignSpec.includes('r')) cellAlign = 'right';
+                        else if (multiAlignSpec.includes('c')) cellAlign = 'center';
+                        else cellAlign = 'left';
+
+                        if (multiAlignSpec.startsWith('|')) cellBorderLeft = true;
+                        if (multiAlignSpec.endsWith('|')) cellBorderRight = true;
+                    }
+
+                    const colDef = colDefs[currentColIndex] || { align: 'left', borderRight: false };
+                    const finalAlign = cellAlign || colDef.align;
+                    const borderClass = [];
+
+                    if ((currentColIndex === 0 && hasLeftBorder) || cellBorderLeft) borderClass.push('border-left');
+                    if (colDef.borderRight || cellBorderRight) borderClass.push('border-right');
+                    if (hasTopBorder) borderClass.push('border-top');
+                    if (hasBottomBorder) borderClass.push('border-bottom');
+
+                    const spanAttr = colSpan > 1 ? ' colspan="' + colSpan + '"' : '';
+                    const classAttr = borderClass.length ? ' class="' + borderClass.join(' ') + '"' : '';
+                    const styleAttr = ' style="text-align: ' + finalAlign + ';"';
+
+                    trHtml += '<td' + spanAttr + classAttr + styleAttr + '>' + cellContent + '</td>';
+                    currentColIndex += colSpan;
+                }
+
+                trHtml += '</tr>';
+                htmlRows.push(trHtml);
+            }
+
+            return '<div class="latex-table-wrapper"><table class="latex-table">' + htmlRows.join('') + '</table></div>';
+        });
+    }
+
+    /**
+     * Chuyển đổi định dạng văn bản LaTeX sang HTML hoàn chỉnh
+     */
+    function latexToHtml(src) {
+        if (!src) return '';
+
+        // 1. Chuyển đổi môi trường table & tabular
+        let s = src
+            .replace(/\\begin\{table\}(?:\[[^\]]*\])?/gi, '<div class="latex-table-container">')
+            .replace(/\\end\{table\}/gi, '</div>')
+            .replace(/\\caption\{([^}]*)\}/gi, '<div class="latex-table-caption">$1</div>');
+
+        s = parseLatexTabular(s);
+
+        // 2. Xử lý các vùng văn bản bên ngoài toán học
+        s = processOutsideMath(s, function(text) {
+            if (!text) return '';
+
+            // An toàn hóa HTML
+            let t = escapeHtml(text);
+
+            // Môi trường căn lề
+            t = t
+                .replace(/\\begin\{center\}/gi, '<div class="latex-center">')
+                .replace(/\\end\{center\}/gi, '</div>')
+                .replace(/\\begin\{flushleft\}/gi, '<div class="latex-flushleft">')
+                .replace(/\\end\{flushleft\}/gi, '</div>')
+                .replace(/\\begin\{flushright\}/gi, '<div class="latex-flushright">')
+                .replace(/\\end\{flushright\}/gi, '</div>')
+                .replace(/\\centering\b/gi, '<div class="latex-center">');
+
+            // Hộp viền fbox / boxed
+            t = parseLatexFbox(t);
+
+            // Màu sắc văn bản & nền
+            t = replaceTextColor(t);
+            t = replaceColorBox(t);
+
+            // Các lệnh văn bản có ngoặc nhọn
+            t = replaceBracedCommand(t, '\\textbf', '<b>', '</b>');
+            t = replaceBracedCommand(t, '\\textit', '<i>', '</i>');
+            t = replaceBracedCommand(t, '\\underline', '<u>', '</u>');
+            t = replaceBracedCommand(t, '\\emph', '<em>', '</em>');
+            t = replaceBracedCommand(t, '\\texttt', '<code>', '</code>');
+            t = replaceBracedCommand(t, '\\title', '<h2 class="latex-title">', '</h2>');
+            t = replaceBracedCommand(t, '\\author', '<h4 class="latex-author">', '</h4>');
+            t = replaceBracedCommand(t, '\\section', '<h3 class="latex-section">', '</h3>');
+            t = replaceBracedCommand(t, '\\subsection', '<h4 class="latex-subsection">', '</h4>');
+            t = replaceBracedCommand(t, '\\subsubsection', '<h5 class="latex-subsubsection">', '</h5>');
+
+            // Bullets và khoảng cách
+            t = t
+                .replace(/\\item\s*/g, '<span class="latex-bullet">•</span> ')
+                .replace(/\\noindent\s*/g, '')
+                .replace(/\\quad\b/g, '&emsp;')
+                .replace(/\\qquad\b/g, '&emsp;&emsp;')
+                .replace(/\\dots\b|\\ldots\b/g, '…')
+                .replace(/\\\\(?![a-zA-Z])/g, '<br>')
+                .replace(/\\newline\b/g, '<br>')
+                .replace(/\\par\b/g, '<div class="latex-par-spacer"></div>')
+                .replace(/\\(medskip|bigskip|smallskip)/g, '<br>');
+
+            // Xuống dòng tự nhiên
+            t = t.replace(/\r\n/g, '\n');
+            t = t.replace(/\n\s*\n/g, '<div class="latex-par-spacer"></div>');
+            t = t.replace(/\n/g, '<br>');
+
+            return t;
+        });
+
+        return s;
+    }
+
+    /**
+     * Render LaTeX và công thức toán học vào phần tử DOM
      */
     function renderLatexContent(element, latexText) {
         if (!element) return;
-        element.innerText = latexText || '';
+        const html = latexToHtml(latexText || '');
+        element.innerHTML = html;
         if (typeof renderMathInElement === 'function') {
             renderMathInElement(element, {
                 delimiters: [
                     { left: '$$', right: '$$', display: true },
                     { left: '$', right: '$', display: false },
                     { left: '\\(', right: '\\)', display: false },
-                    { left: '\\[', right: '\\]', display: true }
+                    { left: '\\[', right: '\\]', display: true },
+                    { left: '\\begin{equation}', right: '\\end{equation}', display: true },
+                    { left: '\\begin{align}', right: '\\end{align}', display: true },
+                    { left: '\\begin{align*}', right: '\\end{align*}', display: true },
+                    { left: '\\begin{gather}', right: '\\end{gather}', display: true },
+                    { left: '\\begin{gather*}', right: '\\end{gather*}', display: true },
+                    { left: '\\begin{cases}', right: '\\end{cases}', display: true },
+                    { left: '\\begin{matrix}', right: '\\end{matrix}', display: true },
+                    { left: '\\begin{pmatrix}', right: '\\end{pmatrix}', display: true },
+                    { left: '\\begin{bmatrix}', right: '\\end{bmatrix}', display: true }
                 ],
-                throwOnError: false
+                throwOnError: false,
+                errorColor: '#f87171'
             });
         }
     }
@@ -1268,6 +1987,20 @@
 
             clone.querySelectorAll('.katex').forEach(k => {
                 k.style.color = '#0f172a';
+            });
+            clone.querySelectorAll('b, strong').forEach(b => {
+                b.style.color = '#0f172a';
+            });
+            clone.querySelectorAll('h2, h3, h4, h5').forEach(h => {
+                h.style.color = '#0f172a';
+                if (h.tagName === 'H3') h.style.borderLeftColor = '#009eb3';
+            });
+            clone.querySelectorAll('.latex-fbox').forEach(f => {
+                f.style.borderColor = '#0f172a';
+                f.style.color = '#0f172a';
+            });
+            clone.querySelectorAll('.latex-bullet').forEach(bl => {
+                bl.style.color = '#009eb3';
             });
 
             document.body.appendChild(clone);
