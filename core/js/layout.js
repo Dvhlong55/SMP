@@ -283,31 +283,52 @@
             flex-shrink: 0 !important;
         }
 
-        /* Auto-hide / Auto-show Topbar */
+        /* ── Topbar Sticky ── */
         .topbar {
-            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease !important;
-            will-change: transform;
-        }
-        .topbar.topbar-hidden {
-            transform: translateY(-100%) !important;
-        }
-
-        /* Topbar on Article Pages */
-        .topbar.topbar-article {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            padding: env(safe-area-inset-top, 0px) 16px 0 16px !important;
-            height: calc(52px + env(safe-area-inset-top, 0px)) !important;
-            min-height: calc(52px + env(safe-area-inset-top, 0px)) !important;
             position: sticky !important;
             top: 0 !important;
-            z-index: 999 !important;
-            background-color: var(--topbar-bg, #ffffff) !important;
-            border-bottom: 1px solid var(--border-light, rgba(128,128,128,0.15)) !important;
-            box-sizing: border-box !important;
+            z-index: 1000 !important;
         }
 
+        .topbar-desktop-inner {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .topbar-article-inner {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Desktop: ALWAYS show standard desktop topbar */
+        @media (min-width: 769px) {
+            .topbar-article-inner {
+                display: none !important;
+            }
+            .topbar-desktop-inner {
+                display: flex !important;
+            }
+        }
+
+        /* Mobile on Article Page: Show article inner with back button and search */
+        @media (max-width: 768px) {
+            body.is-article-page .topbar-desktop-inner {
+                display: none !important;
+            }
+            body.is-article-page .topbar-article-inner {
+                display: flex !important;
+            }
+            body.is-article-page .topbar {
+                padding: calc(6px + env(safe-area-inset-top, 0px)) 12px 6px 12px !important;
+                min-height: calc(48px + env(safe-area-inset-top, 0px)) !important;
+            }
+        }
+
+        /* Back Button on Mobile Article Topbar */
         .topbar-back-btn {
             display: inline-flex !important;
             align-items: center !important;
@@ -315,44 +336,88 @@
             width: 36px !important;
             height: 36px !important;
             border-radius: 50% !important;
-            color: var(--text-dark, #333) !important;
+            color: var(--text-dark, #222) !important;
             text-decoration: none !important;
             background: transparent !important;
             border: none !important;
             cursor: pointer !important;
-            transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease !important;
             flex-shrink: 0 !important;
             padding: 0 !important;
-        }
-        .topbar-back-btn:hover {
-            background-color: rgba(92, 225, 230, 0.1) !important;
-            color: var(--accent-cyan, #0E8FA3) !important;
+            transition: background-color 0.15s ease !important;
         }
         .topbar-back-btn:active {
-            transform: scale(0.9) !important;
+            background-color: rgba(92, 225, 230, 0.2) !important;
+            color: var(--accent-cyan, #0E8FA3) !important;
         }
 
+        /* Title in Mobile Article Topbar */
         .topbar-article-title {
             flex: 1 !important;
-            font-size: 0.92rem !important;
+            font-size: 0.88rem !important;
             font-weight: 600 !important;
+            font-family: inherit !important;
             color: var(--text-dark, #1C1B19) !important;
             white-space: nowrap !important;
             overflow: hidden !important;
             text-overflow: ellipsis !important;
             text-align: center !important;
-            padding: 0 12px !important;
+            padding: 0 10px !important;
             line-height: 1.2 !important;
         }
 
-        .topbar-article-spacer {
-            width: 36px !important;
+        /* Search on Mobile Article Topbar */
+        .search-wrapper-article {
             flex-shrink: 0 !important;
+            position: relative !important;
+        }
+        .search-icon-article {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            color: var(--text-dark, #222) !important;
+        }
+        .search-icon-article:active {
+            background-color: rgba(92, 225, 230, 0.2) !important;
         }
 
+        .search-wrapper-article.mobile-active .search-input-mobile {
+            display: block !important;
+            position: absolute !important;
+            top: 42px !important;
+            right: 0 !important;
+            width: min(280px, 80vw) !important;
+            padding: 8px 12px !important;
+            background: var(--topbar-bg, #fff) !important;
+            border: 1px solid var(--border-light, #ddd) !important;
+            border-radius: 6px !important;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25) !important;
+            color: var(--text-dark) !important;
+            z-index: 10001 !important;
+            outline: none !important;
+            font-size: 0.85rem !important;
+        }
+        .search-wrapper-article.mobile-active .search-results-mobile {
+            position: absolute !important;
+            top: 84px !important;
+            right: 0 !important;
+            width: min(300px, 85vw) !important;
+            max-height: 300px !important;
+            overflow-y: auto !important;
+            background: var(--topbar-bg, #fff) !important;
+            border: 1px solid var(--border-light, #ddd) !important;
+            border-radius: 6px !important;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3) !important;
+            z-index: 10002 !important;
+        }
+
+        /* Reading Progress Bar (Thin Teal Line) */
         .reading-progress-track {
             position: absolute !important;
-            bottom: -1px !important;
+            bottom: 0 !important;
             left: 0 !important;
             right: 0 !important;
             height: 2px !important;
@@ -360,12 +425,10 @@
             pointer-events: none !important;
             overflow: hidden !important;
         }
-
         .reading-progress-fill {
             height: 100% !important;
             width: 0% !important;
             background: var(--accent-cyan, #0E8FA3) !important;
-            transition: width 0.08s linear !important;
         }
         body.dark-mode .reading-progress-fill {
             background: var(--accent-cyan, #5ce1e6) !important;
@@ -504,42 +567,77 @@
         </button>
     </aside>`;
 
+    // ── Check if Article Page ────────────────────────────────────────────────
+    const isArticlePage = window.location.pathname.includes('/posts/') || 
+                          !!document.querySelector('meta[name="post-id"]') || 
+                          !!document.querySelector('.exam-paper, .post-container, #smp-post-content');
+    if (isArticlePage) {
+        document.body.classList.add('is-article-page');
+    }
+
+    let cleanTitle = document.title || 'Bài viết';
+    cleanTitle = cleanTitle.replace(/^SMP\s*[—–-]\s*/, '').replace(/\s*[—–-]\s*SMP$/, '').trim();
+
+    const catUrlMeta = document.querySelector('meta[name="category-url"]');
+    const fallbackBackUrl = catUrlMeta ? catUrlMeta.getAttribute('content') : '/pages/toanhoc.html';
+
     const TOPBAR_HTML = `
     <header class="topbar">
-        <a href="/pages/vetoi.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s; margin-right: 20px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Tôi">SMP</a>
-        
-        <nav class="topbar-nav" style="flex: 1; justify-content: flex-start;">
-            <a href="/home.html" class="topbar-nav-btn" title="Trang chủ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            </a>
-            <a href="/pages/toanhoc.html" class="topbar-nav-btn" title="Toán học">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 4H5l7 8-7 8h14"/></svg>
-            </a>
-            <a href="/pages/toanhoc.html?filter=tools" class="topbar-nav-btn" title="Công cụ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-            </a>
-            <a href="/pages/roadmap.html" class="topbar-nav-btn" title="Lộ trình">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
-            </a>
-            <a href="/pages/profile.html" id="topbar-auth-btn" class="topbar-nav-btn" title="Hồ sơ cá nhân" onclick="if(!localStorage.getItem('smp_access_token')){if(window.openAuthModal){window.openAuthModal('login');return false;}}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </a>
-        </nav>
-
-        <div class="topbar-controls" style="display: flex; align-items: center; gap: 8px; margin-left: auto;">
-            <div class="search-wrapper">
-                <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
-                <span class="search-icon" onclick="this.parentElement.classList.toggle('mobile-active'); document.getElementById('search-input').focus();" title="Tìm kiếm">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                </span>
-                <div id="search-results" class="search-results"></div>
-            </div>
+        <!-- 1. Standard Topbar (Desktop and Mobile non-article) -->
+        <div class="topbar-desktop-inner">
+            <a href="/pages/vetoi.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s; margin-right: 20px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Tôi">SMP</a>
             
-            <div class="notif-wrapper" style="position: relative;">
-                <button id="notif-toggle-btn" class="topbar-nav-btn" onclick="if(window.toggleNotificationDropdown) window.toggleNotificationDropdown(event)" title="Thông báo" style="position: relative;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-                    <span id="top-notif-badge" style="display:none; position:absolute; top:7px; right:7px; background:var(--accent-cyan,#009eb3); width:6px; height:6px; border-radius:50%; box-shadow:0 0 0 2px var(--topbar-bg,#fff);"></span>
-                </button>
+            <nav class="topbar-nav" style="flex: 1; justify-content: flex-start;">
+                <a href="/home.html" class="topbar-nav-btn" title="Trang chủ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </a>
+                <a href="/pages/toanhoc.html" class="topbar-nav-btn" title="Toán học">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 4H5l7 8-7 8h14"/></svg>
+                </a>
+                <a href="/pages/toanhoc.html?filter=tools" class="topbar-nav-btn" title="Công cụ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                </a>
+                <a href="/pages/roadmap.html" class="topbar-nav-btn" title="Lộ trình">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+                </a>
+                <a href="/pages/profile.html" id="topbar-auth-btn" class="topbar-nav-btn" title="Hồ sơ cá nhân" onclick="if(!localStorage.getItem('smp_access_token')){if(window.openAuthModal){window.openAuthModal('login');return false;}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </a>
+            </nav>
+
+            <div class="topbar-controls" style="display: flex; align-items: center; gap: 8px; margin-left: auto;">
+                <div class="search-wrapper">
+                    <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
+                    <span class="search-icon" onclick="this.parentElement.classList.toggle('mobile-active'); document.getElementById('search-input').focus();" title="Tìm kiếm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </span>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                
+                <div class="notif-wrapper" style="position: relative;">
+                    <button id="notif-toggle-btn" class="topbar-nav-btn" onclick="if(window.toggleNotificationDropdown) window.toggleNotificationDropdown(event)" title="Thông báo" style="position: relative;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                        <span id="top-notif-badge" style="display:none; position:absolute; top:7px; right:7px; background:var(--accent-cyan,#009eb3); width:6px; height:6px; border-radius:50%; box-shadow:0 0 0 2px var(--topbar-bg,#fff);"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Mobile Article Topbar (Shown on mobile on article pages) -->
+        <div class="topbar-article-inner">
+            <a href="javascript:void(0)" class="topbar-back-btn" onclick="window.handleArticleBack('${fallbackBackUrl}')" title="Quay lại">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </a>
+            <div class="topbar-article-title" title="${cleanTitle.replace(/"/g, '&quot;')}">${cleanTitle}</div>
+            <div class="search-wrapper search-wrapper-article">
+                <span class="search-icon search-icon-article" onclick="this.parentElement.classList.toggle('mobile-active'); const inp = document.getElementById('search-input-mobile'); if(inp) inp.focus();" title="Tìm kiếm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </span>
+                <input id="search-input-mobile" class="search-input search-input-mobile" type="text" placeholder="Tìm kiếm bài viết..." style="display:none;">
+                <div id="search-results-mobile" class="search-results search-results-mobile"></div>
+            </div>
+            <div class="reading-progress-track">
+                <div class="reading-progress-fill" id="reading-progress-bar"></div>
             </div>
         </div>
     </header>`;
@@ -577,29 +675,6 @@
         </a>
     </nav>`;
 
-    // ── Check if Article Page ────────────────────────────────────────────────
-    const isArticlePage = window.location.pathname.includes('/posts/') || 
-                          !!document.querySelector('meta[name="post-id"]') || 
-                          !!document.querySelector('.exam-paper, .post-container, #smp-post-content');
-
-    let cleanTitle = document.title || 'Bài viết';
-    cleanTitle = cleanTitle.replace(/^SMP\s*[—–-]\s*/, '').replace(/\s*[—–-]\s*SMP$/, '').trim();
-
-    const catUrlMeta = document.querySelector('meta[name="category-url"]');
-    const fallbackBackUrl = catUrlMeta ? catUrlMeta.getAttribute('content') : '/pages/toanhoc.html';
-
-    const ARTICLE_TOPBAR_HTML = `
-    <header class="topbar topbar-article" id="site-topbar">
-        <a href="javascript:void(0)" class="topbar-back-btn" onclick="window.handleArticleBack('${fallbackBackUrl}')" title="Quay lại">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        </a>
-        <div class="topbar-article-title" title="${cleanTitle.replace(/"/g, '&quot;')}">${cleanTitle}</div>
-        <div class="topbar-article-spacer"></div>
-        <div class="reading-progress-track">
-            <div class="reading-progress-fill" id="reading-progress-bar"></div>
-        </div>
-    </header>`;
-
     // ── Inject into placeholders ─────────────────────────────────────────────
     const sidebarEl = document.getElementById('sidebar-placeholder');
     const topbarEl  = document.getElementById('topbar-placeholder');
@@ -607,7 +682,7 @@
     const mainEl = document.querySelector('main');
 
     if (sidebarEl) sidebarEl.outerHTML = SIDEBAR_HTML;
-    if (topbarEl)  topbarEl.outerHTML  = isArticlePage ? ARTICLE_TOPBAR_HTML : TOPBAR_HTML;
+    if (topbarEl)  topbarEl.outerHTML  = TOPBAR_HTML;
     if (leftTagsEl && typeof LEFT_TAGS_HTML !== 'undefined') leftTagsEl.outerHTML = LEFT_TAGS_HTML;
     if (mainEl && !document.querySelector('.site-footer')) mainEl.insertAdjacentHTML('beforeend', FOOTER_HTML);
 
@@ -624,40 +699,25 @@
         }
     };
 
-    // ── Auto-hide / Auto-show Topbar on Scroll & Reading Progress Bar ────────
-    let lastScrollY = window.scrollY;
-    let scrollTicking = false;
-    const activeTopbar = document.getElementById('site-topbar') || document.querySelector('.topbar');
-    const progressBar = document.getElementById('reading-progress-bar');
-
+    // ── Reading Progress Bar on Scroll (Fast & Smooth, zero lag) ─────────────
     window.addEventListener('scroll', () => {
-        if (!scrollTicking) {
-            window.requestAnimationFrame(() => {
-                const currentScrollY = window.scrollY;
-
-                if (progressBar) {
-                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                    const progress = docHeight > 0 ? (currentScrollY / docHeight) * 100 : 0;
-                    progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
-                }
-
-                const tb = activeTopbar || document.querySelector('.topbar');
-                if (tb) {
-                    if (currentScrollY <= 20) {
-                        tb.classList.remove('topbar-hidden');
-                    } else if (currentScrollY > lastScrollY + 6 && currentScrollY > 70) {
-                        tb.classList.add('topbar-hidden');
-                    } else if (currentScrollY < lastScrollY - 6) {
-                        tb.classList.remove('topbar-hidden');
-                    }
-                }
-
-                lastScrollY = currentScrollY;
-                scrollTicking = false;
-            });
-            scrollTicking = true;
+        const progressBar = document.getElementById('reading-progress-bar');
+        if (progressBar) {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+            progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
         }
     }, { passive: true });
+
+    // Click outside to close mobile article search dropdown
+    document.addEventListener('click', (e) => {
+        const sw = document.querySelector('.search-wrapper-article');
+        if (sw && sw.classList.contains('mobile-active')) {
+            if (!sw.contains(e.target)) {
+                sw.classList.remove('mobile-active');
+            }
+        }
+    });
 
     // ── Sidebar collapse logic ───────────────────────────────────────────────
     function initSidebar() {

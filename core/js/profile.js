@@ -75,6 +75,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             } else if (localTheme !== null && user.theme_preference !== (isDark ? 'dark' : 'light')) {
                 updateThemePreference(isDark ? 'dark' : 'light');
             }
+            // Check admin indicators in profile response
+            if (user.is_admin || user.role === 'admin' || (user.username && user.username.toUpperCase() === 'SMP')) {
+                const adminTabBtn = document.getElementById('tab-btn-admin');
+                if (adminTabBtn) adminTabBtn.style.display = 'inline-block';
+                const classTabBtn = document.getElementById('tab-btn-class');
+                if (classTabBtn) classTabBtn.style.display = 'inline-block';
+            }
         }
     } catch (e) {
         console.error("Failed to load user data", e);
@@ -100,10 +107,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         calculateAndRenderStreaks([]);
     }
     
-    // Check admin access
-    if (username && username.toUpperCase() === 'SMP') {
-        checkAdminAccess(token, API_BASE_URL);
-    }
+    // Check admin access via backend stats API
+    checkAdminAccess(token, API_BASE_URL);
 
     // Click outside to close admin inspector modal
     const inspectorModal = document.getElementById('admin-inspector-modal');
@@ -526,6 +531,8 @@ async function checkAdminAccess(token, API_BASE_URL) {
         if (res.ok) {
             const adminTabBtn = document.getElementById('tab-btn-admin');
             if (adminTabBtn) adminTabBtn.style.display = 'inline-block';
+            const classTabBtn = document.getElementById('tab-btn-class');
+            if (classTabBtn) classTabBtn.style.display = 'inline-block';
         }
     } catch (e) {
         // Not admin or network error

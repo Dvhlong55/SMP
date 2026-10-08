@@ -994,44 +994,49 @@ const ALL_POSTS = [
 // === LIVE SEARCH ===
 const LiveSearch = {
     init() {
-        const input = document.getElementById('search-input');
-        const dropdown = document.getElementById('search-results');
-        if (!input || !dropdown) return;
+        const bindInput = (inputId, dropdownId) => {
+            const input = document.getElementById(inputId);
+            const dropdown = document.getElementById(dropdownId);
+            if (!input || !dropdown) return;
 
-        input.addEventListener('input', () => {
-            const q = input.value.trim().toLowerCase();
-            if (q.length < 2) { dropdown.classList.remove('show'); return; }
+            input.addEventListener('input', () => {
+                const q = input.value.trim().toLowerCase();
+                if (q.length < 2) { dropdown.classList.remove('show'); return; }
 
-            const hits = ALL_POSTS.filter(p =>
-                p.title.toLowerCase().includes(q) ||
-                p.tags.some(t => t.toLowerCase().includes(q))
-            );
+                const hits = ALL_POSTS.filter(p =>
+                    p.title.toLowerCase().includes(q) ||
+                    p.tags.some(t => t.toLowerCase().includes(q))
+                );
 
-            if (hits.length === 0) {
-                dropdown.innerHTML = '<div class="search-no-results">Không tìm thấy bài viết phù hợp</div>';
-            } else {
-                dropdown.innerHTML = hits.slice(0, 6).map(p => {
-                    const isExternal = p.url.startsWith('http');
-                    return `
-                        <a class="search-result-item" href="${p.url}" ${isExternal ? 'target="_blank"' : ''}>
-                            <div class="search-result-title">${p.title}</div>
-                            <div class="search-result-date">${p.date} · ${p.tags.join(', ')}</div>
-                        </a>
-                    `;
-                }).join('');
-            }
-            dropdown.classList.add('show');
-        });
+                if (hits.length === 0) {
+                    dropdown.innerHTML = '<div class="search-no-results">Không tìm thấy bài viết phù hợp</div>';
+                } else {
+                    dropdown.innerHTML = hits.slice(0, 6).map(p => {
+                        const isExternal = p.url.startsWith('http');
+                        return `
+                            <a class="search-result-item" href="${p.url}" ${isExternal ? 'target="_blank"' : ''}>
+                                <div class="search-result-title">${p.title}</div>
+                                <div class="search-result-date">${p.date} · ${p.tags.join(', ')}</div>
+                            </a>
+                        `;
+                    }).join('');
+                }
+                dropdown.classList.add('show');
+            });
 
-        document.addEventListener('click', e => {
-            if (!input.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.classList.remove('show');
-            }
-        });
+            document.addEventListener('click', e => {
+                if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
 
-        input.addEventListener('keydown', e => {
-            if (e.key === 'Escape') dropdown.classList.remove('show');
-        });
+            input.addEventListener('keydown', e => {
+                if (e.key === 'Escape') dropdown.classList.remove('show');
+            });
+        };
+
+        bindInput('search-input', 'search-results');
+        bindInput('search-input-mobile', 'search-results-mobile');
     }
 };
 

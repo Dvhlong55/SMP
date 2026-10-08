@@ -712,6 +712,7 @@
                 <button class="prof-tab-btn active" data-tab="overview" onclick="switchMainTab('overview')">Tổng quan</button>
                 <button class="prof-tab-btn" data-tab="settings" onclick="switchMainTab('settings')">Cài đặt</button>
                 <button class="prof-tab-btn" id="tab-btn-admin" data-tab="admin" style="display: none;" onclick="switchMainTab('admin')">Quản trị</button>
+                <a class="prof-tab-btn" id="tab-btn-class" href="/pages/class.html" target="_blank" style="display: none;">Class</a>
             </div>
 
             <!-- Tab 1: Tổng quan -->
@@ -866,6 +867,12 @@
 
             <!-- Tab 3: Admin Dashboard (Chỉ hiện khi admin) -->
             <div id="admin-dashboard-section" class="prof-tab-content" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                    <div class="prof-group-heading" style="border: none; margin: 0; padding: 0;">Quản Trị Hệ Thống</div>
+                    <a href="/pages/class.html" target="_blank" class="prof-btn-save" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                        <span>Quản Lý Lớp Học (Class)</span>
+                    </a>
+                </div>
                 <div class="admin-stats-container">
                     <div class="admin-stat-card">
                         <h3>Tổng Người Dùng</h3>
@@ -994,7 +1001,7 @@
     <script src="/core/js/layout.js?v=38"></script>
     <script src="/core/js/shared.js?v=38"></script>
     <!-- Profile script -->
-    <script src="/core/js/profile.js?v=13"></script>
+    <script src="/core/js/profile.js?v=14"></script>
     
 </body>
 </html>
