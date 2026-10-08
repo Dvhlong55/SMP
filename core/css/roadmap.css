@@ -6,20 +6,28 @@
    - Phong cách: Ấn phẩm toán học độc lập, tối giản, thanh lịch, giàu khoảng trắng
    ========================================================================== */
 
+#sohoc-roadmap {
+    min-height: 80vh;
+}
+
 .rm-root {
     max-width: 1040px;
     margin: 0 auto 60px;
     color: var(--text-dark);
     position: relative;
+    animation: fadeUp 0.5s ease forwards;
+}
+
+.rm-view-detailed {
+    animation: fadeUp 0.4s ease forwards;
 }
 
 /* --------------------------------------------------------------------------
    1. EDITORIAL HERO
    -------------------------------------------------------------------------- */
 .rm-hero {
-    margin-bottom: 48px;
-    padding-bottom: 32px;
-    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 40px;
+    padding-bottom: 8px;
 }
 
 .rm-hero-kicker {
@@ -106,7 +114,7 @@
     border: 1px solid var(--border-light);
     border-radius: 999px;
     padding: 3px;
-    min-width: 290px;
+    min-width: 250px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
     cursor: pointer;
     user-select: none;
@@ -271,9 +279,11 @@ body.dark-mode .rm-view-switch[data-active="tree"] .rm-view-switch-indicator {
 /* --------------------------------------------------------------------------
    3. ROADMAP TIMELINE (Dòng Thời Gian Chuyên Đề — View Chi Tiết)
    -------------------------------------------------------------------------- */
-.rm-timeline-label {
-    margin-top: 56px;
-    margin-bottom: 36px;
+.rm-timeline-divider {
+    height: 1px;
+    background: var(--border-light);
+    margin: 48px 0 40px;
+    border: none;
 }
 
 .rm-timeline {
@@ -503,15 +513,15 @@ body.dark-mode .rm-card.is-ready:hover {
 }
 
 /* --------------------------------------------------------------------------
-   5. SERPENTINE ROADMAP TREE VIEW (Sơ đồ cây lượn sóng chuẩn hình mẫu)
+   5. SERPENTINE ROADMAP TREE VIEW (Mindmap lượn sóng)
    -------------------------------------------------------------------------- */
 .rm-view-tree {
     margin-bottom: 56px;
-    animation: rmFadeIn 0.25s ease-out;
+    animation: fadeUp 0.45s ease forwards;
 }
 
-@keyframes rmFadeIn {
-    from { opacity: 0; transform: translateY(6px); }
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -539,8 +549,8 @@ body.dark-mode .rm-card.is-ready:hover {
 
 .rm-serpentine-canvas {
     position: relative;
-    min-width: 860px;
-    padding: 40px 36px 60px;
+    min-width: 920px;
+    padding: 44px 36px 72px;
     background: radial-gradient(var(--border-light) 1px, transparent 1px);
     background-size: 24px 24px;
     min-height: 800px;
@@ -557,7 +567,7 @@ body.dark-mode .rm-card.is-ready:hover {
     z-index: 1;
 }
 
-/* Trục chính S-curve */
+/* Trục chính S-curve rộng rãi */
 .rm-trunk-path {
     stroke: var(--accent-cyan);
     stroke-width: 2.8;
@@ -602,7 +612,7 @@ body.dark-mode .rm-branch-path.is-hovered {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 40px;
+    margin-bottom: 48px;
     position: relative;
     z-index: 2;
 }
@@ -611,7 +621,7 @@ body.dark-mode .rm-branch-path.is-hovered {
     display: flex;
     justify-content: center;
     flex: 1;
-    margin-left: 170px; /* Cân đối với hộp chú thích bên phải */
+    margin-left: 170px;
 }
 
 .rm-tree-root-node {
@@ -674,43 +684,52 @@ body.dark-mode .rm-tree-root-node {
     border: 1.5px dashed var(--text-muted);
 }
 
-/* Các hàng Chặng (Rows) */
+/* Các hàng Chặng (Rows) với 3 slot cân đối */
 .rm-st-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin: 48px 0;
+    justify-content: center;
+    margin: 68px 0;
     position: relative;
     z-index: 2;
-    gap: 60px;
+    gap: 24px;
 }
 
-.rm-st-col-hub {
+.rm-st-slot-left {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.rm-st-slot-hub {
     flex: 0 0 280px;
     display: flex;
     justify-content: center;
 }
 
-.rm-st-col-cards {
+.rm-st-slot-right {
     flex: 1;
     display: flex;
-    flex-direction: column;
+    justify-content: flex-start;
 }
 
-.rm-st-row[data-side="right"] .rm-st-col-cards {
-    align-items: flex-end;
+/* Hub lệch nhẹ quanh tâm để tạo đường cong uốn lượn rộng */
+.rm-st-row[data-side="right"] .rm-st-slot-hub {
+    justify-content: flex-end;
+    padding-right: 18px;
 }
 
-.rm-st-row[data-side="left"] .rm-st-col-cards {
-    align-items: flex-start;
+.rm-st-row[data-side="left"] .rm-st-slot-hub {
+    justify-content: flex-start;
+    padding-left: 18px;
 }
 
-/* Station Hub (Nút chặng trung tâm nổi bật) */
+/* Station Hub (Nút chủ đề trung tâm) */
 .rm-st-hub {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 20px;
+    justify-content: center;
+    padding: 11px 22px;
     background: var(--main-bg);
     border: 2px solid var(--accent-gold);
     border-radius: 10px;
@@ -718,24 +737,14 @@ body.dark-mode .rm-tree-root-node {
     transition: var(--transition);
 }
 
-.rm-st-hub-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.74rem;
-    font-weight: 800;
-    color: var(--accent-gold);
-    background: rgba(197, 155, 39, 0.12);
-    padding: 2px 8px;
-    border-radius: 4px;
-    white-space: nowrap;
-}
-
 .rm-st-hub-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1.08rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--text-dark);
     margin: 0;
     white-space: nowrap;
+    text-transform: none !important;
 }
 
 /* Nhóm các thẻ bài học (Cards) */
@@ -743,30 +752,58 @@ body.dark-mode .rm-tree-root-node {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-width: 380px;
+    max-width: 360px;
     width: 100%;
 }
 
-/* Khi có từ 5-6 bài (ví dụ Chặng 9): chia 2 cột như trong hình mẫu */
+/* Khi có từ 5-6 bài (ví dụ Chặng 9): chia 2 cột */
 .rm-st-cards-group.is-grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    max-width: 520px;
+    max-width: 480px;
 }
 
-/* Từng thẻ bài học (Chỉ Tiêu Đề) */
+/* Từng thẻ bài học (Chỉ Tiêu Đề, Không Mã, Không Mũi Tên, In Hoa Chữ Đầu) */
 .rm-st-card {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 9px 14px;
+    justify-content: center;
+    padding: 10px 18px;
     border-radius: 8px;
     text-decoration: none;
     color: var(--text-dark);
     transition: var(--transition);
     background: var(--main-bg);
+    min-width: 200px;
+    max-width: 340px;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    font-variant: normal !important;
+}
+
+.rm-st-card.card-link {
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    font-family: inherit;
+}
+
+/* Triệt tiêu mũi tên -> của shared.css */
+.rm-st-card.card-link::after {
+    display: none !important;
+    content: '' !important;
+}
+
+.rm-st-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text-dark);
+    text-align: center;
+    margin: 0;
+    text-transform: none !important;
+    letter-spacing: normal !important;
 }
 
 .rm-st-card.is-ready {
@@ -797,52 +834,13 @@ body.dark-mode .rm-st-card.is-ready {
     cursor: default;
 }
 
-.rm-st-card-code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--accent-cyan);
-    flex-shrink: 0;
-}
-
-.rm-st-card.is-soon .rm-st-card-code {
-    color: var(--text-muted);
-}
-
-.rm-st-card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 0.92rem;
-    font-weight: 600;
-    line-height: 1.35;
-    color: var(--text-dark);
-    flex: 1;
-    transition: color 0.2s;
-}
-
-.rm-st-card-link {
-    display: inline-flex;
-    align-items: center;
-    color: var(--accent-cyan);
-    flex-shrink: 0;
-}
-
-.rm-st-card-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem;
-    color: var(--text-muted);
-    border: 1px solid var(--border-light);
-    border-radius: 4px;
-    padding: 1px 5px;
-    flex-shrink: 0;
-}
-
 /* Phase Milestone Marker */
 .rm-st-phase-milestone {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 3px;
-    margin: 36px auto;
+    margin: 44px auto;
     padding: 8px 24px;
     background: var(--main-bg);
     border: 1px solid var(--border-light);

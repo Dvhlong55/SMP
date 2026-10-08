@@ -218,21 +218,7 @@
         }
     });
 
-    function renderStatsStrip() {
-        const stats = document.querySelector('.stats-strip');
-        if (stats && typeof renderMathInElement === 'function') {
-            renderMathInElement(stats, {
-                delimiters: [
-                    { left: '$$', right: '$$', display: true },
-                    { left: '$', right: '$', display: false }
-                ],
-                throwOnError: false
-            });
-        }
-    }
-
-    // Tự động render ký hiệu toán thanh thống kê và khởi tạo giao diện trống
-    renderStatsStrip();
+    // Khởi tạo giao diện trống
     processTranslation();
 
 })();

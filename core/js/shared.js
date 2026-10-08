@@ -171,73 +171,73 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
-        title: 'Tổng Quan Đề Thi IGO (2017 – 2025)',
+        title: 'Tổng Quan Về Kì Thi Hình Học Iran (IGO)',
         date: 'October 8, 2026',
         url: '/posts/math/de-thi-igo-2017-2025.html',
-        tags: ['Hình Học', 'Đề Thi', 'VMO', 'IGO'],
+        tags: ['Hình Học', 'Đề Thi', 'VMO', 'THCS', 'IGO'],
         page: '/pages/toanhoc.html'
     },
     {
         title: 'Đề Thi IGO 2025',
         date: 'October 8, 2026',
         url: '/posts/math/igo-2025.html',
-        tags: ['Hình Học', 'Đề Thi', 'VMO', 'IGO'],
+        tags: ['Hình Học', 'Đề Thi', 'VMO', 'THCS', 'IGO'],
         page: '/pages/toanhoc.html'
     },
     {
         title: 'Đề Thi IGO 2024',
         date: 'October 8, 2026',
         url: '/posts/math/igo-2024.html',
-        tags: ['Hình Học', 'Đề Thi', 'VMO', 'IGO'],
+        tags: ['Hình Học', 'Đề Thi', 'VMO', 'THCS', 'IGO'],
         page: '/pages/toanhoc.html'
     },
     {
         title: 'Đề Thi IGO 2023',
         date: 'October 8, 2026',
         url: '/posts/math/igo-2023.html',
-        tags: ['Hình Học', 'Đề Thi', 'VMO', 'IGO'],
+        tags: ['Hình Học', 'Đề Thi', 'VMO', 'THCS', 'IGO'],
         page: '/pages/toanhoc.html'
     },
     {
         title: 'Đề Thi IGO 2022',
         date: 'October 8, 2026',
         url: '/posts/math/igo-2022.html',
-        tags: ['Hình Học', 'Đề Thi', 'VMO', 'IGO'],
+        tags: ['Hình Học', 'Đề Thi', 'VMO', 'THCS', 'IGO'],
         page: '/pages/toanhoc.html'
     },
     {
         title: 'Đề Thi IGO 2021',
         date: 'October 8, 2026',
         url: '/posts/math/igo-2021.html',
-        tags: ['Hình Học', 'Đề Thi', 'VMO', 'IGO'],
+        tags: ['Hình Học', 'Đề Thi', 'VMO', 'THCS', 'IGO'],
         page: '/pages/toanhoc.html'
     },
     {
         title: 'Đề Thi IGO 2020',
         date: 'October 8, 2026',
         url: '/posts/math/igo-2020.html',
-        tags: ['Hình Học', 'Đề Thi', 'VMO', 'IGO'],
+        tags: ['Hình Học', 'Đề Thi', 'VMO', 'THCS', 'IGO'],
         page: '/pages/toanhoc.html'
     },
     {
         title: 'Đề Thi IGO 2019',
         date: 'October 8, 2026',
         url: '/posts/math/igo-2019.html',
-        tags: ['Hình Học', 'Đề Thi', 'VMO', 'IGO'],
+        tags: ['Hình Học', 'Đề Thi', 'VMO', 'THCS', 'IGO'],
         page: '/pages/toanhoc.html'
     },
     {
         title: 'Đề Thi IGO 2018',
         date: 'October 8, 2026',
         url: '/posts/math/igo-2018.html',
-        tags: ['Hình Học', 'Đề Thi', 'VMO', 'IGO'],
+        tags: ['Hình Học', 'Đề Thi', 'VMO', 'THCS', 'IGO'],
         page: '/pages/toanhoc.html'
     },
     {
         title: 'Đề Thi IGO 2017',
         date: 'October 8, 2026',
         url: '/posts/math/igo-2017.html',
-        tags: ['Hình Học', 'Đề Thi', 'VMO', 'IGO'],
+        tags: ['Hình Học', 'Đề Thi', 'VMO', 'THCS', 'IGO'],
         page: '/pages/toanhoc.html'
     },
     {

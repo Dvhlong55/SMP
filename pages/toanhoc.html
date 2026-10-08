@@ -31,15 +31,17 @@
             margin-bottom: 20px;
             border-bottom: 1px solid var(--border-light);
             padding-bottom: 16px;
-            overflow-x: auto; /* Hỗ trợ trượt ngang trên điện thoại */
-            scrollbar-width: none; /* Ẩn thanh cuộn Firefox */
+            overflow-x: auto;
+            scrollbar-width: none;
             max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
             width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         .math-nav-bar::-webkit-scrollbar {
-            display: none; /* Ẩn thanh cuộn Chrome/Safari */
+            display: none;
         }
         .math-nav-btn {
             background: transparent;
@@ -79,6 +81,8 @@
             margin-left: auto;
             margin-right: auto;
             width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         .math-subnav-bar::-webkit-scrollbar {
             display: none;
@@ -105,6 +109,25 @@
             background: rgba(201, 169, 110, 0.18);
             border: 1px solid var(--accent-gold);
             font-weight: 700;
+        }
+
+        @media (max-width: 680px) {
+            .math-nav-bar,
+            .math-subnav-bar {
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+
+        /* Grid container căn đều giữa trang, không bị lệch về 1 bên */
+        #math-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 380px));
+            gap: 30px;
+            justify-content: center;
+            width: 100%;
         }
 
         .card.hidden {
@@ -144,10 +167,7 @@
                 <button class="math-nav-btn" data-filter="thcs">THCS</button>
                 <button class="math-nav-btn" data-filter="thpt">THPT</button>
                 <button class="math-nav-btn" data-filter="uni">Đại Học</button>
-                <button class="math-nav-btn" data-filter="challenge">Thách Thức</button>
                 <button class="math-nav-btn" data-filter="phieu-luu">Phiêu Lưu</button>
-                <button class="math-nav-btn" data-filter="trao-doi">Trao Đổi</button>
-
                 <button class="math-nav-btn" data-filter="tools">Tool</button>
             </div>
 
@@ -156,12 +176,84 @@
             <div class="section-label" id="dynamic-section-label">Tất Cả Bài Viết Toán Học</div>
 
             <div class="grid-container" id="math-grid-container">
-                <div class="card fade-up" data-category="vmo" data-topic="hinh-hoc de-thi">
+                <div class="card fade-up" data-category="vmo thcs" data-topic="hinh-hoc de-thi">
                     <div class="card-date">October 8, 2026</div>
                     <span class="card-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);">Hình Học</span>
-                    <h3>Tổng Quan Đề Thi IGO (2017 – 2025)</h3>
+                    <h3>Tổng Quan Về Kì Thi Hình Học Iran (IGO)</h3>
                     <p>Tổng quan hệ thống đề thi và gợi ý giải Kỳ thi Hình học Iran (IGO) từ 2017 đến 2025 cho cả 3 khối Elementary, Intermediate, Advanced.</p>
                     <a href="/posts/math/de-thi-igo-2017-2025.html" class="card-link">READ MORE</a>
+                </div>
+
+                <div class="card fade-up" data-category="vmo thcs" data-topic="hinh-hoc de-thi">
+                    <div class="card-date">October 8, 2026</div>
+                    <span class="card-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);">Hình Học</span>
+                    <h3>Đề Thi IGO 2025</h3>
+                    <p>Đề thi và gợi ý giải Kỳ thi Hình học Iran lần thứ 12 (IGO 2025) cho cả 3 khối Elementary, Intermediate và Advanced.</p>
+                    <a href="/posts/math/igo-2025.html" class="card-link">READ MORE</a>
+                </div>
+
+                <div class="card fade-up" data-category="vmo thcs" data-topic="hinh-hoc de-thi">
+                    <div class="card-date">October 8, 2026</div>
+                    <span class="card-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);">Hình Học</span>
+                    <h3>Đề Thi IGO 2024</h3>
+                    <p>Đề thi và gợi ý giải Kỳ thi Hình học Iran lần thứ 11 (IGO 2024) cho cả 3 khối Elementary, Intermediate và Advanced.</p>
+                    <a href="/posts/math/igo-2024.html" class="card-link">READ MORE</a>
+                </div>
+
+                <div class="card fade-up" data-category="vmo thcs" data-topic="hinh-hoc de-thi">
+                    <div class="card-date">October 8, 2026</div>
+                    <span class="card-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);">Hình Học</span>
+                    <h3>Đề Thi IGO 2023</h3>
+                    <p>Đề thi và gợi ý giải Kỳ thi Hình học Iran lần thứ 10 (IGO 2023) cho cả 3 khối Elementary, Intermediate và Advanced.</p>
+                    <a href="/posts/math/igo-2023.html" class="card-link">READ MORE</a>
+                </div>
+
+                <div class="card fade-up" data-category="vmo thcs" data-topic="hinh-hoc de-thi">
+                    <div class="card-date">October 8, 2026</div>
+                    <span class="card-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);">Hình Học</span>
+                    <h3>Đề Thi IGO 2022</h3>
+                    <p>Đề thi và gợi ý giải Kỳ thi Hình học Iran lần thứ 9 (IGO 2022) cho cả 3 khối Elementary, Intermediate và Advanced.</p>
+                    <a href="/posts/math/igo-2022.html" class="card-link">READ MORE</a>
+                </div>
+
+                <div class="card fade-up" data-category="vmo thcs" data-topic="hinh-hoc de-thi">
+                    <div class="card-date">October 8, 2026</div>
+                    <span class="card-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);">Hình Học</span>
+                    <h3>Đề Thi IGO 2021</h3>
+                    <p>Đề thi và gợi ý giải Kỳ thi Hình học Iran lần thứ 8 (IGO 2021) cho cả 3 khối Elementary, Intermediate và Advanced.</p>
+                    <a href="/posts/math/igo-2021.html" class="card-link">READ MORE</a>
+                </div>
+
+                <div class="card fade-up" data-category="vmo thcs" data-topic="hinh-hoc de-thi">
+                    <div class="card-date">October 8, 2026</div>
+                    <span class="card-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);">Hình Học</span>
+                    <h3>Đề Thi IGO 2020</h3>
+                    <p>Đề thi và gợi ý giải Kỳ thi Hình học Iran lần thứ 7 (IGO 2020) cho cả 3 khối Elementary, Intermediate và Advanced.</p>
+                    <a href="/posts/math/igo-2020.html" class="card-link">READ MORE</a>
+                </div>
+
+                <div class="card fade-up" data-category="vmo thcs" data-topic="hinh-hoc de-thi">
+                    <div class="card-date">October 8, 2026</div>
+                    <span class="card-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);">Hình Học</span>
+                    <h3>Đề Thi IGO 2019</h3>
+                    <p>Đề thi và gợi ý giải Kỳ thi Hình học Iran lần thứ 6 (IGO 2019) cho cả 3 khối Elementary, Intermediate và Advanced.</p>
+                    <a href="/posts/math/igo-2019.html" class="card-link">READ MORE</a>
+                </div>
+
+                <div class="card fade-up" data-category="vmo thcs" data-topic="hinh-hoc de-thi">
+                    <div class="card-date">October 8, 2026</div>
+                    <span class="card-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);">Hình Học</span>
+                    <h3>Đề Thi IGO 2018</h3>
+                    <p>Đề thi và gợi ý giải Kỳ thi Hình học Iran lần thứ 5 (IGO 2018) cho cả 3 khối Elementary, Intermediate và Advanced.</p>
+                    <a href="/posts/math/igo-2018.html" class="card-link">READ MORE</a>
+                </div>
+
+                <div class="card fade-up" data-category="vmo thcs" data-topic="hinh-hoc de-thi">
+                    <div class="card-date">October 8, 2026</div>
+                    <span class="card-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);">Hình Học</span>
+                    <h3>Đề Thi IGO 2017</h3>
+                    <p>Đề thi và gợi ý giải Kỳ thi Hình học Iran lần thứ 4 (IGO 2017) cho cả 3 khối Elementary, Intermediate và Advanced.</p>
+                    <a href="/posts/math/igo-2017.html" class="card-link">READ MORE</a>
                 </div>
 
                 <div class="card fade-up" data-category="vmo" data-topic="so-hoc">
@@ -1058,25 +1150,25 @@
                     <a href="/posts/math/dethichuyen/dongnai-2025.html" class="card-link">READ MORE</a>
                 </div>
 
-                <div class="card fade-up" data-category="challenge">
+                <div class="card fade-up" data-category="phieu-luu">
                     <div class="card-date">June 13, 2026</div>
-                    <span class="card-tag">Thách Thức</span>
+                    <span class="card-tag" style="color: #10b981; border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.1);">Phiêu Lưu</span>
                     <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -3px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Thách Thức Số 2 — 2026</h3>
                     <p>Tập hợp 11 bài toán số học chuyên sâu nâng cao thử thách tư duy, xoay quanh các bổ đề đồng dư Thue, định lý Fermat tổng hai bình phương và các dạng biểu diễn số nguyên tố.</p>
                     <a href="/challenges/ThachThucKiNaySo22026.html" class="card-link">CHINH PHỤC NGAY</a>
                 </div>
 
-                <div class="card fade-up" data-category="challenge">
+                <div class="card fade-up" data-category="phieu-luu">
                     <div class="card-date">June 04, 2026</div>
-                    <span class="card-tag">Thách Thức</span>
+                    <span class="card-tag" style="color: #10b981; border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.1);">Phiêu Lưu</span>
                     <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -3px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Thách Thức Số 1 — 2026</h3>
                     <p>Một số bài Toán thách thức dành cho học sinh chuyên Toán. Thử sức và chinh phục những bài toán đòi hỏi tư duy sáng tạo và kiến thức chuyên sâu!</p>
                     <a href="/challenges/ThachThucKiNaySo12026.html" class="card-link">CHINH PHỤC NGAY</a>
                 </div>
 
-                <div class="card fade-up" data-category="trao-doi">
+                <div class="card fade-up" data-category="phieu-luu">
                     <div class="card-date">June 04, 2026</div>
-                    <span class="card-tag">Trao Đổi</span>
+                    <span class="card-tag" style="color: #10b981; border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.1);">Phiêu Lưu</span>
                     <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -3px;"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Gửi Bài Toán Đề Xuất</h3>
                     <p>Bạn có bài toán hay muốn đóng góp cho mục Thách Thức? Điền form đề xuất — Ban biên tập SMP sẽ xem xét và ghi nhận tên tác giả khi đăng.</p>
                     <a href="/challenges/guibaidexuat.html" class="card-link">GỬI ĐỀ XUẤT</a>
@@ -1170,11 +1262,14 @@
 
             function updateCards() {
                 cards.forEach(card => {
-                    const category = card.getAttribute('data-category');
+                    const catStr = (card.getAttribute('data-category') || '').toLowerCase();
+                    const categories = catStr.split(/\s+/).filter(Boolean);
                     const topicStr = (card.getAttribute('data-topic') || '').toLowerCase();
                     const topics = topicStr.split(/\s+/).filter(Boolean);
                     
-                    let matchCat = (currentFilter === 'all') || (category === currentFilter);
+                    let matchCat = (currentFilter === 'all') || 
+                                   categories.includes(currentFilter) ||
+                                   (currentFilter === 'phieu-luu' && categories.some(c => c === 'phieu-luu' || c === 'challenge' || c === 'trao-doi'));
                     let matchSub = true;
                     if (matchCat && currentFilter !== 'all' && currentSubFilter !== 'all') {
                         matchSub = topics.includes(currentSubFilter);
@@ -1248,6 +1343,9 @@
             }
 
             function selectMainFilter(filter, subFilter = 'all', isUserAction = false) {
+                if (filter === 'challenge' || filter === 'trao-doi' || filter === 'phien-luu') {
+                    filter = 'phieu-luu';
+                }
                 currentFilter = filter;
                 navBtns.forEach(b => {
                     if (b.getAttribute('data-filter') === filter) {

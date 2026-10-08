@@ -429,55 +429,6 @@
             text-align: center;
         }
 
-        /* Stats strip (Editorial summary) */
-        .stats-strip {
-            display: flex;
-            gap: 0;
-            background: var(--card-bg, #ffffff);
-            border: 1px solid var(--border-light);
-            border-radius: 6px;
-            overflow: hidden;
-            margin-top: 48px;
-            margin-bottom: 36px;
-        }
-        .stat-item {
-            flex: 1;
-            padding: 22px 20px;
-            text-align: center;
-            border-right: 1px solid var(--border-light);
-        }
-        .stat-item:last-child {
-            border-right: none;
-        }
-        .stat-number {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.65rem;
-            font-weight: 600;
-            color: var(--accent-cyan);
-            line-height: 1.1;
-            margin-bottom: 6px;
-        }
-        .stat-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-        @media (max-width: 480px) {
-            .stat-item {
-                padding: 16px 10px;
-            }
-            .stat-number {
-                font-size: 1.4rem;
-            }
-            .stat-label {
-                font-size: 0.68rem;
-                letter-spacing: 1px;
-            }
-        }
-
         /* Label tags */
         .label-cloud {
             display: flex;
@@ -742,7 +693,7 @@
                                 <div class="card fade-up">
                                     <div class="card-date">October 8, 2026</div>
                                     <span class="card-tag" style="color: var(--accent-cyan); border-color: rgba(92, 225, 230, 0.4); background: rgba(92, 225, 230, 0.1);">Hình Học</span>
-                                    <h3>Tổng Quan Đề Thi IGO (2017 – 2025)</h3>
+                                    <h3>Tổng Quan Về Kì Thi Hình Học Iran (IGO)</h3>
                                     <p>Tổng quan hệ thống đề thi và gợi ý giải Kỳ thi Hình học Iran (IGO) từ 2017 đến 2025 cho cả 3 khối Elementary, Intermediate, Advanced.</p>
                                     <a href="/posts/math/de-thi-igo-2017-2025.html" class="card-link">READ MORE</a>
                                 </div>
@@ -932,24 +883,6 @@
             </div>
 
 
-            
-
-
-            <div class="stats-strip fade-up">
-                <div class="stat-item">
-                    <div class="stat-number" id="stat-articles-count">107</div>
-                    <div class="stat-label">Bài Viết</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="stat-topics-count">12</div>
-                    <div class="stat-label">Chủ Đề</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">2026</div>
-                    <div class="stat-label">Thành Lập</div>
-                </div>
-            </div>
-
         </main>
     </div>
 
@@ -958,23 +891,6 @@
     <script src="/core/js/shared.js?v=38"></script>
     <script src="/core/js/mailbox.js"></script>
     <script>
-        // Đồng bộ số lượng bài viết thực tế cho statistics strip nếu ALL_POSTS sẵn sàng
-        (function() {
-            function syncStatsStrip() {
-                if (typeof ALL_POSTS !== 'undefined' && Array.isArray(ALL_POSTS) && ALL_POSTS.length > 0) {
-                    const artEl = document.getElementById('stat-articles-count');
-                    if (artEl) {
-                        artEl.textContent = ALL_POSTS.length;
-                    }
-                }
-            }
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', syncStatsStrip);
-            } else {
-                syncStatsStrip();
-            }
-        })();
-
         // === DAILY CHALLENGE INTERACTION ===
         let answerVisible = false;
 

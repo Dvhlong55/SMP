@@ -5,9 +5,7 @@ const LEFT_TAGS_HTML = `
                 <li><a href="/pages/toanhoc.html?filter=thcs">THCS <span>36</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=thpt">THPT <span>1</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=uni">Đại Học <span>1</span></a></li>
-                <li><a href="/pages/toanhoc.html?filter=challenge">Thách Thức <span>2</span></a></li>
-                <li><a href="/pages/toanhoc.html?filter=phieu-luu">Phiêu Lưu <span>1</span></a></li>
-                <li><a href="/pages/toanhoc.html?filter=trao-doi">Trao Đổi <span>1</span></a></li>
+                <li><a href="/pages/toanhoc.html?filter=phieu-luu">Phiêu Lưu <span>4</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=tools">Tool <span>5</span></a></li>
             </ul>
             

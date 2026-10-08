@@ -2,12 +2,12 @@
    SMP — ROADMAP RENDERER (Editorial Table of Contents, Metro Timeline & Serpentine Tree)
    Primary Design Reference: SMP Home (shared.css) & Mindmap / Winding Skill Tree
    - Mặc định: Chế độ "Chi tiết" (Mục lục + Dòng thời gian với các thẻ bài học đầy đủ).
-   - Chế độ "Sơ đồ cây": Sơ đồ lượn sóng (Serpentine Tree) với trục chính uốn lượn,
-                         nhánh nét đứt rẽ ngang sang từng bài học (chỉ tiêu đề, không sao,
-                         không mô tả dài).
+   - Chế độ "Mindmap": Sơ đồ lượn sóng (Serpentine Tree) với trục chính uốn lượn rộng rãi,
+                       nhánh nét đứt rẽ ngang sang từng bài học (chỉ tiêu đề, không sao,
+                       không mã số, không mũi tên, in hoa chữ cái đầu).
    - Ô có `url` → thẻ bấm được (dùng class .card-link để PostViewer của
                    shared.js mở bài viết giống hệt các thẻ bài viết thông thường).
-   - Ô không có `url` → hiển thị "Sắp có".
+   - Ô không có `url` → hiển thị bài chưa mở.
    ========================================================================== */
 (function () {
     'use strict';
@@ -46,24 +46,13 @@
     }
 
     function renderStation(st, phaseName) {
-        const stats = stationStats(st);
         const label = st.label || pad(st.id);
-        const statusText = stats.ready > 0 
-            ? `${stats.ready}/${stats.total} bài viết` 
-            : 'Đang cập nhật';
 
         return `
             <section class="rm-station" id="rm-station-${st.id}">
                 <div class="rm-node" aria-hidden="true">${esc(label)}</div>
                 <div class="rm-station-body">
                     <header class="rm-station-head">
-                        <div class="rm-station-meta">
-                            <span class="rm-station-kicker">Chặng ${esc(label)}</span>
-                            <span class="rm-station-sep">·</span>
-                            <span class="rm-station-phase">${esc(phaseName)}</span>
-                            <span class="rm-station-sep">·</span>
-                            <span class="rm-station-status">${statusText}</span>
-                        </div>
                         <div class="rm-station-title-row">
                             <h2 class="rm-station-title">${st.title}</h2>
                             ${st.formula ? `<span class="rm-station-formula">${st.formula}</span>` : ''}
@@ -80,7 +69,6 @@
     function renderTOC(phases, stations) {
         return `
             <nav class="rm-toc" aria-label="Mục lục chuyên đề">
-                <div class="section-label"><span>Mục Lục Chuyên Đề</span></div>
                 <div class="rm-toc-grid">
                     ${phases.map(ph => {
                         const phStations = stations.filter(s => s.phase === ph.id);
@@ -112,9 +100,10 @@
     }
 
     /* ----------------------------------------------------------------------
-       2. VIEW SƠ ĐỒ CÂY LƯỢN SÓNG (Serpentine Mindmap Tree)
-       - Trục chính uốn lượn zig-zag kết nối các chặng kiến thức.
-       - Các bài học con rẽ nhánh nét đứt sang bên cạnh (Chỉ Tiêu Đề, Không Sao).
+       2. VIEW MINDMAP (Serpentine Tree — Chuẩn hình mẫu người dùng)
+       - Trục chính uốn lượn rộng rãi (nới rộng vòng cung).
+       - Nút chủ đề chỉ hiển thị tên chủ đề (bỏ "Chặng ..").
+       - Thẻ bài học: CHỈ HIỂN THỊ TIÊU ĐỀ (bỏ mã 1.1, bỏ ↗, bỏ →, chỉ in hoa chữ đầu).
        ---------------------------------------------------------------------- */
     function renderTree(phases, stations) {
         let treeHtml = `
@@ -132,7 +121,7 @@
                         <div class="rm-tree-legend-box">
                             <div class="rm-legend-item">
                                 <span class="rm-legend-chip is-hub"></span>
-                                <span>Chặng kiến thức</span>
+                                <span>Chủ đề chính</span>
                             </div>
                             <div class="rm-legend-item">
                                 <span class="rm-legend-chip is-ready"></span>
@@ -147,9 +136,8 @@
 
         let lastPhase = null;
         stations.forEach((st, idx) => {
-            // So le: chặng lẻ hub bên phải (bài học bên trái), chặng chẵn hub bên trái (bài học bên phải)
+            // So le nhẹ quanh trục giữa: chặng chẵn/lẻ
             const side = (idx % 2 === 0) ? 'right' : 'left';
-            const label = st.label || pad(st.id);
             const ph = phases.find(p => p.id === st.phase);
 
             // Mốc chuyển tiếp Giai đoạn
@@ -165,6 +153,7 @@
 
             const isGrid2 = (st.tiles || []).length > 4;
 
+            // Thẻ bài học: Chỉ tiêu đề, không mã số, không mũi tên
             const cardsHtml = `
                 <div class="rm-st-cards-group ${isGrid2 ? 'is-grid-2' : ''}">
                     ${(st.tiles || []).map((t, tIdx) => {
@@ -174,44 +163,42 @@
                         if (ready) {
                             return `
                                 <a href="${esc(t.url)}" class="rm-st-card is-ready card-link" data-code="${esc(code)}" aria-label="Đọc bài: ${esc(cleanTitle)}">
-                                    <span class="rm-st-card-code">${esc(code)}</span>
                                     <span class="rm-st-card-title">${t.title}</span>
-                                    <span class="rm-st-card-link" aria-hidden="true">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-                                    </span>
                                 </a>`;
                         } else {
                             return `
                                 <div class="rm-st-card is-soon" data-code="${esc(code)}">
-                                    <span class="rm-st-card-code">${esc(code)}</span>
                                     <span class="rm-st-card-title">${t.title}</span>
-                                    <span class="rm-st-card-tag">Sắp có</span>
                                 </div>`;
                         }
                     }).join('')}
                 </div>`;
 
+            // Hub chủ đề: Chỉ tên chủ đề, bỏ chữ "Chặng .."
             const hubHtml = `
-                <div class="rm-st-col-hub">
-                    <div class="rm-st-hub" data-station-id="${st.id}">
-                        <span class="rm-st-hub-badge">Chặng ${esc(label)}</span>
-                        <span class="rm-st-hub-title">${st.title}</span>
-                    </div>
+                <div class="rm-st-hub" data-station-id="${st.id}">
+                    <span class="rm-st-hub-title">${st.title}</span>
                 </div>`;
 
             if (side === 'right') {
                 treeHtml += `
                     <div class="rm-st-row" data-station-id="${st.id}" data-side="right">
-                        <div class="rm-st-col-cards">
+                        <div class="rm-st-slot-left">
                             ${cardsHtml}
                         </div>
-                        ${hubHtml}
+                        <div class="rm-st-slot-hub">
+                            ${hubHtml}
+                        </div>
+                        <div class="rm-st-slot-right"></div>
                     </div>`;
             } else {
                 treeHtml += `
                     <div class="rm-st-row" data-station-id="${st.id}" data-side="left">
-                        ${hubHtml}
-                        <div class="rm-st-col-cards">
+                        <div class="rm-st-slot-left"></div>
+                        <div class="rm-st-slot-hub">
+                            ${hubHtml}
+                        </div>
+                        <div class="rm-st-slot-right">
                             ${cardsHtml}
                         </div>
                     </div>`;
@@ -257,7 +244,7 @@
 
         const paths = [];
 
-        // 1. Trục chính uốn lượn: Root -> Station Hubs + Phase Milestones
+        // 1. Trục chính uốn lượn rộng rãi: Root -> Hubs + Phase Milestones
         const trunkElements = [];
         const rootEl = canvasEl.querySelector('#rm-tree-root');
         if (rootEl) trunkElements.push(rootEl);
@@ -274,14 +261,14 @@
             const y1 = from.bottom;
             const x2 = to.cx;
             const y2 = to.top;
-            const dy = Math.max(y2 - y1, 20);
+            const dy = Math.max(y2 - y1, 25);
 
-            // Đường cong S mềm mại
-            const d = `M ${x1} ${y1} C ${x1} ${y1 + dy * 0.5}, ${x2} ${y2 - dy * 0.5}, ${x2} ${y2}`;
+            // Đường cong S rộng, mượt mà và tự nhiên
+            const d = `M ${x1} ${y1} C ${x1} ${y1 + dy * 0.52}, ${x2} ${y2 - dy * 0.52}, ${x2} ${y2}`;
             paths.push(`<path d="${d}" class="rm-trunk-path" />`);
         }
 
-        // 2. Nhánh nét đứt fanning out từ Hub sang các bài học con
+        // 2. Nhánh nét đứt rẽ quạt từ Hub sang các thẻ bài học
         const rows = canvasEl.querySelectorAll('.rm-st-row');
         rows.forEach(row => {
             const hub = row.querySelector('.rm-st-hub');
@@ -365,7 +352,7 @@
                             <span class="rm-view-tab-icon">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="6" height="6" rx="1"></rect><rect x="15" y="3" width="6" height="6" rx="1"></rect><rect x="9" y="15" width="6" height="6" rx="1"></rect><path d="M6 9v3a3 3 0 0 0 3 3h3m6-6v3a3 3 0 0 1-3 3"></path></svg>
                             </span>
-                            <span class="rm-view-tab-text">Sơ đồ cây (Mindmap)</span>
+                            <span class="rm-view-tab-text">Mindmap</span>
                         </button>
                         <span class="rm-view-switch-indicator" aria-hidden="true"></span>
                     </div>
@@ -391,24 +378,24 @@
             timelineHtml += renderStation(st, ph.name);
         });
 
-        // Serpentine Tree Section
+        // Serpentine Mindmap Section
         const treeHtml = renderTree(phases, stations);
 
         container.innerHTML = `
-            <div class="rm-root">
+            <div class="rm-root fade-up">
                 ${heroHtml}
                 <!-- 1. Chế độ xem Chi tiết (Mặc định) -->
-                <div class="rm-view-detailed" id="rm-view-detailed">
+                <div class="rm-view-detailed fade-up" id="rm-view-detailed">
                     ${tocHtml}
-                    <div class="section-label rm-timeline-label"><span>Lộ Trình Học Tập</span></div>
+                    <div class="rm-timeline-divider" aria-hidden="true"></div>
                     <div class="rm-timeline">
                         <div class="rm-spine" aria-hidden="true"></div>
                         <div class="rm-spine-fill" aria-hidden="true"></div>
                         ${timelineHtml}
                     </div>
                 </div>
-                <!-- 2. Chế độ xem Sơ đồ cây lượn sóng (Mindmap) -->
-                <div class="rm-view-tree" id="rm-view-tree" hidden>
+                <!-- 2. Chế độ xem Mindmap lượn sóng -->
+                <div class="rm-view-tree fade-up" id="rm-view-tree" hidden>
                     ${treeHtml}
                 </div>
                 <footer class="rm-colophon">
@@ -479,7 +466,7 @@
         window.addEventListener('resize', onScroll, { passive: true });
         updateTimeline();
 
-        // 3) Switch chuyển đổi chế độ xem (Detailed <-> Tree)
+        // 3) Switch chuyển đổi chế độ xem (Detailed <-> Mindmap)
         const detailedView = root.querySelector('#rm-view-detailed');
         const treeView = root.querySelector('#rm-view-tree');
         const switchEl = root.querySelector('.rm-view-switch');
@@ -543,7 +530,7 @@
             ro.observe(canvasEl);
         }
 
-        // Hiệu ứng tương tác: Rê chuột vào bài học con làm sáng nhánh nét đứt tương ứng
+        // Hiệu ứng tương tác: Rê chuột vào bài học làm sáng nhánh nét đứt tương ứng
         if (canvasEl) {
             canvasEl.addEventListener('mouseenter', (e) => {
                 const card = e.target.closest('.rm-st-card');

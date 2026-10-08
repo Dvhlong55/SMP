@@ -95,24 +95,24 @@ window.SMP_ROADMAP_SOHOC = {
             title: 'Dãy số nguyên',
             tiles: [
                 {
-                    title: 'Tính tuần hoàn số dư',
-                    desc: 'Dãy số nguyên modulo $m$ luôn tuần hoàn — khai thác chu kỳ để chứng minh chia hết.',
-                    url: '/posts/math/vmo/tinh-tuan-hoan-so-du.html'
-                },
-                {
                     title: 'Phương trình đặc trưng',
                     desc: 'Tìm công thức tổng quát của dãy truy hồi tuyến tính qua phương trình đặc trưng.',
                     url: '/posts/math/vmo/phuong-trinh-dac-trung.html'
                 },
                 {
-                    title: 'Nhiều hơn về CTTQ',
-                    desc: 'Các kỹ thuật nâng cao xác định công thức tổng quát và ứng dụng vào tính chất số học của dãy.',
-                    url: '/posts/math/vmo/nhieu-hon-ve-cttq.html'
+                    title: 'Tính tuần hoàn số dư',
+                    desc: 'Dãy số nguyên modulo $m$ luôn tuần hoàn — khai thác chu kỳ để chứng minh chia hết.',
+                    url: '/posts/math/vmo/tinh-tuan-hoan-so-du.html'
                 },
                 {
                     title: 'Dãy số & số chính phương',
                     desc: 'Chứng minh một dãy là dãy nguyên, các bài toán dãy liên quan đến số chính phương.',
                     url: '/posts/math/vmo/bien-doi-dai-so-voi-day-so.html'
+                },
+                {
+                    title: 'Nhiều hơn về CTTQ',
+                    desc: 'Các kỹ thuật nâng cao xác định công thức tổng quát và ứng dụng vào tính chất số học của dãy.',
+                    url: '/posts/math/vmo/nhieu-hon-ve-cttq.html'
                 }
             ]
         },

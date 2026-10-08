@@ -630,55 +630,6 @@ body:not(.dark-mode) .status-bar {
     margin: 40px 0 20px 0;
 }
 
-/* THANH THỐNG KÊ (STATS STRIP) — SỬA LỖI MẤT STYLE */
-.stats-strip {
-    display: flex;
-    gap: 0;
-    border: 1px solid var(--border-light);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 36px;
-    margin-top: 50px;
-    max-width: 100%;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.015);
-}
-
-body:not(.dark-mode) .stats-strip {
-    background: #ffffff;
-    border-color: rgba(15, 23, 42, 0.08);
-}
-
-.stat-item {
-    flex: 1;
-    padding: 18px 20px;
-    text-align: center;
-    border-right: 1px solid var(--border-light);
-}
-
-body:not(.dark-mode) .stat-item {
-    border-right-color: rgba(15, 23, 42, 0.08);
-}
-
-.stat-item:last-child {
-    border-right: none;
-}
-
-.stat-number {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--accent-cyan);
-    line-height: 1;
-    margin-bottom: 6px;
-}
-
-.stat-label {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-}
 
 /* ── Modal Hướng Dẫn Cài Đặt ────────────────────────────── */
 .guide-modal-backdrop {

@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-title" content="SMP">
     <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
     <meta charset="UTF-8">
-    <title>SMP — Tổng Quan Đề Thi IGO (2017 – 2025)</title>
+    <title>Tổng Quan Về Kì Thi Hình Học Iran (IGO)</title>
     
     <meta name="post-id" content="DeThiIGO20172025">
     <meta name="category-name" content="MATH">
@@ -20,15 +20,15 @@
 
     <script src="/core/js/post-layout.js?v=10"></script>
     <!-- SMP SEO START -->
-    <meta name="description" content="Tổng quan Kỳ thi Hình học Iran (Iranian Geometry Olympiad - IGO) từ 2017 đến 2025: Giới thiệu, liên kết trao đổi, ảnh bìa IGO 2026 và mục lục toàn bộ các năm thi.">
-    <meta property="og:title" content="SMP — Tổng Quan Đề Thi IGO (2017 – 2025)">
+    <meta name="description" content="Tổng quan về Kỳ thi Hình học Iran (Iranian Geometry Olympiad - IGO) từ 2017 đến 2025: Giới thiệu, kênh trao đổi, kho lời giải chi tiết và mục lục toàn bộ các năm thi.">
+    <meta property="og:title" content="SMP — Tổng Quan Về Kì Thi Hình Học Iran (IGO)">
     <meta property="og:description" content="Tổng quan Kỳ thi Hình học Iran IGO từ 2017 đến 2025.">
     <meta property="og:image" content="https://smp-math.com/core/image/igo-2026-cover.jpg">
     <meta property="og:url" content="https://smp-math.com/posts/math/de-thi-igo-2017-2025.html">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Secrets of Mathematical Principles">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SMP — Tổng Quan Đề Thi IGO (2017 – 2025)">
+    <meta name="twitter:title" content="SMP — Tổng Quan Về Kì Thi Hình Học Iran (IGO)">
     <meta name="twitter:description" content="Tổng quan Kỳ thi Hình học Iran IGO từ 2017 đến 2025 kèm link đề thi từng năm.">
     <meta name="twitter:image" content="https://smp-math.com/core/image/igo-2026-cover.jpg">
     <!-- SMP SEO END -->
@@ -132,12 +132,107 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             display: inline-block;
         }
+
+        /* Danh sách cấp độ có dấu chấm tròn rõ ràng */
+        .igo-levels-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0 24px 0;
+        }
+        .igo-levels-list li {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin: 10px 0;
+            line-height: 1.7;
+            color: var(--exam-text-color, #333);
+        }
+        .igo-bullet-circle {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: var(--exam-bold-color, #111);
+            display: inline-block;
+            flex-shrink: 0;
+            position: relative;
+            top: -2px;
+        }
+        body.dark-mode .igo-bullet-circle {
+            background-color: var(--exam-bold-color, #f1f5f9);
+        }
+
+        /* 2 Ô bấm nút chuyển link mở tab mới */
+        .igo-btn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin: 16px 0 32px 0;
+        }
+        .igo-link-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: 10px;
+            border: 1px solid var(--border-light, rgba(0,0,0,0.12));
+            background: var(--card-bg, rgba(255,255,255,0.7));
+            text-decoration: none !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            color: inherit !important;
+        }
+        body.dark-mode .igo-link-btn {
+            border-color: rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.04);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .igo-link-btn:hover {
+            border-color: var(--accent-cyan, #0284c7);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.15);
+        }
+        body.dark-mode .igo-link-btn:hover {
+            box-shadow: 0 6px 18px rgba(56, 189, 248, 0.2);
+        }
+        .igo-btn-icon-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            background: rgba(2, 132, 199, 0.08);
+            color: var(--accent-cyan, #0284c7);
+            transition: all 0.2s ease;
+        }
+        .igo-link-btn:hover .igo-btn-icon-wrap {
+            background: var(--accent-cyan, #0284c7);
+            color: #ffffff;
+        }
+        .igo-btn-text {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-width: 0;
+        }
+        .igo-btn-main {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--exam-bold-color, #111);
+            line-height: 1.3;
+        }
+        .igo-btn-sub {
+            font-size: 0.82rem;
+            color: var(--text-muted, #64748b);
+            line-height: 1.3;
+        }
     </style>
 </head>
 <body>
     <div id="smp-post-content" style="display: none;">
         <div class="header-box">
-            <h1>Tổng Quan Đề Thi IGO (2017 – 2025)</h1>
+            <h1>Tổng Quan Về Kì Thi Hình Học Iran (IGO)</h1>
             <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Hội Đồng Kỳ Thi Hình Học Iran (IGO) & IGO Vietnam</h2>
             <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
         </div>
@@ -150,24 +245,45 @@
         <!-- GIỚI THIỆU & KÊNH TRAO ĐỔI (KHÔNG ĐÓNG BOX, BỎ ICON, CHỮ ĐEN) -->
         <h2 style="color: var(--exam-bold-color, #111); margin-top: 28px; margin-bottom: 14px; font-weight: 700;">Giới Thiệu & Kênh Trao Đổi Chính Thức</h2>
         <p><strong>Kỳ thi Hình học Iran (Iranian Geometry Olympiad - IGO)</strong> là một trong những kỳ thi Olympic hình học chuyên biệt thường niên uy tín và giàu tính thẩm mỹ nhất trên quy mô toàn cầu. Kỳ thi được tổ chức lần đầu vào năm 2014 và nhanh chóng trở thành sân chơi học thuật thu hút hàng chục quốc gia tham gia tranh tài.</p>
-        <p>Hệ thống đề thi IGO được phân theo 3 cấp độ chính:</p>
-        <ul style="line-height: 1.8; margin-bottom: 20px;">
-            <li><strong>Elementary Level (Sơ cấp):</strong> Dành cho học sinh Lớp 7 – 8.</li>
-            <li><strong>Intermediate Level (Trung cấp):</strong> Dành cho học sinh Lớp 9 – 10.</li>
-            <li><strong>Advanced Level (Cao cấp):</strong> Dành cho học sinh Lớp 11 – 12 và chuyên Toán Olympic.</li>
+        
+        <p style="margin-bottom: 8px;">Hệ thống đề thi IGO được phân theo 3 cấp độ chính:</p>
+        <ul class="igo-levels-list">
+            <li><span class="igo-bullet-circle"></span><span><strong>Elementary Level (Sơ cấp):</strong> Dành cho học sinh Lớp 7 – 8.</span></li>
+            <li><span class="igo-bullet-circle"></span><span><strong>Intermediate Level (Trung cấp):</strong> Dành cho học sinh Lớp 9 – 10.</span></li>
+            <li><span class="igo-bullet-circle"></span><span><strong>Advanced Level (Cao cấp):</strong> Dành cho học sinh Lớp 11 – 12 và chuyên Toán Olympic.</span></li>
         </ul>
 
-        <p style="margin-bottom: 8px;">Kênh trao đổi chính thức và kho lời giải chi tiết:</p>
-        <ul style="line-height: 1.8; margin-bottom: 28px;">
-            <li><strong>Cộng Đồng IGO Việt Nam (Facebook):</strong> <a href="https://www.facebook.com/groups/259816261518503/" target="_blank" rel="noopener noreferrer">https://www.facebook.com/groups/259816261518503/</a></li>
-            <li><strong>Kho Lời Giải Chi Tiết (Google Drive):</strong> <a href="https://drive.google.com/drive/folders/1aMf5jQW_JKiPbpUOXXdUSJhrl3SV0vwK?usp=drive_link" target="_blank" rel="noopener noreferrer">https://drive.google.com/drive/folders/1aMf5jQW_JKiPbpUOXXdUSJhrl3SV0vwK?usp=drive_link</a></li>
-        </ul>
+        <p style="margin: 24px 0 12px 0; font-weight: 600; color: var(--exam-bold-color, #111);">Kênh trao đổi chính thức và kho lời giải chi tiết:</p>
+        <div class="igo-btn-grid">
+            <a href="https://www.facebook.com/groups/259816261518503/" target="_blank" rel="noopener noreferrer" class="igo-link-btn">
+                <div class="igo-btn-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </div>
+                <div class="igo-btn-text">
+                    <span class="igo-btn-main">Cộng Đồng IGO Việt Nam</span>
+                    <span class="igo-btn-sub">Nhóm Facebook trao đổi & thảo luận ↗</span>
+                </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1aMf5jQW_JKiPbpUOXXdUSJhrl3SV0vwK?usp=drive_link" target="_blank" rel="noopener noreferrer" class="igo-link-btn">
+                <div class="igo-btn-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7.71 3.5L1.15 15l3.43 6 6.55-11.5L7.71 3.5zm3.79 6.5l3.43 6H22.85l-3.43-6H11.5zm5.72-6.5L13.79 9l3.43 6h6.86L17.22 3.5z"/>
+                    </svg>
+                </div>
+                <div class="igo-btn-text">
+                    <span class="igo-btn-main">Kho Lời Giải Chi Tiết</span>
+                    <span class="igo-btn-sub">Google Drive trọn bộ đáp án IGO ↗</span>
+                </div>
+            </a>
+        </div>
 
         <!-- POSTER KỲ THI IGO 2026 -->
         <div class="igo-poster-wrap">
             <img src="/core/image/igo-2026-cover.jpg" alt="Poster 13th Iranian Geometry Olympiad 2026" class="igo-poster-img">
             <p style="margin: 10px 0 0 0; font-size: 0.88rem; color: var(--text-muted); font-style: italic;">
-                Poster chính thức hướng tới Kỳ thi Hình học Iran lần thứ 13 (The 13th Iranian Geometry Olympiad - IGO 2026).
+                Poster chính thức IGO lần thứ 13, năm 2026.
             </p>
         </div>
 
