@@ -1,6 +1,6 @@
 /* ==========================================================================
    SMP — ROADMAP (Lộ Trình Chuyên Đề Số Học)
-   Primary Design Reference: SMP Home (shared.css)
+   Primary Design Reference: SMP Home (shared.css) & roadmap.sh
    - Bảng màu: var(--main-bg), var(--card-bg), var(--text-dark), var(--text-muted)
    - Điểm nhấn: var(--accent-cyan), var(--accent-gold), var(--border-light)
    - Phong cách: Ấn phẩm toán học độc lập, tối giản, thanh lịch, giàu khoảng trắng
@@ -80,7 +80,106 @@
 }
 
 /* --------------------------------------------------------------------------
-   2. TABLE OF CONTENTS (Mục Lục Chuyên Đề)
+   1.1. VIEW SWITCHER (Cần gạt chuyển đổi chế độ xem)
+   -------------------------------------------------------------------------- */
+.rm-view-switch-row {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.rm-view-switch-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.rm-view-switch {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    padding: 3px;
+    min-width: 290px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    user-select: none;
+}
+
+.rm-view-tab {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 7px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.76rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s ease, font-weight 0.2s ease;
+    white-space: nowrap;
+}
+
+.rm-view-tab-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+}
+
+.rm-view-tab:hover {
+    color: var(--text-dark);
+}
+
+.rm-view-tab.is-active {
+    color: var(--text-dark);
+    font-weight: 700;
+}
+
+body.dark-mode .rm-view-tab.is-active {
+    color: #ffffff;
+}
+
+.rm-view-switch-indicator {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc(50% - 3px);
+    background: var(--main-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    transition: transform 0.24s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.rm-view-switch[data-active="tree"] .rm-view-switch-indicator {
+    transform: translateX(100%);
+    border-color: rgba(0, 158, 179, 0.45);
+}
+
+body.dark-mode .rm-view-switch[data-active="tree"] .rm-view-switch-indicator {
+    border-color: rgba(92, 225, 230, 0.5);
+    background: rgba(92, 225, 230, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   2. TABLE OF CONTENTS (Mục Lục Chuyên Đề — Trong View Chi Tiết)
    -------------------------------------------------------------------------- */
 .rm-toc {
     margin-bottom: 56px;
@@ -170,7 +269,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   3. ROADMAP TIMELINE (Dòng Thời Gian Chuyên Đề)
+   3. ROADMAP TIMELINE (Dòng Thời Gian Chuyên Đề — View Chi Tiết)
    -------------------------------------------------------------------------- */
 .rm-timeline-label {
     margin-top: 56px;
@@ -307,7 +406,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   4. LESSON CARDS (Ô Bài Học Chuẩn SMP Card)
+   4. LESSON CARDS (Ô Bài Học Chuẩn SMP Card — View Chi Tiết)
    -------------------------------------------------------------------------- */
 .rm-cards {
     display: grid;
@@ -404,7 +503,380 @@ body.dark-mode .rm-card.is-ready:hover {
 }
 
 /* --------------------------------------------------------------------------
-   5. COLOPHON
+   5. FLOWCHART TREE VIEW (Sơ đồ cây — Phong cách roadmap.sh)
+   -------------------------------------------------------------------------- */
+.rm-view-tree {
+    margin-bottom: 56px;
+    animation: rmFadeIn 0.25s ease-out;
+}
+
+@keyframes rmFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.rm-tree-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 12px 18px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+}
+
+.rm-tree-stats {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    color: var(--text-muted);
+}
+
+.rm-tree-stat-pill strong {
+    color: var(--text-dark);
+    font-weight: 700;
+}
+
+.rm-tree-stat-sep {
+    color: var(--border-light);
+}
+
+.rm-tree-stat-badge {
+    color: var(--accent-cyan);
+    font-weight: 600;
+    background: rgba(0, 158, 179, 0.08);
+    border: 1px solid rgba(0, 158, 179, 0.25);
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+body.dark-mode .rm-tree-stat-badge {
+    background: rgba(92, 225, 230, 0.1);
+    border-color: rgba(92, 225, 230, 0.3);
+}
+
+.rm-tree-legend {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.rm-tree-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rm-tree-legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.rm-tree-legend-item.is-ready .rm-tree-legend-dot {
+    background: var(--accent-cyan);
+    box-shadow: 0 0 0 2px rgba(0, 158, 179, 0.2);
+}
+
+.rm-tree-legend-item.is-soon .rm-tree-legend-dot {
+    background: transparent;
+    border: 1px dashed var(--text-muted);
+}
+
+/* Canvas sơ đồ với hoa văn chấm lưới đặc trưng roadmap.sh */
+.rm-tree-canvas {
+    position: relative;
+    padding: 36px 24px 48px;
+    background: radial-gradient(var(--border-light) 1px, transparent 1px);
+    background-size: 22px 22px;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+}
+
+/* Cột mốc Giai đoạn */
+.rm-tree-phase {
+    display: flex;
+    justify-content: center;
+    margin: 28px 0 16px;
+    position: relative;
+    z-index: 2;
+}
+
+.rm-tree-phase:first-child {
+    margin-top: 0;
+}
+
+.rm-tree-phase-node {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 28px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    text-align: center;
+}
+
+.rm-tree-phase-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    font-weight: 700;
+}
+
+.rm-tree-phase-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+/* Đường nối chuyển tiếp giữa các giai đoạn */
+.rm-tree-phase-transition {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 28px 0 16px;
+    color: var(--accent-gold);
+}
+
+.rm-tree-trans-line {
+    width: 2px;
+    height: 36px;
+    background: linear-gradient(to bottom, var(--border-light), var(--accent-gold));
+}
+
+.rm-tree-trans-arrow {
+    font-size: 0.9rem;
+    line-height: 1;
+    margin-top: -2px;
+    color: var(--accent-gold);
+}
+
+/* Đường nối mũi tên vào từng chặng */
+.rm-tree-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    color: var(--text-muted);
+}
+
+.rm-tree-conn-stem {
+    width: 2px;
+    height: 24px;
+    background: var(--border-light);
+}
+
+.rm-tree-conn-arrow {
+    margin-top: -2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--border-light);
+}
+
+/* Cụm Chặng (Station Hub) */
+.rm-tree-station {
+    margin: 0 auto 12px;
+    max-width: 960px;
+    position: relative;
+}
+
+.rm-tree-hub {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    position: relative;
+    z-index: 2;
+    transition: var(--transition);
+}
+
+.rm-tree-hub-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent-cyan);
+    font-weight: 700;
+}
+
+.rm-tree-hub-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.rm-tree-hub-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent-cyan);
+    opacity: 0.85;
+}
+
+/* Thân nối từ Hub xuống các lá */
+.rm-tree-stem {
+    width: 2px;
+    height: 18px;
+    background: var(--border-light);
+    margin: 0 auto;
+}
+
+/* Lưới các thẻ bài học (Leaves) */
+.rm-tree-leaves {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px 16px;
+    padding-top: 14px;
+}
+
+/* Thanh ngang nối cây */
+.rm-tree-leaves::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: var(--border-light);
+}
+
+/* Thẻ bài học thu gọn (Chỉ Tiêu Đề) */
+.rm-tree-node {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: var(--transition);
+}
+
+/* Đường dọc nối từ thanh ngang vào từng thẻ */
+.rm-tree-node::before {
+    content: '';
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    width: 1px;
+    height: 14px;
+    background: var(--border-light);
+    transition: background 0.2s ease;
+}
+
+.rm-tree-node.is-ready {
+    cursor: pointer;
+}
+
+.rm-tree-node.is-ready:hover {
+    border-color: var(--accent-cyan);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 158, 179, 0.14);
+}
+
+body.dark-mode .rm-tree-node.is-ready:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 4px 14px rgba(92, 225, 230, 0.15);
+}
+
+.rm-tree-node.is-ready:hover::before {
+    background: var(--accent-cyan);
+}
+
+.rm-tree-node.is-ready:hover .rm-tree-node-title {
+    color: var(--accent-cyan);
+}
+
+.rm-tree-node.is-ready:hover .rm-tree-node-link {
+    color: var(--accent-cyan);
+    transform: translate(1px, -1px);
+}
+
+.rm-tree-node.is-soon {
+    opacity: 0.65;
+    border-style: dashed;
+    background: transparent;
+    cursor: default;
+}
+
+.rm-tree-node-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    flex-shrink: 0;
+}
+
+.rm-tree-node.is-soon .rm-tree-node-code {
+    color: var(--text-muted);
+}
+
+.rm-tree-node-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text-dark);
+    flex: 1;
+    transition: color 0.2s;
+}
+
+.rm-tree-node-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.rm-tree-node-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    padding: 2px 6px;
+    flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   6. COLOPHON
    -------------------------------------------------------------------------- */
 .rm-colophon {
     text-align: center;
@@ -442,7 +914,7 @@ body.dark-mode .rm-card.is-ready:hover {
 }
 
 /* --------------------------------------------------------------------------
-   6. RESPONSIVE DESIGN
+   7. RESPONSIVE DESIGN
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
     .rm-hero-head {
@@ -474,5 +946,40 @@ body.dark-mode .rm-card.is-ready:hover {
     }
     .rm-cards {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .rm-view-switch {
+        width: 100%;
+        min-width: 0;
+    }
+    .rm-tree-canvas {
+        padding: 20px 12px 32px;
+    }
+    .rm-tree-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .rm-tree-leaves {
+        grid-template-columns: 1fr;
+        padding-top: 0;
+        padding-left: 18px;
+        border-left: 1px solid var(--border-light);
+        margin-left: 14px;
+        gap: 10px;
+    }
+    .rm-tree-leaves::before {
+        display: none;
+    }
+    .rm-tree-node::before {
+        top: 50%;
+        left: -18px;
+        width: 18px;
+        height: 1px;
+    }
+    .rm-tree-stem {
+        height: 14px;
     }
 }
