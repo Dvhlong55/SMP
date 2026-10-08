@@ -284,25 +284,58 @@ html.sidebar-collapsed .main-wrapper {
 .search-wrapper {
     position: relative;
     flex: 1;
-    max-width: 360px;
+    max-width: 290px;
     margin-left: auto;
-    margin-right: 24px;
+    margin-right: 0;
 }
 .search-input {
     width: 100%;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid #333;
-    border-radius: 6px;
-    padding: 7px 36px 7px 14px;
-    color: #ccc;
+    background: #fbfbf9;
+    border: 1px solid var(--border-light, #e8e4dc);
+    border-radius: 8px;
+    padding: 7px 34px 7px 12px;
+    color: var(--text-dark, #1a1a1a);
     font-size: 0.82rem;
     font-family: 'Inter', 'Segoe UI', sans-serif;
-    transition: var(--transition);
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
     outline: none;
+    box-sizing: border-box;
 }
-.search-input::placeholder { color: #555; }
-.search-input:focus { border-color: var(--accent-cyan); background: rgba(92,225,230,0.04); }
-.search-icon { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #555; font-size: 0.85rem; pointer-events: none; }
+.search-input::placeholder { color: var(--text-muted, #777); opacity: 0.7; }
+.search-input:focus {
+    border-color: var(--accent-cyan, #009eb3) !important;
+    background: #ffffff;
+    box-shadow: 0 0 0 2px rgba(0, 158, 179, 0.12);
+}
+html.dark-mode .search-input,
+body.dark-mode .search-input {
+    background: #181818;
+    border-color: var(--border-light, #2a2a2a);
+    color: #e8e8e8;
+}
+html.dark-mode .search-input:focus,
+body.dark-mode .search-input:focus {
+    border-color: var(--accent-cyan, #5ce1e6) !important;
+    background: #1c1c1c;
+    box-shadow: 0 0 0 2px rgba(92, 225, 230, 0.15);
+}
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted, #777);
+    pointer-events: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.search-icon svg {
+    display: block;
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+}
 
 /* Search results dropdown */
 .search-results {

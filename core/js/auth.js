@@ -138,12 +138,16 @@ window.applyAuthUI = function(username) {
     const topbarBtn  = document.getElementById('topbar-auth-btn');
     const mobileTopbarBtn = document.getElementById('mobile-topbar-auth-btn');
     const userSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+    const sidebarUserSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
 
     if (username) {
-        const sidebarHtml = `&#x2637; ${username}`;
         const profilePath = window.location.pathname.includes('/SMP/') ? '/SMP/pages/profile.html' : '/pages/profile.html';
         
-        if (sidebarBtn) { sidebarBtn.innerHTML = sidebarHtml; sidebarBtn.onclick = function(e){ e.preventDefault(); window.location.href = profilePath; }; }
+        if (sidebarBtn) { 
+            sidebarBtn.innerHTML = `${sidebarUserSvg} <span>Profile</span>`; 
+            sidebarBtn.title = `Hồ sơ (${username})`;
+            sidebarBtn.onclick = function(e){ e.preventDefault(); window.location.href = profilePath; }; 
+        }
         if (topbarBtn)  { 
             topbarBtn.innerHTML = userSvg; 
             topbarBtn.title = `Hồ sơ (${username})`;
@@ -154,7 +158,11 @@ window.applyAuthUI = function(username) {
         const nameEl = document.getElementById('auth-profile-username');
         if (nameEl) nameEl.textContent = username;
     } else {
-        if (sidebarBtn) { sidebarBtn.innerHTML = '&#x2637; Login'; sidebarBtn.onclick = function(e){ e.preventDefault(); if (window.openAuthModal) window.openAuthModal('login'); }; }
+        if (sidebarBtn) { 
+            sidebarBtn.innerHTML = `${sidebarUserSvg} <span>Login</span>`; 
+            sidebarBtn.title = 'Đăng nhập';
+            sidebarBtn.onclick = function(e){ e.preventDefault(); if (window.openAuthModal) window.openAuthModal('login'); }; 
+        }
         if (topbarBtn)  { 
             topbarBtn.innerHTML = userSvg; 
             topbarBtn.title = 'Đăng nhập / Hồ sơ';

@@ -411,29 +411,7 @@
         .prof-settings-container {
             display: flex;
             flex-direction: column;
-            gap: 24px;
-        }
-
-        .prof-settings-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .prof-group-heading {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--prof-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--prof-line);
-            margin-bottom: 4px;
-        }
-
-        .prof-group-heading.danger-heading {
-            color: var(--prof-danger);
-            border-bottom-color: rgba(192, 57, 43, 0.25);
+            gap: 0;
         }
 
         .prof-setting-row {
@@ -443,6 +421,9 @@
             padding: 16px 0;
             border-bottom: 1px solid var(--prof-line);
             gap: 20px;
+        }
+        .prof-setting-row:last-child {
+            border-bottom: none;
         }
 
         .prof-row-info {
@@ -722,7 +703,6 @@
                     </div>
                 </div>
                 <div class="prof-header-actions">
-                    <button class="prof-btn-edit" onclick="switchMainTab('settings')">Chỉnh sửa</button>
                     <button class="prof-btn-logout" onclick="window.handleLogout()">Đăng xuất</button>
                 </div>
             </div>
@@ -732,9 +712,6 @@
                 <button class="prof-tab-btn active" data-tab="overview" onclick="switchMainTab('overview')">Tổng quan</button>
                 <button class="prof-tab-btn" data-tab="settings" onclick="switchMainTab('settings')">Cài đặt</button>
                 <button class="prof-tab-btn" id="tab-btn-admin" data-tab="admin" style="display: none;" onclick="switchMainTab('admin')">Quản trị</button>
-                <a class="prof-tab-btn" href="/pages/saved.html" style="text-decoration: none;">★ Đã Lưu</a>
-                <a class="prof-tab-btn" href="/pages/nonmath.html" style="text-decoration: none;">✦ Non Math</a>
-                <a class="prof-tab-btn" href="/pages/class.html" target="_blank" style="text-decoration: none;">Class ↗</a>
             </div>
 
             <!-- Tab 1: Tổng quan -->
@@ -814,20 +791,14 @@
                 <!-- Mục Lưu trữ & Khám phá cá nhân -->
                 <div class="prof-explore-section" style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--prof-line);">
                     <div style="font-size: 0.95rem; font-weight: 700; color: var(--prof-ink); margin-bottom: 14px;">Lưu Trữ & Khám Phá</div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
-                        <a href="/pages/saved.html" style="display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: var(--prof-card-bg); border: 1px solid var(--prof-line); border-radius: 6px; text-decoration: none; color: var(--prof-ink); transition: all 0.2s ease;" onmouseover="this.style.borderColor='var(--prof-accent)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--prof-line)'; this.style.transform='translateY(0)'">
-                            <span style="font-size: 1.3rem; color: #f0c040;">★</span>
-                            <div>
-                                <div style="font-weight: 600; font-size: 0.92rem;">Bài Viết Đã Lưu</div>
-                                <div style="font-size: 0.76rem; color: var(--prof-muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">Xem lại các bài viết bạn đã bookmark</div>
-                            </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+                        <a href="/pages/saved.html" style="display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--prof-card-bg); border: 1px solid var(--prof-line); border-radius: 6px; text-decoration: none; color: var(--prof-ink); transition: all 0.2s ease;" onmouseover="this.style.borderColor='var(--prof-accent)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--prof-line)'; this.style.transform='translateY(0)'">
+                            <span style="font-size: 1.25rem; color: #f0c040;">★</span>
+                            <div style="font-weight: 600; font-size: 0.92rem;">Bài Viết Đã Lưu</div>
                         </a>
-                        <a href="/pages/nonmath.html" style="display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: var(--prof-card-bg); border: 1px solid var(--prof-line); border-radius: 6px; text-decoration: none; color: var(--prof-ink); transition: all 0.2s ease;" onmouseover="this.style.borderColor='var(--prof-accent)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--prof-line)'; this.style.transform='translateY(0)'">
-                            <span style="font-size: 1.3rem; color: var(--prof-accent);">✦</span>
-                            <div>
-                                <div style="font-weight: 600; font-size: 0.92rem;">Chuyên Mục Non Math</div>
-                                <div style="font-size: 0.76rem; color: var(--prof-muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">Triết lý, góc nhìn cuộc sống & bài học</div>
-                            </div>
+                        <a href="/pages/nonmath.html" style="display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--prof-card-bg); border: 1px solid var(--prof-line); border-radius: 6px; text-decoration: none; color: var(--prof-ink); transition: all 0.2s ease;" onmouseover="this.style.borderColor='var(--prof-accent)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--prof-line)'; this.style.transform='translateY(0)'">
+                            <span style="font-size: 1.25rem; color: var(--prof-accent);">✦</span>
+                            <div style="font-weight: 600; font-size: 0.92rem;">Chuyên Mục Non Math</div>
                         </a>
                     </div>
                 </div>
@@ -836,70 +807,58 @@
             <!-- Tab 2: Cài đặt (Dạng hàng, không dạng thẻ) -->
             <div id="tab-sec-settings" class="prof-tab-content" style="display: none;">
                 <div class="prof-settings-container">
-                    <!-- Nhóm: Giao diện -->
-                    <div class="prof-settings-group">
-                        <div class="prof-group-heading">Giao diện</div>
-                        <div class="prof-setting-row">
-                            <div class="prof-row-info">
-                                <div class="prof-row-title">Chế độ tối</div>
-                                <div class="prof-row-desc">Đổi nền sang tông tối để đỡ mỏi mắt.</div>
-                            </div>
-                            <div class="prof-row-ctrl">
-                                <label class="prof-switch">
-                                    <input type="checkbox" id="profile-dark-switch" onchange="toggleProfileThemeSwitch(this)">
-                                    <span class="prof-slider"></span>
-                                </label>
-                            </div>
+                    <!-- Chế độ tối -->
+                    <div class="prof-setting-row">
+                        <div class="prof-row-info">
+                            <div class="prof-row-title">Chế độ tối</div>
+                        </div>
+                        <div class="prof-row-ctrl">
+                            <label class="prof-switch">
+                                <input type="checkbox" id="profile-dark-switch" onchange="toggleProfileThemeSwitch(this)">
+                                <span class="prof-slider"></span>
+                            </label>
                         </div>
                     </div>
 
-                    <!-- Nhóm: Tài khoản -->
-                    <div class="prof-settings-group">
-                        <div class="prof-group-heading">Tài khoản</div>
-                        
-                        <!-- Đổi tên người dùng -->
-                        <div class="prof-setting-row">
-                            <div class="prof-row-info">
-                                <div class="prof-row-title">Tên người dùng</div>
-                                <div class="prof-row-desc">Hiển thị trên bảng xếp hạng.</div>
-                            </div>
-                            <div class="prof-row-ctrl">
-                                <form id="form-username" onsubmit="handleUpdateUsername(event)" class="prof-inline-form">
-                                    <input type="text" id="new-username" placeholder="smp" required minlength="3" class="prof-input">
-                                    <button type="submit" class="prof-btn-save" id="btn-username">Lưu</button>
-                                </form>
-                                <div id="msg-username" class="msg"></div>
-                            </div>
+                    <!-- Đổi tên người dùng -->
+                    <div class="prof-setting-row">
+                        <div class="prof-row-info">
+                            <div class="prof-row-title">Tên người dùng</div>
+                            <div class="prof-row-desc">Hiển thị trên bảng xếp hạng.</div>
                         </div>
-
-                        <!-- Đổi mật khẩu -->
-                        <div class="prof-setting-row">
-                            <div class="prof-row-info">
-                                <div class="prof-row-title">Đổi mật khẩu</div>
-                                <div class="prof-row-desc">Cập nhật mật khẩu bảo mật tài khoản.</div>
-                            </div>
-                            <div class="prof-row-ctrl">
-                                <form id="form-password" onsubmit="handleUpdatePassword(event)" class="prof-password-form">
-                                    <input type="password" id="old-password" placeholder="Mật khẩu cũ" required class="prof-input">
-                                    <input type="password" id="new-password" placeholder="Mật khẩu mới" required minlength="6" class="prof-input">
-                                    <button type="submit" class="prof-btn-save" id="btn-password">Lưu</button>
-                                </form>
-                                <div id="msg-password" class="msg"></div>
-                            </div>
+                        <div class="prof-row-ctrl">
+                            <form id="form-username" onsubmit="handleUpdateUsername(event)" class="prof-inline-form">
+                                <input type="text" id="new-username" placeholder="smp" required minlength="3" class="prof-input">
+                                <button type="submit" class="prof-btn-save" id="btn-username">Lưu</button>
+                            </form>
+                            <div id="msg-username" class="msg"></div>
                         </div>
                     </div>
 
-                    <!-- Nhóm: Vùng nguy hiểm (Chỉ chỗ này mới dùng màu đỏ) -->
-                    <div class="prof-settings-group danger-group">
-                        <div class="prof-group-heading danger-heading">Vùng nguy hiểm</div>
-                        <div class="prof-setting-row">
-                            <div class="prof-row-info">
-                                <div class="prof-row-title">Xóa tài khoản</div>
-                                <div class="prof-row-desc">Không thể hoàn tác.</div>
-                            </div>
-                            <div class="prof-row-ctrl">
-                                <button class="prof-btn-danger" onclick="handleDeleteAccount()">Xóa</button>
-                            </div>
+                    <!-- Đổi mật khẩu -->
+                    <div class="prof-setting-row">
+                        <div class="prof-row-info">
+                            <div class="prof-row-title">Đổi mật khẩu</div>
+                            <div class="prof-row-desc">Cập nhật mật khẩu bảo mật tài khoản.</div>
+                        </div>
+                        <div class="prof-row-ctrl">
+                            <form id="form-password" onsubmit="handleUpdatePassword(event)" class="prof-password-form">
+                                <input type="password" id="old-password" placeholder="Mật khẩu cũ" required class="prof-input">
+                                <input type="password" id="new-password" placeholder="Mật khẩu mới" required minlength="6" class="prof-input">
+                                <button type="submit" class="prof-btn-save" id="btn-password">Lưu</button>
+                            </form>
+                            <div id="msg-password" class="msg"></div>
+                        </div>
+                    </div>
+
+                    <!-- Xóa tài khoản -->
+                    <div class="prof-setting-row">
+                        <div class="prof-row-info">
+                            <div class="prof-row-title" style="color: var(--prof-danger);">Xóa tài khoản</div>
+                            <div class="prof-row-desc">Không thể hoàn tác.</div>
+                        </div>
+                        <div class="prof-row-ctrl">
+                            <button class="prof-btn-danger" onclick="handleDeleteAccount()">Xóa</button>
                         </div>
                     </div>
                 </div>
