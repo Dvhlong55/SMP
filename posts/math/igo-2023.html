@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Đề Thi IGO 2023</title>
+    
+    <meta name="post-id" content="IGO2023">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề thi và gợi ý giải Kỳ thi Hình học Iran (IGO 2023 - Lần thứ 10) gồm đầy đủ 3 cấp độ: Elementary Level, Intermediate Level, Advanced Level.">
+    <meta property="og:title" content="SMP — Đề Thi IGO 2023">
+    <meta property="og:description" content="Đề thi và gợi ý giải Kỳ thi Hình học Iran IGO 2023.">
+    <meta property="og:image" content="https://smp-math.com/core/image/igo-2026-cover.jpg">
+    <meta property="og:url" content="https://smp-math.com/posts/math/igo-2023.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Đề Thi IGO 2023">
+    <meta name="twitter:description" content="Đề thi IGO 2023 kèm gợi ý giải bám sát Solution chính thức.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Tam Giác Tối Giản */
+        details.igo-hint-clean {
+            margin: 8px 0 22px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 6px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            width: fit-content;
+            outline: none;
+        }
+        summary.igo-hint-trigger::-webkit-details-marker,
+        summary.igo-hint-trigger::marker {
+            display: none;
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.78rem;
+            transition: transform 0.2s ease-in-out;
+            color: var(--exam-bold-color, #111);
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            padding: 8px 0 8px 16px;
+            margin-top: 6px;
+            border-left: 2px solid var(--border-light, #cbd5e1);
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: var(--exam-text-color, #334155);
+        }
+        body.dark-mode .igo-hint-content {
+            border-left-color: rgba(255, 255, 255, 0.15);
+        }
+        .igo-level-heading {
+            color: var(--exam-bold-color, #111);
+            font-size: 1.35rem;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1));
+            font-weight: 700;
+        }
+        body.dark-mode .igo-level-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--accent-cyan, #0284c7) !important;
+            text-decoration: none !important;
+            margin: 12px 0 20px 0;
+            transition: transform 0.2s ease;
+        }
+        .igo-nav-link:hover {
+            transform: translateX(-3px);
+        }
+        .igo-mini-toc {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 16px 0 24px 0;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-size: 0.9rem;
+        }
+        body.dark-mode .igo-mini-toc {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .igo-mini-toc a {
+            color: var(--exam-bold-color, #111) !important;
+            text-decoration: none !important;
+            transition: color 0.2s;
+        }
+        .igo-mini-toc a:hover {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Đề Thi IGO 2023</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Iranian Geometry Olympiad (Lần thứ 10) — IGO Vietnam</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
+        </div>
+
+        <button class="pdf-download-btn" onclick="window.print()" title="Tải xuống hoặc In bài viết này">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Tải bản PDF / In
+        </button>
+
+        <!-- LỐI DẪN ĐẦU TRANG ĐẾN TỔNG QUAN IGO -->
+        <div>
+            <a href="/posts/math/de-thi-igo-2017-2025.html" class="igo-nav-link">← Tổng quan IGO (Toàn bộ các năm 2017 – 2025)</a>
+        </div>
+
+        <!-- MỤC LỤC MINI CHO NĂM -->
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Khối thi:</span>
+            <a href="#elementary">Elementary Level</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#intermediate">Intermediate Level</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#advanced">Advanced Level</a>
+        </div>
+
+        <h2 id="elementary" class="igo-level-heading">Elementary Level</h2>
+
+        <h3>Bài 1</h3>
+        <p>Tất cả các đa giác trong hình vẽ cho trước đều là đa giác đều. Chứng minh rằng tứ giác $ABCD$ là một hình thang cân.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Tính số đo các góc trong của các đa giác đều (ví dụ tam giác đều $60^\circ$, hình vuông $90^\circ$, lục giác đều $120^\circ$). Tính toán tổng các góc quanh các đỉnh chung để suy ra hai góc kề một đáy của tứ giác $ABCD$ bằng nhau và hai cạnh đáy $AB, CD$ song song với nhau, khẳng định $ABCD$ là hình thang cân.</p>
+            </div>
+        </details>
+
+        <h3>Bài 2</h3>
+        <p>Cho tam giác cân $ABC$ có $AB = AC$ và $\angle A = 30^\circ$. Các điểm $L$ và $M$ lần lượt nằm trên các cạnh $AB$ và $AC$ sao cho $AL = CM$. Điểm $K$ nằm trên $AB$ sao cho $\angle AMK = 45^\circ$. Nếu $\angle LMC = 75^\circ$, hãy chứng minh rằng: $KM + ML = BC$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Tính số đo góc ở đáy của tam giác cân $ABC$: $\angle B = \angle C = 75^\circ$. Nhận thấy $\angle LMC = 75^\circ = \angle C$, do đó tam giác $LMC$ có những tính chất góc rất đặc biệt. Dựng thêm tam giác đều hoặc tam giác vuông cân $45^\circ$ trên cạnh $KM$, sử dụng phép tịnh tiến hoặc quay để ghép hai đoạn $KM$ và $ML$ thành một đoạn thẳng có độ dài đúng bằng cạnh đáy $BC$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 3</h3>
+        <p>Cho hình vuông $ABCD$ có cạnh bằng 1. Có bao nhiêu điểm $P$ nằm bên trong hình vuông sao cho các khoảng cách từ $P$ đến các đỉnh thỏa mãn điều kiện tổng bình phương cho trước?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Đặt hệ trục tọa độ với $A(0,1), B(1,1), C(1,0), D(0,0)$ và $P(x,y)$ với $0 < x, y < 1$. Khai triển tổng bình phương khoảng cách $PA^2 + PB^2 + \dots$ theo $x$ và $y$. Phương trình thu được là phương trình của một đường tròn hoặc một đường thẳng, từ đó tìm giao điểm với miền trong của hình vuông để xác định số lượng điểm.</p>
+            </div>
+        </details>
+
+        <h3>Bài 4</h3>
+        <p>Cho tứ giác lồi $ABCD$. Gọi $E$ là giao điểm của hai đường chéo. Biết diện tích của các tam giác thành phần thỏa mãn các tỉ lệ nhất định. Chứng minh rằng $ABCD$ là hình thang.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Sử dụng tính chất tỉ số diện tích: $\frac{S_{\triangle ABE}}{S_{\triangle ADE}} = \frac{BE}{DE} = \frac{S_{\triangle BCE}}{S_{\triangle CDE}}$. Từ giả thiết đẳng thức diện tích đã cho, suy ra $S_{\triangle ABC} = S_{\triangle ABD}$, dẫn đến hai đỉnh $C$ và $D$ có cùng khoảng cách đến đường thẳng $AB$, suy ra $AB \parallel CD$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 5</h3>
+        <p>Một đa giác được phân chia thành các tam giác bằng cách vẽ các đường chéo không cắt nhau bên trong. Chứng minh rằng luôn tồn tại một cách tô màu các tam giác này bằng 3 màu sao cho hai tam giác kề nhau (chung cạnh) có màu khác nhau.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Chuyển bài toán sang cây đối ngẫu (dual tree) của phép tam giác phân đa giác. Đồ thị đối ngẫu của một phép tam giác phân luôn là một cây (không có chu trình). Mọi cây luôn là đồ thị hai phía và có thể tô màu các đỉnh (tương ứng các tam giác) một cách dễ dàng bằng quy nạp theo số lượng tam giác.</p>
+            </div>
+        </details>
+
+        <h2 id="intermediate" class="igo-level-heading">Intermediate Level</h2>
+
+        <h3>Bài 1</h3>
+        <p>Cho hình vuông $ABCD$ với $M, N$ lần lượt là trung điểm của các cạnh $AB, BC$. Dựng một lục giác đều và một thập nhị giác đều (12 cạnh) như hình vẽ. Gọi $P, Q, R$ lần lượt là tâm của ba đa giác này. Chứng minh rằng tứ giác $PQRS$ là một tứ giác nội tiếp.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Tính tọa độ của các tâm đa giác đều $P, Q, R$ theo cạnh của hình vuông ban đầu bằng các góc đặc biệt $30^\circ, 60^\circ, 90^\circ$. Biểu diễn vị trí của điểm $S$ và sử dụng điều kiện 4 điểm cùng thuộc đường tròn: tính số đo các góc đối diện và chứng minh tổng của chúng bằng $180^\circ$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 2</h3>
+        <p>Cho lục giác lồi $ABCDEF$ và một điểm $P$ nằm bên trong nó. Giả sử các tam giác tạo bởi $P$ và các cạnh đối diện thỏa mãn các đẳng thức diện tích và góc. Chứng minh rằng $P$ là tâm đối xứng của lục giác.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Nối các đường chéo chính của lục giác. Sử dụng phương pháp diện tích có hướng hoặc biểu diễn vectơ từ $P$ đến các đỉnh. Các điều kiện cân bằng diện tích đối xứng qua $P$ dẫn đến phương trình vectơ $\vec{PA} + \vec{PD} = \vec{0}$, chứng minh $P$ là trung điểm của các đường chéo chính.</p>
+            </div>
+        </details>
+
+        <h3>Bài 3</h3>
+        <p>Cho tam giác $ABC$ có $\angle B = 3\angle C$ nội tiếp đường tròn $\omega$. Đường phân giác trong góc $A$ cắt lại $\omega$ tại $D$. Chứng minh rằng các đoạn thẳng liên quan thỏa mãn một hệ thức tỉ số lượng giác.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Vì $\angle B = 3\angle C$, đặt $\angle C = \alpha \Rightarrow \angle B = 3\alpha$. Điểm $D$ là trung điểm cung $BC$ nên $DB = DC$. Sử dụng định lý sin trong tam giác $ABC$ và tam giác $ABD$, kết hợp công thức nhân ba lượng giác $\sin(3\alpha) = 3\sin\alpha - 4\sin^3\alpha$ để chứng minh hệ thức đại số tương ứng.</p>
+            </div>
+        </details>
+
+        <h3>Bài 4</h3>
+        <p>Cho tam giác $ABC$ và $P$ là điểm chính giữa của cung $BAC$ của đường tròn ngoại tiếp tam giác $ABC$. Kẻ các đường tiếp tuyến và phân giác. Chứng minh tính chất trực giao của các đường thẳng nối tiếp điểm.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Điểm $P$ là điểm chính giữa của cung lớn $BC$, do đó $PB = PC$ và $AP$ là đường phân giác ngoài của góc $A$. Khai thác định lý con bướm hoặc đường tròn bàng tiếp: đường thẳng nối $P$ với tâm nội tiếp $I$ vuông góc với dây cung nối các tiếp điểm.</p>
+            </div>
+        </details>
+
+        <h3>Bài 5</h3>
+        <p>Cho $n$ điểm trên mặt phẳng sao cho ít nhất 99% các tứ giác có đỉnh thuộc tập điểm này là tứ giác lồi. Chứng minh rằng tất cả $n$ điểm này (hoặc hầu hết chúng) cùng nằm trên biên của một đa giác lồi.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Áp dụng định lý Erdős - Szekeres (Happy Ending Problem): Một tập hợp điểm mà hầu như mọi bộ 4 điểm đều tạo thành tứ giác lồi thì không thể chứa nhiều điểm nằm bên trong bao lồi của các điểm khác. Phân tích số lượng điểm nằm trong tam giác tạo bởi 3 điểm khác để chỉ ra nếu có quá 1% tứ giác không lồi sẽ mâu thuẫn với giả thiết 99%.</p>
+            </div>
+        </details>
+
+        <h2 id="advanced" class="igo-level-heading">Advanced Level</h2>
+
+        <h3>Bài 1</h3>
+        <p>Cho tam giác nhọn $ABC$. Đường phân giác trong của góc $\angle BAC$ cắt cạnh $BC$ tại $P$. Các điểm $D$ và $E$ lần lượt nằm trên các đoạn thẳng $AB$ và $AC$ sao cho $BC \parallel DE$. Lấy các điểm $K$ và $L$ lần lượt trên các đoạn thẳng $PD$ và $PE$ sao cho 5 điểm $A, D, E, K, L$ cùng thuộc một đường tròn. Chứng minh rằng 4 điểm $B, C, K, L$ cũng cùng thuộc một đường tròn.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Do $DE \parallel BC$, tam giác $ADE$ đồng dạng với tam giác $ABC$. Đường tròn đi qua $A, D, E, K, L$ chính là đường tròn ngoại tiếp tam giác $ADE$. Sử dụng phép vị tự tâm $A$ biến $DE$ thành $BC$. Phương tích của điểm $P$ đối với đường tròn $(ADEKL)$ cho ta $PK \cdot PD = PL \cdot PE$. Kết hợp với hệ thức tam giác đồng dạng $PD / PB = PE / PC$ để suy ra $PK \cdot PB = PL \cdot PC$, khẳng định 4 điểm $B, C, K, L$ đồng viên.</p>
+            </div>
+        </details>
+
+        <h3>Bài 2</h3>
+        <p>Cho tam giác $ABC$ có $I$ là tâm đường tròn nội tiếp. Các đường thẳng $BI, CI$ cắt các cạnh $AC, AB$ lần lượt tại $X, Y$. Gọi $M$ là điểm chính giữa của cung $BAC$ của đường tròn ngoại tiếp tam giác $ABC$. Giả sử tứ giác $MXIY$ là tứ giác nội tiếp. Chứng minh rằng diện tích tứ giác $MBIC$ bằng diện tích ngũ giác $BCXIY$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Tứ giác $MXIY$ nội tiếp kết hợp với $M$ là trung điểm cung lớn $BAC$ mang lại tính đối xứng đặc biệt. Điểm $I$ có tính chất góc $\angle BIC = 90^\circ + \frac{\angle A}{2}$. Sử dụng phép biến hình hoặc chia nhỏ hai hình thành các tam giác có diện tích bằng nhau nhờ các cặp đáy bằng nhau và chung đường cao để chứng minh $S_{MBIC} = S_{BCXIY}$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 3</h3>
+        <p>Chọn một số hữu hạn điểm $A_1, A_2, \dots, A_n$ trên đoạn thẳng $S$ có độ dài bằng 1. Dựng các hình tròn nhận các khoảng cách làm đường kính. Chứng minh bất đẳng thức bao phủ.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Sử dụng phương pháp tích phân độ đo hoặc nguyên lý Dirichlet liên tục: tổng chiều dài các đoạn con không vượt quá chiều dài đoạn thẳng $S = 1$. Đánh giá tổng bình phương các khoảng cách bằng bất đẳng thức Cauchy-Schwarz để chứng minh diện tích bao phủ cực tiểu.</p>
+            </div>
+        </details>
+
+        <h3>Bài 4</h3>
+        <p>Cho tam giác $ABC$ có các đường phân giác trong $BE$ và $CF$ cắt nhau tại $I$. Gọi $D$ là hình chiếu vuông góc của $A$ lên $BC$. Đường thẳng qua $I$ vuông góc với $AI$ cắt các cạnh tại các điểm xác định. Chứng minh rằng các đường tròn ngoại tiếp tiếp xúc với nhau.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Nhận xét rằng đường thẳng vuông góc với phân giác trong $AI$ tại $I$ chính là đường phân giác ngoài hoặc liên quan đến trục đối xứng. Áp dụng định lý về tâm bàng tiếp và đường tròn nội tiếp: sử dụng phép nghịch đảo tâm $I$ phương tích $r^2$ biến đường tròn nội tiếp thành chính nó để chuyển bài toán về vị trí tiếp xúc của hai đường tròn.</p>
+            </div>
+        </details>
+
+        <h3>Bài 5</h3>
+        <p>Trong tam giác $ABC$, các điểm $M$ và $N$ lần lượt là trung điểm của các cạnh $AC$ và $AB$. Đường tròn ngoại tiếp các tam giác liên quan cắt nhau tại các điểm mới. Chứng minh rằng tâm đường tròn ngoại tiếp của các tam giác tạo thành thẳng hàng.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Đoạn thẳng $MN$ là đường trung bình của tam giác $ABC$ ($MN \parallel BC$ và $MN = \frac{1}{2}BC$). Sử dụng trục đẳng phương của các cặp đường tròn: trục đẳng phương đi qua trung điểm và vuông góc với đoạn nối tâm. Áp dụng định lý ba trục đẳng phương để chứng minh các tâm đường tròn cùng nằm trên một đường thẳng.</p>
+            </div>
+        </details>
+
+        <div style="margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border-light, rgba(0,0,0,0.1)); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <a href="/posts/math/de-thi-igo-2017-2025.html" class="igo-nav-link">← Quay lại Tổng quan IGO</a>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Kỳ thi IGO 2023 (Lần thứ 10)</span>
+        </div>
+
+        <p class="exam-end"><b>─── HẾT ĐỀ THI IGO 2023 ───</b></p>
+    </div>
+</body>
+</html>

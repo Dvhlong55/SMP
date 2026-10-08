@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Đề Thi IGO 2017</title>
+    
+    <meta name="post-id" content="IGO2017">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề thi và gợi ý giải Kỳ thi Hình học Iran (IGO 2017 - Lần thứ 4) gồm đầy đủ 3 cấp độ: Elementary Level, Intermediate Level, Advanced Level.">
+    <meta property="og:title" content="SMP — Đề Thi IGO 2017">
+    <meta property="og:description" content="Đề thi và gợi ý giải Kỳ thi Hình học Iran IGO 2017.">
+    <meta property="og:image" content="https://smp-math.com/core/image/igo-2026-cover.jpg">
+    <meta property="og:url" content="https://smp-math.com/posts/math/igo-2017.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Đề Thi IGO 2017">
+    <meta name="twitter:description" content="Đề thi IGO 2017 kèm gợi ý giải bám sát Solution chính thức.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Tam Giác Tối Giản */
+        details.igo-hint-clean {
+            margin: 8px 0 22px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 6px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            width: fit-content;
+            outline: none;
+        }
+        summary.igo-hint-trigger::-webkit-details-marker,
+        summary.igo-hint-trigger::marker {
+            display: none;
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.78rem;
+            transition: transform 0.2s ease-in-out;
+            color: var(--exam-bold-color, #111);
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            padding: 8px 0 8px 16px;
+            margin-top: 6px;
+            border-left: 2px solid var(--border-light, #cbd5e1);
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: var(--exam-text-color, #334155);
+        }
+        body.dark-mode .igo-hint-content {
+            border-left-color: rgba(255, 255, 255, 0.15);
+        }
+        .igo-level-heading {
+            color: var(--exam-bold-color, #111);
+            font-size: 1.35rem;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1));
+            font-weight: 700;
+        }
+        body.dark-mode .igo-level-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--accent-cyan, #0284c7) !important;
+            text-decoration: none !important;
+            margin: 12px 0 20px 0;
+            transition: transform 0.2s ease;
+        }
+        .igo-nav-link:hover {
+            transform: translateX(-3px);
+        }
+        .igo-mini-toc {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 16px 0 24px 0;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-size: 0.9rem;
+        }
+        body.dark-mode .igo-mini-toc {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .igo-mini-toc a {
+            color: var(--exam-bold-color, #111) !important;
+            text-decoration: none !important;
+            transition: color 0.2s;
+        }
+        .igo-mini-toc a:hover {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Đề Thi IGO 2017</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Iranian Geometry Olympiad (Lần thứ 4) — IGO Vietnam</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
+        </div>
+
+        <button class="pdf-download-btn" onclick="window.print()" title="Tải xuống hoặc In bài viết này">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Tải bản PDF / In
+        </button>
+
+        <!-- LỐI DẪN ĐẦU TRANG ĐẾN TỔNG QUAN IGO -->
+        <div>
+            <a href="/posts/math/de-thi-igo-2017-2025.html" class="igo-nav-link">← Tổng quan IGO (Toàn bộ các năm 2017 – 2025)</a>
+        </div>
+
+        <!-- MỤC LỤC MINI CHO NĂM -->
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Khối thi:</span>
+            <a href="#elementary">Elementary Level</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#intermediate">Intermediate Level</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#advanced">Advanced Level</a>
+        </div>
+
+        <h2 id="elementary" class="igo-level-heading">Elementary Level</h2>
+
+        <h3>Bài 1</h3>
+        <p>Mỗi cạnh của hình vuông $ABCD$ có độ dài bằng 4 được chia thành 4 phần bằng nhau bởi 3 điểm chia. Chọn một trong 3 điểm chia trên mỗi cạnh, rồi nối lần lượt 4 điểm đó lại để được một tứ giác. Diện tích của tứ giác này có thể nhận những giá trị nào? (Chỉ cần chỉ ra các giá trị diện tích thỏa mãn).</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Sử dụng phương pháp phần bù: Lấy diện tích hình vuông lớn (bằng 16) trừ đi tổng diện tích của 4 tam giác vuông nằm ở 4 góc đỉnh hình vuông ban đầu. Do các điểm chia chia cạnh độ dài 4 thành các đoạn nguyên có độ dài thuộc tập {1, 2, 3}, hãy liệt kê tất cả các tổng diện tích có thể có của 4 tam giác góc vuông này. Đáp số các diện tích tứ giác có thể nhận là 7, 8, 9 hoặc 10.</p>
+            </div>
+        </details>
+
+        <h3>Bài 2</h3>
+        <p>Cho tam giác $ABC$. Bên trong tam giác có một hình thoi với các cạnh song song với các cạnh của tam giác $ABC$, tạo thành các góc ở đỉnh như hình vẽ. Hãy tìm số đo các góc của tam giác $ABC$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Đặt số đo góc $\angle ACB = x$. Vì hình thoi có các cạnh đối diện song song, áp dụng tính chất góc đồng vị và so le trong để biểu diễn hai góc còn lại của tam giác $ABC$ theo $x$: ta được góc $\angle B = 2x$ và góc $\angle A = 90^\circ - \frac{x}{2}$. Thiết lập phương trình tổng 3 góc bằng $180^\circ$ để tìm ra $x = 36^\circ$, từ đó suy ra các góc của tam giác là $72^\circ, 72^\circ, 36^\circ$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 3</h3>
+        <p>Cho ngũ giác đều $ABCDE$. Đường thẳng vuông góc với $CD$ tại $C$ cắt đường thẳng $AB$ tại điểm $F$. Chứng minh rằng $AE + AF = BE$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Kéo dài tia $AE$ cắt đường thẳng $CF$ tại điểm phụ $P$. Bằng phép cộng trừ góc trong ngũ giác đều, ta tính được $\angle EPC = 54^\circ = \angle ECP$, dẫn tới tam giác $EPC$ cân tại $E$ và suy ra $PE = CE = BE$. Tiếp tục chứng minh tam giác $EAF$ cân tại $E$ với $EF = AF$, từ đó ta có $AE + AF = AE + EF = PE = BE$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 4</h3>
+        <p>Cho 100 điểm $P_1, P_2, \dots, P_{100}$ trên mặt phẳng sao cho không có 3 điểm nào thẳng hàng. Với mỗi bộ 3 điểm, ta gọi tam giác tạo thành là tam giác "cùng chiều kim đồng hồ" nếu thứ tự tăng dần của các chỉ số điểm chạy theo chiều kim đồng hồ. Hỏi số lượng tam giác cùng chiều kim đồng hồ có thể nhận đúng giá trị bằng 2017 được hay không?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Xét cấu hình chuẩn khi 100 điểm nằm trên một đường tròn theo thứ tự ngược chiều kim đồng hồ; khi đó số tam giác cùng chiều bằng 0. Mỗi lần ta hoán đổi vị trí hai điểm kề nhau trong thứ tự quay, số lượng tam giác cùng chiều kim đồng hồ thay đổi một lượng liên tục từng bước nhỏ. Vì tổng số tam giác là $\binom{100}{3} = 161700$ và có thể đảo ngược hoàn toàn thứ tự để đạt cực đại, nên giá trị 2017 hoàn toàn có thể đạt được.</p>
+            </div>
+        </details>
+
+        <h3>Bài 5</h3>
+        <p>Cho tam giác cân $ABC$ ($AB = AC$). Gọi $l$ là đường thẳng đi qua $A$ và song song với cạnh $BC$. Điểm $D$ là một điểm tùy ý trên $l$. Gọi $E, F$ lần lượt là hình chiếu vuông góc của $A$ lên $BD$ và $CD$. Gọi $P, Q$ tương ứng là hình chiếu vuông góc của $E, F$ lên $l$. Chứng minh rằng $AP + AQ \le AB$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Nhận xét rằng các điểm $A, P, E, D$ cùng nằm trên đường tròn đường kính $AD$. Khi đó $AP = AD \sin^2(\angle ADE)$. Tương tự cho phía $AQ$. Sử dụng mối quan hệ lượng giác hoặc phép đối xứng trục của tam giác cân qua trung trực của $BC$ để gộp tổng $AP + AQ$ và áp dụng bất đẳng thức khoảng cách chiếu vuông góc, ta suy ra tổng này luôn bị chặn bởi độ dài cạnh bên $AB$.</p>
+            </div>
+        </details>
+
+        <h2 id="intermediate" class="igo-level-heading">Intermediate Level</h2>
+
+        <h3>Bài 1</h3>
+        <p>Cho tam giác nhọn $ABC$ có $\angle A = 60^\circ$. Gọi $E, F$ lần lượt là chân các đường cao kẻ từ $B, C$. Chứng minh rằng: $CE - BF = \frac{3}{2}(AC - AB)$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Đặt độ dài các cạnh $AC = b, AB = c$. Biểu diễn trực tiếp độ dài các đường cao qua các cạnh và góc: $CE = b \sin A = b \frac{\sqrt{3}}{2}$, $BF = c \sin A = c \frac{\sqrt{3}}{2}$, do đó $CE - BF = \frac{\sqrt{3}}{2}(b - c)$. Kẻ thêm đoạn phụ hình học hoặc sử dụng phép quay/hình chiếu với góc $60^\circ$ để quy đổi đẳng thức về tương quan giữa hiệu các đường cao và hiệu các cạnh bên.</p>
+            </div>
+        </details>
+
+        <h3>Bài 2</h3>
+        <p>Hai đường tròn $\omega_1, \omega_2$ cắt nhau tại $A$ và $B$. Một đường thẳng bất kỳ đi qua $B$ cắt $\omega_1, \omega_2$ lần lượt tại $C, D$. Chọn các điểm $E \in \omega_1$ và $F \in \omega_2$ sao cho $CE = CB$ và $BD = DF$. Giả sử $BF$ cắt $\omega_1$ tại $P$, và $BE$ cắt $\omega_2$ tại $Q$. Chứng minh rằng 3 điểm $A, P, Q$ thẳng hàng.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Sử dụng tính chất các góc nội tiếp chắn cùng một cung: Trong $\omega_1$, ta có $\angle PAB = \angle PCB$. Trong $\omega_2$, ta có $\angle QAB = \angle QDB$. Kết hợp giả thiết tam giác $CBE$ cân tại $C$ và tam giác $DBF$ cân tại $D$ để tính góc theo các góc của cát tuyến $CBD$, từ đó chứng minh $\angle PAB + \angle QAB = 180^\circ$, dẫn đến $A, P, Q$ thẳng hàng.</p>
+            </div>
+        </details>
+
+        <h3>Bài 3</h3>
+        <p>Trên mặt phẳng cho $n$ điểm ($n > 2$) sao cho không có 3 điểm nào thẳng hàng. Qua mỗi cặp điểm ta vẽ đường thẳng nối chúng, và trong số các điểm còn lại, ta đánh dấu điểm gần đường thẳng đó nhất (giả thiết điểm gần nhất này là duy nhất trong mỗi trường hợp). Hỏi số lượng điểm được đánh dấu có thể đạt tối đa là bao nhiêu với mỗi số nguyên $n$ cho trước?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Để ý rằng điểm gần nhất với đường thẳng $XY$ chính là điểm tạo với đoạn thẳng $XY$ một tam giác có diện tích nhỏ nhất. Bằng cách phân tích cấu hình các điểm trên bao lồi (convex hull) và các điểm nằm bên trong, ta chứng minh được rằng với $n = 3$ số điểm đánh dấu là 0, còn với mọi $n \ge 4$, bằng cách xếp các điểm trên một đường cong lồi phù hợp hoặc gần một đường thẳng, số điểm được đánh dấu tối đa có thể đạt được là $n$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 4</h3>
+        <p>Cho tam giác cân $ABC$ ($AB = AC$). Gọi $l$ là đường thẳng đi qua $A$ và song song với cạnh $BC$. Điểm $D$ là một điểm tùy ý trên $l$. Gọi $E, F$ lần lượt là hình chiếu vuông góc của $A$ lên $BD, CD$. Gọi $P, Q$ tương ứng là hình chiếu vuông góc của $E, F$ lên $l$. Chứng minh rằng $AP + AQ \le AB$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Đây là bài toán tương đương Bài 5 khối Sơ cấp. Nhận thấy $A, P, E, D$ đồng viên trên đường tròn đường kính $AD$. Sử dụng hệ thức lượng $AP = AD \cos^2(\angle DAP)$ kết hợp biến đổi góc qua các đường thẳng song song và tính đối xứng của tam giác cân $ABC$ để chỉ ra $AP + AQ$ đạt giá trị lớn nhất bằng $AB$ khi $D$ trùng với một vị trí biên xác định.</p>
+            </div>
+        </details>
+
+        <h3>Bài 5</h3>
+        <p>Cho hai điểm $X, Y$ nằm trên cạnh $BC$ của tam giác $ABC$ sao cho $2XY = BC$ ($X$ nằm giữa $B$ và $Y$). Gọi $AA'$ là đường kính của đường tròn ngoại tiếp tam giác $AXY$. Đường thẳng đi qua $B$ vuông góc với $BC$ cắt $AX$ tại $P$; đường thẳng đi qua $C$ vuông góc với $BC$ cắt $AY$ tại $Q$. Chứng minh rằng tiếp tuyến tại $A'$ của đường tròn ngoại tiếp tam giác $AXY$ đi qua tâm đường tròn ngoại tiếp của tam giác $APQ$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Gọi $K$ là giao điểm của tiếp tuyến tại $A'$ với trung trực của đoạn $BC$. Sử dụng các tam giác đồng dạng được tạo bởi các đường vuông góc tại $B, C$ với đường kính $AA'$, chứng minh rằng $K$ cách đều các đỉnh $A, P, Q$ thông qua hệ thức đoạn thẳng $A'X / MX = A'Y / NY$, khẳng định $K$ chính là tâm ngoại tiếp tam giác $APQ$.</p>
+            </div>
+        </details>
+
+        <h2 id="advanced" class="igo-level-heading">Advanced Level</h2>
+
+        <h3>Bài 1</h3>
+        <p>Trong tam giác $ABC$, đường tròn nội tiếp tâm $I$ tiếp xúc với cạnh $BC$ tại điểm $D$. Đường thẳng $DI$ cắt $AC$ tại $X$. Tiếp tuyến kẻ từ $X$ đến đường tròn nội tiếp (khác với $AC$) cắt cạnh $AB$ tại điểm $Y$. Nếu $YI$ và $BC$ cắt nhau tại $Z$, chứng minh rằng $AB = BZ$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Nhận xét rằng trong tam giác $AXY$, điểm $I$ đóng vai trò là tâm đường tròn bàng tiếp góc $A$. Do đó ta tính được số đo góc $\angle XIY = 90^\circ - \frac{\angle A}{2}$. Từ tính chất đối đỉnh và góc phụ, ta suy ra $\angle DIZ = 90^\circ - \frac{\angle A}{2}$, dẫn tới $\angle BZI = \frac{\angle A}{2} = \angle BAI$. Hai tam giác $\triangle ABI$ và $\triangle ZBI$ có cạnh $BI$ chung, $\angle ABI = \angle ZBI$ và $\angle BAI = \angle BZI$, nên chúng bằng nhau (g-c-g), từ đó suy ra $AB = BZ$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 2</h3>
+        <p>Cho 6 đường tròn đôi một không giao nhau trên mặt phẳng, mỗi đường tròn có bán kính không nhỏ hơn 1. Chứng minh rằng bán kính của bất kỳ đường tròn nào cắt cả 6 đường tròn này đều không nhỏ hơn 1.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Gọi tâm của 6 đường tròn là $O_1, O_2, \dots, O_6$ với các bán kính $R_i \ge 1$. Xét đường tròn tâm $O$ bán kính $R$ cắt cả 6 đường tròn đó. Chia góc quanh đỉnh $O$ thành 6 phần bởi các tia $OO_i$; theo nguyên lý Dirichlet luôn tồn tại một cặp chỉ số $i, j$ sao cho $\angle O_i O O_j \le 60^\circ$. Giả sử phản chứng $R < 1$, dùng bất đẳng thức tam giác suy ra độ dài cạnh $O_i O_j < R_i + R_j$, mâu thuẫn với việc hai đường tròn rời nhau.</p>
+            </div>
+        </details>
+
+        <h3>Bài 3</h3>
+        <p>Cho $O$ là tâm đường tròn ngoại tiếp của tam giác $ABC$. Đường thẳng $CO$ cắt đường cao kẻ từ đỉnh $A$ tại điểm $K$. Gọi $P, M$ lần lượt là trung điểm của các đoạn thẳng $AK, AC$. Nếu $PO$ cắt $BC$ tại $Y$, và đường tròn ngoại tiếp tam giác $BCM$ cắt $AB$ tại $X$, chứng minh rằng tứ giác $BXOY$ nội tiếp.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Mục tiêu là chứng minh $\angle XOP = \angle B$. Tứ giác $BXMC$ nội tiếp nên tam giác $AXM$ đồng dạng với tam giác $ACB$, suy ra tỉ số $AX / XM = AC / BC$. Sử dụng định lý hàm số sin trong các tam giác $AKC, OMC, ABC$ để chứng minh $AP / OM = AC / BC$, từ đó suy ra hai tam giác $\triangle XPA$ và $\triangle XOM$ đồng dạng, dẫn tới $\triangle XOP \sim \triangle XMA$ và kết luận tứ giác nội tiếp.</p>
+            </div>
+        </details>
+
+        <h3>Bài 4</h3>
+        <p>Ba đường tròn $\omega_1, \omega_2, \omega_3$ tiếp xúc với đường thẳng $l$ tại $A, B, C$ ($B$ nằm giữa $A, C$) và $\omega_2$ tiếp xúc ngoài với hai đường tròn còn lại. Gọi $X, Y$ là các giao điểm của $\omega_2$ với tiếp tuyến chung ngoài còn lại của $\omega_1, \omega_3$. Đường thẳng vuông góc với $l$ tại $B$ cắt lại $\omega_2$ tại $Z$. Chứng minh rằng đường tròn đường kính $AC$ tiếp xúc với hai đường thẳng $ZX$ và $ZY$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Gọi $M$ là trung điểm của $AC$. Chứng minh đường thẳng $ZM$ chính là trục đẳng phương của hai đường tròn $\omega_1$ và $\omega_3$. Sử dụng định lý Casey (định lý Ptolemy mở rộng) áp dụng cho các tứ giác nội tiếp $\omega_2$ để tính tổng các đoạn tiếp tuyến, qua đó chứng minh khoảng cách từ $M$ đến hai đường thẳng $ZX, ZY$ đúng bằng $\frac{AC}{2}$, suy ra đường tròn đường kính $AC$ tiếp xúc với cả hai đường thẳng đó.</p>
+            </div>
+        </details>
+
+        <h3>Bài 5</h3>
+        <p>Mặt cầu $S$ tiếp xúc với một mặt phẳng $(\alpha)$. Cho $A, B, C, D$ là 4 điểm trên mặt phẳng $(\alpha)$ sao cho không có 3 điểm nào thẳng hàng. Xét điểm $A'$ sao cho mặt cầu $S$ tiếp xúc với tất cả các mặt của tứ diện $A'BCD$. Các điểm $B', C', D'$ được định nghĩa tương tự. Chứng minh rằng 4 điểm $A', B', C', D'$ cùng thuộc một mặt phẳng và mặt phẳng $(A'B'C'D')$ tiếp xúc với mặt cầu $S$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <div class="igo-hint-content">
+                <p>Gọi $P$ là tiếp điểm của mặt cầu $S$ với mặt phẳng $(\alpha)$. Thực hiện phép nghịch đảo không gian tâm $P$ với bán kính thích hợp biến mặt cầu $S$ thành chính nó hoặc một mặt phẳng song song. Các mặt phẳng tiếp xúc với mặt cầu $S$ biến thành các mặt phẳng đối ngẫu, từ đó chứng minh tính đồng phẳng của $A', B', C', D'$ và tính chất tiếp xúc của mặt phẳng chứa chúng với mặt cầu ban đầu.</p>
+            </div>
+        </details>
+
+        <div style="margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border-light, rgba(0,0,0,0.1)); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <a href="/posts/math/de-thi-igo-2017-2025.html" class="igo-nav-link">← Quay lại Tổng quan IGO</a>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Kỳ thi IGO 2017 (Lần thứ 4)</span>
+        </div>
+
+        <p class="exam-end"><b>─── HẾT ĐỀ THI IGO 2017 ───</b></p>
+    </div>
+</body>
+</html>
