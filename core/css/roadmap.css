@@ -1,483 +1,478 @@
 /* ==========================================================================
-   SMP — ROADMAP (Lộ trình chuyên đề)
-   Dùng chung biến màu của shared.css: --card-bg, --text-dark, --text-muted,
-   --border-light, --accent-cyan, --accent-gold, --main-bg (tự đổi theo dark-mode).
-   Mỗi chặng có một sắc độ riêng qua biến --h (hue) do roadmap.js gán.
+   SMP — ROADMAP (Lộ Trình Chuyên Đề Số Học)
+   Primary Design Reference: SMP Home (shared.css)
+   - Bảng màu: var(--main-bg), var(--card-bg), var(--text-dark), var(--text-muted)
+   - Điểm nhấn: var(--accent-cyan), var(--accent-gold), var(--border-light)
+   - Phong cách: Ấn phẩm toán học độc lập, tối giản, thanh lịch, giàu khoảng trắng
    ========================================================================== */
 
 .rm-root {
-    --rm-node: 56px;
-    --rm-gutter: 84px;
-    --rm-radius: 16px;
-    --rm-ease: cubic-bezier(0.16, 1, 0.3, 1);
-    --rm-soon: #b7791f;
-    --rm-soon-soft: rgba(183, 121, 31, 0.12);
-    max-width: 1000px;
-    margin: 0 auto 40px;
+    max-width: 1040px;
+    margin: 0 auto 60px;
     color: var(--text-dark);
     position: relative;
 }
-/* Biến màu phụ thuộc --h phải khai báo lại ở từng chặng để mỗi chặng có sắc độ riêng */
-.rm-root, .rm-station {
-    --rm-c: hsl(var(--h, 188) 72% 42%);
-    --rm-c-soft: hsl(var(--h, 188) 72% 42% / 0.12);
-    --rm-c-glow: hsl(var(--h, 188) 72% 42% / 0.35);
-}
-body.dark-mode .rm-root {
-    --rm-soon: #f6c56b;
-    --rm-soon-soft: rgba(246, 197, 107, 0.1);
-}
-body.dark-mode .rm-root, body.dark-mode .rm-station {
-    --rm-c: hsl(var(--h, 188) 82% 66%);
-    --rm-c-soft: hsl(var(--h, 188) 82% 66% / 0.12);
-    --rm-c-glow: hsl(var(--h, 188) 82% 66% / 0.3);
-}
 
 /* --------------------------------------------------------------------------
-   HERO
+   1. EDITORIAL HERO
    -------------------------------------------------------------------------- */
 .rm-hero {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--border-light);
-    border-radius: 20px;
-    padding: 40px 40px 30px;
-    margin-bottom: 44px;
-    background:
-        radial-gradient(600px 260px at 0% 0%, hsl(188 80% 50% / 0.10), transparent 70%),
-        radial-gradient(500px 260px at 100% 0%, hsl(270 80% 60% / 0.10), transparent 70%),
-        radial-gradient(500px 240px at 60% 120%, hsl(40 85% 55% / 0.12), transparent 70%),
-        var(--card-bg);
-}
-.rm-hero::before {
-    /* Lưới chấm mờ — họa tiết "giấy toán" */
-    content: '';
-    position: absolute; inset: 0;
-    background-image: radial-gradient(var(--border-light) 1px, transparent 1px);
-    background-size: 22px 22px;
-    opacity: 0.6;
-    mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
-    pointer-events: none;
-}
-.rm-hero-deco {
-    /* Các ký hiệu toán trôi nổi trang trí */
-    position: absolute; inset: 0;
-    pointer-events: none;
-    font-family: 'Playfair Display', serif;
-    color: var(--text-muted);
-    opacity: 0.12;
-    user-select: none;
-}
-.rm-hero-deco span { position: absolute; font-size: 2.4rem; font-style: italic; animation: rmFloat 9s ease-in-out infinite; }
-.rm-hero-deco span:nth-child(1) { top: 14%; right: 6%; animation-delay: 0s; }
-.rm-hero-deco span:nth-child(2) { top: 56%; right: 18%; font-size: 1.7rem; animation-delay: -3s; }
-.rm-hero-deco span:nth-child(3) { top: 22%; right: 30%; font-size: 1.4rem; animation-delay: -6s; }
-.rm-hero-deco span:nth-child(4) { bottom: 10%; right: 4%; font-size: 1.9rem; animation-delay: -1.5s; }
-@keyframes rmFloat {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50%      { transform: translateY(-10px) rotate(-4deg); }
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-light);
 }
 
-.rm-hero-inner { position: relative; display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
-.rm-hero-text { flex: 1 1 380px; min-width: 0; }
-.rm-kicker {
+.rm-hero-kicker {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
-    letter-spacing: 3px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
     color: var(--accent-gold);
     margin-bottom: 10px;
-    display: inline-flex; align-items: center; gap: 10px;
 }
-.rm-kicker::before { content: ''; width: 26px; height: 1px; background: currentColor; }
-.rm-title {
+
+.rm-hero-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 12px;
+}
+
+.rm-hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: 2.3rem;
-    line-height: 1.2;
-    margin: 0 0 12px;
-    background: linear-gradient(100deg, hsl(188 80% 40%), hsl(265 70% 55%) 55%, hsl(35 85% 50%));
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; color: transparent;
-}
-body.dark-mode .rm-title {
-    background: linear-gradient(100deg, hsl(188 80% 65%), hsl(265 85% 75%) 55%, hsl(40 90% 65%));
-    -webkit-background-clip: text; background-clip: text;
-}
-.rm-subtitle { color: var(--text-muted); font-size: 1rem; line-height: 1.7; margin: 0; max-width: 560px; }
-
-/* Vòng tiến độ tổng */
-.rm-ring { position: relative; width: 132px; height: 132px; flex: 0 0 auto; }
-.rm-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-.rm-ring-track { fill: none; stroke: var(--border-light); stroke-width: 9; }
-.rm-ring-bar {
-    fill: none; stroke: url(#rmRingGrad); stroke-width: 9; stroke-linecap: round;
-    transition: stroke-dashoffset 1.6s var(--rm-ease);
-}
-.rm-ring-label {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center;
-}
-.rm-ring-label b { font-family: 'Playfair Display', serif; font-size: 1.9rem; line-height: 1; color: var(--text-dark); }
-.rm-ring-label small {
-    font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 1.5px;
-    text-transform: uppercase; color: var(--text-muted); margin-top: 6px;
+    font-size: 2.2rem;
+    line-height: 1.25;
+    color: var(--text-dark);
+    margin: 0;
+    font-weight: 700;
 }
 
-.rm-stats { position: relative; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
-.rm-stat {
-    display: inline-flex; align-items: baseline; gap: 8px;
-    padding: 8px 14px;
+.rm-hero-action {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent-cyan);
+    text-decoration: none;
+    letter-spacing: 1px;
+    padding: 7px 14px;
     border: 1px solid var(--border-light);
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--card-bg) 80%, transparent);
-    font-size: 0.85rem; color: var(--text-muted);
+    border-radius: 6px;
+    background: var(--card-bg);
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
-.rm-stat b { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; color: var(--text-dark); }
-.rm-stat i {
-    width: 8px; height: 8px; border-radius: 50%; display: inline-block; align-self: center;
-    background: var(--accent-cyan);
-}
-.rm-stat.is-soon i { background: var(--rm-soon); }
 
-/* Mục lục nhanh các chặng */
-.rm-index {
-    position: relative;
-    display: flex; flex-wrap: wrap; gap: 8px;
-    margin-top: 22px; padding-top: 20px;
-    border-top: 1px dashed var(--border-light);
+.rm-hero-action:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    transform: translateX(2px);
 }
-.rm-index-chip {
-    --c: hsl(var(--h) 72% 42%);
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 6px 12px 6px 6px;
-    border-radius: 999px;
-    border: 1px solid var(--border-light);
-    background: transparent;
+
+.rm-hero-desc {
     color: var(--text-muted);
-    font-size: 0.8rem;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.25s var(--rm-ease);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0;
+    max-width: 720px;
 }
-body.dark-mode .rm-index-chip { --c: hsl(var(--h) 82% 66%); }
-.rm-index-chip span {
-    width: 22px; height: 22px; border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700;
-    color: #fff; background: var(--c);
-}
-.rm-index-chip.is-empty span { background: transparent; color: var(--c); border: 1.5px dashed var(--c); }
-.rm-index-chip:hover { color: var(--text-dark); border-color: var(--c); transform: translateY(-2px); box-shadow: 0 6px 16px -8px var(--c); }
 
 /* --------------------------------------------------------------------------
-   TRACK & SPINE (đường lộ trình)
+   2. TABLE OF CONTENTS (Mục Lục Chuyên Đề)
    -------------------------------------------------------------------------- */
-.rm-track { position: relative; padding-left: var(--rm-gutter); }
-.rm-spine, .rm-spine-fill {
-    position: absolute;
-    left: calc(var(--rm-node) / 2 - 2px);
-    top: 0;
-    width: 4px;
-    border-radius: 4px;
-}
-.rm-spine { bottom: 0; background: var(--border-light); }
-.rm-spine-fill {
-    height: 0;
-    background: linear-gradient(to bottom,
-        hsl(188 80% 48%), hsl(225 75% 58%) 25%, hsl(270 70% 60%) 50%,
-        hsl(330 70% 58%) 72%, hsl(20 85% 55%) 88%, hsl(40 90% 52%));
-    background-size: 100% var(--rm-track-h, 2000px);
-    box-shadow: 0 0 14px hsl(230 80% 60% / 0.35);
-    transition: height 0.15s linear;
+.rm-toc {
+    margin-bottom: 56px;
 }
 
-/* Nhãn giai đoạn */
-.rm-phase { position: relative; margin: 8px 0 30px; display: flex; align-items: center; gap: 14px; }
-.rm-phase-dot {
-    position: absolute;
-    left: calc(-1 * var(--rm-gutter) + var(--rm-node) / 2 - 9px);
-    top: 50%;
-    margin-top: -9px;
-    width: 18px; height: 18px; border-radius: 5px;
-    transform: rotate(45deg);
-    background: var(--main-bg);
-    border: 2px solid var(--accent-gold);
-    box-shadow: 0 0 0 5px var(--main-bg);
+.rm-toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 36px 48px;
+    margin-top: 20px;
 }
-.rm-phase-label {
+
+.rm-toc-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.rm-toc-phase-name {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--accent-gold);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-light);
+    font-weight: 500;
+}
+
+.rm-toc-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.rm-toc-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 8px 0;
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: var(--transition);
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+}
+
+.rm-toc-row:hover .rm-toc-num,
+.rm-toc-row:hover .rm-toc-title {
+    color: var(--accent-cyan);
+}
+
+.rm-toc-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    width: 24px;
+    flex-shrink: 0;
+}
+
+.rm-toc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.98rem;
+    color: var(--text-dark);
+    transition: color 0.2s;
     white-space: nowrap;
 }
-.rm-phase-desc { color: var(--text-muted); font-size: 0.85rem; font-style: italic; font-family: 'Playfair Display', serif; }
-.rm-phase::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border-light), transparent); }
+
+.rm-toc-dots {
+    flex: 1;
+    border-bottom: 1px dotted var(--border-light);
+    margin: 0 6px;
+    min-width: 20px;
+    position: relative;
+    top: -4px;
+}
+
+.rm-toc-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.rm-toc-status.is-soon {
+    opacity: 0.6;
+}
 
 /* --------------------------------------------------------------------------
-   STATION (chặng)
+   3. ROADMAP TIMELINE (Dòng Thời Gian Chuyên Đề)
    -------------------------------------------------------------------------- */
-.rm-station { position: relative; margin-bottom: 56px; scroll-margin-top: 90px; }
+.rm-timeline-label {
+    margin-top: 56px;
+    margin-bottom: 36px;
+}
+
+.rm-timeline {
+    position: relative;
+    padding-left: 56px;
+}
+
+/* Trục dọc hairline 1px */
+.rm-spine {
+    position: absolute;
+    left: 17px;
+    top: 8px;
+    bottom: 24px;
+    width: 1px;
+    background: var(--border-light);
+}
+
+.rm-spine-fill {
+    position: absolute;
+    left: 17px;
+    top: 8px;
+    width: 1px;
+    background: var(--accent-cyan);
+    height: 0;
+    transition: height 0.15s ease-out;
+}
+
+/* Tiêu đề giai đoạn trên timeline */
+.rm-phase {
+    position: relative;
+    margin: 24px 0 36px -56px;
+}
+
+.rm-phase .section-label {
+    margin-bottom: 0;
+}
+
+/* Từng chặng học (Station) */
+.rm-station {
+    position: relative;
+    margin-bottom: 60px;
+    scroll-margin-top: 100px;
+}
 
 .rm-node {
     position: absolute;
-    left: calc(-1 * var(--rm-gutter));
-    top: -4px;
-    width: var(--rm-node); height: var(--rm-node);
+    left: -56px;
+    top: -2px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: 'JetBrains Mono', monospace;
-    font-weight: 700; font-size: 1.05rem;
-    color: var(--rm-c);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--text-muted);
     background: var(--main-bg);
-    border: 2px solid var(--rm-c);
-    box-shadow: 0 0 0 6px var(--main-bg), 0 0 0 7px var(--rm-c-soft);
-    transition: all 0.5s var(--rm-ease);
-    z-index: 1;
-}
-.rm-station.is-empty .rm-node { border-style: dashed; }
-.rm-station.is-passed .rm-node {
-    color: #fff;
-    background: var(--rm-c);
-    box-shadow: 0 0 0 6px var(--main-bg), 0 0 0 7px var(--rm-c), 0 0 26px var(--rm-c-glow);
-}
-body.dark-mode .rm-station.is-passed .rm-node { color: #111; }
-.rm-node svg { position: absolute; width: 18px; height: 18px; right: -6px; bottom: -6px;
-    padding: 3px; border-radius: 50%; background: var(--main-bg); color: var(--rm-c);
-    border: 1px solid var(--rm-c); box-sizing: content-box; }
-
-.rm-head { margin-bottom: 20px; }
-.rm-head-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
-.rm-head-code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--rm-c);
-}
-.rm-status {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase;
-    padding: 3px 9px; border-radius: 999px;
-    color: var(--rm-c); background: var(--rm-c-soft);
-}
-.rm-status.is-soon { color: var(--rm-soon); background: var(--rm-soon-soft); }
-.rm-head h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem; line-height: 1.3;
-    margin: 0 0 8px;
-    color: var(--text-dark);
-}
-.rm-head p { margin: 0 0 14px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; max-width: 720px; }
-
-.rm-progress { display: flex; align-items: center; gap: 12px; max-width: 360px; margin-top: 12px; }
-.rm-progress-bar { flex: 1; height: 6px; border-radius: 6px; background: var(--border-light); overflow: hidden; }
-.rm-progress-bar span {
-    display: block; height: 100%; width: 0;
-    border-radius: inherit;
-    background: linear-gradient(90deg, var(--rm-c), hsl(calc(var(--h) + 40) 80% 60%));
-    transition: width 1.2s var(--rm-ease) 0.2s;
-}
-.rm-progress small { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
-
-/* --------------------------------------------------------------------------
-   TILES (ô chuyên đề chi tiết)
-   -------------------------------------------------------------------------- */
-.rm-tiles {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 18px;
-}
-.rm-tile {
-    --mx: 50%; --my: 0%;
-    position: relative;
-    display: flex; flex-direction: column;
-    min-width: 0;
-    padding: 22px 22px 18px;
-    border-radius: var(--rm-radius);
     border: 1px solid var(--border-light);
-    background: var(--card-bg);
-    overflow: hidden;
-    isolation: isolate;
-    transition: transform 0.45s var(--rm-ease), box-shadow 0.45s var(--rm-ease), border-color 0.3s;
+    box-shadow: 0 0 0 4px var(--main-bg);
+    transition: var(--transition);
+    z-index: 2;
 }
-.rm-tile::before {
-    /* thanh màu trên đầu ô */
-    content: '';
-    position: absolute; left: 0; right: 0; top: 0; height: 3px;
-    background: linear-gradient(90deg, var(--rm-c), hsl(calc(var(--h) + 40) 80% 60%));
+
+.rm-station.is-passed .rm-node {
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+}
+
+.rm-station-body {
+    position: relative;
+}
+
+.rm-station-head {
+    margin-bottom: 24px;
+}
+
+.rm-station-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.rm-station-kicker {
+    color: var(--accent-cyan);
+    font-weight: 700;
+}
+
+.rm-station-sep {
+    color: var(--border-light);
+}
+
+.rm-station-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+.rm-station-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    line-height: 1.35;
+    color: var(--text-dark);
+    margin: 0;
+    font-weight: 600;
+}
+
+.rm-station-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--accent-cyan);
     opacity: 0.85;
 }
-.rm-tile::after {
-    /* đốm sáng theo con trỏ */
-    content: '';
-    position: absolute; inset: 0; z-index: -1;
-    background: radial-gradient(320px circle at var(--mx) var(--my), var(--rm-c-soft), transparent 60%);
-    opacity: 0; transition: opacity 0.35s;
-}
-.rm-tile.is-ready:hover {
-    transform: translateY(-5px);
-    border-color: var(--rm-c);
-    box-shadow: 0 18px 40px -18px var(--rm-c-glow), 0 4px 14px rgba(0, 0, 0, 0.05);
-}
-.rm-tile.is-ready:hover::after { opacity: 1; }
 
-.rm-tile-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
-.rm-tile-code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem; font-weight: 700;
-    color: var(--rm-c);
-    display: inline-flex; align-items: center; gap: 8px;
-}
-.rm-tile-code::before {
-    content: '';
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--rm-c);
-    box-shadow: 0 0 0 3px var(--rm-c-soft);
-}
-.rm-kind {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem; letter-spacing: 1.5px; text-transform: uppercase;
-    padding: 3px 8px; border-radius: 4px;
+.rm-station-desc {
     color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin: 8px 0 0;
+    max-width: 720px;
+}
+
+/* --------------------------------------------------------------------------
+   4. LESSON CARDS (Ô Bài Học Chuẩn SMP Card)
+   -------------------------------------------------------------------------- */
+.rm-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.rm-card {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 8px;
+    background: var(--card-bg);
     border: 1px solid var(--border-light);
-}
-.rm-tile h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.08rem; line-height: 1.45;
-    margin: 0 0 8px;
-    color: var(--text-dark);
-}
-.rm-tile p { margin: 0 0 16px; font-size: 0.86rem; line-height: 1.65; color: var(--text-muted); flex: 1; }
-
-.rm-tile-foot {
-    display: flex; align-items: center; justify-content: flex-end; gap: 10px;
-    padding-top: 12px;
-    border-top: 1px dashed var(--border-light);
-}
-.rm-count { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); }
-.rm-tile .rm-tile-link { margin: 0; color: var(--rm-c); }
-.rm-tile .rm-tile-link::before {
-    /* phủ toàn bộ ô để bấm vào đâu cũng mở bài viết */
-    content: '';
-    position: absolute; inset: 0; z-index: 2;
-    border-radius: inherit;
-}
-.rm-tile .rm-tile-link:focus-visible { outline: none; }
-.rm-tile:has(.rm-tile-link:focus-visible) { outline: 2px solid var(--rm-c); outline-offset: 3px; }
-
-/* Ô "Đang cập nhật" */
-.rm-tile.is-soon {
-    border-style: dashed;
-    background:
-        repeating-linear-gradient(135deg, transparent 0 12px, var(--rm-soon-soft) 12px 13px),
-        var(--card-bg);
-}
-.rm-tile.is-soon::before { background: var(--border-light); }
-.rm-tile.is-soon h4 { color: var(--text-muted); }
-.rm-tile.is-soon p { opacity: 0.75; }
-.rm-tile.is-soon .rm-tile-code { color: var(--text-muted); }
-.rm-tile.is-soon .rm-tile-code::before { background: transparent; border: 1.5px solid var(--text-muted); box-shadow: none; width: 6px; height: 6px; }
-.rm-soon-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 700;
-    color: var(--rm-soon);
-}
-.rm-soon-badge::before {
-    content: '';
-    width: 7px; height: 7px; border-radius: 50%;
-    background: currentColor;
-    animation: rmPulse 1.8s ease-out infinite;
-}
-@keyframes rmPulse {
-    0%   { box-shadow: 0 0 0 0 currentColor; }
-    70%  { box-shadow: 0 0 0 7px transparent; }
-    100% { box-shadow: 0 0 0 0 transparent; }
-}
-
-/* Chú thích cuối */
-.rm-finish {
+    transition: var(--transition);
     position: relative;
-    text-align: center;
-    padding: 26px 20px 4px;
+    overflow: hidden;
+}
+
+.rm-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent-cyan);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.rm-card.is-ready:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-soft);
+    border-color: rgba(0, 158, 179, 0.35);
+}
+
+body.dark-mode .rm-card.is-ready:hover {
+    border-color: rgba(92, 225, 230, 0.35);
+}
+
+.rm-card.is-ready:hover::before {
+    transform: scaleX(1);
+}
+
+.rm-card.is-soon {
+    opacity: 0.72;
+    border-style: dashed;
+}
+
+.rm-card-top {
+    margin-bottom: 12px;
+}
+
+.rm-card-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    letter-spacing: 1px;
+}
+
+.rm-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.12rem;
+    line-height: 1.45;
+    margin: 0 0 10px;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.rm-card-desc {
     color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.65;
+    margin: 0 0 18px;
+    flex: 1;
+}
+
+.rm-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-light);
+    margin-top: auto;
+}
+
+.rm-soon-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   5. COLOPHON
+   -------------------------------------------------------------------------- */
+.rm-colophon {
+    text-align: center;
+    padding: 56px 20px 32px;
+    margin-top: 48px;
+    border-top: 1px solid var(--border-light);
+}
+
+.rm-colophon-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent-gold);
+    margin: 0 auto 24px;
+    opacity: 0.6;
+}
+
+.rm-quote {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-}
-.rm-finish small {
-    display: block; margin-top: 8px;
-    font-family: 'JetBrains Mono', monospace; font-style: normal;
-    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    line-height: 1.7;
+    max-width: 620px;
+    margin: 0 auto 12px;
 }
 
-/* --------------------------------------------------------------------------
-   HIỆU ỨNG XUẤT HIỆN KHI CUỘN
-   -------------------------------------------------------------------------- */
-.rm-reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.8s var(--rm-ease), transform 0.8s var(--rm-ease); }
-.rm-reveal.is-in { opacity: 1; transform: none; }
-.rm-tiles .rm-reveal:nth-child(2) { transition-delay: 0.07s; }
-.rm-tiles .rm-reveal:nth-child(3) { transition-delay: 0.14s; }
-.rm-tiles .rm-reveal:nth-child(4) { transition-delay: 0.21s; }
-.rm-tiles .rm-reveal:nth-child(5) { transition-delay: 0.28s; }
-.rm-tiles .rm-reveal:nth-child(6) { transition-delay: 0.35s; }
-
-/* --------------------------------------------------------------------------
-   CÔNG TẮC CHẾ ĐỘ XEM (Lộ trình / Danh sách) — dùng ở toanhoc.html
-   -------------------------------------------------------------------------- */
-.rm-viewswitch {
-    max-width: 1000px;
-    margin: 0 auto 26px;
-    display: flex; justify-content: flex-end;
-}
-.rm-viewswitch[hidden] { display: none; }
-.rm-viewswitch-inner {
-    display: inline-flex; gap: 4px; padding: 4px;
-    border: 1px solid var(--border-light);
-    border-radius: 10px;
-    background: var(--card-bg);
-}
-.rm-viewswitch button {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 7px 14px;
-    border: none; border-radius: 7px;
-    background: transparent;
-    color: var(--text-muted);
+.rm-cite {
+    display: block;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.25s;
+    font-size: 0.72rem;
+    font-style: normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
 }
-.rm-viewswitch button:hover { color: var(--accent-cyan); }
-.rm-viewswitch button.active { color: var(--accent-cyan); background: var(--accent-cyan-dim); font-weight: 700; }
-.rm-viewswitch svg { width: 14px; height: 14px; }
 
 /* --------------------------------------------------------------------------
-   RESPONSIVE
+   6. RESPONSIVE DESIGN
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
-    .rm-root { --rm-node: 40px; --rm-gutter: 56px; }
-    .rm-hero { padding: 28px 20px 22px; border-radius: 16px; margin-bottom: 34px; }
-    .rm-title { font-size: 1.75rem; }
-    .rm-ring { width: 104px; height: 104px; }
-    .rm-ring-label b { font-size: 1.5rem; }
-    .rm-hero-deco { display: none; }
-    .rm-node { font-size: 0.85rem; }
-    .rm-node svg { display: none; }
-    .rm-head h3 { font-size: 1.3rem; }
-    .rm-tiles { grid-template-columns: 1fr; gap: 14px; }
-    .rm-tile { padding: 18px 18px 14px; }
-    .rm-phase { flex-wrap: wrap; gap: 4px 12px; }
-    .rm-phase::after { display: none; }
-    .rm-phase-desc { flex-basis: 100%; }
-    .rm-phase-dot { top: 0; margin-top: -2px; }
-    .rm-station { margin-bottom: 44px; }
-    .rm-viewswitch { justify-content: stretch; }
-    .rm-viewswitch-inner { width: 100%; }
-    .rm-viewswitch button { flex: 1; justify-content: center; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .rm-reveal, .rm-reveal.is-in { opacity: 1; transform: none; transition: none; }
-    .rm-hero-deco span, .rm-soon-badge::before { animation: none; }
-    .rm-spine-fill, .rm-progress-bar span, .rm-ring-bar { transition: none; }
+    .rm-hero-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .rm-hero-title {
+        font-size: 1.8rem;
+    }
+    .rm-timeline {
+        padding-left: 42px;
+    }
+    .rm-spine, .rm-spine-fill {
+        left: 14px;
+    }
+    .rm-node {
+        left: -42px;
+        width: 29px;
+        height: 29px;
+        font-size: 0.7rem;
+    }
+    .rm-phase {
+        margin-left: -42px;
+    }
+    .rm-toc-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .rm-cards {
+        grid-template-columns: 1fr;
+    }
 }

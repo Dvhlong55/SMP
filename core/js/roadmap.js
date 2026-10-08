@@ -1,81 +1,107 @@
 /* ==========================================================================
-   SMP — ROADMAP RENDERER
-   Dùng:  SMPRoadmap.render(containerElement, window.SMP_ROADMAP_SOHOC)
+   SMP — ROADMAP RENDERER (Editorial Table of Contents & Timeline)
+   Primary Design Reference: SMP Home (shared.css)
    - Ô có `url`  → thẻ bấm được (dùng class .card-link để PostViewer của
                    shared.js mở bài viết giống hệt các thẻ bài viết thông thường).
-   - Ô không có `url` → hiển thị "Đang cập nhật".
+   - Ô không có `url` → hiển thị "Đang biên soạn".
    ========================================================================== */
 (function () {
     'use strict';
-
-    // Dải màu của lộ trình: cyan → xanh → tím → hồng → cam → vàng
-    const HUE_START = 188;
-    const HUE_END = 400; // 400 ≡ 40 (vàng gold)
 
     const esc = (s) => String(s == null ? '' : s)
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
     const pad = (n) => String(n).padStart(2, '0');
 
-    const ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
-
     function stationStats(st) {
-        const total = st.tiles.length;
-        const ready = st.tiles.filter(t => !!t.url).length;
+        const total = (st.tiles || []).length;
+        const ready = (st.tiles || []).filter(t => !!t.url).length;
         return { total, ready, ratio: total ? ready / total : 0 };
     }
 
-    function statusOf(stats) {
-        if (stats.ready === 0) return { text: 'Đang cập nhật', soon: true };
-        if (stats.ready === stats.total) return { text: 'Đã hoàn thiện', soon: false };
-        return { text: 'Đang bổ sung', soon: false };
-    }
-
-    function renderTile(st, tile, idx) {
+    function renderCard(st, tile, idx) {
         const code = `${st.label || st.id}.${idx + 1}`;
         const ready = !!tile.url;
 
         const foot = ready
-            ? `<a href="${esc(tile.url)}" class="card-link rm-tile-link" aria-label="Đọc bài: ${esc(tile.title.replace(/\$/g, ''))}">Đọc bài</a>`
-            : `<span class="rm-soon-badge">Đang cập nhật</span>`;
+            ? `<a href="${esc(tile.url)}" class="card-link" aria-label="Đọc bài: ${esc(tile.title.replace(/\$/g, ''))}">Đọc bài</a>`
+            : `<span class="rm-soon-text">Đang biên soạn</span>`;
 
         return `
-            <article class="rm-tile rm-reveal ${ready ? 'is-ready' : 'is-soon'}" ${ready ? '' : 'aria-disabled="true"'}>
-                <div class="rm-tile-top">
-                    <span class="rm-tile-code">${esc(code)}</span>
+            <article class="card rm-card ${ready ? 'is-ready' : 'is-soon'}">
+                <div class="rm-card-top">
+                    <span class="rm-card-code">${esc(code)}</span>
                 </div>
-                <h4>${tile.title}</h4>
-                <p>${tile.desc || ''}</p>
-                <div class="rm-tile-foot">${foot}</div>
+                <h3 class="rm-card-title">${tile.title}</h3>
+                ${tile.desc ? `<p class="rm-card-desc">${tile.desc}</p>` : ''}
+                <div class="rm-card-foot">${foot}</div>
             </article>`;
     }
 
-    function renderStation(st, hue, phaseName) {
+    function renderStation(st, phaseName) {
         const stats = stationStats(st);
-        const status = statusOf(stats);
         const label = st.label || pad(st.id);
-        const complete = stats.ready === stats.total && stats.total > 0;
-        const classes = ['rm-station'];
-        if (stats.ready === 0) classes.push('is-empty');
-        if (complete) classes.push('is-complete');
+        const statusText = stats.ready > 0 
+            ? `${stats.ready}/${stats.total} bài viết` 
+            : 'Đang cập nhật';
 
         return `
-            <section class="${classes.join(' ')}" id="rm-station-${st.id}" style="--h:${hue}">
-                <div class="rm-node" aria-hidden="true">${esc(label)}${complete ? ICON_CHECK : ''}</div>
-                <header class="rm-head rm-reveal">
-                    <div class="rm-head-top">
-                        <span class="rm-head-code">${st.label ? 'Chặng cuối' : 'Chặng ' + pad(st.id)} · ${esc(phaseName)}</span>
-                        <span class="rm-status ${status.soon ? 'is-soon' : ''}">${status.text}</span>
+            <section class="rm-station" id="rm-station-${st.id}">
+                <div class="rm-node" aria-hidden="true">${esc(label)}</div>
+                <div class="rm-station-body">
+                    <header class="rm-station-head">
+                        <div class="rm-station-meta">
+                            <span class="rm-station-kicker">Chặng ${esc(label)}</span>
+                            <span class="rm-station-sep">·</span>
+                            <span class="rm-station-phase">${esc(phaseName)}</span>
+                            <span class="rm-station-sep">·</span>
+                            <span class="rm-station-status">${statusText}</span>
+                        </div>
+                        <div class="rm-station-title-row">
+                            <h2 class="rm-station-title">${st.title}</h2>
+                            ${st.formula ? `<span class="rm-station-formula">${st.formula}</span>` : ''}
+                        </div>
+                        ${st.desc ? `<p class="rm-station-desc">${st.desc}</p>` : ''}
+                    </header>
+                    <div class="rm-cards">
+                        ${(st.tiles || []).map((t, i) => renderCard(st, t, i)).join('')}
                     </div>
-                    <h3>${st.title}</h3>
-                    <div class="rm-progress">
-                        <div class="rm-progress-bar"><span data-w="${Math.round(stats.ratio * 100)}"></span></div>
-                    </div>
-                </header>
-                <div class="rm-tiles">
-                    ${st.tiles.map((t, i) => renderTile(st, t, i)).join('')}
                 </div>
             </section>`;
+    }
+
+    function renderTOC(phases, stations) {
+        return `
+            <nav class="rm-toc" aria-label="Mục lục chuyên đề">
+                <div class="section-label"><span>Mục Lục Chuyên Đề</span></div>
+                <div class="rm-toc-grid">
+                    ${phases.map(ph => {
+                        const phStations = stations.filter(s => s.phase === ph.id);
+                        if (!phStations.length) return '';
+                        const roman = ['I', 'II', 'III', 'IV', 'V'][(ph.id || 1) - 1] || ph.id;
+                        return `
+                            <div class="rm-toc-col">
+                                <div class="rm-toc-phase-name">Giai đoạn ${roman} · ${esc(ph.name)}</div>
+                                <div class="rm-toc-items">
+                                    ${phStations.map(st => {
+                                        const stats = stationStats(st);
+                                        const num = esc(st.label || pad(st.id));
+                                        const countText = stats.ready > 0 ? `${stats.ready} bài` : 'Đang cập nhật';
+                                        return `
+                                            <a href="#rm-station-${st.id}" class="rm-toc-row" data-target="rm-station-${st.id}">
+                                                <span class="rm-toc-num">${num}</span>
+                                                <span class="rm-toc-title">${st.title}</span>
+                                                <span class="rm-toc-dots" aria-hidden="true"></span>
+                                                <span class="rm-toc-status ${stats.ready === 0 ? 'is-soon' : ''}">${countText}</span>
+                                            </a>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </nav>`;
     }
 
     function render(container, data) {
@@ -84,163 +110,114 @@
         const phases = data.phases || [];
         const phaseById = Object.fromEntries(phases.map(p => [p.id, p]));
 
-        // Tổng hợp số liệu
-        let totalTiles = 0, readyTiles = 0, problemCount = 0;
-        stations.forEach(st => st.tiles.forEach(t => {
-            totalTiles++;
-            if (t.url) { readyTiles++; problemCount += (t.count || 0); }
-        }));
-        const pct = totalTiles ? Math.round(readyTiles / totalTiles * 100) : 0;
-        const soonTiles = totalTiles - readyTiles;
-        const mainStations = stations.filter(s => !s.label).length;
-
-        const hueOf = (i) => {
-            const n = Math.max(stations.length - 1, 1);
-            return Math.round(HUE_START + (HUE_END - HUE_START) * (i / n)) % 360;
-        };
-
-        // --- HERO ---
-        const R = 54, C = 2 * Math.PI * R;
-        const hero = `
-            <div class="rm-hero rm-reveal">
-                <div class="rm-hero-deco" aria-hidden="true">
-                    <span>a ≡ b (mod n)</span><span>φ(n)</span><span>v<sub>p</sub></span><span>(a/p)</span>
+        // --- 1. EDITORIAL HERO ---
+        const heroHtml = `
+            <header class="rm-hero">
+                <div class="rm-hero-kicker">VMO · Số Học</div>
+                <div class="rm-hero-head">
+                    <h1 class="rm-hero-title">${esc(data.title || 'Lộ Trình Số Học Olympic')}</h1>
+                    <a href="/pages/toanhoc.html?filter=vmo&sub=so-hoc" class="rm-hero-action">
+                        <span>Danh sách bài viết</span> →
+                    </a>
                 </div>
-                <div class="rm-hero-inner">
-                    <div class="rm-hero-text">
-                        <div class="rm-kicker">VMO · Số Học</div>
-                        <h2 class="rm-title">${esc(data.title || 'Lộ trình')}</h2>
-                        ${data.subtitle ? `<p class="rm-subtitle">${data.subtitle}</p>` : ''}
-                    </div>
-                    <div class="rm-ring" role="img" aria-label="Đã có ${readyTiles}/${totalTiles} chủ đề">
-                        <svg viewBox="0 0 132 132">
-                            <defs>
-                                <linearGradient id="rmRingGrad" x1="0" y1="0" x2="1" y2="1">
-                                    <stop offset="0%" stop-color="hsl(188 80% 50%)"/>
-                                    <stop offset="55%" stop-color="hsl(270 75% 62%)"/>
-                                    <stop offset="100%" stop-color="hsl(40 90% 55%)"/>
-                                </linearGradient>
-                            </defs>
-                            <circle class="rm-ring-track" cx="66" cy="66" r="${R}"/>
-                            <circle class="rm-ring-bar" cx="66" cy="66" r="${R}"
-                                stroke-dasharray="${C.toFixed(2)}" stroke-dashoffset="${C.toFixed(2)}"
-                                data-target="${(C * (1 - pct / 100)).toFixed(2)}"/>
-                        </svg>
-                        <div class="rm-ring-label"><b>${pct}%</b><small>hoàn thiện</small></div>
-                    </div>
-                </div>
-                <nav class="rm-index" aria-label="Mục lục lộ trình">
-                    ${stations.map((st, i) => {
-                        const s = stationStats(st);
-                        return `<button type="button" class="rm-index-chip ${s.ready === 0 ? 'is-empty' : ''}" style="--h:${hueOf(i)}" data-target="rm-station-${st.id}">
-                                    <span>${esc(st.label || st.id)}</span>${st.title}
-                                </button>`;
-                    }).join('')}
-                </nav>
-            </div>`;
+                <p class="rm-hero-desc">
+                    Hệ thống chuyên đề và giáo trình chọn lọc bồi dưỡng thi Học sinh Giỏi Quốc gia (VMO), phân bố từ nền tảng đồng dư đến đa thức số học.
+                </p>
+            </header>`;
 
-        // --- TRACK ---
-        let track = '';
+        // --- 2. MỤC LỤC CHUYÊN ĐỀ ---
+        const tocHtml = renderTOC(phases, stations);
+
+        // --- 3. DÒNG LỘ TRÌNH CHI TIẾT ---
+        let timelineHtml = '';
         let lastPhase = null;
-        stations.forEach((st, i) => {
+        stations.forEach((st) => {
             const ph = phaseById[st.phase] || { id: st.phase, name: '' };
             if (st.phase !== lastPhase) {
-                const roman = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'][(ph.id || 1) - 1] || ph.id;
-                track += `
-                    <div class="rm-phase rm-reveal">
-                        <span class="rm-phase-dot" aria-hidden="true"></span>
-                        <span class="rm-phase-label">Giai đoạn ${roman} · ${esc(ph.name)}</span>
-                        ${ph.desc ? `<span class="rm-phase-desc">${esc(ph.desc)}</span>` : ''}
+                const roman = ['I', 'II', 'III', 'IV', 'V'][(ph.id || 1) - 1] || ph.id;
+                timelineHtml += `
+                    <div class="rm-phase">
+                        <div class="section-label"><span>Giai đoạn ${roman} · ${esc(ph.name)}</span></div>
                     </div>`;
                 lastPhase = st.phase;
             }
-            track += renderStation(st, hueOf(i), ph.name);
+            timelineHtml += renderStation(st, ph.name);
         });
 
         container.innerHTML = `
             <div class="rm-root">
-                ${hero}
-                <div class="rm-track">
+                ${heroHtml}
+                ${tocHtml}
+                <div class="section-label rm-timeline-label"><span>Lộ Trình Học Tập</span></div>
+                <div class="rm-timeline">
                     <div class="rm-spine" aria-hidden="true"></div>
                     <div class="rm-spine-fill" aria-hidden="true"></div>
-                    ${track}
+                    ${timelineHtml}
                 </div>
-                <div class="rm-finish rm-reveal">
-                    “Toán học là nữ hoàng của các ngành khoa học, và Số học là nữ hoàng của Toán học.”
-                    <span style="display: block; font-size: 0.85rem; font-style: normal; margin-top: 6px; letter-spacing: 1px; opacity: 0.85;">— Carl Friedrich Gauss —</span>
-                    <small>Các ô viền nét đứt sẽ sớm được cập nhật</small>
-                </div>
+                <footer class="rm-colophon">
+                    <div class="rm-colophon-divider" aria-hidden="true"></div>
+                    <blockquote class="rm-quote">
+                        “Toán học là nữ hoàng của các ngành khoa học, và Số học là nữ hoàng của Toán học.”
+                    </blockquote>
+                    <cite class="rm-cite">— Carl Friedrich Gauss —</cite>
+                </footer>
             </div>`;
 
         bind(container);
         typeset(container);
     }
 
-    // ---------------------------------------------------------------------
-    // Tương tác: hiệu ứng xuất hiện, đường tiến trình theo cuộn, đốm sáng, mục lục
-    // ---------------------------------------------------------------------
     function bind(container) {
         const root = container.querySelector('.rm-root');
         if (!root) return;
 
-        // 1) Hiện dần khi cuộn tới
-        const revealEls = root.querySelectorAll('.rm-reveal');
-        const onIn = (el) => {
-            el.classList.add('is-in');
-            el.querySelectorAll('.rm-progress-bar span').forEach(b => { b.style.width = b.dataset.w + '%'; });
-            el.querySelectorAll('.rm-ring-bar').forEach(c => { c.style.strokeDashoffset = c.dataset.target; });
-        };
-        if ('IntersectionObserver' in window) {
-            const io = new IntersectionObserver((entries) => {
-                entries.forEach(e => { if (e.isIntersecting) { onIn(e.target); io.unobserve(e.target); } });
-            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-            revealEls.forEach(el => io.observe(el));
-        } else {
-            revealEls.forEach(onIn);
-        }
+        // 1) Smooth scroll for TOC links
+        root.querySelectorAll('.rm-toc-row').forEach(row => {
+            row.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = row.dataset.target;
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (window.history && window.history.pushState) {
+                        window.history.pushState(null, '', '#' + targetId);
+                    }
+                }
+            });
+        });
 
-        // 2) Đường lộ trình "chạy" theo vị trí cuộn + đánh dấu các chặng đã qua
-        const track = root.querySelector('.rm-track');
+        // 2) Scroll timeline progress (1px subtle cyan hairline)
+        const timeline = root.querySelector('.rm-timeline');
         const fill = root.querySelector('.rm-spine-fill');
         const stationEls = Array.from(root.querySelectorAll('.rm-station'));
         let ticking = false;
+
         const update = () => {
             ticking = false;
-            if (!track.offsetParent) return; // đang bị ẩn
-            const rect = track.getBoundingClientRect();
-            const anchor = window.innerHeight * 0.55;
+            if (!timeline || !timeline.offsetParent) return;
+            const rect = timeline.getBoundingClientRect();
+            const anchor = window.innerHeight * 0.45;
             const h = rect.height;
-            track.style.setProperty('--rm-track-h', h + 'px');
             const progress = Math.min(Math.max(anchor - rect.top, 0), h);
-            fill.style.height = progress + 'px';
+            if (fill) fill.style.height = progress + 'px';
             stationEls.forEach(s => {
                 const node = s.querySelector('.rm-node');
+                if (!node) return;
                 const top = node.getBoundingClientRect().top + node.offsetHeight / 2;
                 s.classList.toggle('is-passed', top < anchor);
             });
         };
-        const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-        document.addEventListener('scroll', onScroll, { passive: true, capture: true });
+
+        const onScroll = () => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(update);
+            }
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', onScroll, { passive: true });
-        root._rmUpdate = update;
         update();
-
-        // 3) Đốm sáng theo con trỏ trên ô
-        root.addEventListener('pointermove', (e) => {
-            const tile = e.target.closest('.rm-tile.is-ready');
-            if (!tile) return;
-            const r = tile.getBoundingClientRect();
-            tile.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-            tile.style.setProperty('--my', (e.clientY - r.top) + 'px');
-        });
-
-        // 4) Mục lục: cuộn mượt tới chặng
-        root.querySelectorAll('.rm-index-chip').forEach(chip => {
-            chip.addEventListener('click', () => {
-                const target = document.getElementById(chip.dataset.target);
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
     }
 
     function typeset(el) {
@@ -253,16 +230,10 @@
         if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
             MathJax.startup.promise.then(run);
         } else {
-            // MathJax chưa tải xong: thử lại sau, khi tải xong MathJax cũng tự typeset toàn trang
             window.addEventListener('load', run, { once: true });
         }
+        run();
     }
 
-    // Gọi lại khi container vừa được hiện ra (ví dụ chuyển tab)
-    function refresh(container) {
-        const root = container && container.querySelector('.rm-root');
-        if (root && root._rmUpdate) root._rmUpdate();
-    }
-
-    window.SMPRoadmap = { render, refresh };
+    window.SMPRoadmap = { render };
 })();
