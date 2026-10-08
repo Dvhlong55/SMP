@@ -171,6 +171,13 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: 'Đề Thi IGO Từ 2017 – 2025 (Có Gợi Ý)',
+        date: 'October 8, 2026',
+        url: '/posts/math/de-thi-igo-2017-2025.html',
+        tags: ['Hình Học', 'Đề Thi', 'VMO', 'IGO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: 'Hàm Phi Euler',
         date: 'September 15, 2026',
         url: '/posts/math/vmo/ham-phi-euler.html',

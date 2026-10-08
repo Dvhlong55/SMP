@@ -429,32 +429,54 @@
             text-align: center;
         }
 
-        /* Stats strip */
+        /* Stats strip (Editorial summary) */
         .stats-strip {
             display: flex;
             gap: 0;
+            background: var(--card-bg, #ffffff);
             border: 1px solid var(--border-light);
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
+            margin-top: 48px;
             margin-bottom: 36px;
-            margin-top: 50px;
         }
         .stat-item {
             flex: 1;
-            padding: 18px 20px;
+            padding: 22px 20px;
             text-align: center;
             border-right: 1px solid var(--border-light);
         }
-        .stat-item:last-child { border-right: none; }
+        .stat-item:last-child {
+            border-right: none;
+        }
         .stat-number {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: 1.65rem;
+            font-weight: 600;
             color: var(--accent-cyan);
-            line-height: 1;
+            line-height: 1.1;
             margin-bottom: 6px;
         }
-        .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+        .stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        @media (max-width: 480px) {
+            .stat-item {
+                padding: 16px 10px;
+            }
+            .stat-number {
+                font-size: 1.4rem;
+            }
+            .stat-label {
+                font-size: 0.68rem;
+                letter-spacing: 1px;
+            }
+        }
 
         /* Label tags */
         .label-cloud {
@@ -718,6 +740,13 @@
                             <div class="section-label">Bài Đăng Mới Nhất</div>
                             <div class="grid-container" style="grid-template-columns: 1fr; gap: 16px;">
                                 <div class="card fade-up">
+                                    <div class="card-date">October 8, 2026</div>
+                                    <span class="card-tag" style="color: var(--accent-cyan); border-color: rgba(92, 225, 230, 0.4); background: rgba(92, 225, 230, 0.1);">Hình Học</span>
+                                    <h3>Đề Thi IGO Từ 2017 – 2025</h3>
+                                    <p>Tổng hợp 135 bài toán qua các kỳ Iranian Geometry Olympiad (IGO) từ 2017 đến 2025 cho cả 3 khối Sơ cấp, Trung cấp, Cao cấp kèm gợi ý bám sát Solution.</p>
+                                    <a href="/posts/math/de-thi-igo-2017-2025.html" class="card-link">READ MORE</a>
+                                </div>
+                                <div class="card fade-up">
                                     <div class="card-date">September 15, 2026</div>
                                     <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
                                     <h3>Hàm Phi Euler</h3>
@@ -906,11 +935,19 @@
             
 
 
-<div class="stats-strip fade-up">
-                <div class="stat-item"><div class="stat-number">$\Sigma$</div><div class="stat-label">Bài Viết</div></div>
-                <div class="stat-item"><div class="stat-number">$\Phi$</div><div class="stat-label">Chủ Đề</div></div>
-                <div class="stat-item"><div class="stat-number">2026</div><div class="stat-label">Năm Hoạt Động</div></div>
-                <div class="stat-item"><div class="stat-number">$\infty$</div><div class="stat-label">Đam Mê</div></div>
+            <div class="stats-strip fade-up">
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-articles-count">107</div>
+                    <div class="stat-label">Bài Viết</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-topics-count">12</div>
+                    <div class="stat-label">Chủ Đề</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2026</div>
+                    <div class="stat-label">Thành Lập</div>
+                </div>
             </div>
 
         </main>
@@ -921,6 +958,23 @@
     <script src="/core/js/shared.js?v=38"></script>
     <script src="/core/js/mailbox.js"></script>
     <script>
+        // Đồng bộ số lượng bài viết thực tế cho statistics strip nếu ALL_POSTS sẵn sàng
+        (function() {
+            function syncStatsStrip() {
+                if (typeof ALL_POSTS !== 'undefined' && Array.isArray(ALL_POSTS) && ALL_POSTS.length > 0) {
+                    const artEl = document.getElementById('stat-articles-count');
+                    if (artEl) {
+                        artEl.textContent = ALL_POSTS.length;
+                    }
+                }
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', syncStatsStrip);
+            } else {
+                syncStatsStrip();
+            }
+        })();
+
         // === DAILY CHALLENGE INTERACTION ===
         let answerVisible = false;
 
