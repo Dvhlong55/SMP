@@ -1,12 +1,13 @@
 /* ==========================================================================
-   SMP — ROADMAP RENDERER (Editorial Table of Contents, Metro Timeline & Flowchart Tree)
-   Primary Design Reference: SMP Home (shared.css) & roadmap.sh
+   SMP — ROADMAP RENDERER (Editorial Table of Contents, Metro Timeline & Serpentine Tree)
+   Primary Design Reference: SMP Home (shared.css) & Mindmap / Winding Skill Tree
    - Mặc định: Chế độ "Chi tiết" (Mục lục + Dòng thời gian với các thẻ bài học đầy đủ).
-   - Chế độ "Sơ đồ cây": Lược đồ trực quan dạng flowchart (chỉ tiêu đề, không mô tả rườm rà,
-                         không số sao, đường nối chặng và bài học sắc nét).
+   - Chế độ "Sơ đồ cây": Sơ đồ lượn sóng (Serpentine Tree) với trục chính uốn lượn,
+                         nhánh nét đứt rẽ ngang sang từng bài học (chỉ tiêu đề, không sao,
+                         không mô tả dài).
    - Ô có `url` → thẻ bấm được (dùng class .card-link để PostViewer của
                    shared.js mở bài viết giống hệt các thẻ bài viết thông thường).
-   - Ô không có `url` → hiển thị "Sắp có" / "Đang biên soạn".
+   - Ô không có `url` → hiển thị "Sắp có".
    ========================================================================== */
 (function () {
     'use strict';
@@ -23,7 +24,7 @@
     }
 
     /* ----------------------------------------------------------------------
-       1. VIEW CHI TIẾT: Cards & Stations
+       1. VIEW CHI TIẾT: Cards, Stations & TOC
        ---------------------------------------------------------------------- */
     function renderCard(st, tile, idx) {
         const code = `${st.label || st.id}.${idx + 1}`;
@@ -111,116 +112,226 @@
     }
 
     /* ----------------------------------------------------------------------
-       2. VIEW SƠ ĐỒ CÂY (roadmap.sh style Flowchart)
-       - Không mô tả rườm rà (chỉ tiêu đề).
-       - Không đánh số sao.
-       - Tông màu chuẩn SMP (--accent-cyan, --accent-gold, --border-light).
+       2. VIEW SƠ ĐỒ CÂY LƯỢN SÓNG (Serpentine Mindmap Tree)
+       - Trục chính uốn lượn zig-zag kết nối các chặng kiến thức.
+       - Các bài học con rẽ nhánh nét đứt sang bên cạnh (Chỉ Tiêu Đề, Không Sao).
        ---------------------------------------------------------------------- */
     function renderTree(phases, stations) {
-        const totalTiles = stations.reduce((acc, st) => acc + (st.tiles || []).length, 0);
-        const readyTiles = stations.reduce((acc, st) => acc + (st.tiles || []).filter(t => !!t.url).length, 0);
+        let treeHtml = `
+            <div class="rm-tree-scroll-wrapper">
+                <div class="rm-mobile-hint">
+                    <span>👉 Vuốt ngang để quan sát toàn bộ sơ đồ cây</span>
+                </div>
+                <div class="rm-serpentine-canvas" id="rm-serpentine-canvas">
+                    <svg class="rm-serpentine-svg" id="rm-serpentine-svg" aria-hidden="true"></svg>
 
-        let treeContentHtml = '';
+                    <div class="rm-tree-topbar">
+                        <div class="rm-tree-root-box">
+                            <div class="rm-tree-root-node" id="rm-tree-root">VMO · SỐ HỌC OLYMPIC</div>
+                        </div>
+                        <div class="rm-tree-legend-box">
+                            <div class="rm-legend-item">
+                                <span class="rm-legend-chip is-hub"></span>
+                                <span>Chặng kiến thức</span>
+                            </div>
+                            <div class="rm-legend-item">
+                                <span class="rm-legend-chip is-ready"></span>
+                                <span>Đã có bài viết</span>
+                            </div>
+                            <div class="rm-legend-item">
+                                <span class="rm-legend-chip is-soon"></span>
+                                <span>Đang biên soạn</span>
+                            </div>
+                        </div>
+                    </div>`;
 
-        phases.forEach((ph, phIdx) => {
-            const phStations = stations.filter(s => s.phase === ph.id);
-            if (!phStations.length) return;
-            const roman = ['I', 'II', 'III', 'IV', 'V'][(ph.id || 1) - 1] || ph.id;
+        let lastPhase = null;
+        stations.forEach((st, idx) => {
+            // So le: chặng lẻ hub bên phải (bài học bên trái), chặng chẵn hub bên trái (bài học bên phải)
+            const side = (idx % 2 === 0) ? 'right' : 'left';
+            const label = st.label || pad(st.id);
+            const ph = phases.find(p => p.id === st.phase);
 
-            // Phase transition connector (giữa các giai đoạn)
-            if (phIdx > 0) {
-                treeContentHtml += `
-                    <div class="rm-tree-phase-transition" aria-hidden="true">
-                        <span class="rm-tree-trans-line"></span>
-                        <span class="rm-tree-trans-arrow">↓</span>
+            // Mốc chuyển tiếp Giai đoạn
+            if (lastPhase !== null && st.phase !== lastPhase && ph) {
+                const roman = ['I', 'II', 'III', 'IV', 'V'][(ph.id || 1) - 1] || ph.id;
+                treeHtml += `
+                    <div class="rm-st-phase-milestone" data-phase-id="${ph.id}">
+                        <span class="rm-st-phase-kicker">Giai đoạn ${roman}</span>
+                        <span class="rm-st-phase-name">${esc(ph.name)}</span>
                     </div>`;
             }
+            lastPhase = st.phase;
 
-            // Milestone của Giai đoạn
-            treeContentHtml += `
-                <div class="rm-tree-phase" id="tree-phase-${ph.id}">
-                    <div class="rm-tree-phase-node">
-                        <span class="rm-tree-phase-kicker">Giai đoạn ${roman}</span>
-                        <h2 class="rm-tree-phase-title">${esc(ph.name)}</h2>
+            const isGrid2 = (st.tiles || []).length > 4;
+
+            const cardsHtml = `
+                <div class="rm-st-cards-group ${isGrid2 ? 'is-grid-2' : ''}">
+                    ${(st.tiles || []).map((t, tIdx) => {
+                        const code = `${st.label || st.id}.${tIdx + 1}`;
+                        const ready = !!t.url;
+                        const cleanTitle = t.title.replace(/\$/g, '');
+                        if (ready) {
+                            return `
+                                <a href="${esc(t.url)}" class="rm-st-card is-ready card-link" data-code="${esc(code)}" aria-label="Đọc bài: ${esc(cleanTitle)}">
+                                    <span class="rm-st-card-code">${esc(code)}</span>
+                                    <span class="rm-st-card-title">${t.title}</span>
+                                    <span class="rm-st-card-link" aria-hidden="true">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+                                    </span>
+                                </a>`;
+                        } else {
+                            return `
+                                <div class="rm-st-card is-soon" data-code="${esc(code)}">
+                                    <span class="rm-st-card-code">${esc(code)}</span>
+                                    <span class="rm-st-card-title">${t.title}</span>
+                                    <span class="rm-st-card-tag">Sắp có</span>
+                                </div>`;
+                        }
+                    }).join('')}
+                </div>`;
+
+            const hubHtml = `
+                <div class="rm-st-col-hub">
+                    <div class="rm-st-hub" data-station-id="${st.id}">
+                        <span class="rm-st-hub-badge">Chặng ${esc(label)}</span>
+                        <span class="rm-st-hub-title">${st.title}</span>
                     </div>
                 </div>`;
 
-            // Từng chặng bên trong giai đoạn
-            phStations.forEach((st) => {
-                const label = st.label || pad(st.id);
-
-                // Đường dẫn mũi tên đi vào chặng
-                treeContentHtml += `
-                    <div class="rm-tree-connector" aria-hidden="true">
-                        <span class="rm-tree-conn-stem"></span>
-                        <span class="rm-tree-conn-arrow">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-                        </span>
+            if (side === 'right') {
+                treeHtml += `
+                    <div class="rm-st-row" data-station-id="${st.id}" data-side="right">
+                        <div class="rm-st-col-cards">
+                            ${cardsHtml}
+                        </div>
+                        ${hubHtml}
                     </div>`;
-
-                // Cụm Chặng (Station Hub + Nhánh Topic Leaves)
-                treeContentHtml += `
-                    <section class="rm-tree-station" id="tree-station-${st.id}">
-                        <div class="rm-tree-hub">
-                            <span class="rm-tree-hub-code">Chặng ${esc(label)}</span>
-                            <h3 class="rm-tree-hub-title">${st.title}</h3>
-                            ${st.formula ? `<span class="rm-tree-hub-formula">${st.formula}</span>` : ''}
+            } else {
+                treeHtml += `
+                    <div class="rm-st-row" data-station-id="${st.id}" data-side="left">
+                        ${hubHtml}
+                        <div class="rm-st-col-cards">
+                            ${cardsHtml}
                         </div>
-                        <div class="rm-tree-stem" aria-hidden="true"></div>
-                        <div class="rm-tree-leaves">
-                            ${(st.tiles || []).map((t, idx) => {
-                                const code = `${st.label || st.id}.${idx + 1}`;
-                                const ready = !!t.url;
-                                const cleanTitle = t.title.replace(/\$/g, '');
-                                if (ready) {
-                                    return `
-                                        <a href="${esc(t.url)}" class="rm-tree-node is-ready card-link" aria-label="Đọc bài: ${esc(cleanTitle)}">
-                                            <span class="rm-tree-node-code">${esc(code)}</span>
-                                            <span class="rm-tree-node-title">${t.title}</span>
-                                            <span class="rm-tree-node-link" aria-hidden="true">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-                                            </span>
-                                        </a>`;
-                                } else {
-                                    return `
-                                        <div class="rm-tree-node is-soon">
-                                            <span class="rm-tree-node-code">${esc(code)}</span>
-                                            <span class="rm-tree-node-title">${t.title}</span>
-                                            <span class="rm-tree-node-tag">Sắp có</span>
-                                        </div>`;
-                                }
-                            }).join('')}
-                        </div>
-                    </section>`;
-            });
+                    </div>`;
+            }
         });
 
-        return `
-            <div class="rm-tree-toolbar">
-                <div class="rm-tree-stats">
-                    <span class="rm-tree-stat-pill"><strong>${phases.length}</strong> Giai đoạn</span>
-                    <span class="rm-tree-stat-sep">·</span>
-                    <span class="rm-tree-stat-pill"><strong>${stations.length}</strong> Chặng</span>
-                    <span class="rm-tree-stat-sep">·</span>
-                    <span class="rm-tree-stat-pill"><strong>${totalTiles}</strong> Chuyên đề</span>
-                    <span class="rm-tree-stat-badge"><strong>${readyTiles}</strong> bài đã phát hành</span>
+        treeHtml += `
                 </div>
-                <div class="rm-tree-legend">
-                    <span class="rm-tree-legend-item is-ready">
-                        <span class="rm-tree-legend-dot"></span> Đã có bài đọc
-                    </span>
-                    <span class="rm-tree-legend-item is-soon">
-                        <span class="rm-tree-legend-dot"></span> Đang biên soạn
-                    </span>
-                </div>
-            </div>
-            <div class="rm-tree-canvas">
-                ${treeContentHtml}
             </div>`;
+
+        return treeHtml;
     }
 
     /* ----------------------------------------------------------------------
-       3. RENDER CHÍNH
+       3. VẼ CÁC ĐƯỜNG CONG SVG NỐI TRỤC & NHÁNH
+       ---------------------------------------------------------------------- */
+    function drawSerpentineConnections(canvasEl) {
+        if (!canvasEl) return;
+        const svg = canvasEl.querySelector('#rm-serpentine-svg');
+        if (!svg) return;
+
+        const canvasRect = canvasEl.getBoundingClientRect();
+        const w = canvasRect.width;
+        const h = canvasRect.height;
+        if (w === 0 || h === 0) return;
+
+        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+        svg.setAttribute('width', String(w));
+        svg.setAttribute('height', String(h));
+
+        const getAnchor = (el) => {
+            if (!el) return null;
+            const r = el.getBoundingClientRect();
+            return {
+                left: r.left - canvasRect.left,
+                right: r.right - canvasRect.left,
+                top: r.top - canvasRect.top,
+                bottom: r.bottom - canvasRect.top,
+                cx: r.left - canvasRect.left + r.width / 2,
+                cy: r.top - canvasRect.top + r.height / 2
+            };
+        };
+
+        const paths = [];
+
+        // 1. Trục chính uốn lượn: Root -> Station Hubs + Phase Milestones
+        const trunkElements = [];
+        const rootEl = canvasEl.querySelector('#rm-tree-root');
+        if (rootEl) trunkElements.push(rootEl);
+
+        const nodesInOrder = canvasEl.querySelectorAll('.rm-st-hub, .rm-st-phase-milestone');
+        nodesInOrder.forEach(n => trunkElements.push(n));
+
+        for (let i = 0; i < trunkElements.length - 1; i++) {
+            const from = getAnchor(trunkElements[i]);
+            const to = getAnchor(trunkElements[i + 1]);
+            if (!from || !to) continue;
+
+            const x1 = from.cx;
+            const y1 = from.bottom;
+            const x2 = to.cx;
+            const y2 = to.top;
+            const dy = Math.max(y2 - y1, 20);
+
+            // Đường cong S mềm mại
+            const d = `M ${x1} ${y1} C ${x1} ${y1 + dy * 0.5}, ${x2} ${y2 - dy * 0.5}, ${x2} ${y2}`;
+            paths.push(`<path d="${d}" class="rm-trunk-path" />`);
+        }
+
+        // 2. Nhánh nét đứt fanning out từ Hub sang các bài học con
+        const rows = canvasEl.querySelectorAll('.rm-st-row');
+        rows.forEach(row => {
+            const hub = row.querySelector('.rm-st-hub');
+            const cards = row.querySelectorAll('.rm-st-card');
+            const hubA = getAnchor(hub);
+            if (!hubA || !cards.length) return;
+
+            const side = row.dataset.side;
+
+            cards.forEach(card => {
+                const cardA = getAnchor(card);
+                if (!cardA) return;
+
+                let x1, y1, x2, y2, cp1x, cp1y, cp2x, cp2y;
+
+                if (side === 'right') {
+                    // Hub bên phải, bài học bên trái: từ cạnh trái Hub sang cạnh phải Card
+                    x1 = hubA.left;
+                    y1 = hubA.cy;
+                    x2 = cardA.right;
+                    y2 = cardA.cy;
+                    const dx = Math.max(Math.abs(x1 - x2), 20);
+                    cp1x = x1 - dx * 0.45;
+                    cp1y = y1;
+                    cp2x = x2 + dx * 0.45;
+                    cp2y = y2;
+                } else {
+                    // Hub bên trái, bài học bên phải: từ cạnh phải Hub sang cạnh trái Card
+                    x1 = hubA.right;
+                    y1 = hubA.cy;
+                    x2 = cardA.left;
+                    y2 = cardA.cy;
+                    const dx = Math.max(Math.abs(x2 - x1), 20);
+                    cp1x = x1 + dx * 0.45;
+                    cp1y = y1;
+                    cp2x = x2 - dx * 0.45;
+                    cp2y = y2;
+                }
+
+                const cardCode = card.dataset.code || '';
+                const d = `M ${x1} ${y1} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${x2} ${y2}`;
+                paths.push(`<path d="${d}" class="rm-branch-path" data-for-card="${cardCode}" />`);
+            });
+        });
+
+        svg.innerHTML = paths.join('');
+    }
+
+    /* ----------------------------------------------------------------------
+       4. RENDER CHÍNH
        ---------------------------------------------------------------------- */
     function render(container, data) {
         if (!container || !data) return;
@@ -254,7 +365,7 @@
                             <span class="rm-view-tab-icon">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="6" height="6" rx="1"></rect><rect x="15" y="3" width="6" height="6" rx="1"></rect><rect x="9" y="15" width="6" height="6" rx="1"></rect><path d="M6 9v3a3 3 0 0 0 3 3h3m6-6v3a3 3 0 0 1-3 3"></path></svg>
                             </span>
-                            <span class="rm-view-tab-text">Sơ đồ cây (roadmap.sh)</span>
+                            <span class="rm-view-tab-text">Sơ đồ cây (Mindmap)</span>
                         </button>
                         <span class="rm-view-switch-indicator" aria-hidden="true"></span>
                     </div>
@@ -280,7 +391,7 @@
             timelineHtml += renderStation(st, ph.name);
         });
 
-        // Flowchart Tree Section
+        // Serpentine Tree Section
         const treeHtml = renderTree(phases, stations);
 
         container.innerHTML = `
@@ -296,7 +407,7 @@
                         ${timelineHtml}
                     </div>
                 </div>
-                <!-- 2. Chế độ xem Sơ đồ cây (roadmap.sh) -->
+                <!-- 2. Chế độ xem Sơ đồ cây lượn sóng (Mindmap) -->
                 <div class="rm-view-tree" id="rm-view-tree" hidden>
                     ${treeHtml}
                 </div>
@@ -314,7 +425,7 @@
     }
 
     /* ----------------------------------------------------------------------
-       4. SỰ KIỆN TƯƠNG TÁC
+       5. SỰ KIỆN TƯƠNG TÁC
        ---------------------------------------------------------------------- */
     function bind(container) {
         const root = container.querySelector('.rm-root');
@@ -335,7 +446,7 @@
             });
         });
 
-        // 2) Scroll timeline progress (1px subtle cyan hairline)
+        // 2) Scroll timeline progress (View chi tiết)
         const timeline = root.querySelector('.rm-timeline');
         const fill = root.querySelector('.rm-spine-fill');
         const stationEls = Array.from(root.querySelectorAll('.rm-station'));
@@ -373,6 +484,14 @@
         const treeView = root.querySelector('#rm-view-tree');
         const switchEl = root.querySelector('.rm-view-switch');
         const tabs = root.querySelectorAll('.rm-view-tab');
+        const canvasEl = root.querySelector('#rm-serpentine-canvas');
+
+        let resizeTimer = null;
+        const triggerDraw = () => {
+            if (treeView && !treeView.hasAttribute('hidden') && canvasEl) {
+                requestAnimationFrame(() => drawSerpentineConnections(canvasEl));
+            }
+        };
 
         function setView(viewName) {
             if (!detailedView || !treeView || !switchEl) return;
@@ -389,7 +508,8 @@
             if (isTree) {
                 detailedView.setAttribute('hidden', '');
                 treeView.removeAttribute('hidden');
-                typeset(treeView);
+                typeset(treeView, triggerDraw);
+                triggerDraw();
             } else {
                 treeView.setAttribute('hidden', '');
                 detailedView.removeAttribute('hidden');
@@ -411,13 +531,49 @@
                 setView(current === 'detailed' ? 'tree' : 'detailed');
             });
         }
+
+        // Tự động vẽ lại nhánh SVG khi co giãn màn hình hoặc canvas thay đổi
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(triggerDraw, 80);
+        }, { passive: true });
+
+        if (window.ResizeObserver && canvasEl) {
+            const ro = new ResizeObserver(() => triggerDraw());
+            ro.observe(canvasEl);
+        }
+
+        // Hiệu ứng tương tác: Rê chuột vào bài học con làm sáng nhánh nét đứt tương ứng
+        if (canvasEl) {
+            canvasEl.addEventListener('mouseenter', (e) => {
+                const card = e.target.closest('.rm-st-card');
+                if (!card) return;
+                const code = card.dataset.code;
+                const path = canvasEl.querySelector(`.rm-branch-path[data-for-card="${code}"]`);
+                if (path) path.classList.add('is-hovered');
+            }, true);
+
+            canvasEl.addEventListener('mouseleave', (e) => {
+                const card = e.target.closest('.rm-st-card');
+                if (!card) return;
+                const code = card.dataset.code;
+                const path = canvasEl.querySelector(`.rm-branch-path[data-for-card="${code}"]`);
+                if (path) path.classList.remove('is-hovered');
+            }, true);
+        }
     }
 
-    function typeset(el) {
+    function typeset(el, onDone) {
         const run = () => {
             if (window.MathJax && typeof MathJax.typesetPromise === 'function') {
                 if (typeof MathJax.typesetClear === 'function') MathJax.typesetClear([el]);
-                MathJax.typesetPromise([el]).catch(() => {});
+                MathJax.typesetPromise([el]).then(() => {
+                    if (onDone) onDone();
+                }).catch(() => {
+                    if (onDone) onDone();
+                });
+            } else if (onDone) {
+                onDone();
             }
         };
         if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
