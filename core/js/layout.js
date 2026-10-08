@@ -241,6 +241,48 @@
             color: #555;
         }
 
+        /* ── Topbar Nav: 5 Equal & Balanced Icons ── */
+        .topbar-nav {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+        .topbar-nav-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 38px !important;
+            height: 38px !important;
+            border-radius: 8px !important;
+            color: var(--text-dark, #a0a0a0) !important;
+            text-decoration: none !important;
+            transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease !important;
+            box-sizing: border-box !important;
+            cursor: pointer !important;
+            flex-shrink: 0 !important;
+            border: 1px solid transparent !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            line-height: 1 !important;
+        }
+        .topbar-nav-btn:hover {
+            color: var(--accent-cyan, #5ce1e6) !important;
+            background-color: rgba(92, 225, 230, 0.08) !important;
+            border-color: rgba(92, 225, 230, 0.2) !important;
+        }
+        .topbar-nav-btn.active {
+            color: var(--accent-cyan, #5ce1e6) !important;
+            background-color: rgba(92, 225, 230, 0.12) !important;
+            border-color: rgba(92, 225, 230, 0.3) !important;
+        }
+        .topbar-nav-btn svg {
+            display: block !important;
+            width: 18px !important;
+            height: 18px !important;
+            stroke: currentColor !important;
+            flex-shrink: 0 !important;
+        }
+
         /* Mobile Bottom Navigation Bar */
         .mobile-bottom-nav {
             display: none;
@@ -348,10 +390,12 @@
             <nav class="sidebar-nav">
                 <a href="/home.html">&#x2302; Home</a>
                 <a href="/pages/toanhoc.html">&#x2211; Math</a>
-                <a href="/pages/nonmath.html">&#x2734; Non Math</a>
+                <a href="/pages/toanhoc.html?filter=tools">🔧 Tool</a>
                 <a href="/pages/forum.html">⧉ Forum</a>
-                <a href="/pages/saved.html">★ Saved</a>
-                <a href="/pages/roadmap.html" style="color: var(--accent-cyan);">&#x25CE; Roadmap</a>
+                <a href="/pages/nonmath.html">&#x2734; Non Math</a>
+                <div style="height: 1px; background: rgba(255,255,255,0.08); margin: 16px 0 12px 0;"></div>
+                <a href="/pages/roadmap.html" style="color: var(--accent-cyan);">◎ Số Học Olympic</a>
+                <a href="/pages/profile.html">👤 Profile</a>
                 <a href="#" id="sidebar-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">&#x2637; Login</a>
             </nav>
         </div>
@@ -364,27 +408,32 @@
     <header class="topbar">
         <a href="/pages/vetoi.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s; margin-right: 20px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Tôi">SMP</a>
         
-        <nav class="topbar-nav" style="flex: 1; justify-content: flex-start; gap: 20px;">
-            <a href="/home.html">&#x2302; Home</a>
-            <a href="/pages/toanhoc.html">&#x2211; Math</a>
-            <a href="/pages/nonmath.html">&#x2734; Non Math</a>
-            <a href="/pages/forum.html">⧉ Forum</a>
-            <a href="/pages/saved.html">★ Saved</a>
-            <a href="/pages/roadmap.html" style="color: var(--accent-cyan);">&#x25CE; Roadmap</a>
+        <nav class="topbar-nav" style="flex: 1; justify-content: flex-start;">
+            <a href="/home.html" class="topbar-nav-btn" title="Trang chủ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </a>
+            <a href="/pages/toanhoc.html" class="topbar-nav-btn" title="Toán học">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 4H5l7 8-7 8h14"/></svg>
+            </a>
+            <a href="/pages/toanhoc.html?filter=tools" class="topbar-nav-btn" title="Công cụ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </a>
+            <a href="/pages/roadmap.html" class="topbar-nav-btn" title="Lộ trình">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+            </a>
+            <a href="/pages/profile.html" id="topbar-auth-btn" class="topbar-nav-btn" title="Hồ sơ cá nhân" onclick="if(!localStorage.getItem('smp_access_token')){if(window.openAuthModal){window.openAuthModal('login');return false;}}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </a>
         </nav>
 
         <div class="topbar-controls" style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
-            <a href="#" id="mobile-topbar-auth-btn" class="mobile-only-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;" style="color: var(--text-muted); text-decoration: none; font-size: 1.25rem; display: none; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-cyan)'" onmouseout="this.style.color='var(--text-muted)'" title="Đăng nhập">&#x2637;</a>
+            <a href="#" id="mobile-topbar-auth-btn" class="mobile-only-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;" style="color: var(--text-muted); text-decoration: none; font-size: 1.25rem; display: none; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-cyan)'" onmouseout="this.style.color='var(--text-muted)'" title="Tài khoản">&#x2637;</a>
             
             <div class="search-wrapper" style="margin-right: 10px;">
                 <input id="search-input" class="search-input" type="text" placeholder="Tìm kiếm bài viết...">
                 <span class="search-icon" onclick="this.parentElement.classList.toggle('mobile-active'); document.getElementById('search-input').focus();">&#x2315;</span>
                 <div id="search-results" class="search-results"></div>
             </div>
-            
-            <nav class="topbar-nav" style="gap: 20px; margin-right: 15px;">
-                <a href="#" id="topbar-auth-btn" onclick="if(window.openAuthModal) window.openAuthModal('login'); return false;">&#x2637; Login</a>
-            </nav>
             
             <div class="topbar-actions" style="display: flex; gap: 10px; align-items: center;">
                 <div class="notif-wrapper" style="position: relative;">
@@ -413,20 +462,20 @@
             <span class="label">Home</span>
         </a>
         <a href="/pages/toanhoc.html">
-            <span class="icon">&#x2211;</span>
+            <span class="icon" style="font-family:'JetBrains Mono',monospace; font-weight:700;">∑</span>
             <span class="label">Math</span>
         </a>
-        <a href="/pages/forum.html">
-            <span class="icon">⧉</span>
-            <span class="label">Forum</span>
+        <a href="/pages/toanhoc.html?filter=tools">
+            <span class="icon">🔧</span>
+            <span class="label">Tool</span>
         </a>
-        <a href="/pages/saved.html">
-            <span class="icon">★</span>
-            <span class="label">Saved</span>
+        <a href="/pages/roadmap.html">
+            <span class="icon">🗺</span>
+            <span class="label">Roadmap</span>
         </a>
-        <a href="/pages/nonmath.html">
-            <span class="icon">&#x2734;</span>
-            <span class="label">Non Math</span>
+        <a href="/pages/profile.html" id="mobile-bottom-auth-btn" onclick="if(!localStorage.getItem('smp_access_token')){if(window.openAuthModal){window.openAuthModal('login');return false;}}">
+            <span class="icon">👤</span>
+            <span class="label">Profile</span>
         </a>
     </nav>`;
 
@@ -808,7 +857,20 @@ const AUTH_MODAL_HTML = `
         <div id="auth-profile-tab" style="padding:28px 24px; display:none; text-align:center;">
             <div style="font-size:3rem; font-family:'JetBrains Mono',monospace; color:var(--accent-cyan,#5ce1e6); margin-bottom:12px; font-weight:700; letter-spacing:2px; text-shadow:0 0 16px rgba(92,225,230,0.6);">Φ</div>
             <div style="font-family:'JetBrains Mono',monospace; font-size:1.1rem; color:var(--accent-cyan,#5ce1e6); margin-bottom:6px;" id="auth-profile-username">...</div>
-            <div style="font-size:0.8rem; color:var(--text-muted,#888); margin-bottom:24px;">Đã đăng nhập</div>
+            <div style="font-size:0.8rem; color:var(--text-muted,#888); margin-bottom:18px;">Đã đăng nhập</div>
+            
+            <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px; text-align:left;">
+                <a href="/pages/profile.html" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:rgba(92,225,230,0.1); border:1px solid rgba(92,225,230,0.25); border-radius:6px; color:var(--accent-cyan,#5ce1e6); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:0.82rem;">
+                    <span>👤</span> Hồ Sơ Chi Tiết
+                </a>
+                <a href="/pages/saved.html" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:rgba(255,255,255,0.03); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:0.82rem;">
+                    <span>★</span> Bài Viết Đã Lưu
+                </a>
+                <a href="/pages/nonmath.html" style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:rgba(255,255,255,0.03); border:1px solid var(--border-light,#2e2e2e); border-radius:6px; color:var(--text-dark,#eee); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:0.82rem;">
+                    <span>✦</span> Chuyên Mục Non Math
+                </a>
+            </div>
+
             <button onclick="window.handleLogout()" class="modal-logout-btn">ĐĂNG XUẤT</button>
         </div>
     </div>
@@ -837,32 +899,69 @@ function initLayout() {
     const sidebarAuthBtn = document.getElementById('sidebar-auth-btn');
     const topbarAuthBtn = document.getElementById('topbar-auth-btn');
     const mobileTopbarAuthBtn = document.getElementById('mobile-topbar-auth-btn');
+    const userSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
     
     if (token && username) {
         if (sidebarAuthBtn) {
             sidebarAuthBtn.innerHTML = `&#x2637; ${username}`;
             sidebarAuthBtn.onclick = function(e) {
                 e.preventDefault();
-                if (window.openAuthModal) window.openAuthModal('profile');
+                window.location.href = '/pages/profile.html';
                 return false;
             };
         }
         if (topbarAuthBtn) {
-            topbarAuthBtn.innerHTML = `&#x2637; ${username}`;
+            topbarAuthBtn.innerHTML = userSvg;
+            topbarAuthBtn.title = `Hồ sơ (${username})`;
             topbarAuthBtn.onclick = function(e) {
                 e.preventDefault();
-                if (window.openAuthModal) window.openAuthModal('profile');
+                window.location.href = '/pages/profile.html';
                 return false;
             };
         }
         if (mobileTopbarAuthBtn) {
             mobileTopbarAuthBtn.onclick = function(e) {
                 e.preventDefault();
-                if (window.openAuthModal) window.openAuthModal('profile');
+                window.location.href = '/pages/profile.html';
+                return false;
+            };
+        }
+    } else {
+        if (topbarAuthBtn) {
+            topbarAuthBtn.innerHTML = userSvg;
+            topbarAuthBtn.title = 'Đăng nhập / Hồ sơ';
+            topbarAuthBtn.onclick = function(e) {
+                e.preventDefault();
+                if (window.openAuthModal) window.openAuthModal('login');
                 return false;
             };
         }
     }
+
+    // Set active link for topbar 5 icons
+    try {
+        const curPath = window.location.pathname.toLowerCase();
+        const searchParams = new URLSearchParams(window.location.search);
+        const filterParam = searchParams.get('filter');
+
+        document.querySelectorAll('.topbar-nav .topbar-nav-btn').forEach(btn => {
+            const href = (btn.getAttribute('href') || '').toLowerCase();
+            if (!href) return;
+            if (filterParam === 'tools' && href.includes('filter=tools')) {
+                btn.classList.add('active');
+            } else if (filterParam !== 'tools' && href.includes('filter=tools')) {
+                btn.classList.remove('active');
+            } else if (href.includes('toanhoc.html') && curPath.includes('toanhoc.html') && filterParam !== 'tools') {
+                btn.classList.add('active');
+            } else if (href.includes('home.html') && (curPath.endsWith('home.html') || curPath === '/' || curPath.endsWith('/index.html') || curPath === '')) {
+                btn.classList.add('active');
+            } else if (href.includes('roadmap.html') && curPath.includes('roadmap.html')) {
+                btn.classList.add('active');
+            } else if (href.includes('profile.html') && curPath.includes('profile.html')) {
+                btn.classList.add('active');
+            }
+        });
+    } catch(e) {}
 
     // Inject Auth Modal into body
     document.body.insertAdjacentHTML('beforeend', AUTH_MODAL_HTML);

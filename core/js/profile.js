@@ -11,7 +11,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
     
-    // 1. Fetch user profile data (points, streak, theme)
+    // Helper format YYYY-MM
+    function formatYearMonth(dateInput) {
+        const d = dateInput ? new Date(dateInput) : new Date();
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        return `${y}-${m}`;
+    }
+
+    // 1. Fetch user profile data (points, username, theme, createdAt)
     try {
         const res = await fetch(`${API_BASE_URL}/api/auth/me?_t=${Date.now()}`, {
             headers: { 'Authorization': `Bearer ${token}` },
@@ -19,34 +27,60 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
         if (res.ok) {
             const user = await res.json();
-            document.getElementById('profile-username').textContent = user.username;
-            document.getElementById('stat-points').textContent = user.points || 0;
             
-            // Set theme toggle button
-            // Set theme toggle button based on current active state
-            const themeToggleBtn = document.getElementById('profile-dark-toggle');
-            if (themeToggleBtn) {
-                const isDark = document.body.classList.contains('dark-mode') || 
-                               document.documentElement.classList.contains('dark-mode') || 
-                               localStorage.getItem('smp-dark-mode') === 'true';
-                themeToggleBtn.textContent = isDark ? '☀ Chuyển chế độ sáng' : '☽ Chuyển chế độ tối';
+            // Set Avatar initial & Username & Submeta
+            const userInitial = (user.username || 'S').charAt(0).toUpperCase();
+            const avatarEl = document.getElementById('profile-avatar');
+            if (avatarEl) avatarEl.textContent = userInitial;
 
-                const localTheme = localStorage.getItem('smp-dark-mode');
-                if (localTheme === null && user.theme_preference) {
-                    if (window.DarkMode) {
-                        if (user.theme_preference === 'dark') window.DarkMode.enable(true);
-                        else window.DarkMode.disable(true);
-                    }
-                } else if (localTheme !== null && user.theme_preference !== (isDark ? 'dark' : 'light')) {
-                    updateThemePreference(isDark ? 'dark' : 'light');
+            const nameEl = document.getElementById('profile-username');
+            if (nameEl) nameEl.textContent = user.username;
+
+            const submetaEl = document.getElementById('profile-submeta');
+            if (submetaEl) {
+                const joinStr = formatYearMonth(user.createdAt);
+                submetaEl.textContent = `@${user.username.toLowerCase()} · tham gia ${joinStr}`;
+            }
+
+            const inputNewName = document.getElementById('new-username');
+            if (inputNewName) inputNewName.value = user.username;
+
+            // Stat: Points
+            const pointsVal = user.points || 0;
+            const pointsEl = document.getElementById('stat-points');
+            if (pointsEl) pointsEl.textContent = pointsVal;
+
+            const pointsHintEl = document.getElementById('stat-points-hint');
+            if (pointsHintEl) {
+                pointsHintEl.textContent = pointsVal > 0 ? `${pointsVal} điểm tích lũy` : 'Giải bài đầu tiên';
+            }
+            
+            // Sync Dark Mode switch
+            const darkSwitch = document.getElementById('profile-dark-switch');
+            const isDark = document.body.classList.contains('dark-mode') || 
+                           document.documentElement.classList.contains('dark-mode') || 
+                           localStorage.getItem('smp-dark-mode') === 'true';
+            
+            if (darkSwitch) {
+                darkSwitch.checked = isDark;
+            }
+
+            const localTheme = localStorage.getItem('smp-dark-mode');
+            if (localTheme === null && user.theme_preference) {
+                if (window.DarkMode) {
+                    if (user.theme_preference === 'dark') window.DarkMode.enable(true);
+                    else window.DarkMode.disable(true);
                 }
+                if (darkSwitch) darkSwitch.checked = (user.theme_preference === 'dark');
+            } else if (localTheme !== null && user.theme_preference !== (isDark ? 'dark' : 'light')) {
+                updateThemePreference(isDark ? 'dark' : 'light');
             }
         }
     } catch (e) {
         console.error("Failed to load user data", e);
     }
     
-    // 2. Fetch Activity for Heatmap
+    // 2. Fetch Activity for Heatmap & Streak Stats
     try {
         const res = await fetch(`${API_BASE_URL}/api/activity/`, {
             headers: { 'Authorization': `Bearer ${token}` },
@@ -55,13 +89,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (res.ok) {
             const activities = await res.json();
             renderHeatmap(activities);
-            calculateStreak(activities);
+            calculateAndRenderStreaks(activities);
         } else {
             renderHeatmap([]);
+            calculateAndRenderStreaks([]);
         }
     } catch (e) {
         console.error("Failed to load activity", e);
         renderHeatmap([]);
+        calculateAndRenderStreaks([]);
     }
     
     // Check admin access
@@ -78,90 +114,255 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
     }
+
+    // Click outside to close streak guide modal
+    const streakModal = document.getElementById('streak-guide-modal');
+    if (streakModal) {
+        streakModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                window.toggleStreakGuide();
+            }
+        });
+    }
 });
 
-function getPast365Days() {
-    const dates = [];
-    const today = new Date();
-    for (let i = 364; i >= 0; i--) {
-        const d = new Date(today);
-        d.setDate(today.getDate() - i);
-        // Format YYYY-MM-DD
-        const dateStr = d.toISOString().split('T')[0];
-        dates.push(dateStr);
+// ============================================
+// TAB NAVIGATION
+// ============================================
+window.switchMainTab = function(tab) {
+    const tabBtns = document.querySelectorAll('.prof-tab-btn[data-tab]');
+    tabBtns.forEach(btn => {
+        if (btn.getAttribute('data-tab') === tab) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    const overviewSec = document.getElementById('tab-sec-overview');
+    const settingsSec = document.getElementById('tab-sec-settings');
+    const adminSec = document.getElementById('admin-dashboard-section');
+
+    if (overviewSec) overviewSec.style.display = 'none';
+    if (settingsSec) settingsSec.style.display = 'none';
+    if (adminSec) adminSec.style.display = 'none';
+
+    if (tab === 'overview' && overviewSec) {
+        overviewSec.style.display = 'block';
+    } else if (tab === 'settings' && settingsSec) {
+        settingsSec.style.display = 'block';
+    } else if (tab === 'admin' && adminSec) {
+        adminSec.style.display = 'block';
+        loadAdminDashboard();
     }
-    return dates;
+};
+
+window.switchProfileTab = function(tab) {
+    if (tab === 'user') window.switchMainTab('overview');
+    else window.switchMainTab(tab);
+};
+
+// ============================================
+// HEATMAP & STREAK LOGIC
+// ============================================
+function formatDateYMD(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
 }
 
 function renderHeatmap(activities) {
     const heatmap = document.getElementById('activity-heatmap');
     if (!heatmap) return;
-    
     heatmap.innerHTML = '';
     
-    // Create dictionary for fast lookup
+    // Map dates to counts
     const actDict = {};
     activities.forEach(a => {
         actDict[a.date] = a.solve_count;
     });
     
-    const dates = getPast365Days();
+    // 52 weeks * 7 days = 364 cells aligned to Monday..Sunday
+    const now = new Date();
+    const currentDayOfWeek = (now.getDay() + 6) % 7; // Mon=0, Sun=6
     
-    dates.forEach(date => {
-        const cell = document.createElement('div');
-        cell.className = 'heatmap-cell';
+    const endDate = new Date(now);
+    endDate.setDate(now.getDate() + (6 - currentDayOfWeek)); // Sunday of current week
+    
+    const startDate = new Date(endDate);
+    startDate.setDate(endDate.getDate() - (52 * 7 - 1)); // Monday 51 weeks before
+    
+    const tooltip = document.getElementById('prof-heatmap-tooltip');
+    
+    function positionTooltip(e) {
+        if (!tooltip) return;
+        tooltip.style.left = `${e.clientX}px`;
+        tooltip.style.top = `${e.clientY - 12}px`;
+    }
+
+    for (let i = 0; i < 364; i++) {
+        const d = new Date(startDate);
+        d.setDate(startDate.getDate() + i);
+        const dateStr = formatDateYMD(d);
+        const count = actDict[dateStr] || 0;
         
-        const count = actDict[date] || 0;
         let level = 0;
         if (count >= 5) level = 4;
         else if (count >= 3) level = 3;
         else if (count >= 2) level = 2;
         else if (count >= 1) level = 1;
         
+        const cell = document.createElement('div');
+        cell.className = 'heatmap-cell';
         cell.setAttribute('data-level', level);
-        cell.setAttribute('title', `${date}: ${count} bình luận`);
+        cell.setAttribute('data-date', dateStr);
+        cell.setAttribute('data-count', count);
+        
+        if (tooltip) {
+            cell.addEventListener('mouseenter', (e) => {
+                const countText = count > 0 ? `${count} bài` : '0 bài';
+                tooltip.textContent = `${dateStr} · ${countText}`;
+                tooltip.style.display = 'block';
+                positionTooltip(e);
+            });
+            cell.addEventListener('mousemove', (e) => {
+                positionTooltip(e);
+            });
+            cell.addEventListener('mouseleave', () => {
+                tooltip.style.display = 'none';
+            });
+        }
         
         heatmap.appendChild(cell);
-    });
+    }
 }
 
-function calculateStreak(activities) {
-    // Basic streak calculation from today backwards
-    const todayStr = new Date().toISOString().split('T')[0];
+function calculateAndRenderStreaks(activities) {
     const actDict = {};
-    activities.forEach(a => { actDict[a.date] = a.solve_count; });
+    let totalSolved = 0;
+    activities.forEach(a => {
+        actDict[a.date] = a.solve_count;
+        totalSolved += (a.solve_count || 0);
+    });
+
+    const now = new Date();
+    const todayStr = formatDateYMD(now);
     
-    let streak = 0;
-    const today = new Date();
-    
-    for (let i = 0; i < 365; i++) {
-        const d = new Date(today);
-        d.setDate(today.getDate() - i);
-        const dateStr = d.toISOString().split('T')[0];
-        
-        if ((actDict[dateStr] || 0) > 0) {
-            streak++;
-        } else if (i === 0) {
-            // It's ok if today is 0, we check yesterday
-            continue;
-        } else {
-            break;
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    const yesterdayStr = formatDateYMD(yesterday);
+
+    // 1. Current streak calculation
+    let currentStreak = 0;
+    let checkDate = null;
+    if ((actDict[todayStr] || 0) > 0) {
+        checkDate = new Date(now);
+    } else if ((actDict[yesterdayStr] || 0) > 0) {
+        checkDate = yesterday;
+    }
+
+    if (checkDate) {
+        for (let i = 0; i < 365; i++) {
+            const d = new Date(checkDate);
+            d.setDate(checkDate.getDate() - i);
+            const dateStr = formatDateYMD(d);
+            if ((actDict[dateStr] || 0) > 0) {
+                currentStreak++;
+            } else {
+                break;
+            }
         }
     }
-    
-    document.getElementById('stat-streak').textContent = streak;
+
+    // 2. Max streak calculation in past 365 days
+    let maxStreak = 0;
+    let tempStreak = 0;
+    for (let i = 364; i >= 0; i--) {
+        const d = new Date(now);
+        d.setDate(now.getDate() - i);
+        const dateStr = formatDateYMD(d);
+        if ((actDict[dateStr] || 0) > 0) {
+            tempStreak++;
+            if (tempStreak > maxStreak) maxStreak = tempStreak;
+        } else {
+            tempStreak = 0;
+        }
+    }
+
+    // 3. Render into DOM
+    const summaryEl = document.getElementById('heatmap-summary');
+    if (summaryEl) summaryEl.textContent = `${totalSolved} bài trong 12 tháng qua`;
+
+    const streakEl = document.getElementById('stat-streak');
+    if (streakEl) streakEl.textContent = currentStreak;
+
+    const streakHintEl = document.getElementById('stat-streak-hint');
+    if (streakHintEl) streakHintEl.textContent = `Kỷ lục: ${maxStreak} ngày`;
+
+    const solvedEl = document.getElementById('stat-solved');
+    if (solvedEl) solvedEl.textContent = totalSolved;
+
+    const solvedHintEl = document.getElementById('stat-solved-hint');
+    if (solvedHintEl) solvedHintEl.textContent = totalSolved > 0 ? 'Đã hoàn thành' : 'Chưa có bài nào';
+
+    const maxStreakEl = document.getElementById('stat-max-streak');
+    if (maxStreakEl) maxStreakEl.textContent = maxStreak;
+
+    const maxStreakHintEl = document.getElementById('stat-max-streak-hint');
+    if (maxStreakHintEl) {
+        maxStreakHintEl.textContent = maxStreak > 0 ? (maxStreak >= 7 ? 'Phong độ xuất sắc' : 'Duy trì phong độ') : 'Chưa xếp hạng';
+    }
 }
 
-window.toggleProfileTheme = function(evt) {
-    if (window.DarkMode) {
-        window.DarkMode.toggle(evt);
+// ============================================
+// STREAK GUIDE MODAL
+// ============================================
+window.toggleStreakGuide = function() {
+    const modal = document.getElementById('streak-guide-modal');
+    if (!modal) return;
+    const isShowing = modal.style.display === 'flex';
+    if (isShowing) {
+        modal.style.opacity = '0';
+        if (modal.children[0]) modal.children[0].style.transform = 'translateY(20px)';
+        setTimeout(() => { modal.style.display = 'none'; }, 200);
+    } else {
+        modal.style.display = 'flex';
+        requestAnimationFrame(() => {
+            modal.style.opacity = '1';
+            if (modal.children[0]) modal.children[0].style.transform = 'translateY(0)';
+        });
     }
+};
+
+// ============================================
+// SETTINGS: THEME, USERNAME, PASSWORD, DELETE
+// ============================================
+window.toggleProfileThemeSwitch = function(checkbox) {
+    const isDark = checkbox.checked;
+    if (window.DarkMode) {
+        if (isDark) {
+            window.DarkMode.enable();
+        } else {
+            window.DarkMode.disable();
+        }
+    } else {
+        if (isDark) {
+            document.documentElement.classList.add('dark-mode');
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('smp-dark-mode', 'true');
+        } else {
+            document.documentElement.classList.remove('dark-mode');
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('smp-dark-mode', 'false');
+        }
+    }
+    updateThemePreference(isDark ? 'dark' : 'light');
 };
 
 async function updateThemePreference(theme) {
     const token = localStorage.getItem('smp_access_token');
     const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
-    
     if (!token) return;
     
     try {
@@ -186,6 +387,7 @@ async function handleUpdateUsername(e) {
     const msg = document.getElementById('msg-username');
     const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
     
+    if (!input || !token) return;
     btn.disabled = true;
     msg.style.display = 'none';
     
@@ -196,18 +398,31 @@ async function handleUpdateUsername(e) {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ new_username: input.value })
+            body: JSON.stringify({ new_username: input.value.trim() })
         });
         const data = await res.json();
         
         if (!res.ok) throw new Error(data.detail || "Đổi tên thất bại.");
         
-        msg.textContent = data.message;
+        msg.textContent = data.message || "Cập nhật tên thành công!";
         msg.className = 'msg success';
         msg.style.display = 'block';
         
         localStorage.setItem('smp_username', data.new_username);
-        document.getElementById('profile-username').textContent = data.new_username;
+        
+        const usernameEl = document.getElementById('profile-username');
+        if (usernameEl) usernameEl.textContent = data.new_username;
+
+        const avatarEl = document.getElementById('profile-avatar');
+        if (avatarEl) avatarEl.textContent = data.new_username.charAt(0).toUpperCase();
+
+        const submetaEl = document.getElementById('profile-submeta');
+        if (submetaEl) {
+            const currentSubmeta = submetaEl.textContent;
+            const joinPart = currentSubmeta.includes('·') ? currentSubmeta.split('·')[1].trim() : 'tham gia 2026-03';
+            submetaEl.textContent = `@${data.new_username.toLowerCase()} · ${joinPart}`;
+        }
+        
         if (window.applyAuthUI) window.applyAuthUI(data.new_username);
         
     } catch (err) {
@@ -244,7 +459,7 @@ async function handleUpdatePassword(e) {
         
         if (!res.ok) throw new Error(data.detail || "Đổi mật khẩu thất bại.");
         
-        msg.textContent = data.message;
+        msg.textContent = data.message || "Đổi mật khẩu thành công!";
         msg.className = 'msg success';
         msg.style.display = 'block';
         
@@ -260,6 +475,43 @@ async function handleUpdatePassword(e) {
     }
 }
 
+window.handleDeleteAccount = async function() {
+    const confirmed = confirm("CẢNH BÁO: Bạn có chắc chắn muốn xóa tài khoản này không?\n\nHành động này không thể hoàn tác. Mọi điểm thưởng, chuỗi ngày và thông tin cá nhân sẽ bị xóa vĩnh viễn.");
+    if (!confirmed) return;
+    
+    const doubleConfirm = prompt("Vui lòng nhập 'XÓA' để xác nhận xóa tài khoản:");
+    if (doubleConfirm !== 'XÓA') {
+        alert("Thao tác đã được hủy.");
+        return;
+    }
+    
+    const token = localStorage.getItem('smp_access_token');
+    const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
+    
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+            alert("Tài khoản của bạn đã được xóa thành công.");
+            if (window.handleLogout) {
+                window.handleLogout();
+            } else {
+                localStorage.removeItem('smp_access_token');
+                localStorage.removeItem('smp_username');
+                window.location.href = '/home.html';
+            }
+        } else {
+            const data = await res.json().catch(() => ({}));
+            alert("Không thể xóa tài khoản: " + (data.detail || "Vui lòng liên hệ quản trị viên."));
+        }
+    } catch (err) {
+        console.error("Delete account error:", err);
+        alert("Lỗi kết nối khi gửi yêu cầu xóa tài khoản.");
+    }
+};
+
 // ============================================
 // ADMIN DASHBOARD LOGIC
 // ============================================
@@ -272,41 +524,13 @@ async function checkAdminAccess(token, API_BASE_URL) {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
-            document.getElementById('admin-tab-container').style.display = 'flex';
+            const adminTabBtn = document.getElementById('tab-btn-admin');
+            if (adminTabBtn) adminTabBtn.style.display = 'inline-block';
         }
     } catch (e) {
         // Not admin or network error
     }
 }
-
-window.switchProfileTab = function(tab) {
-    const userBtn = document.getElementById('tab-btn-user');
-    const adminBtn = document.getElementById('tab-btn-admin');
-    const classBtn = document.getElementById('tab-btn-class');
-    const userSec = document.getElementById('user-profile-section');
-    const adminSec = document.getElementById('admin-dashboard-section');
-    const classSec = document.getElementById('class-admin-section');
-
-    userBtn.classList.remove('active');
-    adminBtn.classList.remove('active');
-    if(classBtn) classBtn.classList.remove('active');
-    userSec.style.display = 'none';
-    adminSec.style.display = 'none';
-    if(classSec) classSec.style.display = 'none';
-
-    if (tab === 'user') {
-        userBtn.classList.add('active');
-        userSec.style.display = 'block';
-    } else if (tab === 'admin') {
-        adminBtn.classList.add('active');
-        adminSec.style.display = 'block';
-        loadAdminDashboard();
-    } else if (tab === 'class') {
-        if(classBtn) classBtn.classList.add('active');
-        if(classSec) classSec.style.display = 'block';
-        loadClassDashboard();
-    }
-};
 
 async function loadAdminDashboard() {
     const token = localStorage.getItem('smp_access_token');
@@ -345,7 +569,7 @@ window.filterAdminUsers = function(query) {
 
 function renderAdminUsers(users) {
     const tbody = document.getElementById('admin-users-tbody');
-    if(!tbody) return;
+    if (!tbody) return;
     tbody.innerHTML = '';
     
     users.forEach(u => {
@@ -361,13 +585,13 @@ function renderAdminUsers(users) {
         const shortId = u.id.substring(u.id.length - 6);
         
         tr.innerHTML = `
-            <td style="color: var(--text-muted); font-family: monospace;">...${shortId}</td>
-            <td style="font-weight: bold; color: var(--text-dark);">${u.username}</td>
+            <td style="color: var(--prof-muted); font-family: monospace;">...${shortId}</td>
+            <td style="font-weight: bold; color: var(--prof-ink);">${u.username}</td>
             <td>${u.points}</td>
             <td>-</td>
             <td>${statusHtml}</td>
             <td>
-                <button class="admin-action-btn" onclick="openUserInspector('${u.id}')">Kiểm Tra</button>
+                <button class="prof-btn-edit" onclick="openUserInspector('${u.id}')">Kiểm Tra</button>
             </td>
         `;
         tbody.appendChild(tr);
@@ -394,22 +618,22 @@ window.openUserInspector = async function(userId) {
         document.getElementById('insp-joined').textContent = new Date(user.createdAt).toLocaleDateString('vi-VN');
         document.getElementById('insp-points').textContent = user.points;
         
-        // Streak config manually calculate
+        // Streak calculation
         let currentStreak = 0;
-        if(data.activities && data.activities.length > 0) {
-           const actDict = {};
-           data.activities.forEach(a => { actDict[a.date] = a.solve_count; });
-           const today = new Date();
-           for (let i = 0; i < 365; i++) {
-               const d = new Date(today);
-               d.setDate(today.getDate() - i);
-               const dateStr = d.toISOString().split('T')[0];
-               if ((actDict[dateStr] || 0) > 0) {
-                   currentStreak++;
-               } else if (i !== 0) {
-                   break;
-               }
-           }
+        if (data.activities && data.activities.length > 0) {
+            const actDict = {};
+            data.activities.forEach(a => { actDict[a.date] = a.solve_count; });
+            const today = new Date();
+            for (let i = 0; i < 365; i++) {
+                const d = new Date(today);
+                d.setDate(today.getDate() - i);
+                const dateStr = formatDateYMD(d);
+                if ((actDict[dateStr] || 0) > 0) {
+                    currentStreak++;
+                } else if (i !== 0) {
+                    break;
+                }
+            }
         }
         document.getElementById('insp-streak').textContent = currentStreak;
         
@@ -430,25 +654,28 @@ window.openUserInspector = async function(userId) {
         document.getElementById('insp-suspend-chk').checked = user.is_suspended;
         document.getElementById('insp-adjust-points').value = '';
         
-        // Render Heatmap
+        // Render Heatmap in Inspector
         const heatmap = document.getElementById('insp-heatmap');
         heatmap.innerHTML = '';
-        const dates = getPast365Days();
+        const now = new Date();
         const actDict = {};
         data.activities.forEach(a => { actDict[a.date] = a.solve_count; });
-        dates.forEach(date => {
+        for (let i = 364; i >= 0; i--) {
+            const d = new Date(now);
+            d.setDate(now.getDate() - i);
+            const dateStr = formatDateYMD(d);
             const cell = document.createElement('div');
             cell.className = 'heatmap-cell';
-            const count = actDict[date] || 0;
+            const count = actDict[dateStr] || 0;
             let level = 0;
             if (count >= 5) level = 4;
             else if (count >= 3) level = 3;
             else if (count >= 2) level = 2;
             else if (count >= 1) level = 1;
             cell.setAttribute('data-level', level);
-            cell.setAttribute('title', `${date}: ${count} hoạt động`);
+            cell.setAttribute('title', `${dateStr}: ${count} hoạt động`);
             heatmap.appendChild(cell);
-        });
+        }
         
         // Render comments
         const commentsList = document.getElementById('insp-comments-list');
@@ -458,15 +685,15 @@ window.openUserInspector = async function(userId) {
                 const div = document.createElement('div');
                 div.className = 'comment-item';
                 div.innerHTML = `
-                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">
+                    <div style="font-size: 0.8rem; color: var(--prof-muted); margin-bottom: 4px;">
                         ${new Date(c.createdAt).toLocaleString('vi-VN')}
                     </div>
-                    <div style="color: var(--text-dark); margin-bottom: 4px;">${c.content}</div>
+                    <div style="color: var(--prof-ink); margin-bottom: 4px;">${c.content}</div>
                 `;
                 commentsList.appendChild(div);
             });
         } else {
-            commentsList.innerHTML = '<div style="color: var(--text-muted); font-size: 0.9rem;">Chưa có bình luận nào.</div>';
+            commentsList.innerHTML = '<div style="color: var(--prof-muted); font-size: 0.9rem;">Chưa có bình luận nào.</div>';
         }
         
         document.getElementById('admin-inspector-modal').style.display = 'flex';
@@ -536,5 +763,3 @@ async function adminPostRequest(endpoint, body) {
         alert("Lỗi kết nối.");
     }
 }
-
-// Class logic moved to class.js
