@@ -690,14 +690,57 @@
         document.body.insertAdjacentHTML('beforeend', MOBILE_BOTTOM_NAV_HTML);
     }
 
+    // ── Update Topbar Mode (Dynamic switching for Home / In-page post view) ──
+    window.updateTopbarMode = function(isArticle, title, fallbackUrl) {
+        if (isArticle) {
+            document.body.classList.add('is-article-page');
+            const titleEl = document.querySelector('.topbar-article-title');
+            if (titleEl && title) {
+                let clean = title.replace(/^SMP\s*[—–-]\s*/, '').replace(/\s*[—–-]\s*SMP$/, '').trim();
+                titleEl.textContent = clean;
+                titleEl.setAttribute('title', clean);
+            }
+            if (fallbackUrl) {
+                const backBtn = document.querySelector('.topbar-back-btn');
+                if (backBtn) {
+                    backBtn.setAttribute('onclick', `window.handleArticleBack('${fallbackUrl}')`);
+                }
+            }
+        } else {
+            document.body.classList.remove('is-article-page');
+        }
+    };
+
     // ── Handle Article Back ──────────────────────────────────────────────────
     window.handleArticleBack = function(fallbackUrl) {
+        if (window.PostViewer && window.PostViewer._savedContent) {
+            window.PostViewer.restoreRightColumn();
+            return;
+        }
         if (window.history.length > 1 && document.referrer && document.referrer.includes(window.location.host)) {
             window.history.back();
         } else {
             window.location.href = fallbackUrl || '/pages/toanhoc.html';
         }
     };
+
+    // ── Đồng bộ chế độ topbar khi popstate hoặc khôi phục từ bộ nhớ đệm (bfcache) ──
+    window.addEventListener('pageshow', (e) => {
+        const isPost = window.location.pathname.includes('/posts/') || 
+                       !!document.querySelector('meta[name="post-id"]') || 
+                       !!document.querySelector('.exam-paper, .post-container, #smp-post-content');
+        if (isPost) {
+            document.body.classList.add('is-article-page');
+        } else if (!window.PostViewer || !window.PostViewer._savedContent) {
+            document.body.classList.remove('is-article-page');
+        }
+    });
+
+    window.addEventListener('popstate', () => {
+        if (window.PostViewer && window.PostViewer._savedContent) {
+            window.PostViewer.restoreRightColumn(true);
+        }
+    });
 
     // ── Reading Progress Bar on Scroll (Fast & Smooth, zero lag) ─────────────
     window.addEventListener('scroll', () => {

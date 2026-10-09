@@ -104,6 +104,12 @@ body.light-mode .side-widget-title {
 }
 .exam-back-btn:hover { opacity: 1; }
 
+@media (max-width: 768px) {
+    .exam-back-btn {
+        display: none !important;
+    }
+}
+
 .exam-meta {
     display: flex;
     gap: 10px;

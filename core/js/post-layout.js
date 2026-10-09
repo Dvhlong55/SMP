@@ -133,8 +133,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 <div class="main-articles-body">
 
-                    <a href="javascript:history.back()" class="exam-back-btn fade-up">&#8592; Quay Lại</a>
-
                     <div class="exam-meta fade-up" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <span class="exam-tag">${breadcrumbHtml}</span>
                         <div style="display: inline-flex; align-items: center; gap: 14px;">

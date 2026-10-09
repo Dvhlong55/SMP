@@ -1345,11 +1345,20 @@ const PostViewer = {
                     }
                 });
                 
+                // Trích xuất tiêu đề bài viết
+                const docTitle = doc.querySelector('title')?.textContent || doc.querySelector('.exam-paper h2, .exam-paper h1')?.textContent || 'Bài viết';
+                if (typeof window.updateTopbarMode === 'function') {
+                    window.updateTopbarMode(true, docTitle);
+                }
+                // Đẩy trạng thái lịch sử vào browser để nút Back của Google / trình duyệt hoạt động
+                if (!window.history.state || !window.history.state.smpInPagePost) {
+                    window.history.pushState({ smpInPagePost: true, url: url, title: docTitle }, docTitle, url);
+                }
+
                 const newPostContent = doc.getElementById('smp-post-content');
                 let fullRealContent = '';
                 if (newPostContent) {
-                    fullRealContent = '<a href="javascript:void(0)" class="exam-back-btn fade-up">&#8592; Quay Lại Danh Sách</a>' + 
-                                      '<div class="exam-paper fade-up">' + newPostContent.innerHTML + '</div>';
+                    fullRealContent = '<div class="exam-paper fade-up">' + newPostContent.innerHTML + '</div>';
                 } else {
                     fullRealContent = doc.querySelector('.main-articles-body')?.innerHTML || doc.body.innerHTML;
                 }
@@ -1371,15 +1380,25 @@ const PostViewer = {
                     }
                 }, 200);
             } catch(e) {
-                col.innerHTML = `<div style="text-align:center; padding:40px; color:#ff6b6b;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>Lỗi tải bài viết.</div><button class="back-to-list-btn">← Quay Lại Danh Sách</button>`;
+                col.innerHTML = `<div style="text-align:center; padding:40px; color:#ff6b6b;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 6px; margin-top: -2px;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>Lỗi tải bài viết.</div>`;
             }
         }, 250);
     },
 
     // Khôi phục mượt mà danh sách bài viết ban đầu
-    restoreRightColumn() {
+    restoreRightColumn(isPopstateEvent = false) {
         const col = document.querySelector('.main-content-layout .main-articles-body');
         if (col && this._savedContent) {
+            if (typeof window.updateTopbarMode === 'function') {
+                window.updateTopbarMode(false);
+            }
+
+            // Nếu người dùng ấn nút trong web (chứ không phải nút Back của trình duyệt) và trước đó đã pushState
+            if (!isPopstateEvent && window.history.state && window.history.state.smpInPagePost) {
+                window.history.back();
+                return; // Để sự kiện popstate tự gọi restoreRightColumn(true) và thực hiện animation mượt mà
+            }
+
             col.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
             col.style.opacity = '0';
             col.style.transform = 'translateX(20px)';
@@ -1410,6 +1429,8 @@ const PostViewer = {
         }
     }
 };
+
+window.PostViewer = PostViewer;
 
 // === ADD SAVE BUTTONS TO CARDS DYNAMICALLY ===
 function addSaveButtonsToCards() {
