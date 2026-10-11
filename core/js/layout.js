@@ -283,11 +283,16 @@
             flex-shrink: 0 !important;
         }
 
-        /* ── Topbar Sticky ── */
+        /* ── Topbar Sticky & Auto-Hide Headroom (Zero-lag GPU Transform) ── */
         .topbar {
             position: sticky !important;
             top: 0 !important;
             z-index: 1000 !important;
+            transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1) !important;
+            will-change: transform;
+        }
+        .topbar.topbar-hidden {
+            transform: translateY(-100%) !important;
         }
 
         .topbar-desktop-inner {
@@ -314,8 +319,22 @@
             }
         }
 
-        /* Mobile on Article Page: Show article inner with back button and search */
+        /* Mobile: Fixed topbar following viewport + Article mode support */
         @media (max-width: 768px) {
+            .topbar {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                z-index: 1000 !important;
+            }
+            .main-wrapper {
+                padding-top: calc(56px + env(safe-area-inset-top, 0px)) !important;
+            }
+            body.is-article-page .main-wrapper {
+                padding-top: calc(48px + env(safe-area-inset-top, 0px)) !important;
+            }
             body.is-article-page .topbar-desktop-inner {
                 display: none !important;
             }
@@ -692,6 +711,8 @@
 
     // ── Update Topbar Mode (Dynamic switching for Home / In-page post view) ──
     window.updateTopbarMode = function(isArticle, title, fallbackUrl) {
+        const tb = document.querySelector('.topbar');
+        if (tb) tb.classList.remove('topbar-hidden');
         if (isArticle) {
             document.body.classList.add('is-article-page');
             const titleEl = document.querySelector('.topbar-article-title');
@@ -742,13 +763,47 @@
         }
     });
 
-    // ── Reading Progress Bar on Scroll (Fast & Smooth, zero lag) ─────────────
+    // ── Auto-Hide Topbar (Headroom) & Reading Progress Bar on Scroll ─────────
+    let lastScrollY = Math.max(0, window.pageYOffset || document.documentElement.scrollTop || 0);
+    let scrollTicking = false;
+    const topbarNode = document.querySelector('.topbar');
+
     window.addEventListener('scroll', () => {
-        const progressBar = document.getElementById('reading-progress-bar');
-        if (progressBar) {
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
-            progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+        if (!scrollTicking) {
+            window.requestAnimationFrame(() => {
+                const currentScrollY = Math.max(0, window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
+
+                // 1. Update thin teal reading progress bar
+                const progressBar = document.getElementById('reading-progress-bar');
+                if (progressBar) {
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    const progress = docHeight > 0 ? (currentScrollY / docHeight) * 100 : 0;
+                    progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+                }
+
+                // 2. Headroom Auto-Hide on Scroll Down, Reveal on Scroll Up
+                if (topbarNode) {
+                    const delta = currentScrollY - lastScrollY;
+                    if (currentScrollY <= 40) {
+                        topbarNode.classList.remove('topbar-hidden');
+                        lastScrollY = currentScrollY;
+                    } else if (delta > 7 && currentScrollY > 60) {
+                        const searchOpen = document.querySelector('.search-wrapper.mobile-active, .search-wrapper-article.mobile-active');
+                        const notifDropdown = document.getElementById('notif-dropdown');
+                        const notifOpen = notifDropdown && notifDropdown.style.display === 'block';
+                        if (!searchOpen && !notifOpen) {
+                            topbarNode.classList.add('topbar-hidden');
+                        }
+                        lastScrollY = currentScrollY;
+                    } else if (delta < -4) {
+                        topbarNode.classList.remove('topbar-hidden');
+                        lastScrollY = currentScrollY;
+                    }
+                }
+
+                scrollTicking = false;
+            });
+            scrollTicking = true;
         }
     }, { passive: true });
 
