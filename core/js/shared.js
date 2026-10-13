@@ -353,6 +353,20 @@ const ALL_POSTS = [
         page: '/pages/toanhoc.html'
     },
     {
+        title: '[TP. Huế] Đề thi chọn đội tuyển thi HSGQG TP. Huế năm 2026',
+        date: 'October 13, 2026',
+        url: '/posts/math/vmo/hue-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '[Gia Lai] Đề thi chọn đội tuyển thi HSGQG tỉnh Gia Lai năm 2026',
+        date: 'October 13, 2026',
+        url: '/posts/math/vmo/gialai-hsgqg-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '[Tuyên Quang] Đề thi chọn đội tuyển thi HSGQG tỉnh Tuyên Quang năm 2026',
         date: 'September 29, 2026',
         url: '/posts/math/vmo/tuyenquang-hsgqg-2026.html',
