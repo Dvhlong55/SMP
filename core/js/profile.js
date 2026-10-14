@@ -8,6 +8,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = path;
         return;
     }
+
+    // Early check for love button based on cached username
+    if (username && (username.toLowerCase() === 'vuqynu' || username.toUpperCase() === 'SMP')) {
+        const lovePath = window.location.pathname.includes('/SMP/') 
+            ? '/SMP/posts/math/vmo/love/home.html' 
+            : '/posts/math/vmo/love/home.html';
+        const loveBtn = document.getElementById('prof-btn-love');
+        if (loveBtn) { loveBtn.href = lovePath; loveBtn.style.display = 'inline-flex'; }
+        const loveTab = document.getElementById('tab-btn-love');
+        if (loveTab) { loveTab.href = lovePath; loveTab.style.display = 'inline-block'; }
+    }
     
     const API_BASE_URL = window.API_BASE_URL || 'https://smp-backend-kcwn.onrender.com';
     
@@ -81,6 +92,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (adminTabBtn) adminTabBtn.style.display = 'inline-block';
                 const classTabBtn = document.getElementById('tab-btn-class');
                 if (classTabBtn) classTabBtn.style.display = 'inline-block';
+            }
+
+            // Check love button visibility (vuqynu or admin SMP)
+            const isGirlfriend = (user.id === '6a3026dcbd79864b9da81e70') || 
+                                 (user._id === '6a3026dcbd79864b9da81e70') ||
+                                 (user.username && user.username.toLowerCase() === 'vuqynu') || 
+                                 (user.email && user.email.toLowerCase() === 'nhuquynhvu2292007@gmail.com');
+            const isAdmin = user.is_admin || user.role === 'admin' || (user.username && user.username.toUpperCase() === 'SMP');
+
+            const lovePath = window.location.pathname.includes('/SMP/') 
+                ? '/SMP/posts/math/vmo/love/home.html' 
+                : '/posts/math/vmo/love/home.html';
+            const loveBtn = document.getElementById('prof-btn-love');
+            const loveTab = document.getElementById('tab-btn-love');
+
+            if (isGirlfriend || isAdmin) {
+                if (loveBtn) { loveBtn.href = lovePath; loveBtn.style.display = 'inline-flex'; }
+                if (loveTab) { loveTab.href = lovePath; loveTab.style.display = 'inline-block'; }
+            } else {
+                if (loveBtn) loveBtn.style.display = 'none';
+                if (loveTab) loveTab.style.display = 'none';
             }
         }
     } catch (e) {

@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Chặn công cụ tìm kiếm & Bot lập chỉ mục đường dẫn bí mật -->
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <title>💖 Our Sweet Date Planner – 1st Anniversary Secret Page</title>
+
+  <!-- Google Fonts: Pacifico & Quicksand -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bgBlush: '#FFF0F5',
+            bgCream: '#FFE4E9',
+            borderPink: '#FFB6C1',
+            hotPink: '#FF69B4',
+            deepPink: '#FF1493',
+            textBrown: '#5A2A3A',
+          },
+          fontFamily: {
+            script: ['Pacifico', 'cursive'],
+            sans: ['Quicksand', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Thư viện hiệu ứng pháo giấy & xuất ảnh -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E9 100%);
+      color: #5A2A3A;
+      font-family: 'Quicksand', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Glassmorphism Card */
+    .coquette-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 2px solid #FFB6C1;
+      box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
+    }
+
+    /* Option Card Active State */
+    .option-card {
+      background: #FFFFFF;
+      border: 2px solid #FFB6C1;
+      transition: all 0.25s ease;
+    }
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2);
+    }
+    .option-card.active {
+      border-color: #FF1493;
+      background: linear-gradient(to bottom right, #FFF0F5, #FFE4E9);
+      box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.35);
+    }
+
+    /* Shake Animation khi nhập sai mật khẩu */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+    .shake-anim {
+      animation: shake 0.45s ease-in-out;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Hiệu ứng tim, nơ và hoa anh đào rơi nhẹ trên nền */
+    .falling-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .falling-item {
+      position: absolute;
+      top: -10%;
+      user-select: none;
+      animation: fall linear infinite;
+      opacity: 0.65;
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg) translateX(0);
+      }
+      50% {
+        transform: translateY(50vh) rotate(180deg) translateX(15px);
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg) translateX(-15px);
+      }
+    }
+
+    /* Viền răng cưa cho Vé Hẹn Hò */
+    .ticket-wrapper {
+      position: relative;
+      background: #FFFFFF;
+      border: 3px dashed #FF69B4;
+      border-radius: 24px;
+    }
+  </style>
+</head>
+<body class="relative py-6 px-4 md:px-8 flex flex-col items-center justify-center min-h-screen">
+
+  <!-- Hiệu ứng rơi nền -->
+  <div id="falling-bg" class="falling-container"></div>
+
+  <!-- Audio nhạc nền riêng (Tự động phát khi mở khóa thành công) -->
+  <audio id="bg-audio" loop preload="auto">
+    <source src="audio.mp3" type="audio/mpeg">
+    <source src="music.mp3" type="audio/mpeg">
+    <source src="./audio.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Nút Bật/Tắt nhạc nền -->
+  <button id="music-toggle" onclick="toggleMusic()" class="hidden fixed top-4 right-4 z-50 bg-white/90 border-2 border-borderPink text-deepPink px-3.5 py-2 rounded-full shadow-md hover:bg-bgBlush transition flex items-center gap-1.5 text-sm font-bold">
+    <span id="music-icon">🎵</span> <span id="music-label">Nhạc: Bật</span>
+  </button>
+
+  <!-- Thanh Tiến Trình (Ẩn ở màn khóa mật khẩu) -->
+  <div id="progress-Wrapper" class="hidden w-full max-w-3xl z-10 mb-6">
+    <div class="coquette-card rounded-3xl p-4 sm:p-5">
+      <div class="grid grid-cols-5 text-center text-xs sm:text-sm font-bold text-textBrown mb-2.5">
+        <span id="step-label-1" onclick="goToStep(1)" class="transition-all duration-300 cursor-pointer" title="Buổi Sáng">Sáng 🌞</span>
+        <span id="step-label-2" onclick="goToStep(2)" class="transition-all duration-300 cursor-pointer" title="Buổi Trưa">Trưa 🍲</span>
+        <span id="step-label-3" onclick="goToStep(3)" class="transition-all duration-300 cursor-pointer" title="Buổi Chiều">Chiều 🎨</span>
+        <span id="step-label-4" onclick="goToStep(4)" class="transition-all duration-300 cursor-pointer" title="Buổi Tối">Tối 🎬</span>
+        <span id="step-label-5" onclick="finishPlan()" class="transition-all duration-300 cursor-pointer" title="Vé Hẹn Hò">Chốt đơn 💌</span>
+      </div>
+      <div id="progress-track" class="relative w-full h-3 bg-bgCream rounded-full border border-borderPink overflow-visible">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-hotPink to-deepPink rounded-full transition-all duration-500" style="width: 10%;"></div>
+        <div id="progress-bunny" class="absolute -top-3.5 text-2xl transition-all duration-500 select-none pointer-events-none flex items-center justify-center w-8 h-8" style="left: 10%; transform: translateX(-50%);">🐰</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTAINER CHÍNH -->
+  <main class="w-full max-w-3xl z-10">
+
+    <!-- ==========================================
+         MÀN HÌNH 1: CỔNG MẬT KHẨU TÌNH YÊU
+         ========================================== -->
+    <section id="screen-passcode" class="coquette-card rounded-3xl p-6 sm:p-10 text-center max-w-md mx-auto">
+      <div class="text-5xl mb-3 animate-bounce">💖🔒🎀</div>
+      <h1 class="font-script text-3xl sm:text-4xl text-deepPink mb-4">Cổng Bí Mật Tình Yêu</h1>
+
+      <!-- Ô nhập mật khẩu (Tự động định dạng DD/MM/YYYY) -->
+      <div id="passcode-box" class="mb-4">
+        <input
+          id="passcode-input"
+          type="text"
+          inputmode="numeric"
+          placeholder="DD/MM/YYYY"
+          maxlength="10"
+          class="w-full text-center text-2xl font-bold tracking-widest py-3 px-4 rounded-2xl border-2 border-borderPink focus:border-deepPink focus:outline-none bg-bgBlush/60 text-deepPink placeholder-borderPink/70 transition shadow-inner"
+          onkeydown="if(event.key === 'Enter') checkPasscode()"
+        />
+      </div>
+
+      <!-- Thông báo lỗi -->
+      <p id="passcode-error" class="hidden text-xs sm:text-sm font-bold text-red-500 bg-red-50 border border-red-200 rounded-xl p-3 mb-4">
+        Ơ kìaaa! Quên ngày kỷ niệm 1 năm luôn? Nhập lại liền điii đồ béo💢
+      </p>
+
+      <!-- Bàn phím số ảo hình dâu tây (Tự chèn dấu /, icon xóa xinh xắn) -->
+      <div class="grid grid-cols-3 gap-2.5 my-4 max-w-xs mx-auto">
+        <button type="button" onclick="appendKey('1')" class="strawberry-btn py-2.5 rounded-2xl bg-white border-2 border-borderPink hover:bg-bgCream active:scale-95 font-bold text-lg shadow-sm transition">🍓 1</button>
+        <button type="button" onclick="appendKey('2')" class="strawberry-btn py-2.5 rounded-2xl bg-white border-2 border-borderPink hover:bg-bgCream active:scale-95 font-bold text-lg shadow-sm transition">🍓 2</button>
+        <button type="button" onclick="appendKey('3')" class="strawberry-btn py-2.5 rounded-2xl bg-white border-2 border-borderPink hover:bg-bgCream active:scale-95 font-bold text-lg shadow-sm transition">🍓 3</button>
+        <button type="button" onclick="appendKey('4')" class="strawberry-btn py-2.5 rounded-2xl bg-white border-2 border-borderPink hover:bg-bgCream active:scale-95 font-bold text-lg shadow-sm transition">🍓 4</button>
+        <button type="button" onclick="appendKey('5')" class="strawberry-btn py-2.5 rounded-2xl bg-white border-2 border-borderPink hover:bg-bgCream active:scale-95 font-bold text-lg shadow-sm transition">🍓 5</button>
+        <button type="button" onclick="appendKey('6')" class="strawberry-btn py-2.5 rounded-2xl bg-white border-2 border-borderPink hover:bg-bgCream active:scale-95 font-bold text-lg shadow-sm transition">🍓 6</button>
+        <button type="button" onclick="appendKey('7')" class="strawberry-btn py-2.5 rounded-2xl bg-white border-2 border-borderPink hover:bg-bgCream active:scale-95 font-bold text-lg shadow-sm transition">🍓 7</button>
+        <button type="button" onclick="appendKey('8')" class="strawberry-btn py-2.5 rounded-2xl bg-white border-2 border-borderPink hover:bg-bgCream active:scale-95 font-bold text-lg shadow-sm transition">🍓 8</button>
+        <button type="button" onclick="appendKey('9')" class="strawberry-btn py-2.5 rounded-2xl bg-white border-2 border-borderPink hover:bg-bgCream active:scale-95 font-bold text-lg shadow-sm transition">🍓 9</button>
+        <button type="button" onclick="clearPasscode()" class="strawberry-btn py-2.5 rounded-2xl bg-bgBlush border-2 border-borderPink hover:bg-bgCream active:scale-95 font-bold text-sm text-deepPink shadow-sm flex items-center justify-center gap-1 transition" title="Xóa tất cả">
+          <span class="text-base">✨</span>
+          <span>Xóa hết</span>
+        </button>
+        <button type="button" onclick="appendKey('0')" class="strawberry-btn py-2.5 rounded-2xl bg-white border-2 border-borderPink hover:bg-bgCream active:scale-95 font-bold text-lg shadow-sm transition">🍓 0</button>
+        <button type="button" onclick="backspaceKey()" class="strawberry-btn py-2.5 rounded-2xl bg-bgBlush border-2 border-borderPink hover:bg-bgCream active:scale-95 font-bold text-sm text-deepPink shadow-sm flex items-center justify-center gap-1.5 transition" title="Xóa một số">
+          <svg class="w-5 h-5 text-deepPink inline-block" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414-6.414A2 2 0 0110.828 5H20a2 2 0 012 2v10a2 2 0 01-2 2h-9.172a2 2 0 01-1.414-.586L3 12z" />
+          </svg>
+          <span>Xóa</span>
+        </button>
+      </div>
+
+      <button
+        onclick="checkPasscode()"
+        class="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-hotPink to-deepPink text-white font-bold text-lg shadow-lg hover:opacity-95 active:scale-98 transition mt-2"
+      >
+        Mở Khóa Trái Tim 💝
+      </button>
+    </section>
+
+    <!-- ==========================================
+         MÀN HÌNH CHÀO MỪNG & ĐẾM NGƯỢC
+         ========================================== -->
+    <section id="screen-welcome" class="hidden coquette-card rounded-3xl p-6 sm:p-10 text-center">
+      <div class="inline-block bg-bgCream border border-borderPink text-deepPink px-4 py-1 rounded-full text-xs sm:text-sm font-bold mb-3">
+        🎀 Kỷ niệm 1 năm (maybe) • 15/10/2025 🎀
+      </div>
+      <h1 class="font-script text-3xl sm:text-5xl text-deepPink mb-3">
+        Happy 1st Anniversary!
+      </h1>
+      <p class="text-base sm:text-lg font-semibold max-w-xl mx-auto mb-6">
+        Chào mừng bbi đến với thế giới secrete của hl! Cùng lên lịch trình thật thú zị cho buổi hẹn hò vào <strong>Chủ Nhật, 25/10/2026</strong> nha! 🌸
+      </p>
+
+      <!-- Đồng hồ đếm ngược tới 07:30 sáng Chủ Nhật 25/10/2026 -->
+      <div class="bg-white/80 border-2 border-borderPink rounded-2xl p-4 sm:p-6 max-w-lg mx-auto mb-7 shadow-sm">
+        <p class="text-xs sm:text-sm font-bold text-deepPink uppercase tracking-wider mb-3">
+          ⏳ Đếm ngược tới giờ xuất phát (07:30 • 25/10/2026)
+        </p>
+        <div class="grid grid-cols-4 gap-2 sm:gap-4 text-center">
+          <div class="bg-bgBlush rounded-xl p-2.5 border border-borderPink">
+            <div id="cd-days" class="text-2xl sm:text-3xl font-bold text-deepPink">00</div>
+            <div class="text-xs font-semibold">Ngày</div>
+          </div>
+          <div class="bg-bgBlush rounded-xl p-2.5 border border-borderPink">
+            <div id="cd-hours" class="text-2xl sm:text-3xl font-bold text-deepPink">00</div>
+            <div class="text-xs font-semibold">Giờ</div>
+          </div>
+          <div class="bg-bgBlush rounded-xl p-2.5 border border-borderPink">
+            <div id="cd-mins" class="text-2xl sm:text-3xl font-bold text-deepPink">00</div>
+            <div class="text-xs font-semibold">Phút</div>
+          </div>
+          <div class="bg-bgBlush rounded-xl p-2.5 border border-borderPink">
+            <div id="cd-secs" class="text-2xl sm:text-3xl font-bold text-deepPink">00</div>
+            <div class="text-xs font-semibold">Giây</div>
+          </div>
+        </div>
+      </div>
+
+      <button
+        onclick="goToStep(1)"
+        class="py-4 px-8 rounded-full bg-gradient-to-r from-hotPink to-deepPink text-white font-bold text-lg shadow-lg hover:scale-105 transition transform"
+      >
+        Bắt đầu lên đồ đi chơi thôiii 💕
+      </button>
+    </section>
+
+    <!-- ==========================================
+         BƯỚC 1: BUỔI SÁNG (07:30 - 10:30)
+         ========================================== -->
+    <section id="screen-step-1" class="hidden coquette-card rounded-3xl p-6 sm:p-8">
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+        <span class="bg-deepPink text-white text-xs font-bold px-3 py-1 rounded-full">☀️ Buổi Sáng • 07:30 – 10:30</span>
+        <span class="text-xs font-bold text-deepPink">Bước 1 / 4</span>
+      </div>
+      <h2 class="text-xl sm:text-2xl font-bold text-deepPink mb-1">
+        Buổi Sáng Của Tụi Mình ☀️
+      </h2>
+      <p class="text-xs sm:text-sm font-semibold text-textBrown/75 mb-5">
+        🧺 Tụi mình ăn sáng và dạo mát picnic từ 07:30 đến 10:30 rồi đi ăn trưa kẻo nắng nha bbi ☀️
+      </p>
+
+      <!-- 1. Chọn món ăn sáng -->
+      <div class="mb-5">
+        <h3 class="text-base sm:text-lg font-bold text-deepPink mb-2">
+          🥢 1. Sáng nay bbi muốn ăn sáng món gì nè?
+        </h3>
+        <div id="breakfast-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+      </div>
+
+      <!-- 2. Chọn nơi dạo mát / picnic -->
+      <div class="mb-5">
+        <h3 class="text-base sm:text-lg font-bold text-deepPink mb-2">
+          🌿 2. Ăn xong mình ghé đâu ngắm cảnh / picnic chill?
+        </h3>
+        <div id="morning-options" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
+      </div>
+
+      <!-- 3. Checkboxes đồ uống & phụ kiện mang theo -->
+      <div class="bg-bgBlush/70 border-2 border-borderPink rounded-2xl p-4 mb-6">
+        <h4 class="font-bold text-xs sm:text-sm text-deepPink uppercase tracking-wider mb-2.5">
+          🥤 Đồ uống & Phụ kiện mang theo:
+        </h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm font-semibold">
+          <label class="flex items-center gap-2 cursor-pointer bg-white p-2.5 rounded-xl border border-borderPink hover:bg-bgCream/50 transition">
+            <input type="checkbox" class="picnic-item accent-deepPink w-4 h-4" value="☕ Cafe / Trà trái cây / Matcha" checked />
+            <span>☕ Cafe & Trà trái cây, anything for u even nước lọc</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer bg-white p-2.5 rounded-xl border border-borderPink hover:bg-bgCream/50 transition">
+            <input type="checkbox" class="picnic-item accent-deepPink w-4 h-4" value="🥐🍙 Bánh sừng bò, bánh nắm" checked />
+            <span>🥐🍙 Bánh sừng bò, bánh nắm,... nếu có time :></span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer bg-white p-2.5 rounded-xl border border-borderPink hover:bg-bgCream/50 transition">
+            <input type="checkbox" class="picnic-item accent-deepPink w-4 h-4" value="🧺 Thảm caro hồng + Hoa tươi" checked />
+            <span>🧺 Thảm caro hồng + Hoa tươi chụp ảnh</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer bg-white p-2.5 rounded-xl border border-borderPink hover:bg-bgCream/50 transition">
+            <input type="checkbox" class="picnic-item accent-deepPink w-4 h-4" value="📸 Máy ảnh / Điện thoại 100% pin" checked />
+            <span>📸 Máy ảnh / Điện thoại full pin sống ảo tung chảo</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <button onclick="goToStep(2)" class="py-3 px-7 rounded-2xl bg-gradient-to-r from-hotPink to-deepPink text-white font-bold shadow-md hover:opacity-95 transition">
+          Tiếp tục chọn chỗ ăn trưa 🍲 ➔
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         BƯỚC 2: BUỔI TRƯA (11:30 - 13:30)
+         ========================================== -->
+    <section id="screen-step-2" class="hidden coquette-card rounded-3xl p-6 sm:p-8">
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+        <span class="bg-deepPink text-white text-xs font-bold px-3 py-1 rounded-full">🍲 Buổi Trưa • 11:30 – 13:30</span>
+        <span class="text-xs font-bold text-deepPink">Bước 2 / 4</span>
+      </div>
+      <h2 class="text-xl sm:text-2xl font-bold text-deepPink mb-5">
+        Picnic xong đói bụng rùiii, trưa nay mình đi ăn Buffet / Nhà hàng nào ở trung tâm đây?
+      </h2>
+
+      <div id="lunch-options" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6"></div>
+
+      <div class="flex justify-between gap-3">
+        <button onclick="goToStep(1)" class="py-3 px-5 rounded-2xl bg-white border-2 border-borderPink font-bold text-sm hover:bg-bgBlush transition">
+          ⬅ Quay lại
+        </button>
+        <button onclick="goToStep(3)" class="py-3 px-7 rounded-2xl bg-gradient-to-r from-hotPink to-deepPink text-white font-bold shadow-md hover:opacity-95 transition">
+          Tiếp tục chọn Workshop chiều 🎨 ➔
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         BƯỚC 3: BUỔI CHIỀU (14:00 - 17:00)
+         ========================================== -->
+    <section id="screen-step-3" class="hidden coquette-card rounded-3xl p-6 sm:p-8">
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+        <span class="bg-deepPink text-white text-xs font-bold px-3 py-1 rounded-full">🎨 Buổi Chiều • 14:00 – 17:00</span>
+        <span class="text-xs font-bold text-deepPink">Bước 3 / 4</span>
+      </div>
+      <h2 class="text-xl sm:text-2xl font-bold text-deepPink mb-1">
+        Chiều mát mẻ mình trốn nắng đi đâu nè? Bbi thích gì nhất?
+      </h2>
+      <p class="text-xs sm:text-sm font-semibold text-textBrown/75 mb-5">
+        (Các hoạt động trải nghiệm vui vẻ, mát mẻ để trốn nắng 🌸)
+      </p>
+
+      <div id="afternoon-options" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 mb-6"></div>
+
+      <div class="flex justify-between gap-3">
+        <button onclick="goToStep(2)" class="py-3 px-5 rounded-2xl bg-white border-2 border-borderPink font-bold text-sm hover:bg-bgBlush transition">
+          ⬅ Quay lại
+        </button>
+        <button onclick="goToStep(4)" class="py-3 px-7 rounded-2xl bg-gradient-to-r from-hotPink to-deepPink text-white font-bold shadow-md hover:opacity-95 transition">
+          Tiếp tục lịch buổi tối 🌙 ➔
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         BƯỚC 4: BUỔI TỐI (17:30 - 22:30)
+         ========================================== -->
+    <section id="screen-step-4" class="hidden coquette-card rounded-3xl p-6 sm:p-8">
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+        <span class="bg-deepPink text-white text-xs font-bold px-3 py-1 rounded-full">🌙 Buổi Tối • 17:30 – 22:30</span>
+        <span class="text-xs font-bold text-deepPink">Bước 4 / 4</span>
+      </div>
+
+      <!-- Phần 5A: Phố Ăn Vặt -->
+      <div class="mb-7">
+        <h2 class="text-lg sm:text-xl font-bold text-deepPink mb-1">
+          🍢 Phần 1 (17:30 – 19:30): Tối nay tụi mình đi càn quét con phố ăn vặt nào đây ta?
+        </h2>
+        <p class="text-xs font-semibold text-textBrown/75 mb-3">Chọn 1 thiên đường ẩm thực đường phố Sài Gòn:</p>
+        <div id="foodtour-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+      </div>
+
+      <hr class="border-borderPink my-5" />
+
+      <!-- Phần 5B: Xem Phim -->
+      <div class="mb-6">
+        <h2 class="text-lg sm:text-xl font-bold text-deepPink mb-1">
+          🎬 Phần 2 (20:00 – 22:30): Chốt hạ ngày hẹn hò bằng một bộ phim ngoài rạp nha!
+        </h2>
+        <p class="text-xs font-semibold text-textBrown/75 mb-3">Các phim đang chiếu ngày Chủ Nhật 25/10/2026 nè:</p>
+        <div id="movie-options" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 mb-5"></div>
+      </div>
+
+      <!-- Ô nhập lời nhắn nhủ cho anh người yêu -->
+      <div class="bg-white/90 border-2 border-borderPink rounded-2xl p-4 mb-6">
+        <label class="block font-bold text-sm text-deepPink mb-2">
+          💌 Lời nhắn nhủ cho hl:
+        </label>
+        <textarea
+          id="love-note-input"
+          rows="3"
+          placeholder="Ví dụ: Em muốn đi picnic về sớm và đi nhà sách luôn vào buổi sáng hoặc triển lãm, rùi chiều đi chỗ khác"
+          class="w-full p-3 rounded-xl border border-borderPink bg-bgBlush/40 text-sm font-semibold focus:border-deepPink focus:outline-none"
+        ></textarea>
+      </div>
+
+      <div class="flex justify-between items-center gap-3 flex-wrap">
+        <button onclick="goToStep(3)" class="py-3 px-5 rounded-2xl bg-white border-2 border-borderPink font-bold text-sm hover:bg-bgBlush transition">
+          ⬅ Quay lại
+        </button>
+        <button onclick="finishPlan()" class="py-3.5 px-8 rounded-2xl bg-gradient-to-r from-hotPink to-deepPink text-white font-bold text-base sm:text-lg shadow-lg hover:scale-105 transition transform">
+          Chốt Lịch Hẹn Hò Cùng Anh Yêu 💖
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         MÀN HÌNH 6: BẢNG TỔNG KẾT TIMELINE (VÉ HẸN HÒ)
+         ========================================== -->
+    <section id="screen-summary" class="hidden">
+      <!-- Khu vực xuất ảnh html2canvas -->
+      <div id="date-ticket-capture" class="ticket-wrapper p-6 sm:p-8 shadow-xl mb-6">
+        <div class="text-center border-b-2 border-dashed border-borderPink pb-4 mb-5">
+          <div class="text-xs font-bold uppercase tracking-widest text-hotPink mb-1">
+            ✨ OUR SWEET DATE PLANNER • SMP-MATH/LOVE ✨
+          </div>
+          <h1 class="font-script text-3xl sm:text-4xl text-deepPink mb-2">
+            Vé Hẹn Hò Kỷ Niệm 1 Năm
+          </h1>
+          <div class="flex flex-wrap justify-center gap-2 text-xs sm:text-sm font-bold">
+            <span class="bg-bgBlush border border-borderPink px-3 py-1 rounded-full">❤️ Kỷ niệm: 15/10/2025</span>
+            <span class="bg-bgBlush border border-borderPink px-3 py-1 rounded-full">📅 Ngày đi: Chủ Nhật, 25/10/2026</span>
+          </div>
+        </div>
+
+        <!-- Bảng Tổng Kết Timeline -->
+        <div class="overflow-x-auto mb-5">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-bgCream text-deepPink border-b-2 border-borderPink">
+                <th class="p-3 rounded-tl-xl">Khung giờ</th>
+                <th class="p-3">Buổi & Hoạt động</th>
+                <th class="p-3">Địa điểm bbi đã chọn</th>
+                <th class="p-3 rounded-tr-xl">Ghi chú / Chuẩn bị</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-borderPink/60 font-semibold">
+              <tr class="bg-bgBlush/30">
+                <td class="p-3 font-bold text-deepPink whitespace-nowrap">07:30 – 10:30</td>
+                <td class="p-3">☀️ <strong>Sáng:</strong> Ăn sáng & Dạo mát picnic</td>
+                <td id="sum-morning-place" class="p-3 text-textBrown"></td>
+                <td id="sum-morning-items" class="p-3 text-xs text-textBrown/80"></td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-deepPink whitespace-nowrap">11:30 – 13:30</td>
+                <td class="p-3">🍲 <strong>Trưa:</strong> Ăn trưa tại Trung tâm</td>
+                <td id="sum-lunch-place" class="p-3 text-textBrown"></td>
+                <td class="p-3 text-xs text-textBrown/80">Đặt bàn trước để không phải chờ lâu</td>
+              </tr>
+              <tr class="bg-bgBlush/30">
+                <td class="p-3 font-bold text-deepPink whitespace-nowrap">14:00 – 17:00</td>
+                <td class="p-3">🎨 <strong>Chiều:</strong> Hoạt động trải nghiệm</td>
+                <td id="sum-afternoon-place" class="p-3 text-textBrown"></td>
+                <td class="p-3 text-xs text-textBrown/80">Mang thành phẩm về làm kỷ niệm</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-deepPink whitespace-nowrap">17:30 – 19:30</td>
+                <td class="p-3">🍢 <strong>Tối (P1):</strong> Càn quét Phố Ăn Vặt</td>
+                <td id="sum-foodtour-place" class="p-3 text-textBrown"></td>
+                <td class="p-3 text-xs text-textBrown/80">Chuẩn bị chiếc bụng đói đi ăn vặt</td>
+              </tr>
+              <tr class="bg-bgBlush/30">
+                <td class="p-3 font-bold text-deepPink whitespace-nowrap">20:00 – 22:30</td>
+                <td class="p-3">🎬 <strong>Tối (P2):</strong> Xem phim ngoài rạp</td>
+                <td id="sum-movie-place" class="p-3 text-textBrown"></td>
+                <td class="p-3 text-xs text-textBrown/80">Đặt vé rạp + Bắp phô mai caramel</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Lời nhắn nhủ -->
+        <div class="bg-bgBlush border-2 border-borderPink rounded-2xl p-4">
+          <div class="text-xs font-bold text-deepPink uppercase mb-1">💌 Lời nhắn từ bbi:</div>
+          <p id="sum-love-note" class="text-sm font-semibold italic text-textBrown"></p>
+        </div>
+
+        <div class="text-center mt-4 text-xs font-bold text-hotPink">
+          💖 Chụp màn hình hoặc bấm tải vé gửi liền cho anh người yêu nha! 💖
+        </div>
+      </div>
+
+      <!-- Thông báo trạng thái gửi email tự động -->
+      <div id="email-send-status" class="w-full max-w-xl mx-auto mb-6 p-4 rounded-2xl text-center text-xs sm:text-sm font-bold transition-all duration-300 bg-white/95 border-2 border-borderPink text-deepPink shadow-md flex items-center justify-center gap-2">
+        <span id="email-status-icon">💌</span>
+        <span id="email-status-text">Đang tự động gửi ảnh vé và lịch hẹn hò về email cho anh yêu...</span>
+      </div>
+
+      <!-- Các nút chức năng cuối trang -->
+      <div class="flex flex-col sm:flex-row justify-center gap-3">
+        <button
+          onclick="downloadTicket()"
+          class="py-3.5 px-6 rounded-2xl bg-gradient-to-r from-hotPink to-deepPink text-white font-bold text-sm sm:text-base shadow-lg hover:scale-105 transition flex items-center justify-center gap-2"
+        >
+          📸 Tải Vé Hẹn Hò Về Máy
+        </button>
+        <button
+          id="btn-resend-email"
+          onclick="autoSendDatePlanEmail(true)"
+          class="py-3.5 px-6 rounded-2xl bg-pink-100 border-2 border-borderPink text-deepPink font-bold text-sm sm:text-base hover:bg-pink-200 transition flex items-center justify-center gap-2"
+        >
+          💌 Gửi Lại Cho Anh Yêu
+        </button>
+        <button
+          onclick="resetPlanner()"
+          class="py-3.5 px-6 rounded-2xl bg-white border-2 border-borderPink text-deepPink font-bold text-sm sm:text-base hover:bg-bgBlush transition flex items-center justify-center gap-2"
+        >
+          🔄 Chọn Lại
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    /* ==========================================
+       DỮ LIỆU CÁC ĐỊA ĐIỂM HẸN HÒ (25/10/2026)
+       (Chú thích ngắn gọn, súc tích)
+       ========================================== */
+    const breakfastData = [
+      {
+        id: 'B1',
+        name: '🥖 Bánh mì chảo Sài Gòn nóng hổi',
+        image: 'images/B1.jpg',
+        link: 'https://www.google.com/search?q=banh+mi+chao+ngon+sai+gon',
+        desc: 'Chảo gang trứng ốp la, pate bơ, xíu mại thơm lừng'
+      },
+      {
+        id: 'B2',
+        name: '🍜 Phở bò tái nạm / Bún bò Huế',
+        image: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=600&q=80',
+        link: 'https://www.google.com/search?q=pho+bo+ngon+sai+gon',
+        desc: 'Nước dùng nóng thanh ngọt, thịt bò mềm tươi rói'
+      },
+      {
+        id: 'B3',
+        name: '🥪 Sandwich trứng phô mai Egg Drop',
+        image: 'images/B3.jpg',
+        link: 'https://www.google.com/search?q=egg+drop+sandwich+sai+gon',
+        desc: 'Bánh toast trứng mềm ngập sốt béo ngậy kiểu Hàn'
+      },
+      {
+        id: 'B4',
+        name: '🥟 Dimsum / Há cảo tôm, bánh bao xá xíu',
+        image: 'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=600&q=80',
+        link: 'https://www.google.com/search?q=dimsum+an+sang+sai+gon',
+        desc: 'Xửng tre bốc khói, há cảo tôm thịt dai giòn sần sật'
+      },
+      {
+        id: 'B5',
+        name: '🥐 Croissant bơ Pháp & Cafe / Matcha',
+        image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80',
+        link: 'https://www.google.com/search?q=croissant+cafe+sai+gon',
+        desc: 'Bánh sừng bò ngàn lớp bơ thơm cùng ly cafe chill'
+      }
+    ];
+
+    const morningData = [
+      {
+        id: 'S1',
+        name: '🌿 Bờ sông Thủ Thiêm (Ngắm trọn Bitexco Q1)',
+        image: 'images/S1.jpg',
+        link: 'https://www.google.com/search?q=bo+song+thu+thiem+sai+gon',
+        desc: 'Gió sông mát rượi, bãi cỏ view trực diện tòa Bitexco'
+      },
+      {
+        id: 'S2',
+        name: '🌳 Công viên Vinhomes Central Park (Landmark 81)',
+        image: 'images/S2.jpg',
+        link: 'https://www.google.com/search?q=cong+vien+vinhomes+central+park',
+        desc: 'Bãi cỏ xanh mát, cầu đi bộ đỏ rực dưới chân Landmark 81'
+      },
+      {
+        id: 'S3',
+        name: '⚓ Công viên Bến Bạch Đằng (Bến Tàu Thủy Q1)',
+        image: 'images/S3.jpg',
+        link: 'https://www.google.com/search?q=cong+vien+ben+bach+dang+quan+1',
+        desc: 'Lối dạo ven sông trung tâm Q1, ngắm tàu thủy Waterbus'
+      }
+    ];
+
+    const lunchData = [
+      {
+        id: 'T1',
+        name: '🍲 Dookki Buffet Lẩu Tokbokki Hàn Quốc',
+        image: 'images/T1.jpg',
+        link: 'https://www.google.com/search?q=dookki+vietnam',
+        desc: 'Nồi lẩu tokbokki tự pha sốt, chả cá xiên, gà rán giòn sốt cay'
+      },
+      {
+        id: 'T2',
+        name: '🍚 Hoàng Yến Vietnamese Cuisine',
+        image: 'images/T2.jpg',
+        link: 'https://www.google.com/search?q=hoang+yen+cuisine+sai+gon',
+        desc: 'Mâm cơm món Việt ba miền ấm cúng, sang trọng giữa trung tâm'
+      },
+      {
+        id: 'T3',
+        name: "🥩 D'Maris Buffet Quốc Tế Cao Cấp",
+        image: 'images/T3.jpg',
+        link: 'https://www.google.com/search?q=dmaris+buffet+sai+gon',
+        desc: 'Quầy buffet hải sản, sashimi cá hồi & bò bít tết hảo hạng'
+      },
+      {
+        id: 'T4',
+        name: '🥢 Haidilao Hotpot',
+        image: 'images/T4.jpg',
+        link: 'https://www.google.com/search?q=haidilao+vietnam',
+        desc: 'Lẩu 4 ngăn trứ danh, xem múa mì, chăm sóc bbi tận bàn'
+      }
+    ];
+
+    const afternoonData = [
+      {
+        id: 'C1',
+        name: '📚 Dạo Đường Sách Nguyễn Văn Bình & Cafe Chill',
+        image: 'images/C1.jpg',
+        link: 'https://www.google.com/search?q=duong+sach+nguyen+van+binh+quan+1',
+        desc: 'Con đường rợp bóng cây cổ thụ Q1, chọn sách & nhâm nhi cafe'
+      },
+      {
+        id: 'C2',
+        name: '⛸️ Trượt Băng Trong Nhà Vincom Thảo Điền',
+        image: 'images/C2.jpg',
+        link: 'https://www.google.com/search?q=truot+bang+vincom+thao+dien',
+        desc: 'Lướt trên sân băng mát lạnh, xả stress cực đã'
+      },
+      {
+        id: 'C3',
+        name: '🏛️ Bảo Tàng Mỹ Thuật TP.HCM (97A Phó Đức Chính)',
+        image: 'images/C3.jpg',
+        link: 'https://www.google.com/search?q=bao+tang+my+thuat+tphcm',
+        desc: 'Dinh thự vàng kiến trúc Pháp cổ kính, góc check-in siêu đẹp'
+      },
+      {
+        id: 'C4',
+        name: '🧖‍♀️ Couple Spa & Massage Thư Giãn',
+        image: 'images/C4.jpg',
+        link: 'https://www.google.com/search?q=miu+miu+spa+quan+1',
+        desc: 'Phòng spa tinh dầu thảo mộc, thư giãn và phục hồi năng lượng'
+      },
+      {
+        id: 'C5',
+        name: '🎡 Công Viên Văn Hóa Đầm Sen',
+        image: 'images/C5.jpg',
+        link: 'https://www.google.com/search?q=cong+vien+van+hoa+dam+sen',
+        desc: 'Vòng quay khổng lồ trên cao, đạp vịt và dạo quanh hồ nước'
+      },
+      {
+        id: 'C7',
+        name: '🏺 Làm Gốm Thủ Công Bàn Xoay',
+        image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=600&q=80',
+        link: 'https://www.google.com/search?q=workshop+lam+gom+thu+cong+sai+gon',
+        desc: 'Tự chuốt gốm trên bàn xoay, nặn cốc đĩa khắc tên riêng'
+      },
+      {
+        id: 'C8',
+        name: '🎨 Tô Tượng & Cafe Chill',
+        image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80',
+        link: 'https://www.google.com/search?q=to+tuong+cafe+ho+con+rua',
+        desc: 'Tô tượng Capybara, Labubu bằng cọ và màu pastel xinh xắn'
+      },
+      {
+        id: 'C9',
+        name: '🕯️ Làm Nến Thơm & Sáp Hoa Khô',
+        image: 'https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=600&q=80',
+        link: 'https://www.google.com/search?q=coming+home+candle+workshop+nen+thom',
+        desc: 'Nấu sáp đậu nành, phối tinh dầu & cắm hoa khô cốc nến'
+      },
+      {
+        id: 'C10',
+        name: '🌸 Pha Chế Nước Hoa Signature',
+        image: 'https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=600&q=80',
+        link: 'https://www.google.com/search?q=note+the+scent+lab+quan+1',
+        desc: 'Phòng lab tinh dầu, tự phối mùi hương độc bản yêu thích'
+      },
+      {
+        id: 'C11',
+        name: '🍰 Trang Trí Bánh Kem Bento Mini',
+        image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80',
+        link: 'https://www.google.com/search?q=workshop+trang+tri+bento+cake+sai+gon',
+        desc: 'Bắt kem màu pastel, tự tay trang trí chiếc bánh bento xinh xắn'
+      }
+    ];
+
+    const foodTourData = [
+      {
+        id: 'F1',
+        name: '🍢 Phố Ẩm Thực Hồ Thị Kỷ',
+        link: 'https://www.google.com/search?q=pho+am+thuc+ho+thi+ky',
+        desc: 'Thiên đường xiên nướng than hồng, đồ ăn vặt & chè Campuchia'
+      },
+      {
+        id: 'F2',
+        name: '🌯 Phố Nguyễn Thượng Hiền (Bánh Tráng Trộn)',
+        link: 'https://www.google.com/search?q=pho+am+thuc+nguyen+thuong+hien',
+        desc: 'Bánh tráng trộn bò khô trứng cút trứ danh, trà trái cây vỉa hè'
+      },
+      {
+        id: 'F3',
+        name: '🥟 Phố Ẩm Thực Vạn Kiếp (Thiên Đường Ăn Đêm)',
+        link: 'https://www.google.com/search?q=pho+am+thuc+van+kiep',
+        desc: 'Con phố ẩm thực dài tấp nập, hải sản ốc tô & đồ nướng'
+      },
+      {
+        id: 'F4',
+        name: '🍮 Khu Ẩm Thực Chợ 200 (Xóm Chiếu - Phá Lấu)',
+        link: 'https://www.google.com/search?q=khu+am+thuc+cho+200+xom+chieu',
+        desc: 'Phá lấu bò nước dừa béo thơm chấm nước me bánh mì giòn'
+      }
+    ];
+
+    const movieData = [
+      {
+        id: 'P1',
+        name: '🎬 Mẹ Mìn (Kỳ ảo giật gân - Minh Hằng)',
+        release: 'Khởi chiếu: 23/10/2026',
+        link: 'https://www.cgv.vn/default/me-min.html'
+      },
+      {
+        id: 'P2',
+        name: '🎬 Án Mạng Xém Hoàn Hảo (Hài trinh thám)',
+        release: 'Khởi chiếu: 09/10/2026',
+        link: 'https://www.cgv.vn/default/the-almost-perfect-murder.html'
+      },
+      {
+        id: 'P3',
+        name: '🎬 Verity: Bí Mật Bị Chôn Vùi (Tâm lý giật gân)',
+        release: 'Khởi chiếu: 16/10/2026',
+        link: 'https://www.cgv.vn/default/verity.html'
+      },
+      {
+        id: 'P4',
+        name: '🎬 Người Mẹ Khác (Other Mommy - Kinh dị)',
+        release: 'Khởi chiếu: 09/10/2026',
+        link: 'https://www.cgv.vn/default/other-mommy.html'
+      },
+      {
+        id: 'P5',
+        name: '🎬 Blue Lock: Cuộc Chiến Của Những Tiền Đạo',
+        release: 'Khởi chiếu: 09/10/2026',
+        link: 'https://www.cgv.vn/default/blue-lock.html'
+      },
+      {
+        id: 'P6',
+        name: '🎬 Trại Buôn Người (Hành động, Hồi hộp)',
+        release: 'Khởi chiếu: 25/09/2026',
+        link: 'https://www.cgv.vn/default/trai-buon-nguoi.html'
+      }
+    ];
+
+    /* Trạng thái lựa chọn của người dùng */
+    let selections = {
+      breakfast: breakfastData[0],
+      morning: morningData[0],
+      lunch: lunchData[0],
+      afternoon: afternoonData[0],
+      foodtour: foodTourData[0],
+      movie: movieData[0]
+    };
+
+    /* ==========================================
+       KHỞI TẠO HIỆU ỨNG & DANH SÁCH LỰA CHỌN
+       ========================================== */
+    function initFallingItems() {
+      const container = document.getElementById('falling-bg');
+      const icons = ['💖', '🌸', '🎀', '💕', '🌷'];
+      for (let i = 0; i < 18; i++) {
+        const span = document.createElement('span');
+        span.className = 'falling-item';
+        span.textContent = icons[i % icons.length];
+        span.style.left = Math.random() * 100 + 'vw';
+        span.style.fontSize = (14 + Math.random() * 14) + 'px';
+        span.style.animationDuration = (7 + Math.random() * 8) + 's';
+        span.style.animationDelay = (Math.random() * 5) + 's';
+        container.appendChild(span);
+      }
+    }
+
+    function renderOptionGroup(containerId, items, groupKey, badgeField = null) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      items.forEach((item) => {
+        const isSelected = selections[groupKey].id === item.id;
+        const card = document.createElement('div');
+        card.className = `option-card rounded-2xl p-3.5 sm:p-4 cursor-pointer flex flex-col justify-between transition-all duration-200 ${isSelected ? 'active' : ''}`;
+        card.onclick = () => {
+          selections[groupKey] = item;
+          renderOptionGroup(containerId, items, groupKey, badgeField);
+        };
+        const badgeHtml = (badgeField && item[badgeField])
+          ? `<p class="text-xs font-bold text-hotPink mb-1">🎟️ ${item[badgeField]}</p>`
+          : '';
+        const imgHtml = item.image 
+          ? `<div class="relative w-full h-32 sm:h-36 mb-2.5 rounded-xl overflow-hidden bg-bgBlush shadow-inner">
+               <img src="${item.image}" alt="${item.name}" loading="lazy" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=600&q=80';" />
+               <span class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm text-sm px-1.5 py-0.5 rounded-full shadow-sm leading-none">${isSelected ? '💖' : '🤍'}</span>
+             </div>` 
+          : '';
+        const linkHtml = item.link
+          ? `<div class="mt-2.5 pt-2 border-t border-borderPink/40 flex justify-end items-center text-xs">
+               <a href="${item.link}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="inline-flex items-center gap-1 font-bold text-hotPink hover:text-deepPink hover:underline transition">
+                 <span>Xem thêm</span>
+                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+               </a>
+             </div>`
+          : '';
+
+        card.innerHTML = `
+          <div>
+            ${imgHtml}
+            <div class="flex items-start justify-between gap-1.5 mb-1">
+              <h3 class="font-bold text-sm sm:text-base text-deepPink leading-snug">
+                <span class="inline-block bg-hotPink text-white text-xs px-2 py-0.5 rounded-lg mr-1">${item.id}</span>
+                ${item.name}
+              </h3>
+              ${!item.image ? `<span class="text-lg">${isSelected ? '💖' : '🤍'}</span>` : ''}
+            </div>
+            ${badgeHtml}
+            ${item.desc ? `<p class="text-xs sm:text-sm font-medium text-textBrown/85 leading-relaxed">${item.desc}</p>` : ''}
+          </div>
+          ${linkHtml}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    /* ==========================================
+       XỬ LÝ BÀN PHÍM & MẬT KHẨU 15/10/2025
+       (Tự động chèn dấu /, tối ưu nút xóa & xóa hết)
+       ========================================== */
+    function formatPasscode(digits, isAppending = false) {
+      if (!digits) return '';
+      if (digits.length === 1) return digits;
+      if (digits.length === 2) {
+        return isAppending ? `${digits}/` : digits;
+      }
+      if (digits.length === 3) {
+        return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+      }
+      if (digits.length === 4) {
+        return isAppending ? `${digits.slice(0, 2)}/${digits.slice(2)}/` : `${digits.slice(0, 2)}/${digits.slice(2)}`;
+      }
+      return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4, 8)}`;
+    }
+
+    function appendKey(char) {
+      const input = document.getElementById('passcode-input');
+      let digits = input.value.replace(/\D/g, '');
+      if (digits.length < 8) {
+        digits += char;
+        input.value = formatPasscode(digits, true);
+        if (digits.length === 8) {
+          setTimeout(checkPasscode, 250);
+        }
+      }
+    }
+
+    function backspaceKey() {
+      const input = document.getElementById('passcode-input');
+      let digits = input.value.replace(/\D/g, '');
+      if (digits.length > 0) {
+        digits = digits.slice(0, -1);
+        input.value = formatPasscode(digits, false);
+      }
+    }
+
+    function clearPasscode() {
+      const input = document.getElementById('passcode-input');
+      input.value = '';
+      document.getElementById('passcode-error').classList.add('hidden');
+      input.focus();
+    }
+
+    function checkPasscode() {
+      const raw = document.getElementById('passcode-input').value.trim();
+      const validCodes = ['15/10/2025', '15-10-2025', '15102025'];
+      const errorEl = document.getElementById('passcode-error');
+      const boxEl = document.getElementById('passcode-box');
+
+      if (validCodes.includes(raw)) {
+        errorEl.classList.add('hidden');
+        firePinkConfetti();
+        playCustomAudio();
+        document.getElementById('music-toggle').classList.remove('hidden');
+        document.getElementById('screen-passcode').classList.add('hidden');
+        document.getElementById('screen-welcome').classList.remove('hidden');
+      } else {
+        errorEl.classList.remove('hidden');
+        boxEl.classList.remove('shake-anim');
+        void boxEl.offsetWidth; // Trigger reflow
+        boxEl.classList.add('shake-anim');
+      }
+    }
+
+    function initPasscodeInput() {
+      const pInput = document.getElementById('passcode-input');
+      if (pInput) {
+        pInput.addEventListener('input', (e) => {
+          let digits = e.target.value.replace(/\D/g, '');
+          if (digits.length > 8) digits = digits.slice(0, 8);
+          e.target.value = formatPasscode(digits, false);
+          if (digits.length === 8) {
+            setTimeout(checkPasscode, 250);
+          }
+        });
+      }
+    }
+
+    /* ==========================================
+       PHÁO HOA TIM HỒNG (CANVAS-CONFETTI)
+       ========================================== */
+    function firePinkConfetti() {
+      if (typeof confetti !== 'function') return;
+      const duration = 2200;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 5,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#FF69B4', '#FF1493', '#FFB6C1', '#FFF0F5']
+        });
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#FF69B4', '#FF1493', '#FFB6C1', '#FFF0F5']
+        });
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
+    }
+
+    /* ==========================================
+       NHẠC NỀN AUDIO RIÊNG
+       (Người dùng thêm file audio.mp3 hoặc music.mp3 vào cùng thư mục)
+       ========================================== */
+    let isPlayingMusic = false;
+
+    function playCustomAudio() {
+      const audio = document.getElementById('bg-audio');
+      if (!audio) return;
+      audio.volume = 0.6;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          isPlayingMusic = true;
+          updateMusicUI();
+        }).catch(err => {
+          console.log('Chờ file audio hoặc tương tác người dùng:', err);
+          isPlayingMusic = false;
+          updateMusicUI();
+        });
+      }
+    }
+
+    function toggleMusic() {
+      const audio = document.getElementById('bg-audio');
+      if (!audio) return;
+      if (audio.paused) {
+        audio.play().then(() => {
+          isPlayingMusic = true;
+          updateMusicUI();
+        }).catch(err => {
+          alert("Bạn hãy thêm file nhạc 'audio.mp3' vào cùng thư mục với trang web nhé! 🎵");
+        });
+      } else {
+        audio.pause();
+        isPlayingMusic = false;
+        updateMusicUI();
+      }
+    }
+
+    function updateMusicUI() {
+      const icon = document.getElementById('music-icon');
+      const label = document.getElementById('music-label');
+      if (icon) icon.textContent = isPlayingMusic ? '🎵' : '🔇';
+      if (label) label.textContent = isPlayingMusic ? 'Nhạc: Bật' : 'Nhạc: Tắt';
+    }
+
+    /* ==========================================
+       ĐỒNG HỒ ĐẾM NGƯỢC TỚI 25/10/2026 07:30
+       ========================================== */
+    function startCountdown() {
+      const target = new Date('2026-10-25T07:30:00+07:00').getTime();
+      function updateTimer() {
+        const now = Date.now();
+        const diff = Math.max(0, target - now);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / 1000 / 60) % 60);
+        const secs = Math.floor((diff / 1000) % 60);
+
+        document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+        document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+      }
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    }
+
+    /* ==========================================
+       ĐIỀU HƯỚNG GIỮA CÁC BƯỚC & PROGRESS BAR
+       (Con thỏ đứng ngay dưới icon tương ứng)
+       ========================================== */
+    let currentStep = 1;
+
+    function hideAllScreens() {
+      ['screen-passcode', 'screen-welcome', 'screen-step-1', 'screen-step-2', 'screen-step-3', 'screen-step-4', 'screen-summary'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+    }
+
+    function syncBunnyPosition() {
+      const track = document.getElementById('progress-track');
+      const activeLabel = document.getElementById('step-label-' + currentStep);
+      const bunny = document.getElementById('progress-bunny');
+      const bar = document.getElementById('progress-bar');
+
+      if (track && activeLabel && bunny && bar) {
+        const trackRect = track.getBoundingClientRect();
+        const labelRect = activeLabel.getBoundingClientRect();
+        
+        // Tọa độ tâm chính xác của icon/nhãn đang active so với mép trái thanh ray
+        const centerOffset = (labelRect.left + labelRect.width / 2) - trackRect.left;
+        const centerPct = Math.max(0, Math.min(100, (centerOffset / trackRect.width) * 100));
+
+        bunny.style.left = `${centerPct}%`;
+        bunny.style.transform = 'translateX(-50%)';
+        bar.style.width = currentStep === 5 ? '100%' : `${centerPct}%`;
+      }
+    }
+
+    function updateProgressBar(stepIndex) {
+      currentStep = stepIndex;
+      const wrapper = document.getElementById('progress-Wrapper');
+      wrapper.classList.remove('hidden');
+
+      for (let i = 1; i <= 5; i++) {
+        const lbl = document.getElementById('step-label-' + i);
+        if (i === stepIndex) {
+          lbl.className = 'transition-all duration-300 text-deepPink font-extrabold underline decoration-deepPink underline-offset-4 scale-105 cursor-pointer';
+        } else {
+          lbl.className = 'transition-all duration-300 text-textBrown font-bold hover:text-deepPink cursor-pointer';
+        }
+      }
+
+      // Đặt vị trí tức thì theo tâm cột (10%, 30%, 50%, 70%, 90%)
+      const stepPctMap = { 1: 10, 2: 30, 3: 50, 4: 70, 5: 90 };
+      const fallbackPct = stepPctMap[stepIndex] || 10;
+      const bunny = document.getElementById('progress-bunny');
+      const bar = document.getElementById('progress-bar');
+      if (bunny) {
+        bunny.style.left = `${fallbackPct}%`;
+        bunny.style.transform = 'translateX(-50%)';
+      }
+      if (bar) {
+        bar.style.width = stepIndex === 5 ? '100%' : `${fallbackPct}%`;
+      }
+
+      // Đồng bộ lại pixel-perfect theo tọa độ icon bên trên
+      requestAnimationFrame(() => {
+        syncBunnyPosition();
+      });
+    }
+
+    window.addEventListener('resize', () => {
+      syncBunnyPosition();
+    });
+
+    function goToStep(stepNumber) {
+      hideAllScreens();
+      updateProgressBar(stepNumber);
+      document.getElementById('screen-step-' + stepNumber).classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ==========================================
+       HOÀN TẤT & RENDER VÉ HẸN HÒ (MÀN HÌNH 6)
+       ========================================== */
+    function finishPlan() {
+      hideAllScreens();
+      updateProgressBar(5);
+      firePinkConfetti();
+
+      // Lấy danh sách phụ kiện picnic đã chọn
+      const checkedItems = Array.from(document.querySelectorAll('.picnic-item:checked')).map(cb => cb.value);
+      const sumMorningEl = document.getElementById('sum-morning-items');
+      if (checkedItems.length > 0) {
+        sumMorningEl.innerHTML = checkedItems
+          .map(item => `<span class="inline-block bg-white border border-borderPink text-deepPink font-semibold px-2 py-0.5 rounded-lg text-xs mr-1 mb-1 shadow-xs">${item}</span>`)
+          .join('');
+      } else {
+        sumMorningEl.textContent = 'Mang theo tâm hồn đẹp & nụ cười xinh 💖';
+      }
+
+      // Đổ dữ liệu vào bảng tổng kết
+      document.getElementById('sum-morning-place').innerHTML = `
+        <span class="text-xs text-hotPink font-bold">🥢 Ăn sáng:</span> <strong>${selections.breakfast.name}</strong><br/>
+        <span class="text-xs text-hotPink font-bold">🌿 Dạo mát:</span> <strong>${selections.morning.name}</strong>
+      `;
+
+      document.getElementById('sum-lunch-place').innerHTML = `<strong>${selections.lunch.name}</strong>`;
+      document.getElementById('sum-afternoon-place').innerHTML = `<strong>${selections.afternoon.name}</strong>`;
+      document.getElementById('sum-foodtour-place').innerHTML = `<strong>${selections.foodtour.name}</strong>`;
+
+      document.getElementById('sum-movie-place').innerHTML = `Phim: <strong>${selections.movie.name}</strong>`;
+
+      const noteVal = document.getElementById('love-note-input').value.trim();
+      document.getElementById('sum-love-note').textContent = noteVal || 'Hẹn gặp beo vào sáng Chủ Nhật nhe! Iu vqn nhất vutru 💖';
+
+      document.getElementById('screen-summary').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Tự động chụp ảnh vé và gửi email về cho anh người yêu (Google Apps Script)
+      setTimeout(() => {
+        autoSendDatePlanEmail(false);
+      }, 500);
+    }
+
+    /* ==========================================
+       TỰ ĐỘNG GỬI ẢNH VÉ & LỊCH HẸN HÒ QUA GOOGLE APPS SCRIPT
+       (Cơ chế tương tự như /challenges/guibaidexuat.html)
+       ========================================== */
+    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdOWHrWq0fSP9gW8UMk-MjH2pWwlipoZHFDDiI6u2Qx7k8NM7bt6Pe5KYylU1CunOqAA/exec';
+    let isSendingEmail = false;
+    let emailSentSuccessfully = false;
+
+    async function autoSendDatePlanEmail(isManualRetry = false) {
+      if (isSendingEmail) return;
+      if (emailSentSuccessfully && !isManualRetry) return;
+
+      isSendingEmail = true;
+      const statusEl = document.getElementById('email-send-status');
+      const statusIcon = document.getElementById('email-status-icon');
+      const statusText = document.getElementById('email-status-text');
+
+      if (statusEl) {
+        statusEl.classList.remove('hidden');
+        statusEl.className = 'w-full max-w-xl mx-auto mb-6 p-4 rounded-2xl text-center text-xs sm:text-sm font-bold bg-white/95 border-2 border-borderPink text-deepPink shadow-md flex items-center justify-center gap-2';
+        statusIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>';
+        statusText.textContent = 'Đang tự động xuất ảnh vé và gửi lịch về cho anh iu... 💌';
+      }
+
+      try {
+        const ticketEl = document.getElementById('date-ticket-capture');
+        const canvas = await html2canvas(ticketEl, {
+          scale: 2,
+          backgroundColor: '#FFF0F5',
+          useCORS: true,
+          logging: false
+        });
+
+        const dataUrl = canvas.toDataURL('image/png');
+        const base64Data = dataUrl.split(',')[1];
+
+        const checkedItems = Array.from(document.querySelectorAll('.picnic-item:checked')).map(cb => cb.value);
+        const noteVal = document.getElementById('love-note-input') ? document.getElementById('love-note-input').value.trim() : '';
+
+        const combinedProblem = '[Kỷ Niệm 1 Năm] Lịch hẹn hò 25/10/2026 của Vũ Như Quỳnh';
+        const combinedContent = 
+`💖 KẾ HOẠCH HẸN HÒ KỶ NIỆM 1 NĂM (25/10/2026) 💖
+
+• Buổi Sáng (07:30 – 10:30):
+  - Ăn sáng: ${selections.breakfast.name}
+  - Dạo mát: ${selections.morning.name}
+  - Chuẩn bị: ${checkedItems.join(', ') || 'Mang theo tâm hồn đẹp & nụ cười xinh'}
+
+• Buổi Trưa (11:30 – 13:30):
+  - Nhà hàng: ${selections.lunch.name}
+
+• Buổi Chiều (14:00 – 17:00):
+  - Trải nghiệm: ${selections.afternoon.name}
+
+• Buổi Tối (17:30 – 19:30):
+  - Càn quét Food tour: ${selections.foodtour.name}
+
+• Buổi Tối (20:00 – 22:30):
+  - Xem phim rạp: ${selections.movie.name}
+
+💌 LỜI NHẮN NHỦ TỪ BÉ IU:
+"${noteVal || 'Hẹn gặp beo vào sáng Chủ Nhật nhe! Iu vqn nhất vutru 💖'}"
+
+---
+(File ảnh vé hẹn hò chất lượng cao Ve-Hen-Ho-Ky-Niem-1-Nam-25-10-2026.png đã được đính kèm tự động)`;
+
+        const payload = {
+          type: 'de_xuat',
+          name: 'Vũ Như Quỳnh (vuqynu)',
+          contact: 'nhuquynhvu2292007@gmail.com',
+          problem: combinedProblem,
+          content: combinedContent,
+          files: [
+            {
+              name: 'Ve-Hen-Ho-Ky-Niem-1-Nam-25-10-2026.png',
+              mimeType: 'image/png',
+              data: base64Data
+            }
+          ]
+        };
+
+        await fetch(GAS_WEB_APP_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: JSON.stringify(payload)
+        });
+
+        emailSentSuccessfully = true;
+        if (statusEl) {
+          statusEl.className = 'w-full max-w-xl mx-auto mb-6 p-4 rounded-2xl text-center text-xs sm:text-sm font-bold bg-green-50 border-2 border-green-300 text-green-700 shadow-md flex items-center justify-center gap-2';
+          statusIcon.textContent = '💌✨';
+          statusText.textContent = 'Đã tự động gửi lịch hẹn hò và ảnh vé về email cho anh yêu thành công rồi nè! 🥰';
+        }
+      } catch (err) {
+        console.error('Lỗi gửi email:', err);
+        if (statusEl) {
+          statusEl.className = 'w-full max-w-xl mx-auto mb-6 p-4 rounded-2xl text-center text-xs sm:text-sm font-bold bg-pink-50 border-2 border-borderPink text-deepPink shadow-md flex items-center justify-center gap-2';
+          statusIcon.textContent = '💖';
+          statusText.textContent = 'Bbi chụp lại màn hình hoặc bấm nút "Tải Vé" bên dưới gửi cho anh iu nhé!';
+        }
+      } finally {
+        isSendingEmail = false;
+      }
+    }
+
+    function downloadTicket() {
+      const ticketEl = document.getElementById('date-ticket-capture');
+      html2canvas(ticketEl, {
+        scale: 2,
+        backgroundColor: '#FFF0F5'
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'Ve-Hen-Ho-Ky-Niem-1-Nam-25-10-2026.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+
+    function resetPlanner() {
+      goToStep(1);
+    }
+
+    /* Khởi chạy khi tải trang */
+    window.addEventListener('DOMContentLoaded', () => {
+      initFallingItems();
+      initPasscodeInput();
+      startCountdown();
+      renderOptionGroup('breakfast-options', breakfastData, 'breakfast');
+      renderOptionGroup('morning-options', morningData, 'morning');
+      renderOptionGroup('lunch-options', lunchData, 'lunch');
+      renderOptionGroup('afternoon-options', afternoonData, 'afternoon');
+      renderOptionGroup('foodtour-options', foodTourData, 'foodtour');
+      renderOptionGroup('movie-options', movieData, 'movie', 'release');
+    });
+  </script>
+</body>
+</html>
