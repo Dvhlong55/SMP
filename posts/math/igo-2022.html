@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <link rel="manifest" href="/manifest.json">
@@ -138,7 +138,7 @@
 
         <!-- LỐI DẪN ĐẦU TRANG ĐẾN TỔNG QUAN IGO -->
         <div>
-            <a href="/posts/math/de-thi-igo-2017-2025.html" class="igo-nav-link">← Tổng Quan Về Kì Thi Hình Học Iran (IGO)</a>
+            <a href="/posts/math/de-thi-igo-2017-2025.html" class="igo-nav-link">← Tổng quan IGO (Toàn bộ các năm 2017 – 2025)</a>
         </div>
 
         <!-- MỤC LỤC MINI CHO NĂM -->
@@ -154,158 +154,163 @@
         <h2 id="elementary" class="igo-level-heading">Elementary Level</h2>
 
         <h3>Bài 1</h3>
-        <p>Tìm số đo các góc của ngũ giác $ABCDE$ trong hình vẽ cho trước, biết các tam giác và hình vuông thành phần có các góc và cạnh bằng nhau xác định.</p>
+        <p>Tìm các góc của ngũ giác $ABCDE$ trong hình vẽ cho trước (hình gồm các tam giác bằng nhau ghép lại quanh tam giác đều trung tâm $XYZ$).</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Phân tích ngũ giác thành các phần tam giác đều và hình vuông ghép lại. Dùng tính chất góc của tam giác đều ($60^\circ$) và góc vuông ($90^\circ$) tại các đỉnh chung để tính toán góc kề bù quanh một điểm (tổng góc $360^\circ$), từ đó suy ra từng góc trong của ngũ giác.</p>
+                <p>Các tam giác $\triangle CBX, \triangle CXY, \triangle CYD, \triangle ABX, \triangle AXZ, \triangle EDY, \triangle EYZ$ đều bằng nhau và $\triangle XYZ$ là tam giác đều ($60^\circ$). Tổng các góc quanh đỉnh $X$ bằng $360^\circ = 4\angle CXY + 60^\circ \implies \angle CXY = 75^\circ$. Từ đó tính được $\angle ABC = \angle CDE = 150^\circ$ và $\angle BCD = 90^\circ$. Tổng các góc của ngũ giác bằng $540^\circ$, suy ra $\angle BAE + \angle DEA = 540^\circ - 150^\circ - 90^\circ - 150^\circ = 150^\circ$. Do tính đối xứng $\angle BAE = \angle DEA = 75^\circ$. Vậy các góc là $75^\circ, 150^\circ, 90^\circ, 150^\circ, 75^\circ$.</p>
             </div>
         </details>
 
         <h3>Bài 2</h3>
-        <p>Cho hình thang cân $ABCD$ ($AB \parallel CD$). Các điểm $E$ và $F$ lần lượt nằm trên các cạnh đáy sao cho các đoạn thẳng nối chéo thỏa mãn các góc bằng nhau. Chứng minh rằng hai tam giác tạo thành bằng nhau.</p>
+        <p>Cho hình thang cân $ABCD$ ($AB \parallel CD$). Các điểm $E$ và $F$ nằm trên các cạnh bên $BC$ và $AD$, và các điểm $M, N$ nằm trên đoạn thẳng $EF$ sao cho $DF = BE$ và $FM = NE$. Gọi $K$ và $L$ lần lượt là chân đường vuông góc kẻ từ $M$ và $N$ đến các đáy $AB$ và $CD$. Chứng minh rằng tứ giác $EKFL$ là một hình bình hành.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Khai thác trục đối xứng đi qua trung điểm của hai đáy hình thang cân $ABCD$. Dùng phép lấy đối xứng trục để chuyển các đoạn thẳng và góc về cùng một nửa mặt phẳng, sau đó chứng minh hai tam giác bằng nhau theo trường hợp cạnh - góc - cạnh.</p>
+                <p>Qua $F$ kẻ đường thẳng song song với $BC$ cắt $AB, CD$ tại $P, Q$. Tứ giác $PBCQ$ là hình bình hành. Vì $ABCD$ là hình thang cân nên tam giác $APF$ cân tại $F$ với $FP = AF$. Kết hợp với $DF = BE$ và $AD = BC$ suy ra $FP = EC$. Gọi $O$ là trung điểm của đoạn thẳng $MN$ (đồng thời là trung điểm của $EF$). Chứng minh hai tam giác $\triangle PFO \cong \triangle CEO$, suy ra toàn bộ hình (trừ hai đỉnh $A, D$) đối xứng qua tâm $O$. Phép đối xứng tâm qua $O$ biến $F$ thành $E$ và biến đường vuông góc hạ từ $M$ xuống $AB$ thành đường vuông góc hạ từ $N$ xuống $CD$ (tức biến $K$ thành $L$). Do đó $FK = EL$ và $FK \parallel EL$, suy ra $EKFL$ là hình bình hành.</p>
             </div>
         </details>
 
         <h3>Bài 3</h3>
-        <p>Cho ngũ giác lồi $ABCDE$ có $AB = BC = CD$ và các góc $\angle BDE, \angle CEA$ thỏa mãn các điều kiện tỉ lệ góc. Chứng minh rằng ngũ giác này có hai đường chéo bằng nhau.</p>
+        <p>Cho ngũ giác lồi $ABCDE$ sao cho $AB = BC = CD$ và $\angle BDE = \angle EAC = 30^\circ$. Hãy tìm tất cả các giá trị có thể có của góc $\angle BEC$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Tam giác $BCD$ cân tại $C$ ($BC = CD$) và tam giác $ABC$ cân tại $B$ ($AB = BC$). Vẽ đường tròn tâm $B$ bán kính $AB$ và đường tròn tâm $C$ bán kính $CD$. Khai thác các góc ở đáy bằng nhau để chứng minh các tam giác $\triangle BDE$ và $\triangle CEA$ bằng nhau.</p>
+                <p>ĐÁP SỐ: $\angle BEC = 60^\circ$ DUY NHẤT.\nDựng điểm $E'$ nằm cùng phía với $A, D$ đối với đường thẳng $BC$ sao cho tam giác $BCE'$ là tam giác đều ($BE' = CE' = BC$ và $\angle BE'C = 60^\circ$). Vì $AB = BC = BE'$, tam giác $ABE'$ cân tại $B$. Bằng tính toán góc nội tiếp hoặc góc ở tâm, ta có $\angle BDE' = \frac{1}{2}\angle BCE' = 30^\circ$ và $\angle E'AC = 30^\circ$. Do vị trí điểm $E$ thỏa mãn hai điều kiện góc $30^\circ$ là duy nhất trên mặt phẳng, ta bắt buộc phải có $E \equiv E'$. Do đó $\angle BEC = \angle BE'C = 60^\circ$.</p>
             </div>
         </details>
 
         <h3>Bài 4</h3>
-        <p>Cho $AD$ là đường phân giác trong của tam giác $ABC$. Đường tròn nội tiếp các tam giác $ABD$ và $ACD$ tiếp xúc với $AD$ lần lượt tại $E$ và $F$. Chứng minh hệ thức liên hệ độ dài đoạn thẳng $EF$ với chu vi của tam giác.</p>
+        <p>Gọi $AD$ là đường phân giác trong của tam giác $ABC$. Biết rằng các đường tròn nội tiếp của hai tam giác $ABC$ và $ACD$ tiếp xúc ngoài với nhau. Chứng minh rằng: $\angle ABC > 120^\circ$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Biểu diễn độ dài đoạn tiếp tuyến từ đỉnh $A$ đến hai tiếp điểm $E, F$ trên đường phân giác $AD$: Ta có $AE = \frac{AB + AD - BD}{2}$ và $AF = \frac{AC + AD - CD}{2}$. Do đó $EF = |AE - AF| = \frac{|(AB - AC) - (BD - CD)|}{2}$. Kết hợp tính chất đường phân giác $\frac{BD}{CD} = \frac{AB}{AC}$ để rút gọn biểu thức.</p>
+                <p>Gọi $\omega(I, r)$ và $\omega_1(I_1, r_1)$ lần lượt là đường tròn nội tiếp của tam giác $ABC$ và $ACD$. Vì $I_1$ nằm trên đoạn phân giác $CI$ nên khoảng cách từ $I_1$ đến $BC$ nhỏ hơn khoảng cách từ $I$ đến $BC$, suy ra $r_1 < r$. Gọi $T$ là tiếp điểm của $\omega_1$ với $AD$, xét tam giác vuông $\triangle IT I_1$ (vuông tại $T$): cạnh huyền $II_1 = r + r_1 > 2r_1 = 2I_1T$, suy ra $\angle TI_1I > 60^\circ$. Mặt khác góc $\angle AIC = 90^\circ + \frac{1}{2}\angle ABC = \angle TI_1I + 90^\circ$, từ đó suy ra $\frac{1}{2}\angle ABC = \angle TI_1I > 60^\circ \implies \angle ABC > 120^\circ$.</p>
             </div>
         </details>
 
         <h3>Bài 5</h3>
-        <p>(a) Có tồn tại 4 tam giác đều trên mặt phẳng sao cho mỗi tam giác đều có đúng hai đỉnh chung với các tam giác khác hay không?\n(b) Khảo sát tính chất tương tự với số lượng tam giác nhiều hơn.</p>
+        <p>a) Có tồn tại 4 tam giác đều trên mặt phẳng sao cho hai tam giác bất kỳ đều có đúng một đỉnh chung, và mỗi điểm trên mặt phẳng nằm trên biên của nhiều nhất 2 tam giác trong số chúng hay không?\nb) Có tồn tại 4 hình vuông trên mặt phẳng sao cho hai hình vuông bất kỳ đều có đúng một đỉnh chung, và mỗi điểm trên mặt phẳng nằm trên biên của nhiều nhất 2 hình vuông trong số chúng hay không?</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Câu (a): Không tồn tại. Nếu mỗi tam giác đều có đúng hai đỉnh chung thì số đỉnh và số cạnh không thể thỏa mãn tính chất đa giác phẳng đều. Câu (b): Bằng cách sắp xếp các tam giác đều tạo thành một vòng hoa khép kín (như hình lục giác đều chia 6), ta có thể thỏa mãn điều kiện liên kết đỉnh.</p>
+                <p>a) KHÔNG TỒN TẠI. Bổ đề: Với hai đoạn thẳng $AB, CD$ bằng nhau, có nhiều nhất một điểm $Z$ sao cho phép quay tâm $Z$ góc $60^\circ$ biến $AB$ thành $CD$. Giả sử tồn tại 4 tam giác đều, sẽ có 6 đỉnh chung đôi một; phân tích các trường hợp tam giác bằng nhau hoặc không bằng nhau đều dẫn đến việc hai đỉnh chung trùng nhau hoặc một đỉnh là đỉnh chung của 3 tam giác, vi phạm giả thiết biên.\nb) CÓ TỒN TẠI. Dựng 3 hình vuông $Q_1, Q_2, Q_3$ kề nhau tạo thành hình bậc thang có các đỉnh tạo thành tam giác vuông cân $ABC$ (với $AB = AC$ và $\angle CAB = 90^\circ$). Khi đó ba điểm $A, B, C$ chính là 3 đỉnh của một hình vuông thứ tư $Q_4$. Bốn hình vuông này đôi một có đúng một đỉnh chung và không có điểm nào thuộc biên của quá 2 hình vuông.</p>
             </div>
         </details>
 
         <h2 id="intermediate" class="igo-level-heading">Intermediate Level</h2>
 
         <h3>Bài 1</h3>
-        <p>Trong hình vẽ cho trước, bốn điểm $A, X, Y, B$ thẳng hàng theo thứ tự đó thỏa mãn $AX = BY$. Điểm $D$ nằm trên đường tròn $\omega$. Chứng minh rằng $\angle XDA = \angle CDY$.</p>
+        <p>Trong hình vẽ cho trước, trên đường thẳng chứa cạnh $AB$ có hai điểm $X, Y$ thỏa mãn $AX = BY$. Biết $\angle D = 90^\circ$ và các đường tròn/góc vuông thỏa mãn hình vẽ. Chứng minh rằng: $\angle XDA = \angle CDY$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Khai thác tính đối xứng của đoạn thẳng: vì $AX = BY$ nên trung điểm của $AB$ cũng chính là trung điểm của $XY$. Sử dụng phép đối xứng trục hoặc biến đổi tỉ số lượng giác góc: áp dụng định lý sin trong các tam giác $\triangle DAX$ và $\triangle DBY$ để chỉ ra $\sin(\angle XDA) = \sin(\angle CDY)$, dẫn đến hai góc bằng nhau.</p>
+                <p>Gọi $O$ là tâm đường tròn $\omega$ đi qua $A, B, C$. Vì $OY \perp AB$ và $OD \perp AD$, tứ giác $AYOD$ là hình vuông. Do đó $OY = AD$ và $\angle OYB = \angle DAX = 90^\circ$. Kết hợp với giả thiết $AX = BY$, hai tam giác vuông $\triangle DAX$ và $\triangle OYB$ bằng nhau (c-g-c). Từ đó suy ra góc $\angle XDA = \angle BOY = \angle CDY$ (vì góc ở tâm gấp đôi góc nội tiếp hoặc cùng chắn cung).</p>
             </div>
         </details>
 
         <h3>Bài 2</h3>
-        <p>Hai đường tròn có cùng bán kính $\omega_1, \omega_2$ cắt nhau tại hai điểm $E$ và $X$. Lấy các điểm $C \in \omega_1, D \in \omega_2$. Các đường thẳng song song với $XC, XD$ kẻ từ $E$ cắt $\omega_2, \omega_1$ lần lượt tại $A, B$. Giả sử $CD$ cắt $\omega_1, \omega_2$ lần thứ hai tại $P, Q$. Chứng minh rằng 4 điểm $A, B, P, Q$ cùng thuộc một đường tròn.</p>
+        <p>Hai đường tròn có bán kính bằng nhau $\omega_1$ và $\omega_2$ cắt nhau tại hai điểm $E$ và $X$. Lấy các điểm tùy ý $C \in \omega_1$ và $D \in \omega_2$. Các đường thẳng qua $E$ song song với $XC$ và $XD$ cắt $\omega_2, \omega_1$ lần thứ hai tương ứng tại $A$ và $B$. Giả sử đường thẳng $CD$ cắt lại $\omega_1, \omega_2$ lần lượt tại $P, Q$. Chứng minh rằng 4 điểm $A, B, P, Q$ cùng thuộc một đường tròn.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Vì hai đường tròn có cùng bán kính, phép đối xứng qua tâm hoặc trung trực của đoạn nối tâm biến đường tròn này thành đường tròn kia. Đường thẳng song song từ $E$ tạo ra các hình bình hành và tứ giác nội tiếp. Sử dụng tính chất góc có cạnh tương ứng song song để chứng minh tổng hai góc đối của tứ giác $ABPQ$ bằng $180^\circ$.</p>
+                <p>Do hai đường tròn có cùng bán kính và $EA \parallel XC$, ta có tứ giác $AXCE$ là hình bình hành, suy ra $AE = XC$. Tương tự $BEDX$ là hình bình hành nên $BE = XD$. Do đó $\triangle EAB \cong \triangle XCD$, suy ra $AB \parallel CD$. Biến đổi góc nội tiếp chắn các cung bằng nhau: $\angle AQP = \angle AQE + \angle EQX + \angle XQD = \angle XPC + \angle EPX + \angle BPE = \angle BPC = \angle BPQ$. Tứ giác $ABPQ$ có $AB \parallel PQ$ và hai góc đáy $\angle AQP = \angle BPQ$ nên nó là một hình thang cân, do đó 4 điểm $A, B, P, Q$ cùng nằm trên một đường tròn.</p>
             </div>
         </details>
 
         <h3>Bài 3</h3>
-        <p>Cho $O$ là tâm đường tròn ngoại tiếp của tam giác $ABC$. Lấy các điểm tùy ý $M$ và $N$ lần lượt nằm trên các cạnh $AB$ và $AC$. Đường tròn ngoại tiếp tam giác $AMN$ cắt đường tròn ngoại tiếp tam giác $ABC$ tại điểm thứ hai $K$. Chứng minh rằng trực tâm của các tam giác liên quan nằm trên một đường thẳng cố định.</p>
+        <p>Cho tam giác $ABC$ có tâm đường tròn ngoại tiếp là $O$. Lấy các điểm tùy ý $M$ và $N$ lần lượt trên các cạnh $AC$ và $BC$. Lấy các điểm $P$ và $Q$ nằm cùng phía với $C$ đối với đường thẳng $MN$ sao cho $\triangle CMN \sim \triangle PAN \sim \triangle QMB$ (theo đúng thứ tự đỉnh). Chứng minh rằng: $OP = OQ$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Đây là cấu hình điểm Miquel: Điểm $K$ chính là tâm của phép vị tự quay biến đoạn $MB$ thành đoạn $NC$. Áp dụng tính chất phép vị tự quay và đường thẳng Simpson-Steiner của điểm $K$ đối với các tam giác để suy ra tính thẳng hàng của các trực tâm.</p>
+                <p>Từ các cặp tam giác đồng dạng, ta có các tứ giác $ANCP$ và $BMCQ$ nội tiếp, biến đổi góc suy ra ba điểm $P, C, Q$ thẳng hàng. Đường thẳng $MN$ cắt đường tròn ngoại tiếp $\triangle ANC$ và $\triangle BMC$ lần lượt tại $E, F$. Chứng minh các tứ giác $AEPC$ và $BQFC$ là các hình thang cân, nên tâm ngoại tiếp $O$ của $\triangle ABC$ nằm trên đường trung trực của $EP$ và $FQ$. Đồng thời $\angle NEP = 180^\circ - \angle PQF$, chứng tỏ tứ giác $EPQF$ nội tiếp đường tròn có tâm là $O$. Do đó $OP = OQ$ (cùng là bán kính).</p>
             </div>
         </details>
 
         <h3>Bài 4</h3>
-        <p>Ta gọi hai đa giác đơn $P$ và $Q$ là "tương thích" nếu tồn tại một số nguyên dương $k$ sao cho có thể chia $P$ thành $k$ đa giác nhỏ đồng dạng với $Q$ và ngược lại. Khảo sát điều kiện tương thích của các đa giác.</p>
+        <p>Ta gọi hai đa giác đơn $P, Q$ là "tương thích" nếu tồn tại một số nguyên dương $k$ sao cho cả $P$ và $Q$ đều có thể phân chia thành $k$ đa giác bằng nhau và đồng dạng với đa giác kia. Chứng minh rằng với mọi cặp số nguyên chẵn $m, n \ge 4$, luôn tồn tại hai đa giác đơn tương thích lần lượt có $m$ cạnh và $n$ cạnh.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Xét góc trong của hai đa giác: Để một đa giác có thể lát được bởi các đa giác nhỏ đồng dạng với đa giác kia, các góc trong của chúng phải là tổ hợp nguyên của nhau. Sử dụng bất biến góc và tỉ số diện tích để chứng minh sự tương thích chỉ xảy ra khi các góc tương ứng bằng nhau.</p>
+                <p>Bổ đề: Quan hệ tương thích là một quan hệ tương đương (có tính bắc cầu). Do đó chỉ cần chứng minh với mọi số chẵn $d \ge 4$, luôn tồn tại một $d$-giác tương thích với hình vuông đơn vị. Với mỗi $k \ge 1$, xét đa giác hình bậc thang $(2k+2)$-đỉnh $P_k$ có hai cạnh độ dài $2k$ và $2k$ cạnh độ dài 2. Đa giác $P_k$ có thể chia thành $2k(k+1)$ hình vuông đơn vị, và ngược lại một hình vuông kích thước phù hợp có thể ghép từ các hình đa giác bậc thang đồng dạng với $P_k$. Áp dụng tính bắc cầu suy ra điều phải chứng minh.</p>
             </div>
         </details>
 
         <h3>Bài 5</h3>
-        <p>Cho tứ giác $ABCD$ nội tiếp đường tròn $\omega$ tâm $O$. Gọi $P$ là giao điểm của hai đường chéo $AC$ và $BD$. Đường tròn ngoại tiếp tam giác $APB$ và $CPD$ cắt nhau tại điểm thứ hai $Q$. Chứng minh rằng $O, P, Q$ thẳng hàng hoặc vuông góc với một đường thẳng xác định.</p>
+        <p>Cho tứ giác $ABCD$ nội tiếp đường tròn $\omega$ tâm $O$. Gọi $P$ là giao điểm của hai đường chéo $AC$ và $BD$. Điểm $Q$ nằm trên đoạn thẳng $OP$. Gọi $E$ và $F$ lần lượt là hình chiếu vuông góc của $Q$ lên các đường thẳng $AD$ và $BC$. Lấy các điểm $M$ và $N$ trên đường tròn ngoại tiếp tam giác $QEF$ sao cho $QM \parallel AC$ và $QN \parallel BD$. Chứng minh rằng hai đường thẳng $ME$ và $NF$ cắt nhau tại một điểm nằm trên đường trung trực của đoạn thẳng $CD$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Sử dụng trục đẳng phương của hai đường tròn $(APB)$ và $(CPD)$: đoạn thẳng nối giao điểm $PQ$ chính là trục đẳng phương. Áp dụng phương tích của điểm $O$ đối với hai đường tròn và tính chất của điểm liên hợp điều hòa của tứ giác nội tiếp để suy ra $OP \perp PQ$ hoặc $O, P, Q$ thẳng hàng.</p>
+                <p>Quy bài toán về mô hình tam giác qua điểm Miquel: Xét giao điểm của các cặp đường thẳng và đường tròn đường kính $AP$. Sử dụng phép quay vị tự tâm Miquel biến các đoạn thẳng và cặp tam giác đồng dạng $\triangle QMN \sim \triangle KEF$. Biến đổi góc định hướng chứng minh đường thẳng nối giao điểm $ME \cap NF$ song song với đường đối cực và vuông góc với dây cung, từ đó suy ra giao điểm này nằm trên đường trung trực của cạnh $CD$.</p>
             </div>
         </details>
 
         <h2 id="advanced" class="igo-level-heading">Advanced Level</h2>
 
         <h3>Bài 1</h3>
-        <p>Bốn điểm $A, B, C, D$ nằm trên đường tròn $\omega$ sao cho $AB = BC = CD$. Tiếp tuyến với $\omega$ tại $C$ cắt tiếp tuyến với $\omega$ tại $A$ và đường thẳng $AD$ lần lượt tại $K$ và $L$. Đường tròn $\omega$ và đường tròn ngoại tiếp tam giác $KLA$ cắt lại nhau tại $M$. Chứng minh rằng: $MA = ML$.</p>
+        <p>Bốn điểm $A, B, C, D$ nằm trên một đường tròn $\omega$ sao cho $AB = BC = CD$. Tiếp tuyến của $\omega$ tại $C$ cắt tiếp tuyến của $\omega$ tại $A$ và đường thẳng $AD$ lần lượt tại các điểm $K$ và $L$. Đường tròn $\omega$ và đường tròn ngoại tiếp tam giác $KLA$ cắt nhau lần thứ hai tại $M$. Chứng minh rằng: $MA = ML$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Do $AB = BC = CD$, tứ giác $ABCD$ là hình thang cân và có tính đối xứng cao. Điểm $K$ là giao của hai tiếp tuyến tại $A, C$ nên $KA = KC$. Sử dụng biến đổi góc nội tiếp trong đường tròn $\omega$ và đường tròn $(KLA)$: chứng minh $\triangle MAK$ đồng dạng với $\triangle MLK$, hoặc chứng minh $\angle MLA = \angle MAL$, suy ra tam giác $MAL$ cân tại $M$, tức $MA = ML$.</p>
+                <p>Do $AB = BC = CD$ nên $BC \parallel AD$. Biến đổi góc: $\angle KMA = \angle KLA = \angle KCB = \frac{\text{sđ}\overparen{BC}}{2} = \frac{\text{sđ}\overparen{AB}}{2} = \angle BMA$. Suy ra ba điểm $K, B, M$ thẳng hàng. Mặt khác hai tam giác $\triangle KBC \cong \triangle KBA$ bằng nhau (hai tiếp tuyến cắt nhau), suy ra $\angle AKB = \angle CKB$, tức tia $KM$ là phân giác của góc $\angle AKL$. Trong đường tròn ngoại tiếp $\triangle KLA$, tia phân giác của góc đỉnh $K$ đi qua trung điểm của cung đối diện, suy ra dây cung $MA = ML$.</p>
             </div>
         </details>
 
         <h3>Bài 2</h3>
-        <p>Cho tam giác nhọn $ABC$ ($AB \ne AC$). Điểm $D$ nằm trên $BC$ sao cho $DA$ tiếp xúc với đường tròn ngoại tiếp tam giác $ABC$. Gọi $E, F$ lần lượt là tâm đường tròn ngoại tiếp của các tam giác $ABD$ và $ACD$, và $M$ là trung điểm của $EF$. Chứng minh rằng đường thẳng tiếp xúc với đường tròn ngoại tiếp tam giác $AMD$ tại $D$ cũng tiếp xúc với đường tròn ngoại tiếp tam giác $ABC$.</p>
+        <p>Cho tam giác nhọn $ABC$ với $AB \ne AC$. Điểm $D$ nằm trên đường thẳng $BC$ sao cho $DA$ tiếp xúc với đường tròn ngoại tiếp tam giác $ABC$. Gọi $E$ và $F$ lần lượt là tâm đường tròn ngoại tiếp của các tam giác $ABD$ và $ACD$, và $M$ là trung điểm của đoạn thẳng $EF$. Chứng minh rằng tiếp tuyến kẻ từ $D$ đến đường tròn ngoại tiếp tam giác $AMD$ cũng tiếp xúc với đường tròn ngoại tiếp tam giác $ABC$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Do $DA$ là tiếp tuyến của $(ABC)$ nên $DA^2 = DB \cdot DC$. Đoạn nối tâm $EF$ vuông góc với dây cung chung $AD$. Điểm $M$ là trung điểm của $EF$ nên $M$ là tâm của một đường tròn trực giao. Sử dụng phép nghịch đảo tâm $D$ phương tích $DA^2$ biến đường tròn ngoại tiếp $(ABC)$ thành chính nó và biến $(AMD)$ thành một đường thẳng tiếp xúc, từ đó suy ra tính chất tiếp xúc chung.</p>
+                <p>Tính góc chứng minh được $DE \perp AC$ và $DF \perp AB$. Do $O$ là tâm ngoại tiếp $\triangle ABC$, bán kính $FO \perp AC$ và $EO \perp AB$, suy ra $DE \parallel FO$ và $DF \parallel EO$. Do đó $DFOE$ là một hình bình hành, suy ra $M$ là trung điểm của $DO$. Vì $DA \perp AO$ nên tam giác $DAO$ vuông tại $A$, trung tuyến $MD = MO = MA$. Gọi $P$ là điểm đối xứng của $A$ qua đường thẳng $DMO$. Vì $DA \perp AO$ nên $OP \perp DP$, chứng tỏ đường thẳng $DP$ tiếp xúc với $(ABC)$. Mặt khác $\angle PDM = \angle MDA = \angle DAM$, chứng tỏ $DP$ cũng là tiếp tuyến của đường tròn ngoại tiếp tam giác $AMD$.</p>
             </div>
         </details>
 
         <h3>Bài 3</h3>
-        <p>Trong tam giác $ABC$ ($\angle A \ne 90^\circ$), gọi $O, H$ lần lượt là tâm đường tròn ngoại tiếp và chân đường cao kẻ từ $A$. Đường tròn đường kính $AH$ cắt lại $(ABC)$ tại điểm thứ hai $K$. Chứng minh rằng $OK$ tiếp xúc với đường tròn chín điểm Euler của tam giác $ABC$.</p>
+        <p>Trong tam giác $ABC$ ($\angle A \ne 90^\circ$), gọi $O$ và $H$ lần lượt là tâm đường tròn ngoại tiếp và chân đường cao kẻ từ $A$. Gọi $M, N$ lần lượt là trung điểm của $BC$ và $AH$. Điểm $D$ là giao điểm của $AO$ và $BC$, và $H'$ là điểm đối xứng của $H$ qua $M$. Giả sử đường tròn ngoại tiếp tam giác $OH'D$ cắt đường tròn ngoại tiếp tam giác $BOC$ tại $E$. Chứng minh rằng hai đường thẳng $NO$ và $AE$ cắt nhau tại một điểm nằm trên đường tròn ngoại tiếp tam giác $BOC$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Đường tròn đường kính $AH$ đi qua các chân đường cao. Giao điểm $K$ với $(ABC)$ là một điểm quen thuộc (điểm đối cực hoặc chân đường đối trung). Sử dụng phép vị tự tâm trực tâm $H$ tỉ số $1/2$ biến đường tròn ngoại tiếp $(ABC)$ thành đường tròn 9 điểm Euler, qua đó chứng minh bán kính $OK$ vuông góc với bán kính đường tròn Euler tại tiếp điểm.</p>
+                <p>Cách 1: Kéo dài $OH$ cắt $(BOC)$ tại $F$, chứng minh $F, D, E$ thẳng hàng qua góc nội tiếp. Gọi $A'$ là điểm đối đường kính của $A$ trên $(ABC)$, dùng phương tích chỉ ra $AEA'F$ nội tiếp. Chiếu chùm điều hòa từ $O$ và từ $E$ lên đường tròn $(BOC)$, chứng minh giao điểm của $NO$ với $(BOC)$ và giao điểm của $AE$ với $(BOC)$ cùng tương ứng với điểm liên hợp điều hòa duy nhất, suy ra chúng đồng quy.\nCách 2: Áp dụng phép nghịch đảo cực $O$ phương tích $R^2$ biến $(ABC)$ thành chính nó và đưa về bài toán đường trung bình chia đôi đường cao $AH$.</p>
             </div>
         </details>
 
         <h3>Bài 4</h3>
-        <p>Cho hình thang $ABCD$ ($AB \parallel CD$). Các đường chéo cắt nhau tại $P$. Đường thẳng đi qua $P$ cắt các cạnh bên tại các điểm tạo thành các tỉ số bằng nhau. Chứng minh tính chất nội tiếp của tứ giác tạo bởi các đường đối cực.</p>
+        <p>Cho hình thang $ABCD$ ($AB \parallel CD$). Hai đường chéo cắt nhau tại $P$. Đường thẳng qua $P$ song song với $AB$ cắt $AD$ và $BC$ lần lượt tại $Q$ và $R$. Các đường phân giác ngoài của các góc $\angle DBA$ và $\angle DCA$ cắt nhau tại $X$. Gọi $S$ là hình chiếu vuông góc của $X$ lên $BC$. Chứng minh rằng nếu hai tứ giác $ABPQ$ và $CDQP$ đều là các tứ giác ngoại tiếp thì $PR = PS$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Áp dụng định lý Desargues và chùm điều hòa cho hình thang: đường thẳng nối giao điểm hai đường chéo $P$ và giao điểm hai cạnh bên tạo thành chùm điều hòa kinh điển. Chuyển bài toán về tính chất cực và đối cực để chứng minh tính đồng viên.</p>
+                <p>Bổ đề: Trong hình thang ngoại tiếp $KLMN$ đáy $KL \parallel MN$, độ dài các đoạn thẳng liên hệ trực tiếp với hình chiếu và tiếp điểm. Áp dụng bổ đề cho hai hình thang ngoại tiếp $ABPQ$ và $DCPQ$ suy ra đường tròn bàng tiếp góc $A$ của tam giác $ABP$ tiếp xúc với $CD$, và tâm của nó chính là điểm $X$. Đường thẳng $BC$ là đường đối cực của $Q$ đối với đường tròn bàng tiếp này, suy ra $QX \perp BC$, tức hình chiếu $S$ nằm trên đường tròn đường kính $QR$. Do $P$ là trung điểm của $QR$ nên $PR = PS$ (bán kính đường tròn đường kính $QR$).</p>
             </div>
         </details>
 
         <h3>Bài 5</h3>
-        <p>Cho tam giác nhọn $ABC$ nội tiếp đường tròn $\omega$ tâm $O$. Các điểm $E, F$ lần lượt nằm trên các cạnh $AC, AB$. Các đường tròn ngoại tiếp cắt nhau tạo thành các cặp tiếp điểm đối xứng. Chứng minh tính đồng quy tại tâm đối trung.</p>
+        <p>Cho tam giác nhọn $ABC$ nội tiếp đường tròn $\omega$ tâm $O$. Các điểm $E, F$ nằm trên các cạnh $AC, AB$ sao cho $O$ nằm trên $EF$ và tứ giác $BCEF$ nội tiếp. Gọi $R, S$ lần lượt là giao điểm của $EF$ với các cung nhỏ $AB, AC$ của $\omega$. Gọi $K, L$ lần lượt là điểm đối xứng của $R$ qua $C$ và điểm đối xứng của $S$ qua $B$. Lấy các điểm $P$ và $Q$ lần lượt trên các đường thẳng $BS$ và $RC$ sao cho $PK \perp BC$ và $QL \perp BC$. Chứng minh rằng đường tròn tâm $P$ bán kính $PK$ tiếp xúc với đường tròn ngoại tiếp tam giác $RCE$ khi và chỉ khi đường tròn tâm $Q$ bán kính $QL$ tiếp xúc với đường tròn ngoại tiếp tam giác $BFS$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Sử dụng định lý Miquel cho tứ giác toàn phần và phép biến đổi nghịch đảo hoặc đối xứng trục. Điểm đồng quy chính là điểm liên hợp đẳng giác hoặc tâm Lemoine (tâm đối trung) của tam giác $ABC$.</p>
+                <p>Vì $BCEF$ nội tiếp và $O \in EF$, ta có $AO \perp EF$, suy ra các cung $\overparen{AR} = \overparen{AS} = 90^\circ$. Chuyển đổi qua đối xứng và tính chất tiếp xúc: điều kiện tiếp xúc của đường tròn $(P, PK)$ với $(RCE)$ tương đương với một hệ thức đối xứng về khoảng cách đại số từ tâm đến đường kính chung. Do hệ thức này hoàn toàn đối xứng qua trục phản xạ và góc giữa các đỉnh $B, C$, nên điều kiện tiếp xúc của hệ thứ nhất xảy ra khi và chỉ khi điều kiện tiếp xúc của hệ thứ hai xảy ra.</p>
             </div>
         </details>
+
+        <div style="margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border-light, rgba(0,0,0,0.1)); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <a href="/posts/math/de-thi-igo-2017-2025.html" class="igo-nav-link">← Quay lại Tổng quan IGO</a>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Kỳ thi IGO 2022 (Lần thứ 9)</span>
+        </div>
 
         <p class="exam-end"><b>─── HẾT ĐỀ THI IGO 2022 ───</b></p>
     </div>

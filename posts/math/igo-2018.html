@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <link rel="manifest" href="/manifest.json">
@@ -138,7 +138,7 @@
 
         <!-- LỐI DẪN ĐẦU TRANG ĐẾN TỔNG QUAN IGO -->
         <div>
-            <a href="/posts/math/de-thi-igo-2017-2025.html" class="igo-nav-link">← Tổng Quan Về Kì Thi Hình Học Iran (IGO)</a>
+            <a href="/posts/math/de-thi-igo-2017-2025.html" class="igo-nav-link">← Tổng quan IGO (Toàn bộ các năm 2017 – 2025)</a>
         </div>
 
         <!-- MỤC LỤC MINI CHO NĂM -->
@@ -154,64 +154,64 @@
         <h2 id="elementary" class="igo-level-heading">Elementary Level</h2>
 
         <h3>Bài 1</h3>
-        <p>Cho một tờ giấy hình chữ nhật kích thước 40 × 30, bên trong có một hình chữ nhật đặc kích thước 10 × 5 (như hình vẽ). Hãy chia phần giấy còn lại thành hai mảnh bằng nhau sao cho có thể ghép chúng lại thành một hình chữ nhật mới.</p>
+        <p>Cho một tờ giấy kích thước $40 \times 30$, bên trong có một hình chữ nhật đặc (tô đậm) kích thước $10 \times 5$. Ta muốn cắt rời hình chữ nhật đặc này ra khỏi tờ giấy bằng đúng 4 nhát cắt thẳng. Mỗi nhát cắt là một đường thẳng chia tờ giấy thành 2 mảnh, và ta giữ lại mảnh chứa hình chữ nhật đặc. Mục tiêu là cực tiểu hóa tổng độ dài của 4 nhát cắt. Hãy chỉ ra cách cắt để đạt mục tiêu này và cho biết tổng độ dài nhỏ nhất đó là bao nhiêu? (Chỉ cần chỉ ra các nhát cắt đúng và ghi đáp số cuối cùng mà không cần chứng minh).</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Xác định tâm đối xứng chung của hình chữ nhật lớn 40 × 30 và hình chữ nhật nhỏ 10 × 5 bên trong. Thiết kế đường cắt là một đường gấp khúc đi qua tâm đối xứng này để chia phần giấy còn lại thành hai mảnh có diện tích và hình dạng hoàn toàn đối xứng qua tâm, sau đó xoay $180^\circ$ một mảnh để ghép thành hình chữ nhật mới.</p>
+                <p>Cắt theo thứ tự thông minh để nhát cắt sau đi qua phần giấy đã bị thu hẹp bởi nhát cắt trước. Ví dụ, nhát cắt đầu tiên cắt ngang tờ giấy từ biên này sang biên kia (dài 30 hoặc 40), các nhát cắt tiếp theo chỉ cần cắt từ mép vừa tạo đến biên còn lại. Tổng độ dài nhỏ nhất của 4 nhát cắt thẳng có thể đạt được là $65$.</p>
             </div>
         </details>
 
         <h3>Bài 2</h3>
-        <p>Lục giác lồi $A_1A_2A_3A_4A_5A_6$ nằm bên trong lục giác lồi $B_1B_2B_3B_4B_5B_6$. Biết rằng các cặp cạnh tương ứng song song với nhau: $A_1A_2 \parallel B_1B_2, A_2A_3 \parallel B_2B_3, \dots, A_6A_1 \parallel B_6B_1$. Chứng minh rằng diện tích của lục giác $A_1A_2A_3A_4A_5A_6$ nhỏ hơn diện tích của lục giác $B_1B_2B_3B_4B_5B_6$.</p>
+        <p>Lục giác lồi $A_1A_2A_3A_4A_5A_6$ nằm bên trong lục giác lồi $B_1B_2B_3B_4B_5B_6$ sao cho $A_1A_2 \parallel B_1B_2, A_2A_3 \parallel B_2B_3, \dots, A_6A_1 \parallel B_6B_1$. Chứng minh rằng diện tích của hai lục giác đơn $A_1B_2A_3B_4A_5B_6$ và $B_1A_2B_3A_4B_5A_6$ bằng nhau. (Lục giác đơn là lục giác không tự cắt).</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Kéo dài các cạnh của lục giác trong $A_1\dots A_6$ để chia không gian bao bọc giữa hai lục giác thành các hình thang có đáy song song với các cạnh của lục giác ngoài $B_1\dots B_6$. Vì lục giác trong nằm trọn trong lục giác ngoài, tổng diện tích các phần hình thang bù vào luôn dương, suy ra diện tích lục giác trong nhỏ hơn diện tích lục giác ngoài.</p>
+                <p>Chia phần diện tích nằm giữa hai đa giác thành 6 hình thang $A_1A_2B_2B_1, A_2A_3B_3B_2, \dots$. Trong mỗi hình thang (ví dụ $A_1A_2B_2B_1$ có đáy $A_1A_2 \parallel B_1B_2$), hai tam giác có chung đáy $A_1A_2$ và đỉnh đối diện nằm trên đường thẳng song song là $\triangle B_1A_1A_2$ và $\triangle B_2A_1A_2$ có diện tích bằng nhau. Mỗi tam giác thuộc về một trong hai lục giác đơn. Cộng diện tích 6 cặp tam giác bằng nhau này với diện tích phần chung ở giữa (lục giác $A_1A_2A_3A_4A_5A_6$), ta suy ra diện tích của hai lục giác đơn bằng nhau.</p>
             </div>
         </details>
 
         <h3>Bài 3</h3>
-        <p>Cho hình bình hành $ABCD$. Lấy các điểm $E, F$ nằm trên các cạnh $AB, BC$. Các đoạn thẳng nối từ các đỉnh tới $E, F$ chia hình bình hành thành nhiều miền tam giác. Biết diện tích một số tam giác thành phần, hãy tính diện tích của miền tam giác còn lại.</p>
+        <p>Cho hình bình hành $ABCD$ có $\angle D = 60^\circ, AD = 2$ và $AB = \sqrt{3} + 1$. Điểm $M$ là trung điểm của $AD$. Đoạn thẳng $CK$ là đường phân giác trong của góc $\angle C$ ($K \in AB$). Tính số đo góc $\angle CKB$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Sử dụng tính chất diện tích của tam giác có đỉnh nằm trên cạnh hình bình hành: diện tích của tam giác có một cạnh trùng với một cạnh hình bình hành và đỉnh nằm trên cạnh đối diện luôn bằng một nửa diện tích hình bình hành ($S_{\triangle} = \frac{1}{2} S_{ABCD}$). Lập các phương trình cộng trừ diện tích để triệt tiêu các phần chung.</p>
+                <p>Cách 1: Lấy điểm $X$ trên $AB$ sao cho $AX = 1, XB = \sqrt{3}$. Ta có $\angle MAX = 180^\circ - 60^\circ = 120^\circ$. Theo định lý cosin hoặc Pythagoras, $MX = \sqrt{3}$. Suy ra $\triangle MXB$ vuông cân với $\angle MBX = 15^\circ$. Do $CK$ là phân giác góc $\angle C = 60^\circ$ nên $\angle KCB = 30^\circ$, và tính được $\angle CBK = 45^\circ$. Từ đó $\angle CKB = 180^\circ - 60^\circ - 45^\circ = 75^\circ$.\nCách 2: Gọi $N$ là trung điểm $BC$, $MN$ cắt $CK$ tại $L$. Tam giác $CNL$ đều nên $LN = CN = NB$, suy ra $\triangle BCL$ vuông tại $L$. Áp dụng định lý Pythagoras tính được $BL = \sqrt{3} = ML$, từ đó suy ra $\angle LBM = 15^\circ$, $\angle CBK = 45^\circ$ và $\angle CKB = 75^\circ$.</p>
             </div>
         </details>
 
         <h3>Bài 4</h3>
-        <p>Hai đường tròn tâm $O_1, O_2$ nằm bên trong đường tròn lớn $\Omega$ và tiếp xúc trong với $\Omega$. Đường tiếp tuyến chung ngoài của hai đường tròn nhỏ cắt đường tròn lớn tại các điểm. Chứng minh hệ thức liên hệ giữa các cung và góc tạo bởi tiếp tuyến.</p>
+        <p>Hai đường tròn tâm $O_1, O_2$ nằm bên trong đường tròn $\Omega$ và tiếp xúc trong với $\Omega$. Dây cung $AB$ của $\Omega$ tiếp xúc với cả hai đường tròn này sao cho hai đường tròn nằm về hai phía đối nhau của dây cung $AB$. Chứng minh rằng: $\angle O_1AO_2 + \angle O_1BO_2 > 90^\circ$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Khai thác phép vị tự biến đường tròn lớn $\Omega$ thành các đường tròn nhỏ $\omega_1, \omega_2$ với tâm vị tự là các tiếp điểm trên $\Omega$. Chuyển đổi góc giữa tiếp tuyến và dây cung về các góc chắn cung tương ứng trên đường tròn lớn để chứng minh mối quan hệ góc cần tìm.</p>
+                <p>Kẻ các tiếp tuyến $AC, BC$ từ $A, B$ tới đường tròn $(O_1)$, và các tiếp tuyến $AD, BD$ từ $A, B$ tới đường tròn $(O_2)$. Do $AO_1, BO_1$ và $AO_2, BO_2$ là các phân giác góc, ta có $\angle O_1AO_2 + \angle O_1BO_2 = \frac{1}{2}(\angle CAD + \angle CBD)$. Do đó bất đẳng thức tương đương với $\angle CAD + \angle CBD > 180^\circ$, hay $\angle ACB + \angle ADB < 180^\circ$. Vì các điểm $C, D$ nằm bên ngoài đường tròn $\Omega$, góc ngoài chắn dây cung suy ra $\angle ACB < \angle AXB$ và $\angle ADB < \angle AYB$ (với $X, Y$ thuộc $\Omega$). Vì $X, Y$ nằm trên đường tròn về hai phía của dây cung $AB$ nên $\angle AXB + \angle AYB = 180^\circ$, dẫn tới $\angle ACB + \angle ADB < 180^\circ$, bài toán được chứng minh.</p>
             </div>
         </details>
 
         <h3>Bài 5</h3>
-        <p>Cho một tập hợp các đoạn thẳng trên mặt phẳng đôi một không cắt nhau (kể cả tại các đầu mút). Ta nói đoạn thẳng $AB$ "chặt" đoạn thẳng $CD$ nếu đường thẳng kéo dài của $AB$ cắt đoạn $CD$ tại một điểm nằm giữa $C$ và $D$.\n(a) Có thể xảy ra trường hợp mỗi đoạn thẳng khi kéo dài về cả hai phía đều chặt đúng một đoạn thẳng khác theo mỗi phía hay không?\n(b) Một đoạn thẳng được gọi là "bị bao quanh" nếu từ cả hai phía của nó đều có đúng một đoạn thẳng khác chặt nó. Có thể xảy ra trường hợp tất cả các đoạn thẳng đều bị bao quanh hay không?</p>
+        <p>Cho một tập hợp các đoạn thẳng trên mặt phẳng đôi một không cắt nhau (kể cả tại các đầu mút). Ta nói đoạn thẳng $AB$ "chặt" đoạn thẳng $CD$ nếu phần kéo dài của đoạn thẳng $AB$ cắt đoạn $CD$ tại một điểm nằm giữa $C$ và $D$.\n(a) Có thể xảy ra trường hợp mỗi đoạn thẳng khi kéo dài về cả hai phía đều chặt đúng một đoạn thẳng khác theo mỗi phía hay không?\n(b) Một đoạn thẳng được gọi là "bị bao quanh" nếu từ cả hai phía của nó đều có đúng một đoạn thẳng khác chặt nó. Có thể xảy ra trường hợp tất cả các đoạn thẳng đều bị bao quanh hay không?</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Câu (a): Không thể. Hãy xét bao lồi của tập hợp tất cả các đầu mút của các đoạn thẳng. Đầu mút là đỉnh của bao lồi không thể nằm giữa hai điểm của bất kỳ đoạn kéo dài nào, tạo nên mâu thuẫn.\nCâu (b): Có thể. Dựng cấu hình hình học đối xứng dạng cánh chong chóng quay khép kín (xoay quanh tâm đối xứng) gồm các đoạn thẳng sao cho phần kéo dài của đoạn này chắn ngang đoạn tiếp theo theo chu trình.</p>
+                <p>(a) KHÔNG THỂ. Xét bao lồi của tập hợp tất cả các đầu mút của các đoạn thẳng. Gọi $A$ là một đỉnh của bao lồi đó, với $AB$ là một đoạn thẳng trong tập hợp. Khi kéo dài $BA$ về phía $A$, nó phải chặt một đoạn thẳng $CD$, điều này buộc $A$ phải nằm bên trong bao lồi của các điểm $C, D, \dots$, mâu thuẫn với việc $A$ là đỉnh của bao lồi toàn cục.\n(b) CÓ THỂ. Dựng cấu hình các đoạn thẳng xếp thành một hình xoắn ốc khép kín hoặc sắp xếp đối xứng sao cho mỗi đoạn thẳng đều bị chặt từ cả hai phía bởi đúng một đoạn thẳng khác (như hình mẫu trong đáp án chính thức).</p>
             </div>
         </details>
 
         <h2 id="intermediate" class="igo-level-heading">Intermediate Level</h2>
 
         <h3>Bài 1</h3>
-        <p>Cho ba hình chữ nhật được ghép lại như hình vẽ, với các độ dài cạnh tương ứng đã biết. Hãy tìm độ dài của đoạn thẳng $XY$.</p>
+        <p>Cho ba hình chữ nhật được ghép lại như hình vẽ, với các độ dài đoạn thẳng trên biên đã cho. Hãy tìm độ dài của đoạn thẳng $XY$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Kéo dài các cạnh của các hình chữ nhật để tạo thành một tam giác vuông cân lớn $ABC$ có các góc đáy bằng $45^\circ$. Áp dụng định lý Pythagoras tính độ dài các cạnh huyền của các tam giác vuông nhỏ được tạo thành: $AD = 2\sqrt{2}, DX = \sqrt{2}, CE = 2\sqrt{2}, EY = \sqrt{2}$, từ đó suy ra tọa độ các điểm $X, Y$ và tính được khoảng cách $XY$.</p>
+                <p>Kéo dài các cạnh của các hình chữ nhật để tạo thành tam giác vuông cân $ABC$ có $AB = BC$ và $\angle BAC = \angle BCA = 45^\circ$. Áp dụng định lý Pythagoras tính độ dài các đoạn trên cạnh huyền: $AD = 2\sqrt{2}, DX = \sqrt{2}, CE = 2\sqrt{2}, EY = \frac{\sqrt{2}}{2}$ và $AC = 10\sqrt{2}$. Khi đó:\n$XY = AC - AD - DX - CE - EY = 10\sqrt{2} - 2\sqrt{2} - \sqrt{2} - 2\sqrt{2} - \frac{\sqrt{2}}{2} = \frac{9\sqrt{2}}{2}$.</p>
             </div>
         </details>
 
@@ -219,9 +219,9 @@
         <p>Trong tứ giác lồi $ABCD$, hai đường chéo $AC$ và $BD$ cắt nhau tại điểm $P$. Biết rằng $\angle DAC = 90^\circ$ và $2\angle ADB = \angle ACB$. Nếu $\angle DBC + 2\angle ADC = 180^\circ$, chứng minh rằng: $2AP = BP$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Gọi $M$ là giao điểm của đường phân giác góc $\angle PCB$ với đoạn $PB$. Đặt $\angle ADB = \alpha$, suy ra $\angle PCM = \alpha = \angle PDA$. Kết hợp với $\angle APD = \angle MPC$ suy ra $\triangle PMC \sim \triangle PAD$, do đó $\angle PMC = \angle PAD = 90^\circ$. Trong tam giác $CPB$ có đường phân giác $CM$ đồng thời là đường cao nên tam giác cân, suy ra $M$ là trung điểm của $PB$. Từ hai tam giác đồng dạng suy ra $AP = PM = \frac{1}{2}BP$, tức $2AP = BP$.</p>
+                <p>Gọi $M$ là giao điểm của đường phân giác góc $\angle PCB$ với đoạn $PB$. Đặt $\angle ADB = \alpha$, ta có $\angle PCM = \alpha = \angle PDA$. Vì $\angle APD = \angle MPC$ nên $\triangle PMC \sim \triangle PAD$, suy ra $\angle PMC = \angle PAD = 90^\circ$. Trong tam giác $CPB$, đường phân giác $CM$ đồng thời là đường cao nên $\triangle CPB$ cân tại $C$, suy ra $PM = MB = \frac{BP}{2}$. Mặt khác $\angle DBC + 2\alpha + \angle PCD + \angle PDC = 180^\circ$, kết hợp $\angle DBC + 2\angle ADC = 180^\circ$ suy ra $\angle PCD = \angle PDC$, dẫn tới $PC = PD$. Từ đó $\triangle PMC = \triangle PAD$, suy ra $AP = PM = \frac{BP}{2}$, hay $2AP = BP$.</p>
             </div>
         </details>
 
@@ -229,19 +229,19 @@
         <p>Cho hai đường tròn $\omega_1, \omega_2$ có tâm lần lượt là $O_1, O_2$ cắt nhau tại hai điểm $A$ và $B$. Đường thẳng $O_1B$ cắt $\omega_2$ lần thứ hai tại $C$, và đường thẳng $O_2A$ cắt $\omega_1$ lần thứ hai tại $D$. Gọi $X$ là giao điểm thứ hai của $AC$ với $\omega_1$, và $Y$ là giao điểm thứ hai của $BD$ với $\omega_2$. Chứng minh rằng $CX = DY$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Sử dụng tính đối xứng giữa hai tâm $O_1, O_2$ và trục đối xứng của hệ hình. Chứng minh $\triangle O_1AD \cong \triangle O_2BC$ bằng cách so sánh bán kính và góc ở tâm. Sử dụng định lý góc nội tiếp để chỉ ra các tam giác $\triangle CAX$ và $\triangle DBY$ có các góc tương ứng bằng nhau và cùng nội tiếp các đường tròn có bán kính bằng nhau, dẫn tới hai dây cung $CX$ và $DY$ có độ dài bằng nhau.</p>
+                <p>Bổ đề: Nếu tứ giác lồi $PQRS$ có $RQ = RS, \angle RPQ = \angle RPS$ và $PQ \ne PS$ thì $PQRS$ nội tiếp. Áp dụng bổ đề cho thấy $O_1AO_2C$ và $O_2BO_1D$ là các tứ giác nội tiếp. Biến đổi góc suy ra $\angle AYD = \angle O_1BD$, chứng tỏ $AC \parallel BD$, do đó $AY = BC$. Hai tam giác $\triangle ADY$ và $\triangle BXC$ có các góc tương ứng bằng nhau và $AY = BC$ nên hai tam giác này bằng nhau ($\triangle ADY = \triangle BXC$), suy ra hai cạnh tương ứng $CX = DY$.</p>
             </div>
         </details>
 
         <h3>Bài 4</h3>
-        <p>Cho một khối đa diện có tất cả các mặt đều là hình tam giác. Lấy một điểm $P$ tùy ý trên một cạnh của đa diện sao cho $P$ không phải là trung điểm hay đầu mút của cạnh đó. Đặt $P_0 = P$. Ở mỗi bước, nối $P_i$ với trọng tâm của một trong các mặt chứa nó; đường thẳng này cắt chu vi của mặt đó tại điểm $P_{i+1}$. Tiếp tục quá trình này với $P_{i+1}$ và mặt còn lại chứa nó. Chứng minh rằng quá trình này không thể đi qua tất cả các mặt của đa diện.</p>
+        <p>Cho một khối đa diện có tất cả các mặt đều là hình tam giác. Lấy một điểm $P$ tùy ý trên một cạnh của đa diện sao cho $P$ không phải là trung điểm hay đầu mút của cạnh đó. Đặt $P_0 = P$. Ở mỗi bước, nối $P_i$ với trọng tâm của một trong các mặt chứa nó; đường thẳng này cắt chu vi của mặt đó tại điểm $P_{i+1}$. Tiếp tục quá trình này với $P_{i+1}$ và mặt còn lại chứa nó. Chứng minh rằng bằng cách tiếp tục quá trình này, ta không thể đi qua tất cả các mặt của đa diện.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Xét tỉ số chia độ dài của điểm trên cạnh khi đường nối đi qua trọng tâm: Trọng tâm chia đoạn nối từ đỉnh tới trung điểm cạnh đối diện theo tỉ số 2:1. Khi biểu diễn vị trí của điểm qua tọa độ tỉ cự, mẫu số của tỉ số chia chỉ có thể nhân lên các lũy thừa của 2. Do đó một số cạnh hoặc mặt với tỉ số khác sẽ không bao giờ đạt tới được, chứng minh quỹ đạo không thể phủ kín toàn bộ các mặt.</p>
+                <p>Giả sử $P$ nằm trên cạnh $AB$, $M$ là trung điểm $AB$ và giả sử $P$ nằm giữa $B$ và $M$. Ta chứng minh quy nạp rằng dãy điểm $P_i$ chỉ đi qua các cạnh chứa đỉnh $A$. Thật vậy, xét mặt tam giác $AB_i B_{i+1}$ có trọng tâm $G_i$, vì $P_i$ nằm giữa $B_i$ và trung điểm $M_i$, đoạn thẳng $P_i G_i$ nằm kẹp giữa hai đường trung tuyến xuất phát từ $B_i$ và $M_i$, nên giao điểm $P_{i+1}$ bắt buộc phải nằm trên cạnh $AB_{i+1}$ (giữa $B_{i+1}$ và $M_{i+1}$). Như vậy tất cả các điểm $P_i$ đều nằm trên các cạnh đi qua đỉnh $A$. Do đó quá trình không bao giờ đi qua được các mặt không chứa đỉnh $A$ (mà các mặt như vậy luôn tồn tại trong mọi khối đa diện).</p>
             </div>
         </details>
 
@@ -249,9 +249,9 @@
         <p>Cho $ABCD$ là hình bình hành thỏa mãn $\angle DAC = 90^\circ$. Gọi $H$ là hình chiếu vuông góc của $A$ lên $DC$. Điểm $P$ nằm trên đường thẳng $AC$ sao cho đường thẳng $PD$ tiếp xúc với đường tròn ngoại tiếp tam giác $ABD$. Chứng minh rằng $\angle PBA = \angle DBH$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Đường tròn ngoại tiếp tam giác $PDB$ cắt $AB, AD$ lần lượt tại $X, Y$. Do $PD$ là tiếp tuyến của $(ABD)$ nên $\angle PDA = \angle ABD$. Tận dụng tính chất góc tạo bởi tiếp tuyến và các tứ giác nội tiếp để thiết lập mối quan hệ đồng dạng giữa các tam giác vuông chứa đường cao $AH$ và các tam giác liên quan tới $P$, từ đó suy ra hai góc $\angle PBA$ và $\angle DBH$ bằng nhau.</p>
+                <p>Đường tròn ngoại tiếp tam giác $PDB$ cắt $AB, AD$ lần thứ hai tại $X, Y$. Đặt $\angle CDB = \alpha$ và $\angle ADB = \beta$, suy ra $\angle ABD = \beta$ và do tiếp tuyến nên $\angle ADP = \beta$. Góc $\angle PDB = \alpha + \beta = \angle PXB$, và $\angle PAX = \angle DAH$. Từ đó chứng minh hai tam giác $\triangle APX \sim \triangle ADH$ và $\triangle XAD \sim \triangle YAB$, dẫn tới tỉ số $\frac{AP}{AH} = \frac{AY}{AB}$. Do $\angle HAB = \angle PAY = 90^\circ$, ta có $\triangle APY \sim \triangle AHB$. Suy ra $\angle HBA = \angle PYA = \angle PBD$, từ đó trừ đi góc chung ta được $\angle PBA = \angle DBH$.</p>
             </div>
         </details>
 
@@ -261,51 +261,56 @@
         <p>Hai đường tròn $\omega_1, \omega_2$ cắt nhau tại hai điểm $A, B$. Gọi $PQ$ là tiếp tuyến chung ngoài của hai đường tròn với $P \in \omega_1$ và $Q \in \omega_2$. Điểm $X$ tùy ý nằm trên $\omega_1$. Đường thẳng $AX$ cắt $\omega_2$ lần thứ hai tại $Y$. Điểm $Y' \ne Y$ nằm trên $\omega_2$ sao cho $QY = QY'$. Đường thẳng $Y'B$ cắt $\omega_1$ lần thứ hai tại $X'$. Chứng minh rằng: $PX = PX'$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Khai thác phép vị tự quay biến $\omega_1$ thành $\omega_2$ qua tâm $A$ và $B$. Vì $PQ$ là tiếp tuyến chung ngoài, các đoạn tiếp tuyến và dây cung tương ứng bảo toàn mối quan hệ khoảng cách. Điều kiện $QY = QY'$ tương đương với việc cung $QY$ bằng cung $QY'$ trên $\omega_2$. Chuyển góc nội tiếp qua hai giao điểm $A, B$ sang $\omega_1$ để chứng minh cung $PX$ bằng cung $PX'$, suy ra $PX = PX'$.</p>
+                <p>Do $QY = QY'$ trong đường tròn $\omega_2$ nên tam giác $QYY'$ cân, suy ra $\angle QYY' = \angle QY'Y = \angle Y'QP$, chứng tỏ $YY' \parallel PQ$. Mặt khác, góc nội tiếp cho $\angle Y'YA = \angle Y'BA = \angle X'BA = \angle X'XA$, dẫn tới $XX' \parallel YY' \parallel PQ$. Do đó $\angle PXX' = \angle X'PQ = \angle PX'X$, tam giác $PXX'$ cân tại $P$, suy ra $PX = PX'$.</p>
             </div>
         </details>
 
         <h3>Bài 2</h3>
-        <p>Trong tam giác nhọn $ABC$ có $\angle A = 45^\circ$. Gọi $O, H$ lần lượt là tâm đường tròn ngoại tiếp và trực tâm của tam giác. $D$ là chân đường cao kẻ từ $B$. Điểm $X$ là trung điểm của cung $AH$ của đường tròn ngoại tiếp tam giác $ADH$. Chứng minh rằng: $DX$ vuông góc với đường thẳng $AO$.</p>
+        <p>Trong tam giác nhọn $ABC$ có $\angle A = 45^\circ$. Gọi $O, H$ lần lượt là tâm đường tròn ngoại tiếp và trực tâm của tam giác $ABC$. $D$ là chân đường cao kẻ từ $B$. Điểm $X$ là trung điểm của cung $AH$ (cung chứa điểm $D$) của đường tròn ngoại tiếp tam giác $ADH$. Chứng minh rằng: $DX = DO$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Trong tam giác nhọn có góc $A = 45^\circ$, ta có tính chất quen thuộc $AH = BC$ và $\angle BOC = 90^\circ$. Tứ giác nội tiếp chứa đường cao và trực tâm cho phép tính chính xác góc giữa $DX$ và các cạnh. Chú ý rằng $OA$ vuông góc với tiếp tuyến tại $A$, hãy chứng minh $DX$ song song với tiếp tuyến tại $A$ của $(ABC)$ bằng biến đổi góc nội tiếp chắn cung $AH$.</p>
+                <p>Vì $\angle AXH = 90^\circ$ và $XA = XH$ nên $\angle AHX = 45^\circ = \angle ADX$. Góc $\angle BOC = 2\angle A = 90^\circ$, nên các điểm $B, O, D, C$ cùng thuộc đường tròn đường kính $BC$, suy ra $\angle ODA = \angle OBC = 45^\circ$, dẫn tới $\angle ODX = 45^\circ + 45^\circ = 90^\circ$. Mặt khác $\angle ACH = 90^\circ - \angle A = 45^\circ = \frac{1}{2}\angle AXH$, kết hợp $XA = XH$ chứng tỏ $X$ là tâm ngoại tiếp tam giác $ACH$, suy ra $XA = XC$. Do đó $OX$ là đường trung trực của $AC$, tức $OX \perp AC$. Trong tam giác vuông $ODX$, đường thẳng $AC$ vuông góc với $OX$ và chia đôi góc $\angle ODX = 90^\circ$, chứng tỏ tam giác $\triangle ODX$ cân tại $D$, suy ra $DX = DO$.</p>
             </div>
         </details>
 
         <h3>Bài 3</h3>
-        <p>Bốn điểm $A, B, C, D$ nằm trên một đường tròn $\omega$ theo thứ tự đó. Gọi $X$ là giao điểm của các tiếp tuyến với $\omega$ tại $A$ và $C$; $Y$ là giao điểm của các tiếp tuyến với $\omega$ tại $B$ và $D$. Đường thẳng $XY$ cắt các đường thẳng $AB$ và $CD$ lần lượt tại $E$ và $F$. Chứng minh rằng $XE = XF$ hoặc một hệ thức tỉ số tương đương.</p>
+        <p>Tìm tất cả các giá trị của số nguyên $n > 3$ sao cho tồn tại một $n$-giác lồi mà mỗi đường chéo đều là đường trung trực của ít nhất một đường chéo khác.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Sử dụng định lý Pascal cho lục giác suy biến hoặc lý thuyết cực và đối cực (pole and polar). Điểm $X$ và $Y$ là cực của các đường chéo $AC$ và $BD$. Đường thẳng $XY$ chính là trục đối cực của giao điểm hai đường chéo $AC \cap BD$. Sử dụng tỉ số kép và hàng điểm điều hòa để suy ra tính đối xứng và đẳng thức đoạn thẳng cần chứng minh.</p>
+                <p>Gọi $m$ là số lượng đường trung trực của tất cả các đường chéo. Theo giả thiết $m$ không nhỏ hơn số đường chéo, nhưng số đường trung trực không thể vượt quá số đường chéo, nên mỗi đường chéo là trung trực của đúng một đường chéo khác. Bằng cách xét các đỉnh kề nhau, chứng minh tất cả các cạnh của đa giác phải bằng nhau. Nếu $n > 4$, xét 4 đỉnh liên tiếp $A, B, C, D$, đường chéo $AD$ có trung trực đi qua $B$ hoặc $C$, suy ra tam giác đều và tạo thành góc $60^\circ$. Khi đó giữa hai đỉnh kề luôn có một đỉnh có góc $60^\circ$, số góc $60^\circ$ ít nhất là $\frac{n}{2} > 2$, mâu thuẫn với việc đa giác lồi có tối đa hai góc $60^\circ$. Với $n = 4$, hình thoi (không phải vuông) thỏa mãn tính chất. Vậy giá trị duy nhất là $n = 4$.</p>
             </div>
         </details>
 
         <h3>Bài 4</h3>
-        <p>Cho tam giác nhọn $ABC$ với trực tâm $H$ và tâm đường tròn ngoại tiếp $O$. Đường thẳng đi qua $O$ vuông góc với trục Euler $OH$ cắt các cạnh $AB, AC$ lần lượt tại $P, Q$. Chứng minh rằng $HP = HQ$.</p>
+        <p>Tứ giác $ABCD$ ngoại tiếp một đường tròn. Hai đường chéo $AC$ và $BD$ không vuông góc với nhau. Các đường phân giác của các góc tạo bởi hai đường chéo cắt các đoạn thẳng $AB, BC, CD$ và $DA$ lần lượt tại các điểm $K, L, M$ và $N$. Biết rằng tứ giác $KLMN$ nội tiếp, chứng minh rằng tứ giác $ABCD$ cũng nội tiếp.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Nhận xét tính chất đối xứng của trực tâm $H$ qua các phép chiếu. Sử dụng tính chất của đường tròn Euler (đường tròn 9 điểm) và hệ thức lượng trong tam giác: khoảng cách từ $O$ đến các điểm $P, Q$ thỏa mãn đẳng thức tích vô hướng với $OH$. Chứng minh tam giác $HPQ$ cân tại $H$ bằng cách chỉ ra $OH$ là trục đối xứng hoặc đường trung trực của đoạn thẳng liên quan.</p>
+                <p>Gọi $P = AC \cap BD$. Giả sử $KL \parallel MN$, dùng công thức độ dài đường phân giác tính được tỉ số suy ra $\angle APB = 90^\circ$, mâu thuẫn giả thiết. Do đó $KL$ và $MN$ cắt nhau tại $Q$ trên $AC$, $LM$ và $NK$ cắt nhau tại $R$ trên $BD$. Gọi đường tròn nội tiếp của $ABCD$ tiếp xúc các cạnh tại $K', L', M', N'$. Theo định lý Brianchon và Menelaus, $K', L', Q$ thẳng hàng, $M', N', Q$ thẳng hàng và các đường chéo của $KLMN$ cùng $K'L'M'N'$ cắt nhau tại các đỉnh của tam giác cực $\triangle PQR$. Suy ra đường tròn ngoại tiếp $KLMN$ và đường tròn nội tiếp trùng nhau về các cực, dẫn tới các tiếp điểm trùng nhau, từ đó suy ra $ABCD$ nội tiếp.</p>
             </div>
         </details>
 
         <h3>Bài 5</h3>
-        <p>Cho tam giác $ABC$ và ba đường tròn bàng tiếp của nó. Tiếp tuyến chung trong của các cặp đường tròn bàng tiếp tạo thành một tam giác mới. Chứng minh rằng tâm đường tròn ngoại tiếp của tam giác mới này trùng với tâm đường tròn chín điểm Euler của tam giác $ABC$.</p>
+        <p>Cho $ABCD$ là một tứ giác nội tiếp. Một đường tròn đi qua $A, B$ tiếp xúc với đoạn thẳng $CD$ tại điểm $E$. Một đường tròn khác đi qua $C, D$ tiếp xúc với đoạn thẳng $AB$ tại điểm $F$. Điểm $G$ là giao điểm của $AE$ và $DF$, điểm $H$ là giao điểm của $BE$ và $CF$. Chứng minh rằng tâm đường tròn nội tiếp của bốn tam giác $AGF, BHF, CHE, DGE$ cùng nằm trên một đường tròn.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span></summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Áp dụng định lý về tâm vị tự ngoài và tâm vị tự trong của ba đường tròn bàng tiếp. Tam giác tạo bởi các tiếp tuyến chung trong là tam giác vị tự với tam giác $ABC$ qua một tâm vị tự đặc biệt. Sử dụng định lý Feuerbach và tính chất đường tròn Euler tiếp xúc với các đường tròn bàng tiếp để chứng minh tâm ngoại tiếp của tam giác mới chính là tâm đường tròn Euler của $\triangle ABC$.</p>
+                <p>Gọi $I, J, K, L$ lần lượt là tâm nội tiếp của 4 tam giác. Nếu $AB \parallel CD$ thì hình thang cân hiển nhiên. Nếu $AB$ cắt $CD$ tại $M$, dùng phương tích $ME^2 = MA \cdot MB = MD \cdot MC = MF^2$ suy ra $ME = MF$, dẫn tới $EF$ là tia phân giác trong của $\angle AEB$ và $\angle CFD$. Tính góc cho thấy tứ giác $EFJK$ và $EFIL$ nội tiếp. Do $EF$ là phân giác nên $\triangle GEF \cong \triangle HEF$, suy ra $\frac{GE}{GF} = \frac{HE}{HF} = k$. Phân giác ngoài của $G, H$ và $EF$ đồng quy tại $P$, khi đó $PJ \cdot PK = P_{P/(EFJK)} = PE \cdot PF = P_{P/(EFIL)} = PI \cdot PL$, suy ra 4 điểm $I, J, K, L$ cùng thuộc một đường tròn.</p>
             </div>
         </details>
+
+        <div style="margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border-light, rgba(0,0,0,0.1)); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <a href="/posts/math/de-thi-igo-2017-2025.html" class="igo-nav-link">← Quay lại Tổng quan IGO</a>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Kỳ thi IGO 2018 (Lần thứ 5)</span>
+        </div>
 
         <p class="exam-end"><b>─── HẾT ĐỀ THI IGO 2018 ───</b></p>
     </div>
