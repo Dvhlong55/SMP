@@ -1238,46 +1238,50 @@
       const ticketEl = document.getElementById('date-ticket-capture');
       if (!ticketEl) return null;
 
-      return await html2canvas(ticketEl, {
-        scale: 2,
-        backgroundColor: '#FFF0F5',
-        useCORS: true,
-        logging: false,
-        onclone: (clonedDoc) => {
-          const fixStyle = clonedDoc.createElement('style');
-          fixStyle.innerHTML = 'img { display: inline-block !important; }';
-          clonedDoc.head.appendChild(fixStyle);
-          const clonedTicket = clonedDoc.getElementById('date-ticket-capture');
-          if (clonedTicket) {
-            clonedTicket.style.width = '720px';
-            clonedTicket.style.minWidth = '720px';
-            clonedTicket.style.maxWidth = '720px';
-            clonedTicket.style.margin = '0 auto';
-            clonedTicket.style.boxSizing = 'border-box';
-            clonedTicket.style.transform = 'none';
+      if (document.fonts && document.fonts.ready) {
+        try { await document.fonts.ready; } catch (e) {}
+      }
+
+      const metricsFix = document.createElement('style');
+      metricsFix.id = 'html2canvas-metrics-fix';
+      metricsFix.textContent = 'img { display: inline-block !important; vertical-align: baseline !important; }';
+      document.head.appendChild(metricsFix);
+
+      const liveWidth = ticketEl.getBoundingClientRect().width;
+
+      try {
+        return await html2canvas(ticketEl, {
+          scale: 2,
+          backgroundColor: '#FFF0F5',
+          useCORS: true,
+          logging: false,
+          scrollX: 0,
+          scrollY: -window.scrollY,
+          onclone: (clonedDoc) => {
+            const clonedTicket = clonedDoc.getElementById('date-ticket-capture');
+            if (clonedTicket) {
+              clonedTicket.style.width = liveWidth + 'px';
+              clonedTicket.style.minWidth = liveWidth + 'px';
+              clonedTicket.style.maxWidth = liveWidth + 'px';
+              clonedTicket.style.margin = '0';
+              clonedTicket.style.boxSizing = 'border-box';
+              clonedTicket.style.transform = 'none';
+            }
+            clonedDoc.querySelectorAll('#date-ticket-capture table').forEach(t => {
+              t.style.width = '100%';
+              t.style.tableLayout = 'fixed';
+              t.style.borderCollapse = 'collapse';
+            });
+            clonedDoc.querySelectorAll('#date-ticket-capture th').forEach(th => {
+              th.style.backgroundColor = '#FFE4E9';
+              th.style.color = '#FF1493';
+              th.style.boxSizing = 'border-box';
+            });
           }
-          const tables = clonedDoc.querySelectorAll('#date-ticket-capture table');
-          tables.forEach(t => {
-            t.style.width = '100%';
-            t.style.tableLayout = 'fixed';
-            t.style.borderCollapse = 'collapse';
-          });
-          const allTh = clonedDoc.querySelectorAll('#date-ticket-capture th');
-          allTh.forEach(th => {
-            th.style.backgroundColor = '#FFE4E9';
-            th.style.color = '#FF1493';
-            th.style.boxSizing = 'border-box';
-          });
-          const oddRows = clonedDoc.querySelectorAll('#date-ticket-capture tbody tr:nth-child(odd) td');
-          oddRows.forEach(td => {
-            td.style.backgroundColor = 'rgba(255, 240, 245, 0.45)';
-          });
-          const evenRows = clonedDoc.querySelectorAll('#date-ticket-capture tbody tr:nth-child(even) td');
-          evenRows.forEach(td => {
-            td.style.backgroundColor = '#FFFFFF';
-          });
-        }
-      });
+        });
+      } finally {
+        metricsFix.remove();
+      }
     }
 
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdOWHrWq0fSP9gW8UMk-MjH2pWwlipoZHFDDiI6u2Qx7k8NM7bt6Pe5KYylU1CunOqAA/exec';
