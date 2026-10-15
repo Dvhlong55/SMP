@@ -172,31 +172,23 @@
         .prof-btn-love {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
             background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
             color: #ffffff !important;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            font-family: inherit;
-            font-weight: 600;
+            border-radius: 50%;
             text-decoration: none !important;
             box-shadow: 0 3px 12px rgba(255, 105, 180, 0.35);
             transition: all 0.25s ease;
             cursor: pointer;
             animation: pulseLove 2s infinite ease-in-out;
-            white-space: nowrap;
+            flex-shrink: 0;
         }
         .prof-btn-love:hover {
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 5px 18px rgba(255, 20, 147, 0.5);
+            transform: translateY(-2px) scale(1.08);
+            box-shadow: 0 5px 18px rgba(255, 20, 147, 0.55);
             color: #ffffff !important;
-        }
-        .prof-tab-love {
-            color: #ff69b4 !important;
-        }
-        .prof-tab-love:hover {
-            color: #ff1493 !important;
         }
         @keyframes pulseLove {
             0%, 100% {
@@ -743,8 +735,7 @@
                 </div>
                 <div class="prof-header-actions">
                     <a id="prof-btn-love" href="/posts/math/vmo/love/home.html" class="prof-btn-love" style="display: none;" title="Dành riêng cho bạn 💖">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                        <span>Món quà bí mật 💖</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                     </a>
                     <button class="prof-btn-logout" onclick="window.handleLogout()">Đăng xuất</button>
                 </div>
@@ -756,7 +747,6 @@
                 <button class="prof-tab-btn" data-tab="settings" onclick="switchMainTab('settings')">Cài đặt</button>
                 <button class="prof-tab-btn" id="tab-btn-admin" data-tab="admin" style="display: none;" onclick="switchMainTab('admin')">Quản trị</button>
                 <a class="prof-tab-btn" id="tab-btn-class" href="/pages/class.html" target="_blank" style="display: none;">Class</a>
-                <a class="prof-tab-btn prof-tab-love" id="tab-btn-love" href="/posts/math/vmo/love/home.html" style="display: none;">💖 Hẹn Hò Bí Mật</a>
             </div>
 
             <!-- Tab 1: Tổng quan -->
