@@ -3,25 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Chặn công cụ tìm kiếm & Bot lập chỉ mục đường dẫn bí mật -->
-  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <style>
+    html body {
+      display: none !important;
+    }
+    html.auth-granted body {
+      display: flex !important;
+    }
+  </style>
+  <noscript>
+    <meta http-equiv="refresh" content="0; url=/pages/auth.html">
+  </noscript>
   <script>
     (function() {
       var homePath = window.location.pathname.includes('/SMP/') ? '/SMP/home.html' : '/home.html';
-      var token = localStorage.getItem('smp_access_token');
-      var username = (localStorage.getItem('smp_username') || '').toLowerCase();
-      if (!token || (username && username !== 'vuqynu' && username !== 'smp')) {
-        window.location.replace(homePath);
-        return;
+      var authPath = window.location.pathname.includes('/SMP/') ? '/SMP/pages/auth.html' : '/pages/auth.html';
+      try {
+        var token = localStorage.getItem('smp_access_token');
+        var username = (localStorage.getItem('smp_username') || '').toLowerCase();
+        if (!token) {
+          window.location.replace(authPath);
+          return;
+        }
+        if (username !== 'vuqynu' && username !== 'smp') {
+          window.location.replace(homePath);
+          return;
+        }
+      } catch (e) {
+        window.location.replace(authPath);
       }
-      document.documentElement.classList.add('auth-pending');
     })();
   </script>
-  <style>
-    html.auth-pending body {
-      display: none !important;
-    }
-  </style>
   <title>💖 Our Sweet Date Planner – 1st Anniversary Secret Page</title>
 
   <!-- Google Fonts: Dancing Script & Quicksand (Hỗ trợ tiếng Việt 100%) -->
@@ -383,11 +395,16 @@
         <span class="bg-deepPink text-white text-xs font-bold px-3 py-1 rounded-full">🎨 Buổi Chiều • 14:00 – 17:00</span>
         <span class="text-xs font-bold text-deepPink">Bước 3 / 4</span>
       </div>
-      <h2 class="text-xl sm:text-2xl font-bold text-deepPink mb-1">
-        Chiều mát mẻ mình trốn nắng đi đâu nè? Bbi thích gì nhất?
-      </h2>
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-1">
+        <h2 class="text-xl sm:text-2xl font-bold text-deepPink">
+          Chiều mát mẻ mình trốn nắng đi đâu nè? Bbi thích gì nhất?
+        </h2>
+        <span id="afternoon-count-badge" class="bg-pink-100 text-deepPink text-xs font-extrabold px-3 py-1 rounded-full border border-borderPink">
+          Đã chọn: 2/2 hoạt động
+        </span>
+      </div>
       <p class="text-xs sm:text-sm font-semibold text-textBrown/75 mb-5">
-        (Các hoạt động trải nghiệm vui vẻ, mát mẻ để trốn nắng 🌸 • <span class="text-deepPink font-bold">Bbi có thể chọn tối đa 2 hoạt động nha!</span>)
+        (Các hoạt động trải nghiệm vui vẻ, mát mẻ để trốn nắng 🌸 • <span class="text-deepPink font-bold">Bbi có thể chọn 2 hoạt động yêu thích nha! Nhấn thẻ để đổi</span>)
       </p>
 
       <div id="afternoon-options" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 mb-6"></div>
@@ -499,7 +516,7 @@
               </tr>
               <tr class="bg-bgBlush/20">
                 <td style="width: 17%; text-align: center; vertical-align: top;" class="py-3.5 px-2 font-bold text-deepPink whitespace-nowrap">14:00 – 17:00</td>
-                <td style="width: 25%; text-align: left; vertical-align: top;" class="py-3.5 px-3 font-semibold">🎨 <strong>Chiều:</strong> Hoạt động đôi (Tối đa 2)</td>
+                <td style="width: 25%; text-align: left; vertical-align: top;" class="py-3.5 px-3 font-semibold">🎨 <strong>Chiều:</strong> Hoạt động đôi (2 hoạt động)</td>
                 <td style="width: 32%; text-align: left; vertical-align: top;" id="sum-afternoon-place" class="py-3.5 px-3"></td>
                 <td style="width: 26%; text-align: left; vertical-align: top;" class="py-3.5 px-3 text-xs text-textBrown/80">Hoạt động để có sức phẻ</td>
               </tr>
@@ -799,7 +816,7 @@
       breakfast: breakfastData[0],
       morning: morningData[0],
       lunch: lunchData[0],
-      afternoon: [afternoonData[0]],
+      afternoon: [afternoonData[0], afternoonData[1]],
       foodtour: foodTourData[0],
       movie: movieData[0]
     };
@@ -871,6 +888,11 @@
       const container = document.getElementById('afternoon-options');
       if (!container) return;
       container.innerHTML = '';
+
+      const countBadge = document.getElementById('afternoon-count-badge');
+      if (countBadge) {
+        countBadge.textContent = `Đã chọn: ${selections.afternoon.length}/2 hoạt động`;
+      }
 
       afternoonData.forEach((item) => {
         const selectedIdx = selections.afternoon.findIndex(a => a.id === item.id);
@@ -1280,8 +1302,8 @@
         const noteVal = document.getElementById('love-note-input') ? document.getElementById('love-note-input').value.trim() : '';
 
         const afternoonText = selections.afternoon
-          .map((a, i) => `${i + 1}. ${a.name}`)
-          .join('\n  - Trải nghiệm: ');
+          .map((a, i) => (selections.afternoon.length > 1 ? `Hoạt động ${i + 1}: ${a.name}` : a.name))
+          .join('\n  - ');
 
         const combinedProblem = '[Kỷ Niệm 1 Năm] Lịch hẹn hò 25/10/2026 của Vqn';
         const combinedContent = 
@@ -1366,8 +1388,21 @@
 
     async function verifyLoveAccess() {
       const homePath = window.location.pathname.includes('/SMP/') ? '/SMP/home.html' : '/home.html';
-      const token = localStorage.getItem('smp_access_token');
+      const authPath = window.location.pathname.includes('/SMP/') ? '/SMP/pages/auth.html' : '/pages/auth.html';
+      
+      let token = null;
+      let username = '';
+      try {
+        token = localStorage.getItem('smp_access_token');
+        username = (localStorage.getItem('smp_username') || '').toLowerCase();
+      } catch (e) {}
+
       if (!token) {
+        window.location.replace(authPath);
+        return false;
+      }
+
+      if (username !== 'vuqynu' && username !== 'smp') {
         window.location.replace(homePath);
         return false;
       }
@@ -1379,7 +1414,7 @@
           cache: 'no-store'
         });
         if (!res.ok) {
-          window.location.replace(homePath);
+          window.location.replace(authPath);
           return false;
         }
         const user = await res.json();
@@ -1394,13 +1429,12 @@
           return false;
         }
 
-        document.documentElement.classList.remove('auth-pending');
+        document.documentElement.classList.add('auth-granted');
         return true;
       } catch (err) {
         console.error('Lỗi xác thực quyền truy cập:', err);
-        const u = (localStorage.getItem('smp_username') || '').toLowerCase();
-        if (u === 'vuqynu' || u === 'smp') {
-          document.documentElement.classList.remove('auth-pending');
+        if (username === 'vuqynu' || username === 'smp') {
+          document.documentElement.classList.add('auth-granted');
           return true;
         }
         window.location.replace(homePath);
