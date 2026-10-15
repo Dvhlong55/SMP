@@ -486,51 +486,51 @@
 
         <!-- Bảng Tổng Kết Timeline -->
         <div class="overflow-hidden mb-5 rounded-2xl border border-borderPink/60 bg-white">
-          <table class="w-full text-left" style="table-layout: fixed; width: 100%; border-collapse: separate; border-spacing: 0;">
+          <table class="w-full text-left" style="table-layout: fixed; width: 100%; border-collapse: collapse;">
             <colgroup>
-              <col style="width: 17%;">
-              <col style="width: 25%;">
-              <col style="width: 32%;">
-              <col style="width: 26%;">
+              <col style="width: 15%;">
+              <col style="width: 21%;">
+              <col style="width: 31%;">
+              <col style="width: 33%;">
             </colgroup>
             <thead>
               <tr class="bg-bgCream text-deepPink border-b border-borderPink">
-                <th style="width: 17%; text-align: center; vertical-align: middle;" class="py-3 px-2 font-bold text-xs sm:text-sm">Khung giờ</th>
-                <th style="width: 25%; text-align: left; vertical-align: middle;" class="py-3 px-3 font-bold text-xs sm:text-sm">Buổi & Hoạt động</th>
-                <th style="width: 32%; text-align: left; vertical-align: middle;" class="py-3 px-3 font-bold text-xs sm:text-sm">Địa điểm bbi đã chọn</th>
-                <th style="width: 26%; text-align: left; vertical-align: middle;" class="py-3 px-3 font-bold text-xs sm:text-sm">Ghi chú / Chuẩn bị</th>
+                <th style="width: 15%; text-align: center; vertical-align: middle; box-sizing: border-box;" class="py-3 px-2 font-bold text-xs sm:text-sm">Khung giờ</th>
+                <th style="width: 21%; text-align: left; vertical-align: middle; box-sizing: border-box;" class="py-3 px-3 font-bold text-xs sm:text-sm">Buổi & Hoạt động</th>
+                <th style="width: 31%; text-align: left; vertical-align: middle; box-sizing: border-box;" class="py-3 px-3 font-bold text-xs sm:text-sm">Địa điểm bbi đã chọn</th>
+                <th style="width: 33%; text-align: left; vertical-align: middle; box-sizing: border-box;" class="py-3 px-3 font-bold text-xs sm:text-sm">Ghi chú / Chuẩn bị</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-borderPink/40 text-xs sm:text-sm text-textBrown">
               <tr class="bg-bgBlush/20">
-                <td style="width: 17%; text-align: center; vertical-align: top;" class="py-3.5 px-2 font-bold text-deepPink whitespace-nowrap">08:00 – 10:30</td>
-                <td style="width: 25%; text-align: left; vertical-align: top;" class="py-3.5 px-3 font-semibold">☀️ <strong>Sáng:</strong> Ăn sáng, Cafe, Picnic & Photobooth</td>
-                <td style="width: 32%; text-align: left; vertical-align: top;" id="sum-morning-place" class="py-3.5 px-3"></td>
-                <td style="width: 26%; text-align: left; vertical-align: top;" id="sum-morning-items" class="py-3.5 px-3"></td>
+                <td style="width: 15%; text-align: center; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-2 font-bold text-deepPink whitespace-nowrap">08:00 – 10:30</td>
+                <td style="width: 21%; text-align: left; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-3 font-semibold">☀️ <strong>Sáng:</strong> Ăn sáng, Cafe, Picnic & Photobooth</td>
+                <td style="width: 31%; text-align: left; vertical-align: top; box-sizing: border-box;" id="sum-morning-place" class="py-3.5 px-3"></td>
+                <td style="width: 33%; text-align: left; vertical-align: top; box-sizing: border-box;" id="sum-morning-items" class="py-3.5 px-3"></td>
               </tr>
               <tr>
-                <td style="width: 17%; text-align: center; vertical-align: top;" class="py-3.5 px-2 font-bold text-deepPink whitespace-nowrap">11:30 – 13:30</td>
-                <td style="width: 25%; text-align: left; vertical-align: top;" class="py-3.5 px-3 font-semibold">🍲 <strong>Trưa:</strong> Ăn trưa center</td>
-                <td style="width: 32%; text-align: left; vertical-align: top;" id="sum-lunch-place" class="py-3.5 px-3"></td>
-                <td style="width: 26%; text-align: left; vertical-align: top;" class="py-3.5 px-3 text-xs text-textBrown/80">Can't function on an empty stomach</td>
+                <td style="width: 15%; text-align: center; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-2 font-bold text-deepPink whitespace-nowrap">11:30 – 13:30</td>
+                <td style="width: 21%; text-align: left; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-3 font-semibold">🍲 <strong>Trưa:</strong> Ăn trưa center</td>
+                <td style="width: 31%; text-align: left; vertical-align: top; box-sizing: border-box;" id="sum-lunch-place" class="py-3.5 px-3"></td>
+                <td style="width: 33%; text-align: left; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-3 text-xs text-textBrown/80">Can't function on an empty stomach</td>
               </tr>
               <tr class="bg-bgBlush/20">
-                <td style="width: 17%; text-align: center; vertical-align: top;" class="py-3.5 px-2 font-bold text-deepPink whitespace-nowrap">14:00 – 17:00</td>
-                <td style="width: 25%; text-align: left; vertical-align: top;" class="py-3.5 px-3 font-semibold">🎨 <strong>Chiều:</strong> Hoạt động đôi (2 hoạt động)</td>
-                <td style="width: 32%; text-align: left; vertical-align: top;" id="sum-afternoon-place" class="py-3.5 px-3"></td>
-                <td style="width: 26%; text-align: left; vertical-align: top;" class="py-3.5 px-3 text-xs text-textBrown/80">Hoạt động để có sức phẻ</td>
+                <td style="width: 15%; text-align: center; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-2 font-bold text-deepPink whitespace-nowrap">14:00 – 17:00</td>
+                <td style="width: 21%; text-align: left; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-3 font-semibold">🎨 <strong>Chiều:</strong> Hoạt động đôi (2 hoạt động)</td>
+                <td style="width: 31%; text-align: left; vertical-align: top; box-sizing: border-box;" id="sum-afternoon-place" class="py-3.5 px-3"></td>
+                <td style="width: 33%; text-align: left; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-3 text-xs text-textBrown/80">Hoạt động để có sức phẻ</td>
               </tr>
               <tr>
-                <td style="width: 17%; text-align: center; vertical-align: top;" class="py-3.5 px-2 font-bold text-deepPink whitespace-nowrap">17:30 – 19:30</td>
-                <td style="width: 25%; text-align: left; vertical-align: top;" class="py-3.5 px-3 font-semibold">🍢 <strong>Tối (P1):</strong> Clear đồ Ăn Vặt</td>
-                <td style="width: 32%; text-align: left; vertical-align: top;" id="sum-foodtour-place" class="py-3.5 px-3"></td>
-                <td style="width: 26%; text-align: left; vertical-align: top;" class="py-3.5 px-3 text-xs text-textBrown/80">Vì em luôn có một chiếc bụng đói</td>
+                <td style="width: 15%; text-align: center; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-2 font-bold text-deepPink whitespace-nowrap">17:30 – 19:30</td>
+                <td style="width: 21%; text-align: left; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-3 font-semibold">🍢 <strong>Tối (P1):</strong> Clear đồ Ăn Vặt</td>
+                <td style="width: 31%; text-align: left; vertical-align: top; box-sizing: border-box;" id="sum-foodtour-place" class="py-3.5 px-3"></td>
+                <td style="width: 33%; text-align: left; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-3 text-xs text-textBrown/80">Vì em luôn có một chiếc bụng đói</td>
               </tr>
               <tr class="bg-bgBlush/20">
-                <td style="width: 17%; text-align: center; vertical-align: top;" class="py-3.5 px-2 font-bold text-deepPink whitespace-nowrap">20:00 – 22:30</td>
-                <td style="width: 25%; text-align: left; vertical-align: top;" class="py-3.5 px-3 font-semibold">🎬 <strong>Tối (P2):</strong> Xem phim </td>
-                <td style="width: 32%; text-align: left; vertical-align: top;" id="sum-movie-place" class="py-3.5 px-3"></td>
-                <td style="width: 26%; text-align: left; vertical-align: top;" class="py-3.5 px-3 text-xs text-textBrown/80">Đặt vé Sweetbox + Bắp Caramel</td>
+                <td style="width: 15%; text-align: center; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-2 font-bold text-deepPink whitespace-nowrap">20:00 – 22:30</td>
+                <td style="width: 21%; text-align: left; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-3 font-semibold">🎬 <strong>Tối (P2):</strong> Xem phim </td>
+                <td style="width: 31%; text-align: left; vertical-align: top; box-sizing: border-box;" id="sum-movie-place" class="py-3.5 px-3"></td>
+                <td style="width: 33%; text-align: left; vertical-align: top; box-sizing: border-box;" class="py-3.5 px-3 text-xs text-textBrown/80">Đặt vé Sweetbox + Bắp Caramel</td>
               </tr>
             </tbody>
           </table>
@@ -1196,9 +1196,9 @@
       const sumMorningEl = document.getElementById('sum-morning-items');
       if (checkedItems.length > 0) {
         sumMorningEl.innerHTML = `
-          <div class="flex flex-col gap-1.5 text-xs text-textBrown font-semibold">
+          <div class="space-y-1.5 text-xs text-textBrown font-semibold w-full">
             ${checkedItems.map(item => `
-              <div class="bg-bgBlush/70 border border-borderPink/60 rounded-lg px-2 py-1 w-full box-border leading-tight text-[11px] sm:text-xs">
+              <div class="bg-bgBlush/70 border border-borderPink/60 rounded-lg px-2.5 py-1.5 w-full box-border leading-snug text-[11px] sm:text-xs" style="word-break: break-word; overflow-wrap: anywhere;">
                 ${item}
               </div>
             `).join('')}
@@ -1262,10 +1262,47 @@
             clonedTicket.style.boxSizing = 'border-box';
             clonedTicket.style.transform = 'none';
           }
+          const tableContainer = clonedDoc.querySelector('#date-ticket-capture .overflow-hidden');
+          if (tableContainer) {
+            tableContainer.style.width = '686px';
+            tableContainer.style.maxWidth = '686px';
+            tableContainer.style.boxSizing = 'border-box';
+          }
           const tables = clonedDoc.querySelectorAll('#date-ticket-capture table');
           tables.forEach(t => {
-            t.style.width = '100%';
+            t.style.width = '684px';
+            t.style.minWidth = '684px';
+            t.style.maxWidth = '684px';
             t.style.tableLayout = 'fixed';
+            t.style.borderCollapse = 'collapse';
+          });
+          const allCol1 = clonedDoc.querySelectorAll('#date-ticket-capture tr > *:nth-child(1)');
+          allCol1.forEach(c => {
+            c.style.width = '100px';
+            c.style.minWidth = '100px';
+            c.style.maxWidth = '100px';
+            c.style.boxSizing = 'border-box';
+          });
+          const allCol2 = clonedDoc.querySelectorAll('#date-ticket-capture tr > *:nth-child(2)');
+          allCol2.forEach(c => {
+            c.style.width = '144px';
+            c.style.minWidth = '144px';
+            c.style.maxWidth = '144px';
+            c.style.boxSizing = 'border-box';
+          });
+          const allCol3 = clonedDoc.querySelectorAll('#date-ticket-capture tr > *:nth-child(3)');
+          allCol3.forEach(c => {
+            c.style.width = '210px';
+            c.style.minWidth = '210px';
+            c.style.maxWidth = '210px';
+            c.style.boxSizing = 'border-box';
+          });
+          const allCol4 = clonedDoc.querySelectorAll('#date-ticket-capture tr > *:nth-child(4)');
+          allCol4.forEach(c => {
+            c.style.width = '230px';
+            c.style.minWidth = '230px';
+            c.style.maxWidth = '230px';
+            c.style.boxSizing = 'border-box';
           });
         }
       });
