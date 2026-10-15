@@ -487,18 +487,12 @@
         <!-- Bảng Tổng Kết Timeline -->
         <div class="overflow-hidden mb-5 rounded-2xl border border-borderPink/60 bg-white">
           <table class="w-full text-left" style="table-layout: fixed; width: 100%; border-collapse: collapse;">
-            <colgroup>
-              <col style="width: 15%;">
-              <col style="width: 21%;">
-              <col style="width: 31%;">
-              <col style="width: 33%;">
-            </colgroup>
             <thead>
-              <tr class="bg-bgCream text-deepPink border-b border-borderPink">
-                <th style="width: 15%; text-align: center; vertical-align: middle; box-sizing: border-box;" class="py-3 px-2 font-bold text-xs sm:text-sm">Khung giờ</th>
-                <th style="width: 21%; text-align: left; vertical-align: middle; box-sizing: border-box;" class="py-3 px-3 font-bold text-xs sm:text-sm">Buổi & Hoạt động</th>
-                <th style="width: 31%; text-align: left; vertical-align: middle; box-sizing: border-box;" class="py-3 px-3 font-bold text-xs sm:text-sm">Địa điểm bbi đã chọn</th>
-                <th style="width: 33%; text-align: left; vertical-align: middle; box-sizing: border-box;" class="py-3 px-3 font-bold text-xs sm:text-sm">Ghi chú / Chuẩn bị</th>
+              <tr class="border-b border-borderPink" style="background-color: #FFE4E9;">
+                <th style="width: 15%; text-align: center; vertical-align: middle; box-sizing: border-box; background-color: #FFE4E9; color: #FF1493;" class="py-3 px-2 font-bold text-xs sm:text-sm">Khung giờ</th>
+                <th style="width: 21%; text-align: left; vertical-align: middle; box-sizing: border-box; background-color: #FFE4E9; color: #FF1493;" class="py-3 px-3 font-bold text-xs sm:text-sm">Buổi & Hoạt động</th>
+                <th style="width: 31%; text-align: left; vertical-align: middle; box-sizing: border-box; background-color: #FFE4E9; color: #FF1493;" class="py-3 px-3 font-bold text-xs sm:text-sm">Địa điểm bbi đã chọn</th>
+                <th style="width: 33%; text-align: left; vertical-align: middle; box-sizing: border-box; background-color: #FFE4E9; color: #FF1493;" class="py-3 px-3 font-bold text-xs sm:text-sm">Ghi chú / Chuẩn bị</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-borderPink/40 text-xs sm:text-sm text-textBrown">
@@ -1303,6 +1297,20 @@
             c.style.minWidth = '230px';
             c.style.maxWidth = '230px';
             c.style.boxSizing = 'border-box';
+          });
+          const allTh = clonedDoc.querySelectorAll('#date-ticket-capture th');
+          allTh.forEach(th => {
+            th.style.backgroundColor = '#FFE4E9';
+            th.style.color = '#FF1493';
+            th.style.boxSizing = 'border-box';
+          });
+          const oddRows = clonedDoc.querySelectorAll('#date-ticket-capture tbody tr:nth-child(odd) td');
+          oddRows.forEach(td => {
+            td.style.backgroundColor = 'rgba(255, 240, 245, 0.45)';
+          });
+          const evenRows = clonedDoc.querySelectorAll('#date-ticket-capture tbody tr:nth-child(even) td');
+          evenRows.forEach(td => {
+            td.style.backgroundColor = '#FFFFFF';
           });
         }
       });
