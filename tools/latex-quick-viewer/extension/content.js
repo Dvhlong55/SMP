@@ -27,6 +27,8 @@
     let activeHintIndex = 0;
     let filteredHints = [];
     let currentEditorTarget = null; // Textarea đang nhận autocomplete
+    let currentTranslateRawText = ''; // Lưu vết văn bản gốc để tái biên dịch tức thì khi đổi model
+    let currentModelPreference = 'max'; // 'max' (mặc định) | 'min'
 
     // Danh sách gợi ý lệnh quen thuộc chuẩn SMP LaTeX Editor
     const LATEX_SNIPPETS = [
@@ -156,8 +158,8 @@
                 left: 0;
                 width: 100vw;
                 height: 100vh;
-                background: rgba(0, 0, 0, 0.48);
-                backdrop-filter: blur(2px);
+                background: transparent;
+                backdrop-filter: none;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -167,15 +169,20 @@
             }
             .smp-backdrop.active {
                 opacity: 1;
-                pointer-events: auto;
+                pointer-events: none; /* Giữ none để trang phía sau nhận tương tác xem đề, bôi đen */
             }
 
             /* --- GIAO DIỆN HỘP THOẠI & HIỆU ỨNG CHUYỂN MƯỢT MÀ --- */
             .smp-dialog {
+                pointer-events: auto; /* Nhận tương tác chuột và bàn phím riêng cho hộp thoại */
                 position: absolute;
                 width: 860px;
-                max-width: 96vw;
-                max-height: 90vh;
+                height: 620px;
+                min-width: 520px;
+                min-height: 400px;
+                max-width: 98vw;
+                max-height: 98vh;
+                resize: both; /* Cho phép người dùng kéo giãn chỉnh kích thước tùy ý */
                 background: #0f1416;
                 color: #e2e8f0;
                 border-radius: 12px;
@@ -262,11 +269,18 @@
                 background: transparent;
                 border: 1px solid rgba(255, 255, 255, 0.12);
                 color: #94a3b8;
-                font-size: 11px;
-                font-weight: 500;
-                padding: 4px 10px;
+                padding: 4px 8px;
+                min-width: 30px;
+                height: 26px;
                 border-radius: 6px;
                 cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.15s ease;
+            }
+            .smp-tab-btn svg {
+                margin: 0 !important;
             }
             .smp-tab-btn.active {
                 background: rgba(92, 225, 230, 0.2);
@@ -277,14 +291,51 @@
                 background: rgba(255, 255, 255, 0.05);
                 color: #e2e8f0;
             }
+            .smp-tab-btn.smp-tab-latex {
+                padding: 3px 8px;
+                min-width: 44px;
+            }
+            .smp-latex-logo {
+                font-family: 'KaTeX_Main', 'Times New Roman', Georgia, serif;
+                font-size: 13px;
+                font-weight: 700;
+                letter-spacing: 0.02em;
+                display: inline-flex;
+                align-items: baseline;
+                line-height: 1;
+                user-select: none;
+            }
+            .smp-latex-logo .tex-bs {
+                opacity: 0.85;
+                margin-right: 1px;
+                font-family: 'JetBrains Mono', Consolas, monospace;
+                font-weight: 600;
+                font-size: 12px;
+            }
+            .smp-latex-logo .tex-a {
+                font-size: 0.74em;
+                text-transform: uppercase;
+                transform: translateY(-0.22em);
+                margin-left: -0.1em;
+                margin-right: -0.05em;
+                display: inline-block;
+            }
+            .smp-latex-logo .tex-e {
+                font-size: 0.85em;
+                text-transform: uppercase;
+                transform: translateY(0.18em);
+                margin-left: -0.08em;
+                margin-right: -0.04em;
+                display: inline-block;
+            }
 
-            /* --- CẦN GẠT CHUYỂN SÁNG / TỐI (THEME TOGGLE SWITCH) --- */
+            /* --- CẦN GẠT CHUYỂN SÁNG / TỐI (TỐI GIẢN KHÔNG DÙNG ICON) --- */
             .smp-theme-switch {
                 position: relative;
                 display: inline-flex;
                 align-items: center;
-                width: 48px;
-                height: 24px;
+                width: 38px;
+                height: 20px;
                 cursor: pointer;
                 user-select: none;
                 margin: 0 4px;
@@ -305,40 +356,22 @@
                 bottom: 0;
                 background: #cbd5e1;
                 border: 1px solid #94a3b8;
-                border-radius: 24px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 5px;
+                border-radius: 20px;
                 box-sizing: border-box;
-            }
-            .smp-switch-icon {
-                font-size: 10px;
-                line-height: 1;
-                z-index: 1;
-                pointer-events: none;
-                transition: opacity 0.3s ease, transform 0.3s ease;
-            }
-            .smp-icon-sun {
-                opacity: 1;
-                transform: scale(1);
-            }
-            .smp-icon-moon {
-                opacity: 0.35;
-                transform: scale(0.85);
+                transition: background-color 0.3s ease, border-color 0.3s ease;
             }
             .smp-switch-handle {
                 position: absolute;
                 top: 2px;
                 left: 2px;
-                width: 18px;
-                height: 18px;
+                width: 14px;
+                height: 14px;
                 border-radius: 50%;
                 background: #ffffff;
-                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
-                transition: transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1),
-                            background-color 0.32s ease,
-                            box-shadow 0.32s ease;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+                transition: transform 0.28s cubic-bezier(0.34, 1.4, 0.64, 1),
+                            background-color 0.28s ease,
+                            box-shadow 0.28s ease;
                 z-index: 2;
             }
 
@@ -346,18 +379,10 @@
             .smp-theme-switch input:checked + .smp-switch-track {
                 background: #0d161a;
                 border-color: rgba(92, 225, 230, 0.55);
-                box-shadow: 0 0 10px rgba(92, 225, 230, 0.22);
-            }
-            .smp-theme-switch input:checked + .smp-switch-track .smp-icon-sun {
-                opacity: 0.35;
-                transform: scale(0.85);
-            }
-            .smp-theme-switch input:checked + .smp-switch-track .smp-icon-moon {
-                opacity: 1;
-                transform: scale(1);
+                box-shadow: 0 0 8px rgba(92, 225, 230, 0.22);
             }
             .smp-theme-switch input:checked + .smp-switch-track .smp-switch-handle {
-                transform: translateX(24px);
+                transform: translateX(18px);
                 background: #5ce1e6;
                 box-shadow: 0 0 8px rgba(92, 225, 230, 0.65);
             }
@@ -383,7 +408,8 @@
             .smp-body {
                 padding: 12px 16px;
                 overflow-y: auto;
-                max-height: calc(90vh - 110px);
+                flex: 1;
+                min-height: 0;
                 background: #0b1012;
                 display: flex;
                 flex-direction: column;
@@ -456,11 +482,19 @@
             }
 
             /* --- GIAO DIỆN SOẠN THẢO SONG SONG (2 CỘT) --- */
+            #smp-panel-compose {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                flex: 1;
+                min-height: 0;
+            }
             .smp-workspace {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 12px;
-                min-height: 240px;
+                flex: 1;
+                min-height: 200px;
                 position: relative;
             }
             @media (max-width: 720px) {
@@ -470,6 +504,8 @@
                 display: flex;
                 flex-direction: column;
                 min-width: 0;
+                height: 100%;
+                min-height: 0;
                 position: relative;
             }
             .smp-pane-header {
@@ -503,7 +539,8 @@
             .smp-textarea {
                 width: 100%;
                 flex: 1;
-                min-height: 220px;
+                height: 100%;
+                min-height: 160px;
                 background: #070a0b;
                 border: 1px solid rgba(92, 225, 230, 0.15);
                 border-radius: 0 0 8px 8px;
@@ -512,7 +549,7 @@
                 font-size: 13px;
                 padding: 10px;
                 outline: none;
-                resize: vertical;
+                resize: none;
                 box-sizing: border-box;
                 line-height: 1.6;
             }
@@ -522,8 +559,8 @@
             .smp-preview-box {
                 width: 100%;
                 flex: 1;
-                min-height: 220px;
-                max-height: 420px;
+                height: 100%;
+                min-height: 160px;
                 overflow-y: auto;
                 background: #091218;
                 border: 1px solid rgba(92, 225, 230, 0.22);
@@ -628,6 +665,13 @@
             }
 
             /* --- TAB BIÊN DỊCH & MÃ NGUỒN --- */
+            #smp-panel-translate {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                flex: 1;
+                min-height: 0;
+            }
             .smp-translate-view {
                 font-family: "Times New Roman", Times, Georgia, serif;
                 color: #e2e8f0;
@@ -636,11 +680,22 @@
                 letter-spacing: 0.015em;
                 white-space: normal;
                 word-break: break-word;
-                min-height: 180px;
+                flex: 1;
+                min-height: 150px;
                 padding: 14px 18px;
                 background: #091218;
                 border: 1px solid rgba(92, 225, 230, 0.22);
                 border-radius: 8px;
+                overflow-y: auto;
+            }
+            .smp-translate-raw-box {
+                display: flex;
+                flex-direction: column;
+                flex: none;
+                position: relative;
+            }
+            .smp-translate-raw-box .smp-pane-header {
+                border-radius: 8px 8px 0 0;
             }
             .smp-translate-view b, .smp-translate-view strong {
                 color: #5ce1e6;
@@ -718,14 +773,15 @@
             .latex-table td.border-right { border-right: 1px solid currentColor; }
             .smp-raw-textarea {
                 width: 100%;
-                min-height: 220px;
+                height: 115px;
+                min-height: 75px;
                 background: #070a0b;
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                border-radius: 8px;
+                border: 1px solid rgba(92, 225, 230, 0.15);
+                border-radius: 0 0 8px 8px;
                 color: #a5f3fc;
                 font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
                 font-size: 13px;
-                padding: 12px;
+                padding: 10px;
                 outline: none;
                 resize: vertical;
                 box-sizing: border-box;
@@ -752,7 +808,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 10px 16px;
+                padding: 8px 16px;
                 background: #141a1c;
                 border-top: 1px solid rgba(255, 255, 255, 0.08);
                 font-size: 11px;
@@ -761,33 +817,62 @@
             .smp-footer-left {
                 display: flex;
                 align-items: center;
-                gap: 6px;
+                gap: 8px;
             }
-            .smp-status-dot {
-                width: 6px;
-                height: 6px;
-                border-radius: 50%;
-                background: #10b981;
-                box-shadow: 0 0 6px #10b981;
+            /* Thiết kế bộ chọn Model AI kiểu Segmented Pill */
+            .smp-model-pill {
+                display: inline-flex;
+                align-items: center;
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                border-radius: 14px;
+                padding: 2px;
+                gap: 2px;
+            }
+            .smp-model-btn {
+                background: transparent;
+                border: none;
+                color: #94a3b8;
+                font-size: 11px;
+                font-weight: 600;
+                padding: 2px 10px;
+                border-radius: 10px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                line-height: 1.3;
+                letter-spacing: 0.3px;
+                font-family: inherit;
+            }
+            .smp-model-btn.active {
+                background: #0ea5e9;
+                color: #ffffff;
+                box-shadow: 0 1px 4px rgba(14, 165, 233, 0.4);
+            }
+            .smp-model-btn:hover:not(.active) {
+                color: #e2e8f0;
+                background: rgba(255, 255, 255, 0.08);
             }
             .smp-footer-actions {
                 display: flex;
                 align-items: center;
                 gap: 8px;
             }
+            /* Tinh chỉnh nút hành động bên dưới: chỉ giữ icon tinh gọn */
             .smp-action-btn {
                 background: rgba(92, 225, 230, 0.12);
                 border: 1px solid rgba(92, 225, 230, 0.3);
                 color: #5ce1e6;
-                padding: 5px 12px;
+                padding: 6px 10px;
+                min-width: 32px;
+                height: 30px;
                 border-radius: 6px;
-                font-size: 11px;
+                font-size: 12px;
                 font-weight: 500;
                 cursor: pointer;
                 transition: all 0.15s ease;
-                display: flex;
+                display: inline-flex;
                 align-items: center;
-                gap: 5px;
+                justify-content: center;
             }
             .smp-action-btn:hover {
                 background: rgba(92, 225, 230, 0.25);
@@ -977,6 +1062,22 @@
                 background: #f8fafc;
                 border-top-color: #e2e8f0;
             }
+            .smp-dialog.light-theme .smp-model-pill {
+                background: #e2e8f0;
+                border-color: #cbd5e1;
+            }
+            .smp-dialog.light-theme .smp-model-btn {
+                color: #64748b;
+            }
+            .smp-dialog.light-theme .smp-model-btn.active {
+                background: #009eb3;
+                color: #ffffff;
+                box-shadow: 0 1px 4px rgba(0, 158, 179, 0.3);
+            }
+            .smp-dialog.light-theme .smp-model-btn:hover:not(.active) {
+                color: #0f172a;
+                background: #f1f5f9;
+            }
             .smp-dialog.light-theme .smp-action-btn {
                 background: rgba(0, 158, 179, 0.09);
                 border-color: rgba(0, 158, 179, 0.3);
@@ -1016,14 +1117,15 @@
                             <span class="smp-title" id="smp-modal-title"></span>
                         </div>
                         <div class="smp-header-actions">
-                            <button class="smp-tab-btn" id="smp-btn-tab-compose">Soạn Thảo</button>
-                            <button class="smp-tab-btn" id="smp-btn-tab-translate">Biên Dịch</button>
-                            <button class="smp-tab-btn" id="smp-btn-tab-raw">Mã Công Thức</button>
+                            <button class="smp-tab-btn" id="smp-btn-tab-compose" title="Soạn Thảo (Live Editor)">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                            </button>
+                            <button class="smp-tab-btn smp-tab-latex" id="smp-btn-tab-translate" title="Biên Dịch & Mã \LaTeX">
+                                <span class="smp-latex-logo"><span class="tex-bs">\</span>L<span class="tex-a">a</span>T<span class="tex-e">e</span>X</span>
+                            </button>
                             <label class="smp-theme-switch" title="Chuyển chế độ Sáng / Tối" id="smp-theme-toggle-label">
                                 <input type="checkbox" id="smp-theme-toggle-input" aria-label="Chuyển chế độ Sáng / Tối">
                                 <span class="smp-switch-track">
-                                    <span class="smp-switch-icon smp-icon-sun" title="Chế độ Sáng">☀️</span>
-                                    <span class="smp-switch-icon smp-icon-moon" title="Chế độ Tối">🌙</span>
                                     <span class="smp-switch-handle"></span>
                                 </span>
                             </label>
@@ -1161,36 +1263,34 @@
                             </div>
                         </div>
 
-                        <!-- 2. GIAO DIỆN BIÊN DỊCH VĂN BẢN TỪ BÌNH LUẬN BÔI ĐEN -->
+                        <!-- 2. GIAO DIỆN BIÊN DỊCH VĂN BẢN & MÃ LATEX ĐẶT BÊN DƯỚI -->
                         <div id="smp-panel-translate" style="display: none;">
                             <div class="smp-translate-view" id="smp-translate-view"></div>
-                        </div>
-
-                        <!-- 3. GIAO DIỆN MÃ CÔNG THỨC -->
-                        <div id="smp-panel-raw" style="display: none;">
-                            <div class="smp-editor-box">
-                                <textarea class="smp-raw-textarea" id="smp-raw-textarea" spellcheck="false" placeholder="Nhập hoặc chỉnh sửa mã công thức tại đây (hỗ trợ gợi ý khi gõ \\)..."></textarea>
+                            <div class="smp-translate-raw-box">
+                                <div class="smp-pane-header">
+                                    <span class="smp-pane-title">Mã \LaTeX</span>
+                                </div>
+                                <textarea class="smp-raw-textarea" id="smp-raw-textarea" spellcheck="false" placeholder="Mã \LaTeX sạch tự động xuất hiện tại đây (chỉnh sửa trực tiếp sẽ tự cập nhật bản xem phía trên)..."></textarea>
                             </div>
                         </div>
                     </div>
 
                     <div class="smp-footer">
                         <div class="smp-footer-left">
-                            <span class="smp-status-dot"></span>
-                            <span id="smp-status-text"></span>
+                            <div class="smp-model-pill" id="smp-model-pill" title="Chuyển đổi mô hình nhận diện LaTeX (Max: Micro-AI v5.0 | Min: Heuristic rút gọn)">
+                                <button type="button" class="smp-model-btn active" id="smp-model-btn-max" data-model="max">Max</button>
+                                <button type="button" class="smp-model-btn" id="smp-model-btn-min" data-model="min">Min</button>
+                            </div>
                         </div>
                         <div class="smp-footer-actions">
-                            <button class="smp-action-btn btn-primary" id="smp-btn-insert" title="Chèn trực tiếp vào ô bình luận đang chọn">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
-                                <span>Chèn Vào Bình Luận</span>
+                            <button class="smp-action-btn btn-primary" id="smp-btn-insert" title="Chèn vào bình luận (Ctrl+Enter)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
                             </button>
-                            <button class="smp-action-btn" id="smp-btn-copy-image" title="Chép ảnh công thức nét cao vào Clipboard (nhấn Ctrl+V để dán ảnh vào Facebook)">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                                <span>Chép Ảnh</span>
+                            <button class="smp-action-btn" id="smp-btn-copy-image" title="Chép ảnh công thức nét cao vào Clipboard (Ctrl+V để dán ảnh vào Facebook)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
                             </button>
-                            <button class="smp-action-btn" id="smp-btn-copy-code" title="Sao chép chuỗi mã vào Clipboard">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                                <span id="smp-copy-code-text">Sao Chép Mã</span>
+                            <button class="smp-action-btn" id="smp-btn-copy-code" title="Sao chép mã \LaTeX">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                             </button>
                         </div>
                     </div>
@@ -1200,6 +1300,7 @@
             root.appendChild(backdrop);
             bindModalEvents(backdrop);
             initThemePreference(backdrop);
+            initModelPreference(backdrop);
         }
         return backdrop;
     }
@@ -1247,6 +1348,75 @@
             });
         }
     }
+
+    /**
+     * Khởi tạo và quản lý chuyển đổi Model AI (Max / Min)
+     */
+    function applyModelPreference(backdrop, model) {
+        currentModelPreference = model === 'min' ? 'min' : 'max';
+        if (window.SMPNormalizer && typeof window.SMPNormalizer.setModel === 'function') {
+            window.SMPNormalizer.setModel(currentModelPreference);
+        }
+        localStorage.setItem('smp_latex_model', currentModelPreference);
+        if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+            chrome.storage.local.set({ smp_latex_model: currentModelPreference });
+        }
+
+        const btnMax = backdrop.querySelector('#smp-model-btn-max');
+        const btnMin = backdrop.querySelector('#smp-model-btn-min');
+        if (btnMax && btnMin) {
+            if (currentModelPreference === 'min') {
+                btnMin.classList.add('active');
+                btnMax.classList.remove('active');
+            } else {
+                btnMax.classList.add('active');
+                btnMin.classList.remove('active');
+            }
+        }
+
+        // Tái biên dịch realtime văn bản hiện hành nếu đang mở
+        if (currentTranslateRawText) {
+            const normalized = window.SMPNormalizer ? 
+                window.SMPNormalizer.normalizeMathText(currentTranslateRawText, currentModelPreference) : 
+                { cleanLatex: currentTranslateRawText, mathCount: 1 };
+
+            const translateView = backdrop.querySelector('#smp-translate-view');
+            const rawTextarea = backdrop.querySelector('#smp-raw-textarea');
+            if (rawTextarea) rawTextarea.value = normalized.cleanLatex;
+            if (translateView) renderLatexContent(translateView, normalized.cleanLatex);
+        }
+    }
+
+    function initModelPreference(backdrop) {
+        const savedModel = localStorage.getItem('smp_latex_model') || 'max';
+        applyModelPreference(backdrop, savedModel);
+
+        if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+            chrome.storage.local.get(['smp_latex_model'], (res) => {
+                if (res && res.smp_latex_model) {
+                    applyModelPreference(backdrop, res.smp_latex_model);
+                }
+            });
+        }
+
+        const btnMax = backdrop.querySelector('#smp-model-btn-max');
+        const btnMin = backdrop.querySelector('#smp-model-btn-min');
+        if (btnMax) {
+            btnMax.addEventListener('click', (e) => {
+                e.stopPropagation();
+                applyModelPreference(backdrop, 'max');
+                showToast(backdrop, 'Đã chuyển sang mô hình Max (AI v5.0)');
+            });
+        }
+        if (btnMin) {
+            btnMin.addEventListener('click', (e) => {
+                e.stopPropagation();
+                applyModelPreference(backdrop, 'min');
+                showToast(backdrop, 'Đã chuyển sang mô hình Min (Heuristic)');
+            });
+        }
+    }
+
 
     /**
      * Hiển thị thông báo Toast
@@ -1737,45 +1907,34 @@
      * Chuyển Tab (Soạn Thảo / Biên Dịch / Mã Công Thức)
      */
     function switchTab(root, tab) {
-        currentActiveTab = tab;
+        currentActiveTab = tab === 'translate' ? 'translate' : 'compose';
         const btnCompose = root.querySelector('#smp-btn-tab-compose');
         const btnTranslate = root.querySelector('#smp-btn-tab-translate');
-        const btnRaw = root.querySelector('#smp-btn-tab-raw');
 
         const panelCompose = root.querySelector('#smp-panel-compose');
         const panelTranslate = root.querySelector('#smp-panel-translate');
-        const panelRaw = root.querySelector('#smp-panel-raw');
 
         const composeInput = root.querySelector('#smp-compose-input');
         const composePreview = root.querySelector('#smp-compose-preview');
         const translateView = root.querySelector('#smp-translate-view');
         const rawTextarea = root.querySelector('#smp-raw-textarea');
 
-        [btnCompose, btnTranslate, btnRaw].forEach(btn => btn && btn.classList.remove('active'));
-        [panelCompose, panelTranslate, panelRaw].forEach(p => p && (p.style.display = 'none'));
+        [btnCompose, btnTranslate].forEach(btn => btn && btn.classList.remove('active'));
+        [panelCompose, panelTranslate].forEach(p => p && (p.style.display = 'none'));
 
-        if (tab === 'compose') {
-            btnCompose.classList.add('active');
-            panelCompose.style.display = 'flex';
+        if (currentActiveTab === 'compose') {
+            if (btnCompose) btnCompose.classList.add('active');
+            if (panelCompose) panelCompose.style.display = 'flex';
             if (composeInput && composePreview) {
                 renderLatexContent(composePreview, composeInput.value);
                 composeInput.focus();
             }
             renderToolbarMath(root);
-        } else if (tab === 'translate') {
-            btnTranslate.classList.add('active');
-            panelTranslate.style.display = 'block';
+        } else {
+            if (btnTranslate) btnTranslate.classList.add('active');
+            if (panelTranslate) panelTranslate.style.display = 'flex';
             if (rawTextarea && translateView) {
                 renderLatexContent(translateView, rawTextarea.value);
-            }
-        } else {
-            btnRaw.classList.add('active');
-            panelRaw.style.display = 'block';
-            if (rawTextarea) {
-                if (composeInput && composeInput.value.trim() && !rawTextarea.value.trim()) {
-                    rawTextarea.value = composeInput.value;
-                }
-                rawTextarea.focus();
             }
         }
     }
@@ -1787,7 +1946,10 @@
         const root = ensureModalHost();
         const backdrop = createModalDom();
 
-        const normalized = window.SMPNormalizer ? window.SMPNormalizer.normalizeMathText(rawText || '') : { cleanLatex: rawText, mathCount: 1 };
+        currentTranslateRawText = rawText || '';
+        const normalized = window.SMPNormalizer ? 
+            window.SMPNormalizer.normalizeMathText(currentTranslateRawText, currentModelPreference) : 
+            { cleanLatex: currentTranslateRawText, mathCount: 1 };
 
         const translateView = root.querySelector('#smp-translate-view');
         const rawTextarea = root.querySelector('#smp-raw-textarea');
@@ -2098,7 +2260,6 @@
 
         const btnTabCompose = backdrop.querySelector('#smp-btn-tab-compose');
         const btnTabTranslate = backdrop.querySelector('#smp-btn-tab-translate');
-        const btnTabRaw = backdrop.querySelector('#smp-btn-tab-raw');
 
         const composeInput = backdrop.querySelector('#smp-compose-input');
         const composePreview = backdrop.querySelector('#smp-compose-preview');
@@ -2108,7 +2269,6 @@
         const btnInsert = backdrop.querySelector('#smp-btn-insert');
         const btnCopyImage = backdrop.querySelector('#smp-btn-copy-image');
         const btnCopyCode = backdrop.querySelector('#smp-btn-copy-code');
-        const copyCodeText = backdrop.querySelector('#smp-copy-code-text');
         const toolbar = backdrop.querySelector('#smp-snippet-toolbar');
 
         function closeModal() {
@@ -2121,10 +2281,9 @@
             if (e.target === backdrop) closeModal();
         });
 
-        // Chuyển tab
-        btnTabCompose.addEventListener('click', () => switchTab(backdrop, 'compose'));
-        btnTabTranslate.addEventListener('click', () => switchTab(backdrop, 'translate'));
-        btnTabRaw.addEventListener('click', () => switchTab(backdrop, 'raw'));
+        // Chuyển tab (Chỉ gồm Soạn Thảo và Biên Dịch)
+        if (btnTabCompose) btnTabCompose.addEventListener('click', () => switchTab(backdrop, 'compose'));
+        if (btnTabTranslate) btnTabTranslate.addEventListener('click', () => switchTab(backdrop, 'translate'));
 
         // Sự kiện gõ trực tiếp trong ô Soạn Thảo (Live Render realtime & Autocomplete)
         if (composeInput) {
@@ -2235,10 +2394,18 @@
             });
         }
 
-        // Sự kiện trên ô Mã Công Thức
+        // Sự kiện trên ô Mã LaTeX đặt bên dưới Biên Dịch
         if (rawTextarea) {
+            let rawDebounce = null;
             rawTextarea.addEventListener('input', () => {
                 handleAutocompleteInput(rawTextarea, autocompletePopup);
+                clearTimeout(rawDebounce);
+                rawDebounce = setTimeout(() => {
+                    const translateView = backdrop.querySelector('#smp-translate-view');
+                    if (translateView) {
+                        renderLatexContent(translateView, rawTextarea.value);
+                    }
+                }, 40);
             });
 
             rawTextarea.addEventListener('keydown', (e) => {
@@ -2335,11 +2502,9 @@
 
             navigator.clipboard.writeText(textToCopy).then(() => {
                 btnCopyCode.classList.add('copied');
-                copyCodeText.textContent = '✓ Đã chép!';
-                showToast(backdrop, '✓ Đã sao chép mã!');
+                showToast(backdrop, '✓ Đã sao chép mã \\LaTeX!');
                 setTimeout(() => {
                     btnCopyCode.classList.remove('copied');
-                    copyCodeText.textContent = 'Sao Chép Mã';
                 }, 2000);
             }).catch(err => {
                 console.error('[SMP] Không thể sao chép:', err);

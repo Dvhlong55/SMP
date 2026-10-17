@@ -93,6 +93,27 @@
     }
 
     /**
+     * Chuyển đổi Model AI (Max / Min)
+     */
+    window.setWebModel = function (m) {
+        if (window.SMPNormalizer && typeof window.SMPNormalizer.setModel === 'function') {
+            window.SMPNormalizer.setModel(m);
+        }
+        const btnMax = document.getElementById('web-btn-max');
+        const btnMin = document.getElementById('web-btn-min');
+        if (btnMax && btnMin) {
+            if (m === 'min') {
+                btnMin.classList.add('active');
+                btnMax.classList.remove('active');
+            } else {
+                btnMax.classList.add('active');
+                btnMin.classList.remove('active');
+            }
+        }
+        processTranslation();
+    };
+
+    /**
      * Chuyển tab Biên Dịch <-> Mã LaTeX (Kèm nút Quay Lại)
      */
     window.switchTab = function (tab) {

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <link rel="manifest" href="/manifest.json">
@@ -108,6 +108,10 @@
                                     Kết Quả Biên Dịch
                                 </span>
                                 <div class="pane-actions">
+                                    <div class="model-pill-switcher" style="display: inline-flex; align-items: center; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 1px 3px; margin-right: 6px; gap: 2px;">
+                                        <button type="button" class="pane-btn active" id="web-btn-max" onclick="setWebModel('max')" style="border: none; padding: 2px 8px; font-size: 0.72rem; border-radius: 10px; font-weight: 600;" title="Mô hình Max: Micro-AI v5.0">Max</button>
+                                        <button type="button" class="pane-btn" id="web-btn-min" onclick="setWebModel('min')" style="border: none; padding: 2px 8px; font-size: 0.72rem; border-radius: 10px; font-weight: 600;" title="Mô hình Min: Heuristic rút gọn">Min</button>
+                                    </div>
                                     <button class="pane-btn active" id="tab-preview-btn" onclick="switchTab('preview')">Biên Dịch</button>
                                     <button class="pane-btn" id="tab-raw-btn" onclick="switchTab('raw')">Mã LaTeX</button>
                                     <button class="pane-btn" id="btn-back-preview" onclick="switchTab('preview')" style="display: none; color: var(--accent-cyan); border-color: rgba(92,225,230,0.4);" title="Quay lại giao diện biên dịch">← Quay Lại</button>
