@@ -65,7 +65,7 @@
         'ghhh', 'day', 'so', 'ban', 'dau', 'bien', 'doi', 'xac', 'suat', 'ko', 'vuot', 'qua',
         'ngay', 'cung', 'mau', 'luot', 'binh', 'hanh', 'xung', 'buom', 'can', 'ke', 'hoach', 'dinh', 'chinh', 'xet',
         'gs', 'pt', 'bpt', 'hpt', 'bđt', 'bdt', 'đk', 'dk', 'txđ', 'txd', 'gt', 'kl', 'pb', 'vui', 'dưới', 'duoi',
-        'c/m', 't/m', 't/c', 't/chat', 'cm', 'cminh', 'lhdg', 'tdp', 'tđp', 'pgiac', 'tt', 'dt', 'đt', 'dtron', 'đtron', 'đtròn',
+        'c/m', 't/m', 't/c', 't/chat', 'cm', 'cminh', 'lhdg', 'tdp', 'tđp', 'pgiac', 'tt', 'dt', 'đt', 'dtron', 'đtron', 'đtròn', 'ptich', 'hdt', 'bp', 'goal', 'option', 'ms', 'ts',
         'đpcm', 'dpcm', 'đcpm', 'dcpm', 'gtqn', 'cttq', 'nly', 'pth', 'ptr', 'đthuc', 'dthuc', 'ltuc', 'ltục', 'snt', 'scp', 'ưnt', 'unt',
         'mng', 'mn', 'mik', 'mk', 'nx', 'vx', 'lg', 'no', 'vc', 'kmttq', 'bt', 'th1', 'th2', 'th3', 'th4', 'vs', 'camon', 'solve',
         'iff', 'coprime', 'monic', 'modulo', 'euler', 'lagrange', 'largrange', 'cauchy', 'schwarz', 'bernoulli',
@@ -475,6 +475,19 @@
                 isContextualViToken = true;
             }
 
+            // Từ viết tắt danh từ riêng / BĐT / trường thi (không bao giờ là biến số toán học)
+            const COMMON_ACRONYMS = new Set(['HSGS', 'CBS', 'DRL', 'AM-GM', 'BDT', 'BĐT', 'KHTN', 'CSP', 'VMO', 'IMO', 'TST', 'THPT', 'THCS', 'DK', 'ĐK', 'DPCM', 'ĐPCM', 'GTNN', 'GTLN']);
+            if (COMMON_ACRONYMS.has(cleanTok.toUpperCase())) {
+                constraints[i] = 'O';
+                continue;
+            }
+
+            // Số thứ tự phương trình nằm trong phép tính: (1) + t(2) = 0
+            if (/^\(\d+\)$/.test(token) && i + 1 < n && /^[=<>+\-*/^_|]$/.test(tokens[i + 1])) {
+                constraints[i] = 'MATH';
+                continue;
+            }
+
             if (isContextualViToken || isNaturalLanguageWord(token)) {
                 constraints[i] = 'O';
                 continue;
@@ -735,7 +748,7 @@
     function escapeSetBraces(str) {
         if (!str) return '';
         const lines = str.split('\n');
-        const NON_SET_CMDS = /\\(?:frac|dfrac|tfrac|sqrt|cbrt|binom|text|textbf|textit|mathrm|mathbb|mathcal|mathfrak|mathscr|pmod|widehat|widetilde|overline|underline|overrightarrow|overleftarrow|vect|vec|hat|bar|tilde|dot|ddot|begin|end|left|right|overset|underset|color|colorbox|boxed)$/;
+        const NON_SET_CMDS = /(?:\\|\b)(?:frac|dfrac|tfrac|sqrt|cbrt|binom|text|textbf|textit|mathrm|mathbb|mathcal|mathfrak|mathscr|pmod|widehat|widetilde|overline|underline|overrightarrow|overleftarrow|vect|vec|hat|bar|tilde|dot|ddot|begin|end|left|right|overset|underset|color|colorbox|boxed)$/;
 
         return lines.map(line => {
             let result = '';
@@ -936,7 +949,7 @@
                 if (leftDelimMatch) pos += leftDelimMatch[1].length;
 
                 const beforeAtom = s.substring(0, pos);
-                const trigMatch = beforeAtom.match(/(\\(?:sin|cos|tan|cot|sec|csc|ln|log|deg)\s+)$/i);
+                const trigMatch = beforeAtom.match(/(\\(?:sin|cos|tan|cot|sec|csc|ln|log|deg|sqrt(?:\[[^\]]*\])?)\s*)$/i);
                 if (trigMatch) pos -= trigMatch[1].length;
 
                 replaceStart = pos;
@@ -1060,6 +1073,33 @@
     function preSanitize(text) {
         if (!text) return '';
         let s = text;
+
+        // Chuẩn hóa BĐT AM-GM viết liền gạch nối
+        s = s.replace(/\bAM\s*-\s*GM\b/g, 'AM-GM');
+
+        // Phân tích hằng đẳng thức viết tắt: ptich hdt = -> (phân tích HĐT) =
+        s = s.replace(/=\s*ptich\s+hdt\s*=/gi, '= (phân tích HĐT) =');
+        s = s.replace(/\bptich\s+hdt\s*=/gi, '(phân tích HĐT) =');
+        s = s.replace(/\bptich\s+hdt\b/gi, 'phân tích HĐT');
+
+        // Chuẩn hóa Mẫu số viết tắt: MS | -> MS:
+        s = s.replace(/\b(MS|TS)\s*\|\s*/gi, '$1: ');
+
+        // Nhận diện cặp chỉ số dãy số không gõ gạch dưới: ti, tj -> t_i, t_j; xi, xj -> x_i, x_j
+        s = s.replace(/\b([txayuv])([ij])\s*,\s*([txayuv])([ij])\b/g, '$1_$2, $3_$4');
+
+        // Ghép chỉ số dưới có phép cộng trừ: _n+1 -> _{n+1}, _k-1 -> _{k-1}, _i+1 -> _{i+1}
+        s = s.replace(/_([a-zA-Z](?:[+\-]\d+)+)(?=[^a-zA-Z0-9]|$)/g, '_{$1}');
+        s = s.replace(/_([a-zA-Z0-9]+[+\-][a-zA-Z0-9]+)(?=[^a-zA-Z0-9]|$)/g, '_{$1}');
+
+        // Biệt thức Delta: Delta_y, Delta', Delta = ..., tính Delta, để Delta là...
+        s = s.replace(/(?<![\\a-zA-Z])Delta(?![a-zA-Z])/g, '\\Delta');
+        s = s.replace(/(?<![\\a-zA-Z])delta(?![a-zA-Z])/g, '\\delta');
+
+        // Chuẩn hóa sqrt{...} hoặc căn{...} thành \sqrt{...} TRƯỚC KHI escapeSetBraces
+        s = s.replace(/(?:(?<=\\)sqrt|(?<!\\)\bsqrt|căn|can)\s*\{([^{}]+)\}/gi, '\\sqrt{$1}');
+        s = s.replace(/(?:(?<=\\)cbrt|(?<!\\)\bcbrt)\s*\{([^{}]+)\}/gi, '\\sqrt[3]{$1}');
+
 
         s = s.replace(/`([^`\n]+)`/g, '$1');
         s = s.replace(/`/g, '');
@@ -1364,6 +1404,13 @@
         // "1/x + 1" (có khoảng trắng) vẫn giữ nguyên nghĩa (1/x) + 1.
         s = s.replace(/(?<![A-Za-z0-9_}\)])(\d+|[a-zA-Z])\/([a-zA-Z](?:_\{[a-zA-Z0-9]+\}|_[a-zA-Z0-9])?[+\-]\d+)(?=\s+[+\-]\s*(?:\.{2,}|\\dots|\d+\s*\/))/g, '$1/($2)');
 
+        // Dấu nhân x dạng tốc ký giữa các cặp ngoặc hoặc biểu thức: ] x [, ) x (, ] x T
+        // Bắt buộc có khoảng trắng nếu sau số để không nuốt đơn thức như 2x, 3x
+        s = s.replace(/(\]|\))\s*[xX]\s*([\[\(])/g, '$1 \\cdot $2');
+        s = s.replace(/(\]|\))\s*[xX]\s*([a-zA-Z0-9\\])/g, '$1 \\cdot $2');
+        s = s.replace(/([0-9]+)\s+[xX]\s+([\[\(])/g, '$1 \\cdot $2');
+        s = s.replace(/([0-9]+)\s+[xX]\s+([0-9]+)/g, '$1 \\times $2');
+
         s = s.replace(/<=>/g, ' \\Leftrightarrow ');
         s = s.replace(/=>/g, ' \\Rightarrow ');
         s = s.replace(/->/g, ' \\to ');
@@ -1556,7 +1603,7 @@
         }
 
         let labelPrefix = '';
-        const labelMatch = line.match(/^(\s*(?:[a-zA-Z0-9][)\/]|\([a-zA-Z0-9]+\)|\([ivx]+\)|TH\d+\s*:|[a-dA-D],\s+)\s*)/i);
+        const labelMatch = line.match(/^(\s*(?:\d+(?:\.\d+)+(?:[.:)]|\b)|\d+[.:)]|[a-zA-Z0-9][)\/]|\([a-zA-Z0-9]+\)|\([ivx]+\)|TH\d+\s*:|[a-dA-D],\s+)\s*)/i);
         if (labelMatch) {
             labelPrefix = labelMatch[1];
             line = line.slice(labelPrefix.length);
