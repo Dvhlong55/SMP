@@ -288,9 +288,9 @@
                 if (e.key === '\\' || e.code === 'Backslash') {
                     e.preventDefault();
                     e.stopPropagation();
-                    openSuggestionList(mf, block, 'math', '\\');
+                    openSuggestionList(mf, block, 'math', '');
                 }
-            });
+            }, { capture: true });
             body.appendChild(mf);
         } else {
             const editor = document.createElement('div');
@@ -353,17 +353,10 @@
                 }
             }
         });
-                    if (ed) {
-                        ed.focus();
-                        handleEditorSuggestForced(ed, block);
-                    }
-                }
-            }
-        });
 
         // Dragging by handle
         handleBar.addEventListener('pointerdown', (e) => {
-            if (e.target.closest('.block-btn-mini')) return;
+            if (e.target.closest('.block-bar-btn')) return;
             e.preventDefault();
             startDragging(e, block, el);
         });
@@ -963,16 +956,6 @@
         if (suggestState.targetType === 'math' && suggestState.activeMf) {
             const mf = suggestState.activeMf;
             
-            // Xóa dấu \ hoặc query thừa nếu có
-            if (suggestState.query) {
-                const count = suggestState.query.length;
-                for (let i = 0; i < count; i++) {
-                    if (typeof mf.executeCommand === 'function') {
-                        mf.executeCommand('deleteBackward');
-                    }
-                }
-            }
-
             // Đảm bảo không còn dấu \ bị kẹt lại trước vị trí chèn
             const curVal = mf.value || '';
             if (curVal.endsWith('\\')) {
@@ -983,7 +966,7 @@
 
             // Chèn lệnh LaTeX chuẩn vào MathLive
             if (typeof mf.executeCommand === 'function') {
-                mf.executeCommand(['insert', item.insert]);
+                mf.executeCommand(['insert', item.insert, { selectionMode: 'placeholder' }]);
             } else {
                 mf.value = (mf.value || '') + item.insert;
             }
