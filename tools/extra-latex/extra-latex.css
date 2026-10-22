@@ -375,23 +375,22 @@ body {
     z-index: 1000;
 }
 
-/* Canvas Viewport (Center Stage) */
+/* Canvas Viewport (Center Stage - No inner scrollbars!) */
 .mathcha-canvas-viewport {
     flex: 1;
     position: relative;
-    height: calc(100vh - 170px);
-    min-height: 640px;
+    height: calc(100vh - 130px);
     background-color: var(--el-bg);
     border: 1px solid var(--el-ribbon-border);
     border-radius: 10px;
-    overflow: auto;
+    overflow: hidden; /* Bỏ cuộn lồng nhau */
     cursor: default;
     user-select: none;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding: 30px;
+    align-items: center;
+    padding: 16px;
 }
 
 .mathcha-canvas-viewport.grid-dots {
@@ -413,40 +412,46 @@ body {
 /* Artboard Sheet Container */
 .artboard {
     position: relative;
-    transform-origin: 0 0;
-    transition: width 0.2s, height 0.2s, box-shadow 0.2s;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), height 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
+    box-sizing: border-box;
 }
 
-/* 1. Free-form Canvas Mode */
+/* 1. Bảng Vẽ (Drawing Box Frame - Hiện Cái Ô Rõ Ràng) */
 .artboard.mode-canvas {
-    width: 2600px;
-    height: 1800px;
-    background: transparent;
+    width: 920px;
+    max-width: 95%;
+    height: 520px;
+    background: var(--el-sheet-bg);
+    border: 2px dashed var(--accent-cyan);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    margin: auto;
 }
 
-/* 2. A4 Paper Mode (Document Centric) */
+/* 2. A4 Paper Mode (Document Centric Sheet) */
 .artboard.mode-a4 {
     width: 820px;
-    min-height: 1160px;
-    height: 1160px;
+    max-width: 92%;
+    height: calc(100% - 20px);
+    max-height: 820px;
+    min-height: 520px;
     background: var(--el-sheet-bg);
     border: 1px solid var(--el-sheet-border);
     box-shadow: var(--el-sheet-shadow);
-    border-radius: 4px;
-    margin: 10px auto 40px;
-    padding: 20px;
+    border-radius: 6px;
+    margin: auto;
 }
 
-/* 3. Beamer Slide Mode (16:9 Presentation) */
+/* 3. Beamer Slide Mode (16:9 Presentation Frame) */
 .artboard.mode-beamer {
     width: 960px;
+    max-width: 95%;
     height: 540px;
     background: var(--el-sheet-bg);
     border: 2px solid var(--accent-cyan);
     box-shadow: var(--el-sheet-shadow);
     border-radius: 8px;
-    margin: 20px auto 40px;
-    padding: 16px;
+    margin: auto;
 }
 
 .sheet-badge {

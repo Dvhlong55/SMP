@@ -74,14 +74,15 @@
         if (state.canvasMode === 'a4') {
             spawnX = 70;
             spawnY = Math.max(60, (state.blocks.length * 75) + 60);
-            if (spawnY > 1050) spawnY = 60;
+            if (spawnY > 700) spawnY = 60;
         } else if (state.canvasMode === 'beamer') {
             spawnX = 70;
             spawnY = Math.max(50, (state.blocks.length * 70) + 50);
             if (spawnY > 460) spawnY = 50;
         } else {
-            spawnX = viewport.scrollLeft + 80;
-            spawnY = viewport.scrollTop + 60;
+            spawnX = 60;
+            spawnY = Math.max(50, (state.blocks.length * 65) + 50);
+            if (spawnY > 440) spawnY = 50;
         }
 
         createBlock(type, spawnX, spawnY);
