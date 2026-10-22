@@ -58,18 +58,8 @@
             btn.classList.toggle('active', btn.getAttribute('data-mode') === mode);
         });
 
-        if (sheetBadge) {
-            if (mode === 'a4') {
-                sheetBadge.textContent = 'Khổ Giấy A4 (210 × 297 mm)';
-                sheetBadge.style.display = 'block';
-            } else if (mode === 'beamer') {
-                sheetBadge.textContent = 'Slide Beamer (16:9)';
-                sheetBadge.style.display = 'block';
-            } else {
-                sheetBadge.textContent = 'Bảng Vẽ Tự Do';
-                sheetBadge.style.display = 'none';
-            }
-        }
+        const badge = document.getElementById('sheet-badge');
+        if (badge) badge.remove();
 
         saveHistoryState();
         updateLatexCode();
@@ -99,22 +89,19 @@
 
     function createBlock(type, x = 60, y = 60, content = '') {
         const id = 'block-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
-        let defaultW = 280;
-        let defaultH = 50;
-        let defaultContent = content;
+        let defaultW = 240;
+        let defaultH = 46;
+        let defaultContent = content || '';
 
         if (type === 'math') {
-            defaultContent = content || 'x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}';
-            defaultW = 320;
-            defaultH = 50;
+            defaultW = 240;
+            defaultH = 46;
         } else if (type === 'text') {
-            defaultContent = content || 'Gõ văn bản tại đây hoặc bôi đen để định dạng...';
-            defaultW = 340;
-            defaultH = 50;
+            defaultW = 260;
+            defaultH = 46;
         } else if (type === 'box') {
-            defaultContent = content || 'Khung ghi chú / Chú thích';
-            defaultW = 360;
-            defaultH = 110;
+            defaultW = 280;
+            defaultH = 90;
         }
 
         const newBlock = {
@@ -133,17 +120,31 @@
         selectBlock(id);
         saveHistoryState();
         updateLatexCode();
-        showToast('✓ Đã thêm ' + (type === 'math' ? 'công thức' : (type === 'box' ? 'khung ghi chú' : 'khối văn bản')));
+
+        // Auto-focus the new block for immediate typing
+        setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) {
+                if (type === 'math') {
+                    const mf = el.querySelector('math-field');
+                    if (mf) mf.focus();
+                } else {
+                    const ed = el.querySelector('.text-editor-area');
+                    if (ed) ed.focus();
+                }
+            }
+        }, 50);
+
+        showToast('✓ Đã thêm ' + (type === 'math' ? 'công thức' : (type === 'box' ? 'khung' : 'khối văn bản')));
         return newBlock;
     }
 
     function renderAllBlocks() {
         const badge = document.getElementById('sheet-badge');
+        if (badge) badge.remove();
         artboard.innerHTML = '';
-        if (badge) artboard.appendChild(badge);
 
         state.blocks.forEach(block => renderBlockDOM(block));
-        checkEmptyHint();
     }
 
     function renderBlockDOM(block) {
@@ -194,7 +195,7 @@
             editor.className = 'text-editor-area';
             editor.contentEditable = 'true';
             editor.innerHTML = block.content;
-            editor.setAttribute('placeholder', 'Nhập văn bản... Gõ $..$ cho công thức');
+            editor.setAttribute('placeholder', '');
             editor.addEventListener('input', () => {
                 block.content = editor.innerHTML;
                 updateLatexCode();
@@ -372,19 +373,8 @@
     }
 
     function checkEmptyHint() {
-        let hint = document.getElementById('canvas-empty-hint');
-        if (state.blocks.length === 0) {
-            if (!hint) {
-                hint = document.createElement('div');
-                hint.id = 'canvas-empty-hint';
-                hint.className = 'canvas-empty-hint';
-                hint.innerHTML = `+ Nhấp đúp vào trang giấy hoặc chọn công cụ ở cột bên trái để soạn thảo`;
-                artboard.appendChild(hint);
-            }
-            hint.style.display = 'block';
-        } else if (hint) {
-            hint.style.display = 'none';
-        }
+        const hint = document.getElementById('canvas-empty-hint');
+        if (hint) hint.remove();
     }
 
     // === Viewport Events ===
