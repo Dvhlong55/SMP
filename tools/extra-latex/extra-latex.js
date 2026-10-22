@@ -688,6 +688,26 @@
         updateLatexCode();
     }
 
+    window.toggleSnipGroup = function(el) {
+        const row = el.closest('.snip-group-row');
+        if (row) row.classList.toggle('collapsed');
+    };
+
+    window.insertSnip = function(code) {
+        insertSnippet(code);
+    };
+
+    // Auto-render math in snippet buttons using MathJax
+    function typesetSnippets() {
+        if (window.MathJax && MathJax.typesetPromise) {
+            const tb = document.getElementById('snippet-toolbar');
+            if (tb) MathJax.typesetPromise([tb]).catch(() => {});
+        } else {
+            setTimeout(typesetSnippets, 250);
+        }
+    }
+    typesetSnippets();
+
     // === LaTeX Code Generation ===
     function updateLatexCode() {
         if (!latexOutput) return;

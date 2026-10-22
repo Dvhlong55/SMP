@@ -1,184 +1,258 @@
 /* ============================================================
-   SMP EXTRA LATEX - STYLESHEET
+   SMP EXTRA LATEX - SYNCHRONIZED SMP TOOL STYLES
    Free-form Positioning & WYSIWYG Mathcha-style Editor
    ============================================================ */
 
-/* CSS Variables specific to Extra LaTeX, inheriting from shared.css */
+body { overflow-x: hidden; }
+
 :root {
-    --el-canvas-bg: #f8f9fa;
-    --el-grid-color: rgba(0, 0, 0, 0.07);
-    --el-dot-color: rgba(0, 0, 0, 0.18);
-    --el-block-bg: #ffffff;
-    --el-block-border: #e2e8f0;
-    --el-block-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-    --el-block-active-border: var(--accent-cyan);
-    --el-block-active-shadow: 0 8px 24px rgba(0, 158, 179, 0.18);
-    --el-toolbar-bg: #ffffff;
-    --el-toolbar-border: #e2e8f0;
-    --el-bubble-bg: #1e293b;
-    --el-bubble-text: #f8fafc;
+    --body-bg: #0b1111;
+    --widget-title-color: #fff;
+    --widget-link-color: #888;
+    --widget-badge-bg: rgba(255,255,255,0.05);
+    --widget-badge-color: #aaa;
+    --exam-paper-bg: rgba(255,255,255,0.025);
+    --exam-paper-border: rgba(92,225,230,0.09);
+    --exam-text-color: #ddd;
+    --exam-bold-color: #f4f4f4;
+    --exam-title-color: #f0f0f0;
+    --exam-divider-color: rgba(92,225,230,0.1);
+
+    /* Extra LaTeX Canvas Tokens */
+    --el-canvas-bg: #14171d;
+    --el-grid-color: rgba(255, 255, 255, 0.05);
+    --el-dot-color: rgba(92, 225, 230, 0.2);
+    --el-block-bg: #1b1e26;
+    --el-block-border: rgba(92, 225, 230, 0.18);
+    --el-block-shadow: 0 6px 22px rgba(0, 0, 0, 0.5);
+    --el-block-active-border: var(--accent-cyan, #5ce1e6);
+    --el-block-active-shadow: 0 0 16px rgba(92, 225, 230, 0.28);
+    --el-bubble-bg: #0f172a;
+    --el-bubble-text: #f1f5f9;
     --el-bubble-border: #334155;
     --el-bubble-btn-hover: rgba(255, 255, 255, 0.12);
 }
 
-html.dark-mode, body.dark-mode {
-    --el-canvas-bg: #121316;
-    --el-grid-color: rgba(255, 255, 255, 0.05);
-    --el-dot-color: rgba(255, 255, 255, 0.15);
-    --el-block-bg: #1c1d22;
-    --el-block-border: #2e313a;
-    --el-block-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
-    --el-block-active-border: var(--accent-cyan);
-    --el-block-active-shadow: 0 8px 26px rgba(92, 225, 230, 0.22);
-    --el-toolbar-bg: #18191e;
-    --el-toolbar-border: #2a2d36;
-    --el-bubble-bg: #0f172a;
-    --el-bubble-text: #f1f5f9;
-    --el-bubble-border: #1e293b;
+body:not(.dark-mode) {
+    --body-bg: #f8fafc;
+    --widget-title-color: #1e293b;
+    --widget-link-color: #64748b;
+    --widget-badge-bg: rgba(0,0,0,0.05);
+    --widget-badge-color: #475569;
+    --exam-paper-bg: #ffffff;
+    --exam-paper-border: rgba(15,23,42,0.08);
+    --exam-text-color: #334155;
+    --exam-bold-color: #0f172a;
+    --exam-title-color: #1e293b;
+    --exam-divider-color: rgba(15,23,42,0.08);
+    --accent-cyan: #009eb3;
+
+    /* Extra LaTeX Canvas Tokens in Light Mode */
+    --el-canvas-bg: #f1f5f9;
+    --el-grid-color: rgba(0, 0, 0, 0.06);
+    --el-dot-color: rgba(0, 158, 179, 0.25);
+    --el-block-bg: #ffffff;
+    --el-block-border: #cbd5e1;
+    --el-block-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --el-block-active-border: #009eb3;
+    --el-block-active-shadow: 0 0 14px rgba(0, 158, 179, 0.25);
+    --el-bubble-bg: #1e293b;
+    --el-bubble-text: #f8fafc;
+    --el-bubble-border: #475569;
     --el-bubble-btn-hover: rgba(255, 255, 255, 0.15);
 }
 
-/* Container & Layout */
-.extra-latex-container {
+body {
+    background-color: var(--body-bg);
+    transition: background-color 0.3s ease;
+}
+
+/* === SMP Master Page Grid === */
+.main-wrapper {
+    position: relative;
+    max-width: 2000px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    transform: none !important;
+    left: 0 !important;
+    transition: transform 0s !important;
+}
+
+.main-content-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 36px;
+    margin-top: 20px;
+    min-width: 0;
+}
+
+.tags-comment-sidebar {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    width: 100%;
-    margin-bottom: 40px;
+    gap: 36px;
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+    z-index: 1;
 }
 
-/* Hero Section */
-.latex-hero {
-    margin-bottom: 12px;
+@media (max-width: 1100px) {
+    .main-content-layout { grid-template-columns: 1fr; }
+    .tags-comment-sidebar { position: static; }
 }
 
-/* Notice Box */
-.notice-box {
-    background: rgba(92, 225, 230, 0.06);
-    border: 1px solid rgba(92, 225, 230, 0.2);
+.main-articles-body {
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* === Breadcrumb & Hero Header === */
+.exam-back-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--accent-cyan, #5ce1e6); text-decoration: none;
+    font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 22px; opacity: 0.65; transition: opacity 0.2s;
+}
+.exam-back-btn:hover { opacity: 1; }
+
+.exam-meta { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+.exam-tag {
+    font-size: 0.7rem; font-family: 'JetBrains Mono', monospace;
+    padding: 4px 13px; border-radius: 20px;
+    border: 1px solid rgba(92,225,230,0.35);
+    color: var(--accent-cyan, #5ce1e6);
+}
+
+.latex-hero { margin-bottom: 22px; }
+.latex-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--exam-title-color);
+    margin: 0 0 5px 0;
+}
+.latex-hero p { font-size: 0.85rem; color: var(--exam-text-color); opacity: 0.7; margin: 0; }
+
+/* === 2-Column Tool Layout (Synced with MathType-v2) === */
+.math-editor-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 25px;
+    align-items: start;
+}
+@media (max-width: 1300px) {
+    .math-editor-layout { grid-template-columns: 1fr; }
+}
+
+.math-editor-right {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding-right: 5px;
+}
+.math-editor-right::-webkit-scrollbar { width: 4px; }
+.math-editor-right::-webkit-scrollbar-thumb { background: rgba(92,225,230,0.2); border-radius: 4px; }
+
+/* === Notice Box === */
+.math-notice {
+    background: rgba(92,225,230,0.05);
+    border: 1px solid rgba(92,225,230,0.2);
     border-radius: 8px;
     padding: 12px 16px;
-    font-size: 0.88rem;
-    line-height: 1.55;
-    color: var(--text-dark);
+    margin-bottom: 20px;
 }
 
-.notice-box strong {
-    color: var(--accent-cyan);
+/* === Panes & Buttons (SMP Standard) === */
+.latex-workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: stretch;
+    min-width: 0;
+    overflow: hidden;
+    margin-bottom: 30px;
 }
 
-/* Master Control Bar */
-.master-toolbar {
-    background: var(--el-toolbar-bg);
-    border: 1px solid var(--el-toolbar-border);
+.editor-pane {
+    display: flex;
+    flex-direction: column;
     border-radius: 10px;
-    padding: 8px 12px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
 
-.toolbar-group {
+.pane-header {
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(92,225,230,0.06);
+    border: 1px solid rgba(92,225,230,0.12);
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    padding: 9px 15px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.pane-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--accent-cyan, #5ce1e6);
     display: flex;
     align-items: center;
     gap: 6px;
-    flex-wrap: wrap;
 }
-
-.toolbar-divider {
-    width: 1px;
-    height: 24px;
-    background: var(--el-toolbar-border);
-    margin: 0 4px;
+.pane-actions { display: flex; gap: 7px; flex-wrap: wrap; justify-content: flex-end; align-items: center;}
+.pane-btn {
+    background: rgba(92,225,230,0.09); border: 1px solid rgba(92,225,230,0.22); border-radius: 5px; padding: 5px 12px;
+    color: var(--accent-cyan, #5ce1e6); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.8px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 4px;
 }
-
-.tb-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
-    background: transparent;
-    border: 1px solid var(--el-toolbar-border);
-    border-radius: 6px;
-    color: var(--text-dark);
-    font-size: 0.82rem;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    user-select: none;
-}
-
-.tb-btn:hover {
-    background: var(--accent-cyan-dim);
-    border-color: var(--accent-cyan);
-    color: var(--accent-cyan);
-    transform: translateY(-1px);
-}
-
-.tb-btn.active {
-    background: var(--accent-cyan);
-    color: #000 !important;
-    border-color: var(--accent-cyan);
+.pane-btn:hover { background: rgba(92,225,230,0.2); border-color: rgba(92,225,230,0.55); }
+.pane-btn.btn-highlight {
+    background: rgba(92,225,230,0.18) !important;
+    border-color: rgba(92,225,230,0.55) !important;
+    color: var(--accent-cyan, #5ce1e6) !important;
     font-weight: 600;
+    box-shadow: 0 0 10px rgba(92,225,230,0.12);
 }
-
-.tb-btn.btn-primary {
-    background: var(--accent-cyan);
-    color: #000;
-    font-weight: 600;
-    border-color: var(--accent-cyan);
+.pane-btn.btn-highlight:hover {
+    background: rgba(92,225,230,0.30) !important;
+    border-color: rgba(92,225,230,0.85) !important;
 }
+.pane-btn.danger { background: rgba(248,113,113,0.08); border-color: rgba(248,113,113,0.22); color: #f87171; }
+.pane-btn.danger:hover { background: rgba(248,113,113,0.2); }
 
-.tb-btn.btn-primary:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
-}
-
-.tb-btn.danger:hover {
-    background: rgba(239, 68, 68, 0.15);
-    border-color: #ef4444;
-    color: #ef4444;
-}
-
-.tb-select {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid var(--el-toolbar-border);
-    background: var(--el-toolbar-bg);
-    color: var(--text-dark);
-    font-size: 0.8rem;
-    font-family: inherit;
-    cursor: pointer;
+.pane-select {
+    background: rgba(92,225,230,0.09);
+    border: 1px solid rgba(92,225,230,0.22);
+    border-radius: 5px;
+    padding: 4px 8px;
+    color: var(--accent-cyan, #5ce1e6);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.70rem;
     outline: none;
+    cursor: pointer;
+}
+body:not(.dark-mode) .pane-select {
+    background: #ffffff;
+    color: var(--accent-cyan);
+    border-color: rgba(0, 158, 179, 0.3);
 }
 
-/* Workspace Layout */
-.workspace-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-    width: 100%;
-}
-
-/* Canvas Viewport */
+/* === Canvas Viewport (The Artboard Container) === */
 .canvas-viewport {
     position: relative;
     width: 100%;
-    height: 640px;
+    height: 520px;
     background-color: var(--el-canvas-bg);
-    border: 1px solid var(--el-toolbar-border);
-    border-radius: 12px;
+    border: 1px solid rgba(92,225,230,0.12);
+    border-radius: 0 0 10px 10px;
     overflow: auto;
     cursor: default;
     user-select: none;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
 }
 
-/* Background Grids */
 .canvas-viewport.grid-dots {
     background-image: radial-gradient(var(--el-dot-color) 1px, transparent 1px);
     background-size: 20px 20px;
@@ -195,35 +269,30 @@ html.dark-mode, body.dark-mode {
     background-image: none;
 }
 
-/* Interactive Artboard inside viewport */
+/* Large infinite-like artboard */
 .artboard {
     position: absolute;
     top: 0;
     left: 0;
-    width: 3200px;
-    height: 2400px;
+    width: 2800px;
+    height: 2000px;
     transform-origin: 0 0;
 }
 
-/* Canvas Floating Hint */
+/* Floating Hint when empty */
 .canvas-empty-hint {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 40%;
+    left: 45%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: var(--text-muted);
+    color: var(--exam-text-color);
+    opacity: 0.6;
     pointer-events: none;
-    opacity: 0.65;
-    transition: opacity 0.3s;
+    line-height: 1.6;
 }
 
-.canvas-empty-hint svg {
-    margin-bottom: 8px;
-    opacity: 0.8;
-}
-
-/* Movable Block Card */
+/* === Movable Block Card === */
 .movable-block {
     position: absolute;
     background: var(--el-block-bg);
@@ -245,23 +314,17 @@ html.dark-mode, body.dark-mode {
     z-index: 50 !important;
 }
 
-/* Block Header & Drag Handle */
 .block-header {
-    height: 22px;
-    background: rgba(0, 0, 0, 0.03);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    height: 24px;
+    background: rgba(92, 225, 230, 0.05);
+    border-bottom: 1px solid rgba(92, 225, 230, 0.1);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 6px;
+    padding: 0 8px;
     border-radius: 8px 8px 0 0;
     cursor: grab;
     user-select: none;
-}
-
-html.dark-mode .block-header {
-    background: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .movable-block:active .block-header {
@@ -271,9 +334,8 @@ html.dark-mode .block-header {
 .block-title-tag {
     font-size: 0.68rem;
     font-family: 'JetBrains Mono', monospace;
-    opacity: 0.6;
+    color: var(--accent-cyan);
     letter-spacing: 0.5px;
-    text-transform: uppercase;
     display: flex;
     align-items: center;
     gap: 4px;
@@ -295,20 +357,21 @@ html.dark-mode .block-header {
 .block-action-btn {
     background: transparent;
     border: none;
-    color: var(--text-muted);
+    color: var(--exam-text-color);
     cursor: pointer;
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 3px;
     padding: 0;
+    font-size: 0.75rem;
 }
 
 .block-action-btn:hover {
     color: var(--accent-cyan);
-    background: var(--accent-cyan-dim);
+    background: rgba(92, 225, 230, 0.15);
 }
 
 .block-action-btn.del-btn:hover {
@@ -316,61 +379,51 @@ html.dark-mode .block-header {
     background: rgba(239, 68, 68, 0.15);
 }
 
-/* Block Content */
 .block-body {
-    padding: 10px 14px;
+    padding: 8px 12px;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
-    overflow: visible;
 }
 
-/* Math Field in Math Block */
+/* MathLive Field inside Block */
 math-field {
-    border: none;
-    outline: none;
-    font-size: 1.3rem;
-    color: var(--text-dark);
-    background: transparent;
+    border: none !important;
+    outline: none !important;
+    font-size: 1.35rem;
+    color: var(--exam-text-color);
+    background: transparent !important;
     width: 100%;
     min-height: 38px;
     padding: 2px 4px;
+    --caret-color: var(--accent-cyan);
+    --selection-background-color: rgba(92,225,230,0.2);
+    --selection-color: var(--accent-cyan);
 }
 
-math-field:focus-within {
-    outline: none;
-}
-
-/* Contenteditable in Text Block */
 .text-editor-area {
     outline: none;
-    min-height: 24px;
-    font-size: 1rem;
+    min-height: 28px;
+    font-size: 0.98rem;
     line-height: 1.5;
-    color: var(--text-dark);
+    color: var(--exam-text-color);
     word-break: break-word;
 }
 
 .text-editor-area:empty:before {
     content: attr(placeholder);
-    color: var(--text-muted);
-    opacity: 0.6;
+    color: var(--exam-text-color);
+    opacity: 0.5;
     pointer-events: none;
 }
 
-/* Box & Annotation Block */
 .movable-block.block-box {
-    border: 2px dashed var(--accent-gold);
+    border: 2px dashed var(--accent-gold, #c9a96e);
     background: rgba(201, 169, 110, 0.05);
 }
 
-.movable-block.block-box.selected {
-    border-color: var(--accent-cyan);
-}
-
-/* Resize Handle */
 .resize-handle {
     position: absolute;
     right: 2px;
@@ -389,18 +442,18 @@ math-field:focus-within {
     opacity: 0.8;
 }
 
-/* Floating Bubble Toolbar (Selection Menu) */
+/* === Floating Bubble Selection Popover (Mathcha Style) === */
 .floating-bubble-toolbar {
     position: fixed;
     z-index: 99999;
     background: var(--el-bubble-bg);
     border: 1px solid var(--el-bubble-border);
     border-radius: 8px;
-    padding: 4px 6px;
+    padding: 4px 8px;
     display: none;
     align-items: center;
     gap: 4px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
     transform: translateX(-50%);
     animation: bubbleFadeIn 0.15s ease-out;
     pointer-events: auto;
@@ -437,11 +490,6 @@ math-field:focus-within {
     color: var(--accent-cyan);
 }
 
-.bubble-btn.active {
-    background: var(--accent-cyan);
-    color: #000;
-}
-
 .bubble-divider {
     width: 1px;
     height: 18px;
@@ -449,17 +497,16 @@ math-field:focus-within {
     margin: 0 2px;
 }
 
-/* Color Picker Popover in Bubble */
 .bubble-color-picker {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
     padding: 0 4px;
 }
 
 .color-dot {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     cursor: pointer;
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -470,182 +517,121 @@ math-field:focus-within {
     transform: scale(1.3);
 }
 
-/* Snippet Drawer */
-.snippet-panel {
-    background: var(--el-toolbar-bg);
-    border: 1px solid var(--el-toolbar-border);
-    border-radius: 10px;
-    padding: 12px;
+/* === Snippet Toolbar (Synced 2-Column Right Sidebar) === */
+.snippet-toolbar {
+    column-count: 2;
+    column-gap: 12px;
+    margin-bottom: 16px;
 }
-
-.snippet-tabs {
-    display: flex;
-    gap: 8px;
-    border-bottom: 1px solid var(--el-toolbar-border);
-    padding-bottom: 8px;
+.snip-group-row { 
+    display: flex; 
+    flex-direction: column; 
+    background: rgba(255,255,255,0.02); 
+    border: 1px solid rgba(92,225,230,0.15); 
+    border-radius: 8px; 
+    overflow: hidden;
     margin-bottom: 12px;
-    overflow-x: auto;
+    break-inside: avoid;
+    page-break-inside: avoid;
 }
+.snip-group-row .snip-group-label {
+    width: 100%; margin: 0; padding: 6px 10px; font-size: 0.65rem; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent-cyan, #5ce1e6); opacity: 0.8;
+    background: rgba(92,225,230,0.08); border-bottom: 1px solid rgba(92,225,230,0.12); display: flex; align-items: center;
+    cursor: pointer; user-select: none;
+}
+.snip-group-btns { display: flex; flex-wrap: wrap; gap: 2px; flex: 1; padding: 6px; min-width: 0; justify-content: flex-start; }
+.snip-btn {
+    background: transparent; border: 1px solid transparent; border-radius: 4px; padding: 6px;
+    color: var(--exam-text-color); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;
+    cursor: pointer; transition: all 0.1s; min-width: 32px; height: auto; min-height: 32px;
+    display: inline-flex; justify-content: center; align-items: center;
+}
+.snip-btn:hover { background: rgba(92,225,230,0.15); border-color: rgba(92,225,230,0.4); transform: scale(1.1); z-index: 2; position: relative; }
+.snip-btn mjx-container { overflow: hidden !important; pointer-events: none; }
 
-.snippet-tab-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    padding: 4px 10px;
-    border-radius: 5px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    font-family: inherit;
-    white-space: nowrap;
-}
+.snip-group-row.collapsed .snip-group-btns { display: none; }
+.snip-group-row.collapsed .toggle-icon { transform: rotate(-90deg); }
 
-.snippet-tab-btn:hover {
-    color: var(--accent-cyan);
-}
+body:not(.dark-mode) .snip-group-row { background: #f8fafc; border-color: rgba(15,23,42,0.15); }
+body:not(.dark-mode) .snip-group-row .snip-group-label { background: rgba(0,0,0,0.04); border-color: rgba(15,23,42,0.08); color: var(--accent-cyan); }
+body:not(.dark-mode) .snip-btn:hover { background: rgba(0,0,0,0.06); border-color: rgba(15,23,42,0.2); }
 
-.snippet-tab-btn.active {
-    background: var(--accent-cyan-dim);
-    color: var(--accent-cyan);
-    font-weight: 600;
+/* === LaTeX Output Textarea & Tabs === */
+#latex-output {
+    width: 100%; height: 110px; margin-top: 10px; background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(92,225,230,0.10); border-radius: 10px; padding: 12px;
+    color: var(--exam-text-color); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+    resize: vertical; box-sizing: border-box; outline: none;
 }
-
-.snippet-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
-    gap: 6px;
-}
-
-.snip-item-btn {
-    background: var(--card-bg);
-    border: 1px solid var(--el-toolbar-border);
-    border-radius: 6px;
-    padding: 6px 4px;
-    color: var(--text-dark);
-    font-size: 0.95rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 38px;
-    transition: all 0.15s ease;
-}
-
-.snip-item-btn:hover {
-    border-color: var(--accent-cyan);
-    color: var(--accent-cyan);
-    background: var(--accent-cyan-dim);
-    transform: scale(1.05);
-}
-
-/* LaTeX Output & Export Drawer */
-.export-panel {
-    background: var(--el-toolbar-bg);
-    border: 1px solid var(--el-toolbar-border);
-    border-radius: 10px;
-    padding: 14px 16px;
-}
-
-.export-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.export-title-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+body:not(.dark-mode) #latex-output { background: #ffffff; border-color: rgba(15,23,42,0.1); }
 
 .export-mode-tabs {
-    display: flex;
-    background: rgba(0, 0, 0, 0.05);
+    display: inline-flex;
+    background: rgba(92,225,230,0.06);
     border-radius: 6px;
     padding: 2px;
+    border: 1px solid rgba(92,225,230,0.15);
 }
-
-html.dark-mode .export-mode-tabs {
-    background: rgba(255, 255, 255, 0.06);
-}
-
 .export-tab-btn {
-    padding: 4px 12px;
+    padding: 3px 9px;
     border: none;
     background: transparent;
     border-radius: 4px;
-    font-size: 0.78rem;
-    font-family: inherit;
-    color: var(--text-muted);
-    cursor: pointer;
-}
-
-.export-tab-btn.active {
-    background: var(--card-bg);
-    color: var(--accent-cyan);
-    font-weight: 600;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-
-.export-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.latex-textarea {
-    width: 100%;
-    height: 140px;
-    padding: 10px 14px;
-    background: var(--card-bg);
-    border: 1px solid var(--el-toolbar-border);
-    border-radius: 8px;
-    color: var(--text-dark);
+    font-size: 0.68rem;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    resize: vertical;
-    outline: none;
+    color: var(--exam-text-color);
+    opacity: 0.7;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+.export-tab-btn.active {
+    background: rgba(92,225,230,0.2);
+    color: var(--accent-cyan);
+    opacity: 1;
+    font-weight: 600;
 }
 
-.latex-textarea:focus {
-    border-color: var(--accent-cyan);
-}
-
-/* Zen Mode Fullscreen */
-body.zen-mode .main-wrapper {
-    margin-left: 0 !important;
-    width: 100% !important;
-}
-
+/* === Zen Mode === */
 body.zen-mode #sidebar-placeholder,
 body.zen-mode #topbar-placeholder,
 body.zen-mode .tags-comment-sidebar,
-body.zen-mode .latex-hero,
-body.zen-mode .exam-back-btn,
 body.zen-mode .exam-meta,
-body.zen-mode .notice-box {
+body.zen-mode .exam-back-btn,
+body.zen-mode .latex-hero,
+body.zen-mode .math-notice,
+body.zen-mode .math-editor-right {
     display: none !important;
 }
 
-body.zen-mode .canvas-viewport {
-    height: calc(100vh - 280px) !important;
+body.zen-mode .main-content-layout,
+body.zen-mode .math-editor-layout {
+    grid-template-columns: 1fr !important;
+    margin-top: 0;
+    gap: 0;
 }
 
-/* Toast Message */
+body.zen-mode .main-wrapper {
+    padding: 0;
+    margin: 0;
+    max-width: 100% !important;
+}
+
+body.zen-mode .canvas-viewport {
+    height: calc(100vh - 240px) !important;
+}
+
+/* === Toast Notification === */
 .el-toast {
     position: fixed;
     bottom: 28px;
     left: 50%;
     transform: translateX(-50%) translateY(20px);
-    background: #1e293b;
+    background: #0f172a;
     color: #fff;
-    padding: 10px 22px;
+    padding: 9px 20px;
     border-radius: 8px;
-    font-size: 0.86rem;
+    font-size: 0.82rem;
     font-family: 'JetBrains Mono', monospace;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     opacity: 0;
@@ -655,10 +641,31 @@ body.zen-mode .canvas-viewport {
     display: flex;
     align-items: center;
     gap: 8px;
-    border-left: 4px solid var(--accent-cyan);
+    border-left: 3px solid var(--accent-cyan);
 }
 
 .el-toast.show {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+}
+
+/* Footer Divider */
+.site-footer {
+    margin-top: 40px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+.footer-divider {
+    height: 1px;
+    background: rgba(92,225,230,0.1);
+    margin-bottom: 20px;
+}
+.footer-bottom p {
+    font-size: 0.78rem;
+    color: var(--exam-text-color);
+    opacity: 0.6;
+}
+.footer-brand {
+    color: var(--accent-cyan);
+    font-weight: 600;
 }
