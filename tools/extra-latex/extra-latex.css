@@ -1,6 +1,6 @@
 /* ============================================================
-   SMP EXTRA LATEX - CLEAN SPLIT VIEW (CANVAS + COMPILER)
-   3 Modes: Bảng vẽ, Giấy A4, Slide Beamer
+   SMP EXTRA LATEX — MATHCHA-STYLE MODERN UI
+   Document-Centric + Top Ribbon + Left Tool Palette + Export Drawer
    ============================================================ */
 
 body { overflow-x: hidden; }
@@ -8,59 +8,75 @@ body { overflow-x: hidden; }
 :root {
     --body-bg: #0b1111;
     --widget-title-color: #fff;
-    --widget-link-color: #888;
     --exam-paper-bg: rgba(255,255,255,0.025);
-    --exam-paper-border: rgba(92,225,230,0.09);
     --exam-text-color: #ddd;
     --exam-bold-color: #f4f4f4;
     --exam-title-color: #f0f0f0;
     --accent-cyan: #5ce1e6;
     --accent-gold: #c9a96e;
 
-    /* Extra LaTeX Canvas Tokens */
-    --el-canvas-bg: #12141a;
-    --el-sheet-bg: #1a1d26;
+    /* Workspace Canvas Tokens */
+    --el-bg: #101216;
+    --el-sheet-bg: #181b22;
     --el-sheet-border: rgba(92, 225, 230, 0.25);
+    --el-sheet-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+    --el-ribbon-bg: #14171e;
+    --el-ribbon-border: rgba(92, 225, 230, 0.16);
+    --el-palette-bg: #14171e;
+    --el-palette-border: rgba(92, 225, 230, 0.16);
+    --el-btn-hover: rgba(92, 225, 230, 0.15);
+    --el-btn-active: rgba(92, 225, 230, 0.25);
+    --el-dot-color: rgba(92, 225, 230, 0.2);
     --el-grid-color: rgba(255, 255, 255, 0.05);
-    --el-dot-color: rgba(92, 225, 230, 0.22);
-    --el-block-bg: #222632;
-    --el-block-border: rgba(92, 225, 230, 0.22);
-    --el-block-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
-    --el-block-active-border: var(--accent-cyan);
-    --el-block-active-shadow: 0 0 16px rgba(92, 225, 230, 0.35);
-    --el-bubble-bg: #0f172a;
-    --el-bubble-text: #f1f5f9;
-    --el-bubble-border: #334155;
-    --el-bubble-btn-hover: rgba(255, 255, 255, 0.12);
+
+    /* Block Tokens */
+    --el-block-bg: rgba(255, 255, 255, 0.03);
+    --el-block-border: transparent;
+    --el-block-hover-border: rgba(92, 225, 230, 0.35);
+    --el-block-selected-border: var(--accent-cyan);
+    --el-block-selected-shadow: 0 0 16px rgba(92, 225, 230, 0.3);
+
+    /* Bubble & Popover */
+    --el-popover-bg: #0f172a;
+    --el-popover-border: #334155;
+    --el-popover-text: #f1f5f9;
 }
 
 body:not(.dark-mode) {
-    --body-bg: #f8fafc;
+    --body-bg: #f1f5f9;
     --widget-title-color: #1e293b;
-    --widget-link-color: #64748b;
     --exam-paper-bg: #ffffff;
-    --exam-paper-border: rgba(15,23,42,0.08);
     --exam-text-color: #334155;
     --exam-bold-color: #0f172a;
     --exam-title-color: #1e293b;
     --accent-cyan: #009eb3;
     --accent-gold: #b38600;
 
-    /* Light Mode Canvas Tokens */
-    --el-canvas-bg: #e2e8f0;
+    /* Workspace Canvas Tokens in Light Mode */
+    --el-bg: #e2e8f0;
     --el-sheet-bg: #ffffff;
     --el-sheet-border: #cbd5e1;
-    --el-grid-color: rgba(0, 0, 0, 0.06);
+    --el-sheet-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+    --el-ribbon-bg: #ffffff;
+    --el-ribbon-border: #cbd5e1;
+    --el-palette-bg: #ffffff;
+    --el-palette-border: #cbd5e1;
+    --el-btn-hover: rgba(0, 158, 179, 0.1);
+    --el-btn-active: rgba(0, 158, 179, 0.2);
     --el-dot-color: rgba(0, 158, 179, 0.25);
-    --el-block-bg: #ffffff;
-    --el-block-border: #cbd5e1;
-    --el-block-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    --el-block-active-border: #009eb3;
-    --el-block-active-shadow: 0 0 14px rgba(0, 158, 179, 0.25);
-    --el-bubble-bg: #1e293b;
-    --el-bubble-text: #f8fafc;
-    --el-bubble-border: #475569;
-    --el-bubble-btn-hover: rgba(255, 255, 255, 0.15);
+    --el-grid-color: rgba(0, 0, 0, 0.06);
+
+    /* Block Tokens in Light Mode */
+    --el-block-bg: rgba(0, 0, 0, 0.015);
+    --el-block-border: transparent;
+    --el-block-hover-border: rgba(0, 158, 179, 0.4);
+    --el-block-selected-border: #009eb3;
+    --el-block-selected-shadow: 0 0 14px rgba(0, 158, 179, 0.25);
+
+    /* Bubble & Popover in Light Mode */
+    --el-popover-bg: #1e293b;
+    --el-popover-border: #475569;
+    --el-popover-text: #f8fafc;
 }
 
 body {
@@ -68,19 +84,18 @@ body {
     transition: background-color 0.3s ease;
 }
 
-/* === Layout Full Width (No Left Sidebar) === */
+/* Master Wrapper */
 .main-wrapper {
-    position: relative;
     max-width: 100% !important;
     width: 100% !important;
     margin: 0 auto !important;
-    padding: 0 24px;
+    padding: 0 16px;
     box-sizing: border-box;
 }
 
 .main-content-layout {
     display: block !important;
-    margin-top: 14px;
+    margin-top: 10px;
     width: 100%;
 }
 
@@ -89,199 +104,286 @@ body {
     min-width: 0;
 }
 
-/* Header & Breadcrumb */
+/* Breadcrumb Bar */
+.top-nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
 .exam-back-btn {
     display: inline-flex; align-items: center; gap: 6px;
     color: var(--accent-cyan, #5ce1e6); text-decoration: none;
-    font-size: 0.78rem; font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.8px; text-transform: uppercase;
-    margin-bottom: 12px; opacity: 0.75; transition: opacity 0.2s;
+    font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.6px; text-transform: uppercase;
+    opacity: 0.8; transition: opacity 0.2s;
 }
 .exam-back-btn:hover { opacity: 1; }
 
-.exam-meta { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
-.exam-tag {
-    font-size: 0.68rem; font-family: 'JetBrains Mono', monospace;
-    padding: 3px 10px; border-radius: 16px;
-    border: 1px solid rgba(92,225,230,0.35);
-    color: var(--accent-cyan, #5ce1e6);
-}
-
-.latex-hero {
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.latex-hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.45rem;
-    color: var(--exam-title-color);
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* === 2-COLUMN SPLIT VIEW: CANVAS (LEFT) & COMPILER (RIGHT) === */
-.extra-split-layout {
-    display: grid;
-    grid-template-columns: 1.25fr 0.95fr;
-    gap: 18px;
-    align-items: stretch;
-    width: 100%;
-    margin-bottom: 30px;
-}
-
-@media (max-width: 1280px) {
-    .extra-split-layout {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* === Panes & Headers === */
-.split-pane {
-    display: flex;
-    flex-direction: column;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(92,225,230,0.15);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-}
-
-body:not(.dark-mode) .split-pane {
-    background: #ffffff;
-    border-color: rgba(15,23,42,0.1);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-}
-
-.pane-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(92,225,230,0.06);
-    border-bottom: 1px solid rgba(92,225,230,0.14);
-    padding: 8px 12px;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.pane-title {
+.app-title-tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    font-size: 0.78rem;
     color: var(--accent-cyan);
-    display: flex;
-    align-items: center;
-    gap: 6px;
     font-weight: 600;
-}
-
-.pane-actions {
+    letter-spacing: 0.5px;
     display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
     align-items: center;
+    gap: 6px;
 }
 
-/* Buttons */
-.pane-btn {
-    background: rgba(92,225,230,0.09);
-    border: 1px solid rgba(92,225,230,0.22);
-    border-radius: 5px;
+/* ============================================================
+   1. TOP RIBBON TOOLBAR (Mathcha Horizontal Formatting Bar)
+   ============================================================ */
+.mathcha-top-ribbon {
+    background: var(--el-ribbon-bg);
+    border: 1px solid var(--el-ribbon-border);
+    border-radius: 8px;
     padding: 4px 10px;
-    color: var(--accent-cyan, #5ce1e6);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.70rem;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.ribbon-section {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
+    white-space: nowrap;
 }
 
-.pane-btn:hover {
-    background: rgba(92,225,230,0.22);
-    border-color: rgba(92,225,230,0.6);
+.ribbon-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--el-ribbon-border);
+    margin: 0 5px;
+    opacity: 0.8;
 }
 
-.pane-btn.btn-highlight {
-    background: rgba(92,225,230,0.2) !important;
-    border-color: rgba(92,225,230,0.6) !important;
-    font-weight: 600;
-}
-
-.pane-btn.danger {
-    background: rgba(248,113,113,0.08);
-    border-color: rgba(248,113,113,0.22);
-    color: #f87171;
-}
-
-.pane-btn.danger:hover {
-    background: rgba(248,113,113,0.22);
-}
-
-/* Mode Switcher Group (Bảng Vẽ, Giấy A4, Beamer) */
-.mode-switch-group {
+/* Mode Switch Tabs in Ribbon */
+.mode-tabs {
     display: inline-flex;
-    background: rgba(92,225,230,0.08);
-    border: 1px solid rgba(92,225,230,0.25);
+    background: rgba(92, 225, 230, 0.08);
+    border: 1px solid rgba(92, 225, 230, 0.2);
     border-radius: 6px;
     padding: 2px;
 }
 
-.mode-btn {
-    border: none;
+.mode-tab-btn {
     background: transparent;
+    border: none;
     color: var(--exam-text-color);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem;
-    padding: 4px 10px;
+    font-size: 0.72rem;
+    padding: 3px 9px;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.15s;
-    opacity: 0.7;
-    white-space: nowrap;
+    opacity: 0.75;
 }
 
-.mode-btn:hover {
-    opacity: 1;
-    color: var(--accent-cyan);
-}
-
-.mode-btn.active {
+.mode-tab-btn:hover { opacity: 1; color: var(--accent-cyan); }
+.mode-tab-btn.active {
     background: var(--accent-cyan);
     color: #0b1111 !important;
     font-weight: 700;
     opacity: 1;
 }
 
-.pane-select {
-    background: rgba(92,225,230,0.09);
-    border: 1px solid rgba(92,225,230,0.22);
-    border-radius: 5px;
+/* Ribbon Icon Buttons (Mathcha Style: B, I, U, S, Align, Undo) */
+.rb-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--exam-text-color);
     padding: 4px 6px;
-    color: var(--accent-cyan, #5ce1e6);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem;
-    outline: none;
+    height: 28px;
+    min-width: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    font-size: 0.88rem;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.15s;
+    user-select: none;
 }
 
-/* === Canvas Viewport (Left Pane) === */
-.canvas-viewport {
+.rb-btn:hover {
+    background: var(--el-btn-hover);
+    color: var(--accent-cyan);
+    border-color: rgba(92, 225, 230, 0.3);
+}
+
+.rb-btn.active {
+    background: var(--el-btn-active);
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+}
+
+.rb-select {
+    background: transparent;
+    border: 1px solid rgba(92, 225, 230, 0.2);
+    border-radius: 4px;
+    color: var(--exam-text-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    padding: 3px 6px;
+    outline: none;
+    cursor: pointer;
+    height: 28px;
+}
+
+/* Color Tool with Underbar */
+.color-tool-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.color-indicator-btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    width: 28px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--exam-text-color);
+}
+
+.color-indicator-btn:hover {
+    background: var(--el-btn-hover);
+}
+
+.color-bar {
+    width: 14px;
+    height: 3px;
+    border-radius: 1px;
+    background: var(--accent-cyan);
+    margin-top: 1px;
+}
+
+/* Export CTA Button */
+.export-cta-btn {
+    background: var(--accent-cyan) !important;
+    color: #0b1111 !important;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 4px 12px;
+    font-size: 0.74rem;
+    letter-spacing: 0.4px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: filter 0.2s, transform 0.15s;
+}
+
+.export-cta-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+/* ============================================================
+   2. MAIN WORKSPACE WITH LEFT PALETTE & CENTER SHEET
+   ============================================================ */
+.mathcha-workspace-layout {
     position: relative;
     width: 100%;
-    height: 680px;
-    background-color: var(--el-canvas-bg);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+/* Left Floating Tool Palette (Mathcha Vertical Tool Strip) */
+.mathcha-left-palette {
+    position: sticky;
+    top: 20px;
+    background: var(--el-palette-bg);
+    border: 1px solid var(--el-palette-border);
+    border-radius: 8px;
+    padding: 6px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    z-index: 10;
+}
+
+.palette-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: var(--exam-text-color);
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.15s;
+    position: relative;
+}
+
+.palette-btn:hover {
+    background: var(--el-btn-hover);
+    color: var(--accent-cyan);
+    border-color: rgba(92, 225, 230, 0.35);
+    transform: scale(1.08);
+}
+
+.palette-btn.btn-active {
+    background: var(--el-btn-active);
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+}
+
+.palette-btn.del:hover {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.15);
+    border-color: #ef4444;
+}
+
+/* Tooltip on palette buttons */
+.palette-btn[data-tip]:hover:after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 42px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--el-popover-bg);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    border: 1px solid var(--el-popover-border);
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+}
+
+/* Canvas Viewport (Center Stage) */
+.mathcha-canvas-viewport {
+    flex: 1;
+    position: relative;
+    height: calc(100vh - 170px);
+    min-height: 640px;
+    background-color: var(--el-bg);
+    border: 1px solid var(--el-ribbon-border);
+    border-radius: 10px;
     overflow: auto;
     cursor: default;
     user-select: none;
@@ -289,64 +391,65 @@ body:not(.dark-mode) .split-pane {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 20px;
+    padding: 30px;
 }
 
-.canvas-viewport.grid-dots {
+.mathcha-canvas-viewport.grid-dots {
     background-image: radial-gradient(var(--el-dot-color) 1px, transparent 1px);
     background-size: 20px 20px;
 }
 
-.canvas-viewport.grid-lines {
+.mathcha-canvas-viewport.grid-lines {
     background-image: 
         linear-gradient(to right, var(--el-grid-color) 1px, transparent 1px),
         linear-gradient(to bottom, var(--el-grid-color) 1px, transparent 1px);
     background-size: 20px 20px;
 }
 
-.canvas-viewport.grid-none {
+.mathcha-canvas-viewport.grid-none {
     background-image: none;
 }
 
-/* 3 Canvas Formats */
+/* Artboard Sheet Container */
 .artboard {
     position: relative;
     transform-origin: 0 0;
     transition: width 0.2s, height 0.2s, box-shadow 0.2s;
 }
 
-/* 1. Free Canvas Mode */
+/* 1. Free-form Canvas Mode */
 .artboard.mode-canvas {
     width: 2600px;
     height: 1800px;
     background: transparent;
 }
 
-/* 2. A4 Paper Mode (210mm x 297mm -> 794px x 1123px) */
+/* 2. A4 Paper Mode (Document Centric) */
 .artboard.mode-a4 {
-    width: 794px;
-    min-height: 1123px;
-    height: 1123px;
+    width: 820px;
+    min-height: 1160px;
+    height: 1160px;
     background: var(--el-sheet-bg);
     border: 1px solid var(--el-sheet-border);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--el-sheet-shadow);
     border-radius: 4px;
-    margin: 10px auto;
+    margin: 10px auto 40px;
+    padding: 20px;
 }
 
-/* 3. Beamer Slide Mode (16:9 -> 960px x 540px) */
+/* 3. Beamer Slide Mode (16:9 Presentation) */
 .artboard.mode-beamer {
     width: 960px;
     height: 540px;
     background: var(--el-sheet-bg);
     border: 2px solid var(--accent-cyan);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
+    box-shadow: var(--el-sheet-shadow);
     border-radius: 8px;
-    margin: 20px auto;
+    margin: 20px auto 40px;
+    padding: 16px;
 }
 
-/* Sheet watermark / header tag */
-.sheet-watermark {
+.sheet-badge {
     position: absolute;
     top: 8px;
     right: 12px;
@@ -359,113 +462,95 @@ body:not(.dark-mode) .split-pane {
     text-transform: uppercase;
 }
 
-/* Empty hint */
 .canvas-empty-hint {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     color: var(--exam-text-color);
-    opacity: 0.45;
+    opacity: 0.4;
     pointer-events: none;
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     font-family: 'JetBrains Mono', monospace;
+    line-height: 1.6;
 }
 
-/* === Movable Blocks === */
+/* ============================================================
+   3. MOVABLE BLOCKS (Minimalist, No Clunky Headers)
+   ============================================================ */
 .movable-block {
     position: absolute;
     background: var(--el-block-bg);
     border: 1px solid var(--el-block-border);
     border-radius: 6px;
-    box-shadow: var(--el-block-shadow);
-    min-width: 100px;
-    min-height: 48px;
+    min-width: 90px;
+    min-height: 42px;
     display: flex;
     flex-direction: column;
     user-select: text;
-    transition: box-shadow 0.2s, border-color 0.2s;
+    transition: box-shadow 0.15s, border-color 0.15s;
     touch-action: none;
 }
 
+.movable-block:hover {
+    border-color: var(--el-block-hover-border);
+}
+
 .movable-block.selected {
-    border-color: var(--el-block-active-border);
-    box-shadow: var(--el-block-active-shadow);
+    border-color: var(--el-block-selected-border) !important;
+    box-shadow: var(--el-block-selected-shadow);
     z-index: 50 !important;
 }
 
-.block-header {
-    height: 22px;
-    background: rgba(92, 225, 230, 0.05);
-    border-bottom: 1px solid rgba(92, 225, 230, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 6px;
-    border-radius: 6px 6px 0 0;
-    cursor: grab;
-    user-select: none;
-}
-
-.movable-block:active .block-header {
-    cursor: grabbing;
-}
-
-.block-title-tag {
-    font-size: 0.65rem;
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--accent-cyan);
-    display: flex;
+/* Floating mini action handle on top of block */
+.block-handle-bar {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    height: 18px;
+    background: var(--el-popover-bg);
+    border: 1px solid var(--el-popover-border);
+    border-radius: 4px;
+    display: none;
     align-items: center;
     gap: 4px;
+    padding: 0 4px;
+    cursor: grab;
+    user-select: none;
+    z-index: 60;
 }
 
-.block-actions {
+.movable-block:hover .block-handle-bar,
+.movable-block.selected .block-handle-bar {
     display: flex;
-    align-items: center;
-    gap: 3px;
-    opacity: 0;
-    transition: opacity 0.15s;
 }
 
-.movable-block:hover .block-actions,
-.movable-block.selected .block-actions {
-    opacity: 1;
+.block-handle-drag {
+    font-size: 0.7rem;
+    opacity: 0.6;
+    color: var(--accent-cyan);
 }
 
-.block-action-btn {
+.block-btn-mini {
     background: transparent;
     border: none;
     color: var(--exam-text-color);
     cursor: pointer;
-    width: 16px;
-    height: 16px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px;
-    padding: 0;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
+    padding: 0 2px;
+    line-height: 1;
 }
 
-.block-action-btn:hover {
-    color: var(--accent-cyan);
-    background: rgba(92, 225, 230, 0.15);
-}
-
-.block-action-btn.del-btn:hover {
-    color: #ef4444;
-    background: rgba(239, 68, 68, 0.15);
-}
+.block-btn-mini:hover { color: var(--accent-cyan); }
+.block-btn-mini.del:hover { color: #ef4444; }
 
 .block-body {
-    padding: 6px 10px;
+    padding: 4px 8px;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative;
 }
 
 math-field {
@@ -475,7 +560,7 @@ math-field {
     color: var(--exam-text-color);
     background: transparent !important;
     width: 100%;
-    min-height: 34px;
+    min-height: 32px;
     padding: 2px;
     --caret-color: var(--accent-cyan);
     --selection-background-color: rgba(92,225,230,0.2);
@@ -494,7 +579,7 @@ math-field {
 .text-editor-area:empty:before {
     content: attr(placeholder);
     color: var(--exam-text-color);
-    opacity: 0.45;
+    opacity: 0.35;
     pointer-events: none;
 }
 
@@ -521,21 +606,22 @@ math-field {
     opacity: 0.8;
 }
 
-/* === Floating Bubble Selection Popover (Mathcha Style) === */
+/* ============================================================
+   4. FLOATING SELECTION BUBBLE (On Highlight Text)
+   ============================================================ */
 .floating-bubble-toolbar {
     position: fixed;
     z-index: 99999;
-    background: var(--el-bubble-bg);
-    border: 1px solid var(--el-bubble-border);
-    border-radius: 8px;
-    padding: 4px 8px;
+    background: var(--el-popover-bg);
+    border: 1px solid var(--el-popover-border);
+    border-radius: 6px;
+    padding: 3px 6px;
     display: none;
     align-items: center;
     gap: 4px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     transform: translateX(-50%);
     animation: bubbleFadeIn 0.15s ease-out;
-    pointer-events: auto;
 }
 
 .floating-bubble-toolbar.active {
@@ -550,9 +636,9 @@ math-field {
 .bubble-btn {
     background: transparent;
     border: none;
-    color: var(--el-bubble-text);
-    padding: 4px 7px;
-    border-radius: 4px;
+    color: var(--el-popover-text);
+    padding: 4px 6px;
+    border-radius: 3px;
     cursor: pointer;
     font-size: 0.82rem;
     font-weight: 500;
@@ -560,12 +646,12 @@ math-field {
     align-items: center;
     justify-content: center;
     transition: background 0.15s, color 0.15s;
-    height: 26px;
-    min-width: 26px;
+    height: 24px;
+    min-width: 24px;
 }
 
 .bubble-btn:hover {
-    background: var(--el-bubble-btn-hover);
+    background: var(--el-btn-hover);
     color: var(--accent-cyan);
 }
 
@@ -580,12 +666,12 @@ math-field {
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 0 4px;
+    padding: 0 2px;
 }
 
 .color-dot {
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
     cursor: pointer;
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -596,100 +682,131 @@ math-field {
     transform: scale(1.3);
 }
 
-/* === Right Pane: Compiler & Live Render === */
-.compiler-viewport {
-    display: flex;
-    flex-direction: column;
-    height: 680px;
-    box-sizing: border-box;
+/* ============================================================
+   5. SLIDE-UP EXPORT DRAWER (Modern Bottom Sheet)
+   ============================================================ */
+.export-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 100000;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
 }
 
-.compiler-sub-header {
+.export-drawer-overlay.active {
+    display: flex;
+}
+
+.export-drawer-sheet {
+    background: var(--el-sheet-bg);
+    border: 1px solid var(--el-sheet-border);
+    border-radius: 14px 14px 0 0;
+    width: 100%;
+    max-width: 980px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
+    animation: drawerUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes drawerUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+.drawer-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 12px;
-    background: rgba(0, 0, 0, 0.15);
-    border-bottom: 1px solid rgba(92, 225, 230, 0.1);
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--el-ribbon-border);
 }
 
-.compiler-tabs {
-    display: inline-flex;
-    background: rgba(92,225,230,0.06);
-    border: 1px solid rgba(92,225,230,0.18);
-    border-radius: 5px;
-    padding: 2px;
-}
-
-.compiler-tab-btn {
-    border: none;
-    background: transparent;
-    color: var(--exam-text-color);
+.drawer-title {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem;
-    padding: 3px 8px;
-    border-radius: 3px;
-    cursor: pointer;
-    opacity: 0.7;
-}
-
-.compiler-tab-btn.active {
-    background: rgba(92,225,230,0.22);
-    color: var(--accent-cyan);
+    font-size: 0.88rem;
     font-weight: 600;
-    opacity: 1;
-}
-
-/* Split between Live Render and Raw LaTeX Code in Right Pane */
-.compiler-body {
-    flex: 1;
+    color: var(--accent-cyan);
     display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    align-items: center;
+    gap: 8px;
 }
 
-.live-render-box {
-    flex: 1;
-    min-height: 240px;
-    padding: 16px;
-    overflow-y: auto;
-    background: rgba(255,255,255,0.015);
-    border-bottom: 1px solid rgba(92,225,230,0.1);
+.drawer-close-btn {
+    background: transparent;
+    border: none;
     color: var(--exam-text-color);
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 1.3rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.6;
 }
+.drawer-close-btn:hover { opacity: 1; color: var(--accent-cyan); }
 
-body:not(.dark-mode) .live-render-box {
-    background: #fbfcfe;
-}
-
-.raw-code-box {
-    height: 260px;
+.drawer-body {
+    padding: 16px 18px;
     display: flex;
     flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+}
+
+.drawer-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.drawer-action-btn {
+    background: rgba(92, 225, 230, 0.1);
+    border: 1px solid rgba(92, 225, 230, 0.25);
+    border-radius: 5px;
+    padding: 6px 12px;
+    color: var(--accent-cyan);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.drawer-action-btn:hover {
+    background: rgba(92, 225, 230, 0.22);
+    border-color: var(--accent-cyan);
+}
+
+.drawer-action-btn.btn-primary {
+    background: var(--accent-cyan);
+    color: #0b1111;
 }
 
 #latex-output {
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    border: none;
+    height: 240px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--el-ribbon-border);
+    border-radius: 8px;
     padding: 12px;
     color: var(--exam-text-color);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
+    font-size: 0.84rem;
     line-height: 1.5;
-    resize: none;
+    resize: vertical;
     outline: none;
     box-sizing: border-box;
 }
 
 body:not(.dark-mode) #latex-output {
-    background: #f1f5f9;
+    background: #f8fafc;
 }
 
-/* Toast Message */
+/* Toast */
 .el-toast {
     position: fixed;
     bottom: 24px;
@@ -705,7 +822,7 @@ body:not(.dark-mode) #latex-output {
     opacity: 0;
     pointer-events: none;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 100000;
+    z-index: 1000000;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -720,17 +837,10 @@ body:not(.dark-mode) #latex-output {
 /* Zen Mode */
 body.zen-mode #sidebar-placeholder,
 body.zen-mode #topbar-placeholder,
-body.zen-mode .exam-meta,
-body.zen-mode .exam-back-btn,
-body.zen-mode .latex-hero {
+body.zen-mode .top-nav-bar {
     display: none !important;
 }
 
-body.zen-mode .main-wrapper {
-    padding: 0 10px;
-}
-
-body.zen-mode .canvas-viewport,
-body.zen-mode .compiler-viewport {
+body.zen-mode .mathcha-canvas-viewport {
     height: calc(100vh - 80px) !important;
 }

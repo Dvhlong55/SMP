@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="SMP">
     <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
-    <title>SMP — Extra LaTeX: Soạn Thảo & Định Vị Tự Do</title>
+    <title>SMP — Extra LaTeX: Soạn Thảo &amp; Định Vị Tự Do</title>
 
     <!-- MathLive for visual equation editing -->
     <script src="https://unpkg.com/mathlive"></script>
@@ -37,8 +37,8 @@
 
     <!-- Shared SMP Styles -->
     <link class="theme-link" rel="stylesheet" href="/core/css/shared.css?v=38">
-    <!-- Extra LaTeX Custom Styles -->
-    <link rel="stylesheet" href="/tools/extra-latex/extra-latex.css?v=3">
+    <!-- Extra LaTeX Modern Mathcha Styles -->
+    <link rel="stylesheet" href="/tools/extra-latex/extra-latex.css?v=4">
     <link rel="icon" type="image/png" href="/core/image/favicon.png">
 </head>
 <body>
@@ -49,109 +49,147 @@
 
         <main>
             <div class="main-content-layout">
-
                 <div class="main-articles-body">
 
-                    <a href="javascript:history.back()" class="exam-back-btn fade-up">&#8592; Quay Lại</a>
-
-                    <div class="exam-meta fade-up">
-                        <span class="exam-tag"><a href="/pages/toanhoc.html" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">MATH</a> &nbsp;&gt;&nbsp; <a href="/pages/toanhoc.html?filter=tools" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Công Cụ</a> &nbsp;&gt;&nbsp; Extra $\LaTeX$ Trực Quan</span>
-                    </div>
-
-                    <div class="latex-hero fade-up">
-                        <h1>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 8h10"/><path d="M7 12h4"/><path d="M7 16h10"/></svg>
-                            Extra $\LaTeX$ — Soạn Thảo &amp; Định Vị
-                        </h1>
-
-                        <!-- Mode Switcher: Bảng Vẽ | Giấy A4 | Slide Beamer -->
-                        <div class="mode-switch-group">
-                            <button type="button" class="mode-btn active" data-mode="canvas" onclick="setCanvasMode('canvas')" title="Bảng vẽ vô hạn tự do">Bảng Vẽ</button>
-                            <button type="button" class="mode-btn" data-mode="a4" onclick="setCanvasMode('a4')" title="Khổ giấy A4 (210 x 297 mm)">Giấy A4</button>
-                            <button type="button" class="mode-btn" data-mode="beamer" onclick="setCanvasMode('beamer')" title="Khổ Slide thuyết trình Beamer (16:9)">Slide Beamer</button>
+                    <!-- Top Navigation Bar -->
+                    <div class="top-nav-bar fade-up">
+                        <a href="javascript:history.back()" class="exam-back-btn">&#8592; Quay Lại</a>
+                        <div class="app-title-tag">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 8h10"/><path d="M7 12h4"/><path d="M7 16h10"/></svg>
+                            Extra $\LaTeX$ Editor
                         </div>
                     </div>
 
-                    <!-- Split View: Canvas on Left, Compiler & Output on Right -->
-                    <div class="extra-split-layout fade-up">
-
-                        <!-- Left Pane: Visual Canvas Editor -->
-                        <div class="split-pane">
-                            <div class="pane-header">
-                                <div class="pane-title">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-                                    BẢNG SOẠN THẢO
-                                </div>
-                                <div class="pane-actions">
-                                    <button type="button" class="pane-btn btn-highlight" onclick="addBlock('math')" title="Thêm công thức toán">+ Công Thức</button>
-                                    <button type="button" class="pane-btn" onclick="addBlock('text')" title="Thêm khối văn bản">+ Văn Bản</button>
-                                    <button type="button" class="pane-btn" onclick="addBlock('box')" title="Thêm khung ghi chú">+ Khung</button>
-                                    <select class="pane-select" onchange="setGridType(this.value)" title="Kiểu lưới nền">
-                                        <option value="dots">Lưới Chấm</option>
-                                        <option value="lines">Lưới Ô</option>
-                                        <option value="none">Không Lưới</option>
-                                    </select>
-                                    <select class="pane-select" onchange="setSnapGrid(this.value)" title="Hít lưới tự động">
-                                        <option value="10">Hít: 10px</option>
-                                        <option value="20">Hít: 20px</option>
-                                        <option value="0">Tắt hít</option>
-                                    </select>
-                                    <button type="button" class="pane-btn" onclick="undo()" title="Hoàn tác (Ctrl+Z)">↶</button>
-                                    <button type="button" class="pane-btn" onclick="redo()" title="Làm lại (Ctrl+Y)">↷</button>
-                                    <button type="button" class="pane-btn" onclick="window.open('/tools/latex-ocr/index.html', '_blank')" title="Quét công thức từ ảnh (OCR)">📷 OCR</button>
-                                    <button type="button" class="pane-btn" onclick="toggleZenMode()" title="Toàn màn hình">⛶ Zen</button>
-                                    <button type="button" class="pane-btn danger" onclick="clearCanvas()" title="Xóa toàn bộ">Xóa</button>
-                                </div>
-                            </div>
-
-                            <!-- Canvas Viewport -->
-                            <div class="canvas-viewport grid-dots" id="canvas-viewport">
-                                <div class="artboard mode-canvas" id="artboard">
-                                    <div class="sheet-watermark" id="sheet-watermark" style="display:none;"></div>
-                                    <!-- Movable blocks injected by JS -->
-                                </div>
+                    <!-- 1. TOP HORIZONTAL RIBBON TOOLBAR (Mathcha Style) -->
+                    <div class="mathcha-top-ribbon fade-up">
+                        
+                        <!-- Mode Tabs: Bảng Vẽ | A4 | Beamer -->
+                        <div class="ribbon-section">
+                            <div class="mode-tabs">
+                                <button type="button" class="mode-tab-btn" data-mode="canvas" onclick="setCanvasMode('canvas')" title="Bảng vẽ vô hạn">Bảng Vẽ</button>
+                                <button type="button" class="mode-tab-btn active" data-mode="a4" onclick="setCanvasMode('a4')" title="Khổ giấy A4 (210 x 297 mm)">Giấy A4</button>
+                                <button type="button" class="mode-tab-btn" data-mode="beamer" onclick="setCanvasMode('beamer')" title="Slide thuyết trình Beamer (16:9)">Slide Beamer</button>
                             </div>
                         </div>
 
-                        <!-- Right Pane: Realtime Compiler & Code Exporter -->
-                        <div class="split-pane">
-                            <div class="pane-header">
-                                <div class="pane-title">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                                    BIÊN DỊCH &amp; XUẤT BẢN
-                                </div>
-                                <div class="pane-actions">
-                                    <button type="button" class="pane-btn btn-highlight" onclick="copyForMathType()" title="Copy mã để biến thành đối tượng MathType trong Word (Alt + \)">
-                                        Copy MathType (Alt+\)
-                                    </button>
-                                    <button type="button" class="pane-btn" onclick="copyForWord()" title="Copy dán thẳng vào Word thành Equation">Copy Word</button>
-                                    <button type="button" class="pane-btn" onclick="copyCanvasAsImage()" title="Chụp ảnh PNG 300 DPI">Copy Ảnh</button>
-                                    <button type="button" class="pane-btn" onclick="copyLatexCode()" title="Copy mã nguồn LaTeX">Copy LaTeX</button>
-                                    <button type="button" class="pane-btn" onclick="downloadTexFile()" title="Tải file .tex">Tải .tex</button>
-                                    <button type="button" class="pane-btn" onclick="printCanvas()" title="In">In</button>
-                                </div>
+                        <div class="ribbon-divider"></div>
+
+                        <!-- Alignment Group -->
+                        <div class="ribbon-section">
+                            <button type="button" class="rb-btn" onclick="execFormat('justify-left')" title="Căn trái">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="6" x2="3" y2="6"/><line x1="15" y1="12" x2="3" y2="12"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
+                            </button>
+                            <button type="button" class="rb-btn" onclick="execFormat('justify-center')" title="Căn giữa">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="6" x2="3" y2="6"/><line x1="18" y1="12" x2="6" y2="12"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+                            </button>
+                            <button type="button" class="rb-btn" onclick="execFormat('justify-right')" title="Căn phải">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="12" x2="9" y2="12"/><line x1="21" y1="18" x2="7" y2="18"/></svg>
+                            </button>
+                        </div>
+
+                        <div class="ribbon-divider"></div>
+
+                        <!-- Font Size Selector -->
+                        <div class="ribbon-section">
+                            <select class="rb-select" onchange="execFormat('size', this.value)" title="Cỡ chữ">
+                                <option value="0.82rem">Nhỏ (small)</option>
+                                <option value="0.95rem" selected>Vừa (normalsize)</option>
+                                <option value="1.25rem">Lớn (large)</option>
+                                <option value="1.6rem">Rất lớn (Huge)</option>
+                            </select>
+                        </div>
+
+                        <div class="ribbon-divider"></div>
+
+                        <!-- Text Formatting Group: B, I, U, S -->
+                        <div class="ribbon-section">
+                            <button type="button" class="rb-btn" onclick="execFormat('bold')" title="In đậm (\textbf) [Ctrl+B]"><b>B</b></button>
+                            <button type="button" class="rb-btn" onclick="execFormat('italic')" title="In nghiêng (\textit) [Ctrl+I]"><i>I</i></button>
+                            <button type="button" class="rb-btn" onclick="execFormat('underline')" title="Gạch chân (\underline) [Ctrl+U]"><u>U</u></button>
+                            <button type="button" class="rb-btn" onclick="execFormat('strike')" title="Gạch ngang (\sout)"><s>S</s></button>
+                            
+                            <!-- Color Picker Tool with color bar -->
+                            <div class="color-tool-wrap">
+                                <button type="button" class="color-indicator-btn" onclick="execFormat('color', '#5ce1e6')" title="Màu chữ (\textcolor)">
+                                    <span style="font-weight:700; font-size:0.85rem;">A</span>
+                                    <span class="color-bar" id="active-color-bar"></span>
+                                </button>
+                                <select class="rb-select" style="padding:0; width:14px; border:none; opacity:0; position:absolute; inset:0; cursor:pointer;" onchange="execFormat('color', this.value)">
+                                    <option value="#5ce1e6">Xanh Cyan</option>
+                                    <option value="#c9a96e">Vàng Gold</option>
+                                    <option value="#ef4444">Đỏ</option>
+                                    <option value="#22c55e">Xanh Lá</option>
+                                    <option value="#3b82f6">Xanh Dương</option>
+                                    <option value="#a855f7">Tím</option>
+                                    <option value="#ffffff">Trắng / Mặc định</option>
+                                </select>
                             </div>
+                        </div>
 
-                            <div class="compiler-viewport">
-                                <!-- Sub Header with Tabs -->
-                                <div class="compiler-sub-header">
-                                    <span style="font-family:'JetBrains Mono', monospace; font-size:0.7rem; color:var(--accent-cyan); text-transform:uppercase;">Chế Độ Xuất:</span>
-                                    <div class="compiler-tabs">
-                                        <button type="button" class="compiler-tab-btn active" data-tab="tikz" onclick="setExportTab('tikz')">TikZ Tọa Độ</button>
-                                        <button type="button" class="compiler-tab-btn" data-tab="flow" onclick="setExportTab('flow')">LaTeX Tài Liệu</button>
-                                        <button type="button" class="compiler-tab-btn" data-tab="math" onclick="setExportTab('math')">Chỉ Công Thức</button>
-                                    </div>
-                                </div>
+                        <div class="ribbon-divider"></div>
 
-                                <!-- Compiler Body: Realtime Visual Preview on Top, Raw LaTeX Code below -->
-                                <div class="compiler-body">
-                                    <div class="live-render-box" id="live-render-box">
-                                        <span style="opacity:0.4; font-style:italic;">Kết quả biên dịch realtime sẽ hiển thị tại đây...</span>
-                                    </div>
-                                    <div class="raw-code-box">
-                                        <textarea id="latex-output" readonly spellcheck="false" placeholder="Mã LaTeX tương ứng..."></textarea>
-                                    </div>
-                                </div>
+                        <!-- Math & Grid Utilities -->
+                        <div class="ribbon-section">
+                            <button type="button" class="rb-btn" onclick="execFormat('math-inline')" title="Đổi thành công thức toán $...$">&#8721;</button>
+                            
+                            <select class="rb-select" onchange="setGridType(this.value)" title="Lưới nền">
+                                <option value="dots">Lưới Chấm</option>
+                                <option value="lines">Lưới Kẻ Ô</option>
+                                <option value="none">Không Lưới</option>
+                            </select>
+
+                            <select class="rb-select" onchange="setSnapGrid(this.value)" title="Hít lưới">
+                                <option value="10">Hít: 10px</option>
+                                <option value="20">Hít: 20px</option>
+                                <option value="0">Tắt hít</option>
+                            </select>
+                        </div>
+
+                        <div class="ribbon-divider"></div>
+
+                        <!-- History & Zen -->
+                        <div class="ribbon-section">
+                            <button type="button" class="rb-btn" onclick="undo()" title="Hoàn tác (Ctrl+Z)">↶</button>
+                            <button type="button" class="rb-btn" onclick="redo()" title="Làm lại (Ctrl+Y)">↷</button>
+                            <button type="button" class="rb-btn" onclick="window.open('/tools/latex-ocr/index.html', '_blank')" title="Quét công thức từ ảnh (OCR)">📷</button>
+                            <button type="button" class="rb-btn" onclick="toggleZenMode()" title="Toàn màn hình">⛶</button>
+                        </div>
+
+                        <!-- Right CTA: Export Button -->
+                        <div class="ribbon-section" style="margin-left: auto;">
+                            <button type="button" class="export-cta-btn" onclick="openExportDrawer()" title="Mở bảng xuất mã LaTeX, Word, MathType">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                Xuất Bản ▾
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- 2. MAIN WORKSPACE: LEFT FLOATING PALETTE + CENTER DOCUMENT CANVAS -->
+                    <div class="mathcha-workspace-layout fade-up">
+                        
+                        <!-- Left Floating Tool Palette (Mathcha Vertical Strip) -->
+                        <div class="mathcha-left-palette">
+                            <button type="button" class="palette-btn" onclick="addBlock('text')" data-tip="Thêm Văn Bản">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+                            </button>
+                            <button type="button" class="palette-btn" onclick="addBlock('math')" data-tip="Thêm Công Thức (∑)">
+                                <span style="font-weight:700; font-size:1.15rem; font-family:'JetBrains Mono', monospace;">∑</span>
+                            </button>
+                            <button type="button" class="palette-btn" onclick="addBlock('box')" data-tip="Thêm Khung / Hộp Ghi Chú">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" stroke-dasharray="3 3"/></svg>
+                            </button>
+                            <div style="height:1px; background:rgba(92,225,230,0.15); margin:2px 0;"></div>
+                            <button type="button" class="palette-btn del" onclick="clearCanvas()" data-tip="Xóa Toàn Bộ">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- Canvas Viewport (The Document Center Stage) -->
+                        <div class="mathcha-canvas-viewport grid-dots" id="canvas-viewport">
+                            <div class="artboard mode-a4" id="artboard">
+                                <div class="sheet-badge" id="sheet-badge">Khổ Giấy A4 (210 × 297 mm)</div>
+                                <!-- Movable blocks injected by JS -->
                             </div>
                         </div>
 
@@ -160,6 +198,41 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- 3. SLIDE-UP EXPORT DRAWER (Modern Bottom Sheet) -->
+    <div class="export-drawer-overlay" id="export-drawer-overlay" onclick="if(event.target === this) closeExportDrawer();">
+        <div class="export-drawer-sheet">
+            <div class="drawer-header">
+                <div class="drawer-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    XUẤT BẢN &amp; BIÊN DỊCH MÃ
+                </div>
+                <button type="button" class="drawer-close-btn" onclick="closeExportDrawer()" title="Đóng">&times;</button>
+            </div>
+            <div class="drawer-body">
+                <div class="drawer-action-row">
+                    <!-- Mode Tabs -->
+                    <div class="mode-tabs">
+                        <button type="button" class="mode-tab-btn drawer-tab-btn active" data-tab="tikz" onclick="setExportTab('tikz')">TikZ Tọa Độ</button>
+                        <button type="button" class="mode-tab-btn drawer-tab-btn" data-tab="flow" onclick="setExportTab('flow')">LaTeX Tài Liệu</button>
+                        <button type="button" class="mode-tab-btn drawer-tab-btn" data-tab="math" onclick="setExportTab('math')">Chỉ Công Thức</button>
+                    </div>
+
+                    <!-- Action buttons -->
+                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                        <button type="button" class="drawer-action-btn btn-primary" onclick="copyForMathType()" title="Dán vào Word rồi ấn Alt + \">Copy MathType (Alt+\)</button>
+                        <button type="button" class="drawer-action-btn" onclick="copyForWord()" title="Dán trực tiếp thành Word Equation">Copy Word</button>
+                        <button type="button" class="drawer-action-btn" onclick="copyCanvasAsImage()" title="Xuất ảnh PNG 300 DPI">Copy Ảnh (PNG)</button>
+                        <button type="button" class="drawer-action-btn" onclick="copyLatexCode()" title="Copy mã nguồn LaTeX">Copy LaTeX</button>
+                        <button type="button" class="drawer-action-btn" onclick="downloadTexFile()" title="Tải file .tex">Tải .tex</button>
+                        <button type="button" class="drawer-action-btn" onclick="printCanvas()" title="In ấn">In</button>
+                    </div>
+                </div>
+
+                <textarea id="latex-output" readonly spellcheck="false" placeholder="Mã LaTeX tương ứng..."></textarea>
+            </div>
+        </div>
     </div>
 
     <!-- Floating Bubble Formatting Toolbar (Mathcha Style Selection Popover) -->
@@ -191,6 +264,6 @@
     <script src="/core/js/sidebar-data.js"></script>
     <script src="/core/js/layout.js"></script>
     <!-- Extra LaTeX Main Script -->
-    <script src="/tools/extra-latex/extra-latex.js?v=3"></script>
+    <script src="/tools/extra-latex/extra-latex.js?v=4"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 /**
- * SMP EXTRA LATEX — Free-form Positioning & WYSIWYG Math Editor
- * Clean Split-View: Left Canvas (3 Modes: Canvas, A4, Beamer) | Right Compiler & Live Render
+ * SMP EXTRA LATEX — Modern Mathcha-Style Architecture
+ * Features: Top Ribbon + Left Floating Tool Palette + Document-Centric Canvas (3 Modes) + Slide-Up Export Drawer
  */
 
 (function () {
@@ -10,10 +10,10 @@
     const state = {
         blocks: [],
         selectedBlockId: null,
-        canvasMode: 'canvas',    // 'canvas' | 'a4' | 'beamer'
-        activeExportTab: 'tikz', // 'tikz' | 'flow' | 'math'
-        gridType: 'dots',        // 'dots' | 'lines' | 'none'
-        snapGrid: 10,            // 0, 10, 20
+        canvasMode: 'a4',       // 'canvas' | 'a4' | 'beamer' (Default to A4 for clean document view)
+        activeExportTab: 'tikz',// 'tikz' | 'flow' | 'math'
+        gridType: 'dots',       // 'dots' | 'lines' | 'none'
+        snapGrid: 10,           // 0, 10, 20
         history: [],
         historyIndex: -1,
         isDragging: false,
@@ -25,21 +25,22 @@
     };
 
     // DOM Elements Cache
-    let viewport, artboard, bubbleToolbar, latexOutput, liveRenderBox, toastEl, watermarkEl;
+    let viewport, artboard, bubbleToolbar, exportOverlay, latexOutput, toastEl, sheetBadge;
 
     // === Initialization ===
     window.addEventListener('DOMContentLoaded', () => {
         viewport = document.getElementById('canvas-viewport');
         artboard = document.getElementById('artboard');
         bubbleToolbar = document.getElementById('floating-bubble');
+        exportOverlay = document.getElementById('export-drawer-overlay');
         latexOutput = document.getElementById('latex-output');
-        liveRenderBox = document.getElementById('live-render-box');
         toastEl = document.getElementById('el-toast');
-        watermarkEl = document.getElementById('sheet-watermark');
+        sheetBadge = document.getElementById('sheet-badge');
 
         initViewportEvents();
         initBubbleToolbar();
         loadSavedState();
+        setCanvasMode(state.canvasMode);
         renderAllBlocks();
         saveHistoryState();
         updateLatexCode();
@@ -53,20 +54,20 @@
         state.canvasMode = mode;
         artboard.className = `artboard mode-${mode}`;
 
-        document.querySelectorAll('.mode-btn').forEach(btn => {
+        document.querySelectorAll('.mode-tab-btn').forEach(btn => {
             btn.classList.toggle('active', btn.getAttribute('data-mode') === mode);
         });
 
-        if (watermarkEl) {
+        if (sheetBadge) {
             if (mode === 'a4') {
-                watermarkEl.textContent = 'Khổ Giấy A4 (210 × 297 mm)';
-                watermarkEl.style.display = 'block';
+                sheetBadge.textContent = 'Khổ Giấy A4 (210 × 297 mm)';
+                sheetBadge.style.display = 'block';
             } else if (mode === 'beamer') {
-                watermarkEl.textContent = 'Slide Beamer (16:9)';
-                watermarkEl.style.display = 'block';
+                sheetBadge.textContent = 'Slide Beamer (16:9)';
+                sheetBadge.style.display = 'block';
             } else {
-                watermarkEl.textContent = 'Bảng Vẽ Tự Do';
-                watermarkEl.style.display = 'none';
+                sheetBadge.textContent = 'Bảng Vẽ Tự Do';
+                sheetBadge.style.display = 'none';
             }
         }
 
@@ -77,18 +78,17 @@
 
     // === Block Creation & Rendering ===
     window.addBlock = function (type) {
-        // Find visible center in artboard
         let spawnX = 60;
         let spawnY = 60;
 
         if (state.canvasMode === 'a4') {
-            spawnX = 80;
-            spawnY = Math.max(80, (state.blocks.length * 80) + 60);
-            if (spawnY > 1000) spawnY = 80;
-        } else if (state.canvasMode === 'beamer') {
-            spawnX = 80;
+            spawnX = 70;
             spawnY = Math.max(60, (state.blocks.length * 75) + 60);
-            if (spawnY > 440) spawnY = 60;
+            if (spawnY > 1050) spawnY = 60;
+        } else if (state.canvasMode === 'beamer') {
+            spawnX = 70;
+            spawnY = Math.max(50, (state.blocks.length * 70) + 50);
+            if (spawnY > 460) spawnY = 50;
         } else {
             spawnX = viewport.scrollLeft + 80;
             spawnY = viewport.scrollTop + 60;
@@ -100,21 +100,21 @@
     function createBlock(type, x = 60, y = 60, content = '') {
         const id = 'block-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
         let defaultW = 280;
-        let defaultH = 55;
+        let defaultH = 50;
         let defaultContent = content;
 
         if (type === 'math') {
             defaultContent = content || 'x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}';
             defaultW = 320;
-            defaultH = 55;
+            defaultH = 50;
         } else if (type === 'text') {
             defaultContent = content || 'Gõ văn bản tại đây hoặc bôi đen để định dạng...';
             defaultW = 340;
-            defaultH = 55;
+            defaultH = 50;
         } else if (type === 'box') {
             defaultContent = content || 'Khung ghi chú / Chú thích';
             defaultW = 360;
-            defaultH = 120;
+            defaultH = 110;
         }
 
         const newBlock = {
@@ -138,10 +138,9 @@
     }
 
     function renderAllBlocks() {
-        // Keep watermark if exists
-        const wm = document.getElementById('sheet-watermark');
+        const badge = document.getElementById('sheet-badge');
         artboard.innerHTML = '';
-        if (wm) artboard.appendChild(wm);
+        if (badge) artboard.appendChild(badge);
 
         state.blocks.forEach(block => renderBlockDOM(block));
         checkEmptyHint();
@@ -161,26 +160,17 @@
             div.classList.add('selected');
         }
 
-        // Header
-        const header = document.createElement('div');
-        header.className = 'block-header';
+        // Mini Hover Handle Bar (Sleek Mathcha Style)
+        const handleBar = document.createElement('div');
+        handleBar.className = 'block-handle-bar';
         
-        let typeLabel = 'Toán';
-        let typeIcon = '∑';
-        if (block.type === 'text') { typeLabel = 'Văn bản'; typeIcon = 'T'; }
-        if (block.type === 'box') { typeLabel = 'Khung'; typeIcon = '▢'; }
-
-        header.innerHTML = `
-            <div class="block-title-tag">
-                <span style="opacity:0.6; cursor:grab;">⠿</span>
-                <span style="font-weight:600;">${typeIcon}</span> ${typeLabel}
-            </div>
-            <div class="block-actions">
-                <button class="block-action-btn" title="Nhân đôi (Duplicate)" data-action="duplicate">❐</button>
-                <button class="block-action-btn" title="Lên trên" data-action="layer-up">▲</button>
-                <button class="block-action-btn" title="Xuống dưới" data-action="layer-down">▼</button>
-                <button class="block-action-btn del-btn" title="Xóa" data-action="delete">✕</button>
-            </div>
+        let typeIcon = block.type === 'math' ? '∑' : (block.type === 'box' ? '▢' : 'T');
+        handleBar.innerHTML = `
+            <span class="block-handle-drag" title="Kéo để di chuyển">⠿ ${typeIcon}</span>
+            <button class="block-btn-mini" title="Nhân đôi" data-action="duplicate">❐</button>
+            <button class="block-btn-mini" title="Lên trên" data-action="layer-up">▲</button>
+            <button class="block-btn-mini" title="Xuống dưới" data-action="layer-down">▼</button>
+            <button class="block-btn-mini del" title="Xóa" data-action="delete">✕</button>
         `;
 
         // Body
@@ -216,7 +206,7 @@
         const resize = document.createElement('div');
         resize.className = 'resize-handle';
 
-        div.appendChild(header);
+        div.appendChild(handleBar);
         div.appendChild(body);
         div.appendChild(resize);
 
@@ -227,13 +217,13 @@
 
     function setupBlockEvents(el, block) {
         el.addEventListener('pointerdown', (e) => {
-            if (e.target.closest('.block-action-btn')) return;
+            if (e.target.closest('.block-btn-mini')) return;
             selectBlock(block.id);
         });
 
-        const actions = el.querySelector('.block-actions');
-        actions.addEventListener('click', (e) => {
-            const btn = e.target.closest('.block-action-btn');
+        const handleBar = el.querySelector('.block-handle-bar');
+        handleBar.addEventListener('click', (e) => {
+            const btn = e.target.closest('.block-btn-mini');
             if (!btn) return;
             e.stopPropagation();
             const act = btn.getAttribute('data-action');
@@ -252,13 +242,14 @@
             }
         });
 
-        const header = el.querySelector('.block-header');
-        header.addEventListener('pointerdown', (e) => {
-            if (e.target.closest('.block-action-btn')) return;
+        // Dragging by handle
+        handleBar.addEventListener('pointerdown', (e) => {
+            if (e.target.closest('.block-btn-mini')) return;
             e.preventDefault();
             startDragging(e, block, el);
         });
 
+        // Resizing
         const resizeHandle = el.querySelector('.resize-handle');
         resizeHandle.addEventListener('pointerdown', (e) => {
             e.preventDefault();
@@ -275,7 +266,6 @@
             x: e.clientX - block.x,
             y: e.clientY - block.y
         };
-        el.style.cursor = 'grabbing';
 
         function onPointerMove(moveEvent) {
             if (!state.isDragging) return;
@@ -296,7 +286,6 @@
 
         function onPointerUp() {
             state.isDragging = false;
-            el.style.cursor = '';
             window.removeEventListener('pointermove', onPointerMove);
             window.removeEventListener('pointerup', onPointerUp);
             saveHistoryState();
@@ -320,8 +309,8 @@
             const deltaX = moveEvent.clientX - state.initialSize.startX;
             const deltaY = moveEvent.clientY - state.initialSize.startY;
 
-            let nw = Math.max(100, state.initialSize.w + deltaX);
-            let nh = Math.max(45, state.initialSize.h + deltaY);
+            let nw = Math.max(90, state.initialSize.w + deltaX);
+            let nh = Math.max(40, state.initialSize.h + deltaY);
 
             nw = snap(nw);
             nh = snap(nh);
@@ -379,7 +368,7 @@
     function duplicateBlock(id) {
         const source = state.blocks.find(b => b.id === id);
         if (!source) return;
-        createBlock(source.type, source.x + 25, source.y + 25, source.content);
+        createBlock(source.type, source.x + 20, source.y + 20, source.content);
     }
 
     function checkEmptyHint() {
@@ -389,7 +378,7 @@
                 hint = document.createElement('div');
                 hint.id = 'canvas-empty-hint';
                 hint.className = 'canvas-empty-hint';
-                hint.innerHTML = `+ Nhấp đúp chuột hoặc bấm các nút ở trên để thêm công thức / văn bản`;
+                hint.innerHTML = `+ Nhấp đúp vào trang giấy hoặc chọn công cụ ở cột bên trái để soạn thảo`;
                 artboard.appendChild(hint);
             }
             hint.style.display = 'block';
@@ -398,25 +387,57 @@
         }
     }
 
-    // === Double Click to Add ===
+    // === Viewport Events ===
     function initViewportEvents() {
         viewport.addEventListener('dblclick', (e) => {
             if (e.target.closest('.movable-block')) return;
             const rect = artboard.getBoundingClientRect();
             const clickX = e.clientX - rect.left;
             const clickY = e.clientY - rect.top;
-            createBlock('math', clickX - 80, clickY - 25);
+            createBlock('math', clickX - 80, clickY - 20);
         });
 
         viewport.addEventListener('pointerdown', (e) => {
-            if (!e.target.closest('.movable-block') && !e.target.closest('#floating-bubble')) {
+            if (!e.target.closest('.movable-block') && !e.target.closest('#floating-bubble') && !e.target.closest('.mathcha-top-ribbon') && !e.target.closest('.mathcha-left-palette')) {
                 state.selectedBlockId = null;
                 document.querySelectorAll('.movable-block').forEach(el => el.classList.remove('selected'));
             }
         });
     }
 
-    // === Floating Selection Bubble Toolbar (Mathcha Style WYSIWYG) ===
+    // === Top Ribbon & Selection Formatting ===
+    window.execFormat = function (format, value = null) {
+        // If text is selected in an editable element, format the selection
+        const sel = window.getSelection();
+        if (sel && !sel.isCollapsed && sel.rangeCount > 0) {
+            applyFormatToSelection(format, value);
+            return;
+        }
+
+        // If a block is currently selected, apply block-level styling
+        if (state.selectedBlockId) {
+            const block = state.blocks.find(b => b.id === state.selectedBlockId);
+            if (!block) return;
+            const el = document.getElementById(block.id);
+            if (!el) return;
+
+            if (format === 'justify-left' || format === 'justify-center' || format === 'justify-right') {
+                const align = format.replace('justify-', '');
+                el.style.textAlign = align;
+                block.align = align;
+            } else if (format === 'size') {
+                const body = el.querySelector('.block-body');
+                if (body) body.style.fontSize = value;
+            } else if (format === 'color') {
+                el.style.color = value;
+                const bar = document.getElementById('active-color-bar');
+                if (bar) bar.style.backgroundColor = value;
+            }
+            saveHistoryState();
+            updateLatexCode();
+        }
+    };
+
     function initBubbleToolbar() {
         document.addEventListener('selectionchange', handleTextSelection);
 
@@ -465,19 +486,17 @@
         const rect = range.getBoundingClientRect();
 
         const posX = Math.max(160, Math.min(window.innerWidth - 160, rect.left + rect.width / 2));
-        const posY = Math.max(12, rect.top - 46);
+        const posY = Math.max(12, rect.top - 44);
         bubbleToolbar.style.left = `${posX}px`;
         bubbleToolbar.style.top = `${posY}px`;
         bubbleToolbar.classList.add('active');
     }
 
     function hideBubble() {
-        if (bubbleToolbar) {
-            bubbleToolbar.classList.remove('active');
-        }
+        if (bubbleToolbar) bubbleToolbar.classList.remove('active');
     }
 
-    function applyFormatToSelection(format) {
+    function applyFormatToSelection(format, value = null) {
         if (!state.savedSelectionRange) return;
 
         const sel = window.getSelection();
@@ -496,6 +515,9 @@
             wrapSelectionWith('$', '$');
         } else if (format === 'math-block') {
             wrapSelectionWith('$$', '$$');
+        } else if (format === 'color') {
+            applyColorToSelection(value);
+            return;
         }
 
         syncCurrentActiveBlockContent();
@@ -512,6 +534,9 @@
 
         document.execCommand('styleWithCSS', false, true);
         document.execCommand('foreColor', false, color);
+
+        const bar = document.getElementById('active-color-bar');
+        if (bar) bar.style.backgroundColor = color;
 
         syncCurrentActiveBlockContent();
         saveHistoryState();
@@ -545,7 +570,25 @@
         }
     }
 
-    // === LaTeX Code Generation & Live Render ===
+    // === Export Drawer Controls ===
+    window.openExportDrawer = function () {
+        updateLatexCode();
+        if (exportOverlay) exportOverlay.classList.add('active');
+    };
+
+    window.closeExportDrawer = function () {
+        if (exportOverlay) exportOverlay.classList.remove('active');
+    };
+
+    window.setExportTab = function (tab) {
+        state.activeExportTab = tab;
+        document.querySelectorAll('.drawer-tab-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-tab') === tab);
+        });
+        updateLatexCode();
+    };
+
+    // === LaTeX Code Generation ===
     function updateLatexCode() {
         if (!latexOutput) return;
 
@@ -556,44 +599,10 @@
         } else {
             latexOutput.value = generateMathOnlyCode();
         }
-
-        renderLivePreview();
-    }
-
-    function renderLivePreview() {
-        if (!liveRenderBox) return;
-
-        if (state.blocks.length === 0) {
-            liveRenderBox.innerHTML = '<span style="opacity:0.4; font-style:italic;">Kết quả biên dịch realtime sẽ hiển thị tại đây...</span>';
-            return;
-        }
-
-        // Render preview ordered top-down
-        const sorted = [...state.blocks].sort((a, b) => {
-            if (Math.abs(a.y - b.y) < 25) return a.x - b.x;
-            return a.y - b.y;
-        });
-
-        let html = '';
-        sorted.forEach(b => {
-            if (b.type === 'math') {
-                html += `<div style="margin: 12px 0; text-align: center;">\\[ ${b.content} \\]</div>`;
-            } else if (b.type === 'box') {
-                html += `<div style="border: 1px dashed var(--accent-cyan); padding: 8px 12px; margin: 8px 0; border-radius: 6px; background: rgba(92,225,230,0.05);">${b.content}</div>`;
-            } else {
-                html += `<div style="margin: 8px 0;">${b.content}</div>`;
-            }
-        });
-
-        liveRenderBox.innerHTML = html;
-
-        if (window.MathJax && MathJax.typesetPromise) {
-            MathJax.typesetPromise([liveRenderBox]).catch(() => {});
-        }
     }
 
     function generateTikzCode() {
-        if (state.blocks.length === 0) return '% Bảng vẽ đang trống. Bấm "+ Công Thức" để bắt đầu.';
+        if (state.blocks.length === 0) return '% Bảng vẽ đang trống.';
 
         let header = '';
         let footer = '';
@@ -692,29 +701,21 @@
         return s.trim();
     }
 
-    // === Global Action Handlers ===
+    // === View & Canvas Controls ===
     window.clearCanvas = function () {
         if (state.blocks.length === 0) return;
-        if (!confirm('Bạn có chắc chắn muốn xóa toàn bộ bảng vẽ không?')) return;
+        if (!confirm('Bạn có chắc chắn muốn xóa sạch toàn bộ bảng không?')) return;
         state.blocks = [];
         state.selectedBlockId = null;
         renderAllBlocks();
         saveHistoryState();
         updateLatexCode();
-        showToast('Đã dọn sạch bảng vẽ');
-    };
-
-    window.setExportTab = function (tab) {
-        state.activeExportTab = tab;
-        document.querySelectorAll('.compiler-tab-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.getAttribute('data-tab') === tab);
-        });
-        updateLatexCode();
+        showToast('Đã xóa sạch bảng vẽ');
     };
 
     window.setGridType = function (type) {
         state.gridType = type;
-        viewport.className = `canvas-viewport grid-${type}`;
+        viewport.className = `mathcha-canvas-viewport grid-${type}`;
         showToast('Lưới: ' + (type === 'dots' ? 'Chấm' : (type === 'lines' ? 'Kẻ ô' : 'Tắt')));
     };
 
@@ -726,10 +727,10 @@
     window.toggleZenMode = function () {
         document.body.classList.toggle('zen-mode');
         const isZen = document.body.classList.contains('zen-mode');
-        showToast(isZen ? 'Chế độ Zen (Toàn màn hình)' : 'Thoát Chế độ Zen');
+        showToast(isZen ? 'Chế độ Zen' : 'Thoát Zen');
     };
 
-    // === Clipboard & Export Engine ===
+    // === Export Actions ===
     window.copyLatexCode = function () {
         const text = latexOutput.value;
         if (!text) {
@@ -872,7 +873,7 @@
         }
 
         try {
-            localStorage.setItem('smp-extra-latex-clean-blocks', snapshot);
+            localStorage.setItem('smp-extra-latex-mathcha-blocks', snapshot);
         } catch (e) { }
     }
 
@@ -898,14 +899,13 @@
 
     function loadSavedState() {
         try {
-            const saved = localStorage.getItem('smp-extra-latex-clean-blocks');
+            const saved = localStorage.getItem('smp-extra-latex-mathcha-blocks');
             if (saved) {
                 state.blocks = JSON.parse(saved);
                 return;
             }
         } catch (e) { }
-        // Default is EMPTY as requested
-        state.blocks = [];
+        state.blocks = []; // Clean empty by default
     }
 
     // === Keyboard Shortcuts ===
@@ -978,7 +978,7 @@
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => {
             toastEl.classList.remove('show');
-        }, 2400);
+        }, 2200);
     }
 
 })();
