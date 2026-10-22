@@ -30,7 +30,7 @@
     let viewport, artboard, bubbleToolbar, exportOverlay, latexOutput, toastEl, sheetBadge;
 
     // === Initialization ===
-    window.addEventListener('DOMContentLoaded', () => {
+    function initApp() {
         viewport = document.getElementById('canvas-viewport');
         artboard = document.getElementById('artboard');
         bubbleToolbar = document.getElementById('floating-bubble');
@@ -50,10 +50,16 @@
 
         // Keyboard shortcuts
         document.addEventListener('keydown', handleGlobalKeydown);
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', initApp);
+    } else {
+        initApp();
+    }
 
     // === Multi-Page System ===
-    window.renderPageTabs = function () {
+    function renderPageTabs() {
         const container = document.getElementById('page-tabs-container');
         if (!container) return;
         container.innerHTML = '';
@@ -76,18 +82,20 @@
             const curIdx = state.pages.findIndex(p => p.id === state.currentPageId) + 1;
             indicator.textContent = `${Math.max(1, curIdx)} / ${state.pages.length}`;
         }
-    };
+    }
+    window.renderPageTabs = renderPageTabs;
 
-    window.addNewPage = function () {
+    function addNewPage() {
         const nextId = state.pages.reduce((max, p) => Math.max(max, p.id), 0) + 1;
         const newPage = { id: nextId, title: 'Trang ' + nextId };
         state.pages.push(newPage);
         switchPage(nextId);
         saveHistoryState();
         showToast('✓ Đã thêm ' + newPage.title);
-    };
+    }
+    window.addNewPage = addNewPage;
 
-    window.switchPage = function (pageId) {
+    function switchPage(pageId) {
         state.currentPageId = pageId;
         state.selectedBlockId = null;
         hideBubble();
@@ -96,9 +104,10 @@
         renderAllBlocks();
         updateLatexCode();
         if (viewport) viewport.scrollTop = 0;
-    };
+    }
+    window.switchPage = switchPage;
 
-    window.deleteCurrentPage = function () {
+    function deleteCurrentPage() {
         if (state.pages.length <= 1) return;
         if (!confirm('Xóa trang hiện tại cùng toàn bộ nội dung trong trang?')) return;
         const targetId = state.currentPageId;
@@ -110,20 +119,23 @@
         saveHistoryState();
         updateLatexCode();
         showToast('Đã xóa trang');
-    };
+    }
+    window.deleteCurrentPage = deleteCurrentPage;
 
-    window.prevPage = function () {
+    function prevPage() {
         const idx = state.pages.findIndex(p => p.id === state.currentPageId);
         if (idx > 0) switchPage(state.pages[idx - 1].id);
-    };
+    }
+    window.prevPage = prevPage;
 
-    window.nextPage = function () {
+    function nextPage() {
         const idx = state.pages.findIndex(p => p.id === state.currentPageId);
         if (idx < state.pages.length - 1) switchPage(state.pages[idx + 1].id);
-    };
+    }
+    window.nextPage = nextPage;
 
     // === Canvas Modes (Bảng vẽ, Giấy A4, Slide Beamer) ===
-    window.setCanvasMode = function (mode) {
+    function setCanvasMode(mode) {
         state.canvasMode = mode;
         artboard.className = `artboard mode-${mode}`;
 
@@ -137,10 +149,11 @@
         saveHistoryState();
         updateLatexCode();
         showToast('Chế độ: ' + (mode === 'a4' ? 'Giấy A4' : (mode === 'beamer' ? 'Slide Beamer' : 'Bảng Vẽ')));
-    };
+    }
+    window.setCanvasMode = setCanvasMode;
 
     // === Block Creation & Rendering ===
-    window.addBlock = function (type) {
+    function addBlock(type) {
         let spawnX = 60;
         let spawnY = 60;
         const curPageBlocks = state.blocks.filter(b => (b.pageId || 1) === state.currentPageId);
@@ -160,7 +173,8 @@
         }
 
         createBlock(type, spawnX, spawnY);
-    };
+    }
+    window.addBlock = addBlock;
 
     function createBlock(type, x = 60, y = 60, content = '') {
         const id = 'block-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
@@ -355,7 +369,6 @@
                     }
                 }
             }
-        });
         });
 
         // Dragging by handle
