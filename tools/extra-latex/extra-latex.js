@@ -1,6 +1,6 @@
 /**
  * SMP EXTRA LATEX — Free-form Positioning & WYSIWYG Math Editor
- * Architecture: Canvas Artboard + Draggable Blocks + Floating Selection Bubble + Dual LaTeX Exporter
+ * Clean Split-View: Left Canvas (3 Modes: Canvas, A4, Beamer) | Right Compiler & Live Render
  */
 
 (function () {
@@ -10,10 +10,10 @@
     const state = {
         blocks: [],
         selectedBlockId: null,
+        canvasMode: 'canvas',    // 'canvas' | 'a4' | 'beamer'
         activeExportTab: 'tikz', // 'tikz' | 'flow' | 'math'
         gridType: 'dots',        // 'dots' | 'lines' | 'none'
         snapGrid: 10,            // 0, 10, 20
-        zoom: 1,
         history: [],
         historyIndex: -1,
         isDragging: false,
@@ -25,61 +25,7 @@
     };
 
     // DOM Elements Cache
-    let viewport, artboard, bubbleToolbar, latexOutput, toastEl, snippetContainer;
-
-    // Default sample content on first load
-    const DEFAULT_BLOCKS = [
-        {
-            id: 'b-1',
-            type: 'text',
-            x: 80,
-            y: 50,
-            w: 420,
-            h: 70,
-            content: '<strong>Định lý Fermat nhỏ:</strong> Cho $p$ là số nguyên tố và $a \\in \\mathbb{Z}$ không chia hết cho $p$, khi đó:',
-            zIndex: 1
-        },
-        {
-            id: 'b-2',
-            type: 'math',
-            x: 120,
-            y: 140,
-            w: 320,
-            h: 60,
-            content: 'a^{p-1} \\equiv 1 \\pmod{p}',
-            zIndex: 2
-        },
-        {
-            id: 'b-3',
-            type: 'box',
-            x: 60,
-            y: 35,
-            w: 480,
-            h: 190,
-            content: 'Ghi chú quan trọng',
-            zIndex: 0
-        },
-        {
-            id: 'b-4',
-            type: 'text',
-            x: 80,
-            y: 250,
-            w: 460,
-            h: 60,
-            content: 'Hệ quả trực tiếp với mọi số nguyên $a$ bất kỳ:',
-            zIndex: 3
-        },
-        {
-            id: 'b-5',
-            type: 'math',
-            x: 140,
-            y: 320,
-            w: 300,
-            h: 60,
-            content: 'a^p \\equiv a \\pmod{p}',
-            zIndex: 4
-        }
-    ];
+    let viewport, artboard, bubbleToolbar, latexOutput, liveRenderBox, toastEl, watermarkEl;
 
     // === Initialization ===
     window.addEventListener('DOMContentLoaded', () => {
@@ -87,12 +33,12 @@
         artboard = document.getElementById('artboard');
         bubbleToolbar = document.getElementById('floating-bubble');
         latexOutput = document.getElementById('latex-output');
+        liveRenderBox = document.getElementById('live-render-box');
         toastEl = document.getElementById('el-toast');
-        snippetContainer = document.getElementById('snippet-container');
+        watermarkEl = document.getElementById('sheet-watermark');
 
         initViewportEvents();
         initBubbleToolbar();
-        initSnippets();
         loadSavedState();
         renderAllBlocks();
         saveHistoryState();
@@ -102,25 +48,73 @@
         document.addEventListener('keydown', handleGlobalKeydown);
     });
 
+    // === Canvas Modes (Bảng vẽ, Giấy A4, Slide Beamer) ===
+    window.setCanvasMode = function (mode) {
+        state.canvasMode = mode;
+        artboard.className = `artboard mode-${mode}`;
+
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-mode') === mode);
+        });
+
+        if (watermarkEl) {
+            if (mode === 'a4') {
+                watermarkEl.textContent = 'Khổ Giấy A4 (210 × 297 mm)';
+                watermarkEl.style.display = 'block';
+            } else if (mode === 'beamer') {
+                watermarkEl.textContent = 'Slide Beamer (16:9)';
+                watermarkEl.style.display = 'block';
+            } else {
+                watermarkEl.textContent = 'Bảng Vẽ Tự Do';
+                watermarkEl.style.display = 'none';
+            }
+        }
+
+        saveHistoryState();
+        updateLatexCode();
+        showToast('Chế độ: ' + (mode === 'a4' ? 'Giấy A4' : (mode === 'beamer' ? 'Slide Beamer' : 'Bảng Vẽ')));
+    };
+
     // === Block Creation & Rendering ===
-    function createBlock(type, x = 100, y = 100, content = '') {
+    window.addBlock = function (type) {
+        // Find visible center in artboard
+        let spawnX = 60;
+        let spawnY = 60;
+
+        if (state.canvasMode === 'a4') {
+            spawnX = 80;
+            spawnY = Math.max(80, (state.blocks.length * 80) + 60);
+            if (spawnY > 1000) spawnY = 80;
+        } else if (state.canvasMode === 'beamer') {
+            spawnX = 80;
+            spawnY = Math.max(60, (state.blocks.length * 75) + 60);
+            if (spawnY > 440) spawnY = 60;
+        } else {
+            spawnX = viewport.scrollLeft + 80;
+            spawnY = viewport.scrollTop + 60;
+        }
+
+        createBlock(type, spawnX, spawnY);
+    };
+
+    function createBlock(type, x = 60, y = 60, content = '') {
         const id = 'block-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
         let defaultW = 280;
-        let defaultH = 65;
+        let defaultH = 55;
         let defaultContent = content;
 
         if (type === 'math') {
             defaultContent = content || 'x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}';
             defaultW = 320;
-            defaultH = 65;
+            defaultH = 55;
         } else if (type === 'text') {
-            defaultContent = content || 'Nhập văn bản tại đây hoặc bôi đen để định dạng...';
+            defaultContent = content || 'Gõ văn bản tại đây hoặc bôi đen để định dạng...';
             defaultW = 340;
-            defaultH = 65;
+            defaultH = 55;
         } else if (type === 'box') {
             defaultContent = content || 'Khung ghi chú / Chú thích';
             defaultW = 360;
-            defaultH = 140;
+            defaultH = 120;
         }
 
         const newBlock = {
@@ -144,7 +138,11 @@
     }
 
     function renderAllBlocks() {
+        // Keep watermark if exists
+        const wm = document.getElementById('sheet-watermark');
         artboard.innerHTML = '';
+        if (wm) artboard.appendChild(wm);
+
         state.blocks.forEach(block => renderBlockDOM(block));
         checkEmptyHint();
     }
@@ -179,8 +177,8 @@
             </div>
             <div class="block-actions">
                 <button class="block-action-btn" title="Nhân đôi (Duplicate)" data-action="duplicate">❐</button>
-                <button class="block-action-btn" title="Lên trên (Layer Up)" data-action="layer-up">▲</button>
-                <button class="block-action-btn" title="Xuống dưới (Layer Down)" data-action="layer-down">▼</button>
+                <button class="block-action-btn" title="Lên trên" data-action="layer-up">▲</button>
+                <button class="block-action-btn" title="Xuống dưới" data-action="layer-down">▼</button>
                 <button class="block-action-btn del-btn" title="Xóa" data-action="delete">✕</button>
             </div>
         `;
@@ -222,21 +220,17 @@
         div.appendChild(body);
         div.appendChild(resize);
 
-        // Events
         setupBlockEvents(div, block);
-
         artboard.appendChild(div);
         checkEmptyHint();
     }
 
     function setupBlockEvents(el, block) {
-        // Selection
         el.addEventListener('pointerdown', (e) => {
             if (e.target.closest('.block-action-btn')) return;
             selectBlock(block.id);
         });
 
-        // Action buttons
         const actions = el.querySelector('.block-actions');
         actions.addEventListener('click', (e) => {
             const btn = e.target.closest('.block-action-btn');
@@ -258,7 +252,6 @@
             }
         });
 
-        // Header Dragging
         const header = el.querySelector('.block-header');
         header.addEventListener('pointerdown', (e) => {
             if (e.target.closest('.block-action-btn')) return;
@@ -266,7 +259,6 @@
             startDragging(e, block, el);
         });
 
-        // Resizing
         const resizeHandle = el.querySelector('.resize-handle');
         resizeHandle.addEventListener('pointerdown', (e) => {
             e.preventDefault();
@@ -328,8 +320,8 @@
             const deltaX = moveEvent.clientX - state.initialSize.startX;
             const deltaY = moveEvent.clientY - state.initialSize.startY;
 
-            let nw = Math.max(120, state.initialSize.w + deltaX);
-            let nh = Math.max(50, state.initialSize.h + deltaY);
+            let nw = Math.max(100, state.initialSize.w + deltaX);
+            let nh = Math.max(45, state.initialSize.h + deltaY);
 
             nw = snap(nw);
             nh = snap(nh);
@@ -387,7 +379,7 @@
     function duplicateBlock(id) {
         const source = state.blocks.find(b => b.id === id);
         if (!source) return;
-        createBlock(source.type, source.x + 30, source.y + 30, source.content);
+        createBlock(source.type, source.x + 25, source.y + 25, source.content);
     }
 
     function checkEmptyHint() {
@@ -397,15 +389,7 @@
                 hint = document.createElement('div');
                 hint.id = 'canvas-empty-hint';
                 hint.className = 'canvas-empty-hint';
-                hint.innerHTML = `
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="12" y1="8" x2="12" y2="16"/>
-                        <line x1="8" y1="12" x2="16" y2="12"/>
-                    </svg>
-                    <div style="font-size:0.95rem; font-weight:500;">Bảng vẽ đang trống</div>
-                    <div style="font-size:0.8rem; margin-top:4px;">Nhấp đúp chuột vào bất kỳ đâu hoặc bấm các nút phía trên để thêm công thức!</div>
-                `;
+                hint.innerHTML = `+ Nhấp đúp chuột hoặc bấm các nút ở trên để thêm công thức / văn bản`;
                 artboard.appendChild(hint);
             }
             hint.style.display = 'block';
@@ -414,7 +398,7 @@
         }
     }
 
-    // === Viewport Double Click & Events ===
+    // === Double Click to Add ===
     function initViewportEvents() {
         viewport.addEventListener('dblclick', (e) => {
             if (e.target.closest('.movable-block')) return;
@@ -424,7 +408,6 @@
             createBlock('math', clickX - 80, clickY - 25);
         });
 
-        // Click outside blocks deselects
         viewport.addEventListener('pointerdown', (e) => {
             if (!e.target.closest('.movable-block') && !e.target.closest('#floating-bubble')) {
                 state.selectedBlockId = null;
@@ -437,17 +420,15 @@
     function initBubbleToolbar() {
         document.addEventListener('selectionchange', handleTextSelection);
 
-        // Bubble button handlers
         const buttons = bubbleToolbar.querySelectorAll('[data-format]');
         buttons.forEach(btn => {
             btn.addEventListener('mousedown', (e) => {
-                e.preventDefault(); // Prevent losing focus / selection
+                e.preventDefault();
                 const format = btn.getAttribute('data-format');
                 applyFormatToSelection(format);
             });
         });
 
-        // Color dots
         const colorDots = bubbleToolbar.querySelectorAll('.color-dot');
         colorDots.forEach(dot => {
             dot.addEventListener('mousedown', (e) => {
@@ -471,7 +452,6 @@
             return;
         }
 
-        // Check if selection is within our editable areas
         const range = sel.getRangeAt(0);
         const container = range.commonAncestorContainer;
         const parentEditor = container.nodeType === 1 ? container.closest('.text-editor-area, math-field') : container.parentElement.closest('.text-editor-area, math-field');
@@ -484,7 +464,6 @@
         state.savedSelectionRange = range.cloneRange();
         const rect = range.getBoundingClientRect();
 
-        // Position bubble safely above the selection
         const posX = Math.max(160, Math.min(window.innerWidth - 160, rect.left + rect.width / 2));
         const posY = Math.max(12, rect.top - 46);
         bubbleToolbar.style.left = `${posX}px`;
@@ -559,156 +538,14 @@
 
         if (block.type === 'math') {
             const mf = el.querySelector('math-field');
-            if (mf) block.content = mf.getValue();
+            if (mf) block.content = mf.value || (typeof mf.getValue === 'function' ? mf.getValue() : '');
         } else {
             const ed = el.querySelector('.text-editor-area');
             if (ed) block.content = ed.innerHTML;
         }
     }
 
-    // === Snippet Toolbar Integration ===
-    const SNIPPET_GROUPS = {
-        'co-ban': [
-            { label: '\\frac{a}{b}', code: '\\frac{#?}{#?}' },
-            { label: '\\sqrt{x}', code: '\\sqrt{#?}' },
-            { label: '\\sqrt[n]{x}', code: '\\sqrt[#?]{#?}' },
-            { label: 'x^n', code: '^{#?}' },
-            { label: 'x_n', code: '_{#?}' },
-            { label: '\\pm', code: '\\pm ' },
-            { label: '\\times', code: '\\times ' },
-            { label: '\\div', code: '\\div ' }
-        ],
-        'dai-so': [
-            { label: '\\le', code: '\\le ' },
-            { label: '\\ge', code: '\\ge ' },
-            { label: '\\neq', code: '\\neq ' },
-            { label: '\\approx', code: '\\approx ' },
-            { label: '\\equiv', code: '\\equiv ' },
-            { label: '\\in', code: '\\in ' },
-            { label: '\\subset', code: '\\subset ' },
-            { label: '\\forall', code: '\\forall ' },
-            { label: '\\exists', code: '\\exists ' }
-        ],
-        'giai-tich': [
-            { label: '\\sum', code: '\\sum_{#?}^{#?} #?' },
-            { label: '\\int', code: '\\int_{#?}^{#?} #? \\, dx' },
-            { label: '\\lim', code: '\\lim_{#? \\to #?} #?' },
-            { label: '\\prod', code: '\\prod_{#?}^{#?} #?' },
-            { label: '\\infty', code: '\\infty' },
-            { label: '\\partial', code: '\\partial' }
-        ],
-        'he-ma-tran': [
-            { label: '\\begin{cases}', code: '\\begin{cases} #? \\\\ #? \\end{cases}' },
-            { label: '\\begin{pmatrix}', code: '\\begin{pmatrix} #? & #? \\\\ #? & #? \\end{pmatrix}' },
-            { label: '\\begin{bmatrix}', code: '\\begin{bmatrix} #? & #? \\\\ #? & #? \\end{bmatrix}' },
-            { label: '\\vec{v}', code: '\\vec{#?}' }
-        ],
-        'hy-lap': [
-            { label: '\\alpha', code: '\\alpha' },
-            { label: '\\beta', code: '\\beta' },
-            { label: '\\gamma', code: '\\gamma' },
-            { label: '\\theta', code: '\\theta' },
-            { label: '\\pi', code: '\\pi' },
-            { label: '\\lambda', code: '\\lambda' },
-            { label: '\\Delta', code: '\\Delta' },
-            { label: '\\Omega', code: '\\Omega' }
-        ]
-    };
-
-    function initSnippets() {
-        if (!snippetContainer) return;
-        renderSnippetGroup('co-ban');
-
-        const tabBtns = document.querySelectorAll('.snippet-tab-btn');
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                tabBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const group = btn.getAttribute('data-group');
-                renderSnippetGroup(group);
-            });
-        });
-    }
-
-    function renderSnippetGroup(groupKey) {
-        const list = SNIPPET_GROUPS[groupKey] || [];
-        snippetContainer.innerHTML = '';
-        list.forEach(item => {
-            const btn = document.createElement('button');
-            btn.className = 'snip-item-btn';
-            btn.title = item.label;
-            btn.innerHTML = `$${item.label}$`;
-            btn.addEventListener('click', () => insertSnippet(item.code));
-            snippetContainer.appendChild(btn);
-        });
-
-        // Re-render math in snippet buttons
-        function renderMathSafely() {
-            if (window.renderMathInElement) {
-                renderMathInElement(snippetContainer, {
-                    delimiters: [{ left: '$', right: '$', display: false }]
-                });
-            } else {
-                setTimeout(renderMathSafely, 200);
-            }
-        }
-        renderMathSafely();
-    }
-
-    function insertSnippet(code) {
-        if (!state.selectedBlockId) {
-            // If no block selected, create a new math block with snippet
-            createBlock('math', 150, 150, code.replace(/#\?/g, ''));
-            return;
-        }
-
-        const block = state.blocks.find(b => b.id === state.selectedBlockId);
-        if (!block) return;
-
-        const el = document.getElementById(block.id);
-        if (block.type === 'math') {
-            const mf = el.querySelector('math-field');
-            if (mf) {
-                if (typeof mf.insert === 'function') {
-                    mf.insert(code);
-                } else if (typeof mf.executeCommand === 'function') {
-                    mf.executeCommand(['insert', code]);
-                }
-                mf.focus();
-                block.content = mf.value || (typeof mf.getValue === 'function' ? mf.getValue() : '');
-            }
-        } else {
-            const cleanCode = code.replace(/#\?/g, '');
-            document.execCommand('insertText', false, `$${cleanCode}$`);
-            const ed = el.querySelector('.text-editor-area');
-            if (ed) block.content = ed.innerHTML;
-        }
-
-        saveHistoryState();
-        updateLatexCode();
-    }
-
-    window.toggleSnipGroup = function(el) {
-        const row = el.closest('.snip-group-row');
-        if (row) row.classList.toggle('collapsed');
-    };
-
-    window.insertSnip = function(code) {
-        insertSnippet(code);
-    };
-
-    // Auto-render math in snippet buttons using MathJax
-    function typesetSnippets() {
-        if (window.MathJax && MathJax.typesetPromise) {
-            const tb = document.getElementById('snippet-toolbar');
-            if (tb) MathJax.typesetPromise([tb]).catch(() => {});
-        } else {
-            setTimeout(typesetSnippets, 250);
-        }
-    }
-    typesetSnippets();
-
-    // === LaTeX Code Generation ===
+    // === LaTeX Code Generation & Live Render ===
     function updateLatexCode() {
         if (!latexOutput) return;
 
@@ -719,17 +556,63 @@
         } else {
             latexOutput.value = generateMathOnlyCode();
         }
+
+        renderLivePreview();
+    }
+
+    function renderLivePreview() {
+        if (!liveRenderBox) return;
+
+        if (state.blocks.length === 0) {
+            liveRenderBox.innerHTML = '<span style="opacity:0.4; font-style:italic;">Kết quả biên dịch realtime sẽ hiển thị tại đây...</span>';
+            return;
+        }
+
+        // Render preview ordered top-down
+        const sorted = [...state.blocks].sort((a, b) => {
+            if (Math.abs(a.y - b.y) < 25) return a.x - b.x;
+            return a.y - b.y;
+        });
+
+        let html = '';
+        sorted.forEach(b => {
+            if (b.type === 'math') {
+                html += `<div style="margin: 12px 0; text-align: center;">\\[ ${b.content} \\]</div>`;
+            } else if (b.type === 'box') {
+                html += `<div style="border: 1px dashed var(--accent-cyan); padding: 8px 12px; margin: 8px 0; border-radius: 6px; background: rgba(92,225,230,0.05);">${b.content}</div>`;
+            } else {
+                html += `<div style="margin: 8px 0;">${b.content}</div>`;
+            }
+        });
+
+        liveRenderBox.innerHTML = html;
+
+        if (window.MathJax && MathJax.typesetPromise) {
+            MathJax.typesetPromise([liveRenderBox]).catch(() => {});
+        }
     }
 
     function generateTikzCode() {
-        if (state.blocks.length === 0) return '% Bảng vẽ đang trống. Thêm công thức để xuất mã TikZ.';
+        if (state.blocks.length === 0) return '% Bảng vẽ đang trống. Bấm "+ Công Thức" để bắt đầu.';
 
-        let code = `\\documentclass{standalone}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\usepackage{tikz}\n\\begin{document}\n\\begin{tikzpicture}[x=1mm, y=1mm]\n`;
+        let header = '';
+        let footer = '';
 
+        if (state.canvasMode === 'a4') {
+            header = `\\documentclass[a4paper,12pt]{article}\n\\usepackage[margin=2cm]{geometry}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\usepackage{tikz}\n\\begin{document}\n\\noindent\n\\begin{tikzpicture}[x=1mm, y=1mm]\n`;
+            footer = `\\end{tikzpicture}\n\\end{document}`;
+        } else if (state.canvasMode === 'beamer') {
+            header = `\\documentclass[aspectratio=169]{beamer}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\usepackage{tikz}\n\\usetheme{Madrid}\n\\begin{document}\n\\begin{frame}{Slide Beamer}\n\\centering\n\\begin{tikzpicture}[x=1mm, y=1mm]\n`;
+            footer = `\\end{tikzpicture}\n\\end{frame}\n\\end{document}`;
+        } else {
+            header = `\\documentclass{standalone}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\usepackage{tikz}\n\\begin{document}\n\\begin{tikzpicture}[x=1mm, y=1mm]\n`;
+            footer = `\\end{tikzpicture}\n\\end{document}`;
+        }
+
+        let code = header;
         state.blocks.forEach(b => {
-            // Convert px to mm: ~ 3.78 px = 1mm
             const xMm = (b.x / 3.78).toFixed(1);
-            const yMm = (-b.y / 3.78).toFixed(1); // In TikZ Y goes upwards
+            const yMm = (-b.y / 3.78).toFixed(1);
 
             if (b.type === 'math') {
                 code += `  \\node[anchor=north west] at (${xMm}, ${yMm}) { $\\displaystyle ${b.content}$ };\n`;
@@ -743,20 +626,24 @@
             }
         });
 
-        code += `\\end{tikzpicture}\n\\end{document}`;
+        code += footer;
         return code;
     }
 
     function generateFlowCode() {
         if (state.blocks.length === 0) return '% Chưa có nội dung để xuất.';
 
-        // Sort blocks by Y position (top to bottom), then by X
         const sorted = [...state.blocks].sort((a, b) => {
             if (Math.abs(a.y - b.y) < 25) return a.x - b.x;
             return a.y - b.y;
         });
 
-        let code = `\\documentclass{article}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\begin{document}\n\n`;
+        let docClass = '\\documentclass{article}';
+        if (state.canvasMode === 'a4') docClass = '\\documentclass[a4paper,12pt]{article}\n\\usepackage[margin=2cm]{geometry}';
+        if (state.canvasMode === 'beamer') docClass = '\\documentclass[aspectratio=169]{beamer}\n\\usetheme{Madrid}';
+
+        let code = `${docClass}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\begin{document}\n\n`;
+        if (state.canvasMode === 'beamer') code += `\\begin{frame}{Slide Beamer}\n\n`;
 
         sorted.forEach(b => {
             if (b.type === 'math') {
@@ -768,6 +655,7 @@
             }
         });
 
+        if (state.canvasMode === 'beamer') code += `\\end{frame}\n\n`;
         code += `\\end{document}`;
         return code;
     }
@@ -805,13 +693,6 @@
     }
 
     // === Global Action Handlers ===
-    window.addBlock = function (type) {
-        // Find center of current viewport scroll
-        const scrollX = viewport.scrollLeft + 150;
-        const scrollY = viewport.scrollTop + 120;
-        createBlock(type, scrollX, scrollY);
-    };
-
     window.clearCanvas = function () {
         if (state.blocks.length === 0) return;
         if (!confirm('Bạn có chắc chắn muốn xóa toàn bộ bảng vẽ không?')) return;
@@ -825,7 +706,7 @@
 
     window.setExportTab = function (tab) {
         state.activeExportTab = tab;
-        document.querySelectorAll('.export-tab-btn').forEach(btn => {
+        document.querySelectorAll('.compiler-tab-btn').forEach(btn => {
             btn.classList.toggle('active', btn.getAttribute('data-tab') === tab);
         });
         updateLatexCode();
@@ -845,7 +726,7 @@
     window.toggleZenMode = function () {
         document.body.classList.toggle('zen-mode');
         const isZen = document.body.classList.contains('zen-mode');
-        showToast(isZen ? 'Đã bật Chế độ Zen (Toàn màn hình)' : 'Đã thoát Chế độ Zen');
+        showToast(isZen ? 'Chế độ Zen (Toàn màn hình)' : 'Thoát Chế độ Zen');
     };
 
     // === Clipboard & Export Engine ===
@@ -886,7 +767,7 @@
         mathText = mathText.replace(/\\placeholder\{\}/g, '');
 
         if (!window.MathJax || !MathJax.tex2mmlPromise) {
-            showToast('Đang tải MathJax, vui lòng thử lại...');
+            showToast('Đang tải MathJax, vui lòng đợi...');
             return;
         }
 
@@ -933,32 +814,11 @@
             return;
         }
 
-        // Calculate bounding box of all blocks
-        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-        state.blocks.forEach(b => {
-            minX = Math.min(minX, b.x);
-            minY = Math.min(minY, b.y);
-            maxX = Math.max(maxX, b.x + b.w);
-            maxY = Math.max(maxY, b.y + b.h);
-        });
-
-        const padding = 24;
-        const captureArea = {
-            x: Math.max(0, minX - padding),
-            y: Math.max(0, minY - padding),
-            width: (maxX - minX) + padding * 2,
-            height: (maxY - minY) + padding * 2
-        };
-
-        showToast('Đang xử lý ảnh độ phân giải cao (300 DPI)...');
+        showToast('Đang xử lý ảnh (300 DPI)...');
 
         html2canvas(artboard, {
             scale: 3,
             backgroundColor: null,
-            x: captureArea.x,
-            y: captureArea.y,
-            width: captureArea.width,
-            height: captureArea.height,
             logging: false
         }).then(canvas => {
             canvas.toBlob(blob => {
@@ -966,7 +826,7 @@
                     navigator.clipboard.write([
                         new ClipboardItem({ 'image/png': blob })
                     ]).then(() => {
-                        showToast('✓ Đã copy ảnh PNG vào bộ nhớ tạm! Dán trực tiếp vào Word/Docs');
+                        showToast('✓ Đã copy ảnh PNG (300 DPI) vào clipboard!');
                     }).catch(() => downloadBlob(blob, 'extra-latex.png'));
                 } else {
                     downloadBlob(blob, 'extra-latex.png');
@@ -997,7 +857,7 @@
         window.print();
     };
 
-    // === History (Undo / Redo) & Persistence ===
+    // === History & Persistence ===
     function saveHistoryState() {
         const snapshot = JSON.stringify(state.blocks);
         if (state.historyIndex >= 0 && state.history[state.historyIndex] === snapshot) return;
@@ -1006,15 +866,13 @@
         state.history.push(snapshot);
         state.historyIndex++;
 
-        // Keep last 30 states
         if (state.history.length > 30) {
             state.history.shift();
             state.historyIndex--;
         }
 
-        // Auto save to localStorage
         try {
-            localStorage.setItem('smp-extra-latex-blocks', snapshot);
+            localStorage.setItem('smp-extra-latex-clean-blocks', snapshot);
         } catch (e) { }
     }
 
@@ -1040,18 +898,18 @@
 
     function loadSavedState() {
         try {
-            const saved = localStorage.getItem('smp-extra-latex-blocks');
+            const saved = localStorage.getItem('smp-extra-latex-clean-blocks');
             if (saved) {
                 state.blocks = JSON.parse(saved);
                 return;
             }
         } catch (e) { }
-        state.blocks = JSON.parse(JSON.stringify(DEFAULT_BLOCKS));
+        // Default is EMPTY as requested
+        state.blocks = [];
     }
 
     // === Keyboard Shortcuts ===
     function handleGlobalKeydown(e) {
-        // Undo / Redo
         if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
             if (e.shiftKey) {
                 e.preventDefault();
@@ -1069,7 +927,6 @@
             return;
         }
 
-        // Delete block when not typing
         if ((e.key === 'Delete' || e.key === 'Backspace') && state.selectedBlockId) {
             const isTyping = document.activeElement && (
                 document.activeElement.tagName === 'INPUT' ||
@@ -1084,7 +941,6 @@
             }
         }
 
-        // Arrow keys to nudge selected block
         if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key) && state.selectedBlockId) {
             const isTyping = document.activeElement && (
                 document.activeElement.tagName === 'INPUT' ||
@@ -1122,7 +978,7 @@
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => {
             toastEl.classList.remove('show');
-        }, 2600);
+        }, 2400);
     }
 
 })();
