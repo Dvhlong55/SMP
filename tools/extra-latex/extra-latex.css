@@ -844,3 +844,63 @@ body.zen-mode .top-nav-bar {
 body.zen-mode .mathcha-canvas-viewport {
     height: calc(100vh - 80px) !important;
 }
+
+/* ============================================================
+   6. LATEX AUTOCOMPLETE SUGGESTION POPUP (Triggers on \)
+   ============================================================ */
+.latex-suggest-popup {
+    position: fixed;
+    z-index: 999999;
+    background: var(--el-popover-bg);
+    border: 1px solid var(--accent-cyan);
+    border-radius: 8px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65);
+    display: none;
+    flex-direction: column;
+    min-width: 220px;
+    max-width: 320px;
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 4px;
+    backdrop-filter: blur(10px);
+}
+
+.latex-suggest-popup.active {
+    display: flex;
+}
+
+.suggest-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--el-popover-text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    transition: background 0.1s, color 0.1s;
+    user-select: none;
+}
+
+.suggest-item:hover,
+.suggest-item.highlighted {
+    background: var(--accent-cyan);
+    color: #0b1111 !important;
+    font-weight: 700;
+}
+
+.suggest-cmd {
+    font-weight: 500;
+}
+
+.suggest-preview {
+    font-size: 0.95rem;
+    color: var(--accent-cyan);
+    margin-left: 12px;
+}
+
+.suggest-item:hover .suggest-preview,
+.suggest-item.highlighted .suggest-preview {
+    color: #0b1111;
+}

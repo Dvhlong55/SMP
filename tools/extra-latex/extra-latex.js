@@ -199,6 +199,13 @@
             editor.addEventListener('input', () => {
                 block.content = editor.innerHTML;
                 updateLatexCode();
+                handleEditorSuggest(editor);
+            });
+            editor.addEventListener('keydown', (e) => {
+                handleSuggestKeydown(e, editor, block);
+            });
+            editor.addEventListener('blur', () => {
+                setTimeout(hideSuggestPopup, 200);
             });
             body.appendChild(editor);
         }
@@ -558,6 +565,205 @@
             const ed = el.querySelector('.text-editor-area');
             if (ed) block.content = ed.innerHTML;
         }
+    }
+
+    // === LaTeX Autocomplete Database & Engine (Triggers on \) ===
+    const LATEX_SYMBOLS = [
+        { cmd: '\\frac', label: '\\frac{a}{b}', preview: 'a/b', insert: '\\frac{a}{b}' },
+        { cmd: '\\sqrt', label: '\\sqrt{x}', preview: '√x', insert: '\\sqrt{x}' },
+        { cmd: '\\cfrac', label: '\\cfrac{a}{b}', preview: 'cfrac', insert: '\\cfrac{a}{b}' },
+        { cmd: '\\alpha', label: '\\alpha', preview: 'α', insert: '\\alpha' },
+        { cmd: '\\beta', label: '\\beta', preview: 'β', insert: '\\beta' },
+        { cmd: '\\gamma', label: '\\gamma', preview: 'γ', insert: '\\gamma' },
+        { cmd: '\\delta', label: '\\delta', preview: 'δ', insert: '\\delta' },
+        { cmd: '\\Delta', label: '\\Delta', preview: 'Δ', insert: '\\Delta' },
+        { cmd: '\\epsilon', label: '\\epsilon', preview: 'ε', insert: '\\epsilon' },
+        { cmd: '\\theta', label: '\\theta', preview: 'θ', insert: '\\theta' },
+        { cmd: '\\lambda', label: '\\lambda', preview: 'λ', insert: '\\lambda' },
+        { cmd: '\\pi', label: '\\pi', preview: 'π', insert: '\\pi' },
+        { cmd: '\\sigma', label: '\\sigma', preview: 'σ', insert: '\\sigma' },
+        { cmd: '\\omega', label: '\\omega', preview: 'ω', insert: '\\omega' },
+        { cmd: '\\Omega', label: '\\Omega', preview: 'Ω', insert: '\\Omega' },
+        { cmd: '\\sum', label: '\\sum', preview: '∑', insert: '\\sum_{i=1}^{n}' },
+        { cmd: '\\prod', label: '\\prod', preview: '∏', insert: '\\prod_{i=1}^{n}' },
+        { cmd: '\\int', label: '\\int', preview: '∫', insert: '\\int_{a}^{b}' },
+        { cmd: '\\lim', label: '\\lim', preview: 'lim', insert: '\\lim_{x \\to \\infty}' },
+        { cmd: '\\infty', label: '\\infty', preview: '∞', insert: '\\infty' },
+        { cmd: '\\le', label: '\\le', preview: '≤', insert: '\\le' },
+        { cmd: '\\ge', label: '\\ge', preview: '≥', insert: '\\ge' },
+        { cmd: '\\neq', label: '\\neq', preview: '≠', insert: '\\neq' },
+        { cmd: '\\approx', label: '\\approx', preview: '≈', insert: '\\approx' },
+        { cmd: '\\equiv', label: '\\equiv', preview: '≡', insert: '\\equiv' },
+        { cmd: '\\pm', label: '\\pm', preview: '±', insert: '\\pm' },
+        { cmd: '\\times', label: '\\times', preview: '×', insert: '\\times' },
+        { cmd: '\\div', label: '\\div', preview: '÷', insert: '\\div' },
+        { cmd: '\\in', label: '\\in', preview: '∈', insert: '\\in' },
+        { cmd: '\\notin', label: '\\notin', preview: '∉', insert: '\\notin' },
+        { cmd: '\\subset', label: '\\subset', preview: '⊂', insert: '\\subset' },
+        { cmd: '\\cup', label: '\\cup', preview: '∪', insert: '\\cup' },
+        { cmd: '\\cap', label: '\\cap', preview: '∩', insert: '\\cap' },
+        { cmd: '\\emptyset', label: '\\emptyset', preview: '∅', insert: '\\emptyset' },
+        { cmd: '\\forall', label: '\\forall', preview: '∀', insert: '\\forall' },
+        { cmd: '\\exists', label: '\\exists', preview: '∃', insert: '\\exists' },
+        { cmd: '\\to', label: '\\to', preview: '→', insert: '\\to' },
+        { cmd: '\\Rightarrow', label: '\\Rightarrow', preview: '⇒', insert: '\\Rightarrow' },
+        { cmd: '\\Leftrightarrow', label: '\\Leftrightarrow', preview: '⇔', insert: '\\Leftrightarrow' },
+        { cmd: '\\vec', label: '\\vec{v}', preview: 'v⃗', insert: '\\vec{v}' },
+        { cmd: '\\binom', label: '\\binom{n}{k}', preview: 'C(n,k)', insert: '\\binom{n}{k}' },
+        { cmd: '\\cases', label: '\\begin{cases}', preview: '{..', insert: '\\begin{cases} x \\\\ y \\end{cases}' },
+        { cmd: '\\matrix', label: '\\begin{matrix}', preview: '[..]', insert: '\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}' },
+        { cmd: '\\textbf', label: '\\textbf{in đậm}', preview: 'Bold', insert: '\\textbf{in đậm}' },
+        { cmd: '\\textit', label: '\\textit{in nghiêng}', preview: 'Italic', insert: '\\textit{in nghiêng}' },
+        { cmd: '\\underline', label: '\\underline{gạch chân}', preview: 'Underline', insert: '\\underline{gạch chân}' }
+    ];
+
+    let suggestState = {
+        active: false,
+        items: [],
+        highlightIndex: 0,
+        query: '',
+        textNode: null,
+        cursorOffset: 0,
+        activeEditor: null
+    };
+
+    function handleEditorSuggest(editor) {
+        const sel = window.getSelection();
+        if (!sel || !sel.rangeCount || sel.isCollapsed === false) {
+            hideSuggestPopup();
+            return;
+        }
+
+        const range = sel.getRangeAt(0);
+        const node = range.startContainer;
+        if (node.nodeType !== Node.TEXT_NODE) {
+            hideSuggestPopup();
+            return;
+        }
+
+        const textBeforeCaret = node.textContent.slice(0, range.startOffset);
+        const match = textBeforeCaret.match(/\\([a-zA-Z]*)$/);
+
+        if (!match) {
+            hideSuggestPopup();
+            return;
+        }
+
+        const query = match[1].toLowerCase();
+        const matches = LATEX_SYMBOLS.filter(item => item.cmd.slice(1).toLowerCase().startsWith(query));
+
+        if (matches.length === 0) {
+            hideSuggestPopup();
+            return;
+        }
+
+        suggestState.active = true;
+        suggestState.items = matches.slice(0, 8);
+        suggestState.highlightIndex = 0;
+        suggestState.query = match[0];
+        suggestState.textNode = node;
+        suggestState.cursorOffset = range.startOffset;
+        suggestState.activeEditor = editor;
+
+        showSuggestPopup(range);
+    }
+
+    function showSuggestPopup(range) {
+        const popup = document.getElementById('latex-suggest-popup');
+        if (!popup) return;
+
+        popup.innerHTML = '';
+        suggestState.items.forEach((item, idx) => {
+            const div = document.createElement('div');
+            div.className = `suggest-item ${idx === suggestState.highlightIndex ? 'highlighted' : ''}`;
+            div.innerHTML = `
+                <span class="suggest-cmd">${item.label}</span>
+                <span class="suggest-preview">${item.preview}</span>
+            `;
+            div.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                insertSuggestion(item);
+            });
+            popup.appendChild(div);
+        });
+
+        const rect = range.getBoundingClientRect();
+        const posX = Math.max(10, Math.min(window.innerWidth - 240, rect.left));
+        const posY = rect.bottom + 6;
+
+        popup.style.left = `${posX}px`;
+        popup.style.top = `${posY}px`;
+        popup.classList.add('active');
+    }
+
+    function hideSuggestPopup() {
+        suggestState.active = false;
+        const popup = document.getElementById('latex-suggest-popup');
+        if (popup) popup.classList.remove('active');
+    }
+
+    function handleSuggestKeydown(e, editor, block) {
+        if (!suggestState.active) return;
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            suggestState.highlightIndex = (suggestState.highlightIndex + 1) % suggestState.items.length;
+            updateSuggestHighlight();
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            suggestState.highlightIndex = (suggestState.highlightIndex - 1 + suggestState.items.length) % suggestState.items.length;
+            updateSuggestHighlight();
+        } else if (e.key === 'Enter' || e.key === 'Tab') {
+            e.preventDefault();
+            const item = suggestState.items[suggestState.highlightIndex];
+            if (item) insertSuggestion(item);
+        } else if (e.key === 'Escape') {
+            hideSuggestPopup();
+        }
+    }
+
+    function updateSuggestHighlight() {
+        const popup = document.getElementById('latex-suggest-popup');
+        if (!popup) return;
+        const items = popup.querySelectorAll('.suggest-item');
+        items.forEach((el, idx) => {
+            el.classList.toggle('highlighted', idx === suggestState.highlightIndex);
+        });
+    }
+
+    function insertSuggestion(item) {
+        const { textNode, cursorOffset, query } = suggestState;
+        if (!textNode || !textNode.parentNode) {
+            hideSuggestPopup();
+            return;
+        }
+
+        const fullText = textNode.textContent;
+        const beforeMatch = fullText.slice(0, cursorOffset - query.length);
+        const afterMatch = fullText.slice(cursorOffset);
+
+        let insertText = '';
+        if (item.cmd.startsWith('\\text') || item.cmd.startsWith('\\under')) {
+            insertText = item.insert + ' ';
+        } else {
+            insertText = `$${item.insert}$ `;
+        }
+
+        textNode.textContent = beforeMatch + insertText + afterMatch;
+
+        const sel = window.getSelection();
+        const newRange = document.createRange();
+        newRange.setStart(textNode, (beforeMatch + insertText).length);
+        newRange.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+
+        if (suggestState.activeEditor) {
+            syncCurrentActiveBlockContent();
+            updateLatexCode();
+        }
+
+        hideSuggestPopup();
     }
 
     // === Export Drawer Controls ===
