@@ -127,31 +127,21 @@
 
                         <div class="ribbon-divider"></div>
 
-                        <!-- Math & Grid Utilities -->
+                        <!-- Grid Selector -->
                         <div class="ribbon-section">
-                            <button type="button" class="rb-btn" onclick="execFormat('math-inline')" title="Đổi thành công thức toán $...$">&#8721;</button>
-                            
-                            <select class="rb-select" onchange="setGridType(this.value)" title="Lưới nền">
+                            <select class="rb-select" onchange="setGridType(this.value)" title="Kiểu lưới nền">
                                 <option value="dots">Lưới Chấm</option>
                                 <option value="lines">Lưới Kẻ Ô</option>
                                 <option value="none">Không Lưới</option>
-                            </select>
-
-                            <select class="rb-select" onchange="setSnapGrid(this.value)" title="Hít lưới">
-                                <option value="10">Hít: 10px</option>
-                                <option value="20">Hít: 20px</option>
-                                <option value="0">Tắt hít</option>
                             </select>
                         </div>
 
                         <div class="ribbon-divider"></div>
 
-                        <!-- History & Zen -->
+                        <!-- History (Undo / Redo) -->
                         <div class="ribbon-section">
                             <button type="button" class="rb-btn" onclick="undo()" title="Hoàn tác (Ctrl+Z)">↶</button>
                             <button type="button" class="rb-btn" onclick="redo()" title="Làm lại (Ctrl+Y)">↷</button>
-                            <button type="button" class="rb-btn" onclick="window.open('/tools/latex-ocr/index.html', '_blank')" title="Quét công thức từ ảnh (OCR)">📷</button>
-                            <button type="button" class="rb-btn" onclick="toggleZenMode()" title="Toàn màn hình">⛶</button>
                         </div>
 
                         <!-- Right CTA: Export Button -->
