@@ -8,6 +8,8 @@
 
     // === Global State ===
     const state = {
+        pages: [{ id: 1, title: 'Trang 1' }],
+        currentPageId: 1,
         blocks: [],
         selectedBlockId: null,
         canvasMode: 'a4',       // 'canvas' | 'a4' | 'beamer' (Default to A4 for clean document view)
@@ -41,6 +43,7 @@
         initBubbleToolbar();
         loadSavedState();
         setCanvasMode(state.canvasMode);
+        renderPageTabs();
         renderAllBlocks();
         saveHistoryState();
         updateLatexCode();
@@ -48,6 +51,76 @@
         // Keyboard shortcuts
         document.addEventListener('keydown', handleGlobalKeydown);
     });
+
+    // === Multi-Page System ===
+    window.renderPageTabs = function () {
+        const container = document.getElementById('page-tabs-container');
+        if (!container) return;
+        container.innerHTML = '';
+
+        state.pages.forEach((p, idx) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `page-tab-item ${p.id === state.currentPageId ? 'active' : ''}`;
+            btn.textContent = p.title || `Trang ${idx + 1}`;
+            btn.addEventListener('click', () => switchPage(p.id));
+            container.appendChild(btn);
+        });
+
+        const delBtn = document.getElementById('page-del-btn');
+        if (delBtn) {
+            delBtn.style.display = state.pages.length > 1 ? 'inline-flex' : 'none';
+        }
+        const indicator = document.getElementById('page-indicator-text');
+        if (indicator) {
+            const curIdx = state.pages.findIndex(p => p.id === state.currentPageId) + 1;
+            indicator.textContent = `${Math.max(1, curIdx)} / ${state.pages.length}`;
+        }
+    };
+
+    window.addNewPage = function () {
+        const nextId = state.pages.reduce((max, p) => Math.max(max, p.id), 0) + 1;
+        const newPage = { id: nextId, title: 'Trang ' + nextId };
+        state.pages.push(newPage);
+        switchPage(nextId);
+        saveHistoryState();
+        showToast('✓ Đã thêm ' + newPage.title);
+    };
+
+    window.switchPage = function (pageId) {
+        state.currentPageId = pageId;
+        state.selectedBlockId = null;
+        hideBubble();
+        hideSuggestPopup();
+        renderPageTabs();
+        renderAllBlocks();
+        updateLatexCode();
+        if (viewport) viewport.scrollTop = 0;
+    };
+
+    window.deleteCurrentPage = function () {
+        if (state.pages.length <= 1) return;
+        if (!confirm('Xóa trang hiện tại cùng toàn bộ nội dung trong trang?')) return;
+        const targetId = state.currentPageId;
+        state.blocks = state.blocks.filter(b => (b.pageId || 1) !== targetId);
+        state.pages = state.pages.filter(p => p.id !== targetId);
+        state.currentPageId = state.pages[0].id;
+        renderPageTabs();
+        renderAllBlocks();
+        saveHistoryState();
+        updateLatexCode();
+        showToast('Đã xóa trang');
+    };
+
+    window.prevPage = function () {
+        const idx = state.pages.findIndex(p => p.id === state.currentPageId);
+        if (idx > 0) switchPage(state.pages[idx - 1].id);
+    };
+
+    window.nextPage = function () {
+        const idx = state.pages.findIndex(p => p.id === state.currentPageId);
+        if (idx < state.pages.length - 1) switchPage(state.pages[idx + 1].id);
+    };
 
     // === Canvas Modes (Bảng vẽ, Giấy A4, Slide Beamer) ===
     window.setCanvasMode = function (mode) {
@@ -70,19 +143,20 @@
     window.addBlock = function (type) {
         let spawnX = 60;
         let spawnY = 60;
+        const curPageBlocks = state.blocks.filter(b => (b.pageId || 1) === state.currentPageId);
 
         if (state.canvasMode === 'a4') {
             spawnX = 70;
-            spawnY = Math.max(60, (state.blocks.length * 75) + 60);
-            if (spawnY > 700) spawnY = 60;
+            spawnY = Math.max(60, (curPageBlocks.length * 75) + 60);
+            if (spawnY > 950) spawnY = 60;
         } else if (state.canvasMode === 'beamer') {
             spawnX = 70;
-            spawnY = Math.max(50, (state.blocks.length * 70) + 50);
-            if (spawnY > 460) spawnY = 50;
+            spawnY = Math.max(50, (curPageBlocks.length * 70) + 50);
+            if (spawnY > 440) spawnY = 50;
         } else {
             spawnX = 60;
-            spawnY = Math.max(50, (state.blocks.length * 65) + 50);
-            if (spawnY > 440) spawnY = 50;
+            spawnY = Math.max(50, (curPageBlocks.length * 65) + 50);
+            if (spawnY > 500) spawnY = 50;
         }
 
         createBlock(type, spawnX, spawnY);
@@ -107,6 +181,7 @@
 
         const newBlock = {
             id,
+            pageId: state.currentPageId,
             type,
             x: snap(x),
             y: snap(y),
@@ -145,7 +220,8 @@
         if (badge) badge.remove();
         artboard.innerHTML = '';
 
-        state.blocks.forEach(block => renderBlockDOM(block));
+        const visibleBlocks = state.blocks.filter(b => (b.pageId || 1) === state.currentPageId);
+        visibleBlocks.forEach(block => renderBlockDOM(block));
     }
 
     function renderBlockDOM(block) {
@@ -169,6 +245,7 @@
         let typeIcon = block.type === 'math' ? '∑' : (block.type === 'box' ? '▢' : 'T');
         handleBar.innerHTML = `
             <span class="block-handle-drag" title="Kéo để di chuyển">⠿ ${typeIcon}</span>
+            <button class="block-btn-mini btn-suggest-trigger" title="Gợi ý ký hiệu LaTeX (Tiếng Việt & Lệnh)" data-action="suggest">∑?</button>
             <button class="block-btn-mini" title="Nhân đôi" data-action="duplicate">❐</button>
             <button class="block-btn-mini" title="Lên trên" data-action="layer-up">▲</button>
             <button class="block-btn-mini" title="Xuống dưới" data-action="layer-down">▼</button>
@@ -189,6 +266,21 @@
             mf.addEventListener('input', () => {
                 block.content = mf.value || (typeof mf.getValue === 'function' ? mf.getValue() : '');
                 updateLatexCode();
+                handleMathFieldSuggest(mf, block);
+            });
+            mf.addEventListener('keydown', (e) => {
+                if (suggestState.active) {
+                    if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === 'Tab' || e.key === 'Escape') {
+                        handleSuggestKeydown(e, mf, block);
+                        return;
+                    }
+                }
+                if (e.key === '\\' || e.code === 'Backslash') {
+                    setTimeout(() => handleMathFieldSuggest(mf, block, true), 20);
+                }
+            });
+            mf.addEventListener('blur', () => {
+                setTimeout(hideSuggestPopup, 250);
             });
             body.appendChild(mf);
         } else {
@@ -248,7 +340,22 @@
                 block.zIndex = Math.max(1, (block.zIndex || 1) - 2);
                 el.style.zIndex = block.zIndex;
                 saveHistoryState();
+            } else if (act === 'suggest') {
+                if (block.type === 'math') {
+                    const mf = el.querySelector('math-field');
+                    if (mf) {
+                        mf.focus();
+                        handleMathFieldSuggest(mf, block, true);
+                    }
+                } else {
+                    const ed = el.querySelector('.text-editor-area');
+                    if (ed) {
+                        ed.focus();
+                        handleEditorSuggestForced(ed, block);
+                    }
+                }
             }
+        });
         });
 
         // Dragging by handle
@@ -568,66 +675,167 @@
         }
     }
 
-    // === LaTeX Autocomplete Database & Engine (Triggers on \) ===
+    // === Vietnamese Tone Normalizer (Bỏ dấu để gõ tiếng Việt không bị lỗi lệnh) ===
+    function removeVietnameseTones(str) {
+        if (!str) return '';
+        return str.normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+            .toLowerCase()
+            .trim();
+    }
+
+    // === LaTeX Autocomplete Database (Hỗ trợ tiếng Việt & Lệnh Mathcha/MathType) ===
     const LATEX_SYMBOLS = [
-        { cmd: '\\frac', label: '\\frac{a}{b}', preview: 'a/b', insert: '\\frac{a}{b}' },
-        { cmd: '\\sqrt', label: '\\sqrt{x}', preview: '√x', insert: '\\sqrt{x}' },
-        { cmd: '\\cfrac', label: '\\cfrac{a}{b}', preview: 'cfrac', insert: '\\cfrac{a}{b}' },
-        { cmd: '\\alpha', label: '\\alpha', preview: 'α', insert: '\\alpha' },
-        { cmd: '\\beta', label: '\\beta', preview: 'β', insert: '\\beta' },
-        { cmd: '\\gamma', label: '\\gamma', preview: 'γ', insert: '\\gamma' },
-        { cmd: '\\delta', label: '\\delta', preview: 'δ', insert: '\\delta' },
-        { cmd: '\\Delta', label: '\\Delta', preview: 'Δ', insert: '\\Delta' },
-        { cmd: '\\epsilon', label: '\\epsilon', preview: 'ε', insert: '\\epsilon' },
-        { cmd: '\\theta', label: '\\theta', preview: 'θ', insert: '\\theta' },
-        { cmd: '\\lambda', label: '\\lambda', preview: 'λ', insert: '\\lambda' },
-        { cmd: '\\pi', label: '\\pi', preview: 'π', insert: '\\pi' },
-        { cmd: '\\sigma', label: '\\sigma', preview: 'σ', insert: '\\sigma' },
-        { cmd: '\\omega', label: '\\omega', preview: 'ω', insert: '\\omega' },
-        { cmd: '\\Omega', label: '\\Omega', preview: 'Ω', insert: '\\Omega' },
-        { cmd: '\\sum', label: '\\sum', preview: '∑', insert: '\\sum_{i=1}^{n}' },
-        { cmd: '\\prod', label: '\\prod', preview: '∏', insert: '\\prod_{i=1}^{n}' },
-        { cmd: '\\int', label: '\\int', preview: '∫', insert: '\\int_{a}^{b}' },
-        { cmd: '\\lim', label: '\\lim', preview: 'lim', insert: '\\lim_{x \\to \\infty}' },
-        { cmd: '\\infty', label: '\\infty', preview: '∞', insert: '\\infty' },
-        { cmd: '\\le', label: '\\le', preview: '≤', insert: '\\le' },
-        { cmd: '\\ge', label: '\\ge', preview: '≥', insert: '\\ge' },
-        { cmd: '\\neq', label: '\\neq', preview: '≠', insert: '\\neq' },
-        { cmd: '\\approx', label: '\\approx', preview: '≈', insert: '\\approx' },
-        { cmd: '\\equiv', label: '\\equiv', preview: '≡', insert: '\\equiv' },
-        { cmd: '\\pm', label: '\\pm', preview: '±', insert: '\\pm' },
-        { cmd: '\\times', label: '\\times', preview: '×', insert: '\\times' },
-        { cmd: '\\div', label: '\\div', preview: '÷', insert: '\\div' },
-        { cmd: '\\in', label: '\\in', preview: '∈', insert: '\\in' },
-        { cmd: '\\notin', label: '\\notin', preview: '∉', insert: '\\notin' },
-        { cmd: '\\subset', label: '\\subset', preview: '⊂', insert: '\\subset' },
-        { cmd: '\\cup', label: '\\cup', preview: '∪', insert: '\\cup' },
-        { cmd: '\\cap', label: '\\cap', preview: '∩', insert: '\\cap' },
-        { cmd: '\\emptyset', label: '\\emptyset', preview: '∅', insert: '\\emptyset' },
-        { cmd: '\\forall', label: '\\forall', preview: '∀', insert: '\\forall' },
-        { cmd: '\\exists', label: '\\exists', preview: '∃', insert: '\\exists' },
-        { cmd: '\\to', label: '\\to', preview: '→', insert: '\\to' },
-        { cmd: '\\Rightarrow', label: '\\Rightarrow', preview: '⇒', insert: '\\Rightarrow' },
-        { cmd: '\\Leftrightarrow', label: '\\Leftrightarrow', preview: '⇔', insert: '\\Leftrightarrow' },
-        { cmd: '\\vec', label: '\\vec{v}', preview: 'v⃗', insert: '\\vec{v}' },
-        { cmd: '\\binom', label: '\\binom{n}{k}', preview: 'C(n,k)', insert: '\\binom{n}{k}' },
-        { cmd: '\\cases', label: '\\begin{cases}', preview: '{..', insert: '\\begin{cases} x \\\\ y \\end{cases}' },
-        { cmd: '\\matrix', label: '\\begin{matrix}', preview: '[..]', insert: '\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}' },
-        { cmd: '\\textbf', label: '\\textbf{in đậm}', preview: 'Bold', insert: '\\textbf{in đậm}' },
-        { cmd: '\\textit', label: '\\textit{in nghiêng}', preview: 'Italic', insert: '\\textit{in nghiêng}' },
-        { cmd: '\\underline', label: '\\underline{gạch chân}', preview: 'Underline', insert: '\\underline{gạch chân}' }
+        // Phân số & Căn thức
+        { cmd: '\\frac', label: '\\frac{a}{b}', preview: 'a/b', insert: '\\frac{a}{b}', keywords: ['ps', 'phan', 'phanso', 'chia', 'fraction', 'frac'] },
+        { cmd: '\\sqrt', label: '\\sqrt{x}', preview: '√x', insert: '\\sqrt{x}', keywords: ['can', 'canbac2', 'canthuc', 'sqrt', 'root'] },
+        { cmd: '\\sqrt[n]', label: '\\sqrt[n]{x}', preview: 'ⁿ√x', insert: '\\sqrt[n]{x}', keywords: ['cann', 'canbacn', 'canso'] },
+        { cmd: '\\cfrac', label: '\\cfrac{a}{b}', preview: 'cfrac', insert: '\\cfrac{a}{b}', keywords: ['lienphanso', 'cfrac'] },
+        
+        // Toán tử & Ký hiệu phép tính
+        { cmd: '\\sum', label: '\\sum_{i=1}^{n}', preview: '∑', insert: '\\sum_{i=1}^{n}', keywords: ['tong', 'sigma', 'sum', 'summation'] },
+        { cmd: '\\prod', label: '\\prod_{i=1}^{n}', preview: '∏', insert: '\\prod_{i=1}^{n}', keywords: ['tich', 'pi', 'prod'] },
+        { cmd: '\\int', label: '\\int_{a}^{b}', preview: '∫', insert: '\\int_{a}^{b}', keywords: ['tp', 'tichphan', 'nguyentham', 'int', 'integral'] },
+        { cmd: '\\iint', label: '\\iint', preview: '∬', insert: '\\iint', keywords: ['tichphankep', 'iint'] },
+        { cmd: '\\lim', label: '\\lim_{x \\to \\infty}', preview: 'lim', insert: '\\lim_{x \\to \\infty}', keywords: ['lim', 'gioihan', 'gh'] },
+        { cmd: '\\infty', label: '\\infty (∞)', preview: '∞', insert: '\\infty', keywords: ['vocung', 'vc', 'vocuc', 'infty', 'infinity'] },
+        { cmd: '\\pm', label: '\\pm (±)', preview: '±', insert: '\\pm', keywords: ['congtru', 'pm', 'plusminus'] },
+        { cmd: '\\times', label: '\\times (×)', preview: '×', insert: '\\times', keywords: ['nhan', 'nhanx', 'times'] },
+        { cmd: '\\cdot', label: '\\cdot (·)', preview: '·', insert: '\\cdot', keywords: ['cham', 'nhancham', 'dot', 'cdot'] },
+        { cmd: '\\div', label: '\\div (÷)', preview: '÷', insert: '\\div', keywords: ['chia', 'div', 'divide'] },
+
+        // So sánh & Quan hệ
+        { cmd: '\\le', label: '\\le (≤)', preview: '≤', insert: '\\le', keywords: ['behonbang', 'nhohonbang', 'le'] },
+        { cmd: '\\ge', label: '\\ge (≥)', preview: '≥', insert: '\\ge', keywords: ['lonhonbang', 'ge'] },
+        { cmd: '\\ne', label: '\\ne (≠)', preview: '≠', insert: '\\ne', keywords: ['khac', 'ne', 'neq'] },
+        { cmd: '\\approx', label: '\\approx (≈)', preview: '≈', insert: '\\approx', keywords: ['xapxi', 'ganbang', 'approx'] },
+        { cmd: '\\equiv', label: '\\equiv (≡)', preview: '≡', insert: '\\equiv', keywords: ['dongdu', 'tuongduong', 'equiv'] },
+
+        // Mũi tên & Logic
+        { cmd: '\\Rightarrow', label: '\\Rightarrow (⇒)', preview: '⇒', insert: '\\Rightarrow', keywords: ['suyra', 'sr', 'implies', 'to'] },
+        { cmd: '\\Leftrightarrow', label: '\\Leftrightarrow (⇔)', preview: '⇔', insert: '\\Leftrightarrow', keywords: ['tuongduong', 'td', 'iff'] },
+        { cmd: '\\to', label: '\\to (→)', preview: '→', insert: '\\to', keywords: ['dentoi', 'muiten', 'to', 'tienve'] },
+        { cmd: '\\forall', label: '\\forall (∀)', preview: '∀', insert: '\\forall', keywords: ['moithuoc', 'moiphantu', 'forall'] },
+        { cmd: '\\exists', label: '\\exists (∃)', preview: '∃', insert: '\\exists', keywords: ['tontai', 'exists'] },
+
+        // Tập hợp & Số
+        { cmd: '\\in', label: '\\in (∈)', preview: '∈', insert: '\\in', keywords: ['thuoc', 'in'] },
+        { cmd: '\\notin', label: '\\notin (∉)', preview: '∉', insert: '\\notin', keywords: ['khongthuoc', 'notin'] },
+        { cmd: '\\subset', label: '\\subset (⊂)', preview: '⊂', insert: '\\subset', keywords: ['tapcon', 'con', 'subset'] },
+        { cmd: '\\cup', label: '\\cup (∪)', preview: '∪', insert: '\\cup', keywords: ['hop', 'cup'] },
+        { cmd: '\\cap', label: '\\cap (∩)', preview: '∩', insert: '\\cap', keywords: ['giao', 'cap'] },
+        { cmd: '\\emptyset', label: '\\emptyset (∅)', preview: '∅', insert: '\\emptyset', keywords: ['rong', 'tapconrong', 'empty', 'emptyset'] },
+        { cmd: '\\mathbb{R}', label: '\\mathbb{R}', preview: 'ℝ', insert: '\\mathbb{R}', keywords: ['sothuc', 'tapR', 'R'] },
+        { cmd: '\\mathbb{N}', label: '\\mathbb{N}', preview: 'ℕ', insert: '\\mathbb{N}', keywords: ['sotunhien', 'tapN', 'N'] },
+        { cmd: '\\mathbb{Z}', label: '\\mathbb{Z}', preview: 'ℤ', insert: '\\mathbb{Z}', keywords: ['songuyen', 'tapZ', 'Z'] },
+
+        // Hình học & Vector
+        { cmd: '\\vec', label: '\\vec{v}', preview: 'v⃗', insert: '\\vec{v}', keywords: ['vec', 'vecto', 'vt', 'vector'] },
+        { cmd: '\\overrightarrow', label: '\\overrightarrow{AB}', preview: 'AB⃗', insert: '\\overrightarrow{AB}', keywords: ['vectoab', 'overrightarrow'] },
+        { cmd: '\\perp', label: '\\perp (⊥)', preview: '⊥', insert: '\\perp', keywords: ['vuonggoc', 'vg', 'perp'] },
+        { cmd: '\\parallel', label: '\\parallel (∥)', preview: '∥', insert: '\\parallel', keywords: ['songsong', 'ss', 'parallel'] },
+        { cmd: '\\angle', label: '\\angle (∠)', preview: '∠', insert: '\\angle', keywords: ['goc', 'angle'] },
+        { cmd: '\\triangle', label: '\\triangle (△)', preview: '△', insert: '\\triangle', keywords: ['tamgiac', 'tg', 'triangle'] },
+        { cmd: '^\\circ', label: '^\\circ (độ)', preview: '°', insert: '^\\circ', keywords: ['do', 'degree', 'gocdo'] },
+
+        // Lượng giác
+        { cmd: '\\sin', label: '\\sin{x}', preview: 'sin', insert: '\\sin{x}', keywords: ['sin', 'sinh', 'sìn'] },
+        { cmd: '\\cos', label: '\\cos{x}', preview: 'cos', insert: '\\cos{x}', keywords: ['cos', 'cosh', 'cót'] },
+        { cmd: '\\tan', label: '\\tan{x}', preview: 'tan', insert: '\\tan{x}', keywords: ['tan', 'tang', 'tán'] },
+        { cmd: '\\cot', label: '\\cot{x}', preview: 'cot', insert: '\\cot{x}', keywords: ['cot', 'cotg', 'cót'] },
+
+        // Chữ cái Hy Lạp
+        { cmd: '\\alpha', label: '\\alpha (α)', preview: 'α', insert: '\\alpha', keywords: ['alpha', 'anpha', 'alp', 'alphâ'] },
+        { cmd: '\\beta', label: '\\beta (β)', preview: 'β', insert: '\\beta', keywords: ['beta', 'be-ta'] },
+        { cmd: '\\gamma', label: '\\gamma (γ)', preview: 'γ', insert: '\\gamma', keywords: ['gamma'] },
+        { cmd: '\\delta', label: '\\delta (δ)', preview: 'δ', insert: '\\delta', keywords: ['delta'] },
+        { cmd: '\\Delta', label: '\\Delta (Δ)', preview: 'Δ', insert: '\\Delta', keywords: ['delta', 'tamgiacdelta'] },
+        { cmd: '\\epsilon', label: '\\epsilon (ε)', preview: 'ε', insert: '\\epsilon', keywords: ['epsilon', 'ep'] },
+        { cmd: '\\theta', label: '\\theta (θ)', preview: 'θ', insert: '\\theta', keywords: ['theta', 'teta'] },
+        { cmd: '\\lambda', label: '\\lambda (λ)', preview: 'λ', insert: '\\lambda', keywords: ['lambda', 'lamda'] },
+        { cmd: '\\pi', label: '\\pi (π)', preview: 'π', insert: '\\pi', keywords: ['pi', 'sopi'] },
+        { cmd: '\\sigma', label: '\\sigma (σ)', preview: 'σ', insert: '\\sigma', keywords: ['sigma'] },
+        { cmd: '\\omega', label: '\\omega (ω)', preview: 'ω', insert: '\\omega', keywords: ['omega'] },
+        { cmd: '\\Omega', label: '\\Omega (Ω)', preview: 'Ω', insert: '\\Omega', keywords: ['omega', 'dienom'] },
+
+        // Hệ phương trình & Ma trận
+        { cmd: '\\cases', label: '\\begin{cases}', preview: '{..', insert: '\\begin{cases} x = 1 \\\\ y = 2 \\end{cases}', keywords: ['he', 'hephuongtrinh', 'hpt', 'cases'] },
+        { cmd: '\\matrix', label: '\\begin{pmatrix}', preview: '[..]', insert: '\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}', keywords: ['matran', 'matrix', 'mt'] },
+        { cmd: '\\binom', label: '\\binom{n}{k}', preview: 'C(n,k)', insert: '\\binom{n}{k}', keywords: ['tohop', 'binom', 'chapk'] },
+
+        // Định dạng văn bản
+        { cmd: '\\textbf', label: '\\textbf{in đậm}', preview: 'Bold', insert: '\\textbf{in đậm}', keywords: ['dam', 'indam', 'bold', 'textbf'] },
+        { cmd: '\\textit', label: '\\textit{in nghiêng}', preview: 'Italic', insert: '\\textit{in nghiêng}', keywords: ['nghieng', 'innghieng', 'italic', 'textit'] },
+        { cmd: '\\underline', label: '\\underline{gạch chân}', preview: 'Underline', insert: '\\underline{gạch chân}', keywords: ['gachchan', 'underline'] }
     ];
 
     let suggestState = {
         active: false,
+        targetType: 'text',     // 'text' | 'math'
         items: [],
         highlightIndex: 0,
         query: '',
         textNode: null,
         cursorOffset: 0,
-        activeEditor: null
+        activeEditor: null,
+        activeMf: null,
+        activeBlock: null
     };
 
+    function filterLatexSymbols(rawQuery) {
+        const cleanQuery = removeVietnameseTones(rawQuery);
+        if (!cleanQuery) return LATEX_SYMBOLS.slice(0, 10);
+
+        return LATEX_SYMBOLS.filter(item => {
+            const cmdClean = removeVietnameseTones(item.cmd.replace('\\', ''));
+            if (cmdClean.startsWith(cleanQuery)) return true;
+            if (item.keywords && item.keywords.some(k => removeVietnameseTones(k).startsWith(cleanQuery))) return true;
+            return false;
+        });
+    }
+
+    // Gợi ý cho Math Field (Khối công thức MathLive / MathType)
+    function handleMathFieldSuggest(mf, block, forced = false) {
+        const val = mf.value || (typeof mf.getValue === 'function' ? mf.getValue() : '');
+        let query = '';
+
+        if (forced) {
+            query = '';
+        } else {
+            const matchCmd = val.match(/\\([a-zA-Z\u00C0-\u024F\u1EA0-\u1EF9]*)$/);
+            if (matchCmd) {
+                query = matchCmd[1];
+            } else {
+                const matchWord = val.match(/([a-zA-Z\u00C0-\u024F\u1EA0-\u1EF9]{2,})$/);
+                if (matchWord) {
+                    query = matchWord[1];
+                } else {
+                    hideSuggestPopup();
+                    return;
+                }
+            }
+        }
+
+        const matches = filterLatexSymbols(query);
+        if (matches.length === 0) {
+            hideSuggestPopup();
+            return;
+        }
+
+        suggestState.active = true;
+        suggestState.targetType = 'math';
+        suggestState.items = matches.slice(0, 8);
+        suggestState.highlightIndex = 0;
+        suggestState.query = query;
+        suggestState.activeMf = mf;
+        suggestState.activeBlock = block;
+
+        const rect = mf.getBoundingClientRect();
+        renderSuggestPopupDOM(rect.left, rect.bottom + 6);
+    }
+
+    // Gợi ý cho Khối Văn bản thường (contenteditable)
     function handleEditorSuggest(editor) {
         const sel = window.getSelection();
         if (!sel || !sel.rangeCount || sel.isCollapsed === false) {
@@ -643,33 +851,48 @@
         }
 
         const textBeforeCaret = node.textContent.slice(0, range.startOffset);
-        const match = textBeforeCaret.match(/\\([a-zA-Z]*)$/);
+        // Hỗ trợ cả dấu tiếng Việt sau dấu \ (như \sìn, \vẹc, \căn, \phân, \tổng)
+        const match = textBeforeCaret.match(/\\([a-zA-Z\u00C0-\u024F\u1EA0-\u1EF9]*)$/);
 
         if (!match) {
             hideSuggestPopup();
             return;
         }
 
-        const query = match[1].toLowerCase();
-        const matches = LATEX_SYMBOLS.filter(item => item.cmd.slice(1).toLowerCase().startsWith(query));
-
+        const matches = filterLatexSymbols(match[1]);
         if (matches.length === 0) {
             hideSuggestPopup();
             return;
         }
 
         suggestState.active = true;
+        suggestState.targetType = 'text';
         suggestState.items = matches.slice(0, 8);
         suggestState.highlightIndex = 0;
-        suggestState.query = match[0];
+        suggestState.query = match[0]; // Gồm cả dấu \
         suggestState.textNode = node;
         suggestState.cursorOffset = range.startOffset;
         suggestState.activeEditor = editor;
 
-        showSuggestPopup(range);
+        const rect = range.getBoundingClientRect();
+        renderSuggestPopupDOM(rect.left, rect.bottom + 6);
     }
 
-    function showSuggestPopup(range) {
+    function handleEditorSuggestForced(editor, block) {
+        suggestState.active = true;
+        suggestState.targetType = 'text';
+        suggestState.items = LATEX_SYMBOLS.slice(0, 8);
+        suggestState.highlightIndex = 0;
+        suggestState.query = '';
+        suggestState.textNode = null;
+        suggestState.activeEditor = editor;
+        suggestState.activeBlock = block;
+
+        const rect = editor.getBoundingClientRect();
+        renderSuggestPopupDOM(rect.left, rect.bottom + 6);
+    }
+
+    function renderSuggestPopupDOM(posX, posY) {
         const popup = document.getElementById('latex-suggest-popup');
         if (!popup) return;
 
@@ -688,11 +911,8 @@
             popup.appendChild(div);
         });
 
-        const rect = range.getBoundingClientRect();
-        const posX = Math.max(10, Math.min(window.innerWidth - 240, rect.left));
-        const posY = rect.bottom + 6;
-
-        popup.style.left = `${posX}px`;
+        const clampedX = Math.max(10, Math.min(window.innerWidth - 260, posX));
+        popup.style.left = `${clampedX}px`;
         popup.style.top = `${posY}px`;
         popup.classList.add('active');
     }
@@ -703,7 +923,7 @@
         if (popup) popup.classList.remove('active');
     }
 
-    function handleSuggestKeydown(e, editor, block) {
+    function handleSuggestKeydown(e, el, block) {
         if (!suggestState.active) return;
 
         if (e.key === 'ArrowDown') {
@@ -733,14 +953,44 @@
     }
 
     function insertSuggestion(item) {
-        const { textNode, cursorOffset, query } = suggestState;
+        // 1. Nếu đang gõ trong Math Field (MathLive)
+        if (suggestState.targetType === 'math' && suggestState.activeMf) {
+            const mf = suggestState.activeMf;
+            if (suggestState.query) {
+                for (let i = 0; i < suggestState.query.length; i++) {
+                    if (typeof mf.executeCommand === 'function') {
+                        mf.executeCommand('deleteBackward');
+                    }
+                }
+            }
+            if (typeof mf.executeCommand === 'function') {
+                mf.executeCommand(['insert', item.insert]);
+            } else {
+                mf.value = (mf.value || '') + item.insert;
+            }
+            if (suggestState.activeBlock) {
+                suggestState.activeBlock.content = mf.value;
+            }
+            updateLatexCode();
+            hideSuggestPopup();
+            mf.focus();
+            return;
+        }
+
+        // 2. Nếu đang gõ trong Text Editor
+        const { textNode, cursorOffset, query, activeEditor } = suggestState;
         if (!textNode || !textNode.parentNode) {
+            if (activeEditor) {
+                activeEditor.innerHTML += (item.cmd.startsWith('\\text') ? item.insert : ` $${item.insert}$ `);
+                syncCurrentActiveBlockContent();
+                updateLatexCode();
+            }
             hideSuggestPopup();
             return;
         }
 
         const fullText = textNode.textContent;
-        const beforeMatch = fullText.slice(0, cursorOffset - query.length);
+        const beforeMatch = fullText.slice(0, cursorOffset - (query ? query.length : 0));
         const afterMatch = fullText.slice(cursorOffset);
 
         let insertText = '';
@@ -801,67 +1051,115 @@
     function generateTikzCode() {
         if (state.blocks.length === 0) return '% Bảng vẽ đang trống.';
 
-        let header = '';
-        let footer = '';
-
+        let code = '';
         if (state.canvasMode === 'a4') {
-            header = `\\documentclass[a4paper,12pt]{article}\n\\usepackage[margin=2cm]{geometry}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\usepackage{tikz}\n\\begin{document}\n\\noindent\n\\begin{tikzpicture}[x=1mm, y=1mm]\n`;
-            footer = `\\end{tikzpicture}\n\\end{document}`;
+            code += `\\documentclass[a4paper,12pt]{article}\n\\usepackage[margin=2cm]{geometry}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\usepackage{tikz}\n\\begin{document}\n\\noindent\n`;
+            state.pages.forEach((page, pIdx) => {
+                const pageBlocks = state.blocks.filter(b => (b.pageId || 1) === page.id);
+                if (pIdx > 0) code += `\n\\newpage\n\\noindent\n`;
+                code += `% === ${page.title} ===\n\\begin{tikzpicture}[x=1mm, y=1mm]\n`;
+                pageBlocks.forEach(b => {
+                    const xMm = (b.x / 3.78).toFixed(1);
+                    const yMm = (-b.y / 3.78).toFixed(1);
+                    if (b.type === 'math') {
+                        code += `  \\node[anchor=north west] at (${xMm}, ${yMm}) { $\\displaystyle ${b.content}$ };\n`;
+                    } else if (b.type === 'box') {
+                        const wMm = (b.w / 3.78).toFixed(1);
+                        const hMm = (b.h / 3.78).toFixed(1);
+                        code += `  \\draw[dashed, color=cyan!70!black, rounded corners=2mm] (${xMm}, ${yMm}) rectangle ++(${wMm}, -${hMm});\n`;
+                    } else {
+                        const cleanText = convertHtmlToLatex(b.content);
+                        code += `  \\node[anchor=north west, align=left, text width=${(b.w / 3.78).toFixed(1)}mm] at (${xMm}, ${yMm}) { ${cleanText} };\n`;
+                    }
+                });
+                code += `\\end{tikzpicture}\n`;
+            });
+            code += `\\end{document}`;
         } else if (state.canvasMode === 'beamer') {
-            header = `\\documentclass[aspectratio=169]{beamer}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\usepackage{tikz}\n\\usetheme{Madrid}\n\\begin{document}\n\\begin{frame}{Slide Beamer}\n\\centering\n\\begin{tikzpicture}[x=1mm, y=1mm]\n`;
-            footer = `\\end{tikzpicture}\n\\end{frame}\n\\end{document}`;
+            code += `\\documentclass[aspectratio=169]{beamer}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\usepackage{tikz}\n\\usetheme{Madrid}\n\\begin{document}\n`;
+            state.pages.forEach((page) => {
+                const pageBlocks = state.blocks.filter(b => (b.pageId || 1) === page.id);
+                code += `\n\\begin{frame}{${page.title}}\n\\centering\n\\begin{tikzpicture}[x=1mm, y=1mm]\n`;
+                pageBlocks.forEach(b => {
+                    const xMm = (b.x / 3.78).toFixed(1);
+                    const yMm = (-b.y / 3.78).toFixed(1);
+                    if (b.type === 'math') {
+                        code += `  \\node[anchor=north west] at (${xMm}, ${yMm}) { $\\displaystyle ${b.content}$ };\n`;
+                    } else if (b.type === 'box') {
+                        const wMm = (b.w / 3.78).toFixed(1);
+                        const hMm = (b.h / 3.78).toFixed(1);
+                        code += `  \\draw[dashed, color=cyan!70!black, rounded corners=2mm] (${xMm}, ${yMm}) rectangle ++(${wMm}, -${hMm});\n`;
+                    } else {
+                        const cleanText = convertHtmlToLatex(b.content);
+                        code += `  \\node[anchor=north west, align=left, text width=${(b.w / 3.78).toFixed(1)}mm] at (${xMm}, ${yMm}) { ${cleanText} };\n`;
+                    }
+                });
+                code += `\\end{tikzpicture}\n\\end{frame}\n`;
+            });
+            code += `\\end{document}`;
         } else {
-            header = `\\documentclass{standalone}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\usepackage{tikz}\n\\begin{document}\n\\begin{tikzpicture}[x=1mm, y=1mm]\n`;
-            footer = `\\end{tikzpicture}\n\\end{document}`;
+            code += `\\documentclass{standalone}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\usepackage{tikz}\n\\begin{document}\n`;
+            state.pages.forEach((page) => {
+                const pageBlocks = state.blocks.filter(b => (b.pageId || 1) === page.id);
+                code += `\\begin{tikzpicture}[x=1mm, y=1mm]\n`;
+                pageBlocks.forEach(b => {
+                    const xMm = (b.x / 3.78).toFixed(1);
+                    const yMm = (-b.y / 3.78).toFixed(1);
+                    if (b.type === 'math') {
+                        code += `  \\node[anchor=north west] at (${xMm}, ${yMm}) { $\\displaystyle ${b.content}$ };\n`;
+                    } else if (b.type === 'box') {
+                        const wMm = (b.w / 3.78).toFixed(1);
+                        const hMm = (b.h / 3.78).toFixed(1);
+                        code += `  \\draw[dashed, color=cyan!70!black, rounded corners=2mm] (${xMm}, ${yMm}) rectangle ++(${wMm}, -${hMm});\n`;
+                    } else {
+                        const cleanText = convertHtmlToLatex(b.content);
+                        code += `  \\node[anchor=north west, align=left, text width=${(b.w / 3.78).toFixed(1)}mm] at (${xMm}, ${yMm}) { ${cleanText} };\n`;
+                    }
+                });
+                code += `\\end{tikzpicture}\n`;
+            });
+            code += `\\end{document}`;
         }
-
-        let code = header;
-        state.blocks.forEach(b => {
-            const xMm = (b.x / 3.78).toFixed(1);
-            const yMm = (-b.y / 3.78).toFixed(1);
-
-            if (b.type === 'math') {
-                code += `  \\node[anchor=north west] at (${xMm}, ${yMm}) { $\\displaystyle ${b.content}$ };\n`;
-            } else if (b.type === 'box') {
-                const wMm = (b.w / 3.78).toFixed(1);
-                const hMm = (b.h / 3.78).toFixed(1);
-                code += `  \\draw[dashed, color=cyan!70!black, rounded corners=2mm] (${xMm}, ${yMm}) rectangle ++(${wMm}, -${hMm});\n`;
-            } else {
-                const cleanText = convertHtmlToLatex(b.content);
-                code += `  \\node[anchor=north west, align=left, text width=${(b.w / 3.78).toFixed(1)}mm] at (${xMm}, ${yMm}) { ${cleanText} };\n`;
-            }
-        });
-
-        code += footer;
         return code;
     }
 
     function generateFlowCode() {
         if (state.blocks.length === 0) return '% Chưa có nội dung để xuất.';
 
-        const sorted = [...state.blocks].sort((a, b) => {
-            if (Math.abs(a.y - b.y) < 25) return a.x - b.x;
-            return a.y - b.y;
-        });
-
         let docClass = '\\documentclass{article}';
         if (state.canvasMode === 'a4') docClass = '\\documentclass[a4paper,12pt]{article}\n\\usepackage[margin=2cm]{geometry}';
         if (state.canvasMode === 'beamer') docClass = '\\documentclass[aspectratio=169]{beamer}\n\\usetheme{Madrid}';
 
         let code = `${docClass}\n\\usepackage{amsmath,amssymb,amsfonts,xcolor}\n\\begin{document}\n\n`;
-        if (state.canvasMode === 'beamer') code += `\\begin{frame}{Slide Beamer}\n\n`;
 
-        sorted.forEach(b => {
-            if (b.type === 'math') {
-                code += `\\begin{equation*}\n  ${b.content}\n\\end{equation*}\n\n`;
-            } else if (b.type === 'box') {
-                code += `\\begin{tcolorbox}[title=${b.content}]\n\\end{tcolorbox}\n\n`;
-            } else {
-                code += `${convertHtmlToLatex(b.content)}\n\n`;
+        state.pages.forEach((page, pIdx) => {
+            const pageBlocks = state.blocks.filter(b => (b.pageId || 1) === page.id);
+            const sorted = [...pageBlocks].sort((a, b) => {
+                if (Math.abs(a.y - b.y) < 25) return a.x - b.x;
+                return a.y - b.y;
+            });
+
+            if (state.canvasMode === 'beamer') {
+                code += `\\begin{frame}{${page.title}}\n\n`;
+            } else if (pIdx > 0) {
+                code += `\\newpage\n\n`;
+            }
+
+            sorted.forEach(b => {
+                if (b.type === 'math') {
+                    code += `\\begin{equation*}\n  ${b.content}\n\\end{equation*}\n\n`;
+                } else if (b.type === 'box') {
+                    code += `\\begin{tcolorbox}[title=${b.content}]\n\\end{tcolorbox}\n\n`;
+                } else {
+                    code += `${convertHtmlToLatex(b.content)}\n\n`;
+                }
+            });
+
+            if (state.canvasMode === 'beamer') {
+                code += `\\end{frame}\n\n`;
             }
         });
 
-        if (state.canvasMode === 'beamer') code += `\\end{frame}\n\n`;
         code += `\\end{document}`;
         return code;
     }
@@ -1057,7 +1355,12 @@
 
     // === History & Persistence ===
     function saveHistoryState() {
-        const snapshot = JSON.stringify(state.blocks);
+        const data = {
+            pages: state.pages,
+            currentPageId: state.currentPageId,
+            blocks: state.blocks
+        };
+        const snapshot = JSON.stringify(data);
         if (state.historyIndex >= 0 && state.history[state.historyIndex] === snapshot) return;
 
         state.history = state.history.slice(0, state.historyIndex + 1);
@@ -1070,16 +1373,30 @@
         }
 
         try {
-            localStorage.setItem('smp-extra-latex-mathcha-blocks', snapshot);
+            localStorage.setItem('smp-extra-latex-mathcha-pages', snapshot);
+        } catch (e) { }
+    }
+
+    function applySnapshot(snapshotStr) {
+        try {
+            const parsed = JSON.parse(snapshotStr);
+            if (Array.isArray(parsed)) {
+                state.blocks = parsed;
+            } else if (parsed && typeof parsed === 'object') {
+                state.blocks = parsed.blocks || [];
+                state.pages = parsed.pages || [{ id: 1, title: 'Trang 1' }];
+                state.currentPageId = parsed.currentPageId || state.pages[0].id;
+            }
+            renderPageTabs();
+            renderAllBlocks();
+            updateLatexCode();
         } catch (e) { }
     }
 
     window.undo = function () {
         if (state.historyIndex > 0) {
             state.historyIndex--;
-            state.blocks = JSON.parse(state.history[state.historyIndex]);
-            renderAllBlocks();
-            updateLatexCode();
+            applySnapshot(state.history[state.historyIndex]);
             showToast('Hoàn tác (Undo)');
         }
     };
@@ -1087,22 +1404,31 @@
     window.redo = function () {
         if (state.historyIndex < state.history.length - 1) {
             state.historyIndex++;
-            state.blocks = JSON.parse(state.history[state.historyIndex]);
-            renderAllBlocks();
-            updateLatexCode();
+            applySnapshot(state.history[state.historyIndex]);
             showToast('Làm lại (Redo)');
         }
     };
 
     function loadSavedState() {
         try {
-            const saved = localStorage.getItem('smp-extra-latex-mathcha-blocks');
+            const saved = localStorage.getItem('smp-extra-latex-mathcha-pages') || localStorage.getItem('smp-extra-latex-mathcha-blocks');
             if (saved) {
-                state.blocks = JSON.parse(saved);
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed)) {
+                    state.blocks = parsed;
+                    state.pages = [{ id: 1, title: 'Trang 1' }];
+                    state.currentPageId = 1;
+                } else if (parsed && typeof parsed === 'object') {
+                    state.blocks = parsed.blocks || [];
+                    state.pages = parsed.pages && parsed.pages.length ? parsed.pages : [{ id: 1, title: 'Trang 1' }];
+                    state.currentPageId = parsed.currentPageId || state.pages[0].id;
+                }
                 return;
             }
         } catch (e) { }
         state.blocks = []; // Clean empty by default
+        state.pages = [{ id: 1, title: 'Trang 1' }];
+        state.currentPageId = 1;
     }
 
     // === Keyboard Shortcuts ===

@@ -375,22 +375,25 @@ body {
     z-index: 1000;
 }
 
-/* Canvas Viewport (Center Stage - No inner scrollbars!) */
+/* Canvas Viewport (Center Stage - Cuộn mượt mà như cũ, hỗ trợ nhiều trang) */
 .mathcha-canvas-viewport {
     flex: 1;
     position: relative;
-    height: calc(100vh - 130px);
+    height: calc(100vh - 180px);
+    min-height: 600px;
     background-color: var(--el-bg);
     border: 1px solid var(--el-ribbon-border);
     border-radius: 10px;
-    overflow: hidden; /* Bỏ cuộn lồng nhau */
+    overflow-y: auto;
+    overflow-x: auto;
     cursor: default;
     user-select: none;
     box-sizing: border-box;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    padding: 16px;
+    justify-content: flex-start;
+    padding: 24px 20px 60px;
 }
 
 .mathcha-canvas-viewport.grid-dots {
@@ -409,6 +412,140 @@ body {
     background-image: none;
 }
 
+/* Page Navigation Strip (Thanh Điều Hướng & Quản Lý Trang) */
+.mathcha-page-strip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--el-ribbon-bg);
+    border: 1px solid var(--el-ribbon-border);
+    border-radius: 8px;
+    padding: 6px 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    flex-wrap: wrap;
+}
+
+.page-nav-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.page-indicator {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--el-text);
+    padding: 2px 8px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.page-tabs-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    max-width: 50vw;
+}
+
+.page-tab-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--el-text-muted);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.page-tab-item:hover {
+    color: var(--el-text);
+    border-color: var(--accent-cyan);
+    background: rgba(92, 225, 230, 0.08);
+}
+
+.page-tab-item.active {
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+    background: rgba(92, 225, 230, 0.16);
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(92, 225, 230, 0.2);
+}
+
+.page-add-btn, .page-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(92, 225, 230, 0.1);
+    border: 1px solid rgba(92, 225, 230, 0.3);
+    color: var(--accent-cyan);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.page-add-btn:hover, .page-nav-btn:hover {
+    background: rgba(92, 225, 230, 0.22);
+    border-color: var(--accent-cyan);
+    transform: translateY(-1px);
+}
+
+.page-del-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+    font-size: 0.76rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-left: auto;
+}
+
+.page-del-btn:hover {
+    background: rgba(239, 68, 68, 0.22);
+    border-color: #ef4444;
+}
+
+.page-bottom-add-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+    margin-bottom: 24px;
+    padding: 10px 28px;
+    border-radius: 24px;
+    background: rgba(92, 225, 230, 0.06);
+    border: 1.5px dashed rgba(92, 225, 230, 0.45);
+    color: var(--accent-cyan);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.page-bottom-add-btn:hover {
+    background: rgba(92, 225, 230, 0.16);
+    border-color: var(--accent-cyan);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(92, 225, 230, 0.25);
+}
+
 /* Artboard Sheet Container */
 .artboard {
     position: relative;
@@ -416,42 +553,44 @@ body {
     box-sizing: border-box;
 }
 
-/* 1. Bảng Vẽ (Drawing Box Frame - Hiện Cái Ô Rõ Ràng) */
+/* 1. Bảng Vẽ (Drawing Box Frame) */
 .artboard.mode-canvas {
-    width: 920px;
+    width: 960px;
     max-width: 95%;
-    height: 520px;
+    min-height: 560px;
     background: var(--el-sheet-bg);
     border: 2px dashed var(--accent-cyan);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
-    margin: auto;
+    margin: 0 auto 24px;
+    flex-shrink: 0;
 }
 
-/* 2. A4 Paper Mode (Document Centric Sheet) */
+/* 2. Khổ Giấy A4 (Chuẩn Tờ Giấy Tự Nhiên Như Cũ) */
 .artboard.mode-a4 {
     width: 820px;
-    max-width: 92%;
-    height: calc(100% - 20px);
-    max-height: 820px;
-    min-height: 520px;
+    max-width: 95%;
+    min-height: 1140px;
     background: var(--el-sheet-bg);
     border: 1px solid var(--el-sheet-border);
     box-shadow: var(--el-sheet-shadow);
     border-radius: 6px;
-    margin: auto;
+    margin: 0 auto 24px;
+    flex-shrink: 0;
 }
 
-/* 3. Beamer Slide Mode (16:9 Presentation Frame) */
+/* 3. Slide Beamer (16:9 Presentation Frame) */
 .artboard.mode-beamer {
     width: 960px;
     max-width: 95%;
     height: 540px;
+    min-height: 540px;
     background: var(--el-sheet-bg);
     border: 2px solid var(--accent-cyan);
     box-shadow: var(--el-sheet-shadow);
     border-radius: 8px;
-    margin: auto;
+    margin: 0 auto 24px;
+    flex-shrink: 0;
 }
 
 .sheet-badge {
@@ -549,6 +688,18 @@ body {
 
 .block-btn-mini:hover { color: var(--accent-cyan); }
 .block-btn-mini.del:hover { color: #ef4444; }
+.block-btn-mini.btn-suggest-trigger {
+    color: var(--accent-cyan);
+    font-weight: 700;
+    font-size: 0.72rem;
+    padding: 0 4px;
+    border-radius: 3px;
+    background: rgba(92, 225, 230, 0.12);
+}
+.block-btn-mini.btn-suggest-trigger:hover {
+    background: var(--accent-cyan);
+    color: #0b1120;
+}
 
 .block-body {
     padding: 4px 8px;
