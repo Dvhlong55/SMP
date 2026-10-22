@@ -38,7 +38,7 @@
     <!-- Shared SMP Styles -->
     <link class="theme-link" rel="stylesheet" href="/core/css/shared.css?v=38">
     <!-- Extra LaTeX Modern Mathcha Styles -->
-    <link rel="stylesheet" href="/tools/extra-latex/extra-latex.css?v=8">
+    <link rel="stylesheet" href="/tools/extra-latex/extra-latex.css?v=9">
     <link rel="icon" type="image/png" href="/core/image/favicon.png">
 </head>
 <body>
@@ -267,8 +267,20 @@
         </div>
     </div>
 
-    <!-- LaTeX Autocomplete Suggestion Popup -->
-    <div class="latex-suggest-popup" id="latex-suggest-popup"></div>
+    <!-- LaTeX Autocomplete Suggestion Popup (Mathcha Style List) -->
+    <div class="latex-suggest-popup" id="latex-suggest-popup">
+        <div class="suggest-search-bar">
+            <span class="suggest-search-icon">🔍</span>
+            <input type="text" class="suggest-search-input" id="suggest-search-input" placeholder="Gõ để lọc: sq, can, frac, ps, sum, he..." autocomplete="off" spellcheck="false">
+            <button type="button" class="suggest-close-btn" onclick="hideSuggestPopup()" title="Đóng [Esc]">✕</button>
+        </div>
+        <div class="suggest-list-container" id="suggest-list-container"></div>
+        <div class="suggest-footer-hint">
+            <span><b>↵ Enter</b> chọn</span>
+            <span><b>↑↓</b> di chuyển</span>
+            <span><b>Esc</b> đóng</span>
+        </div>
+    </div>
 
     <!-- Toast Notification -->
     <div class="el-toast" id="el-toast">✓ Đã copy thành công</div>
@@ -278,6 +290,6 @@
     <script src="/core/js/sidebar-data.js"></script>
     <script src="/core/js/layout.js"></script>
     <!-- Extra LaTeX Main Script -->
-    <script src="/tools/extra-latex/extra-latex.js?v=8"></script>
+    <script src="/tools/extra-latex/extra-latex.js?v=9"></script>
 </body>
 </html>

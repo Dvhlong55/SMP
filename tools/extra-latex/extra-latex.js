@@ -47,6 +47,7 @@
         renderAllBlocks();
         saveHistoryState();
         updateLatexCode();
+        initSuggestEvents();
 
         // Keyboard shortcuts
         document.addEventListener('keydown', handleGlobalKeydown);
@@ -252,18 +253,20 @@
             div.classList.add('selected');
         }
 
-        // Mini Hover Handle Bar (Sleek Mathcha Style)
+        // Action Toolbar on top of block (Rõ ràng, dễ nhìn, dễ bấm)
         const handleBar = document.createElement('div');
         handleBar.className = 'block-handle-bar';
         
-        let typeIcon = block.type === 'math' ? '∑' : (block.type === 'box' ? '▢' : 'T');
+        let typeIcon = block.type === 'math' ? '∑ Toán' : (block.type === 'box' ? '▢ Khung' : 'T Chữ');
         handleBar.innerHTML = `
-            <span class="block-handle-drag" title="Kéo để di chuyển">⠿ ${typeIcon}</span>
-            <button class="block-btn-mini btn-suggest-trigger" title="Gợi ý ký hiệu LaTeX (Tiếng Việt & Lệnh)" data-action="suggest">∑?</button>
-            <button class="block-btn-mini" title="Nhân đôi" data-action="duplicate">❐</button>
-            <button class="block-btn-mini" title="Lên trên" data-action="layer-up">▲</button>
-            <button class="block-btn-mini" title="Xuống dưới" data-action="layer-down">▼</button>
-            <button class="block-btn-mini del" title="Xóa" data-action="delete">✕</button>
+            <span class="block-handle-drag" title="Giữ chuột và kéo để di chuyển khối">⠿ ${typeIcon}</span>
+            <button type="button" class="block-bar-btn btn-suggest-pill" title="Mở danh sách gợi ý công thức LaTeX (\)" data-action="suggest">
+                <span style="font-weight:800;">∑</span> Gợi ý \\
+            </button>
+            <button type="button" class="block-bar-btn" title="Nhân đôi khối" data-action="duplicate">❐ Nhân đôi</button>
+            <button type="button" class="block-bar-btn" title="Đưa lên lớp trên" data-action="layer-up">▲</button>
+            <button type="button" class="block-bar-btn" title="Đưa xuống lớp dưới" data-action="layer-down">▼</button>
+            <button type="button" class="block-bar-btn btn-del" title="Xóa khối này" data-action="delete">✕</button>
         `;
 
         // Body
@@ -280,21 +283,13 @@
             mf.addEventListener('input', () => {
                 block.content = mf.value || (typeof mf.getValue === 'function' ? mf.getValue() : '');
                 updateLatexCode();
-                handleMathFieldSuggest(mf, block);
             });
             mf.addEventListener('keydown', (e) => {
-                if (suggestState.active) {
-                    if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === 'Tab' || e.key === 'Escape') {
-                        handleSuggestKeydown(e, mf, block);
-                        return;
-                    }
-                }
                 if (e.key === '\\' || e.code === 'Backslash') {
-                    setTimeout(() => handleMathFieldSuggest(mf, block, true), 20);
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openSuggestionList(mf, block, 'math', '\\');
                 }
-            });
-            mf.addEventListener('blur', () => {
-                setTimeout(hideSuggestPopup, 250);
             });
             body.appendChild(mf);
         } else {
@@ -306,13 +301,7 @@
             editor.addEventListener('input', () => {
                 block.content = editor.innerHTML;
                 updateLatexCode();
-                handleEditorSuggest(editor);
-            });
-            editor.addEventListener('keydown', (e) => {
-                handleSuggestKeydown(e, editor, block);
-            });
-            editor.addEventListener('blur', () => {
-                setTimeout(hideSuggestPopup, 200);
+                handleEditorSuggest(editor, block);
             });
             body.appendChild(editor);
         }
@@ -332,13 +321,13 @@
 
     function setupBlockEvents(el, block) {
         el.addEventListener('pointerdown', (e) => {
-            if (e.target.closest('.block-btn-mini')) return;
+            if (e.target.closest('.block-bar-btn')) return;
             selectBlock(block.id);
         });
 
         const handleBar = el.querySelector('.block-handle-bar');
         handleBar.addEventListener('click', (e) => {
-            const btn = e.target.closest('.block-btn-mini');
+            const btn = e.target.closest('.block-bar-btn');
             if (!btn) return;
             e.stopPropagation();
             const act = btn.getAttribute('data-action');
@@ -357,12 +346,13 @@
             } else if (act === 'suggest') {
                 if (block.type === 'math') {
                     const mf = el.querySelector('math-field');
-                    if (mf) {
-                        mf.focus();
-                        handleMathFieldSuggest(mf, block, true);
-                    }
+                    openSuggestionList(mf || el, block, 'math', '');
                 } else {
                     const ed = el.querySelector('.text-editor-area');
+                    openSuggestionList(ed || el, block, 'text', '');
+                }
+            }
+        });
                     if (ed) {
                         ed.focus();
                         handleEditorSuggestForced(ed, block);
@@ -701,86 +691,86 @@
     // === LaTeX Autocomplete Database (Hỗ trợ tiếng Việt & Lệnh Mathcha/MathType) ===
     const LATEX_SYMBOLS = [
         // Phân số & Căn thức
-        { cmd: '\\frac', label: '\\frac{a}{b}', preview: 'a/b', insert: '\\frac{a}{b}', keywords: ['ps', 'phan', 'phanso', 'chia', 'fraction', 'frac'] },
-        { cmd: '\\sqrt', label: '\\sqrt{x}', preview: '√x', insert: '\\sqrt{x}', keywords: ['can', 'canbac2', 'canthuc', 'sqrt', 'root'] },
-        { cmd: '\\sqrt[n]', label: '\\sqrt[n]{x}', preview: 'ⁿ√x', insert: '\\sqrt[n]{x}', keywords: ['cann', 'canbacn', 'canso'] },
-        { cmd: '\\cfrac', label: '\\cfrac{a}{b}', preview: 'cfrac', insert: '\\cfrac{a}{b}', keywords: ['lienphanso', 'cfrac'] },
+        { cmd: '\\frac', label: '\\frac{a}{b}', preview: 'a/b', insert: '\\frac{a}{b}', desc: 'Phân số thường', keywords: ['ps', 'phan', 'phanso', 'chia', 'fraction', 'frac'] },
+        { cmd: '\\sqrt', label: '\\sqrt{x}', preview: '√x', insert: '\\sqrt{x}', desc: 'Căn bậc hai', keywords: ['sq', 'can', 'canbac2', 'canthuc', 'sqrt', 'root'] },
+        { cmd: '\\sqrt[n]', label: '\\sqrt[n]{x}', preview: 'ⁿ√x', insert: '\\sqrt[n]{x}', desc: 'Căn bậc n', keywords: ['cann', 'canbacn', 'canso'] },
+        { cmd: '\\cfrac', label: '\\cfrac{a}{b}', preview: 'cfrac', insert: '\\cfrac{a}{b}', desc: 'Liên phân số', keywords: ['lienphanso', 'cfrac'] },
         
         // Toán tử & Ký hiệu phép tính
-        { cmd: '\\sum', label: '\\sum_{i=1}^{n}', preview: '∑', insert: '\\sum_{i=1}^{n}', keywords: ['tong', 'sigma', 'sum', 'summation'] },
-        { cmd: '\\prod', label: '\\prod_{i=1}^{n}', preview: '∏', insert: '\\prod_{i=1}^{n}', keywords: ['tich', 'pi', 'prod'] },
-        { cmd: '\\int', label: '\\int_{a}^{b}', preview: '∫', insert: '\\int_{a}^{b}', keywords: ['tp', 'tichphan', 'nguyentham', 'int', 'integral'] },
-        { cmd: '\\iint', label: '\\iint', preview: '∬', insert: '\\iint', keywords: ['tichphankep', 'iint'] },
-        { cmd: '\\lim', label: '\\lim_{x \\to \\infty}', preview: 'lim', insert: '\\lim_{x \\to \\infty}', keywords: ['lim', 'gioihan', 'gh'] },
-        { cmd: '\\infty', label: '\\infty (∞)', preview: '∞', insert: '\\infty', keywords: ['vocung', 'vc', 'vocuc', 'infty', 'infinity'] },
-        { cmd: '\\pm', label: '\\pm (±)', preview: '±', insert: '\\pm', keywords: ['congtru', 'pm', 'plusminus'] },
-        { cmd: '\\times', label: '\\times (×)', preview: '×', insert: '\\times', keywords: ['nhan', 'nhanx', 'times'] },
-        { cmd: '\\cdot', label: '\\cdot (·)', preview: '·', insert: '\\cdot', keywords: ['cham', 'nhancham', 'dot', 'cdot'] },
-        { cmd: '\\div', label: '\\div (÷)', preview: '÷', insert: '\\div', keywords: ['chia', 'div', 'divide'] },
+        { cmd: '\\sum', label: '\\sum_{i=1}^{n}', preview: '∑', insert: '\\sum_{i=1}^{n}', desc: 'Tổng Sigma', keywords: ['tong', 'sigma', 'sum', 'summation'] },
+        { cmd: '\\prod', label: '\\prod_{i=1}^{n}', preview: '∏', insert: '\\prod_{i=1}^{n}', desc: 'Tích Pi', keywords: ['tich', 'pi', 'prod'] },
+        { cmd: '\\int', label: '\\int_{a}^{b}', preview: '∫', insert: '\\int_{a}^{b}', desc: 'Tích phân xác định', keywords: ['tp', 'tichphan', 'nguyentham', 'int', 'integral'] },
+        { cmd: '\\iint', label: '\\iint', preview: '∬', insert: '\\iint', desc: 'Tích phân kép', keywords: ['tichphankep', 'iint'] },
+        { cmd: '\\lim', label: '\\lim_{x \\to \\infty}', preview: 'lim', insert: '\\lim_{x \\to \\infty}', desc: 'Giới hạn Lim', keywords: ['lim', 'gioihan', 'gh'] },
+        { cmd: '\\infty', label: '\\infty', preview: '∞', insert: '\\infty', desc: 'Vô cực / Vô cùng', keywords: ['vocung', 'vc', 'vocuc', 'infty', 'infinity'] },
+        { cmd: '\\pm', label: '\\pm', preview: '±', insert: '\\pm', desc: 'Cộng trừ', keywords: ['congtru', 'pm', 'plusminus'] },
+        { cmd: '\\times', label: '\\times', preview: '×', insert: '\\times', desc: 'Dấu nhân (chữ x)', keywords: ['nhan', 'nhanx', 'times'] },
+        { cmd: '\\cdot', label: '\\cdot', preview: '·', insert: '\\cdot', desc: 'Dấu nhân (chấm)', keywords: ['cham', 'nhancham', 'dot', 'cdot'] },
+        { cmd: '\\div', label: '\\div', preview: '÷', insert: '\\div', desc: 'Dấu chia', keywords: ['chia', 'div', 'divide'] },
 
         // So sánh & Quan hệ
-        { cmd: '\\le', label: '\\le (≤)', preview: '≤', insert: '\\le', keywords: ['behonbang', 'nhohonbang', 'le'] },
-        { cmd: '\\ge', label: '\\ge (≥)', preview: '≥', insert: '\\ge', keywords: ['lonhonbang', 'ge'] },
-        { cmd: '\\ne', label: '\\ne (≠)', preview: '≠', insert: '\\ne', keywords: ['khac', 'ne', 'neq'] },
-        { cmd: '\\approx', label: '\\approx (≈)', preview: '≈', insert: '\\approx', keywords: ['xapxi', 'ganbang', 'approx'] },
-        { cmd: '\\equiv', label: '\\equiv (≡)', preview: '≡', insert: '\\equiv', keywords: ['dongdu', 'tuongduong', 'equiv'] },
+        { cmd: '\\le', label: '\\le', preview: '≤', insert: '\\le', desc: 'Bé hơn hoặc bằng', keywords: ['behonbang', 'nhohonbang', 'le'] },
+        { cmd: '\\ge', label: '\\ge', preview: '≥', insert: '\\ge', desc: 'Lớn hơn hoặc bằng', keywords: ['lonhonbang', 'ge'] },
+        { cmd: '\\ne', label: '\\ne', preview: '≠', insert: '\\ne', desc: 'Dấu khác', keywords: ['khac', 'ne', 'neq'] },
+        { cmd: '\\approx', label: '\\approx', preview: '≈', insert: '\\approx', desc: 'Xấp xỉ / Gần bằng', keywords: ['xapxi', 'ganbang', 'approx'] },
+        { cmd: '\\equiv', label: '\\equiv', preview: '≡', insert: '\\equiv', desc: 'Đồng dư / Tương đương', keywords: ['dongdu', 'tuongduong', 'equiv'] },
 
         // Mũi tên & Logic
-        { cmd: '\\Rightarrow', label: '\\Rightarrow (⇒)', preview: '⇒', insert: '\\Rightarrow', keywords: ['suyra', 'sr', 'implies', 'to'] },
-        { cmd: '\\Leftrightarrow', label: '\\Leftrightarrow (⇔)', preview: '⇔', insert: '\\Leftrightarrow', keywords: ['tuongduong', 'td', 'iff'] },
-        { cmd: '\\to', label: '\\to (→)', preview: '→', insert: '\\to', keywords: ['dentoi', 'muiten', 'to', 'tienve'] },
-        { cmd: '\\forall', label: '\\forall (∀)', preview: '∀', insert: '\\forall', keywords: ['moithuoc', 'moiphantu', 'forall'] },
-        { cmd: '\\exists', label: '\\exists (∃)', preview: '∃', insert: '\\exists', keywords: ['tontai', 'exists'] },
+        { cmd: '\\Rightarrow', label: '\\Rightarrow', preview: '⇒', insert: '\\Rightarrow', desc: 'Suy ra', keywords: ['suyra', 'sr', 'implies', 'to'] },
+        { cmd: '\\Leftrightarrow', label: '\\Leftrightarrow', preview: '⇔', insert: '\\Leftrightarrow', desc: 'Tương đương', keywords: ['tuongduong', 'td', 'iff'] },
+        { cmd: '\\to', label: '\\to', preview: '→', insert: '\\to', desc: 'Mũi tên tới', keywords: ['dentoi', 'muiten', 'to', 'tienve'] },
+        { cmd: '\\forall', label: '\\forall', preview: '∀', insert: '\\forall', desc: 'Với mọi', keywords: ['moithuoc', 'moiphantu', 'forall'] },
+        { cmd: '\\exists', label: '\\exists', preview: '∃', insert: '\\exists', desc: 'Tồn tại', keywords: ['tontai', 'exists'] },
 
         // Tập hợp & Số
-        { cmd: '\\in', label: '\\in (∈)', preview: '∈', insert: '\\in', keywords: ['thuoc', 'in'] },
-        { cmd: '\\notin', label: '\\notin (∉)', preview: '∉', insert: '\\notin', keywords: ['khongthuoc', 'notin'] },
-        { cmd: '\\subset', label: '\\subset (⊂)', preview: '⊂', insert: '\\subset', keywords: ['tapcon', 'con', 'subset'] },
-        { cmd: '\\cup', label: '\\cup (∪)', preview: '∪', insert: '\\cup', keywords: ['hop', 'cup'] },
-        { cmd: '\\cap', label: '\\cap (∩)', preview: '∩', insert: '\\cap', keywords: ['giao', 'cap'] },
-        { cmd: '\\emptyset', label: '\\emptyset (∅)', preview: '∅', insert: '\\emptyset', keywords: ['rong', 'tapconrong', 'empty', 'emptyset'] },
-        { cmd: '\\mathbb{R}', label: '\\mathbb{R}', preview: 'ℝ', insert: '\\mathbb{R}', keywords: ['sothuc', 'tapR', 'R'] },
-        { cmd: '\\mathbb{N}', label: '\\mathbb{N}', preview: 'ℕ', insert: '\\mathbb{N}', keywords: ['sotunhien', 'tapN', 'N'] },
-        { cmd: '\\mathbb{Z}', label: '\\mathbb{Z}', preview: 'ℤ', insert: '\\mathbb{Z}', keywords: ['songuyen', 'tapZ', 'Z'] },
+        { cmd: '\\in', label: '\\in', preview: '∈', insert: '\\in', desc: 'Thuộc tập hợp', keywords: ['thuoc', 'in'] },
+        { cmd: '\\notin', label: '\\notin', preview: '∉', insert: '\\notin', desc: 'Không thuộc', keywords: ['khongthuoc', 'notin'] },
+        { cmd: '\\subset', label: '\\subset', preview: '⊂', insert: '\\subset', desc: 'Tập hợp con', keywords: ['tapcon', 'con', 'subset'] },
+        { cmd: '\\cup', label: '\\cup', preview: '∪', insert: '\\cup', desc: 'Hợp của hai tập hợp', keywords: ['hop', 'cup'] },
+        { cmd: '\\cap', label: '\\cap', preview: '∩', insert: '\\cap', desc: 'Giao của hai tập hợp', keywords: ['giao', 'cap'] },
+        { cmd: '\\emptyset', label: '\\emptyset', preview: '∅', insert: '\\emptyset', desc: 'Tập hợp rỗng', keywords: ['rong', 'tapconrong', 'empty', 'emptyset'] },
+        { cmd: '\\mathbb{R}', label: '\\mathbb{R}', preview: 'ℝ', insert: '\\mathbb{R}', desc: 'Tập số thực R', keywords: ['sothuc', 'tapR', 'R'] },
+        { cmd: '\\mathbb{N}', label: '\\mathbb{N}', preview: 'ℕ', insert: '\\mathbb{N}', desc: 'Tập số tự nhiên N', keywords: ['sotunhien', 'tapN', 'N'] },
+        { cmd: '\\mathbb{Z}', label: '\\mathbb{Z}', preview: 'ℤ', insert: '\\mathbb{Z}', desc: 'Tập số nguyên Z', keywords: ['songuyen', 'tapZ', 'Z'] },
 
         // Hình học & Vector
-        { cmd: '\\vec', label: '\\vec{v}', preview: 'v⃗', insert: '\\vec{v}', keywords: ['vec', 'vecto', 'vt', 'vector'] },
-        { cmd: '\\overrightarrow', label: '\\overrightarrow{AB}', preview: 'AB⃗', insert: '\\overrightarrow{AB}', keywords: ['vectoab', 'overrightarrow'] },
-        { cmd: '\\perp', label: '\\perp (⊥)', preview: '⊥', insert: '\\perp', keywords: ['vuonggoc', 'vg', 'perp'] },
-        { cmd: '\\parallel', label: '\\parallel (∥)', preview: '∥', insert: '\\parallel', keywords: ['songsong', 'ss', 'parallel'] },
-        { cmd: '\\angle', label: '\\angle (∠)', preview: '∠', insert: '\\angle', keywords: ['goc', 'angle'] },
-        { cmd: '\\triangle', label: '\\triangle (△)', preview: '△', insert: '\\triangle', keywords: ['tamgiac', 'tg', 'triangle'] },
-        { cmd: '^\\circ', label: '^\\circ (độ)', preview: '°', insert: '^\\circ', keywords: ['do', 'degree', 'gocdo'] },
+        { cmd: '\\vec', label: '\\vec{v}', preview: 'v⃗', insert: '\\vec{v}', desc: 'Véc-tơ v', keywords: ['vec', 'vecto', 'vt', 'vector'] },
+        { cmd: '\\overrightarrow', label: '\\overrightarrow{AB}', preview: 'AB⃗', insert: '\\overrightarrow{AB}', desc: 'Véc-tơ AB', keywords: ['vectoab', 'overrightarrow'] },
+        { cmd: '\\perp', label: '\\perp', preview: '⊥', insert: '\\perp', desc: 'Vuông góc', keywords: ['vuonggoc', 'vg', 'perp'] },
+        { cmd: '\\parallel', label: '\\parallel', preview: '∥', insert: '\\parallel', desc: 'Song song', keywords: ['songsong', 'ss', 'parallel'] },
+        { cmd: '\\angle', label: '\\angle', preview: '∠', insert: '\\angle', desc: 'Góc', keywords: ['goc', 'angle'] },
+        { cmd: '\\triangle', label: '\\triangle', preview: '△', insert: '\\triangle', desc: 'Tam giác', keywords: ['tamgiac', 'tg', 'triangle'] },
+        { cmd: '^\\circ', label: '^\\circ', preview: '°', insert: '^\\circ', desc: 'Độ (góc)', keywords: ['do', 'degree', 'gocdo'] },
 
         // Lượng giác
-        { cmd: '\\sin', label: '\\sin{x}', preview: 'sin', insert: '\\sin{x}', keywords: ['sin', 'sinh', 'sìn'] },
-        { cmd: '\\cos', label: '\\cos{x}', preview: 'cos', insert: '\\cos{x}', keywords: ['cos', 'cosh', 'cót'] },
-        { cmd: '\\tan', label: '\\tan{x}', preview: 'tan', insert: '\\tan{x}', keywords: ['tan', 'tang', 'tán'] },
-        { cmd: '\\cot', label: '\\cot{x}', preview: 'cot', insert: '\\cot{x}', keywords: ['cot', 'cotg', 'cót'] },
+        { cmd: '\\sin', label: '\\sin{x}', preview: 'sin', insert: '\\sin{x}', desc: 'Hàm số Sin', keywords: ['sin', 'sinh', 'sìn'] },
+        { cmd: '\\cos', label: '\\cos{x}', preview: 'cos', insert: '\\cos{x}', desc: 'Hàm số Cos', keywords: ['cos', 'cosh', 'cót'] },
+        { cmd: '\\tan', label: '\\tan{x}', preview: 'tan', insert: '\\tan{x}', desc: 'Hàm số Tang', keywords: ['tan', 'tang', 'tán'] },
+        { cmd: '\\cot', label: '\\cot{x}', preview: 'cot', insert: '\\cot{x}', desc: 'Hàm số Cotang', keywords: ['cot', 'cotg', 'cót'] },
 
         // Chữ cái Hy Lạp
-        { cmd: '\\alpha', label: '\\alpha (α)', preview: 'α', insert: '\\alpha', keywords: ['alpha', 'anpha', 'alp', 'alphâ'] },
-        { cmd: '\\beta', label: '\\beta (β)', preview: 'β', insert: '\\beta', keywords: ['beta', 'be-ta'] },
-        { cmd: '\\gamma', label: '\\gamma (γ)', preview: 'γ', insert: '\\gamma', keywords: ['gamma'] },
-        { cmd: '\\delta', label: '\\delta (δ)', preview: 'δ', insert: '\\delta', keywords: ['delta'] },
-        { cmd: '\\Delta', label: '\\Delta (Δ)', preview: 'Δ', insert: '\\Delta', keywords: ['delta', 'tamgiacdelta'] },
-        { cmd: '\\epsilon', label: '\\epsilon (ε)', preview: 'ε', insert: '\\epsilon', keywords: ['epsilon', 'ep'] },
-        { cmd: '\\theta', label: '\\theta (θ)', preview: 'θ', insert: '\\theta', keywords: ['theta', 'teta'] },
-        { cmd: '\\lambda', label: '\\lambda (λ)', preview: 'λ', insert: '\\lambda', keywords: ['lambda', 'lamda'] },
-        { cmd: '\\pi', label: '\\pi (π)', preview: 'π', insert: '\\pi', keywords: ['pi', 'sopi'] },
-        { cmd: '\\sigma', label: '\\sigma (σ)', preview: 'σ', insert: '\\sigma', keywords: ['sigma'] },
-        { cmd: '\\omega', label: '\\omega (ω)', preview: 'ω', insert: '\\omega', keywords: ['omega'] },
-        { cmd: '\\Omega', label: '\\Omega (Ω)', preview: 'Ω', insert: '\\Omega', keywords: ['omega', 'dienom'] },
+        { cmd: '\\alpha', label: '\\alpha', preview: 'α', insert: '\\alpha', desc: 'Chữ cái Alpha', keywords: ['alpha', 'anpha', 'alp', 'alphâ'] },
+        { cmd: '\\beta', label: '\\beta', preview: 'β', insert: '\\beta', desc: 'Chữ cái Beta', keywords: ['beta', 'be-ta'] },
+        { cmd: '\\gamma', label: '\\gamma', preview: 'γ', insert: '\\gamma', desc: 'Chữ cái Gamma', keywords: ['gamma'] },
+        { cmd: '\\delta', label: '\\delta', preview: 'δ', insert: '\\delta', desc: 'Chữ cái Delta', keywords: ['delta'] },
+        { cmd: '\\Delta', label: '\\Delta', preview: 'Δ', insert: '\\Delta', desc: 'Delta hoa (biệt thức)', keywords: ['delta', 'tamgiacdelta'] },
+        { cmd: '\\epsilon', label: '\\epsilon', preview: 'ε', insert: '\\epsilon', desc: 'Chữ cái Epsilon', keywords: ['epsilon', 'ep'] },
+        { cmd: '\\theta', label: '\\theta', preview: 'θ', insert: '\\theta', desc: 'Chữ cái Theta (góc)', keywords: ['theta', 'teta'] },
+        { cmd: '\\lambda', label: '\\lambda', preview: 'λ', insert: '\\lambda', desc: 'Chữ cái Lambda', keywords: ['lambda', 'lamda'] },
+        { cmd: '\\pi', label: '\\pi', preview: 'π', insert: '\\pi', desc: 'Số Pi (3.14159...)', keywords: ['pi', 'sopi'] },
+        { cmd: '\\sigma', label: '\\sigma', preview: 'σ', insert: '\\sigma', desc: 'Chữ cái Sigma', keywords: ['sigma'] },
+        { cmd: '\\omega', label: '\\omega', preview: 'ω', insert: '\\omega', desc: 'Chữ cái Omega', keywords: ['omega'] },
+        { cmd: '\\Omega', label: '\\Omega', preview: 'Ω', insert: '\\Omega', desc: 'Omega hoa (Điện trở Ôm)', keywords: ['omega', 'dienom'] },
 
         // Hệ phương trình & Ma trận
-        { cmd: '\\cases', label: '\\begin{cases}', preview: '{..', insert: '\\begin{cases} x = 1 \\\\ y = 2 \\end{cases}', keywords: ['he', 'hephuongtrinh', 'hpt', 'cases'] },
-        { cmd: '\\matrix', label: '\\begin{pmatrix}', preview: '[..]', insert: '\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}', keywords: ['matran', 'matrix', 'mt'] },
-        { cmd: '\\binom', label: '\\binom{n}{k}', preview: 'C(n,k)', insert: '\\binom{n}{k}', keywords: ['tohop', 'binom', 'chapk'] },
+        { cmd: '\\cases', label: '\\begin{cases}', preview: '{..', insert: '\\begin{cases} x = 1 \\\\ y = 2 \\end{cases}', desc: 'Hệ phương trình', keywords: ['he', 'hephuongtrinh', 'hpt', 'cases'] },
+        { cmd: '\\matrix', label: '\\begin{pmatrix}', preview: '[..]', insert: '\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}', desc: 'Ma trận vuông', keywords: ['matran', 'matrix', 'mt'] },
+        { cmd: '\\binom', label: '\\binom{n}{k}', preview: 'C(n,k)', insert: '\\binom{n}{k}', desc: 'Tổ hợp chập k của n', keywords: ['tohop', 'binom', 'chapk'] },
 
         // Định dạng văn bản
-        { cmd: '\\textbf', label: '\\textbf{in đậm}', preview: 'Bold', insert: '\\textbf{in đậm}', keywords: ['dam', 'indam', 'bold', 'textbf'] },
-        { cmd: '\\textit', label: '\\textit{in nghiêng}', preview: 'Italic', insert: '\\textit{in nghiêng}', keywords: ['nghieng', 'innghieng', 'italic', 'textit'] },
-        { cmd: '\\underline', label: '\\underline{gạch chân}', preview: 'Underline', insert: '\\underline{gạch chân}', keywords: ['gachchan', 'underline'] }
+        { cmd: '\\textbf', label: '\\textbf{in đậm}', preview: 'Bold', insert: '\\textbf{in đậm}', desc: 'Chữ in đậm', keywords: ['dam', 'indam', 'bold', 'textbf'] },
+        { cmd: '\\textit', label: '\\textit{in nghiêng}', preview: 'Italic', insert: '\\textit{in nghiêng}', desc: 'Chữ in nghiêng', keywords: ['nghieng', 'innghieng', 'italic', 'textit'] },
+        { cmd: '\\underline', label: '\\underline{gạch chân}', preview: 'Underline', insert: '\\underline{gạch chân}', desc: 'Chữ gạch chân', keywords: ['gachchan', 'underline'] }
     ];
 
     let suggestState = {
@@ -796,138 +786,169 @@
         activeBlock: null
     };
 
-    function filterLatexSymbols(rawQuery) {
-        const cleanQuery = removeVietnameseTones(rawQuery);
-        if (!cleanQuery) return LATEX_SYMBOLS.slice(0, 10);
+    function initSuggestEvents() {
+        const searchInput = document.getElementById('suggest-search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                filterAndRenderSuggestList(searchInput.value);
+            });
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (suggestState.items.length > 0) {
+                        suggestState.highlightIndex = (suggestState.highlightIndex + 1) % suggestState.items.length;
+                        updateSuggestHighlight();
+                        scrollHighlightedIntoView();
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (suggestState.items.length > 0) {
+                        suggestState.highlightIndex = (suggestState.highlightIndex - 1 + suggestState.items.length) % suggestState.items.length;
+                        updateSuggestHighlight();
+                        scrollHighlightedIntoView();
+                    }
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const item = suggestState.items[suggestState.highlightIndex];
+                    if (item) insertSuggestion(item);
+                } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    hideSuggestPopup();
+                }
+            });
+        }
 
-        return LATEX_SYMBOLS.filter(item => {
-            const cmdClean = removeVietnameseTones(item.cmd.replace('\\', ''));
-            if (cmdClean.startsWith(cleanQuery)) return true;
-            if (item.keywords && item.keywords.some(k => removeVietnameseTones(k).startsWith(cleanQuery))) return true;
-            return false;
+        document.addEventListener('pointerdown', (e) => {
+            if (suggestState.active && !e.target.closest('#latex-suggest-popup') && !e.target.closest('.btn-suggest-pill')) {
+                hideSuggestPopup();
+            }
         });
     }
 
-    // Gợi ý cho Math Field (Khối công thức MathLive / MathType)
-    function handleMathFieldSuggest(mf, block, forced = false) {
-        const val = mf.value || (typeof mf.getValue === 'function' ? mf.getValue() : '');
-        let query = '';
-
-        if (forced) {
-            query = '';
-        } else {
-            const matchCmd = val.match(/\\([a-zA-Z\u00C0-\u024F\u1EA0-\u1EF9]*)$/);
-            if (matchCmd) {
-                query = matchCmd[1];
-            } else {
-                const matchWord = val.match(/([a-zA-Z\u00C0-\u024F\u1EA0-\u1EF9]{2,})$/);
-                if (matchWord) {
-                    query = matchWord[1];
-                } else {
-                    hideSuggestPopup();
-                    return;
-                }
-            }
-        }
-
-        const matches = filterLatexSymbols(query);
-        if (matches.length === 0) {
-            hideSuggestPopup();
-            return;
-        }
-
+    function openSuggestionList(anchorEl, block, targetType, initialQuery = '') {
         suggestState.active = true;
-        suggestState.targetType = 'math';
-        suggestState.items = matches.slice(0, 8);
-        suggestState.highlightIndex = 0;
-        suggestState.query = query;
-        suggestState.activeMf = mf;
+        suggestState.targetType = targetType;
+        suggestState.activeMf = targetType === 'math' ? anchorEl : null;
+        suggestState.activeEditor = targetType === 'text' ? anchorEl : null;
         suggestState.activeBlock = block;
+        suggestState.query = initialQuery;
 
-        const rect = mf.getBoundingClientRect();
-        renderSuggestPopupDOM(rect.left, rect.bottom + 6);
+        const popup = document.getElementById('latex-suggest-popup');
+        const searchInput = document.getElementById('suggest-search-input');
+        if (!popup || !searchInput) return;
+
+        // Định vị popup nằm ngay dưới ô/khối đang soạn thảo
+        const rect = anchorEl.getBoundingClientRect();
+        const posX = Math.max(10, Math.min(window.innerWidth - 370, rect.left));
+        let posY = rect.bottom + 6;
+        if (posY + 340 > window.innerHeight) {
+            posY = Math.max(10, rect.top - 340);
+        }
+
+        popup.style.left = `${posX}px`;
+        popup.style.top = `${posY}px`;
+        popup.classList.add('active');
+
+        searchInput.value = initialQuery.replace(/^\\/, '');
+        filterAndRenderSuggestList(searchInput.value);
+
+        setTimeout(() => {
+            searchInput.focus();
+            searchInput.select();
+        }, 30);
     }
 
-    // Gợi ý cho Khối Văn bản thường (contenteditable)
-    function handleEditorSuggest(editor) {
+    function handleEditorSuggest(editor, block) {
         const sel = window.getSelection();
         if (!sel || !sel.rangeCount || sel.isCollapsed === false) {
-            hideSuggestPopup();
             return;
         }
 
         const range = sel.getRangeAt(0);
         const node = range.startContainer;
         if (node.nodeType !== Node.TEXT_NODE) {
-            hideSuggestPopup();
             return;
         }
 
         const textBeforeCaret = node.textContent.slice(0, range.startOffset);
-        // Hỗ trợ cả dấu tiếng Việt sau dấu \ (như \sìn, \vẹc, \căn, \phân, \tổng)
         const match = textBeforeCaret.match(/\\([a-zA-Z\u00C0-\u024F\u1EA0-\u1EF9]*)$/);
 
         if (!match) {
-            hideSuggestPopup();
+            if (suggestState.active && suggestState.targetType === 'text') {
+                hideSuggestPopup();
+            }
             return;
         }
 
-        const matches = filterLatexSymbols(match[1]);
-        if (matches.length === 0) {
-            hideSuggestPopup();
-            return;
-        }
-
-        suggestState.active = true;
-        suggestState.targetType = 'text';
-        suggestState.items = matches.slice(0, 8);
-        suggestState.highlightIndex = 0;
-        suggestState.query = match[0]; // Gồm cả dấu \
         suggestState.textNode = node;
         suggestState.cursorOffset = range.startOffset;
-        suggestState.activeEditor = editor;
-
-        const rect = range.getBoundingClientRect();
-        renderSuggestPopupDOM(rect.left, rect.bottom + 6);
+        openSuggestionList(editor, block, 'text', match[0]);
     }
 
-    function handleEditorSuggestForced(editor, block) {
-        suggestState.active = true;
-        suggestState.targetType = 'text';
-        suggestState.items = LATEX_SYMBOLS.slice(0, 8);
+    function filterAndRenderSuggestList(rawQuery) {
+        const cleanQuery = removeVietnameseTones((rawQuery || '').replace(/^\\/, ''));
+        const matches = LATEX_SYMBOLS.filter(item => {
+            if (!cleanQuery) return true;
+            const cmdClean = removeVietnameseTones(item.cmd.replace('\\', ''));
+            if (cmdClean.startsWith(cleanQuery) || cmdClean.includes(cleanQuery)) return true;
+            if (item.keywords && item.keywords.some(k => removeVietnameseTones(k).includes(cleanQuery))) return true;
+            if (item.desc && removeVietnameseTones(item.desc).includes(cleanQuery)) return true;
+            return false;
+        });
+
+        suggestState.items = matches.slice(0, 25);
         suggestState.highlightIndex = 0;
-        suggestState.query = '';
-        suggestState.textNode = null;
-        suggestState.activeEditor = editor;
-        suggestState.activeBlock = block;
 
-        const rect = editor.getBoundingClientRect();
-        renderSuggestPopupDOM(rect.left, rect.bottom + 6);
-    }
+        const container = document.getElementById('suggest-list-container');
+        if (!container) return;
+        container.innerHTML = '';
 
-    function renderSuggestPopupDOM(posX, posY) {
-        const popup = document.getElementById('latex-suggest-popup');
-        if (!popup) return;
+        if (suggestState.items.length === 0) {
+            container.innerHTML = `<div style="padding:20px; text-align:center; color:#94a3b8; font-size:0.8rem;">Không tìm thấy ký hiệu phù hợp cho "<b>${rawQuery}</b>"</div>`;
+            return;
+        }
 
-        popup.innerHTML = '';
         suggestState.items.forEach((item, idx) => {
             const div = document.createElement('div');
-            div.className = `suggest-item ${idx === suggestState.highlightIndex ? 'highlighted' : ''}`;
+            div.className = `suggest-item ${idx === 0 ? 'highlighted' : ''}`;
             div.innerHTML = `
-                <span class="suggest-cmd">${item.label}</span>
-                <span class="suggest-preview">${item.preview}</span>
+                <div class="suggest-item-left">
+                    <span class="suggest-badge-preview">${item.preview}</span>
+                    <div class="suggest-item-text">
+                        <span class="suggest-cmd-name">${item.label}</span>
+                        <span class="suggest-tag-desc">${item.desc || ''}</span>
+                    </div>
+                </div>
+                <span class="suggest-enter-hint">↵ Chèn</span>
             `;
             div.addEventListener('mousedown', (e) => {
                 e.preventDefault();
                 insertSuggestion(item);
             });
-            popup.appendChild(div);
+            div.addEventListener('mouseenter', () => {
+                suggestState.highlightIndex = idx;
+                updateSuggestHighlight();
+            });
+            container.appendChild(div);
         });
+    }
 
-        const clampedX = Math.max(10, Math.min(window.innerWidth - 260, posX));
-        popup.style.left = `${clampedX}px`;
-        popup.style.top = `${posY}px`;
-        popup.classList.add('active');
+    function scrollHighlightedIntoView() {
+        const container = document.getElementById('suggest-list-container');
+        if (!container) return;
+        const highlighted = container.querySelector('.suggest-item.highlighted');
+        if (highlighted) {
+            highlighted.scrollIntoView({ block: 'nearest' });
+        }
+    }
+
+    function updateSuggestHighlight() {
+        const container = document.getElementById('suggest-list-container');
+        if (!container) return;
+        const items = container.querySelectorAll('.suggest-item');
+        items.forEach((el, idx) => {
+            el.classList.toggle('highlighted', idx === suggestState.highlightIndex);
+        });
     }
 
     function hideSuggestPopup() {
@@ -935,66 +956,55 @@
         const popup = document.getElementById('latex-suggest-popup');
         if (popup) popup.classList.remove('active');
     }
-
-    function handleSuggestKeydown(e, el, block) {
-        if (!suggestState.active) return;
-
-        if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            suggestState.highlightIndex = (suggestState.highlightIndex + 1) % suggestState.items.length;
-            updateSuggestHighlight();
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            suggestState.highlightIndex = (suggestState.highlightIndex - 1 + suggestState.items.length) % suggestState.items.length;
-            updateSuggestHighlight();
-        } else if (e.key === 'Enter' || e.key === 'Tab') {
-            e.preventDefault();
-            const item = suggestState.items[suggestState.highlightIndex];
-            if (item) insertSuggestion(item);
-        } else if (e.key === 'Escape') {
-            hideSuggestPopup();
-        }
-    }
-
-    function updateSuggestHighlight() {
-        const popup = document.getElementById('latex-suggest-popup');
-        if (!popup) return;
-        const items = popup.querySelectorAll('.suggest-item');
-        items.forEach((el, idx) => {
-            el.classList.toggle('highlighted', idx === suggestState.highlightIndex);
-        });
-    }
+    window.hideSuggestPopup = hideSuggestPopup;
 
     function insertSuggestion(item) {
-        // 1. Nếu đang gõ trong Math Field (MathLive)
+        // 1. Nếu đang ở khối Công Thức (MathLive)
         if (suggestState.targetType === 'math' && suggestState.activeMf) {
             const mf = suggestState.activeMf;
+            
+            // Xóa dấu \ hoặc query thừa nếu có
             if (suggestState.query) {
-                for (let i = 0; i < suggestState.query.length; i++) {
+                const count = suggestState.query.length;
+                for (let i = 0; i < count; i++) {
                     if (typeof mf.executeCommand === 'function') {
                         mf.executeCommand('deleteBackward');
                     }
                 }
             }
+
+            // Đảm bảo không còn dấu \ bị kẹt lại trước vị trí chèn
+            const curVal = mf.value || '';
+            if (curVal.endsWith('\\')) {
+                if (typeof mf.executeCommand === 'function') {
+                    mf.executeCommand('deleteBackward');
+                }
+            }
+
+            // Chèn lệnh LaTeX chuẩn vào MathLive
             if (typeof mf.executeCommand === 'function') {
                 mf.executeCommand(['insert', item.insert]);
             } else {
                 mf.value = (mf.value || '') + item.insert;
             }
+
             if (suggestState.activeBlock) {
                 suggestState.activeBlock.content = mf.value;
             }
             updateLatexCode();
             hideSuggestPopup();
-            mf.focus();
+            setTimeout(() => {
+                if (typeof mf.focus === 'function') mf.focus();
+            }, 50);
             return;
         }
 
-        // 2. Nếu đang gõ trong Text Editor
+        // 2. Nếu đang ở khối Văn Bản thường (contenteditable)
         const { textNode, cursorOffset, query, activeEditor } = suggestState;
         if (!textNode || !textNode.parentNode) {
             if (activeEditor) {
-                activeEditor.innerHTML += (item.cmd.startsWith('\\text') ? item.insert : ` $${item.insert}$ `);
+                activeEditor.innerHTML = activeEditor.innerHTML.replace(/\\([a-zA-Z\u00C0-\u024F\u1EA0-\u1EF9]*)$/, '');
+                activeEditor.innerHTML += (item.cmd.startsWith('\\text') || item.cmd.startsWith('\\under') ? item.insert + ' ' : ` $${item.insert}$ `);
                 syncCurrentActiveBlockContent();
                 updateLatexCode();
             }
@@ -1003,7 +1013,8 @@
         }
 
         const fullText = textNode.textContent;
-        const beforeMatch = fullText.slice(0, cursorOffset - (query ? query.length : 0));
+        const qLen = query ? query.length : 0;
+        const beforeMatch = fullText.slice(0, Math.max(0, cursorOffset - qLen));
         const afterMatch = fullText.slice(cursorOffset);
 
         let insertText = '';
