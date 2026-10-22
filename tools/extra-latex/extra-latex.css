@@ -1,0 +1,664 @@
+/* ============================================================
+   SMP EXTRA LATEX - STYLESHEET
+   Free-form Positioning & WYSIWYG Mathcha-style Editor
+   ============================================================ */
+
+/* CSS Variables specific to Extra LaTeX, inheriting from shared.css */
+:root {
+    --el-canvas-bg: #f8f9fa;
+    --el-grid-color: rgba(0, 0, 0, 0.07);
+    --el-dot-color: rgba(0, 0, 0, 0.18);
+    --el-block-bg: #ffffff;
+    --el-block-border: #e2e8f0;
+    --el-block-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    --el-block-active-border: var(--accent-cyan);
+    --el-block-active-shadow: 0 8px 24px rgba(0, 158, 179, 0.18);
+    --el-toolbar-bg: #ffffff;
+    --el-toolbar-border: #e2e8f0;
+    --el-bubble-bg: #1e293b;
+    --el-bubble-text: #f8fafc;
+    --el-bubble-border: #334155;
+    --el-bubble-btn-hover: rgba(255, 255, 255, 0.12);
+}
+
+html.dark-mode, body.dark-mode {
+    --el-canvas-bg: #121316;
+    --el-grid-color: rgba(255, 255, 255, 0.05);
+    --el-dot-color: rgba(255, 255, 255, 0.15);
+    --el-block-bg: #1c1d22;
+    --el-block-border: #2e313a;
+    --el-block-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+    --el-block-active-border: var(--accent-cyan);
+    --el-block-active-shadow: 0 8px 26px rgba(92, 225, 230, 0.22);
+    --el-toolbar-bg: #18191e;
+    --el-toolbar-border: #2a2d36;
+    --el-bubble-bg: #0f172a;
+    --el-bubble-text: #f1f5f9;
+    --el-bubble-border: #1e293b;
+    --el-bubble-btn-hover: rgba(255, 255, 255, 0.15);
+}
+
+/* Container & Layout */
+.extra-latex-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+/* Hero Section */
+.latex-hero {
+    margin-bottom: 12px;
+}
+
+/* Notice Box */
+.notice-box {
+    background: rgba(92, 225, 230, 0.06);
+    border: 1px solid rgba(92, 225, 230, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--text-dark);
+}
+
+.notice-box strong {
+    color: var(--accent-cyan);
+}
+
+/* Master Control Bar */
+.master-toolbar {
+    background: var(--el-toolbar-bg);
+    border: 1px solid var(--el-toolbar-border);
+    border-radius: 10px;
+    padding: 8px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--el-toolbar-border);
+    margin: 0 4px;
+}
+
+.tb-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px solid var(--el-toolbar-border);
+    border-radius: 6px;
+    color: var(--text-dark);
+    font-size: 0.82rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.tb-btn:hover {
+    background: var(--accent-cyan-dim);
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    transform: translateY(-1px);
+}
+
+.tb-btn.active {
+    background: var(--accent-cyan);
+    color: #000 !important;
+    border-color: var(--accent-cyan);
+    font-weight: 600;
+}
+
+.tb-btn.btn-primary {
+    background: var(--accent-cyan);
+    color: #000;
+    font-weight: 600;
+    border-color: var(--accent-cyan);
+}
+
+.tb-btn.btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+.tb-btn.danger:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+.tb-select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--el-toolbar-border);
+    background: var(--el-toolbar-bg);
+    color: var(--text-dark);
+    font-size: 0.8rem;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Workspace Layout */
+.workspace-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+}
+
+/* Canvas Viewport */
+.canvas-viewport {
+    position: relative;
+    width: 100%;
+    height: 640px;
+    background-color: var(--el-canvas-bg);
+    border: 1px solid var(--el-toolbar-border);
+    border-radius: 12px;
+    overflow: auto;
+    cursor: default;
+    user-select: none;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Background Grids */
+.canvas-viewport.grid-dots {
+    background-image: radial-gradient(var(--el-dot-color) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.canvas-viewport.grid-lines {
+    background-image: 
+        linear-gradient(to right, var(--el-grid-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--el-grid-color) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.canvas-viewport.grid-none {
+    background-image: none;
+}
+
+/* Interactive Artboard inside viewport */
+.artboard {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3200px;
+    height: 2400px;
+    transform-origin: 0 0;
+}
+
+/* Canvas Floating Hint */
+.canvas-empty-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--text-muted);
+    pointer-events: none;
+    opacity: 0.65;
+    transition: opacity 0.3s;
+}
+
+.canvas-empty-hint svg {
+    margin-bottom: 8px;
+    opacity: 0.8;
+}
+
+/* Movable Block Card */
+.movable-block {
+    position: absolute;
+    background: var(--el-block-bg);
+    border: 1px solid var(--el-block-border);
+    border-radius: 8px;
+    box-shadow: var(--el-block-shadow);
+    min-width: 120px;
+    min-height: 54px;
+    display: flex;
+    flex-direction: column;
+    user-select: text;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    touch-action: none;
+}
+
+.movable-block.selected {
+    border-color: var(--el-block-active-border);
+    box-shadow: var(--el-block-active-shadow);
+    z-index: 50 !important;
+}
+
+/* Block Header & Drag Handle */
+.block-header {
+    height: 22px;
+    background: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    border-radius: 8px 8px 0 0;
+    cursor: grab;
+    user-select: none;
+}
+
+html.dark-mode .block-header {
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.movable-block:active .block-header {
+    cursor: grabbing;
+}
+
+.block-title-tag {
+    font-size: 0.68rem;
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0.6;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.block-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.movable-block:hover .block-actions,
+.movable-block.selected .block-actions {
+    opacity: 1;
+}
+
+.block-action-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    padding: 0;
+}
+
+.block-action-btn:hover {
+    color: var(--accent-cyan);
+    background: var(--accent-cyan-dim);
+}
+
+.block-action-btn.del-btn:hover {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.15);
+}
+
+/* Block Content */
+.block-body {
+    padding: 10px 14px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: visible;
+}
+
+/* Math Field in Math Block */
+math-field {
+    border: none;
+    outline: none;
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    background: transparent;
+    width: 100%;
+    min-height: 38px;
+    padding: 2px 4px;
+}
+
+math-field:focus-within {
+    outline: none;
+}
+
+/* Contenteditable in Text Block */
+.text-editor-area {
+    outline: none;
+    min-height: 24px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-dark);
+    word-break: break-word;
+}
+
+.text-editor-area:empty:before {
+    content: attr(placeholder);
+    color: var(--text-muted);
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Box & Annotation Block */
+.movable-block.block-box {
+    border: 2px dashed var(--accent-gold);
+    background: rgba(201, 169, 110, 0.05);
+}
+
+.movable-block.block-box.selected {
+    border-color: var(--accent-cyan);
+}
+
+/* Resize Handle */
+.resize-handle {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    width: 12px;
+    height: 12px;
+    cursor: se-resize;
+    opacity: 0;
+    transition: opacity 0.2s;
+    background: linear-gradient(135deg, transparent 50%, var(--accent-cyan) 50%);
+    border-radius: 0 0 4px 0;
+}
+
+.movable-block:hover .resize-handle,
+.movable-block.selected .resize-handle {
+    opacity: 0.8;
+}
+
+/* Floating Bubble Toolbar (Selection Menu) */
+.floating-bubble-toolbar {
+    position: fixed;
+    z-index: 99999;
+    background: var(--el-bubble-bg);
+    border: 1px solid var(--el-bubble-border);
+    border-radius: 8px;
+    padding: 4px 6px;
+    display: none;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transform: translateX(-50%);
+    animation: bubbleFadeIn 0.15s ease-out;
+    pointer-events: auto;
+}
+
+.floating-bubble-toolbar.active {
+    display: flex;
+}
+
+@keyframes bubbleFadeIn {
+    from { opacity: 0; transform: translate(-50%, 6px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.bubble-btn {
+    background: transparent;
+    border: none;
+    color: var(--el-bubble-text);
+    padding: 5px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+    height: 28px;
+    min-width: 28px;
+}
+
+.bubble-btn:hover {
+    background: var(--el-bubble-btn-hover);
+    color: var(--accent-cyan);
+}
+
+.bubble-btn.active {
+    background: var(--accent-cyan);
+    color: #000;
+}
+
+.bubble-divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.15);
+    margin: 0 2px;
+}
+
+/* Color Picker Popover in Bubble */
+.bubble-color-picker {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 4px;
+}
+
+.color-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.15s;
+}
+
+.color-dot:hover {
+    transform: scale(1.3);
+}
+
+/* Snippet Drawer */
+.snippet-panel {
+    background: var(--el-toolbar-bg);
+    border: 1px solid var(--el-toolbar-border);
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.snippet-tabs {
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid var(--el-toolbar-border);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    overflow-x: auto;
+}
+
+.snippet-tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.snippet-tab-btn:hover {
+    color: var(--accent-cyan);
+}
+
+.snippet-tab-btn.active {
+    background: var(--accent-cyan-dim);
+    color: var(--accent-cyan);
+    font-weight: 600;
+}
+
+.snippet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+    gap: 6px;
+}
+
+.snip-item-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--el-toolbar-border);
+    border-radius: 6px;
+    padding: 6px 4px;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    transition: all 0.15s ease;
+}
+
+.snip-item-btn:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    background: var(--accent-cyan-dim);
+    transform: scale(1.05);
+}
+
+/* LaTeX Output & Export Drawer */
+.export-panel {
+    background: var(--el-toolbar-bg);
+    border: 1px solid var(--el-toolbar-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+}
+
+.export-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.export-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.export-mode-tabs {
+    display: flex;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    padding: 2px;
+}
+
+html.dark-mode .export-mode-tabs {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.export-tab-btn {
+    padding: 4px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-family: inherit;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.export-tab-btn.active {
+    background: var(--card-bg);
+    color: var(--accent-cyan);
+    font-weight: 600;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.export-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.latex-textarea {
+    width: 100%;
+    height: 140px;
+    padding: 10px 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--el-toolbar-border);
+    border-radius: 8px;
+    color: var(--text-dark);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    resize: vertical;
+    outline: none;
+}
+
+.latex-textarea:focus {
+    border-color: var(--accent-cyan);
+}
+
+/* Zen Mode Fullscreen */
+body.zen-mode .main-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+
+body.zen-mode #sidebar-placeholder,
+body.zen-mode #topbar-placeholder,
+body.zen-mode .tags-comment-sidebar,
+body.zen-mode .latex-hero,
+body.zen-mode .exam-back-btn,
+body.zen-mode .exam-meta,
+body.zen-mode .notice-box {
+    display: none !important;
+}
+
+body.zen-mode .canvas-viewport {
+    height: calc(100vh - 280px) !important;
+}
+
+/* Toast Message */
+.el-toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1e293b;
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-left: 4px solid var(--accent-cyan);
+}
+
+.el-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
