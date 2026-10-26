@@ -66,7 +66,7 @@
             </section>`;
     }
 
-    function renderTOC(phases, stations) {
+    function renderTOC(phases, stations, phasePrefix = 'Giai đoạn') {
         return `
             <nav class="rm-toc" aria-label="Mục lục chuyên đề">
                 <div class="rm-toc-grid">
@@ -76,7 +76,7 @@
                         const roman = ['I', 'II', 'III', 'IV', 'V'][(ph.id || 1) - 1] || ph.id;
                         return `
                             <div class="rm-toc-col">
-                                <div class="rm-toc-phase-name">Giai đoạn ${roman} · ${esc(ph.name)}</div>
+                                <div class="rm-toc-phase-name">${esc(phasePrefix)} ${roman} · ${esc(ph.name)}</div>
                                 <div class="rm-toc-items">
                                     ${phStations.map(st => {
                                         const stats = stationStats(st);
@@ -105,7 +105,7 @@
        - Nút chủ đề chỉ hiển thị tên chủ đề (bỏ "Chặng ..").
        - Thẻ bài học: CHỈ HIỂN THỊ TIÊU ĐỀ (bỏ mã 1.1, bỏ ↗, bỏ →, chỉ in hoa chữ đầu).
        ---------------------------------------------------------------------- */
-    function renderTree(phases, stations) {
+    function renderTree(phases, stations, phasePrefix = 'Giai đoạn', treeRoot = 'VMO · SỐ HỌC OLYMPIC') {
         let treeHtml = `
             <div class="rm-tree-scroll-wrapper">
                 <div class="rm-mobile-hint">
@@ -116,7 +116,7 @@
 
                     <div class="rm-tree-topbar">
                         <div class="rm-tree-root-box">
-                            <div class="rm-tree-root-node" id="rm-tree-root">VMO · SỐ HỌC OLYMPIC</div>
+                            <div class="rm-tree-root-node" id="rm-tree-root">${esc(treeRoot)}</div>
                         </div>
                         <div class="rm-tree-legend-box">
                             <div class="rm-legend-item">
@@ -140,12 +140,12 @@
             const side = (idx % 2 === 0) ? 'right' : 'left';
             const ph = phases.find(p => p.id === st.phase);
 
-            // Mốc chuyển tiếp Giai đoạn
+            // Mốc chuyển tiếp Giai đoạn / Chuyên đề
             if (lastPhase !== null && st.phase !== lastPhase && ph) {
                 const roman = ['I', 'II', 'III', 'IV', 'V'][(ph.id || 1) - 1] || ph.id;
                 treeHtml += `
                     <div class="rm-st-phase-milestone" data-phase-id="${ph.id}">
-                        <span class="rm-st-phase-kicker">Giai đoạn ${roman}</span>
+                        <span class="rm-st-phase-kicker">${esc(phasePrefix)} ${roman}</span>
                         <span class="rm-st-phase-name">${esc(ph.name)}</span>
                     </div>`;
             }
@@ -326,18 +326,57 @@
         const phases = data.phases || [];
         const phaseById = Object.fromEntries(phases.map(p => [p.id, p]));
 
+        // Danh sách các Lộ trình hiện có (phỏng theo thanh chip icon của Chuyên mục Toán học)
+        const AVAILABLE_ROADMAPS = [
+            {
+                id: 'so-hoc',
+                name: 'Số Học Olympic',
+                url: '/pages/roadmap.html',
+                icon: '<span class="chip-latex">\\(\\mathbb{Z}\\)</span>'
+            },
+            {
+                id: 'chuyen-toan',
+                name: 'Chuyên Toán THCS',
+                url: '/pages/roadmap-chuyen-toan.html',
+                icon: '<span class="chip-latex">\\(P(x)\\)</span>'
+            }
+        ];
+
+        const curId = data.id || (window.location.pathname.includes('chuyen-toan') ? 'chuyen-toan' : 'so-hoc');
+
+        const navBarHtml = `
+            <div class="rm-nav-wrapper">
+                <nav class="rm-nav-bar" aria-label="Danh mục Lộ trình">
+                    ${AVAILABLE_ROADMAPS.map(r => {
+                        const isActive = (curId === r.id);
+                        return `
+                            <a href="${r.url}" class="rm-nav-btn ${isActive ? 'active' : ''}" title="${r.name}">
+                                <span class="chip-icon">${r.icon}</span>
+                                <span class="chip-label">${r.name}</span>
+                            </a>
+                        `;
+                    }).join('')}
+                </nav>
+            </div>`;
+
+        const kickerText = data.kicker || (curId === 'chuyen-toan' ? 'THCS · Chuyên Toán' : 'VMO · Số Học');
+        const listUrl = data.listUrl || (curId === 'chuyen-toan' ? '/pages/toanhoc.html?filter=thcs' : '/pages/toanhoc.html?filter=vmo&sub=so-hoc');
+        const heroDesc = data.subtitle || (curId === 'chuyen-toan' 
+            ? 'Hệ thống chuyên đề và bài tập chọn lọc bồi dưỡng thi vào lớp 10 Chuyên Toán & Học sinh Giỏi, bao trọn 4 phân môn Đại số, Số học, Hình học và Tổ hợp.'
+            : 'Hệ thống chuyên đề và giáo trình chọn lọc bồi dưỡng thi Học sinh Giỏi Quốc gia (VMO), phân bố từ nền tảng đồng dư đến đa thức số học.');
+
         // Hero Section + Cần gạt chuyển view (ngay dưới dòng mô tả)
         const heroHtml = `
             <header class="rm-hero">
-                <div class="rm-hero-kicker">VMO · Số Học</div>
+                <div class="rm-hero-kicker">${esc(kickerText)}</div>
                 <div class="rm-hero-head">
                     <h1 class="rm-hero-title">${esc(data.title || 'Lộ Trình Số Học Olympic')}</h1>
-                    <a href="/pages/toanhoc.html?filter=vmo&sub=so-hoc" class="rm-hero-action">
+                    <a href="${esc(listUrl)}" class="rm-hero-action">
                         <span>Danh sách bài viết</span> →
                     </a>
                 </div>
                 <p class="rm-hero-desc">
-                    Hệ thống chuyên đề và giáo trình chọn lọc bồi dưỡng thi Học sinh Giỏi Quốc gia (VMO), phân bố từ nền tảng đồng dư đến đa thức số học.
+                    ${esc(heroDesc)}
                 </p>
                 <div class="rm-view-switch-row">
                     <span class="rm-view-switch-label">Chế độ xem:</span>
@@ -359,8 +398,13 @@
                 </div>
             </header>`;
 
+        const phasePrefix = data.phasePrefix || 'Giai đoạn';
+        const treeRoot = data.treeRoot || 'VMO · SỐ HỌC OLYMPIC';
+        const quoteText = data.quote || '“Toán học là nữ hoàng của các ngành khoa học, và Số học là nữ hoàng của Toán học.”';
+        const citeText = data.cite || '— Carl Friedrich Gauss —';
+
         // TOC Section
-        const tocHtml = renderTOC(phases, stations);
+        const tocHtml = renderTOC(phases, stations, phasePrefix);
 
         // Timeline Section (Chi tiết)
         let timelineHtml = '';
@@ -371,7 +415,7 @@
                 const roman = ['I', 'II', 'III', 'IV', 'V'][(ph.id || 1) - 1] || ph.id;
                 timelineHtml += `
                     <div class="rm-phase">
-                        <div class="section-label"><span>Giai đoạn ${roman} · ${esc(ph.name)}</span></div>
+                        <div class="section-label"><span>${esc(phasePrefix)} ${roman} · ${esc(ph.name)}</span></div>
                     </div>`;
                 lastPhase = st.phase;
             }
@@ -379,10 +423,11 @@
         });
 
         // Serpentine Mindmap Section
-        const treeHtml = renderTree(phases, stations);
+        const treeHtml = renderTree(phases, stations, phasePrefix, treeRoot);
 
         container.innerHTML = `
             <div class="rm-root fade-up">
+                ${navBarHtml}
                 ${heroHtml}
                 <!-- 1. Chế độ xem Chi tiết (Mặc định) -->
                 <div class="rm-view-detailed fade-up" id="rm-view-detailed">
@@ -401,9 +446,9 @@
                 <footer class="rm-colophon">
                     <div class="rm-colophon-divider" aria-hidden="true"></div>
                     <blockquote class="rm-quote">
-                        “Toán học là nữ hoàng của các ngành khoa học, và Số học là nữ hoàng của Toán học.”
+                        ${quoteText}
                     </blockquote>
-                    <cite class="rm-cite">— Carl Friedrich Gauss —</cite>
+                    <cite class="rm-cite">${citeText}</cite>
                 </footer>
             </div>`;
 

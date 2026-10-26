@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Nhiều Hơn Về Đẳng Thức & Phân Thức Đại Số</title>
+    
+    <meta name="post-id" content="NhieuHonVeDangThuc">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="THCS">
+    <meta name="subcategory-filter" content="thcs">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Đại số Chuyên Toán THCS: Khai thác hằng đẳng thức đối xứng, kỹ thuật đổi biến và rút gọn phân thức hữu tỷ nâng cao.">
+    <meta property="og:title" content="SMP — Nhiều Hơn Về Đẳng Thức & Phân Thức Đại Số">
+    <meta property="og:description" content="Chuyên đề Đại số Chuyên Toán THCS: Khai thác hằng đẳng thức đối xứng, kỹ thuật đổi biến và rút gọn phân thức hữu tỷ nâng cao.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/thcs/dai-so/nhieu-hon-ve-dang-thuc.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Nhiều Hơn Về Đẳng Thức & Phân Thức Đại Số">
+    <meta name="twitter:description" content="Chuyên đề Đại số Chuyên Toán THCS: Khai thác hằng đẳng thức đối xứng, kỹ thuật đổi biến và rút gọn phân thức hữu tỷ nâng cao.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>$\S$ Nhiều Hơn Về Đẳng Thức</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles — Chuyên Toán THCS</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Chuyên đề Đại số · Phân thức và Biến đổi đẳng thức</h2>
+        </div>
+
+<div style="background: rgba(92, 225, 230, 0.05); border-left: 3px solid var(--accent-cyan, #5ce1e6); padding: 16px 20px; border-radius: 6px; margin: 24px 0;">
+            <p style="margin: 0; font-weight: 500; line-height: 1.6;">
+                <b>Kỹ thuật biến đổi then chốt:</b> 
+                Khai thác điều kiện ràng buộc tích $xyz = k$ bằng cách đổi biến đồng bậc, kỹ thuật thế điều kiện $ab + bc + ca = 1 \implies 1 + a^2 = (a+b)(a+c)$, và ý tưởng đa thức nội suy Lagrange trong chứng minh đẳng thức phân thức.
+            </p>
+        </div>
+
+        <h3>Bài 1</h3>
+        <p>Rút gọn biểu thức sau (với $a, b, c$ đôi một khác nhau):</p>
+        $$P = \frac{(d - b)(d - c)}{(a - b)(a - c)} + \frac{(d - c)(d - a)}{(b - c)(b - a)} + \frac{(d - a)(d - b)}{(c - a)(c - b)}$$
+
+        <h3>Bài 2</h3>
+        <p>Cho $x, y, z$ là các số thực dương thỏa mãn $xyz = 4$. Chứng minh rằng:</p>
+        $$\frac{15\sqrt{x}}{3\sqrt{x} + \sqrt{xy} + 2} + \frac{5\sqrt{y}}{\sqrt{yz} + \sqrt{y} + 3} + \frac{10\sqrt{z}}{3\sqrt{zx} + 2\sqrt{z} + 2} = 5$$
+
+        <h3>Bài 3</h3>
+        <p>Cho $x, y, z$ là các số thực dương thỏa mãn $xyz = x + y + z$. Chứng minh rằng:</p>
+        $$\frac{x}{1 + x^2} + \frac{2y}{1 + y^2} + \frac{3z}{1 + z^2} = \frac{xyz(5x + 4y + 3z)}{(x + y)(y + z)(z + x)}$$
+
+        <h3>Bài 4</h3>
+        <p>Cho $x, y, z$ thỏa mãn $x + y + z + \sqrt{xyz} = 4$. Chứng minh rằng:</p>
+        $$\sqrt{x(4 - y)(4 - z)} + \sqrt{y(4 - z)(4 - x)} + \sqrt{z(4 - x)(4 - y)} - \sqrt{xyz} = 8$$
+
+        <h3>Bài 5</h3>
+        <p>Cho ba số $a, b, c$ thỏa mãn $c^2 + 2(ab - bc - ca) = 0$, với $b \neq c$ và $a + b \neq c$. Chứng minh rằng:</p>
+        $$\frac{2a^2 - 2ac + c^2}{2b^2 - 2ab + c^2} = \frac{a - c}{b - c}$$
+
+        <h3>Bài 6</h3>
+        <p>Cho trước $a, b \in \mathbb{R}$. Gọi $x, y$ là hai số thực thỏa mãn:</p>
+        $$\begin{cases} x + y = a + b \\ x^3 + y^3 = a^3 + b^3 \end{cases}$$
+        <p>Chứng minh rằng: $x^{2011} + y^{2011} = a^{2011} + b^{2011}$.</p>
+
+        <h3>Bài 7</h3>
+        <p>Cho ba số thực dương $a, b, c$ thỏa mãn $ab + bc + ca = 1$. Tính giá trị của biểu thức:</p>
+        $$T = a\sqrt{\frac{(1 + b^2)(1 + c^2)}{1 + a^2}} + b\sqrt{\frac{(1 + c^2)(1 + a^2)}{1 + b^2}} + c\sqrt{\frac{(1 + a^2)(1 + b^2)}{1 + c^2}}$$
+
+        <h3>Bài 8</h3>
+        <p>Cho $a, b, c$ là các số thực khác $0$ thoả mãn $\frac{1}{a} + \frac{1}{b} + \frac{1}{c} = \frac{2026}{abc}$. Tính giá trị biểu thức:</p>
+        $$A = \frac{1}{a^2 + 2bc - 2026} + \frac{1}{b^2 + 2ac - 2026} + \frac{1}{c^2 + 2ab - 2026}$$
+
+        <p class="exam-end" style="text-align: center; color: var(--smp-header-text-muted); letter-spacing: 4px; margin: 45px 0 20px 0; font-weight: bold;">─── HẾT ───</p>
+    </div>
+</body>
+</html>

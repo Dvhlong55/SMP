@@ -6,7 +6,8 @@
    - Phong cách: Ấn phẩm toán học độc lập, tối giản, thanh lịch, giàu khoảng trắng
    ========================================================================== */
 
-#sohoc-roadmap {
+#sohoc-roadmap,
+#chuyen-toan-roadmap {
     min-height: 80vh;
 }
 
@@ -20,6 +21,124 @@
 
 .rm-view-detailed {
     animation: fadeUp 0.4s ease forwards;
+}
+
+/* --------------------------------------------------------------------------
+   0. ROADMAP SELECTOR BAR (Phỏng theo math-subnav-bar của chuyên mục)
+   -------------------------------------------------------------------------- */
+.rm-nav-wrapper {
+    width: 100%;
+    margin: 0 0 24px 0;
+    display: flex;
+    align-items: center;
+}
+
+.rm-nav-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.rm-nav-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.rm-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.4;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    white-space: nowrap;
+    letter-spacing: normal;
+    text-transform: none;
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 36px;
+    height: 32px;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body:not(.dark-mode) .rm-nav-btn {
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+.rm-nav-btn .chip-icon,
+.rm-nav-btn .chip-latex {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.rm-nav-btn .chip-label {
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-left: 0;
+    transition: max-width 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, margin-left 0.2s ease;
+}
+
+.rm-nav-btn.active .chip-label,
+.rm-nav-btn:hover .chip-label {
+    max-width: 220px;
+    opacity: 1;
+    margin-left: 6px;
+}
+
+.rm-nav-btn:hover {
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+    background: rgba(92, 225, 230, 0.08);
+}
+
+.rm-nav-btn.active {
+    background: #009eb3 !important;
+    color: #ffffff !important;
+    border-color: #009eb3 !important;
+    font-weight: 600;
+}
+
+html.dark-mode .rm-nav-btn.active,
+body.dark-mode .rm-nav-btn.active {
+    background: #0d9488 !important;
+    color: #ffffff !important;
+    border-color: #0d9488 !important;
+}
+
+.rm-nav-btn.active .chip-icon,
+.rm-nav-btn.active .chip-latex,
+.rm-nav-btn.active svg,
+.rm-nav-btn.active mjx-container,
+.rm-nav-btn.active mjx-container * {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
+@media (max-width: 768px) {
+    .rm-nav-bar {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        justify-content: flex-start !important;
+        padding-left: 2px;
+        padding-right: 20px;
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
 /* --------------------------------------------------------------------------

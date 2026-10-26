@@ -9,8 +9,11 @@
    ========================================================================== */
 
 window.SMP_ROADMAP_SOHOC = {
+    id: 'so-hoc',
     title: 'Lộ Trình Số Học Olympic',
-    subtitle: '',
+    kicker: 'VMO · Số Học',
+    subtitle: 'Hệ thống chuyên đề và giáo trình chọn lọc bồi dưỡng thi Học sinh Giỏi Quốc gia (VMO), phân bố từ nền tảng đồng dư đến đa thức số học.',
+    listUrl: '/pages/toanhoc.html?filter=vmo&sub=so-hoc',
 
     phases: [
         { id: 1, name: 'Nền tảng' },

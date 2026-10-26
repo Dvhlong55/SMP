@@ -206,6 +206,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadScriptSequentially(index) {
         if (index >= scriptsToLoad.length) {
             document.body.style.display = '';
+            if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+                window.MathJax.typesetPromise().catch(function(e) { console.warn('MathJax:', e); });
+            }
             return;
         }
         const script = document.createElement('script');

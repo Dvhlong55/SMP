@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Định Lý Viète & Ứng Dụng</title>
+    
+    <meta name="post-id" content="DinhLyVieteVaUngDung">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="THCS">
+    <meta name="subcategory-filter" content="thcs">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Đại số Chuyên Toán THCS: Định lý Viète thuận và đảo, các bài toán tìm tham số m, biểu thức đối xứng giữa hai nghiệm và sự tồn tại nghiệm thực.">
+    <meta property="og:title" content="SMP — Định Lý Viète & Ứng Dụng">
+    <meta property="og:description" content="Chuyên đề Đại số Chuyên Toán THCS: Định lý Viète thuận và đảo, các bài toán tìm tham số m, biểu thức đối xứng giữa hai nghiệm và sự tồn tại nghiệm thực.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/thcs/dai-so/dinh-ly-viete-va-ung-dung.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Định Lý Viète & Ứng Dụng">
+    <meta name="twitter:description" content="Chuyên đề Đại số Chuyên Toán THCS: Định lý Viète thuận và đảo, các bài toán tìm tham số m, biểu thức đối xứng giữa hai nghiệm và sự tồn tại nghiệm thực.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>$\S$ Định Lý Viète & Ứng Dụng</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles — Chuyên Toán THCS</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Chuyên đề Đại số · Phương trình bậc hai</h2>
+        </div>
+
+<div style="background: rgba(92, 225, 230, 0.05); border-left: 3px solid var(--accent-cyan, #5ce1e6); padding: 16px 20px; border-radius: 6px; margin: 24px 0;">
+            <p style="margin: 0; font-weight: 500; line-height: 1.6;">
+                <b>Định lý Viète cho phương trình bậc hai $ax^2 + bx + c = 0$ ($a \neq 0$):</b>
+                Nếu phương trình có hai nghiệm $x_1, x_2$ (tức $\Delta \geq 0$) thì:
+                $$x_1 + x_2 = -\frac{b}{a}, \quad x_1 x_2 = \frac{c}{a}$$
+                Định lý đảo: Nếu hai số $u, v$ thỏa mãn $u + v = S$ và $uv = P$ với $S^2 - 4P \geq 0$ thì $u, v$ là hai nghiệm của phương trình bậc hai $t^2 - St + P = 0$.
+            </p>
+        </div>
+
+        <h3>Bài 1</h3>
+        <p>Cho phương trình bậc hai $ax^2 + bx + c = 0$ ($a \neq 0$). Chứng minh rằng:</p>
+        <ol>
+            <li>Nếu $a, c$ trái dấu thì phương trình luôn có hai nghiệm phân biệt trái dấu.</li>
+            <li>Nếu $\Delta < 0$ thì $a(ax^2 + bx + c) > 0$ với mọi số thực $x$.</li>
+            <li>Nếu phương trình có hai nghiệm phân biệt $x_1 < x_2$, xét điểm $x_0 \in (x_1, x_2)$. Chứng minh rằng: $a \cdot (ax_0^2 + bx_0 + c) < 0$.</li>
+        </ol>
+
+        <h3>Bài 2</h3>
+        <p>Cho các số thực $a, b, c$ thỏa mãn $a + b + c > 0, ab + bc + ca > 0$ và $abc > 0$. Chứng minh rằng phương trình sau luôn có nghiệm thực:</p>
+        $$x^2 - 2(ab + bc + ca)(a + b + c)x + 9abc = 0$$
+
+        <h3>Bài 3</h3>
+        <p>Cho bốn số $a, b, c, d$ thỏa mãn $\frac{ac}{b+d} \geq 2$ với $b + d > 0$. Chứng minh rằng phương trình sau luôn có nghiệm thực:</p>
+        $$(x^2 + ax + b)(x^2 + cx + d) = 0$$
+
+        <p class="exam-end" style="text-align: center; color: var(--smp-header-text-muted); letter-spacing: 4px; margin: 45px 0 20px 0; font-weight: bold;">─── HẾT ───</p>
+    </div>
+</body>
+</html>

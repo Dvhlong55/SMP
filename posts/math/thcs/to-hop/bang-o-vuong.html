@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Bài Toán Bảng Ô Vuông</title>
+    
+    <meta name="post-id" content="BangOVuongTHCS">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="THCS">
+    <meta name="subcategory-filter" content="thcs">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Tổ hợp Chuyên Toán THCS: Kỹ thuật tô màu lưới, bài toán phủ domino/tetromino và đường đi của robot.">
+    <meta property="og:title" content="SMP — Bài Toán Bảng Ô Vuông">
+    <meta property="og:description" content="Chuyên đề Tổ hợp Chuyên Toán THCS: Kỹ thuật tô màu lưới, bài toán phủ domino/tetromino và đường đi của robot.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/thcs/to-hop/bang-o-vuong.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Bài Toán Bảng Ô Vuông">
+    <meta name="twitter:description" content="Chuyên đề Tổ hợp Chuyên Toán THCS: Kỹ thuật tô màu lưới, bài toán phủ domino/tetromino và đường đi của robot.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>§ Bài Toán Bảng Ô Vuông</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles — Chuyên Toán THCS</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Phiếu bài tập luyện tập chuyên sâu</h2>
+        </div>
+
+<h3>Bài toán 1</h3>
+        <p>Trên bảng ô vuông cỡ $7 \times 7$, có 37 con robot đứng ở 37 ô vuông đôi một khác nhau của bảng. Mỗi giây, các con robot di chuyển sang các ô bên cạnh tới khi chạm vào tâm của ô đó thì các con robot xoay một góc $90^\circ$ rồi lại di chuyển sang ô bên cạnh của ô đó. Chứng minh rằng có một thời điểm mà có hai con robot cùng dịch chuyển vào một ô vuông.</p>
+
+        <h3>Bài toán 2</h3>
+        <p>Cho bảng ô vuông $7 \times 7$. Ta đặt 1 viên gạch kích thước $1 \times 1$ vào bảng. Giả sử rằng ta có 2 loại gạch gồm vô hạn viên gạch $1 \times 3$ và $n$ viên gạch hình chữ L (phủ 3 ô vuông). Tìm giá trị nhỏ nhất của $n$ sao cho với mọi cách đặt viên gạch $1 \times 1$, ta có thể phủ phần còn lại của bảng bởi 2 loại gạch trên.</p>
+
+        <h3>Bài toán 3</h3>
+        <p>Cho một sàn nhà hình vuông kích thước $n \times n$. Tại góc nào đó của sàn nhà, người ta lát một viên gạch kích thước $2 \times 2$. Tìm tất cả các giá trị của $n$ sao cho ta có thể lát kín phần còn lại của sàn nhà bởi các viên gạch kích thước $1 \times 3$.</p>
+
+        <h3>Bài toán 4</h3>
+        <p>Cho một sàn nhà kích thước $n \times n$. Tại góc nào đó của sàn nhà, người ta lát một viên gạch kích thước $1 \times 1$. Tìm tất cả các giá trị của $n$ sao cho ta có thể lát kín phần còn lại của sàn nhà bởi 1 viên gạch hình chữ L (phủ 3 ô vuông con) và các viên gạch kích thước $1 \times 3$.</p>
+
+        <h3>Bài toán 5</h3>
+        <p>Cho bảng ô vuông kích thước $6 \times 6$. Ở bước đầu tiên, bạn Dan tô đỏ $k$ ô vuông bất kì của bảng. Sau đó, ở mỗi bước tiếp theo bạn Dan tô đỏ các ô vuông kề với ít nhất hai ô đã được tô đỏ (hai ô vuông được gọi là kề nhau nếu chúng có cạnh chung).</p>
+        <p>1. Chỉ ra một cách tô đỏ 23 ô của bảng ở bước đầu tiên sao cho dù sau bao nhiêu bước, bạn Dan cũng không thể tô đỏ được tất cả các ô của bảng.<br>
+        2. Tìm giá trị nhỏ nhất của $k$ để tồn tại một cách tô đỏ $k$ ô vuông ban đầu sao cho sau một số hữu hạn bước, bạn Dan tô đỏ được tất cả các ô vuông của bảng.</p>
+
+        <h3>Bài toán 6</h3>
+        <p>Cho bảng ô vuông kích thước $2023 \times 2023$, ô vuông có kích thước $1 \times 1$ được gọi là ô vuông đơn vị. Mỗi ô vuông đơn vị của bảng được tô bằng một trong hai màu đen hoặc trắng, sao cho mỗi ô vuông đơn vị được tô màu đen được kề với ít nhất ba ô vuông đơn vị được tô màu trắng (hai ô vuông đơn vị có cạnh chung nhau được gọi là kề nhau). Hỏi số ô vuông đơn vị được tô màu đen nhiều nhất là bao nhiêu?</p>
+
+        <p class="exam-end" style="text-align: center; color: var(--smp-header-text-muted); letter-spacing: 4px; margin: 45px 0 20px 0; font-weight: bold;">─── HẾT ───</p>
+    </div>
+</body>
+</html>
