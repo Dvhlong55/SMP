@@ -14,8 +14,8 @@ const LEFT_TAGS_HTML = `
             <div style="height: 1px; background: rgba(255, 255, 255, 0.08); margin: 32px 0 20px 0;"></div>
             
             <ul class="side-widget-list">
-                <li><a href="/pages/roadmap.html" style="color: var(--accent-cyan); font-weight: 500;">Roadmap Số Học (VMO)</a></li>
-                <li><a href="/pages/roadmap-chuyen-toan.html" style="color: var(--accent-cyan); font-weight: 500;">Roadmap Chuyên Toán (THCS)</a></li>
+                <li><a href="/pages/roadmap.html" style="color: var(--accent-cyan); font-weight: 500;">Số Học Olympic (VMO)</a></li>
+                <li><a href="/pages/roadmap-chuyen-toan.html" style="color: var(--accent-cyan); font-weight: 500;">Chuyên Toán (THCS)</a></li>
             </ul>
         </div>
 `;

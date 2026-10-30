@@ -4,6 +4,14 @@
 // ============================================
 
 (function() {
+    // ── Clear stale Service Worker caches ───────────────
+    if ('caches' in window) {
+        caches.keys().then(function(names) {
+            for (let name of names) {
+                if (name !== 'smp-cache-v99') caches.delete(name);
+            }
+        }).catch(function(){});
+    }
 
     // ── Inject Favicon ───────────────
     if (!document.querySelector('link[rel="icon"]')) {
@@ -588,11 +596,7 @@
                 <div style="height: 1px; background: rgba(255,255,255,0.08); margin: 16px 0 12px 0;"></div>
                 <a href="/pages/roadmap.html" style="color: var(--accent-cyan);">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
-                    <span>Roadmap Số Học</span>
-                </a>
-                <a href="/pages/roadmap-chuyen-toan.html" style="color: var(--accent-cyan);">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                    <span>Roadmap Chuyên Toán</span>
+                    <span>Roadmap</span>
                 </a>
                 <a href="/pages/profile.html" id="sidebar-auth-btn" onclick="if(!localStorage.getItem('smp_access_token')){if(window.openAuthModal){window.openAuthModal('login');return false;}}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
