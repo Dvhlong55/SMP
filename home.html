@@ -24,23 +24,24 @@
     <link rel="stylesheet" href="/core/css/shared.css?v=99">
     <link rel="stylesheet" href="/core/css/mailbox.css">
     <style>
-        /* Featured post hero */
+        /* Featured post hero (sized to match post cards below) */
         .featured-hero {
             background: linear-gradient(135deg, #0f1a1a 0%, #1a1a0f 100%);
             border: 1px solid rgba(92,225,230,0.15);
-            border-radius: 10px;
-            padding: 36px 40px;
-            margin-bottom: 36px;
+            border-radius: 8px;
+            padding: 22px 24px;
+            margin-bottom: 24px;
             position: relative;
             overflow: hidden;
         }
         .featured-hero::after {
             content: '✦';
             position: absolute;
-            right: 32px; top: 24px;
-            font-size: 4rem;
+            right: 22px; top: 16px;
+            font-size: 2.8rem;
             color: rgba(201,169,110,0.08);
             line-height: 1;
+            pointer-events: none;
         }
         .featured-label {
             font-size: 0.7rem;
@@ -48,17 +49,24 @@
             letter-spacing: 3px;
             text-transform: uppercase;
             font-family: 'JetBrains Mono', monospace;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         .featured-hero h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
+            font-size: 1.15rem;
             color: #fff;
-            margin-bottom: 14px;
-            line-height: 1.4;
-            max-width: 600px;
+            margin: 0 0 12px 0;
+            line-height: 1.5;
+            max-width: 100%;
         }
-        .featured-hero p { color: #888; font-size: 0.9rem; line-height: 1.7; margin-bottom: 20px; max-width: 520px; }
+        .featured-hero p {
+            color: #888;
+            font-size: 0.88rem;
+            line-height: 1.65;
+            margin-bottom: 14px;
+            max-width: 100%;
+            font-family: 'JetBrains Mono', monospace;
+        }
         .featured-link {
             display: inline-flex;
             align-items: center;
@@ -66,9 +74,9 @@
             background: var(--accent-cyan);
             color: #111;
             text-decoration: none;
-            padding: 9px 20px;
+            padding: 8px 16px;
             border-radius: 6px;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-family: 'JetBrains Mono', monospace;
             font-weight: 700;
             letter-spacing: 1px;
@@ -678,16 +686,17 @@
                     
                 </div>
 
-                    <div class="featured-hero fade-up">
-                        <div class="featured-label">Nổi bật</div>
-                        <h2>Lộ Trình Số Học Olympic — Chinh Phục VMO</h2>
-                        <p>Sơ đồ Metro trực quan từ Hệ thặng dư, Bổ đề LTE, Căn nguyên thủy đến Phương trình nghiệm nguyên và Đa thức số học, kèm bài tập phân dạng chi tiết.</p>
-                        <a href="/pages/roadmap.html" class="featured-link">Khám Phá Lộ Trình ↗</a>
-                    </div>
-
                     <div class="home-challenge-row">
-                        <!-- Cột Trái: 3 Bài Đăng Mới Nhất -->
+                        <!-- Cột Trái: Nổi Bật & 3 Bài Đăng Mới Nhất -->
                         <div class="home-posts-column">
+                            <div class="section-label">Nổi Bật</div>
+                            <div class="featured-hero fade-up">
+                                <div class="featured-label">Nổi bật</div>
+                                <h2>Lộ Trình Số Học Olympic — Chinh Phục VMO</h2>
+                                <p>Sơ đồ Metro trực quan từ Hệ thặng dư, Bổ đề LTE, Căn nguyên thủy đến Phương trình nghiệm nguyên và Đa thức số học, kèm bài tập phân dạng chi tiết.</p>
+                                <a href="/pages/roadmap.html" class="featured-link">Khám Phá Lộ Trình ↗</a>
+                            </div>
+
                             <div class="section-label">Bài Đăng Mới Nhất</div>
                             <div class="grid-container" style="grid-template-columns: 1fr; gap: 16px;">
                                 <div class="card fade-up">

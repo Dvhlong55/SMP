@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Hàm Đếm Số & Tổng Các Ước</title>
+    
+    <meta name="post-id" content="HamDemSoVaTongCacUoc">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Số học Olympic: Hàm đếm số ước τ(n) và hàm tổng các ước σ(n), tính chất nhân tính, tổng kép, số hoàn hảo và các bài toán nâng cao.">
+    <meta property="og:title" content="SMP — Hàm Đếm Số & Tổng Các Ước">
+    <meta property="og:description" content="Chuyên đề Số học Olympic: Hàm đếm số ước τ(n) và hàm tổng các ước σ(n), tính chất nhân tính, tổng kép, số hoàn hảo và các bài toán nâng cao.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/ham-dem-so-va-tong-cac-uoc.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Hàm Đếm Số & Tổng Các Ước">
+    <meta name="twitter:description" content="Chuyên đề Số học Olympic: Hàm đếm số ước τ(n) và hàm tổng các ước σ(n), tính chất nhân tính, tổng kép, số hoàn hảo và các bài toán nâng cao.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        
+        <div class="header-box">
+            <h1>$\S$ Hàm Đếm Số &amp; Tổng Các Ước</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles • Long Do</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">September 27, 2026</h2>
+        </div>
+
+        <h2 style="font-size: 1.2rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 30px; text-align: left;">Tóm tắt lý thuyết</h2>
+
+        <h3>Định nghĩa</h3>
+        <p>Với mỗi số nguyên dương $n$, ta ký hiệu $\tau(n)$ (hoặc $d(n)$) là số các ước nguyên dương của $n$ và $\sigma(n)$ là tổng các ước nguyên dương của $n$:</p>
+        $$\tau(n) = \sum_{d \mid n} 1, \qquad \sigma(n) = \sum_{d \mid n} d, \qquad \sigma_k(n) = \sum_{d \mid n} d^k.$$
+
+        <h3>Bổ đề</h3>
+        <p>Cho các tập chỉ số hữu hạn $I, J$. Khi làm việc với tổng kép $\sum\sum$ trong Số học, ta có hai quy tắc nền tảng sau:</p>
+        <p style="padding-left: 20px;">1. <b>Quy tắc tách tích trên hai miền chỉ số độc lập:</b> Nếu $i \in I$ và $j \in J$ chạy độc lập với nhau, đồng thời $A(i, j) = f(i)g(j)$, thì:</p>
+        $$\sum_{i \in I} \sum_{j \in J} f(i)g(j) = \left(\sum_{i \in I} f(i)\right)\left(\sum_{j \in J} g(j)\right).$$
+        <p style="padding-left: 20px;">2. <b>Quy tắc đổi thứ tự lấy tổng (Đếm bằng hai cách):</b> Với mọi tập con $S \subseteq I \times J$:</p>
+        $$\sum_{(i, j) \in S} A(i, j) = \sum_{i \in I} \left(\sum_{\substack{j \in J \\ (i, j) \in S}} A(i, j)\right) = \sum_{j \in J} \left(\sum_{\substack{i \in I \\ (i, j) \in S}} A(i, j)\right).$$
+        <p style="padding-left: 20px;">Đặc biệt trên miền chia hết ($1 \le m \le n,\, d \mid m$) và miền ước lồng nhau ($cd \mid n$):</p>
+        $$\sum_{m=1}^n \sum_{d \mid m} A(d, m) = \sum_{d=1}^n \sum_{\substack{1 \le m \le n \\ d \mid m}} A(d, m) = \sum_{d=1}^n \sum_{k=1}^{\lfloor n/d \rfloor} A(d, kd),$$
+        $$\sum_{d \mid n} \sum_{c \mid \frac{n}{d}} A(c, d) = \sum_{c \mid n} \sum_{d \mid \frac{n}{c}} A(c, d).$$
+
+        <h3>Định lý</h3>
+        <p>Giả sử số nguyên dương $n > 1$ có phân tích tiêu chuẩn $n = p_1^{\alpha_1} p_2^{\alpha_2} \cdots p_k^{\alpha_k}$ (với $p_1, p_2, \dots, p_k$ là các số nguyên tố phân biệt và $\alpha_i \in \mathbb{N}^*$). Khi đó:</p>
+        <p style="padding-left: 20px;">1. <b>Công thức tính:</b></p>
+        $$\tau(n) = \prod_{i=1}^k (\alpha_i + 1) \quad \text{và} \quad \sigma(n) = \prod_{i=1}^k \frac{p_i^{\alpha_i + 1} - 1}{p_i - 1}.$$
+        <p style="padding-left: 20px;">2. <b>Tính nhân tính:</b> Với mọi $m, n \in \mathbb{N}^*$ nguyên tố cùng nhau ($\gcd(m, n) = 1$), ta có:</p>
+        $$\tau(mn) = \tau(m)\tau(n) \quad \text{và} \quad \sigma(mn) = \sigma(m)\sigma(n).$$
+        <p style="padding-left: 20px;">3. <b>Tính đối ngẫu và tính chẵn lẻ:</b></p>
+        <ul style="padding-left: 40px;">
+            <li>$\displaystyle \prod_{d \mid n} d = n^{\frac{\tau(n)}{2}}$ và $\displaystyle \sum_{d \mid n} \frac{1}{d} = \frac{\sigma(n)}{n}$.</li>
+            <li>$\tau(n)$ là số lẻ $\iff n$ là một số chính phương ($n = k^2$).</li>
+            <li>$\sigma(n)$ là số lẻ $\iff n$ có dạng $k^2$ hoặc $2k^2$ ($k \in \mathbb{N}^*$).</li>
+        </ul>
+        <p style="padding-left: 20px;">4. <b>Tổng tích lũy trên các ước:</b></p>
+        $$\sum_{m=1}^n \tau(m) = \sum_{i=1}^n \left\lfloor \frac{n}{i} \right\rfloor \quad \text{và} \quad \sum_{m=1}^n \sigma(m) = \sum_{i=1}^n i \left\lfloor \frac{n}{i} \right\rfloor.$$
+
+        <h2 style="font-size: 1.2rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 34px; text-align: left;">Bài tập</h2>
+
+        <h3>Bài 1</h3>
+        <p style="padding-left: 20px;">1. Chứng minh rằng với mọi số nguyên dương $m, n$:</p>
+        $$\tau(m)\tau(n) \ge \tau(mn) \quad \text{và} \quad \sigma(m)\sigma(n) \ge \sigma(mn).$$
+        <p style="padding-left: 20px;">2. Chứng minh rằng với mọi số nguyên dương $n \ge 2$:</p>
+        $$\sigma(n)\varphi(n) < n^2 \quad \text{và} \quad \sigma(n) + \varphi(n) \ge 2n.$$
+        <p style="padding-left: 20px;">3. Chứng minh rằng với mọi số nguyên dương $n \ge 2$:</p>
+        $$\frac{n^2}{2} < \varphi(n)\sigma(n) < n^2.$$
+
+        <h3>Bài 2</h3>
+        <p>Cho số nguyên dương $n$.</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng $\tau(n) \le 2\sqrt{n}$ với mọi số nguyên dương $n$.</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng $\sigma(n) < n\sqrt{n}$ với mọi số nguyên dương $n > 2$.</p>
+        <p style="padding-left: 20px;">3. Chứng minh rằng $\sigma(n) > n + \sqrt{n}$ khi và chỉ khi $n$ là một hợp số.</p>
+
+        <h3>Bài 3</h3>
+        <p>Tìm tất cả các số nguyên dương $n$ sao cho</p>
+        $$(\tau(n))^3 = 4n.$$
+
+        <h3>Bài 4</h3>
+        <p>Tìm tất cả các số tự nhiên lẻ $n \ge 2$ sao cho tổng các ước nguyên dương của số</p>
+        $$N = n^5 - 4$$
+        <p>là một số lẻ.</p>
+
+        <h3>Bài 5</h3>
+        <p>Với mỗi số nguyên dương $n$, đặt $I(n) = \dfrac{\sigma(n)}{n}$, trong đó $\sigma(n)$ là tổng các ước nguyên dương của $n$.</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng $I(4n) \ge \dfrac{7}{4}$ với mọi số nguyên dương $n$. Dấu bằng xảy ra khi nào?</p>
+        <p style="padding-left: 20px;">2. Giả sử $n$ là một số nguyên dương sao cho tồn tại số nguyên tố lẻ $p$ thỏa mãn</p>
+        $$I(n) = \frac{p + 2}{p}.$$
+        <p style="padding-left: 20px;">Chứng minh rằng $n$ là một số chính phương lẻ.</p>
+
+        <h3>Bài 6</h3>
+        <p>Với mỗi số nguyên dương $n$, ký hiệu $\sigma(n)$ là tổng các ước nguyên dương và $\varphi(n)$ là số các số nguyên dương không vượt quá $n$ nguyên tố cùng nhau với $n$. Xét phương trình</p>
+        $$\sigma(n) - \varphi(n) = n + 4. \tag{1}$$
+        <p style="padding-left: 20px;">1. Giả sử $n$ là số nguyên dương lẻ thỏa mãn $(1)$. Chứng minh rằng $n$ là một số chính phương.</p>
+        <p style="padding-left: 20px;">2. Tìm tất cả các số nguyên dương chẵn thỏa mãn $(1)$.</p>
+
+        <h3>Bài 7</h3>
+        <p>Cho số nguyên dương $n$ sao cho tổng bình phương các ước nguyên dương của $n$ bằng $n(n + 3)$.</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng số nguyên dương $n$ có đúng hai ước nguyên tố phân biệt.</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng tồn tại hai chỉ số $i, j$ sao cho $n = F_i \cdot F_j$, với $(F_k)_{k \ge 1}$ là dãy số Fibonacci xác định bởi $F_1 = F_2 = 1$ và $F_k = F_{k-1} + F_{k-2}$ với mọi $k \ge 3$.</p>
+
+        <h3>Bài 8</h3>
+        <p>Tìm tất cả các số nguyên dương $n$ sao cho dãy $\tau(n), \tau(\tau(n)), \tau(\tau(\tau(n))), \dots$ không chứa bất kỳ số chính phương nào.</p>
+
+        <h3>Bài 9</h3>
+        <p>Một số nguyên dương $n$ được gọi là số hoàn hảo nếu tổng tất cả các ước nguyên dương của nó bằng $2n$, tức là $\sigma(n) = 2n$.</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng một số nguyên dương chẵn $n$ là số hoàn hảo khi và chỉ khi $n$ có dạng</p>
+        $$n = 2^{p-1}(2^p - 1),$$
+        <p style="padding-left: 20px;">trong đó $p$ và $2^p - 1$ đều là các số nguyên tố (số nguyên tố Mersenne).</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng nếu tồn tại một số hoàn hảo lẻ $n$, thì $n$ phải có ít nhất $3$ ước nguyên tố phân biệt.</p>
+
+        <h3>Bài 10</h3>
+        <p>Với mỗi số nguyên dương $n$, gọi $\sigma(n)$ là tổng các ước dương của $n$. Chứng minh rằng tồn tại vô hạn số nguyên dương $n$ sao cho $n$ là ước của $2^{\sigma(n)} - 1$.</p>
+
+        <h3>Bài 11</h3>
+        <p>Cho số nguyên dương $k$ lớn hơn $1$. Với mỗi $n \in \mathbb{N}^*$, gọi $\sigma_k(n)$ là tổng các lũy thừa bậc $k$ của các ước nguyên dương của $n$. Ta gọi $n$ là số tốt nếu $n \mid \sigma_k(n)$.</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng $\sigma_k$ là hàm nhân tính số học và tồn tại một dãy vô hạn các số tốt $n_1 < n_2 < \dots$ thỏa mãn $n_i \mid n_{i+1}$ với mọi $i \ge 1$.</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng với mọi $r \in \mathbb{N}^*$, tồn tại một số tốt có ít nhất $r$ ước nguyên tố phân biệt.</p>
+
+        <h3>Bài 12</h3>
+        <p>Tìm tất cả các hợp số nguyên dương $n$ thỏa mãn điều kiện</p>
+        $$n\sigma(n) \equiv 2 \pmod{\varphi(n)},$$
+        <p>trong đó ký hiệu $\sigma(n)$ là hàm tổng các ước của $n$ và $\varphi(n)$ là hàm Euler.</p>
+
+        <h3>Bài 13</h3>
+        <p>Số nguyên dương $n$ được gọi là số hoàn chỉnh nếu $n$ bằng tổng các ước số dương của nó (không kể chính nó).</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng nếu $n$ là số hoàn chỉnh lẻ thì nó có dạng</p>
+        $$n = p^s m^2,$$
+        <p style="padding-left: 20px;">trong đó $p$ là số nguyên tố có dạng $4k + 1$, $s$ là số nguyên dương có dạng $4h + 1$ và $m$ là số nguyên dương không chia hết cho $p$.</p>
+        <p style="padding-left: 20px;">2. Tìm tất cả các số nguyên dương $n > 1$ sao cho $n - 1$ và $\dfrac{n(n - 1)}{2}$ đều là các số hoàn chỉnh.</p>
+
+        <h3>Bài 14</h3>
+        <p>Tìm tất cả các số nguyên $n \ge 2$ thỏa mãn phương trình</p>
+        $$\frac{\sigma(n)}{p(n) - 1} = n,$$
+        <p>trong đó $\sigma(n)$ là tổng tất cả các ước nguyên dương của $n$, và $p(n)$ là ước nguyên tố lớn nhất của $n$.</p>
+
+        <h3>Bài 15</h3>
+        <p style="padding-left: 20px;">1. Chứng minh rằng dãy $\tau(n)$ không tăng ngặt, không giảm ngặt từ bất kỳ điểm nào.</p>
+        <p style="padding-left: 20px;">2. Cho dãy số $(a_n)_{n \ge 1}$ xác định bởi</p>
+        $$a_n = \frac{1}{n} \left( \left\lfloor \frac{n}{1} \right\rfloor + \left\lfloor \frac{n}{2} \right\rfloor + \dots + \left\lfloor \frac{n}{n} \right\rfloor \right).$$
+        <p style="padding-left: 20px;">Chứng minh rằng tồn tại vô hạn số nguyên dương $n$ để $a_{n+1} > a_n$, và tồn tại vô hạn số nguyên dương $n$ để $a_{n+1} < a_n$.</p>
+
+        <h3>Bài 16</h3>
+        <p>Với mỗi số nguyên dương $n$, ký hiệu $d(n)$ là số ước nguyên dương của $n$. Tìm tất cả các hàm số $f \colon \mathbb{Z}^+ \to \mathbb{Z}^+$ thỏa mãn điều kiện $f(mn) = f(m)f(n)$ với mọi $m, n \in \mathbb{Z}^+$, hơn nữa với mọi số nguyên dương $n$, ta đều có $f(d(n)) = d(f(n))$.</p>
+
+        <h3>Bài 17</h3>
+        <p style="padding-left: 20px;">1. Xét dãy số nguyên $(a_n)_{n \ge 1}$ xác định bởi $a_{n+1} = a_n + 2\tau(n)$. Tồn tại hay không hai số hạng liên tiếp là số chính phương?</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng dãy số $u_n = \tau(n^2 + 1)$ không thể tăng ngặt từ lúc nào đó.</p>
+
+        <h3>Bài 18</h3>
+        <p>Với mỗi số nguyên dương $n$, ta đặt</p>
+        $$f(n) = d_1^2 + d_2^2 + \dots + d_k^2,$$
+        <p>trong đó $d_1 < d_2 < \dots < d_k$ là tất cả các ước nguyên dương của $n$.</p>
+        <p style="padding-left: 20px;">1. Tìm tất cả các số nguyên dương $n$ sao cho $f(n) = n^2 + n + 1$.</p>
+        <p style="padding-left: 20px;">2. Tìm tất cả các đa thức hệ số nguyên $P(x)$ sao cho $f(n) \mid P(n)$ với mọi số nguyên dương $n$.</p>
+
+        <h3>Bài 19</h3>
+        <p>Với mỗi số nguyên dương $N$, ký hiệu $\sigma(N)$ là tổng các ước nguyên dương của $N$. Tìm tất cả các số nguyên $m \ge n \ge 2$ thỏa mãn:</p>
+        $$\frac{\sigma(m) - 1}{m - 1} = \frac{\sigma(n) - 1}{n - 1} = \frac{\sigma(mn) - 1}{mn - 1}.$$
+
+        <p class="exam-end"><b>─── HẾT ───</b></p>
+    </div>
+</body>
+</html>

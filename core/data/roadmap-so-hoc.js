@@ -133,7 +133,7 @@ window.SMP_ROADMAP_SOHOC = {
                 {
                     title: 'Hàm số ước $\\tau(n)$ & tổng ước $\\sigma(n)$',
                     desc: 'Đếm số ước, tổng các ước và những bài toán đánh giá, phương trình liên quan.',
-                    url: null
+                    url: '/posts/math/vmo/ham-dem-so-va-tong-cac-uoc.html'
                 },
                 {
                     title: 'Hàm tổng chữ số $S(n)$',
