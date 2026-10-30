@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Hàm Tổng Các Chữ Số</title>
+    
+    <meta name="post-id" content="HamTongCacChuSo">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Số học Olympic: Hàm tổng các chữ số S(n), tính chất đồng dư mod 9, bất đẳng thức chữ số, hệ cơ số 2 và các bài toán nâng cao.">
+    <meta property="og:title" content="SMP — Hàm Tổng Các Chữ Số">
+    <meta property="og:description" content="Chuyên đề Số học Olympic: Hàm tổng các chữ số S(n), tính chất đồng dư mod 9, bất đẳng thức chữ số, hệ cơ số 2 và các bài toán nâng cao.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/ham-tong-cac-chu-so.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Hàm Tổng Các Chữ Số">
+    <meta name="twitter:description" content="Chuyên đề Số học Olympic: Hàm tổng các chữ số S(n), tính chất đồng dư mod 9, bất đẳng thức chữ số, hệ cơ số 2 và các bài toán nâng cao.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        
+        <div class="header-box">
+            <h1>$\S$ Hàm Tổng Các Chữ Số</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles • Long Do</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">September 27, 2026</h2>
+        </div>
+
+        <h3>Bài 1</h3>
+        <p>Cho số nguyên dương $n$ và gọi $S(n)$ là tổng các chữ số của $n$ trong hệ thập phân.</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng $n \equiv S(n) \pmod 9$.</p>
+        <p style="padding-left: 20px;">2. Tìm tất cả các số nguyên dương $n$ thỏa mãn phương trình $$ n + S(n) + S(S(n)) = 2024. $$</p>
+        <h3>Bài 2</h3>
+        <p style="padding-left: 20px;">1. Chứng minh rằng với mọi số nguyên dương $a, b$: $$ S(a + b) \le S(a) + S(b). $$ Dấu bằng xảy ra khi và chỉ khi phép cộng $a + b$ trong hệ thập phân không có nhớ.</p>
+        <p style="padding-left: 20px;">2. Gọi $k$ là số lần nhớ khi thực hiện phép cộng $a + b$. Chứng minh rằng $$ S(a + b) = S(a) + S(b) - 9k. $$</p>
+        <p style="padding-left: 20px;">3. Chứng minh rằng $S(ab) \le S(a)S(b)$ với mọi số nguyên dương $a, b$.</p>
+        <h3>Bài 3</h3>
+        <p>Tìm tất cả các số nguyên dương $n$ sao cho tồn tại các số nguyên không âm $a, b$ thỏa mãn $$ S(a) = S(b) = S(a + b) = n. $$</p>
+        <h3>Bài 4</h3>
+        <p style="padding-left: 20px;">1. Chứng minh rằng các số tự nhiên $999$ và $2999$ không thể biểu diễn thành tổng $a + b$ với $a, b \in \mathbb{N}^*$ sao cho $S(a) = S(b)$.</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng với mọi số nguyên dương $n$ thỏa mãn $999 < n < 2999$, $n$ đều có thể biểu diễn thành tổng $a + b$ của hai số nguyên dương có cùng tổng các chữ số: $S(a) = S(b)$.</p>
+        <h3>Bài 5</h3>
+        <p>Số nguyên dương $N$ được viết trong hệ thập phân có các chữ số tăng ngặt khi đọc từ trái qua phải: $$ N = \overline{d_1 d_2 \dots d_k}, \quad \text{với } 1 \le d_1 < d_2 < \dots < d_k \le 9. $$ Tính giá trị của $S(9N)$.</p>
+        <h3>Bài 6</h3>
+        <p>Cho dãy số $(x_n)_{n \ge 0}$ xác định bởi $$ x_0 = 2^{2024}, \quad x_{n+1} = S(x_n), \quad \forall n \ge 0. $$</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng dãy số $(x_n)$ trở thành dãy hằng kể từ một chỉ số nào đó.</p>
+        <p style="padding-left: 20px;">2. Tìm giá trị của hằng số đó và tính $x_{2024}$.</p>
+        <h3>Bài 7</h3>
+        <p style="padding-left: 20px;">1. Chứng minh rằng $\lim_{n \to \infty} S(2^n) = \infty$.</p>
+        <p style="padding-left: 20px;">2. Chứng minh rằng với mọi số nguyên dương $k$, luôn tồn tại số nguyên dương $n$ sao cho $S(n) = k$ và $S(n^2) = k^2$.</p>
+        <h3>Bài 8</h3>
+        <p>Tìm tất cả các số nguyên dương $n$ thỏa mãn: $$ S(k \cdot n) = S(n) \quad \text{với mọi } k \in \{1, 2, \dots, n\}, $$ nghĩa là dãy đẳng thức $S(n) = S(2n) = S(3n) = \dots = S(n^2)$ đồng thời xảy ra.</p>
+        <h3>Bài 9</h3>
+        <p>Cho số nguyên $N = 4444^{4444}$. Đặt $A = S(N)$ là tổng các chữ số của $N$ trong hệ thập phân, và đặt $B = S(A)$ là tổng các chữ số của $A$. Hãy tính giá trị của $S(B)$.</p>
+        <h3>Bài 10</h3>
+        <p>Tổng các chữ số của số nguyên dương $n$ trong hệ thập phân bằng $100$, và tổng các chữ số của $44n$ bằng $800$. Hãy xác định tổng các chữ số của $3n$.</p>
+        <h3>Bài 11</h3>
+        <p style="padding-left: 20px;">1. Cho các số nguyên dương $n$ và $k$ sao cho $n$ không chia hết cho 3 và $k \ge n$. Chứng minh rằng luôn tồn tại một bội số của $n$ có tổng các chữ số trong hệ thập phân đúng bằng $k$.</p>
+        <p style="padding-left: 20px;">2. Tìm tất cả các số nguyên dương $n$ sao cho với mọi số nguyên $k \ge n$, luôn tồn tại một bội số của $n$ có tổng các chữ số trong hệ thập phân đúng bằng $k$.</p>
+        <h3>Bài 12</h3>
+        <p>Với mỗi số nguyên dương $n$, ký hiệu $S_2(n)$ là tổng các chữ số của $n$ khi viết trong hệ nhị phân (hệ cơ số 2).</p>
+        <p style="padding-left: 20px;">1. Chứng minh rằng với mọi số nguyên dương $n$: $$ v_2\left(\binom{2n}{n}\right) = S_2(n). $$</p>
+        <p style="padding-left: 20px;">2. Tìm tất cả các số nguyên dương $n$ sao cho hệ số nhị thức $\binom{2n}{n}$ không chia hết cho 4.</p>
+        <p style="padding-left: 20px;">3. Ký hiệu $C_n = \frac{1}{n+1}\binom{2n}{n}$ là số Catalan thứ $n$. Chứng minh rằng $C_n$ là một số nguyên với mọi $n \ge 1$, và $C_n$ là số lẻ khi và chỉ khi $n$ có dạng $2^m - 1$ với $m \in \mathbb{N}^*$.</p>
+        <h3>Bài 13</h3>
+        <p>Với mỗi số nguyên dương $k$, ký hiệu $S(k)$ là tổng các chữ số của $k$ trong hệ thập phân. Tìm tất cả các đa thức $P(x)$ với hệ số nguyên sao cho với mọi số nguyên dương $n \ge 2016$, số $P(n)$ là một số nguyên dương và thỏa mãn $$ S(P(n)) = P(S(n)). $$</p>
+        <h3>Bài 14</h3>
+        <p>Cho đa thức monic bậc $n \ge 2$ với các hệ số nguyên dương: $$ P(x) = x^n + a_{n-1}x^{n-1} + \dots + a_1 x + a_0 \quad (a_i \in \mathbb{Z}^+, \forall 0 \le i \le n-1). $$ Hỏi có tồn tại đa thức $P(x)$ như trên sao cho với mọi số nguyên dương $k$, hai số $S(k)$ và $S(P(k))$ luôn có cùng tính chẵn lẻ hay không?</p>
+        <h3>Bài 15</h3>
+        <p>Với mỗi số nguyên dương $n \ge 0$, xét tích $$ A_n = 9 \times 99 \times 9999 \times \dots \times (10^{2^n} - 1) = \prod_{i=0}^n (10^{2^i} - 1). $$ Hãy xác định công thức tường minh theo $n$ của tổng các chữ số $S(A_n)$ trong hệ thập phân.</p>
+
+    </div>
+</body>
+</html>

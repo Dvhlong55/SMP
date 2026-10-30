@@ -138,7 +138,7 @@ window.SMP_ROADMAP_SOHOC = {
                 {
                     title: 'Hàm tổng chữ số $S(n)$',
                     desc: 'Tính chất đồng dư của tổng chữ số, đánh giá kích thước và bài toán biểu diễn thập phân.',
-                    url: null
+                    url: '/posts/math/vmo/ham-tong-cac-chu-so.html'
                 }
             ]
         },
