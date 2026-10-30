@@ -39,13 +39,9 @@
 
     // ── Toggle-specific CSS only — layout stays in shared.css ───────────────
     const TOGGLE_CSS = `
-        /* Sidebar sits cleanly below topbar so header never obscures it */
+        /* Sidebar must be fixed (shared.css already does this) */
         .sidebar {
-            top: calc(60px + env(safe-area-inset-top, 0px)) !important;
-            height: calc(100vh - 60px - env(safe-area-inset-top, 0px)) !important;
-            padding: 0 !important;
-            z-index: 200 !important;
-            overflow: visible !important;
+            overflow: visible !important; /* let the toggle tab peek outside */
         }
 
         /* Scrollable inner panel */
@@ -55,7 +51,7 @@
             overflow-y: auto;
             overflow-x: hidden;
             scrollbar-width: none;
-            padding: 20px 20px 32px 20px;
+            padding: 0px 20px 0px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -80,40 +76,71 @@
             width: 120px;
             height: 90px;
             margin: 0 auto 16px;
+            /* Phóng to một chút */
             transform: scale(1.7);
             transform-origin: center;
         }
 
-        /* Topbar Sidebar Toggle button (Dấu đồng dư ≡) */
-        .topbar-sidebar-toggle {
-            background: transparent;
-            border: none;
-            outline: none;
+        /* Toggle tab — hangs off the right edge, vertically centred */
+        .sidebar-toggle {
+            position: absolute;
+            right: -1px;
+            top: 50%;
+            transform: translate(100%, -50%);
+            width: 50px;
+            height: 52px;
+            background: var(--sidebar-bg, #1a1a1a);
+            border: 1px solid var(--border-color, #2e2e2e);
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+            color: var(--accent-cyan, #5ce1e6);
+            font-size: 0.85rem;
             cursor: pointer;
-            color: var(--accent-cyan, #009eb3);
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            width: 38px;
-            height: 38px;
-            border-radius: 8px;
-            margin-right: 12px;
-            margin-left: -6px;
+            z-index: 201;
             padding: 0;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+            line-height: 1;
+            pointer-events: auto !important;
         }
-        .topbar-sidebar-toggle:hover {
-            background: rgba(92, 225, 230, 0.12);
+        .sidebar-toggle:hover {
+            opacity: 0.85;
+        }
+
+        /* Light mode (giao diện sáng): nút nền ĐEN để nổi bật */
+        body:not(.dark-mode) .sidebar-toggle {
+            background: #1a1a1a;
+            border-color: #1a1a1a;
             color: var(--accent-cyan, #009eb3);
-            transform: scale(1.06);
         }
-        body.dark-mode .topbar-sidebar-toggle {
+        body:not(.dark-mode) .sidebar-toggle:hover {
+            background: #333333;
+            border-color: #333333;
+        }
+
+        /* Dark mode (giao diện tối): nút nền TRẮNG để nổi bật */
+        body.dark-mode .sidebar-toggle {
+            background: #ffffff;
+            border-color: #ffffff;
             color: var(--accent-cyan, #5ce1e6);
         }
-        body.dark-mode .topbar-sidebar-toggle:hover {
-            background: rgba(92, 225, 230, 0.15);
-            color: var(--accent-cyan, #5ce1e6);
+        body.dark-mode .sidebar-toggle:hover {
+            background: #e0e0e0;
+            border-color: #e0e0e0;
+        }
+
+        /* Dark mode: dark-toggle button turns white */
+        body.dark-mode .dark-toggle {
+            color: #ffffff !important;
+            border-color: rgba(255,255,255,0.25) !important;
+            background: rgba(255,255,255,0.08) !important;
+        }
+        body.dark-mode .dark-toggle:hover {
+            border-color: var(--accent-cyan, #5ce1e6) !important;
+            color: var(--accent-cyan, #5ce1e6) !important;
+            background: rgba(92,225,230,0.12) !important;
         }
 
         /* ── Collapsed state ── */
@@ -121,7 +148,12 @@
         html.sidebar-collapsed .sidebar {
             width: 0 !important;
             padding: 0 !important;
-            pointer-events: none !important;
+            pointer-events: none !important; /* sidebar bị thu lại không click được */
+        }
+        /* Nhưng nút toggle VẪN phải click được kể cả khi sidebar đóng */
+        .sidebar.collapsed .sidebar-toggle,
+        html.sidebar-collapsed .sidebar .sidebar-toggle {
+            pointer-events: auto !important;
         }
         .sidebar.collapsed .sidebar-inner,
         html.sidebar-collapsed .sidebar .sidebar-inner {
@@ -134,12 +166,9 @@
             width: 100% !important;
         }
 
-        /* Mobile */
+        /* Mobile Floating Action Button for sidebar toggle */
         @media (max-width: 768px) {
-            .sidebar, .sidebar-overlay {
-                display: none !important;
-            }
-            .topbar-sidebar-toggle {
+            .sidebar, .sidebar-toggle, .sidebar-overlay {
                 display: none !important;
             }
         }
@@ -210,26 +239,281 @@
         .sidebar-widget-list li a span {
             font-size: 0.75rem;
             color: #555;
-            font-family: monospace;
         }
-        /* ── Sidebar Overlay (Click bên ngoài để đóng) ── */
-        .sidebar-overlay {
-            position: fixed;
-            top: calc(60px + env(safe-area-inset-top, 0px));
-            left: 0;
-            width: 100vw;
-            height: calc(100vh - 60px - env(safe-area-inset-top, 0px));
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
-            z-index: 199;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+
+        /* ── Topbar Nav: 5 Equal & Balanced Icons ── */
+        .topbar-nav {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
         }
-        .sidebar-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+        .topbar-nav-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 38px !important;
+            height: 38px !important;
+            border-radius: 8px !important;
+            color: var(--text-dark, #a0a0a0) !important;
+            text-decoration: none !important;
+            transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease !important;
+            box-sizing: border-box !important;
+            cursor: pointer !important;
+            flex-shrink: 0 !important;
+            border: 1px solid transparent !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            line-height: 1 !important;
+        }
+        .topbar-nav-btn:hover {
+            color: var(--accent-cyan, #5ce1e6) !important;
+            background-color: rgba(92, 225, 230, 0.08) !important;
+            border-color: rgba(92, 225, 230, 0.2) !important;
+        }
+        .topbar-nav-btn.active {
+            color: var(--accent-cyan, #5ce1e6) !important;
+            background-color: rgba(92, 225, 230, 0.12) !important;
+            border-color: rgba(92, 225, 230, 0.3) !important;
+        }
+        .topbar-nav-btn svg {
+            display: block !important;
+            width: 18px !important;
+            height: 18px !important;
+            stroke: currentColor !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* ── Topbar Sticky & Auto-Hide Headroom (Zero-lag GPU Transform) ── */
+        .topbar {
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 1000 !important;
+            transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1) !important;
+            will-change: transform;
+        }
+        .topbar.topbar-hidden {
+            transform: translateY(-100%) !important;
+        }
+
+        .topbar-desktop-inner {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .topbar-article-inner {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Desktop: ALWAYS show standard desktop topbar */
+        @media (min-width: 769px) {
+            .topbar-article-inner {
+                display: none !important;
+            }
+            .topbar-desktop-inner {
+                display: flex !important;
+            }
+        }
+
+        /* Mobile: Fixed topbar following viewport + Article mode support */
+        @media (max-width: 768px) {
+            .topbar {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                z-index: 1000 !important;
+            }
+            .main-wrapper {
+                padding-top: calc(56px + env(safe-area-inset-top, 0px)) !important;
+            }
+            body.is-article-page .main-wrapper {
+                padding-top: calc(48px + env(safe-area-inset-top, 0px)) !important;
+            }
+            body.is-article-page .topbar-desktop-inner {
+                display: none !important;
+            }
+            body.is-article-page .topbar-article-inner {
+                display: flex !important;
+            }
+            body.is-article-page .topbar {
+                padding: calc(6px + env(safe-area-inset-top, 0px)) 12px 6px 12px !important;
+                min-height: calc(48px + env(safe-area-inset-top, 0px)) !important;
+            }
+        }
+
+        /* Back Button on Mobile Article Topbar */
+        .topbar-back-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            color: var(--text-dark, #222) !important;
+            text-decoration: none !important;
+            background: transparent !important;
+            border: none !important;
+            cursor: pointer !important;
+            flex-shrink: 0 !important;
+            padding: 0 !important;
+            transition: background-color 0.15s ease !important;
+        }
+        .topbar-back-btn:active {
+            background-color: rgba(92, 225, 230, 0.2) !important;
+            color: var(--accent-cyan, #0E8FA3) !important;
+        }
+
+        /* Title in Mobile Article Topbar */
+        .topbar-article-title {
+            flex: 1 !important;
+            font-size: 0.88rem !important;
+            font-weight: 600 !important;
+            font-family: inherit !important;
+            color: var(--text-dark, #1C1B19) !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            text-align: center !important;
+            padding: 0 10px !important;
+            line-height: 1.2 !important;
+        }
+
+        /* Search on Mobile Article Topbar */
+        .search-wrapper-article {
+            flex-shrink: 0 !important;
+            position: relative !important;
+        }
+        .search-icon-article {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            color: var(--text-dark, #222) !important;
+        }
+        .search-icon-article:active {
+            background-color: rgba(92, 225, 230, 0.2) !important;
+        }
+
+        .search-wrapper-article.mobile-active .search-input-mobile {
+            display: block !important;
+            position: absolute !important;
+            top: 42px !important;
+            right: 0 !important;
+            width: min(280px, 80vw) !important;
+            padding: 8px 12px !important;
+            background: var(--topbar-bg, #fff) !important;
+            border: 1px solid var(--border-light, #ddd) !important;
+            border-radius: 6px !important;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25) !important;
+            color: var(--text-dark) !important;
+            z-index: 10001 !important;
+            outline: none !important;
+            font-size: 0.85rem !important;
+        }
+        .search-wrapper-article.mobile-active .search-results-mobile {
+            position: absolute !important;
+            top: 84px !important;
+            right: 0 !important;
+            width: min(300px, 85vw) !important;
+            max-height: 300px !important;
+            overflow-y: auto !important;
+            background: var(--topbar-bg, #fff) !important;
+            border: 1px solid var(--border-light, #ddd) !important;
+            border-radius: 6px !important;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3) !important;
+            z-index: 10002 !important;
+        }
+
+        /* Reading Progress Bar (Thin Teal Line) */
+        .reading-progress-track {
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            height: 2px !important;
+            background: transparent !important;
+            pointer-events: none !important;
+            overflow: hidden !important;
+        }
+        .reading-progress-fill {
+            height: 100% !important;
+            width: 0% !important;
+            background: var(--accent-cyan, #0E8FA3) !important;
+        }
+        body.dark-mode .reading-progress-fill {
+            background: var(--accent-cyan, #5ce1e6) !important;
+        }
+
+        /* Mobile Bottom Navigation Bar (Icons Only) */
+        .mobile-bottom-nav {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-bottom-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: calc(52px + env(safe-area-inset-bottom));
+                background-color: var(--topbar-bg, #111111);
+                border-top: 1px solid rgba(128, 128, 128, 0.15);
+                z-index: 9999;
+                justify-content: space-around;
+                align-items: center;
+                padding-bottom: env(safe-area-inset-bottom);
+                box-sizing: border-box;
+                box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            .mobile-bottom-nav a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text-muted, #9a9a9a);
+                text-decoration: none;
+                flex: 1;
+                height: 52px;
+                box-sizing: border-box;
+                transition: color 0.2s ease, transform 0.15s ease;
+            }
+
+            .mobile-bottom-nav a .icon {
+                font-size: 1.35rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                line-height: 1;
+                transition: transform 0.2s ease;
+            }
+
+            .mobile-bottom-nav a.active {
+                color: var(--accent-cyan, #5ce1e6) !important;
+            }
+
+            .mobile-bottom-nav a:active .icon {
+                transform: scale(0.85);
+            }
+
+            /* Hide the topbar navigation on mobile */
+            .topbar-nav {
+                display: none !important;
+            }
+
+            /* Adjust body padding so bottom nav doesn't overlap content */
+            body {
+                padding-bottom: calc(52px + env(safe-area-inset-bottom)) !important;
+            }
         }
     `;
 
@@ -252,9 +536,10 @@
             <a href="/demo.html" style="display: block; cursor: pointer; border: none; outline: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" title="Xem tính năng hệ sinh thái">
                 <img src="/core/image/image_49b1a4.png" alt="SMP Logo" class="sidebar-logo">
             </a>
+            <div class="sidebar-title">Secret of<br>Mathematical<br>Principles</div>
             <div class="sidebar-divider"></div>
             <div class="sidebar-socials">
-                <a href="mailto:smp.m4th@gmail.com" class="sidebar-social-btn" title="Email">
+                <a href="mailto:smp.cqt0907@gmail.com" class="sidebar-social-btn" title="Email">
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                 </a>
                 <a href="https://www.youtube.com/@secret.mathematical.principles" target="_blank" class="sidebar-social-btn" title="YouTube">
@@ -288,11 +573,11 @@
                 <div style="height: 1px; background: rgba(255,255,255,0.08); margin: 16px 0 12px 0;"></div>
                 <a href="/pages/roadmap.html" style="color: var(--accent-cyan);">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
-                    <span>Roadmap Số Học</span>
+                    <span>Số Học Olympic</span>
                 </a>
                 <a href="/pages/roadmap-chuyen-toan.html" style="color: var(--accent-cyan);">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                    <span>Roadmap Chuyên Toán</span>
+                    <span>Chuyên Toán THCS</span>
                 </a>
                 <a href="/pages/profile.html" id="sidebar-auth-btn" onclick="if(!localStorage.getItem('smp_access_token')){if(window.openAuthModal){window.openAuthModal('login');return false;}}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -300,7 +585,10 @@
                 </a>
             </nav>
         </div>
-        </aside>`;
+        <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle sidebar" aria-label="Toggle sidebar">
+            <span class="toggle-icon">${initialToggleIcon}</span>
+        </button>
+    </aside>`;
 
     // ── Check if Article Page ────────────────────────────────────────────────
     const isArticlePage = window.location.pathname.includes('/posts/') || 
@@ -320,13 +608,6 @@
     <header class="topbar">
         <!-- 1. Standard Topbar (Desktop and Mobile non-article) -->
         <div class="topbar-desktop-inner">
-                        <button class="topbar-sidebar-toggle" id="sidebar-toggle" title="Đóng/Mở thanh bên" aria-label="Toggle sidebar">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
             <a href="/pages/vetoi.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s; margin-right: 20px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Tôi">SMP</a>
             
             <nav class="topbar-nav" style="flex: 1; justify-content: flex-start;">
@@ -586,7 +867,7 @@
                 overlay.classList.toggle('active', !collapsed);
             }
 
-            if (iconEl) iconEl.innerHTML = collapsed ? '&#x00BB;' : '&#x00AB;';
+            iconEl.innerHTML = collapsed ? '&#x00BB;' : '&#x00AB;';
 
             localStorage.setItem(STORAGE_KEY, collapsed ? 'true' : 'false');
 
