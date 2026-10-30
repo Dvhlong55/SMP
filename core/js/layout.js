@@ -51,7 +51,7 @@
             overflow-y: auto;
             overflow-x: hidden;
             scrollbar-width: none;
-            padding: 0px 20px 0px;
+            padding: calc(60px + env(safe-area-inset-top, 0px) + 20px) 20px 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -81,29 +81,45 @@
             transform-origin: center;
         }
 
-        /* Toggle tab — hangs off the right edge, vertically centred */
+        /* Old toggle tab is hidden; now toggled via header congruence button */
         .sidebar-toggle {
-            position: absolute;
-            right: -1px;
-            top: 50%;
-            transform: translate(100%, -50%);
-            width: 50px;
-            height: 52px;
-            background: var(--sidebar-bg, #1a1a1a);
-            border: 1px solid var(--border-color, #2e2e2e);
-            border-left: none;
-            border-radius: 0 8px 8px 0;
-            color: var(--accent-cyan, #5ce1e6);
-            font-size: 0.85rem;
+            display: none !important;
+        }
+
+        /* Topbar Sidebar Toggle Button (Congruence symbol ≡) */
+        .topbar-sidebar-toggle {
+            background: none;
+            border: none;
+            outline: none;
             cursor: pointer;
-            display: flex;
+            color: var(--accent-cyan, #009eb3);
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            z-index: 201;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            margin-right: 12px;
             padding: 0;
-            transition: background 0.3s, color 0.3s, border-color 0.3s;
-            line-height: 1;
-            pointer-events: auto !important;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+            flex-shrink: 0;
+        }
+        .topbar-sidebar-toggle:hover {
+            background: rgba(92, 225, 230, 0.12);
+            color: var(--accent-cyan, #009eb3);
+            transform: scale(1.06);
+        }
+        body.dark-mode .topbar-sidebar-toggle {
+            color: var(--accent-cyan, #5ce1e6);
+        }
+        body.dark-mode .topbar-sidebar-toggle:hover {
+            background: rgba(92, 225, 230, 0.15);
+            color: var(--accent-cyan, #5ce1e6);
+        }
+        @media (max-width: 768px) {
+            .topbar-sidebar-toggle {
+                display: none !important;
+            }
         }
         .sidebar-toggle:hover {
             opacity: 0.85;
@@ -536,10 +552,9 @@
             <a href="/demo.html" style="display: block; cursor: pointer; border: none; outline: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" title="Xem tính năng hệ sinh thái">
                 <img src="/core/image/image_49b1a4.png" alt="SMP Logo" class="sidebar-logo">
             </a>
-            <div class="sidebar-title">Secret of<br>Mathematical<br>Principles</div>
-            <div class="sidebar-divider"></div>
+                        <div class="sidebar-divider"></div>
             <div class="sidebar-socials">
-                <a href="mailto:smp.cqt0907@gmail.com" class="sidebar-social-btn" title="Email">
+                <a href="mailto:smp.m4th@gmail.com" class="sidebar-social-btn" title="Email">
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                 </a>
                 <a href="https://www.youtube.com/@secret.mathematical.principles" target="_blank" class="sidebar-social-btn" title="YouTube">
@@ -573,11 +588,11 @@
                 <div style="height: 1px; background: rgba(255,255,255,0.08); margin: 16px 0 12px 0;"></div>
                 <a href="/pages/roadmap.html" style="color: var(--accent-cyan);">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
-                    <span>Số Học Olympic</span>
+                    <span>Roadmap Số Học</span>
                 </a>
                 <a href="/pages/roadmap-chuyen-toan.html" style="color: var(--accent-cyan);">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                    <span>Chuyên Toán THCS</span>
+                    <span>Roadmap Chuyên Toán</span>
                 </a>
                 <a href="/pages/profile.html" id="sidebar-auth-btn" onclick="if(!localStorage.getItem('smp_access_token')){if(window.openAuthModal){window.openAuthModal('login');return false;}}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -608,6 +623,13 @@
     <header class="topbar">
         <!-- 1. Standard Topbar (Desktop and Mobile non-article) -->
         <div class="topbar-desktop-inner">
+            <button class="topbar-sidebar-toggle" onclick="var s=document.getElementById('sidebar-toggle');if(s)s.click();" title="Đóng/Mở thanh bên" aria-label="Toggle sidebar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
             <a href="/pages/vetoi.html" style="color: var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size: 1.5rem; letter-spacing:2px; flex-shrink:0; text-decoration:none; transition:opacity 0.2s; margin-right: 20px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'" title="Về Tôi">SMP</a>
             
             <nav class="topbar-nav" style="flex: 1; justify-content: flex-start;">
