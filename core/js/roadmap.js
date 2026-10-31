@@ -335,6 +335,12 @@
                 icon: '<span class="chip-latex">\\(\\mathbb{Z}\\)</span>'
             },
             {
+                id: 'to-hop',
+                name: 'Tổ Hợp Olympic',
+                url: '/pages/roadmap-to-hop.html',
+                icon: '<span class="chip-latex">\\(C_n^k\\)</span>'
+            },
+            {
                 id: 'chuyen-toan',
                 name: 'Chuyên Toán THCS',
                 url: '/pages/roadmap-chuyen-toan.html',

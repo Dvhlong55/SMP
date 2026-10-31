@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smp-cache-v100';
+const CACHE_NAME = 'smp-cache-v101';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -9,6 +9,8 @@ const urlsToCache = [
   '/pages/vetoi.html',
   '/pages/auth.html',
   '/pages/notifications.html',
+  '/pages/roadmap-to-hop.html',
+  '/core/data/roadmap-to-hop.js',
   '/core/css/shared.css',
   '/core/css/post.css',
   '/core/js/shared.js',

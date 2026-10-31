@@ -15,6 +15,7 @@ const LEFT_TAGS_HTML = `
             
             <ul class="side-widget-list">
                 <li><a href="/pages/roadmap.html" style="color: var(--accent-cyan); font-weight: 500;">Số Học Olympic (VMO)</a></li>
+                <li><a href="/pages/roadmap-to-hop.html" style="color: var(--accent-cyan); font-weight: 500;">Tổ Hợp Olympic (VMO)</a></li>
                 <li><a href="/pages/roadmap-chuyen-toan.html" style="color: var(--accent-cyan); font-weight: 500;">Chuyên Toán (THCS)</a></li>
             </ul>
         </div>
