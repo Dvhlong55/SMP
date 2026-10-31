@@ -13,6 +13,9 @@ window.SMP_ROADMAP_TOHOP = {
     listUrl: '/pages/toanhoc.html?filter=vmo&sub=to-hop',
     author: 'SMP',
     email: 'smp.mth@gmail.com',
+    treeRoot: 'VMO · TỔ HỢP OLYMPIC',
+    quote: '“Nghệ thuật của Toán học tổ hợp là tìm ra vẻ đẹp và trật tự ẩn sâu bên dưới những cấu hình rời rạc tưởng chừng hỗn loạn.”',
+    cite: '— Paul Erdős —',
 
     phases: [
         { id: 1, name: 'Mở đầu về tư duy' },
