@@ -15,11 +15,15 @@ window.SMP_ROADMAP_TOHOP = {
     email: 'smp.mth@gmail.com',
 
     phases: [
-        { id: 1, name: 'Mở đầu về tư duy' },
+        { 
+            id: 1, 
+            name: 'Mở đầu về tư duy',
+            note: 'Tham khảo: <a href="/pages/roadmap-chuyen-toan.html#rm-station-10" style="color: var(--accent-cyan); text-decoration: underline;">Chuyên đề IV · Tổ hợp</a> bên Chuyên Toán THCS'
+        },
         { id: 2, name: 'Bài toán đếm' },
         { id: 3, name: 'Bảng ô vuông & Trò chơi' },
         { id: 4, name: 'Lý thuyết đồ thị' },
-        { id: 5, name: 'Phương pháp nâng cao & Về đích' }
+        { id: 5, name: 'Phương pháp nâng cao' }
     ],
 
     stations: [
@@ -28,28 +32,73 @@ window.SMP_ROADMAP_TOHOP = {
            ============================================================ */
         {
             id: 1, phase: 1,
-            title: 'Bộ 3 nguyên lý: Dirichlet, Cực hạn & Bất biến',
-            desc: 'Bộ ba nguyên lý kinh điển rèn luyện tư duy lập luận logic và chứng minh sự tồn tại cấu hình rời rạc.',
+            title: 'Làm quen với suy luận',
             tiles: [
                 {
-                    title: 'Nguyên lý Dirichlet nâng cao',
-                    desc: 'Nguyên lý lồng chim bồ câu, dạng mở rộng cho tập vô hạn, ứng dụng trong số học và hình học tổ hợp.',
+                    title: 'Mở đầu về suy luận logic',
+                    desc: 'Các bài toán suy luận logic cơ bản, phương pháp lập bảng chân trị, bài toán người thật thà - kẻ nói dối.',
+                    url: '/posts/math/thcs/to-hop/mo-dau-ve-suy-luan.html'
+                }
+            ]
+        },
+
+        {
+            id: 2, phase: 1,
+            title: 'Nguyên lý Dirichlet',
+            tiles: [
+                {
+                    title: 'Nguyên lý Dirichlet cơ bản & nâng cao',
+                    desc: 'Nguyên lý lồng chim bồ câu, dạng mở rộng cho tập vô hạn, chia khoảng và ứng dụng trong số học, hình học.',
                     url: null
                 },
                 {
-                    title: 'Nguyên lý Cực hạn',
-                    desc: 'Kỹ thuật xét phần tử biên (nhỏ nhất, lớn nhất), bài toán cấu hình điểm Sylvester-Gallai và đường biên.',
+                    title: 'Nguyên lý Dirichlet (Phần 1 - Nền tảng)',
+                    desc: 'Bài toán chia chuồng, nguyên lý bồ câu trên lưới và bài toán tồn tại.',
+                    url: '/posts/math/thcs/to-hop/nguyen-ly-dirichlet-phan-1.html'
+                },
+                {
+                    title: 'Nguyên lý Dirichlet (Phần 2 - Nâng cao)',
+                    desc: 'Áp dụng định lượng, Dirichlet trong hệ thặng dư và hình học tổ hợp.',
+                    url: '/posts/math/thcs/to-hop/nguyen-ly-dirichlet-phan-2.html'
+                }
+            ]
+        },
+
+        {
+            id: 3, phase: 1,
+            title: 'Nguyên lý Cực hạn',
+            tiles: [
+                {
+                    title: 'Nguyên lý Cực hạn trong Tổ hợp',
+                    desc: 'Kỹ thuật xét phần tử biên (nhỏ nhất, lớn nhất), bài toán cấu hình điểm Sylvester-Gallai và điểm biên.',
                     url: null
                 },
                 {
-                    title: 'Đại lượng Bất biến & Đơn biến',
-                    desc: 'Xây dựng hàm thế năng, bất biến chẵn lẻ, bất biến modulo và tính dừng của quá trình hữu hạn bước.',
+                    title: 'Nguyên lý Cực hạn (Chuyên đề rèn luyện)',
+                    desc: 'Phân loại các dạng toán cực hạn: đường thẳng, đa giác, tập số và bài toán chuyển động rời rạc.',
+                    url: '/posts/math/thcs/to-hop/nguyen-ly-cuc-han.html'
+                }
+            ]
+        },
+
+        {
+            id: 4, phase: 1,
+            title: 'Đại lượng Bất biến & Đơn biến',
+            tiles: [
+                {
+                    title: 'Đại lượng Bất biến và Ứng dụng',
+                    desc: 'Bất biến chẵn lẻ, bất biến modulo, tính đối xứng và các bài toán biến đổi bộ số.',
                     url: null
                 },
                 {
-                    title: 'Tổng hợp các nguyên lý quan trọng',
-                    desc: 'Tuyển chọn các bài toán phối hợp Dirichlet, cực hạn và đại lượng bất biến trong các kỳ thi HSGQG.',
+                    title: 'Đơn biến và Các vấn đề liên quan',
+                    desc: 'Xây dựng hàm thế năng, quá trình dừng và tính hữu hạn của thuật toán biến đổi.',
                     url: null
+                },
+                {
+                    title: 'Đại lượng Bất biến (Chuyên đề rèn luyện)',
+                    desc: 'Tổng hợp bài toán bất biến trên bảng ô vuông và biến đổi sỏi.',
+                    url: '/posts/math/thcs/to-hop/dai-luong-bat-bien.html'
                 }
             ]
         },
@@ -58,22 +107,25 @@ window.SMP_ROADMAP_TOHOP = {
            GIAI ĐOẠN II: BÀI TOÁN ĐẾM
            ============================================================ */
         {
-            id: 2, phase: 2,
+            id: 5, phase: 2,
             title: 'Các nguyên tắc đếm cơ bản',
-            desc: 'Quy tắc cộng, quy tắc nhân, hoán vị, chỉnh hợp và tổ hợp — nền tảng của mọi bài toán đếm rời rạc.',
             tiles: [
                 {
                     title: 'Quy tắc đếm cơ bản & Hoán vị, Chỉnh hợp, Tổ hợp',
                     desc: 'Phân biệt mô hình có thứ tự và không thứ tự, hoán vị vòng quanh và các bài toán phân nhóm cơ bản.',
                     url: null
+                },
+                {
+                    title: 'Bài toán đếm cơ bản (Chuyên đề rèn luyện)',
+                    desc: 'Rèn luyện kỹ năng phân chia trường hợp, nguyên lý bù và đếm bổ sung.',
+                    url: '/posts/math/thcs/to-hop/bai-toan-dem-co-ban.html'
                 }
             ]
         },
 
         {
-            id: 3, phase: 2,
+            id: 6, phase: 2,
             title: 'Nguyên lý bù trừ (PIE) & Bài toán tồn tại',
-            desc: 'Công thức hợp của các tập hợp, bài toán đếm phần tử thỏa mãn tính chất và ứng dụng chỉ ra sự tồn tại.',
             tiles: [
                 {
                     title: 'Nguyên lý bù trừ (Inclusion-Exclusion Principle)',
@@ -84,9 +136,8 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 4, phase: 2,
+            id: 7, phase: 2,
             title: 'Bài toán chia kẹo Euler & Phương pháp vách ngăn',
-            desc: 'Mô hình Stars and Bars tìm số nghiệm nguyên không âm, nguyên dương của phương trình tổng.',
             tiles: [
                 {
                     title: 'Chia kẹo Euler (Phần 1)',
@@ -102,9 +153,8 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 5, phase: 2,
+            id: 8, phase: 2,
             title: 'Hệ thức truy hồi & Đếm bằng truy hồi',
-            desc: 'Phương pháp thiết lập hệ thức truy hồi tuyến tính từ cấu trúc con của bài toán đếm.',
             tiles: [
                 {
                     title: 'Đếm bằng truy hồi (Phần 1)',
@@ -120,9 +170,8 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 6, phase: 2,
+            id: 9, phase: 2,
             title: 'Phương pháp đếm bằng hai cách (Double Counting)',
-            desc: 'Kỹ thuật đếm số cặp liên thuộc $(x, S)$ trên hai tập hợp để chứng minh đẳng thức và bất đẳng thức tổ hợp.',
             tiles: [
                 {
                     title: 'Đếm bằng hai cách — Cơ bản',
@@ -143,9 +192,8 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 7, phase: 2,
+            id: 10, phase: 2,
             title: 'Hàm số & Đếm bằng song ánh',
-            desc: 'Kỹ thuật chuyển đổi bài toán đếm phức tạp về mô hình quen thuộc thông qua ánh xạ song ánh.',
             tiles: [
                 {
                     title: 'Đếm bằng song ánh & Ánh xạ',
@@ -159,9 +207,8 @@ window.SMP_ROADMAP_TOHOP = {
            GIAI ĐOẠN III: BẢNG Ô VUÔNG & TRÒ CHƠI
            ============================================================ */
         {
-            id: 8, phase: 3,
+            id: 11, phase: 3,
             title: 'Một số vấn đề về bảng ô vuông',
-            desc: 'Kỹ thuật tô màu, lát gạch (Domino, Tromino), vết cắt và đánh giá trên lưới ô vuông.',
             tiles: [
                 {
                     title: 'Bài toán lát Domino & Polyomino',
@@ -177,9 +224,8 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 9, phase: 3,
+            id: 12, phase: 3,
             title: 'Các bài toán trò chơi và chiến thuật',
-            desc: 'Lý thuyết trò chơi tổ hợp hữu hạn bước, phân tích vị trí thắng thua và chiến thuật đối xứng.',
             tiles: [
                 {
                     title: 'Trò chơi đối kháng & Chiến thuật đối xứng',
@@ -198,27 +244,20 @@ window.SMP_ROADMAP_TOHOP = {
            GIAI ĐOẠN IV: LÝ THUYẾT ĐỒ THỊ
            ============================================================ */
         {
-            id: 10, phase: 4,
-            title: 'Lý thuyết đồ thị căn bản & Đồ thị phẳng',
-            desc: 'Các khái niệm nền tảng: Bậc đỉnh, đường đi, chu trình, đồ thị hai phía, cây và đồ thị phẳng.',
+            id: 13, phase: 4,
+            title: 'Lý thuyết đồ thị căn bản',
             tiles: [
                 {
-                    title: 'Graph Theory 1 — Bậc đỉnh & Chu trình',
+                    title: 'Graph Theory 1 — Bậc đỉnh, đường đi & chu trình',
                     desc: 'Bổ đề bắt tay $\\sum d(v) = 2|E|$, đường đi Euler, chu trình Hamilton và đồ thị liên thông.',
-                    url: null
-                },
-                {
-                    title: 'Planar Graph — Đồ thị phẳng & Công thức Euler',
-                    desc: 'Định lý Euler $V - E + F = 2$, tính chất đồ thị đối ngẫu, định lý Kuratowski ($K_5, K_{3,3}$) và bài toán tô màu bản đồ.',
                     url: null
                 }
             ]
         },
 
         {
-            id: 11, phase: 4,
+            id: 14, phase: 4,
             title: 'Ứng dụng của Turán & Kỹ thuật đánh giá $V, E$',
-            desc: 'Đồ thị cực trị, đánh giá số cạnh cực đại không chứa đồ thị con cấm và lý thuyết Ramsey cơ bản.',
             tiles: [
                 {
                     title: 'Graph Theory 2 — Đường đi & Đánh giá liên thông',
@@ -234,9 +273,8 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 12, phase: 4,
+            id: 15, phase: 4,
             title: 'Định lý Hall và kĩ thuật ghép cặp',
-            desc: 'Hệ đại diện phân biệt (SDR), ghép cặp cực đại trên đồ thị hai phía và ứng dụng trong phân phối.',
             tiles: [
                 {
                     title: 'Định lý Hall (Marriage Theorem)',
@@ -251,13 +289,29 @@ window.SMP_ROADMAP_TOHOP = {
             ]
         },
 
+        {
+            id: 16, phase: 4,
+            title: 'Đồ thị phẳng & Công thức Euler',
+            tiles: [
+                {
+                    title: 'Planar Graph — Đồ thị phẳng & Công thức Euler',
+                    desc: 'Định lý Euler $V - E + F = 2$, tính chất đồ thị đối ngẫu, định lý Kuratowski ($K_5, K_{3,3}$) và bài toán tô màu bản đồ.',
+                    url: null
+                },
+                {
+                    title: 'Đồ thị đối ngẫu & Bài toán tô màu bản đồ',
+                    desc: 'Định lý 4 màu, định lý 5 màu và bài toán chia mặt phẳng bởi hệ đường cong.',
+                    url: null
+                }
+            ]
+        },
+
         /* ============================================================
-           GIAI ĐOẠN V: PHƯƠNG PHÁP NÂNG CAO & VỀ ĐÍCH
+           GIAI ĐOẠN V: PHƯƠNG PHÁP NÂNG CAO
            ============================================================ */
         {
-            id: 13, phase: 5,
+            id: 17, phase: 5,
             title: 'Ứng dụng số phức & Hàm sinh trong tổ hợp',
-            desc: 'Sức mạnh của đại số và giải tích trong việc giải quyết các bài toán đếm và phân hoạch nâng cao.',
             tiles: [
                 {
                     title: 'Phương pháp hàm sinh (Generating Functions)',
@@ -273,9 +327,8 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 14, phase: 5,
+            id: 18, phase: 5,
             title: 'Phương pháp xác suất chứng minh tồn tại',
-            desc: 'Sử dụng không gian xác suất rời rạc và kỳ vọng để chứng minh sự tồn tại cấu hình tổ hợp tối ưu.',
             tiles: [
                 {
                     title: 'Phương pháp xác suất (Probabilistic Method)',
@@ -291,9 +344,8 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 15, phase: 5,
+            id: 19, phase: 5,
             title: 'Thuật toán: Tham lam, điều chỉnh địa phương & Cực trị',
-            desc: 'Tư duy thuật toán trong giải toán tổ hợp: Tìm kiếm lời giải tối ưu và rời rạc hóa cấu hình.',
             tiles: [
                 {
                     title: 'Thuật toán tham lam (Greedy Algorithm)',
@@ -309,9 +361,8 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 16, phase: 5,
+            id: 20, phase: 5,
             title: 'Tổ hợp có tính chất số học',
-            desc: 'Giao thoa giữa Số học và Tổ hợp: Định lý Schur, định lý Van der Waerden và cấu hình thặng dư.',
             tiles: [
                 {
                     title: 'Tổ hợp số học (Combinatorial Number Theory)',
@@ -322,9 +373,8 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 17, phase: 5, icon: 'trophy', label: '★',
+            id: 21, phase: 5, icon: 'trophy', label: '★',
             title: 'Luyện tập tổng hợp Olympic VMO',
-            desc: 'Tuyển tập đề thi và bài tập rèn luyện toàn diện các kỹ năng tổ hợp chuẩn bị cho kỳ thi HSGQG.',
             tiles: [
                 {
                     title: 'Khởi động Tổ hợp VMO',

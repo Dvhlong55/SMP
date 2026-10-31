@@ -16,7 +16,11 @@ window.SMP_ROADMAP_SOHOC = {
     listUrl: '/pages/toanhoc.html?filter=vmo&sub=so-hoc',
 
     phases: [
-        { id: 1, name: 'Nền tảng' },
+        { 
+            id: 1, 
+            name: 'Nền tảng',
+            note: 'Tham khảo: <a href="/pages/roadmap-chuyen-toan.html#rm-station-4" style="color: var(--accent-cyan); text-decoration: underline;">Chuyên đề II · Số học</a> bên Chuyên Toán THCS'
+        },
         { id: 2, name: 'Chuyên sâu' },
         { id: 3, name: 'Ứng dụng' },
         { id: 4, name: 'Về đích' }
