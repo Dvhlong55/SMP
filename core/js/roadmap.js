@@ -30,8 +30,9 @@
         const code = `${st.label || st.id}.${idx + 1}`;
         const ready = !!tile.url;
 
+        const btnText = tile.btnText || (tile.url && tile.url.includes('roadmap') ? 'Xem lộ trình ↗' : 'Đọc bài');
         const foot = ready
-            ? `<a href="${esc(tile.url)}" class="card-link" aria-label="Đọc bài: ${esc(tile.title.replace(/\$/g, ''))}">Đọc bài</a>`
+            ? `<a href="${esc(tile.url)}" class="card-link" aria-label="Đọc bài: ${esc(tile.title.replace(/\$/g, ''))}">${esc(btnText)}</a>`
             : `<span class="rm-soon-text">Đang biên soạn</span>`;
 
         return `
@@ -77,7 +78,6 @@
                         return `
                             <div class="rm-toc-col">
                                 <div class="rm-toc-phase-name">${esc(phasePrefix)} ${roman} · ${esc(ph.name)}</div>
-                                ${ph.note ? `<div class="rm-toc-phase-note" style="font-size: 0.72rem; color: var(--accent-cyan); margin: 3px 0 8px 0; font-family: 'JetBrains Mono', monospace; font-weight: normal; line-height: 1.4;">${ph.note}</div>` : ''}
                                 <div class="rm-toc-items">
                                     ${phStations.map(st => {
                                         const stats = stationStats(st);
@@ -423,7 +423,6 @@
                 timelineHtml += `
                     <div class="rm-phase">
                         <div class="section-label"><span>${esc(phasePrefix)} ${roman} · ${esc(ph.name)}</span></div>
-                        ${ph.note ? `<div class="rm-phase-note" style="margin: 4px 0 24px 0; font-size: 0.82rem; color: var(--accent-cyan); font-family: 'JetBrains Mono', monospace;">${ph.note}</div>` : ''}
                     </div>`;
                 lastPhase = st.phase;
             }

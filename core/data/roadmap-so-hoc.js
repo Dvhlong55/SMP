@@ -16,11 +16,7 @@ window.SMP_ROADMAP_SOHOC = {
     listUrl: '/pages/toanhoc.html?filter=vmo&sub=so-hoc',
 
     phases: [
-        { 
-            id: 1, 
-            name: 'Nền tảng',
-            note: 'Tham khảo: <a href="/pages/roadmap-chuyen-toan.html#rm-station-4" style="color: var(--accent-cyan); text-decoration: underline;">Chuyên đề II · Số học</a> bên Chuyên Toán THCS'
-        },
+        { id: 1, name: 'Nền tảng' },
         { id: 2, name: 'Chuyên sâu' },
         { id: 3, name: 'Ứng dụng' },
         { id: 4, name: 'Về đích' }
@@ -29,7 +25,21 @@ window.SMP_ROADMAP_SOHOC = {
     stations: [
         /* ------------------------------------------------------------ 1 */
         {
-            id: 1, phase: 1, icon: 'mod',
+            id: 1, phase: 1, icon: 'book',
+            title: 'Chuyên đề II · Số học (Chuyên Toán)',
+            tiles: [
+                {
+                    title: 'Nền tảng Số học Chuyên Toán THCS',
+                    desc: 'Toàn bộ chuyên đề Số học Chuyên Toán THCS: Phép chia, ước chung - bội chung, đồng dư, số nguyên tố, số chính phương và phương trình nghiệm nguyên cơ bản.',
+                    url: '/pages/roadmap-chuyen-toan.html#rm-station-4',
+                    btnText: 'Xem lộ trình ↗'
+                }
+            ]
+        },
+
+        /* ------------------------------------------------------------ 2 */
+        {
+            id: 2, phase: 1, icon: 'mod',
             title: 'Hệ thặng dư',
             tiles: [
                 {
@@ -50,9 +60,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 2 */
+        /* ------------------------------------------------------------ 3 */
         {
-            id: 2, phase: 1, icon: 'lte',
+            id: 3, phase: 1, icon: 'lte',
             title: 'LTE & số mũ đúng $v_p$',
             tiles: [
                 {
@@ -73,9 +83,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 3 */
+        /* ------------------------------------------------------------ 4 */
         {
-            id: 3, phase: 1, icon: 'cycle',
+            id: 4, phase: 1, icon: 'cycle',
             title: 'Cấp số nguyên & căn nguyên thủy',
             tiles: [
                 {
@@ -96,9 +106,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 4 */
+        /* ------------------------------------------------------------ 5 */
         {
-            id: 4, phase: 1, icon: 'sequence',
+            id: 5, phase: 1, icon: 'sequence',
             title: 'Dãy số nguyên',
             tiles: [
                 {
@@ -124,9 +134,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 5 */
+        /* ------------------------------------------------------------ 6 */
         {
-            id: 5, phase: 1, icon: 'function',
+            id: 6, phase: 1, icon: 'function',
             title: 'Hàm số học',
             tiles: [
                 {
@@ -147,9 +157,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 6 */
+        /* ------------------------------------------------------------ 7 */
         {
-            id: 6, phase: 2, icon: 'star',
+            id: 7, phase: 2, icon: 'star',
             title: 'Số đặc biệt',
             tiles: [
                 {
@@ -170,9 +180,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 7 */
+        /* ------------------------------------------------------------ 8 */
         {
-            id: 7, phase: 2, icon: 'binom',
+            id: 8, phase: 2, icon: 'binom',
             title: 'Số học nhị thức',
             tiles: [
                 {
@@ -193,9 +203,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 8 */
+        /* ------------------------------------------------------------ 9 */
         {
-            id: 8, phase: 2, icon: 'square',
+            id: 9, phase: 2, icon: 'square',
             title: 'Thặng dư bậc hai',
             tiles: [
                 {
@@ -216,9 +226,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 9 */
+        /* ------------------------------------------------------------ 10 */
         {
-            id: 9, phase: 3, icon: 'equation',
+            id: 10, phase: 3, icon: 'equation',
             title: 'Phương trình nghiệm nguyên',
             tiles: [
                 {
@@ -254,9 +264,9 @@ window.SMP_ROADMAP_SOHOC = {
             ]
         },
 
-        /* ------------------------------------------------------------ 10 */
+        /* ------------------------------------------------------------ 11 */
         {
-            id: 10, phase: 3, icon: 'poly',
+            id: 11, phase: 3, icon: 'poly',
             title: 'Đa thức số học',
             tiles: [
                 {
@@ -279,7 +289,7 @@ window.SMP_ROADMAP_SOHOC = {
 
         /* ------------------------------------------------------------ ★ */
         {
-            id: 11, phase: 4, icon: 'trophy', label: '★',
+            id: 12, phase: 4, icon: 'trophy', label: '★',
             title: 'Luyện tập tổng hợp',
             tiles: [
                 {

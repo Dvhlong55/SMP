@@ -15,11 +15,7 @@ window.SMP_ROADMAP_TOHOP = {
     email: 'smp.mth@gmail.com',
 
     phases: [
-        { 
-            id: 1, 
-            name: 'Mở đầu về tư duy',
-            note: 'Tham khảo: <a href="/pages/roadmap-chuyen-toan.html#rm-station-10" style="color: var(--accent-cyan); text-decoration: underline;">Chuyên đề IV · Tổ hợp</a> bên Chuyên Toán THCS'
-        },
+        { id: 1, name: 'Mở đầu về tư duy' },
         { id: 2, name: 'Bài toán đếm' },
         { id: 3, name: 'Bảng ô vuông & Trò chơi' },
         { id: 4, name: 'Lý thuyết đồ thị' },
@@ -32,6 +28,19 @@ window.SMP_ROADMAP_TOHOP = {
            ============================================================ */
         {
             id: 1, phase: 1,
+            title: 'Chuyên đề IV · Tổ hợp (Chuyên Toán)',
+            tiles: [
+                {
+                    title: 'Nền tảng Tổ hợp Chuyên Toán THCS',
+                    desc: 'Toàn bộ chuyên đề Tổ hợp Chuyên Toán THCS: Suy luận logic, nguyên lý Dirichlet, cực hạn, bất biến, bài toán đếm và trò chơi.',
+                    url: '/pages/roadmap-chuyen-toan.html#rm-station-14',
+                    btnText: 'Xem lộ trình ↗'
+                }
+            ]
+        },
+
+        {
+            id: 2, phase: 1,
             title: 'Làm quen với suy luận',
             tiles: [
                 {
@@ -43,7 +52,7 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 2, phase: 1,
+            id: 3, phase: 1,
             title: 'Nguyên lý Dirichlet',
             tiles: [
                 {
@@ -65,7 +74,7 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 3, phase: 1,
+            id: 4, phase: 1,
             title: 'Nguyên lý Cực hạn',
             tiles: [
                 {
@@ -82,7 +91,7 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 4, phase: 1,
+            id: 5, phase: 1,
             title: 'Đại lượng Bất biến & Đơn biến',
             tiles: [
                 {
@@ -107,7 +116,7 @@ window.SMP_ROADMAP_TOHOP = {
            GIAI ĐOẠN II: BÀI TOÁN ĐẾM
            ============================================================ */
         {
-            id: 5, phase: 2,
+            id: 6, phase: 2,
             title: 'Các nguyên tắc đếm cơ bản',
             tiles: [
                 {
@@ -124,7 +133,7 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 6, phase: 2,
+            id: 7, phase: 2,
             title: 'Nguyên lý bù trừ (PIE) & Bài toán tồn tại',
             tiles: [
                 {
@@ -136,24 +145,24 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 7, phase: 2,
+            id: 8, phase: 2,
             title: 'Bài toán chia kẹo Euler & Phương pháp vách ngăn',
             tiles: [
                 {
                     title: 'Chia kẹo Euler (Phần 1)',
-                    desc: 'Phương pháp vách ngăn cơ bản, số nghiệm nguyên thỏa mãn cận dưới $x_i \\ge c_i$.',
+                    desc: 'Phương pháp vách ngăn cơ bản, số nghiệm nguyên thỏa mãn cận dưới $x_i \ge c_i$.',
                     url: null
                 },
                 {
                     title: 'Chia kẹo Euler (Phần 2) & Phân hoạch',
-                    desc: 'Kết hợp chia kẹo với nguyên lý bù trừ xử lý điều kiện chặn trên $x_i \\le b_i$ và phân hoạch số nguyên.',
+                    desc: 'Kết hợp chia kẹo với nguyên lý bù trừ xử lý điều kiện chặn trên $x_i \le b_i$ và phân hoạch số nguyên.',
                     url: null
                 }
             ]
         },
 
         {
-            id: 8, phase: 2,
+            id: 9, phase: 2,
             title: 'Hệ thức truy hồi & Đếm bằng truy hồi',
             tiles: [
                 {
@@ -163,14 +172,14 @@ window.SMP_ROADMAP_TOHOP = {
                 },
                 {
                     title: 'Đếm bằng truy hồi (Phần 2)',
-                    desc: 'Hệ phương trình truy hồi liên kết, lát bảng ô vuông dải $2 \\times n$, $3 \\times n$ và phương pháp đa thức đặc trưng.',
+                    desc: 'Hệ phương trình truy hồi liên kết, lát bảng ô vuông dải $2 \times n$, $3 \times n$ và phương pháp đa thức đặc trưng.',
                     url: null
                 }
             ]
         },
 
         {
-            id: 9, phase: 2,
+            id: 10, phase: 2,
             title: 'Phương pháp đếm bằng hai cách (Double Counting)',
             tiles: [
                 {
@@ -192,7 +201,7 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 10, phase: 2,
+            id: 11, phase: 2,
             title: 'Hàm số & Đếm bằng song ánh',
             tiles: [
                 {
@@ -207,7 +216,7 @@ window.SMP_ROADMAP_TOHOP = {
            GIAI ĐOẠN III: BẢNG Ô VUÔNG & TRÒ CHƠI
            ============================================================ */
         {
-            id: 11, phase: 3,
+            id: 12, phase: 3,
             title: 'Một số vấn đề về bảng ô vuông',
             tiles: [
                 {
@@ -224,7 +233,7 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 12, phase: 3,
+            id: 13, phase: 3,
             title: 'Các bài toán trò chơi và chiến thuật',
             tiles: [
                 {
@@ -244,19 +253,19 @@ window.SMP_ROADMAP_TOHOP = {
            GIAI ĐOẠN IV: LÝ THUYẾT ĐỒ THỊ
            ============================================================ */
         {
-            id: 13, phase: 4,
+            id: 14, phase: 4,
             title: 'Lý thuyết đồ thị căn bản',
             tiles: [
                 {
                     title: 'Graph Theory 1 — Bậc đỉnh, đường đi & chu trình',
-                    desc: 'Bổ đề bắt tay $\\sum d(v) = 2|E|$, đường đi Euler, chu trình Hamilton và đồ thị liên thông.',
+                    desc: 'Bổ đề bắt tay $\sum d(v) = 2|E|$, đường đi Euler, chu trình Hamilton và đồ thị liên thông.',
                     url: null
                 }
             ]
         },
 
         {
-            id: 14, phase: 4,
+            id: 15, phase: 4,
             title: 'Ứng dụng của Turán & Kỹ thuật đánh giá $V, E$',
             tiles: [
                 {
@@ -273,12 +282,12 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 15, phase: 4,
+            id: 16, phase: 4,
             title: 'Định lý Hall và kĩ thuật ghép cặp',
             tiles: [
                 {
                     title: 'Định lý Hall (Marriage Theorem)',
-                    desc: 'Điều kiện Hall $|N(S)| \\ge |S|$, chứng minh và ứng dụng ghép cặp hoàn hảo trên đồ thị hai phía.',
+                    desc: 'Điều kiện Hall $|N(S)| \ge |S|$, chứng minh và ứng dụng ghép cặp hoàn hảo trên đồ thị hai phía.',
                     url: null
                 },
                 {
@@ -290,7 +299,7 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 16, phase: 4,
+            id: 17, phase: 4,
             title: 'Đồ thị phẳng & Công thức Euler',
             tiles: [
                 {
@@ -310,7 +319,7 @@ window.SMP_ROADMAP_TOHOP = {
            GIAI ĐOẠN V: PHƯƠNG PHÁP NÂNG CAO
            ============================================================ */
         {
-            id: 17, phase: 5,
+            id: 18, phase: 5,
             title: 'Ứng dụng số phức & Hàm sinh trong tổ hợp',
             tiles: [
                 {
@@ -320,19 +329,19 @@ window.SMP_ROADMAP_TOHOP = {
                 },
                 {
                     title: 'Bộ lọc rễ đơn vị (Roots of Unity Filter)',
-                    desc: 'Sử dụng nghiệm phức $z^n = 1$ để tính các tổng tổ hợp $\\sum \\binom{n}{km+r}$ theo bước nhảy modulo $m$.',
+                    desc: 'Sử dụng nghiệm phức $z^n = 1$ để tính các tổng tổ hợp $\sum \binom{n}{km+r}$ theo bước nhảy modulo $m$.',
                     url: null
                 }
             ]
         },
 
         {
-            id: 18, phase: 5,
+            id: 19, phase: 5,
             title: 'Phương pháp xác suất chứng minh tồn tại',
             tiles: [
                 {
                     title: 'Phương pháp xác suất (Probabilistic Method)',
-                    desc: 'Nguyên lý xác suất dương $P(A) > 0 \\implies A \\ne \\emptyset$ và các kỹ thuật xây dựng biến ngẫu nhiên.',
+                    desc: 'Nguyên lý xác suất dương $P(A) > 0 \implies A \ne \emptyset$ và các kỹ thuật xây dựng biến ngẫu nhiên.',
                     url: null
                 },
                 {
@@ -344,7 +353,7 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 19, phase: 5,
+            id: 20, phase: 5,
             title: 'Thuật toán: Tham lam, điều chỉnh địa phương & Cực trị',
             tiles: [
                 {
@@ -361,7 +370,7 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 20, phase: 5,
+            id: 21, phase: 5,
             title: 'Tổ hợp có tính chất số học',
             tiles: [
                 {
@@ -373,7 +382,7 @@ window.SMP_ROADMAP_TOHOP = {
         },
 
         {
-            id: 21, phase: 5, icon: 'trophy', label: '★',
+            id: 22, phase: 5, icon: 'trophy', label: '★',
             title: 'Luyện tập tổng hợp Olympic VMO',
             tiles: [
                 {
