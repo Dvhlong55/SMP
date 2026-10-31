@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Planar Graph — Đồ Thị Phẳng & Công Thức Euler</title>
+    
+    <meta name="post-id" content="PlanarGraphDoThiPhangVMO">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Lý thuyết đồ thị Olympic VMO: Đồ thị phẳng, công thức Euler V - E + F = 2, đồ thị đối ngẫu, định lý Kuratowski và bài toán đa diện lồi.">
+    <meta property="og:title" content="SMP — Planar Graph — Đồ Thị Phẳng & Công Thức Euler">
+    <meta property="og:description" content="Chuyên đề Lý thuyết đồ thị Olympic VMO: Đồ thị phẳng, công thức Euler V - E + F = 2, đồ thị đối ngẫu, định lý Kuratowski và bài toán đa diện lồi.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/planar-graph-do-thi-phang.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Planar Graph — Đồ Thị Phẳng & Công Thức Euler">
+    <meta name="twitter:description" content="Chuyên đề Lý thuyết đồ thị Olympic VMO: Đồ thị phẳng, công thức Euler V - E + F = 2, đồ thị đối ngẫu, định lý Kuratowski và bài toán đa diện lồi.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        
+        <div class="header-box">
+            <h1>$\S$ Planar Graph — Đồ Thị Phẳng & Công Thức Euler</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles • SMP</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">smp.mth@gmail.com</h2>
+        </div>
+
+        <h2 style="font-size: 1.2rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 30px;">Tóm tắt lý thuyết nền tảng</h2>
+
+        <h3>Định nghĩa 1 (Đồ thị phẳng)</h3>
+        <p>Một đồ thị được gọi là đồ thị phẳng (planar graph) nếu ta có thể vẽ nó trên mặt phẳng sao cho các cạnh của nó không cắt nhau ngoài ở các đỉnh.</p>
+
+        <h3>Định nghĩa 2 (Đồ thị đối ngẫu)</h3>
+        <p>Đồ thị đối ngẫu (dual graph) của một đồ thị phẳng $G$ là đồ thị $G'$ trong đó mỗi đỉnh tương ứng với một miền mặt phẳng của $G$, và hai đỉnh của $G'$ nối nhau bởi một cạnh khi và chỉ khi hai miền tương ứng trong $G$ có chung đường biên.</p>
+
+        <h3>Định lý Kuratowski</h3>
+        <p>Một đồ thị là phẳng khi và chỉ khi nó không chứa đồ thị con đồng phôi với $K_5$ (đồ thị đầy đủ 5 đỉnh) hoặc $K_{3,3}$ (đồ thị hai phía đầy đủ $3 \times 3$).</p>
+
+        <h3>Định lý Euler về đồ thị phẳng</h3>
+        <p>Với mọi đồ thị phẳng liên thông có $V$ đỉnh, $E$ cạnh và $F$ miền mặt phẳng: $$ V - E + F = 2. $$</p>
+        <p>Hệ quả đánh giá số cạnh:</p>
+        <p style="padding-left: 20px;">1. Nếu $V \ge 3$ thì $E \le 3V - 6$.</p>
+        <p style="padding-left: 20px;">2. Nếu $V \ge 3$ và đồ thị không chứa tam giác thì $E \le 2V - 4$.</p>
+        <p style="padding-left: 20px;">3. Mọi đồ thị phẳng đều tồn tại ít nhất một đỉnh có bậc $d(v) \le 5$.</p>
+
+        <h2 style="font-size: 1.2rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 30px;">Hệ thống bài tập</h2>
+
+        <h3>Bài 1</h3>
+        <p>Chứng minh rằng đồ thị đầy đủ 5 đỉnh $K_5$ và đồ thị hai phía $K_{3,3}$ không phải là đồ thị phẳng.</p>
+
+        <h3>Bài 2</h3>
+        <p>Cho $n > 3$ điểm trên một đường tròn. Nối mỗi cặp điểm bằng dây cung sao cho không có ba dây cung nào đồng quy tại một điểm bên trong đường tròn. Hãy tìm số miền được tạo thành bên trong hình tròn theo $n$.</p>
+
+        <h3>Bài 3</h3>
+        <p>Một hình vuông được chia thành $n$ miền là các đa giác lồi. Hãy tìm số cạnh lớn nhất có thể có trong toàn bộ hình theo $n$.</p>
+
+        <h3>Bài 4</h3>
+        <p>Xét một đa diện lồi có đúng $m$ mặt tam giác (và có thể có các mặt khác). Giả sử tại mỗi đỉnh có đúng 4 cạnh gặp nhau. Hãy tìm giá trị nhỏ nhất có thể có của $m$.</p>
+
+        <h3>Bài 5</h3>
+        <p>Chứng minh Định lý 5 màu (Heawood): Mọi đồ thị phẳng đều có thể tô các đỉnh bằng 5 màu sao cho không có hai đỉnh kề nhau cùng màu.</p>
+
+        <h3>Bài 6 (VMO 2024)</h3>
+        <p>Trong không gian, cho đa diện lồi $D$ sao cho tại mỗi đỉnh của $D$ có đúng một số chẵn các cạnh chứa đỉnh đó. Chọn một mặt $F$ của $D$. Giả sử ta gán cho mỗi cạnh của $D$ một số nguyên dương sao cho: với mỗi mặt khác $F$, tổng các số được gán trên các cạnh của mặt đó chia hết cho 2024. Chứng minh rằng tổng các số được gán trên các cạnh của mặt $F$ cũng chia hết cho 2024.</p>
+
+    </div>
+</body>
+</html>

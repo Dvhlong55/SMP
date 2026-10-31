@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Graph Theory 1 — Kiến Thức Nền Tảng Đồ Thị</title>
+    
+    <meta name="post-id" content="GraphTheory1VMO">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Lý thuyết đồ thị Olympic VMO: Bậc đỉnh, bổ đề bắt tay, chu trình, đồ thị hai phía, cấu trúc cây và định lý Mantel.">
+    <meta property="og:title" content="SMP — Graph Theory 1 — Kiến Thức Nền Tảng Đồ Thị">
+    <meta property="og:description" content="Chuyên đề Lý thuyết đồ thị Olympic VMO: Bậc đỉnh, bổ đề bắt tay, chu trình, đồ thị hai phía, cấu trúc cây và định lý Mantel.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/graph-theory-1.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Graph Theory 1 — Kiến Thức Nền Tảng Đồ Thị">
+    <meta name="twitter:description" content="Chuyên đề Lý thuyết đồ thị Olympic VMO: Bậc đỉnh, bổ đề bắt tay, chu trình, đồ thị hai phía, cấu trúc cây và định lý Mantel.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        
+        <div class="header-box">
+            <h1>$\S$ Graph Theory 1 — Kiến Thức Nền Tảng Đồ Thị</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles • SMP</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">smp.mth@gmail.com</h2>
+        </div>
+
+        <h3>Bài 1 (Các tính chất cơ bản)</h3>
+        <p style="padding-left: 20px;">1. Trong đồ thị đơn $G = (V, E)$, nếu $|V| \ge 2$ thì tồn tại hai đỉnh có cùng bậc. Nếu dấu bằng xảy ra thì hai đỉnh này không thể đồng thời có bậc 0 và bậc $n - 1$.</p>
+        <p style="padding-left: 20px;">2. Cho $G = (V, E)$ là đồ thị vô hướng có $|V| \ge 3$ và với mọi $v \in V$ có $d(v) \ge 2$. Chứng minh $G$ luôn tồn tại ít nhất một chu trình sơ cấp. Nếu thêm điều kiện $d(v) \ge 3$, chứng minh có chu trình sơ cấp độ dài chẵn.</p>
+        <p style="padding-left: 20px;">3. Trong mọi đồ thị $G$ có $n \ge 2$ đỉnh, nếu với mọi cặp đỉnh không kề nhau $v_1, v_2$ thỏa mãn $d(v_1) + d(v_2) \ge n - 1$ thì $G$ liên thông.</p>
+        <p style="padding-left: 20px;">4. Nếu đồ thị $G$ có đúng hai đỉnh bậc lẻ thì hai đỉnh này phải thuộc cùng một thành phần liên thông.</p>
+
+        <h3>Bài 2 (Đồ thị hai phía)</h3>
+        <p>Chứng minh rằng đồ thị $G = (V, E)$ là một đồ thị hai phía (bipartite graph) khi và chỉ khi mọi chu trình của nó đều có độ dài chẵn.</p>
+
+        <h3>Bài 3 (Công thức Euler)</h3>
+        <p>Giả sử $G$ là đồ thị phẳng liên thông với $n$ đỉnh, $m$ cạnh. Gọi $r$ là số miền của mặt phẳng bị chia bởi biểu diễn phẳng của $G$. Chứng minh rằng: $$ r = m - n + 2. $$</p>
+
+        <h3>Bài 4 (Định lý đặc trưng về Cây)</h3>
+        <p>Cho đồ thị $G$ có $n$ đỉnh. Chứng minh các mệnh đề sau là tương đương:</p>
+        <p style="padding-left: 20px;">1. $G$ là một cây (tree);</p>
+        <p style="padding-left: 20px;">2. $G$ không có chu trình và có đúng $n - 1$ cạnh;</p>
+        <p style="padding-left: 20px;">3. $G$ liên thông và có đúng $n - 1$ cạnh;</p>
+        <p style="padding-left: 20px;">4. Giữa hai đỉnh bất kỳ của $G$ luôn có duy nhất một đường đi đơn.</p>
+
+        <h3>Bài 5 (Định lý Mantel - Turán)</h3>
+        <p>Chứng minh rằng một đồ thị $G$ có $n$ đỉnh và không chứa đồ thị con đầy đủ $K_3$ (tam giác) thì có không quá $\lfloor n^2/4 \rfloor$ cạnh. Tổng quát cho đồ thị không chứa $K_k$.</p>
+
+        <h3>Bài 6 (Đồ thị k-free)</h3>
+        <p>Cho $G$ là một đồ thị không chứa $K_k$ ($k$-free) với $n \ge k \ge 3$. Chứng minh tồn tại một đỉnh có bậc không vượt quá: $$ \frac{k-2}{k-1} \cdot n. $$</p>
+
+        <h3>Bài 7</h3>
+        <p>Cho đồ thị $k$-free có $n$ đỉnh. Tìm số cạnh lớn nhất có thể của đồ thị và mô tả cấu trúc đồ thị đạt cực trị (đồ thị Turán $T(n, k-1)$).</p>
+
+        <h3>Bài 8 (Định lý Hall)</h3>
+        <p>Phát biểu và chứng minh định lý Hall (Marriage Theorem) về điều kiện cần và đủ để đồ thị hai phía tồn tại phép ghép cặp hoàn hảo.</p>
+
+    </div>
+</body>
+</html>

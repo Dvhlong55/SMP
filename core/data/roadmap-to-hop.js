@@ -1,7 +1,7 @@
 /* ==========================================================================
    SMP — DỮ LIỆU LỘ TRÌNH TỔ HỢP (VMO → Tổ Hợp)
    --------------------------------------------------------------------------
-   Phát triển dựa trên khung 15 chuyên đề bồi dưỡng Tổ Hợp Olympic VMO
+   Phát triển dựa trên khung chuyên đề bồi dưỡng Tổ Hợp Olympic VMO
    Tác giả: SMP • Email: smp.mth@gmail.com
    ========================================================================== */
 
@@ -41,73 +41,53 @@ window.SMP_ROADMAP_TOHOP = {
 
         {
             id: 2, phase: 1,
-            title: 'Làm quen với suy luận',
+            title: 'Nguyên lý Dirichlet',
             tiles: [
                 {
-                    title: 'Mở đầu về suy luận logic',
-                    desc: 'Các bài toán suy luận logic cơ bản, phương pháp lập bảng chân trị, bài toán người thật thà - kẻ nói dối.',
-                    url: '/posts/math/thcs/to-hop/mo-dau-ve-suy-luan.html'
+                    title: 'Nguyên lý Dirichlet',
+                    desc: 'Nguyên lý lồng chim bồ câu, dạng mở rộng cho tập vô hạn, chia khoảng và ứng dụng trong số học, hình học.',
+                    url: '/posts/math/vmo/nguyen-ly-dirichlet.html'
                 }
             ]
         },
 
         {
             id: 3, phase: 1,
-            title: 'Nguyên lý Dirichlet',
+            title: 'Nguyên lý Cực hạn',
             tiles: [
                 {
-                    title: 'Nguyên lý Dirichlet cơ bản & nâng cao',
-                    desc: 'Nguyên lý lồng chim bồ câu, dạng mở rộng cho tập vô hạn, chia khoảng và ứng dụng trong số học, hình học.',
-                    url: null
-                },
-                {
-                    title: 'Nguyên lý Dirichlet (Phần 1 - Nền tảng)',
-                    desc: 'Bài toán chia chuồng, nguyên lý bồ câu trên lưới và bài toán tồn tại.',
-                    url: '/posts/math/thcs/to-hop/nguyen-ly-dirichlet-phan-1.html'
-                },
-                {
-                    title: 'Nguyên lý Dirichlet (Phần 2 - Nâng cao)',
-                    desc: 'Áp dụng định lượng, Dirichlet trong hệ thặng dư và hình học tổ hợp.',
-                    url: '/posts/math/thcs/to-hop/nguyen-ly-dirichlet-phan-2.html'
+                    title: 'Nguyên lý Cực hạn',
+                    desc: 'Kỹ thuật xét phần tử biên (nhỏ nhất, lớn nhất), bài toán cấu hình điểm Sylvester-Gallai và điểm biên.',
+                    url: '/posts/math/vmo/nguyen-ly-cuc-han-vmo.html'
                 }
             ]
         },
 
         {
             id: 4, phase: 1,
-            title: 'Nguyên lý Cực hạn',
+            title: 'Đại lượng Bất biến & Đơn biến',
             tiles: [
                 {
-                    title: 'Nguyên lý Cực hạn trong Tổ hợp',
-                    desc: 'Kỹ thuật xét phần tử biên (nhỏ nhất, lớn nhất), bài toán cấu hình điểm Sylvester-Gallai và điểm biên.',
-                    url: null
+                    title: 'Đại lượng Bất biến và Ứng dụng',
+                    desc: 'Bất biến chẵn lẻ, bất biến modulo, tính đối xứng và các bài toán biến đổi bộ số.',
+                    url: '/posts/math/vmo/dai-luong-bat-bien-va-ung-dung.html'
                 },
                 {
-                    title: 'Nguyên lý Cực hạn (Chuyên đề rèn luyện)',
-                    desc: 'Phân loại các dạng toán cực hạn: đường thẳng, đa giác, tập số và bài toán chuyển động rời rạc.',
-                    url: '/posts/math/thcs/to-hop/nguyen-ly-cuc-han.html'
+                    title: 'Đơn biến và Các vấn đề liên quan',
+                    desc: 'Xây dựng hàm thế năng, quá trình dừng và tính hữu hạn của thuật toán biến đổi.',
+                    url: '/posts/math/vmo/don-bien-va-cac-van-de-lien-quan.html'
                 }
             ]
         },
 
         {
             id: 5, phase: 1,
-            title: 'Đại lượng Bất biến & Đơn biến',
+            title: 'Tổng hợp các nguyên lý quan trọng',
             tiles: [
                 {
-                    title: 'Đại lượng Bất biến và Ứng dụng',
-                    desc: 'Bất biến chẵn lẻ, bất biến modulo, tính đối xứng và các bài toán biến đổi bộ số.',
-                    url: null
-                },
-                {
-                    title: 'Đơn biến và Các vấn đề liên quan',
-                    desc: 'Xây dựng hàm thế năng, quá trình dừng và tính hữu hạn của thuật toán biến đổi.',
-                    url: null
-                },
-                {
-                    title: 'Đại lượng Bất biến (Chuyên đề rèn luyện)',
-                    desc: 'Tổng hợp bài toán bất biến trên bảng ô vuông và biến đổi sỏi.',
-                    url: '/posts/math/thcs/to-hop/dai-luong-bat-bien.html'
+                    title: 'Các nguyên lý quan trọng',
+                    desc: 'Tổng hợp các bài toán vận dụng kết hợp nguyên lý Dirichlet, cực hạn, bất biến và lý thuyết tô màu.',
+                    url: '/posts/math/vmo/cac-nguyen-ly-quan-trong.html'
                 }
             ]
         },
@@ -117,46 +97,41 @@ window.SMP_ROADMAP_TOHOP = {
            ============================================================ */
         {
             id: 6, phase: 2,
-            title: 'Các nguyên tắc đếm cơ bản',
+            title: 'Phương pháp đếm cơ bản',
             tiles: [
                 {
-                    title: 'Quy tắc đếm cơ bản & Hoán vị, Chỉnh hợp, Tổ hợp',
-                    desc: 'Phân biệt mô hình có thứ tự và không thứ tự, hoán vị vòng quanh và các bài toán phân nhóm cơ bản.',
-                    url: null
-                },
-                {
-                    title: 'Bài toán đếm cơ bản (Chuyên đề rèn luyện)',
-                    desc: 'Rèn luyện kỹ năng phân chia trường hợp, nguyên lý bù và đếm bổ sung.',
-                    url: '/posts/math/thcs/to-hop/bai-toan-dem-co-ban.html'
+                    title: 'Phương pháp đếm cơ bản',
+                    desc: 'Quy tắc cộng, quy tắc nhân, hoán vị, chỉnh hợp, tổ hợp và kỹ thuật phân chia tập hợp.',
+                    url: '/posts/math/vmo/phuong-phap-dem-co-ban.html'
                 }
             ]
         },
 
         {
             id: 7, phase: 2,
-            title: 'Nguyên lý bù trừ (PIE) & Bài toán tồn tại',
+            title: 'Nguyên lý bù trừ (PIE)',
             tiles: [
                 {
-                    title: 'Nguyên lý bù trừ (Inclusion-Exclusion Principle)',
-                    desc: 'Công thức tổng quát cho n tập hợp, bài toán mất thứ tự (Derangements) và bài toán số các toàn ánh.',
-                    url: null
+                    title: 'Nguyên lý bù trừ',
+                    desc: 'Công thức bao hàm - loại trừ tổng quát cho n tập hợp, bài toán mất thứ tự và bài toán số các toàn ánh.',
+                    url: '/posts/math/vmo/nguyen-ly-bu-tru.html'
                 }
             ]
         },
 
         {
             id: 8, phase: 2,
-            title: 'Bài toán chia kẹo Euler & Phương pháp vách ngăn',
+            title: 'Bài toán chia kẹo Euler & Phân hoạch',
             tiles: [
                 {
                     title: 'Chia kẹo Euler (Phần 1)',
-                    desc: 'Phương pháp vách ngăn cơ bản, số nghiệm nguyên thỏa mãn cận dưới $x_i \ge c_i$.',
-                    url: null
+                    desc: 'Phương pháp vách ngăn cơ bản, số nghiệm nguyên thỏa mãn cận dưới và bài toán chọn phần tử không kề nhau.',
+                    url: '/posts/math/vmo/chia-keo-euler-phan-1.html'
                 },
                 {
-                    title: 'Chia kẹo Euler (Phần 2) & Phân hoạch',
-                    desc: 'Kết hợp chia kẹo với nguyên lý bù trừ xử lý điều kiện chặn trên $x_i \le b_i$ và phân hoạch số nguyên.',
-                    url: null
+                    title: 'Chia kẹo Euler (Phần 2)',
+                    desc: 'Kết hợp chia kẹo với nguyên lý bù trừ xử lý điều kiện chặn trên và bài toán đường đi trên lưới nguyên.',
+                    url: '/posts/math/vmo/chia-keo-euler-phan-2.html'
                 }
             ]
         },
@@ -167,35 +142,35 @@ window.SMP_ROADMAP_TOHOP = {
             tiles: [
                 {
                     title: 'Đếm bằng truy hồi (Phần 1)',
-                    desc: 'Mô hình hóa bài toán đếm chuỗi nhị phân không chứa mẫu cấm, dãy Fibonacci và truy hồi cấp 2.',
-                    url: null
+                    desc: 'Mô hình hóa bài toán đếm chuỗi nhị phân không chứa mẫu cấm, dãy Fibonacci và truy hồi tuyến tính cấp 2.',
+                    url: '/posts/math/vmo/dem-bang-truy-hoi-phan-1.html'
                 },
                 {
                     title: 'Đếm bằng truy hồi (Phần 2)',
-                    desc: 'Hệ phương trình truy hồi liên kết, lát bảng ô vuông dải $2 \times n$, $3 \times n$ và phương pháp đa thức đặc trưng.',
-                    url: null
+                    desc: 'Hệ phương trình truy hồi liên kết, lát bảng ô vuông dải 2 x n, 3 x n và bài toán tháp Hà Nội.',
+                    url: '/posts/math/vmo/dem-bang-truy-hoi-phan-2.html'
                 }
             ]
         },
 
         {
             id: 10, phase: 2,
-            title: 'Phương pháp đếm bằng hai cách (Double Counting)',
+            title: 'Phương pháp đếm bằng hai cách',
             tiles: [
                 {
-                    title: 'Đếm bằng hai cách — Cơ bản',
-                    desc: 'Ý tưởng đếm hai chiều, ma trận 0-1 và các hệ thức tổ hợp nhị thức kinh điển.',
-                    url: null
+                    title: 'Đếm bằng hai cách (Phần 1)',
+                    desc: 'Ý tưởng đếm hai chiều, ma trận liên thuộc 0-1 và các hệ thức tổ hợp nhị thức kinh điển.',
+                    url: '/posts/math/vmo/dem-bang-hai-cach-phan-1.html'
                 },
                 {
-                    title: 'Đếm bằng hai cách — Ma trận liên thuộc',
+                    title: 'Đếm bằng hai cách (Phần 2)',
                     desc: 'Khai thác tổng theo hàng và cột, số giao điểm của các tập hợp và bất đẳng thức Cauchy-Schwarz rời rạc.',
-                    url: null
+                    url: '/posts/math/vmo/dem-bang-hai-cach-phan-2.html'
                 },
                 {
-                    title: 'Đếm bằng hai cách — Bất đẳng thức tổ hợp nâng cao',
+                    title: 'Đếm bằng hai cách (Phần 3)',
                     desc: 'Đánh giá số cặp phần tử cùng thuộc tính, thiết lập chặn trên/dưới trong các kỳ thi Olympic.',
-                    url: null
+                    url: '/posts/math/vmo/dem-bang-hai-cach-phan-3.html'
                 }
             ]
         },
@@ -205,9 +180,9 @@ window.SMP_ROADMAP_TOHOP = {
             title: 'Hàm số & Đếm bằng song ánh',
             tiles: [
                 {
-                    title: 'Đếm bằng song ánh & Ánh xạ',
+                    title: 'Đếm bằng ánh xạ',
                     desc: 'Xây dựng song ánh bảo toàn cấu trúc, số Catalan, đường đi lưới (Lattice paths) và phản xạ André.',
-                    url: null
+                    url: '/posts/math/vmo/dem-bang-anh-xa.html'
                 }
             ]
         },
@@ -220,14 +195,9 @@ window.SMP_ROADMAP_TOHOP = {
             title: 'Một số vấn đề về bảng ô vuông',
             tiles: [
                 {
-                    title: 'Bài toán lát Domino & Polyomino',
-                    desc: 'Điều kiện cần và đủ để phủ kín bảng ô vuông bị khuyết, đa thức màu và tính chẵn lẻ của số cách lát.',
-                    url: null
-                },
-                {
-                    title: 'Tô màu & Đánh giá trên lưới',
-                    desc: 'Phương pháp tô màu modulo $k$, đếm số quân mã/quân xe không ăn nhau và bài toán vết cắt bàn cờ.',
-                    url: null
+                    title: 'Bài toán lát Domino',
+                    desc: 'Điều kiện cần và đủ để phủ kín bảng ô vuông bị khuyết, đa thức màu, hệ thức truy hồi và tính chẵn lẻ của số cách lát.',
+                    url: '/posts/math/vmo/bai-toan-lat-domino.html'
                 }
             ]
         },
@@ -238,12 +208,7 @@ window.SMP_ROADMAP_TOHOP = {
             tiles: [
                 {
                     title: 'Trò chơi đối kháng & Chiến thuật đối xứng',
-                    desc: 'Xác định chiến lược thắng cho người đi trước/đi sau thông qua tính đối xứng tâm, trục và phép bù.',
-                    url: null
-                },
-                {
-                    title: 'Phân tích trạng thái P-position & N-position',
-                    desc: 'Truy hồi trạng thái dừng, hàm Grundy và định lý Sprague-Grundy trong trò chơi Nim.',
+                    desc: 'Xác định chiến lược thắng cho người đi trước/đi sau thông qua tính đối xứng tâm, trục và phép bù trạng thái P/N.',
                     url: null
                 }
             ]
@@ -257,9 +222,9 @@ window.SMP_ROADMAP_TOHOP = {
             title: 'Lý thuyết đồ thị căn bản',
             tiles: [
                 {
-                    title: 'Graph Theory 1 — Bậc đỉnh, đường đi & chu trình',
-                    desc: 'Bổ đề bắt tay $\sum d(v) = 2|E|$, đường đi Euler, chu trình Hamilton và đồ thị liên thông.',
-                    url: null
+                    title: 'Graph Theory 1 — Kiến thức nền tảng đồ thị',
+                    desc: 'Bổ đề bắt tay, chu trình sơ cấp, đồ thị hai phía, cấu trúc cây và định lý Mantel.',
+                    url: '/posts/math/vmo/graph-theory-1.html'
                 }
             ]
         },
@@ -270,13 +235,13 @@ window.SMP_ROADMAP_TOHOP = {
             tiles: [
                 {
                     title: 'Graph Theory 2 — Đường đi & Đánh giá liên thông',
-                    desc: 'Khoảng cách giữa các đỉnh, đường kính, bán kính và bài toán sắp xếp các đỉnh trên đồ thị.',
-                    url: null
+                    desc: 'Khoảng cách giữa các đỉnh, đường kính, bán kính và bài toán đánh giá liên thông mạng lưới.',
+                    url: '/posts/math/vmo/graph-theory-2.html'
                 },
                 {
                     title: 'Graph Theory 3 — Định lý Turán & Lý thuyết Ramsey',
-                    desc: 'Định lý Mantel, đồ thị Turán $T(n, r)$, kỹ thuật đánh giá bậc và số cạnh, bài toán quen - không quen $R(3, 3) = 6$.',
-                    url: null
+                    desc: 'Định lý Turán tổng quát, đồ thị Turán T(n, r), số Ramsey R(3, 3) = 6 và chu trình Hamilton.',
+                    url: '/posts/math/vmo/graph-theory-3.html'
                 }
             ]
         },
@@ -286,13 +251,8 @@ window.SMP_ROADMAP_TOHOP = {
             title: 'Định lý Hall và kĩ thuật ghép cặp',
             tiles: [
                 {
-                    title: 'Định lý Hall (Marriage Theorem)',
-                    desc: 'Điều kiện Hall $|N(S)| \ge |S|$, chứng minh và ứng dụng ghép cặp hoàn hảo trên đồ thị hai phía.',
-                    url: null
-                },
-                {
-                    title: 'Ghép cặp cực đại & Định lý König',
-                    desc: 'Mối liên hệ giữa số ghép cặp cực đại và số đỉnh phủ cực tiểu, ứng dụng trong ma trận 0-1.',
+                    title: 'Định lý Hall & Ghép cặp cực đại',
+                    desc: 'Điều kiện Hall |N(S)| >= |S|, chứng minh và ứng dụng ghép cặp hoàn hảo trên đồ thị hai phía.',
                     url: null
                 }
             ]
@@ -304,13 +264,8 @@ window.SMP_ROADMAP_TOHOP = {
             tiles: [
                 {
                     title: 'Planar Graph — Đồ thị phẳng & Công thức Euler',
-                    desc: 'Định lý Euler $V - E + F = 2$, tính chất đồ thị đối ngẫu, định lý Kuratowski ($K_5, K_{3,3}$) và bài toán tô màu bản đồ.',
-                    url: null
-                },
-                {
-                    title: 'Đồ thị đối ngẫu & Bài toán tô màu bản đồ',
-                    desc: 'Định lý 4 màu, định lý 5 màu và bài toán chia mặt phẳng bởi hệ đường cong.',
-                    url: null
+                    desc: 'Định lý Euler V - E + F = 2, tính chất đồ thị đối ngẫu, định lý Kuratowski (K_5, K_{3,3}) và định lý 5 màu.',
+                    url: '/posts/math/vmo/planar-graph-do-thi-phang.html'
                 }
             ]
         },
@@ -323,13 +278,8 @@ window.SMP_ROADMAP_TOHOP = {
             title: 'Ứng dụng số phức & Hàm sinh trong tổ hợp',
             tiles: [
                 {
-                    title: 'Phương pháp hàm sinh (Generating Functions)',
-                    desc: 'Hàm sinh đại số hình thức (OGF), phân tích phân số tối giản và giải hệ thức truy hồi.',
-                    url: null
-                },
-                {
-                    title: 'Bộ lọc rễ đơn vị (Roots of Unity Filter)',
-                    desc: 'Sử dụng nghiệm phức $z^n = 1$ để tính các tổng tổ hợp $\sum \binom{n}{km+r}$ theo bước nhảy modulo $m$.',
+                    title: 'Phương pháp hàm sinh & Đa thức tổ hợp',
+                    desc: 'Hàm sinh đại số hình thức (OGF), bộ lọc rễ đơn vị (Roots of unity filter) và giải hệ thức truy hồi.',
                     url: null
                 }
             ]
@@ -340,13 +290,8 @@ window.SMP_ROADMAP_TOHOP = {
             title: 'Phương pháp xác suất chứng minh tồn tại',
             tiles: [
                 {
-                    title: 'Phương pháp xác suất (Probabilistic Method)',
-                    desc: 'Nguyên lý xác suất dương $P(A) > 0 \implies A \ne \emptyset$ và các kỹ thuật xây dựng biến ngẫu nhiên.',
-                    url: null
-                },
-                {
-                    title: 'Tính cộng tính của kỳ vọng (Linearity of Expectation)',
-                    desc: 'Kỳ vọng biến chỉ thị (Indicator variables) giải quyết các bài toán tồn tại đồ thị con và tập con độc lập.',
+                    title: 'Phương pháp xác suất trong tổ hợp',
+                    desc: 'Nguyên lý xác suất dương, tính cộng tính của kỳ vọng (Linearity of expectation) và biến chỉ thị.',
                     url: null
                 }
             ]
@@ -357,13 +302,8 @@ window.SMP_ROADMAP_TOHOP = {
             title: 'Thuật toán: Tham lam, điều chỉnh địa phương & Cực trị',
             tiles: [
                 {
-                    title: 'Thuật toán tham lam (Greedy Algorithm)',
-                    desc: 'Chiến thuật chọn tối ưu cục bộ, bài toán phân chia tập hợp và sắp xếp công việc.',
-                    url: null
-                },
-                {
-                    title: 'Điều chỉnh địa phương (Local Search)',
-                    desc: 'Biến đổi vi mô cấu hình để cải thiện hàm mục tiêu, kỹ thuật hoán đổi phần tử và tính ổn định.',
+                    title: 'Thuật toán tham lam & Điều chỉnh địa phương',
+                    desc: 'Chiến thuật chọn tối ưu cục bộ, biến đổi vi mô cấu hình để cải thiện hàm mục tiêu.',
                     url: null
                 }
             ]
@@ -374,9 +314,9 @@ window.SMP_ROADMAP_TOHOP = {
             title: 'Tổ hợp có tính chất số học',
             tiles: [
                 {
-                    title: 'Tổ hợp số học (Combinatorial Number Theory)',
-                    desc: 'Cấp số cộng trong tập hợp số nguyên, định lý Erdős-Ginzburg-Ziv và tổng modulo $p$.',
-                    url: null
+                    title: 'Tổ hợp có tính chất số học',
+                    desc: 'Tương tác giữa số học và tổ hợp, tổng thặng dư modulo p, cấp số cộng lũy thừa và định lý EGZ.',
+                    url: '/posts/math/vmo/to-hop-co-tinh-chat-so-hoc.html'
                 }
             ]
         },
@@ -388,7 +328,7 @@ window.SMP_ROADMAP_TOHOP = {
                 {
                     title: 'Khởi động Tổ hợp VMO',
                     desc: 'Bộ bài tập khởi động tuyển chọn rèn luyện phản xạ tư duy tổ hợp phân dạng.',
-                    url: null
+                    url: '/posts/math/vmo/khoi-dong-vmo-to-hop.html'
                 },
                 {
                     title: 'Tổng hợp Tổ Hợp TST Tỉnh 2026',
@@ -396,9 +336,9 @@ window.SMP_ROADMAP_TOHOP = {
                     url: '/posts/math/vmo/tong-hop-to-hop-tst-tinh-2026.html'
                 },
                 {
-                    title: 'Bài tập Tổ hợp Tết',
-                    desc: 'Tuyển tập các chuyên đề lát domino, xác định tập hợp và ước lượng khoảng cách điểm.',
-                    url: null
+                    title: 'Tuyển tập Tổ hợp: Xác định tập hợp & Ước lượng khoảng cách',
+                    desc: 'Tuyển tập các chuyên đề xác định tập hợp thỏa mãn tính đóng đại số và bài toán hình học tổ hợp ước lượng khoảng cách điểm.',
+                    url: '/posts/math/vmo/bai-tap-to-hop-tet.html'
                 }
             ]
         }
