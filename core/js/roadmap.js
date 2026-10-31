@@ -407,8 +407,8 @@
 
         const phasePrefix = data.phasePrefix || 'Giai đoạn';
         const treeRoot = data.treeRoot || 'VMO · SỐ HỌC OLYMPIC';
-        const quoteText = data.quote || '“Toán học là nữ hoàng của các ngành khoa học, và Số học là nữ hoàng của Toán học.”';
-        const citeText = data.cite || '— Carl Friedrich Gauss —';
+        const quoteText = data.quote !== undefined ? data.quote : '“Toán học là nữ hoàng của các ngành khoa học, và Số học là nữ hoàng của Toán học.”';
+        const citeText = data.cite !== undefined ? data.cite : '— Carl Friedrich Gauss —';
 
         // TOC Section
         const tocHtml = renderTOC(phases, stations, phasePrefix);
@@ -455,7 +455,7 @@
                     <blockquote class="rm-quote">
                         ${quoteText}
                     </blockquote>
-                    <cite class="rm-cite">${citeText}</cite>
+                    ${citeText ? `<cite class="rm-cite">${citeText}</cite>` : ''}
                 </footer>
             </div>`;
 
