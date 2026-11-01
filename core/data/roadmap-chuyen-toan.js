@@ -87,11 +87,23 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
             ]
         },
 
+        {
+            id: 4, phase: 1,
+            title: 'Bất đẳng thức AM — GM',
+            tiles: [
+                {
+                    title: 'Bất đẳng thức AM — GM',
+                    desc: 'Kỹ thuật chọn điểm rơi, cân bằng hệ số, ghép cặp đối xứng, hoán vị và kỹ thuật AM-GM ngược dấu.',
+                    url: '/posts/math/thcs/dai-so/bat-dang-thuc-am-gm.html'
+                }
+            ]
+        },
+
         /* ============================================================
            CHUYÊN ĐỀ II: SỐ HỌC (N2)
            ============================================================ */
         {
-            id: 4, phase: 2,
+            id: 5, phase: 2,
             title: 'Phép chia & Tính chia hết',
             tiles: [
                 {
@@ -113,7 +125,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
         },
 
         {
-            id: 5, phase: 2,
+            id: 6, phase: 2,
             title: 'Các loại số quan trọng',
             tiles: [
                 {
@@ -135,7 +147,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
         },
 
         {
-            id: 6, phase: 2,
+            id: 7, phase: 2,
             title: 'Phương trình nghiệm nguyên',
             tiles: [
                 {
@@ -165,7 +177,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
            CHUYÊN ĐỀ III: HÌNH HỌC (G2)
            ============================================================ */
         {
-            id: 7, phase: 3,
+            id: 8, phase: 3,
             title: 'Định lý Thales & Tỉ số',
             tiles: [
                 {
@@ -182,7 +194,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
         },
 
         {
-            id: 8, phase: 3,
+            id: 9, phase: 3,
             title: 'Tam giác đồng dạng',
             tiles: [
                 {
@@ -199,7 +211,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
         },
 
         {
-            id: 9, phase: 3,
+            id: 10, phase: 3,
             title: 'Tứ giác nội tiếp & Phương tích',
             tiles: [
                 {
@@ -221,7 +233,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
         },
 
         {
-            id: 10, phase: 3,
+            id: 11, phase: 3,
             title: 'Mô hình tiếp tuyến & Đường tròn',
             tiles: [
                 {
@@ -238,7 +250,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
         },
 
         {
-            id: 11, phase: 3,
+            id: 12, phase: 3,
             title: 'Các bổ đề hình học',
             tiles: [
                 {
@@ -255,7 +267,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
         },
 
         {
-            id: 12, phase: 3,
+            id: 13, phase: 3,
             title: 'Đường thẳng Simson & Steiner',
             tiles: [
                 {
@@ -272,7 +284,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
         },
 
         {
-            id: 13, phase: 3,
+            id: 14, phase: 3,
             title: 'Biến đổi tỉ số & Ôn tập hình học',
             tiles: [
                 {
@@ -297,7 +309,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
            CHUYÊN ĐỀ IV: TỔ HỢP & SUY LUẬN (C2)
            ============================================================ */
         {
-            id: 14, phase: 4,
+            id: 15, phase: 4,
             title: 'Suy luận logic & Dirichlet',
             tiles: [
                 {
@@ -324,7 +336,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
         },
 
         {
-            id: 15, phase: 4,
+            id: 16, phase: 4,
             title: 'Bất biến, Trò chơi & Bảng ô vuông',
             tiles: [
                 {
@@ -346,7 +358,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
         },
 
         {
-            id: 16, phase: 4,
+            id: 17, phase: 4,
             title: 'Đại số tổ hợp & Xác suất',
             tiles: [
                 {
@@ -363,7 +375,7 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
         },
 
         {
-            id: 17, phase: 4,
+            id: 18, phase: 4,
             title: 'Hình học tổ hợp',
             tiles: [
                 {

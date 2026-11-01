@@ -36,7 +36,7 @@ window.SMP_ROADMAP_TOHOP = {
                 {
                     title: 'Nền tảng Tổ hợp Chuyên Toán THCS',
                     desc: 'Toàn bộ chuyên đề Tổ hợp Chuyên Toán THCS: Suy luận logic, nguyên lý Dirichlet, cực hạn, bất biến, bài toán đếm và trò chơi.',
-                    url: '/pages/roadmap-chuyen-toan.html#rm-station-14',
+                    url: '/pages/roadmap-chuyen-toan.html#rm-station-15',
                     btnText: 'Xem lộ trình ↗'
                 }
             ]

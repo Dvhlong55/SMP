@@ -31,7 +31,7 @@ window.SMP_ROADMAP_SOHOC = {
                 {
                     title: 'Nền tảng Số học Chuyên Toán THCS',
                     desc: 'Toàn bộ chuyên đề Số học Chuyên Toán THCS: Phép chia, ước chung - bội chung, đồng dư, số nguyên tố, số chính phương và phương trình nghiệm nguyên cơ bản.',
-                    url: '/pages/roadmap-chuyen-toan.html#rm-station-4',
+                    url: '/pages/roadmap-chuyen-toan.html#rm-station-5',
                     btnText: 'Xem lộ trình ↗'
                 }
             ]
