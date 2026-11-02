@@ -82,6 +82,12 @@ document.addEventListener('DOMContentLoaded', function () {
         linkPost.href = depthPrefix + 'core/css/post.css?v=35';
         head.appendChild(linkPost);
     }
+    if (contentHtml.includes('solution-mailbox') && !document.querySelector('link[href*="mailbox.css"]')) {
+        const linkMailbox = document.createElement('link');
+        linkMailbox.rel = 'stylesheet';
+        linkMailbox.href = depthPrefix + 'core/css/mailbox.css';
+        head.appendChild(linkMailbox);
+    }
     
     // Cấu hình MathJax
     if (!window.MathJax) {
