@@ -1,11 +1,11 @@
 const LEFT_TAGS_HTML = `
         <div class="side-widget fade-up">
             <ul class="side-widget-list">
-                <li><a href="/pages/toanhoc.html?filter=vmo">VMO <span>104</span></a></li>
+                <li><a href="/pages/toanhoc.html?filter=vmo">VMO <span>105</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=thcs">THCS <span>89</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=thpt">THPT <span>1</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=uni">Đại Học <span>1</span></a></li>
-                <li><a href="/pages/toanhoc.html?filter=phieu-luu">Phiêu Lưu <span>4</span></a></li>
+                <li><a href="/pages/toanhoc.html?filter=phieu-luu">Phiêu Lưu <span>5</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=tools">Tool <span>6</span></a></li>
                 <li><a href="/pages/forum.html">Forum</a></li>
                 <li><a href="/pages/nonmath.html">Non Math <span>16</span></a></li>

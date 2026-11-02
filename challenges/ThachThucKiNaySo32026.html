@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức (Số 3)</title>
+    
+    <meta name="post-id" content="ThachThucKiNaySo3">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="Thách Thức">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <script src="/core/js/mailbox.js"></script>
+    <!-- CodeMirror 5 Core & Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/stex/stex.min.js"></script>
+    <!-- CodeMirror Hint -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+    <link rel="stylesheet" href="/tools/latex-v2/latex.css">
+    <script src="/core/js/smp-latex-core.js"></script>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <h1 style="text-align: center;">
+        § Thách Thức (Số 3)
+        </h1>
+
+        <h2 style="text-align: center;">
+        Secrets of Mathematical Principles<br />
+        Nov 02, 2026
+        </h2>
+
+        <p style="font-style: italic; color: var(--text-muted); margin-bottom: 28px; text-align: center;">Kỳ thách thức số 3 tập trung vào các bài toán đa thức chuyên sâu, tính đối xứng hình học của đồ thị, và các cấu trúc số học - đại số nâng cao dành cho học sinh giỏi Olympic.</p>
+
+        <h3>Bài 1</h3>
+        <p>Cho $P(x)$ là đa thức hệ số thực khác hằng thỏa mãn: tồn tại vô số cặp số nguyên $m, n$ sao cho $P(m) + P(n) = 0$. Chứng minh rằng đồ thị của hàm số $y = P(x)$ có tâm đối xứng.</p>
+
+        <h3>Bài 2</h3>
+        <p>Cho $P(x)$ là đa thức hệ số thực khác hằng thỏa mãn: tồn tại vô số cặp số nguyên $m \neq n$ sao cho $P(m) = P(n)$. Chứng minh rằng đồ thị của hàm số $y = P(x)$ có trục đối xứng.</p>
+
+        <h3>Bài 3</h3>
+        <p>Cho $P(x), Q(x)$ là hai đa thức hệ số thực khác đa thức hằng thỏa mãn:
+        \[
+        \forall x \in \mathbb{R}, \quad \lfloor P(x) \rfloor = \lfloor Q(x) \rfloor.
+        \]
+        Chứng minh rằng $P(x) \equiv Q(x)$.</p>
+
+        <h3>Bài 4</h3>
+        <p>Tìm tất cả các đa thức $f(x) \in \mathbb{R}[x]$ sao cho với mọi $n \in \mathbb{N}^*$, phương trình $f(x) = n$:
+        <ul style="list-style-type: none; padding-left: 0; margin-top: 6px;">
+            <li>a) Có ít nhất 1 nghiệm nguyên.</li>
+            <li>b) Có ít nhất 1 nghiệm hữu tỷ.</li>
+        </ul>
+        </p>
+
+        <h3>Bài 5</h3>
+        <p>Cho đa thức $P(x) \in \mathbb{R}[x]$ có hệ số bậc cao nhất dương thỏa mãn: tồn tại số thực $M$ sao cho với mọi $x > M$ thì $P'(x) > 0$. Giả sử phương trình $P(P(x)) = x$ có vô hạn nghiệm thực. Chứng minh rằng $P(x) \equiv x$.</p>
+
+        <p class="exam-end"><b>─── END ───</b></p>
+
+        <!-- ═══ SOLUTION SUBMISSION MAILBOX ═══ -->
+        <div class="solution-mailbox fade-up">
+            <div class="mailbox-header">
+                <div class="mailbox-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+                <div class="mailbox-title">Gửi Lời Giải Của Bạn</div>
+            </div>
+            <p class="mailbox-subtitle">
+                Nếu bạn có lời giải cho bất kì bài toán nào, hãy gửi nó cho tôi —
+                tôi sẽ <em>đăng lên hệ thống</em> và ghi nhận đóng góp của bạn!
+            </p>
+
+            <div class="mailbox-form" id="solution-form">
+                <div class="mailbox-row">
+                    <div class="mailbox-field">
+                        <label class="mailbox-label" for="sol-name">Họ &amp; Tên <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
+                        <input type="text" id="sol-name" class="mailbox-input" placeholder="Nguyễn Văn A...">
+                    </div>
+                    <div class="mailbox-field">
+                        <label class="mailbox-label" for="sol-contact">Email <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
+                        <input type="text" id="sol-contact" class="mailbox-input" placeholder="Nhập địa chỉ email...">
+                    </div>
+                </div>
+                
+                <div class="mailbox-row">
+                    <div class="mailbox-field">
+                        <label class="mailbox-label" for="sol-problem">Bài toán <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
+                        <select id="sol-problem" class="mailbox-input mailbox-select">
+                            <option value="">-- Chọn bài --</option>
+                            <option value="Bài 1">Bài 1 — Đồ thị P(x) có tâm đối xứng</option>
+                            <option value="Bài 2">Bài 2 — Đồ thị P(x) có trục đối xứng</option>
+                            <option value="Bài 3">Bài 3 — Đẳng thức phần nguyên đa thức</option>
+                            <option value="Bài 4">Bài 4 — Phương trình f(x) = n có nghiệm nguyên/hữu tỷ</option>
+                            <option value="Bài 5">Bài 5 — Phương trình hàm đa thức P(P(x)) = x</option>
+                        </select>
+                    </div>
+                    <div class="mailbox-field">
+                        <label class="mailbox-label" for="sol-fb">Facebook hoặc NickName <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
+                        <input type="text" id="sol-fb" class="mailbox-input" placeholder="Tên hiển thị trên web...">
+                    </div>
+                </div>
+
+                <div class="mailbox-field">
+                    <label class="mailbox-label" for="sol-content">Nội dung lời giải <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
+                    <textarea id="sol-content" class="mailbox-textarea"
+                        placeholder="Viết lời giải của bạn tại đây. Bạn có thể dùng LaTeX thông thường, ví dụ: $x^2 + y^2 = z^2$ hoặc \[ \sum_{k=1}^{n} k = \frac{n(n+1)}{2} \]"></textarea>
+                    <span class="mailbox-hint">Hỗ trợ LaTeX inline <code>$ ... $</code> và display <code>\[ ... \]</code></span>
+                    <div class="latex-preview-wrap">
+                        <button class="latex-preview-toggle" id="preview-toggle" onclick="togglePreview()">▶ Xem preview LaTeX</button>
+                        <div class="latex-preview-box" id="latex-preview">
+                            <span class="latex-preview-empty">Bắt đầu gõ để xem preview...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mailbox-field">
+                    <label class="mailbox-label">Đính kèm ảnh (tuỳ chọn)</label>
+                    <div class="mailbox-file-zone" id="file-drop-zone">
+                        <input type="file" id="sol-images" accept="image/*,.pdf" multiple>
+                        <span class="mailbox-file-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-bottom: 8px;"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span>
+                        <p class="mailbox-file-label"><strong>Nhấn để chọn file</strong> hoặc kéo &amp; thả vào đây</p>
+                        <p class="mailbox-file-label" style="margin-top:4px; font-size:0.75rem;">Hỗ trợ ảnh (PNG, JPG...) và PDF</p>
+                        <div class="mailbox-file-names" id="file-names"></div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="mailbox-send-btn" id="sol-send-btn" onclick="sendSolution()">
+                        <span id="sol-submit-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+                        <span id="sol-submit-text">Gửi Lời Giải (Đính Kèm Tự Động)</span>
+                    </button>
+                </div>
+                <p class="mailbox-note">Lời giải và toàn bộ file đính kèm sẽ được nén và đẩy thẳng đến tác giả!</p>
+            </div>
+        </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof SMPLatexCore !== 'undefined') {
+            SMPLatexCore.init('sol-content');
+        }
+    });
+    </script>
+</body>
+</html>

@@ -700,6 +700,13 @@
                             <div class="section-label">Bài Đăng Mới Nhất</div>
                             <div class="grid-container" style="grid-template-columns: 1fr; gap: 16px;">
                                 <div class="card fade-up">
+                                    <div class="card-date">02/11/2026</div>
+                                    <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
+                                    <h3>§ Về Một Bổ Đề Đơn Điệu Của Đa Thức</h3>
+                                    <p>Chuyên đề Đa thức: Bổ đề về tính đơn điệu của đa thức khi tiến ra vô cực và các bài toán ứng dụng đặc sắc Olympic VMO.</p>
+                                    <a href="/posts/math/vmo/ve-mot-bo-de-don-dieu-cua-da-thuc.html" class="card-link">READ MORE</a>
+                                </div>
+                                <div class="card fade-up">
                                     <div class="card-date">08/10/2026</div>
                                     <span class="card-tag" style="color: var(--accent-cyan); border-color: rgba(92, 225, 230, 0.4); background: rgba(92, 225, 230, 0.1);">Hình Học</span>
                                     <h3>Tổng Quan Về Kì Thi Hình Học Iran (IGO)</h3>
@@ -712,13 +719,6 @@
                                     <h3>Hàm Phi Euler</h3>
                                     <p>Chuyên đề Hàm phi Euler: Định nghĩa, tính chất nhân tính, hệ thức Gauss và 14 bài toán chọn lọc nâng cao Olympic.</p>
                                     <a href="/posts/math/vmo/ham-phi-euler.html" class="card-link">READ MORE</a>
-                                </div>
-                                <div class="card fade-up">
-                                    <div class="card-date">19/09/2026</div>
-                                    <span class="card-tag" style="color: var(--accent-gold); border-color: rgba(201, 169, 110, 0.4); background: rgba(201, 169, 110, 0.1);">VMO</span>
-                                    <h3>Tổng hợp Số Học TST Tỉnh 2026</h3>
-                                    <p>Tuyển tập và phân loại toàn bộ 45 bài toán Số học từ các kỳ thi chọn đội tuyển HSGQG (TST Tỉnh) năm học 2026-2027 trên cả nước.</p>
-                                    <a href="/posts/math/vmo/tong-hop-so-hoc-tst-tinh-2026.html" class="card-link">READ MORE</a>
                                 </div>
                             </div>
                             <div style="margin-top: 16px; text-align: right;">
@@ -736,54 +736,22 @@
                                     <div class="challenge-badge" style="margin-bottom: 0;">Câu Đố Trong Ngày</div>
                                     <span class="challenge-level" style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent-gold); background: rgba(201,169,110,0.1); border: 1px solid rgba(201,169,110,0.25); padding: 3px 8px; border-radius: 4px; white-space: nowrap;">Olympic / VMO</span>
                                 </div>
-                                <h3 style="font-size: 1.25rem; margin-bottom: 14px; color: #fff; line-height: 1.4;">Ước Nguyên Tố Của Dãy Số</h3>
+                                <h3 style="font-size: 1.25rem; margin-bottom: 14px; color: #fff; line-height: 1.4;">Đẳng Thức Phần Nguyên Của Hai Đa Thức</h3>
                                 <div class="challenge-problem" id="challenge-problem">
-                                    <p>Cho dãy số nguyên dương $(u_n)$ không là dãy hằng và thỏa mãn $(u_m - u_n)$ chia hết cho $(m - n)$, với mọi số nguyên dương $m, n$ phân biệt.</p>
+                                    <p>Cho hai đa thức hệ số thực $P(x), Q(x)$ khác đa thức hằng thỏa mãn:</p>
+                                    <p style="margin: 10px 0; text-align: center; font-size: 1.05rem;">
+                                        $$\forall x \in \mathbb{R}, \quad \lfloor P(x) \rfloor = \lfloor Q(x) \rfloor.$$
+                                    </p>
                                     <p style="margin-top: 10px; font-weight: 500; color: #e5e5e5;">
-                                        <strong>Chứng minh rằng:</strong> Tập hợp các số nguyên tố xuất hiện trong các phân tích thừa số nguyên tố của các số hạng của dãy số $(u_n)$ là vô hạn.
+                                        <strong>Chứng minh rằng:</strong> $P(x) \equiv Q(x)$.
                                     </p>
                                 </div>
                                 
-                                <div class="challenge-actions">
-                                    <button type="button" class="challenge-btn" id="show-answer-btn" onclick="toggleAnswer()">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                                        <span id="show-answer-text">Xem Lời Giải</span>
+                                <div class="challenge-actions" style="margin-top: 14px;">
+                                    <button type="button" class="challenge-btn challenge-btn-submit" id="toggle-solution-btn" onclick="toggleSolutionForm()" style="width: 100%; justify-content: center; background: linear-gradient(135deg, rgba(92,225,230,0.2), rgba(201,169,110,0.2)); border-color: rgba(92,225,230,0.4); color: #fff; font-weight: 600; padding: 10px 18px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M12 5v14M5 12h14"/></svg>
+                                        <span id="toggle-solution-text">Gửi Lời Giải Của Bạn</span>
                                     </button>
-                                    <button type="button" class="challenge-btn challenge-btn-submit" id="toggle-solution-btn" onclick="toggleSolutionForm()">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px;"><path d="M12 5v14M5 12h14"/></svg>
-                                        <span id="toggle-solution-text">Thêm Lời Giải Mới</span>
-                                    </button>
-                                </div>
-
-                                <div class="challenge-answer" id="challenge-answer">
-                                    <div style="font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--accent-cyan); font-weight: 600; margin-bottom: 12px; border-bottom: 1px solid rgba(92,225,230,0.15); padding-bottom: 6px;">
-                                        Lời Giải Tham Khảo
-                                    </div>
-                                    <div style="line-height: 1.8; color: #ddd;">
-                                        <p>Giả sử chỉ có hữu hạn ước nguyên tố xuất hiện trong phân tích tiêu chuẩn của các số hạng của dãy \((u_n)\), đó là:</p>
-                                        \[
-                                        S = \{p_1, p_2, \ldots, p_s\}.
-                                        \]
-                                        <p>Trước hết ta viết \(u_1 = \prod_{i = 1}^s p_i^{\alpha_i}\), trong đó \(\alpha_i \in \mathbb{N}, \; \forall i = \overline{1, s}\). Đặt \(P = \prod_{i = 1}^s p_i^{\alpha_i + 1}\). Theo giả thiết bài toán:</p>
-                                        \[
-                                        P \mid (kP + 1) - 1 \mid u_{kP + 1} - u_1 \implies v_p(u_{kP + 1} - u_1) \ge v_p(P) = \alpha + 1,
-                                        \]
-                                        <p>trong đó \(p \in S\) và ứng với \(u_1\) có số mũ tương ứng là \(\alpha\), tức \(p^\alpha \parallel u_1 \implies p^{\alpha+1} \parallel P\). Giả sử \(v_p(u_{kP + 1}) \neq v_p(u_1)\), dẫn đến:</p>
-                                        \[
-                                        \alpha + 1 \le v_p(u_{kP + 1} - u_1) = \min\{v_p(u_{kP + 1}), v_p(u_1)\} \le v_p(u_1) \le \alpha.
-                                        \]
-                                        <p>Đây là một mâu thuẫn hiển nhiên.</p>
-                                        <p>Như vậy với mọi \(p \mid u_1 \implies v_p(u_{kP + 1}) = v_p(u_1)\), mà \(u_{kP + 1}\) cũng chỉ chứa các ước nguyên tố trong \(S\). Do đó:</p>
-                                        \[
-                                        u_{kP + 1} = u_1, \quad \forall k \in \mathbb{Z}^+.
-                                        \]
-                                        <p>Với mỗi chỉ số \(n\), xét:</p>
-                                        \[
-                                        kP + 1 - n \mid u_{kP + 1} - u_n = u_1 - u_n,
-                                        \]
-                                        <p>cho \(k \to +\infty\), ta buộc phải có \(u_n = u_1\). Nói cách khác \((u_n)\) là dãy hằng, mâu thuẫn với giả thiết ban đầu.</p>
-                                        <p>Vậy giả sử phản chứng là sai, suy ra tập hợp các số nguyên tố xuất hiện trong phân tích thừa số nguyên tố của các số hạng của dãy \((u_n)\) là vô hạn. $\blacksquare$</p>
-                                    </div>
                                 </div>
 
                                 <!-- Biểu mẫu Gửi Lời Giải Của Bạn (tinh chỉnh gọn gàng) -->
@@ -816,7 +784,7 @@
                                                 <div class="mailbox-field">
                                                     <label class="mailbox-label" for="sol-problem">Bài toán <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
                                                     <select id="sol-problem" class="mailbox-input mailbox-select">
-                                                        <option value="Câu đố trong ngày: Ước nguyên tố của dãy số" selected>Câu đố trong ngày: Ước nguyên tố của dãy số</option>
+                                                        <option value="Câu đố trong ngày: Đẳng thức phần nguyên của hai đa thức" selected>Câu đố trong ngày: Đẳng thức phần nguyên của hai đa thức</option>
                                                         <option value="Đóng góp câu đố mới">Đóng góp câu đố mới</option>
                                                         <option value="Đóng góp bài toán khác">Đóng góp bài toán khác</option>
                                                         <option value="" style="display:none;"></option>

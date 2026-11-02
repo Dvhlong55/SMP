@@ -171,6 +171,20 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '§ Thách Thức (Số 3)',
+        date: 'November 2, 2026',
+        url: '/challenges/ThachThucKiNaySo32026.html',
+        tags: ['Thách Thức', 'Đa Thức', 'VMO', 'Phiêu Lưu'],
+        page: '/pages/toanhoc.html?filter=phieu-luu'
+    },
+    {
+        title: '§ Về Một Bổ Đề Đơn Điệu Của Đa Thức',
+        date: 'November 2, 2026',
+        url: '/posts/math/vmo/ve-mot-bo-de-don-dieu-cua-da-thuc.html',
+        tags: ['Đại Số', 'Đa Thức', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: 'Tổng Quan Về Kì Thi Hình Học Iran (IGO)',
         date: 'October 8, 2026',
         url: '/posts/math/de-thi-igo-2017-2025.html',
