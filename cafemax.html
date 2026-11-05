@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0E1116">
+<title>CafeMax • Biometric Readiness & Protocol</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+@font-face{font-family:'CMU Serif';src:url('https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts/Serif/cmunrm.woff') format('woff');font-weight:400}
+@font-face{font-family:'CMU Serif';src:url('https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts/Serif/cmunbx.woff') format('woff');font-weight:700}
+
+:root[data-theme="dark"]{
+  --bg:#0E1116;--surface:#161B22;--raised:#1E2530;--line:#262E3A;--line2:#39445A;
+  --text:#EEF2F7;--muted:#9AA7B8;--faint:#66738A;
+  --green:#34D399;--amber:#FBBF24;--red:#FB7185;--blue:#60A5FA;
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#F5F6F8;--surface:#FFFFFF;--raised:#EEF0F3;--line:#DCE0E6;--line2:#B8C0CC;
+  --text:#14181F;--muted:#4A5565;--faint:#8792A3;
+  --green:#047857;--amber:#B45309;--red:#BE123C;--blue:#1D4ED8;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--text);
+  font:14px/1.5 'Inter',-apple-system,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding:calc(env(safe-area-inset-top,0px) + 14px) 16px calc(env(safe-area-inset-bottom,0px) + 92px);
+}
+.serif{font-family:'CMU Serif','Latin Modern Roman',Georgia,serif}
+.mono{font-family:'Fira Code',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+/* Top Bar */
+.top{display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:20px;font-weight:700;letter-spacing:-0.02em}
+.top-r{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px}
+.icon-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--text);font-size:14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:background 0.2s}
+.icon-btn:active{background:var(--raised)}
+.refresh-spin{animation:spin 0.8s linear infinite}
+@keyframes spin{100%{transform:rotate(360deg)}}
+
+/* Biometric Readiness Hero */
+.hero{display:grid;grid-template-columns:112px 1fr;gap:18px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.ring{position:relative;width:112px;height:112px}
+.ring svg{width:112px;height:112px;transform:rotate(-90deg)}
+.ring .bg{stroke:var(--raised)}
+.ring .fg{transition:stroke-dashoffset .9s cubic-bezier(.2,.7,.2,1),stroke .3s}
+.ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-num b{font-size:30px;font-weight:600;line-height:1}
+.ring-num span{font-size:11px;color:var(--muted);margin-top:3px}
+.stats{display:grid;gap:10px}
+.stat{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:8px}
+.stat:last-child{border-bottom:none;padding-bottom:0}
+.stat span{color:var(--muted);font-size:12.5px}
+.stat b{font-size:16px;font-weight:500}
+
+/* Now Bar */
+.now{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface)}
+.now-dot{width:10px;height:10px;border-radius:50%;background:var(--faint);flex:none}
+.now.live .now-dot{background:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 25%,transparent)}
+.now.free .now-dot{background:var(--green)}
+.now-t{font-weight:600;font-size:14px}
+.now-s{color:var(--muted);font-size:12.5px}
+
+/* Timeline */
+.sec-title{font-size:13px;font-weight:600;color:var(--muted);margin:0 2px 8px;display:flex;justify-content:space-between}
+.tl{position:relative;display:flex;flex-direction:column;gap:8px}
+.ev{display:grid;grid-template-columns:54px 1fr;gap:12px}
+.ev-time{text-align:right;font-size:12px;color:var(--muted);padding-top:12px;line-height:1.35}
+.ev-time i{display:block;font-style:normal;color:var(--faint)}
+.ev-card{border:1px solid var(--line);border-left:3px solid var(--line2);background:var(--surface);border-radius:10px;padding:10px 12px}
+.ev-name{font-weight:600;line-height:1.35}
+.ev-meta{color:var(--muted);font-size:12.5px;margin-top:2px}
+.ev.past .ev-card{opacity:.55}
+.ev.live .ev-card{border-left-color:var(--blue);background:color-mix(in srgb,var(--blue) 10%,var(--surface))}
+.ev.gap .ev-card{border:1px dashed color-mix(in srgb,var(--green) 55%,transparent);border-left-width:3px;border-left-color:var(--green);background:transparent}
+.ev.gap .ev-name{color:var(--green)}
+.ev.caffeine .ev-card{border-left-color:var(--amber);background:color-mix(in srgb,var(--amber) 8%,var(--surface))}
+.empty{padding:28px 16px;text-align:center;color:var(--muted);border:1px dashed var(--line2);border-radius:12px}
+
+/* Tasks */
+.grp{margin-bottom:16px}
+.task{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:6px}
+.task.urgent{border-left:3px solid var(--red)}
+.task-t{line-height:1.4}
+.tag{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--raised);color:var(--muted);white-space:nowrap}
+.task.urgent .tag{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red);font-weight:600}
+
+/* Radar (Markdown-style Accordions) */
+details.sec{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+details.sec summary{list-style:none;cursor:pointer;padding:14px 16px;font-size:15px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+details.sec summary::-webkit-details-marker{display:none}
+details.sec summary::after{content:'+';color:var(--muted);font-weight:400;font-size:18px}
+details.sec[open] summary::after{content:'\2212'}
+.sec-body{padding:0 16px 14px;line-height:1.65}
+.sec-body ul{padding-left:18px}
+.sec-body li{margin-bottom:8px}
+.sec-body p{margin-bottom:8px}
+.sec-body strong{font-weight:700}
+.sec-body code{font-family:'Fira Code',monospace;font-size:12px;background:var(--raised);padding:1px 6px;border-radius:4px}
+
+/* Bottom Navigation Bar */
+.bar{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;
+  padding:8px 16px calc(env(safe-area-inset-bottom,0px) + 8px);
+  background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);z-index:99}
+.bar-in{width:100%;max-width:560px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tab{appearance:none;border:none;background:transparent;color:var(--muted);font:600 12.5px 'Inter',sans-serif;padding:10px 6px;border-radius:10px;cursor:pointer;display:flex;gap:6px;justify-content:center;align-items:center}
+.tab[aria-selected="true"]{background:var(--raised);color:var(--text)}
+.pill{font-size:11px;padding:0 6px;border-radius:99px;background:var(--line);color:var(--text)}
+.hidden{display:none!important}
+@media (max-width:380px){.hero{grid-template-columns:1fr;justify-items:center}.stats{width:100%}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Sync indicator */
+.sync-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--muted)}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.sync-dot.stale{background:var(--amber)}
+.sync-dot.error{background:var(--red)}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <div style="display:flex;align-items:baseline;gap:8px;">
+      <span class="brand serif">CafeMax</span>
+      <span class="sync-badge"><span class="sync-dot" id="sync-dot"></span><span id="sync-text">LIVE</span></span>
+    </div>
+    <div class="top-r">
+      <span class="mono"><span id="date-str">--</span> <span id="clock">--:--</span></span>
+      <button class="icon-btn" id="refresh-btn" aria-label="Làm mới dữ liệu" title="Cập nhật">↻</button>
+      <button class="icon-btn" id="theme-btn" aria-label="Đổi giao diện">☾</button>
+    </div>
+  </header>
+
+  <section class="hero" aria-label="Biometric Readiness">
+    <div class="ring">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="bg" cx="50" cy="50" r="44" fill="none" stroke-width="7"/>
+        <circle class="fg" id="ring-fg" cx="50" cy="50" r="44" fill="none" stroke-width="7" stroke-linecap="round" stroke-dasharray="276.46" stroke-dashoffset="276.46"/>
+      </svg>
+      <div class="ring-num"><b class="mono" id="m-ready">--</b><span>Readiness</span></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><span>Sleep Duration</span><b class="mono" id="m-sleep">--</b></div>
+      <div class="stat"><span>Caffeine Curfew</span><b class="mono" id="m-curfew" style="color:var(--amber)">--</b></div>
+      <div class="stat"><span>Target Bedtime</span><b class="mono" id="m-bed">--</b></div>
+    </div>
+  </section>
+
+  <div class="now" id="now-box"><span class="now-dot"></span><div><div class="now-t" id="now-t">Đang tải lịch trình...</div><div class="now-s" id="now-s">Kết nối hệ thống SMP backend</div></div></div>
+
+  <section id="panel-timeline" role="tabpanel">
+    <div class="sec-title"><span>Today's Execution Timeline</span></div>
+    <div class="tl" id="tl-box"></div>
+  </section>
+
+  <section id="panel-tasks" role="tabpanel" class="hidden">
+    <div id="task-box"></div>
+  </section>
+
+  <section id="panel-radar" role="tabpanel" class="hidden">
+    <div id="radar-box"></div>
+  </section>
+</main>
+
+<nav class="bar" role="tablist">
+  <div class="bar-in">
+    <button class="tab" role="tab" id="tab-timeline" aria-selected="true">Timeline <span class="pill mono" id="count-timeline">0</span></button>
+    <button class="tab" role="tab" id="tab-tasks" aria-selected="false">Pending Tasks <span class="pill mono" id="count-tasks">0</span></button>
+    <button class="tab" role="tab" id="tab-radar" aria-selected="false">72h Radar</button>
+  </div>
+</nav>
+
+<script>
+const API_URL = "https://smp-backend-kcwn.onrender.com/api/cafemax";
+
+let CURRENT_DATA = null;
+
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function pad(n){return String(n).padStart(2,'0');}
+
+/* Theme Management */
+function getSavedTheme(){try{return localStorage.getItem('cafemax_theme');}catch(e){return null;}}
+function setSavedTheme(v){try{localStorage.setItem('cafemax_theme',v);}catch(e){}}
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  document.getElementById('theme-btn').textContent = t==='dark' ? '☀' : '☾';
+  const m=document.querySelector('meta[name="theme-color"]'); if(m) m.content = t==='dark' ? '#0E1116' : '#F5F6F8';
+}
+function initTheme(){
+  let t=getSavedTheme();
+  if(!t) t = (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+  applyTheme(t);
+}
+document.getElementById('theme-btn').addEventListener('click', function(){
+  const next = document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+  applyTheme(next); setSavedTheme(next);
+});
+
+/* Tab Switching */
+function switchTab(tab){
+  ['timeline','tasks','radar'].forEach(function(t){
+    document.getElementById('tab-'+t).setAttribute('aria-selected', t===tab ? 'true':'false');
+    document.getElementById('panel-'+t).classList.toggle('hidden', t!==tab);
+  });
+  window.scrollTo(0,0);
+}
+['timeline','tasks','radar'].forEach(function(t){
+  document.getElementById('tab-'+t).addEventListener('click', function(){ switchTab(t); });
+});
+
+/* Markdown Radar Parser */
+function inline(s){
+  return s.replace(/`([^`]+)`/g,'<code>$1</code>')
+          .replace(/[*]{2}([^*]+)[*]{2}/g,'<strong>$1</strong>')
+          .replace(/[*]([^*]+)[*]/g,'<em>$1</em>');
+}
+function renderRadar(md){
+  if(!md) return '<div class="empty">Chưa có chỉ dẫn chiến lược.<' + '/div>';
+  const lines = esc(md).split(/\r?\n/);
+  const sections=[];
+  let cur={title:'',html:'',list:false};
+  function closeList(){ if(cur.list){cur.html+='</ul>';cur.list=false;} }
+  function push(){ closeList(); if(cur.title||cur.html) sections.push(cur); }
+  lines.forEach(function(raw){
+    const line=raw.trim();
+    if(!line){closeList();return;}
+    if(/^#{1,4} /.test(line)){
+      push(); cur={title:inline(line.replace(/^#{1,4} /,'')),html:'',list:false};
+    } else if(/^[-*•] /.test(line) || /^[0-9]+[.] /.test(line)){
+      if(!cur.list){cur.html+='<ul>';cur.list=true;}
+      cur.html+='<li>'+inline(line.replace(/^([-*•]|[0-9]+[.]) /,''))+'</li>';
+    } else {
+      closeList(); cur.html+='<p>'+inline(line)+'</p>';
+    }
+  });
+  push();
+  return sections.map(function(s,i){
+    if(!s.title) return '<div class="sec-body">'+s.html+'</div>';
+    return '<details class="sec"'+(i<2?' open':'')+'><summary class="serif">'+s.title+'</summary><div class="sec-body">'+s.html+'</div></details>';
+  }).join('');
+}
+
+/* Now Indicator */
+function renderNow(items){
+  const box=document.getElementById('now-box'), t=document.getElementById('now-t'), s=document.getElementById('now-s');
+  const now=Date.now();
+  let live=null, next=null;
+  (items||[]).forEach(function(it){
+    if(it.type==='gap') return;
+    if(now>=it.startMs && now<=it.endMs) live=it;
+    else if(it.startMs>now && (!next || it.startMs<next.startMs)) next=it;
+  });
+  box.className='now';
+  if(live){
+    box.classList.add('live');
+    t.textContent='Active Now: ' + live.title;
+    s.textContent='Kết thúc lúc ' + live.endTime + ' (còn ' + Math.max(1,Math.round((live.endMs-now)/60000)) + ' phút)';
+  } else if(next){
+    box.classList.add('free');
+    const m=Math.round((next.startMs-now)/60000);
+    t.textContent='Open Window. Tiếp theo: ' + next.title;
+    s.textContent='Bắt đầu lúc ' + next.startTime + ' (sau ' + (m>=60?Math.floor(m/60)+'h '+(m%60)+'m':m+' phút') + ')';
+  } else {
+    t.textContent='Lịch trình hôm nay đã hoàn thành';
+    s.textContent='Bắt đầu thả lỏng và chuẩn bị giấc ngủ.';
+  }
+}
+
+function durLabel(a,b){
+  const m=Math.round((b-a)/60000);
+  return m>=60 ? Math.floor(m/60)+'h '+(m%60?pad(m%60)+'m':'') : m+' phút';
+}
+
+/* Main Render Function */
+function render(d){
+  CURRENT_DATA=d;
+  const now=Date.now();
+  document.getElementById('date-str').textContent=d.dateStr||'--';
+  document.getElementById('m-sleep').textContent=d.sleep||'--';
+  document.getElementById('m-curfew').textContent=d.curfew||'--';
+  document.getElementById('m-bed').textContent=d.bedtime||'--';
+
+  const r=Number(d.readiness)||0, C=276.46;
+  const color = r>=80 ? 'var(--green)' : (r>=65 ? 'var(--amber)' : 'var(--red)');
+  const fg=document.getElementById('ring-fg');
+  fg.style.stroke=color;
+  document.getElementById('m-ready').textContent=r+'%';
+  requestAnimationFrame(function(){ fg.style.strokeDashoffset = String(C*(1-Math.min(r,100)/100)); });
+
+  const items=d.timeline||[];
+  document.getElementById('count-timeline').textContent=items.filter(function(i){return i.type!=='gap';}).length;
+  renderNow(items);
+
+  const tl=document.getElementById('tl-box');
+  if(!items.length){
+    tl.innerHTML='<div class="empty">Không có sự kiện nào hôm nay. Ngày trống.<' + '/div>';
+  } else {
+    tl.innerHTML=items.map(function(it){
+      let cls='ev';
+      if(it.type==='gap') cls+=' gap';
+      else if(it.type==='caffeine') cls+=' caffeine';
+      else if(now>it.endMs) cls+=' past';
+      else if(now>=it.startMs) cls+=' live';
+      const name = it.type==='gap' ? 'Golden Window ('+durLabel(it.startMs,it.endMs)+')' : esc(it.title);
+      const meta = it.type==='gap' ? esc(it.meta||'Deep Work / High-Priority Execution') : esc(it.meta||'');
+      return '<div class="'+cls+'"><div class="ev-time mono">'+esc(it.startTime)+'<i>'+esc(it.endTime)+'</i></div>'+
+             '<div class="ev-card"><div class="ev-name">'+name+'</div>'+(meta?'<div class="ev-meta">'+meta+'</div>':'')+'</div></div>';
+    }).join('');
+  }
+
+  const tasks=d.tasks||[];
+  document.getElementById('count-tasks').textContent=tasks.length;
+  const tb=document.getElementById('task-box');
+  if(!tasks.length){
+    tb.innerHTML='<div class="empty">Tất cả deadline đã giải quyết.<' + '/div>';
+  } else {
+    function row(t){
+      return '<div class="task'+(t.urgent?' urgent':'')+'"><span class="task-t">'+esc(t.title)+'</span>'+
+             (t.due?'<span class="tag mono">'+esc(t.due)+'</span>':'')+'</div>';
+    }
+    const urgent=tasks.filter(function(t){return t.urgent;}), rest=tasks.filter(function(t){return !t.urgent;});
+    let html='';
+    if(urgent.length) html+='<div class="grp"><div class="sec-title"><span>Critical Pressure (&le;48h)</span><span class="mono">'+urgent.length+'</span></div>'+urgent.map(row).join('')+'</div>';
+    if(rest.length) html+='<div class="grp"><div class="sec-title"><span>Upcoming</span><span class="mono">'+rest.length+'</span></div>'+rest.map(row).join('')+'</div>';
+    tb.innerHTML=html;
+  }
+
+  document.getElementById('radar-box').innerHTML=renderRadar(d.aiBrief);
+}
+
+function tick(){
+  const n=new Date();
+  document.getElementById('clock').textContent=pad(n.getHours())+':'+pad(n.getMinutes());
+}
+
+/* Fetch data from backend proxy */
+async function loadData(forceFresh = false){
+  const refreshBtn = document.getElementById('refresh-btn');
+  const syncDot = document.getElementById('sync-dot');
+  const syncText = document.getElementById('sync-text');
+  refreshBtn.classList.add('refresh-spin');
+
+  try {
+    const url = forceFresh ? `${API_URL}?fresh=true` : API_URL;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    render(data);
+    try { localStorage.setItem('cafemax_cache', JSON.stringify(data)); } catch(e){}
+    syncDot.className = 'sync-dot';
+    syncText.textContent = 'LIVE';
+  } catch(err) {
+    console.warn("Lỗi tải API, đọc từ local cache:", err);
+    syncDot.className = 'sync-dot error';
+    syncText.textContent = 'OFFLINE';
+    const cached = localStorage.getItem('cafemax_cache');
+    if(cached) {
+      try { render(JSON.parse(cached)); } catch(e){}
+    }
+  } finally {
+    refreshBtn.classList.remove('refresh-spin');
+  }
+}
+
+document.getElementById('refresh-btn').addEventListener('click', function(){
+  loadData(true);
+});
+
+/* Init */
+initTheme();
+tick();
+setInterval(tick, 10000);
+setInterval(function(){ if(CURRENT_DATA) renderNow(CURRENT_DATA.timeline||[]); }, 60000);
+
+// Load from local cache first if available for instant display
+const initialCache = localStorage.getItem('cafemax_cache');
+if(initialCache){
+  try { render(JSON.parse(initialCache)); } catch(e){}
+}
+loadData();
+// Auto refresh every 3 minutes
+setInterval(function(){ loadData(false); }, 180000);
+</script>
+</body>
+</html>
