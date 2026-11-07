@@ -1263,7 +1263,7 @@ function initShared() {
                 .then(res => res.json())
                 .then(data => {
                     if (data.views !== undefined) {
-                        viewCountEl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg>${data.views} lượt xem`;
+                        viewCountEl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg>${data.views}`;
                     }
                 })
                 .catch(err => console.error('Error fetching view count:', err));
@@ -1296,10 +1296,14 @@ window.toggleSavePost = async function(postId, postTitle, postUrl, btnElement) {
         return;
     }
     
-    const isSaving = btnElement.innerText.includes('Bỏ lưu') ? false : true;
-    const originalText = btnElement.innerText;
-    btnElement.innerText = 'Đang xử lý...';
+    const isPageBtn = btnElement.id === 'save-post-btn';
+    const originalHtml = btnElement.innerHTML;
     btnElement.disabled = true;
+    if (!isPageBtn) {
+        btnElement.innerText = 'Đang xử lý...';
+    } else {
+        btnElement.style.opacity = '0.5';
+    }
     
     try {
         const res = await fetch(`${API_BASE}/api/users/saved`, {
@@ -1314,25 +1318,40 @@ window.toggleSavePost = async function(postId, postTitle, postUrl, btnElement) {
         const data = await res.json();
         if (res.ok) {
             if (data.saved) {
-                btnElement.innerHTML = '&#x2605; Đã lưu';
-                btnElement.classList.add('saved-active');
-                btnElement.style.color = 'var(--accent-gold)';
-                btnElement.style.borderColor = 'var(--accent-gold)';
+                if (isPageBtn) {
+                    btnElement.innerHTML = '&#x2605;';
+                    btnElement.classList.add('saved-active');
+                    btnElement.style.color = 'var(--accent-gold)';
+                    btnElement.title = 'Đã lưu bài viết';
+                } else {
+                    btnElement.innerHTML = '&#x2605; Đã lưu';
+                    btnElement.classList.add('saved-active');
+                    btnElement.style.color = 'var(--accent-gold)';
+                    btnElement.style.borderColor = 'var(--accent-gold)';
+                }
             } else {
-                btnElement.innerHTML = '&#x2606; Lưu bài';
-                btnElement.classList.remove('saved-active');
-                btnElement.style.color = 'var(--text-muted)';
-                btnElement.style.borderColor = 'var(--border-light)';
+                if (isPageBtn) {
+                    btnElement.innerHTML = '&#x2606;';
+                    btnElement.classList.remove('saved-active');
+                    btnElement.style.color = 'var(--text-muted)';
+                    btnElement.title = 'Lưu bài viết';
+                } else {
+                    btnElement.innerHTML = '&#x2606; Lưu bài';
+                    btnElement.classList.remove('saved-active');
+                    btnElement.style.color = 'var(--text-muted)';
+                    btnElement.style.borderColor = 'var(--border-light)';
+                }
             }
         } else {
-            btnElement.innerText = originalText;
+            btnElement.innerHTML = originalHtml;
             alert(data.detail || "Lỗi lưu bài viết");
         }
     } catch (err) {
-        btnElement.innerText = originalText;
+        btnElement.innerHTML = originalHtml;
         alert("Không thể kết nối đến máy chủ.");
     } finally {
         btnElement.disabled = false;
+        btnElement.style.opacity = '1';
     }
 }
 
@@ -1486,10 +1505,15 @@ async function syncSavedPostsState() {
         if (pageSaveBtn) {
             const postId = decodeURIComponent(window.location.pathname.split('/').pop().replace('.html', ''));
             if (savedIds.has(postId)) {
-                pageSaveBtn.innerHTML = '&#x2605; Đã lưu';
+                pageSaveBtn.innerHTML = '&#x2605;';
                 pageSaveBtn.classList.add('saved-active');
                 pageSaveBtn.style.color = 'var(--accent-gold)';
-                pageSaveBtn.style.borderColor = 'var(--accent-gold)';
+                pageSaveBtn.title = 'Đã lưu bài viết';
+            } else {
+                pageSaveBtn.innerHTML = '&#x2606;';
+                pageSaveBtn.classList.remove('saved-active');
+                pageSaveBtn.style.color = 'var(--text-muted)';
+                pageSaveBtn.title = 'Lưu bài viết';
             }
         }
     } catch (err) {

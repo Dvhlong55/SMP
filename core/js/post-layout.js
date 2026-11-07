@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('link[href*="post.css"]')) {
         const linkPost = document.createElement('link');
         linkPost.rel = 'stylesheet';
-        linkPost.href = depthPrefix + 'core/css/post.css?v=35';
+        linkPost.href = depthPrefix + 'core/css/post.css?v=36';
         head.appendChild(linkPost);
     }
     if (contentHtml.includes('solution-mailbox') && !document.querySelector('link[href*="mailbox.css"]')) {
@@ -119,9 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 5. Build the wrapper HTML
     const FULL_LAYOUT = `
-    <button id="exit-focus-btn" onclick="toggleFocusMode()" style="position: fixed; top: 20px; right: 20px; z-index: 100000; display: none; background: var(--accent-cyan); color: #111; border: none; padding: 10px 18px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; font-weight: bold; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.25);"
-        onmouseover="this.style.background='var(--accent-gold)';"
-        onmouseout="this.style.background='var(--accent-cyan)';">
+    <button id="exit-focus-btn" onclick="toggleFocusMode()" title="Thoát chế độ tập trung" aria-label="Thoát tập trung">
         Thoát tập trung ✕
     </button>
 
@@ -141,17 +139,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     <div class="exam-meta fade-up" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <span class="exam-tag">${breadcrumbHtml}</span>
-                        <div style="display: inline-flex; align-items: center; gap: 14px;">
-                            <span id="post-view-count" style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; display: inline-flex; align-items: center; gap: 4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block;"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg> -- lượt xem</span>
+                        <div style="display: inline-flex; align-items: center; gap: 12px;">
+                            <span id="post-view-count" title="Lượt xem" style="font-size: 0.82rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; display: inline-flex; align-items: center; gap: 4px;"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-top: -1px;"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg>--</span>
                             <button id="focus-mode-btn"
                                 onclick="toggleFocusMode()"
-                                style="display:inline-flex; align-items:center; gap:6px; background:none; border:1px solid var(--border-light); color:var(--text-muted); padding:6px 14px; border-radius:20px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.8rem; transition: all 0.2s;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 2px;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Đọc tập trung
+                                title="Chế độ đọc tập trung"
+                                aria-label="Đọc tập trung">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
                             </button>
                             <button id="save-post-btn"
                                 onclick="(function(btn){ if(window.toggleSavePost){ const postId = decodeURIComponent(window.location.pathname.split('/').pop().replace('.html','')); const title = document.title.replace(' - SMP','').trim(); toggleSavePost(postId, title, window.location.href, btn); } else { alert('Vui lòng đăng nhập để lưu bài viết!'); } })(this)"
-                                style="display:inline-flex; align-items:center; gap:6px; background:none; border:1px solid var(--border-light); color:var(--text-muted); padding:6px 14px; border-radius:20px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.8rem; transition: all 0.2s;">
-                                &#x2606; Lưu bài
+                                title="Lưu bài viết"
+                                aria-label="Lưu bài viết">
+                                &#x2606;
                             </button>
                         </div>
                     </div>
@@ -185,8 +185,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // 6. Nhúng các script giao diện theo thứ tự tuần tự để tránh race condition
     const scriptsToLoad = [
         depthPrefix + "core/js/sidebar-data.js?v=99",
-        depthPrefix + "core/js/layout.js?v=99",
-        depthPrefix + "core/js/shared.js?v=51",
+        depthPrefix + "core/js/layout.js?v=100",
+        depthPrefix + "core/js/shared.js?v=52",
         depthPrefix + "core/js/saved.js?v=35",
         depthPrefix + "core/js/comment.js?v=35"
     ];
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('smp-focus-mode', isFocus ? 'true' : 'false');
         const exitBtn = document.getElementById('exit-focus-btn');
         if (exitBtn) {
-            exitBtn.style.display = isFocus ? 'block' : 'none';
+            exitBtn.classList.remove('focus-btn-hidden');
         }
     };
 
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.add('focus-mode');
         setTimeout(() => {
             const exitBtn = document.getElementById('exit-focus-btn');
-            if (exitBtn) exitBtn.style.display = 'block';
+            if (exitBtn) exitBtn.classList.remove('focus-btn-hidden');
         }, 50);
     }
 

@@ -283,23 +283,90 @@ body.focus-mode .exam-paper h3 {
     margin-top: 34px !important;
 }
 
-/* Button styles in normal and hover states (removed inline styles) */
-#save-post-btn:hover {
-    border-color: var(--accent-gold) !important;
-    color: var(--accent-gold) !important;
+/* Button styles in normal and hover states: minimal icon buttons without box/border */
+#save-post-btn,
+#focus-mode-btn {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 4px 6px !important;
+    cursor: pointer !important;
+    color: var(--text-muted) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: color 0.2s ease, transform 0.15s ease !important;
+    border-radius: 0 !important;
 }
+
+#save-post-btn {
+    font-size: 1.25rem !important;
+    line-height: 1 !important;
+}
+
+#save-post-btn:hover {
+    color: var(--accent-gold) !important;
+    transform: scale(1.18) !important;
+}
+
 #save-post-btn.saved-active {
     color: var(--accent-gold) !important;
-    border-color: var(--accent-gold) !important;
 }
 
 #focus-mode-btn:hover {
-    border-color: var(--accent-cyan) !important;
+    color: var(--accent-cyan) !important;
+    transform: scale(1.15) !important;
+}
+
+body.focus-mode #focus-mode-btn {
     color: var(--accent-cyan) !important;
 }
-body.focus-mode #focus-mode-btn {
-    border-color: var(--accent-cyan) !important;
-    color: var(--accent-cyan) !important;
+
+/* Floating Exit Focus Button with Safe Area & Headroom */
+#exit-focus-btn {
+    position: fixed;
+    top: max(20px, calc(env(safe-area-inset-top, 0px) + 14px));
+    right: max(20px, calc(env(safe-area-inset-right, 0px) + 14px));
+    z-index: 100000;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent-cyan);
+    color: #111;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s, box-shadow 0.2s;
+    will-change: transform;
+    transform: translateY(0);
+}
+
+body.focus-mode #exit-focus-btn {
+    display: inline-flex !important;
+}
+
+#exit-focus-btn:hover {
+    background: var(--accent-gold);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+#exit-focus-btn.focus-btn-hidden {
+    transform: translateY(calc(-100% - env(safe-area-inset-top, 0px) - 30px)) !important;
+}
+
+@media (max-width: 768px) {
+    #exit-focus-btn {
+        top: max(14px, calc(env(safe-area-inset-top, 0px) + 10px)) !important;
+        right: max(14px, calc(env(safe-area-inset-right, 0px) + 10px)) !important;
+        padding: 8px 14px !important;
+        font-size: 0.78rem !important;
+    }
 }
 
 /* === LEARNING PROGRESS TRACKER STYLES === */

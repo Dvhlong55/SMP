@@ -489,15 +489,22 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
-                height: calc(52px + env(safe-area-inset-bottom));
+                height: calc(52px + env(safe-area-inset-bottom, 0px));
                 background-color: var(--topbar-bg, #111111);
                 border-top: 1px solid rgba(128, 128, 128, 0.15);
                 z-index: 9999;
                 justify-content: space-around;
                 align-items: center;
-                padding-bottom: env(safe-area-inset-bottom);
+                padding-bottom: env(safe-area-inset-bottom, 0px);
                 box-sizing: border-box;
                 box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+                will-change: transform;
+                transform: translateY(0);
+            }
+
+            .mobile-bottom-nav.bottom-nav-hidden {
+                transform: translateY(calc(100% + env(safe-area-inset-bottom, 0px) + 20px)) !important;
             }
 
             .mobile-bottom-nav a {
@@ -793,10 +800,9 @@
         }
     });
 
-    // ── Auto-Hide Topbar (Headroom) & Reading Progress Bar on Scroll ─────────
+    // ── Auto-Hide Topbar, Bottom Nav, Exit Focus Button & Reading Progress Bar on Scroll ─────────
     let lastScrollY = Math.max(0, window.pageYOffset || document.documentElement.scrollTop || 0);
     let scrollTicking = false;
-    const topbarNode = document.querySelector('.topbar');
 
     window.addEventListener('scroll', () => {
         if (!scrollTicking) {
@@ -812,23 +818,31 @@
                 }
 
                 // 2. Headroom Auto-Hide on Scroll Down, Reveal on Scroll Up
-                if (topbarNode) {
-                    const delta = currentScrollY - lastScrollY;
-                    if (currentScrollY <= 40) {
-                        topbarNode.classList.remove('topbar-hidden');
-                        lastScrollY = currentScrollY;
-                    } else if (delta > 7 && currentScrollY > 60) {
-                        const searchOpen = document.querySelector('.search-wrapper.mobile-active, .search-wrapper-article.mobile-active');
-                        const notifDropdown = document.getElementById('notif-dropdown');
-                        const notifOpen = notifDropdown && notifDropdown.style.display === 'block';
-                        if (!searchOpen && !notifOpen) {
-                            topbarNode.classList.add('topbar-hidden');
-                        }
-                        lastScrollY = currentScrollY;
-                    } else if (delta < -4) {
-                        topbarNode.classList.remove('topbar-hidden');
-                        lastScrollY = currentScrollY;
+                const tb = document.querySelector('.topbar');
+                const bottomNav = document.querySelector('.mobile-bottom-nav');
+                const exitFocus = document.getElementById('exit-focus-btn');
+
+                const delta = currentScrollY - lastScrollY;
+                if (currentScrollY <= 40) {
+                    if (tb) tb.classList.remove('topbar-hidden');
+                    if (bottomNav) bottomNav.classList.remove('bottom-nav-hidden');
+                    if (exitFocus) exitFocus.classList.remove('focus-btn-hidden');
+                    lastScrollY = currentScrollY;
+                } else if (delta > 7 && currentScrollY > 60) {
+                    const searchOpen = document.querySelector('.search-wrapper.mobile-active, .search-wrapper-article.mobile-active');
+                    const notifDropdown = document.getElementById('notif-dropdown');
+                    const notifOpen = notifDropdown && notifDropdown.style.display === 'block';
+                    if (!searchOpen && !notifOpen) {
+                        if (tb) tb.classList.add('topbar-hidden');
+                        if (bottomNav) bottomNav.classList.add('bottom-nav-hidden');
+                        if (exitFocus) exitFocus.classList.add('focus-btn-hidden');
                     }
+                    lastScrollY = currentScrollY;
+                } else if (delta < -4) {
+                    if (tb) tb.classList.remove('topbar-hidden');
+                    if (bottomNav) bottomNav.classList.remove('bottom-nav-hidden');
+                    if (exitFocus) exitFocus.classList.remove('focus-btn-hidden');
+                    lastScrollY = currentScrollY;
                 }
 
                 scrollTicking = false;
