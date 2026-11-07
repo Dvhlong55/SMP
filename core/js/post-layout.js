@@ -220,6 +220,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const script = document.createElement('script');
         script.src = scriptsToLoad[index];
         script.onload = () => loadScriptSequentially(index + 1);
+        script.onerror = () => {
+            console.warn('Failed to load:', scriptsToLoad[index]);
+            loadScriptSequentially(index + 1);
+        };
         document.body.appendChild(script);
     }
     

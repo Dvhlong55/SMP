@@ -92,8 +92,13 @@ window.SMP_ROADMAP_CHUYEN_TOAN = {
             title: 'Bất đẳng thức AM — GM',
             tiles: [
                 {
-                    title: 'Bất đẳng thức AM — GM',
-                    desc: 'Kỹ thuật chọn điểm rơi, cân bằng hệ số, ghép cặp đối xứng, hoán vị và kỹ thuật AM-GM ngược dấu.',
+                    title: 'Bất đẳng thức AM — GM (Bài giảng & Lý thuyết)',
+                    desc: 'Ý nghĩa hình học đường tròn, phương pháp quy nạp ngược Cauchy, kỹ thuật chọn điểm rơi, ghép cặp đối xứng và AM-GM ngược dấu.',
+                    url: '/posts/math/thcs/dai-so/bat-dang-thuc-am-gm-ly-thuyet.html'
+                },
+                {
+                    title: 'Bất đẳng thức AM — GM (Bài tập rèn luyện)',
+                    desc: 'Hệ thống 18 bài toán rèn luyện phân hóa: chọn điểm rơi, cân bằng hệ số, ghép cặp đối xứng, hoán vị và kỹ thuật AM-GM ngược dấu.',
                     url: '/posts/math/thcs/dai-so/bat-dang-thuc-am-gm.html'
                 }
             ]

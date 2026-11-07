@@ -1118,13 +1118,25 @@ window.addEventListener('beforeinstallprompt', (e) => {
 // Liên tục kiểm tra và xử lý công thức Toán dài vượt quá màn hình
 setInterval(function() {
     document.querySelectorAll('mjx-container:not([display="true"])').forEach(mjx => {
-        if (mjx.offsetWidth > mjx.parentElement.clientWidth) {
-            mjx.style.display = 'block';
-            mjx.style.overflowX = 'auto';
-            mjx.style.overflowY = 'hidden';
-            mjx.style.maxWidth = '100%';
-            mjx.style.minWidth = '0';
-            mjx.style.paddingBottom = '4px'; // Avoid clipping scrollbar
+        // Tránh so sánh với parentElement nếu là thẻ inline (b, span, strong, em, a...) vì clientWidth của thẻ inline luôn bằng 0
+        const blockContainer = mjx.closest('p, li, dd, dt, div, td, th, blockquote, .exam-paper');
+        if (blockContainer && blockContainer.clientWidth > 50) {
+            if (mjx.offsetWidth > blockContainer.clientWidth) {
+                mjx.style.display = 'inline-block';
+                mjx.style.verticalAlign = 'middle';
+                mjx.style.overflowX = 'auto';
+                mjx.style.overflowY = 'hidden';
+                mjx.style.maxWidth = '100%';
+                mjx.style.minWidth = '0';
+                mjx.style.paddingBottom = '4px';
+            } else if (mjx.style.display === 'block' || mjx.style.display === 'inline-block') {
+                mjx.style.display = '';
+                mjx.style.overflowX = '';
+                mjx.style.overflowY = '';
+                mjx.style.maxWidth = '';
+                mjx.style.minWidth = '';
+                mjx.style.paddingBottom = '';
+            }
         }
     });
 }, 1000);

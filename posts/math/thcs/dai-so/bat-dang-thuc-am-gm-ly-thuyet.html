@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Bất Đẳng Thức AM — GM: Bài Giảng & Lý Thuyết</title>
+    
+    <meta name="post-id" content="BatDangThucAMGMLyThuyet">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="THCS">
+    <meta name="subcategory-filter" content="thcs">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Đại số Chuyên Toán THCS: Bài giảng lý thuyết Bất đẳng thức AM — GM, ý nghĩa hình học, phương pháp quy nạp ngược Cauchy, kỹ thuật chọn điểm rơi, ghép cặp đối xứng và AM-GM ngược dấu.">
+    <meta property="og:title" content="SMP — Bất Đẳng Thức AM — GM: Bài Giảng & Lý Thuyết">
+    <meta property="og:description" content="Chuyên đề Đại số Chuyên Toán THCS: Bài giảng lý thuyết Bất đẳng thức AM — GM, ý nghĩa hình học, phương pháp quy nạp ngược Cauchy, kỹ thuật chọn điểm rơi, ghép cặp đối xứng và AM-GM ngược dấu.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/thcs/dai-so/bat-dang-thuc-am-gm-ly-thuyet.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Bất Đẳng Thức AM — GM: Bài Giảng & Lý Thuyết">
+    <meta name="twitter:description" content="Chuyên đề Đại số Chuyên Toán THCS: Bài giảng lý thuyết Bất đẳng thức AM — GM, ý nghĩa hình học, phương pháp quy nạp ngược Cauchy, kỹ thuật chọn điểm rơi, ghép cặp đối xứng và AM-GM ngược dấu.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>§4.1 Bất Đẳng Thức AM — GM: Bài Giảng & Lý Thuyết</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles — Chuyên Toán THCS</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Long Do • smp.m4th@gmail.com</h2>
+        </div>
+
+        <!-- Thanh điều hướng liên kết chuyên đề -->
+        <div style="background: rgba(92, 225, 230, 0.08); border: 1px solid rgba(92, 225, 230, 0.25); border-left: 4px solid var(--accent-cyan, #5ce1e6); padding: 14px 18px; border-radius: 8px; margin: 20px 0 30px 0; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
+            <div style="font-weight: 500;">
+                <span style="color: var(--accent-cyan); font-weight: 700;">CHUYÊN ĐỀ 4:</span> Bạn đang xem <b>Phần 4.1 — Bài giảng & Lý thuyết</b>.
+            </div>
+            <div>
+                <a href="/posts/math/thcs/dai-so/bat-dang-thuc-am-gm.html" style="display: inline-block; padding: 6px 14px; background: var(--accent-cyan); color: #000; border-radius: 6px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: opacity 0.2s ease;">Chuyển sang 4.2: Bài tập rèn luyện →</a>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- PHẦN 0: TỔNG QUAN HỆ THỐNG ĐÁNH GIÁ -->
+        <!-- ========================================================================= -->
+        <h2 style="text-align: left !important; font-size: 1.25rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 32px;">0. Tổng Quan Các Hướng Tiếp Cận Bất Đẳng Thức</h2>
+
+        <p>Trong chương trình Chuyên Toán THCS và các kỳ thi Học sinh giỏi, bài toán <b>Bất đẳng thức (Đánh giá đại số)</b> là bài toán phân loại then chốt. Nhìn từ bức tranh tổng thể, hệ thống công cụ đánh giá được xây dựng dựa trên 6 trụ cột chính:</p>
+
+        <div style="text-align: center; margin: 24px 0;">
+            <img src="/core/image/bdt-overview-mindmap.svg" alt="Sơ đồ tư duy các phương pháp chứng minh Bất đẳng thức" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: var(--shadow-soft);">
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 8px; font-style: italic;">Hình 1: Sơ đồ tư duy 6 trụ cột phương pháp đánh giá Bất đẳng thức</p>
+        </div>
+
+        <ol style="padding-left: 24px; line-height: 1.8;">
+            <li><b>Biến đổi tương đương:</b> Đưa về hằng đẳng thức tổng các bình phương ($A^2 \ge 0$), phương pháp SOS ($S_a, S_b, S_c$).</li>
+            <li><b>Bất đẳng thức AM — GM:</b> Cân bằng đại lượng trung bình cộng và trung bình nhân, xử lý điểm rơi và nghịch đảo dấu.</li>
+            <li><b>Bất đẳng thức Cauchy — Schwarz (CBS):</b> Dạng nhân vectơ và đặc biệt là dạng cộng mẫu phân thức Schwarz (Bổ đề Bergström).</li>
+            <li><b>Bất đẳng thức Minkowski:</b> Bất đẳng thức tam giác và độ dài vectơ $\sqrt{x_1^2 + y_1^2} + \sqrt{x_2^2 + y_2^2} \ge \sqrt{(x_1+x_2)^2 + (y_1+y_2)^2}$.</li>
+            <li><b>Các Bổ đề kinh điển:</b> Bất đẳng thức Schur, Nesbitt, Chebyshev, phương pháp đổi biến chuẩn hóa $p, q, r$.</li>
+            <li><b>Phương pháp Tam thức bậc hai:</b> Đặt một biến làm ẩn chính, xét dấu biệt thức $\Delta \le 0$ hoặc định lý đảo về dấu tam thức.</li>
+        </ol>
+
+        <!-- ========================================================================= -->
+        <!-- PHẦN I: LÝ THUYẾT NỀN TẢNG AM-GM -->
+        <!-- ========================================================================= -->
+        <h2 style="text-align: left !important; font-size: 1.25rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 36px;">I. Bất Đẳng Thức AM — GM Cơ Bản</h2>
+
+        <div style="background: rgba(92, 225, 230, 0.05); border-left: 3px solid var(--accent-cyan, #5ce1e6); padding: 16px 20px; border-radius: 6px; margin: 20px 0;">
+            <p style="margin: 0; font-weight: 500; line-height: 1.6;">
+                <b>Định lý AM — GM (Arithmetic Mean — Geometric Mean):</b><br>
+                Với bộ $n$ số thực không âm $a_1, a_2, \dots, a_n \ge 0$, ta có:
+                $$\frac{a_1 + a_2 + \dots + a_n}{n} \ge \sqrt[n]{a_1 a_2 \dots a_n}$$
+                hay viết dưới dạng tổng:
+                $$a_1 + a_2 + \dots + a_n \ge n \sqrt[n]{a_1 a_2 \dots a_n}.$$
+                Đẳng thức xảy ra khi và chỉ khi tất cả các số hạng bằng nhau: $a_1 = a_2 = \dots = a_n$.
+            </p>
+        </div>
+
+        <h3 style="color: var(--accent-cyan); margin-top: 24px;">1. Trường hợp $n = 2$ & Ý nghĩa hình học</h3>
+        <p>Với hai số thực không âm $a, b \ge 0$, bất đẳng thức có dạng:</p>
+        $$\frac{a + b}{2} \ge \sqrt{ab} \iff a + b \ge 2\sqrt{ab}$$
+
+        <p><b>Chứng minh đại số:</b></p>
+        $$a + b - 2\sqrt{ab} = (\sqrt{a} - \sqrt{b})^2 \ge 0$$
+        <p style="margin: 4px 0 12px 0; font-style: italic; color: var(--text-muted); text-align: right;">(Bất đẳng thức luôn đúng do bình phương một số thực không âm).</p>
+        <p>Đẳng thức xảy ra khi và chỉ khi $\sqrt{a} = \sqrt{b} \iff a = b$.</p>
+
+        <p><b>Ý nghĩa hình học :</b></p>
+        <p>Bất đẳng thức AM — GM cho 2 số sở hữu một biểu diễn hình học tuyệt đẹp thông qua đường tròn:</p>
+
+        <div style="text-align: center; margin: 24px 0;">
+            <img src="/core/image/am-gm-geometric-proof.svg" alt="Ý nghĩa hình học của Bất đẳng thức AM-GM" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: var(--shadow-soft);">
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 8px; font-style: italic;">Hình 2: Chứng minh hình học BĐT AM — GM qua đường tròn đường kính $BC$</p>
+        </div>
+
+        <ul style="padding-left: 20px; line-height: 1.7;">
+            <li>Xét đường tròn $(O)$ có đường kính $BC = a + b$. Khi đó tâm $O$ là trung điểm $BC$, và bán kính của đường tròn chính là <b>Trung bình cộng (AM)</b>:
+            $$R = OS = \frac{BC}{2} = \frac{a + b}{2}.$$</li>
+            <li>Lấy điểm $H$ trên đoạn $BC$ sao cho $HB = a$ và $HC = b$. Kẻ đường thẳng vuông góc với $BC$ tại $H$, cắt nửa đường tròn tại điểm $A$.</li>
+            <li>Tam giác $ABC$ nội tiếp đường tròn đường kính $BC$ nên vuông tại $A$. Áp dụng hệ thức lượng trong tam giác vuông $ABC$ với đường cao $AH$:
+            $$AH^2 = HB \cdot HC = ab \implies AH = \sqrt{ab}.$$
+            Độ dài đường cao $AH$ chính là <b>Trung bình nhân (GM)</b>.</li>
+            <li>Do $A$ nằm trên nửa đường tròn, khoảng cách từ $A$ đến đường kính $BC$ (chính là $AH$) luôn không vượt quá bán kính $OS$:
+            $$AH \le OS \iff \sqrt{ab} \le \frac{a + b}{2}.$$</li>
+            <li>Đẳng thức xảy ra khi và chỉ khi $A$ trùng với điểm chính giữa cung $BC$ (điểm $S$), tức $H$ trùng với tâm $O \iff HB = HC \iff a = b$.</li>
+        </ul>
+
+        <h3 style="color: var(--accent-cyan); margin-top: 28px;">2. Trường hợp $n = 3$ & Phương pháp quy nạp ngược của Cauchy</h3>
+        <p>Với ba số thực không âm $a, b, c \ge 0$, bất đẳng thức khẳng định:</p>
+        $$\frac{a + b + c}{3} \ge \sqrt[3]{abc} \iff a + b + c \ge 3\sqrt[3]{abc}$$
+
+        <p><b>Cách 1: Sử dụng hằng đẳng thức bậc ba</b></p>
+        <p>Đặt $a = x^3, b = y^3, c = z^3$ ($x, y, z \ge 0$). Bất đẳng thức cần chứng minh trở thành:</p>
+        $$x^3 + y^3 + z^3 - 3xyz \ge 0$$
+        <p>Phân tích đa thức thành nhân tử:</p>
+        $$x^3 + y^3 + z^3 - 3xyz = (x + y + z)(x^2 + y^2 + z^2 - xy - yz - zx)$$
+        <p>Nhân 2 vào biểu thức thứ hai và nhóm thành tổng ba bình phương:</p>
+        $$x^2 + y^2 + z^2 - xy - yz - zx = \frac{1}{2} \left[ (x - y)^2 + (y - z)^2 + (z - x)^2 \right] \ge 0$$
+        <p>Vì $x, y, z \ge 0 \implies x + y + z \ge 0$. Do đó tích của hai đại lượng không âm luôn $\ge 0$. Đẳng thức xảy ra khi $x = y = z \iff a = b = c$.</p>
+
+        <p><b>Cách 2: Phương pháp quy nạp ngược của Cauchy </b></p>
+        <p>Đây là phát kiến lịch sử kinh điển của nhà toán học Augustin-Louis Cauchy:</p>
+        <ul style="padding-left: 20px; line-height: 1.7;">
+            <li><b>Bước 1:</b> Chứng minh cho $n = 4$ từ trường hợp $n = 2$:<br>
+            Áp dụng AM — GM cho từng cặp:
+            $$a_1 + a_2 \ge 2\sqrt{a_1 a_2}, \quad a_3 + a_4 \ge 2\sqrt{a_3 a_4}$$
+            Cộng vế theo vế và tiếp tục áp dụng AM — GM cho hai số $\sqrt{a_1 a_2}$ và $\sqrt{a_3 a_4}$:
+            $$a_1 + a_2 + a_3 + a_4 \ge 2\left(\sqrt{a_1 a_2} + \sqrt{a_3 a_4}\right) \ge 2 \cdot 2 \sqrt{\sqrt{a_1 a_2} \cdot \sqrt{a_3 a_4}} = 4\sqrt[4]{a_1 a_2 a_3 a_4}.$$</li>
+            <li><b>Bước 2:</b> Lùi từ $n = 4$ về $n = 3$:<br>
+            Từ kết quả $a_1 + a_2 + a_3 + a_4 \ge 4\sqrt[4]{a_1 a_2 a_3 a_4}$, ta cô lập tổng ba số hạng đầu:
+            $$a_1 + a_2 + a_3 \ge 4\sqrt[4]{a_1 a_2 a_3 a_4} - a_4$$
+            Bí quyết ở đây là ta tự do chọn giá trị của số hạng thứ tư $a_4$. Chọn:
+            $$a_4 = \sqrt[3]{a_1 a_2 a_3}$$
+            Khi đó tích 4 số trở thành:
+            $$a_1 a_2 a_3 a_4 = (a_1 a_2 a_3) \cdot \sqrt[3]{a_1 a_2 a_3} = \left(\sqrt[3]{a_1 a_2 a_3}\right)^4$$
+            Thay vào vế phải:
+            $$4\sqrt[4]{a_1 a_2 a_3 a_4} - a_4 = 4\sqrt[3]{a_1 a_2 a_3} - \sqrt[3]{a_1 a_2 a_3} = 3\sqrt[3]{a_1 a_2 a_3}$$
+            Suy ra:
+            $$a_1 + a_2 + a_3 \ge 3\sqrt[3]{a_1 a_2 a_3}$$
+            <p style="margin: 4px 0 12px 0; font-style: italic; color: var(--text-muted); text-align: right;">(Hoàn tất chứng minh).</p></li>
+        </ul>
+
+        <h3 style="color: var(--accent-cyan); margin-top: 28px;">3. Các biến thể và hệ quả quan trọng</h3>
+        <ul style="padding-left: 20px; line-height: 1.8;">
+            <li><b>Đánh giá tích qua tổng (Bình phương trung bình):</b>
+            $$ab \le \left(\frac{a+b}{2}\right)^2 \iff (a+b)^2 \ge 4ab$$</li>
+            <li><b>Bất đẳng thức phân thức nghịch đảo (Cộng mẫu Engel 2 số):</b>
+            $$\frac{1}{a} + \frac{1}{b} = \frac{a+b}{ab} \ge \frac{a+b}{\frac{(a+b)^2}{4}} = \frac{4}{a+b}$$</li>
+            <li><b>Đánh giá không phụ thuộc tính không âm:</b>
+            Với mọi $a, b \in \mathbb{R}$ (không cần dương):
+            $$a^2 + b^2 \ge 2|ab| \ge 2ab$$
+            Bởi vì $(\pm a \mp b)^2 \ge 0$. Học sinh cần phân biệt rõ khi nào cần điều kiện không âm ($a+b \ge 2\sqrt{ab}$) và khi nào đúng với mọi số thực ($a^2 + b^2 \ge 2ab$).</li>
+        </ul>
+
+        <!-- ========================================================================= -->
+        <!-- PHẦN II: KỸ THUẬT CHỌN ĐIỂM RƠI VÀ CÂN BẰNG HỆ SỐ -->
+        <!-- ========================================================================= -->
+        <h2 style="text-align: left !important; font-size: 1.25rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 36px;">II. Kỹ Thuật Chọn Điểm Rơi & Cân Bằng Hệ Số</h2>
+
+        <p>Bất đẳng thức AM — GM chỉ đạt giá trị cực trị (dấu bằng) khi tất cả các số hạng tham gia đánh giá bằng nhau. Nếu áp dụng trực tiếp mà không kiểm soát dấu bằng, ta sẽ phạm sai lầm điểm rơi.</p>
+
+        <div style="background: rgba(201, 169, 110, 0.08); border-left: 3px solid var(--accent-gold); padding: 14px 18px; border-radius: 6px; margin: 18px 0;">
+            <p style="margin: 0; font-weight: 500;">
+                <b>Nguyên tắc vàng:</b><br>
+                1. <i>Dự đoán điểm rơi:</i> Xác định các biến đạt giá trị bao nhiêu tại cực trị (thường nằm tại biên của điều kiện hoặc tại tâm đối xứng).<br>
+                2. <i>Cân bằng hệ số:</i> Nhân thêm tham số $k$ vào một trong các số hạng sao cho tại điểm rơi, các số hạng có giá trị đúng bằng nhau.<br>
+                3. <i>Đồng nhất bậc:</i> Khi áp dụng AM — GM để triệt tiêu biến ở mẫu, tổng bậc của biến ở tử số phải bằng tổng bậc của biến ở mẫu số.
+            </p>
+        </div>
+
+        <h3 style="margin-top: 24px;">Ví dụ 1</h3>
+        <p>Cho hai số thực không âm $a, b \ge 0$ thỏa mãn $ab = 25$. Tìm giá trị nhỏ nhất của biểu thức $P = a + b$.</p>
+        <p><b>Lời giải:</b></p>
+        <p>Áp dụng trực tiếp AM — GM cho hai số dương $a, b$:</p>
+        $$P = a + b \ge 2\sqrt{ab} = 2\sqrt{25} = 10$$
+        <p>Dấu bằng xảy ra khi $\begin{cases} a = b \\ ab = 25 \end{cases} \iff a = b = 5$. Vậy $\min P = 10$.</p>
+
+        <h3 style="margin-top: 24px;">Ví dụ 2</h3>
+        <p>Cho số thực $a \ge 6$ và $ab = 25$. Tìm giá trị nhỏ nhất của $P = a + b$.</p>
+        <p><b>Phân tích & Lời giải:</b></p>
+        <p>Ta có $P = a + \dfrac{25}{a}$. Nếu áp dụng ngay $a + \dfrac{25}{a} \ge 2\sqrt{a \cdot \frac{25}{a}} = 10$, dấu bằng yêu cầu $a = \dfrac{25}{a} \iff a = 5$, mâu thuẫn với điều kiện $a \ge 6$.</p>
+        <p>Do $a \ge 6$, điểm rơi đạt tại biên $a = 6 \implies \dfrac{25}{a} = \dfrac{25}{6}$. Ta cần tìm số thực $k > 0$ sao cho tại $a = 6$, hạng tử $ka$ cân bằng với $\dfrac{25}{a}$:</p>
+        $$k \cdot 6 = \frac{25}{6} \implies k = \frac{25}{36}$$
+        <p>Tách biểu thức $P$ theo hệ số $k = \dfrac{25}{36}$:</p>
+        $$P = \left(\frac{25}{36}a + \frac{25}{a}\right) + \frac{11}{36}a$$
+        <p>Áp dụng AM — GM cho cặp số thứ nhất và đánh giá phần dư bằng giả thiết $a \ge 6$:</p>
+        $$P \ge 2\sqrt{\frac{25}{36}a \cdot \frac{25}{a}} + \frac{11}{36} \cdot 6 = 2 \cdot \frac{25}{6} + \frac{11}{6} = \frac{50}{6} + \frac{11}{6} = \frac{61}{6}$$
+        <p>Dấu bằng xảy ra khi $a = 6$ và $b = \dfrac{25}{6}$. Vậy $\min P = \dfrac{61}{6}$.</p>
+
+        <h3 style="margin-top: 24px;">Ví dụ 3</h3>
+        <p>Cho số thực $a \ge 2$.</p>
+        <p style="padding-left: 16px;">a) Tìm giá trị nhỏ nhất của $B = a + \dfrac{1}{a}$.</p>
+        <p style="padding-left: 16px;">b) Tìm giá trị nhỏ nhất của $A = a + \dfrac{1}{a^2}$.</p>
+
+        <p><b>Lời giải:</b></p>
+        <p><b>a) Xét biểu thức $B$:</b> Điểm rơi tại $a = 2 \implies \dfrac{1}{a} = \dfrac{1}{2}$. Ta ghép $\dfrac{a}{4}$ với $\dfrac{1}{a}$:</p>
+        $$B = \left(\frac{a}{4} + \frac{1}{a}\right) + \frac{3a}{4} \ge 2\sqrt{\frac{a}{4} \cdot \frac{1}{a}} + \frac{3 \cdot 2}{4} = 1 + \frac{3}{2} = \frac{5}{2}$$
+        <p>Dấu bằng xảy ra khi $a = 2$. Vậy $\min B = \dfrac{5}{2}$.</p>
+
+        <p><b>b) Xét biểu thức $A$:</b></p>
+        <div style="background: rgba(239, 68, 68, 0.06); border-left: 3px solid #ef4444; padding: 12px 16px; border-radius: 6px; margin: 12px 0;">
+            <p style="margin: 0; color: #ef4444; font-weight: 500;">
+                <b>Lỗi sai thường gặp:</b> Học sinh thường cân bằng hệ số $\dfrac{1}{a^2} = \dfrac{1}{4}$ tại $a = 2$, dẫn đến ghép $\dfrac{a}{8} + \dfrac{1}{a^2} \ge 2\sqrt{\dfrac{a}{8} \cdot \dfrac{1}{a^2}} = 2\sqrt{\dfrac{1}{8a}}$. Vế phải vẫn còn chứa biến $a$, không triệt tiêu thành hằng số!
+            </p>
+        </div>
+        <p><b>Khắc phục:</b> Để triệt tiêu mẫu $a^2$, ta cần tích của hai biến $a$ ở tử số. Do đó, phải tách thành tổng của <b>hai hạng tử bậc một</b> kết hợp với $\dfrac{1}{a^2}$ trong AM — GM 3 số:</p>
+        <p>Tại $a = 2 \implies \dfrac{1}{a^2} = \dfrac{1}{4}$. Ta cần $ka + ka + \dfrac{1}{a^2}$ với $ka = \dfrac{1}{4} \implies k \cdot 2 = \dfrac{1}{4} \implies k = \dfrac{1}{8}$.</p>
+        <p>Tách biểu thức $A$:</p>
+        $$A = \left(\frac{a}{8} + \frac{a}{8} + \frac{1}{a^2}\right) + \frac{3a}{4}$$
+        <p>Áp dụng AM — GM cho 3 số dương và đánh giá đại lượng dư:</p>
+        $$A \ge 3\sqrt[3]{\frac{a}{8} \cdot \frac{a}{8} \cdot \frac{1}{a^2}} + \frac{3 \cdot 2}{4} = 3\sqrt[3]{\frac{1}{64}} + \frac{3}{2} = \frac{3}{4} + \frac{6}{4} = \frac{9}{4}$$
+        <p>Dấu bằng xảy ra khi $a = 2$. Vậy $\min A = \dfrac{9}{4}$.</p>
+
+        <h3 style="margin-top: 24px;">Ví dụ 4</h3>
+        <p>Cho ba số thực dương $a, b, c > 0$ thỏa mãn điều kiện $a + 2b + 3c \ge 20$. Tìm giá trị nhỏ nhất của:</p>
+        $$A = a + b + c + \frac{3}{a} + \frac{9}{2b} + \frac{4}{c}$$
+
+        <p><b>Phân tích & Lời giải:</b></p>
+        <p>Dự đoán điểm rơi: Tại biên dấu bằng $a + 2b + 3c = 20$. Thử chọn nghiệm nguyên đẹp phù hợp với các hệ số ở mẫu số: $(a, b, c) = (2, 3, 4)$ thỏa mãn $2 + 2(3) + 3(4) = 2 + 6 + 12 = 20$.</p>
+        <p>Xác định các hệ số ghép cặp tại điểm rơi $(2, 3, 4)$:</p>
+        <ul style="padding-left: 20px; line-height: 1.7;">
+            <li>$\dfrac{3}{a} = \dfrac{3}{2} = k_1 a \implies k_1 \cdot 2 = \dfrac{3}{2} \implies k_1 = \dfrac{3}{4}$.</li>
+            <li>$\dfrac{9}{2b} = \dfrac{9}{2 \cdot 3} = \dfrac{3}{2} = k_2 b \implies k_2 \cdot 3 = \dfrac{3}{2} \implies k_2 = \dfrac{1}{2}$.</li>
+            <li>$\dfrac{4}{c} = \dfrac{4}{4} = 1 = k_3 c \implies k_3 \cdot 4 = 1 \implies k_3 = \dfrac{1}{4}$.</li>
+        </ul>
+        <p>Biểu diễn lại biểu thức $A$:</p>
+        $$A = \left(\frac{3}{4}a + \frac{3}{a}\right) + \left(\frac{1}{2}b + \frac{9}{2b}\right) + \left(\frac{1}{4}c + \frac{4}{c}\right) + \left(\frac{1}{4}a + \frac{1}{2}b + \frac{3}{4}c\right)$$
+        <p>Đặc biệt lưu ý phần dư hoàn toàn tỉ lệ thuận với giả thiết:</p>
+        $$\frac{1}{4}a + \frac{1}{2}b + \frac{3}{4}c = \frac{1}{4}\left(a + 2b + 3c\right) \ge \frac{1}{4} \cdot 20 = 5$$
+        <p>Áp dụng AM — GM cho từng cặp số:</p>
+        $$A \ge 2\sqrt{\frac{3}{4}a \cdot \frac{3}{a}} + 2\sqrt{\frac{1}{2}b \cdot \frac{9}{2b}} + 2\sqrt{\frac{1}{4}c \cdot \frac{4}{c}} + 5$$
+        $$A \ge 2 \cdot \frac{3}{2} + 2 \cdot \frac{3}{2} + 2 \cdot 1 + 5 = 3 + 3 + 2 + 5 = 13$$
+        <p>Dấu bằng xảy ra khi $a = 2, b = 3, c = 4$. Vậy $\min A = 13$.</p>
+
+        <!-- ========================================================================= -->
+        <!-- PHẦN III: KỸ THUẬT GHÉP CẶP ĐỐI XỨNG VÀ HOÁN VỊ -->
+        <!-- ========================================================================= -->
+        <h2 style="text-align: left !important; font-size: 1.25rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 36px;">III. Kỹ Thuật Ghép Cặp Đối Xứng & Hoán Vị</h2>
+
+        <p>Khi các biến số trong bất đẳng thức có vai trò bình đẳng hoặc hoán vị vòng quanh, ta thường ghép các số hạng theo từng cặp đôi hoặc bộ ba để triệt tiêu lẫn nhau hoặc làm xuất hiện tổng đối xứng sau khi cộng/nhân theo vế.</p>
+
+        <h3 style="margin-top: 24px;">Ví dụ 5</h3>
+        <p>Cho ba số thực $a, b, c \ge 0$. Chứng minh rằng:</p>
+        $$a^2 + b^2 + c^2 \ge ab + bc + ca$$
+
+        <p><b>Lời giải:</b></p>
+        <p>Áp dụng AM — GM cho từng cặp biến:</p>
+        $$a^2 + b^2 \ge 2ab, \quad b^2 + c^2 \ge 2bc, \quad c^2 + a^2 \ge 2ca$$
+        <p>Cộng vế theo vế ba bất đẳng thức trên:</p>
+        $$2(a^2 + b^2 + c^2) \ge 2(ab + bc + ca) \iff a^2 + b^2 + c^2 \ge ab + bc + ca$$
+        <p>Đẳng thức xảy ra khi và chỉ khi $a = b = c$.</p>
+        <div style="background: rgba(92, 225, 230, 0.05); border-left: 3px solid var(--accent-cyan); padding: 10px 16px; border-radius: 4px; margin: 10px 0;">
+            <p style="margin: 0; font-style: italic; color: var(--text-dark);">
+                <b>Lưu ý sư phạm:</b> Hạn chế chia biến số nếu chưa biết dấu của biến. Trong bài toán trên, ta nhân đôi và chia cho số dương 2, hoàn toàn chặt chẽ.
+            </p>
+        </div>
+
+        <h3 style="margin-top: 24px;">Ví dụ 6</h3>
+        <p>Cho ba số thực dương $a, b, c > 0$. Chứng minh rằng:</p>
+        $$\frac{ab}{c} + \frac{bc}{a} + \frac{ca}{b} \ge a + b + c$$
+
+        <p><b>Lời giải:</b></p>
+        <p>Nhận thấy ở mỗi phân thức, tích ở tử có hai biến và mẫu có biến còn lại. Ghép từng cặp phân thức có chung một biến ở tử:</p>
+        $$\frac{ab}{c} + \frac{bc}{a} \ge 2\sqrt{\frac{ab}{c} \cdot \frac{bc}{a}} = 2\sqrt{b^2} = 2b$$
+        $$\frac{bc}{a} + \frac{ca}{b} \ge 2\sqrt{\frac{bc}{a} \cdot \frac{ca}{b}} = 2\sqrt{c^2} = 2c$$
+        $$\frac{ca}{b} + \frac{ab}{c} \ge 2\sqrt{\frac{ca}{b} \cdot \frac{ab}{c}} = 2\sqrt{a^2} = 2a$$
+        <p>Cộng vế theo vế ba bất đẳng thức trên:</p>
+        $$2\left(\frac{ab}{c} + \frac{bc}{a} + \frac{ca}{b}\right) \ge 2(a + b + c) \iff \frac{ab}{c} + \frac{bc}{a} + \frac{ca}{b} \ge a + b + c$$
+        <p>Đẳng thức xảy ra khi và chỉ khi $a = b = c$.</p>
+
+        <h3 style="margin-top: 24px;">Ví dụ 7</h3>
+        <p>Cho $a, b, c$ là độ dài ba cạnh của một tam giác. Chứng minh rằng:</p>
+        $$(a + b - c)(b + c - a)(c + a - b) \le abc$$
+
+        <p><b>Lời giải:</b></p>
+        <p>Theo bất đẳng thức tam giác, cả ba thừa số đều là số thực dương: $x = a + b - c > 0$, $y = b + c - a > 0$, $z = c + a - b > 0$.</p>
+        <p>Áp dụng bất đẳng thức AM — GM dạng $xy \le \left(\dfrac{x+y}{2}\right)^2$ cho từng cặp:</p>
+        $$(a + b - c)(b + c - a) \le \left[\frac{(a+b-c) + (b+c-a)}{2}\right]^2 = \left(\frac{2b}{2}\right)^2 = b^2$$
+        $$(b + c - a)(c + a - b) \le \left[\frac{(b+c-a) + (c+a-b)}{2}\right]^2 = \left(\frac{2c}{2}\right)^2 = c^2$$
+        $$(c + a - b)(a + b - c) \le \left[\frac{(c+a-b) + (a+b-c)}{2}\right]^2 = \left(\frac{2a}{2}\right)^2 = a^2$$
+        <p>Nhân vế theo vế ba bất đẳng thức trên (do hai vế đều dương):</p>
+        $$\left[ (a + b - c)(b + c - a)(c + a - b) \right]^2 \le a^2 b^2 c^2 = (abc)^2$$
+        <p>Lấy căn bậc hai hai vế, ta thu được điều phải chứng minh:</p>
+        $$(a + b - c)(b + c - a)(c + a - b) \le abc$$
+        <p>Đẳng thức xảy ra khi và chỉ khi $a = b = c$ (tam giác đều).</p>
+        <div style="background: rgba(92, 225, 230, 0.05); border-left: 3px solid var(--accent-cyan); padding: 12px 16px; border-radius: 6px; margin: 12px 0;">
+            <p style="margin: 0; line-height: 1.6;">
+                <b>Mở rộng cho số thực dương tùy ý:</b> Nếu $a, b, c > 0$ không nhất thiết là ba cạnh tam giác, giả sử $a + b - c \le 0$ thì $c \ge a + b > a$ và $c > b$, dẫn đến $b + c - a > 0$ và $a + c - b > 0$. Khi đó vế trái $\le 0 < abc = \text{VP}$, bất đẳng thức luôn đúng hiển nhiên!<br>
+                <b>Liên hệ Bất đẳng thức Schur:</b> Biểu thức trên sau khi khai triển chính là dạng quen thuộc của BĐT Schur bậc ba $a^3 + b^3 + c^3 + 3abc \ge ab(a+b) + bc(b+c) + ca(c+a)$, hay dạng tổng quát:
+                $$a^k(a-b)(a-c) + b^k(b-c)(b-a) + c^k(c-a)(c-b) \ge 0 \quad (k > 0)$$
+                rất phổ biến trong kỹ thuật đổi biến $p = a+b+c, q = ab+bc+ca, r = abc$.
+            </p>
+        </div>
+
+        <h3 style="margin-top: 24px;">Ví dụ 8</h3>
+        <p>Cho ba số thực dương $a, b, c > 0$. Chứng minh rằng:</p>
+        $$\frac{a}{b} + \frac{b}{c} + \frac{c}{a} \ge \frac{a+b+c}{\sqrt[3]{abc}}$$
+
+        <p><b>Phân tích & Lời giải:</b></p>
+        <p>Nếu ghép cặp hai số $\dfrac{a}{b} + \dfrac{b}{c} \ge 2\sqrt{\dfrac{a}{c}}$, ta không thể tạo ra căn bậc ba $\sqrt[3]{abc}$ ở mẫu.</p>
+        <p>Quan sát tỉ số ở vế phải: $\dfrac{a}{\sqrt[3]{abc}} = \sqrt[3]{\dfrac{a^3}{abc}} = \sqrt[3]{\dfrac{a^2}{bc}}$.</p>
+        <p>Để tạo ra $a^2$ ở tử và $bc$ ở mẫu, ta cần nhân <b>hai số hạng $\dfrac{a}{b}$</b> với <b>một số hạng $\dfrac{b}{c}$</b> trong bất đẳng thức AM — GM cho 3 số:</p>
+        $$\frac{a}{b} + \frac{a}{b} + \frac{b}{c} \ge 3\sqrt[3]{\frac{a}{b} \cdot \frac{a}{b} \cdot \frac{b}{c}} = 3\sqrt[3]{\frac{a^2}{bc}} = 3 \cdot \frac{a}{\sqrt[3]{abc}}$$
+        <p>Thiết lập tương tự cho hai bộ ba còn lại theo nguyên lý hoán vị vòng quanh:</p>
+        $$\frac{b}{c} + \frac{b}{c} + \frac{c}{a} \ge 3\sqrt[3]{\frac{b^2}{ca}} = 3 \cdot \frac{b}{\sqrt[3]{abc}}$$
+        $$\frac{c}{a} + \frac{c}{a} + \frac{a}{b} \ge 3\sqrt[3]{\frac{c^2}{ab}} = 3 \cdot \frac{c}{\sqrt[3]{abc}}$$
+        <p>Cộng vế theo vế ba bất đẳng thức trên:</p>
+        $$3\left(\frac{a}{b} + \frac{b}{c} + \frac{c}{a}\right) \ge 3 \cdot \frac{a+b+c}{\sqrt[3]{abc}} \iff \frac{a}{b} + \frac{b}{c} + \frac{c}{a} \ge \frac{a+b+c}{\sqrt[3]{abc}}$$
+        <p>Đẳng thức xảy ra khi và chỉ khi $a = b = c$.</p>
+        <p><i>Hệ quả:</i> Khi $abc = 1$, ta có ngay bài toán kinh điển: $\dfrac{a}{b} + \dfrac{b}{c} + \dfrac{c}{a} \ge a + b + c$.</p>
+
+        <!-- ========================================================================= -->
+        <!-- PHẦN IV: KỸ THUẬT AM-GM NGƯỢC DẤU -->
+        <!-- ========================================================================= -->
+        <h2 style="text-align: left !important; font-size: 1.25rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 36px;">IV. Kỹ Thuật AM — GM Ngược Dấu</h2>
+
+        <p>Kỹ thuật AM — GM ngược dấu (Reverse AM — GM) là một trong những phương pháp biến đổi đại số đẹp mắt và hiệu quả nhất để giải quyết các bài toán bất đẳng thức phân thức trong đề thi Chuyên Toán.</p>
+
+        <div style="background: rgba(92, 225, 230, 0.05); border-left: 3px solid var(--accent-cyan); padding: 14px 18px; border-radius: 6px; margin: 18px 0;">
+            <p style="margin: 0; line-height: 1.7;">
+                <b>Khi nào cần dùng AM — GM ngược dấu?</b><br>
+                Khi biểu thức cần tìm giá trị nhỏ nhất (hoặc chứng minh $P \ge C$), nhưng mẫu số lại có dạng $B = 1 + x^2$ hoặc $x + y^2$.<br>
+                Nếu đánh giá AM — GM thuận chiều trực tiếp dưới mẫu: $B = 1 + x^2 \ge 2x \implies \dfrac{1}{B} \le \dfrac{1}{2x}$, bất đẳng thức bị <b>ngược dấu</b> hoàn toàn so với yêu cầu $\ge$.<br><br>
+                <b>Nguyên tắc xử lý:</b> Dùng phép trừ đại số để đẩy dấu trừ ra trước phân thức:
+                $$\frac{A}{B} = \frac{mB - N}{B} = m - \frac{N}{B} \quad (N > 0)$$
+                Khi đó, áp dụng AM — GM cho mẫu $B \ge K > 0$ sẽ làm:
+                $$\frac{N}{B} \le \frac{N}{K} \implies -\frac{N}{B} \ge -\frac{N}{K} \implies \frac{A}{B} \ge m - \frac{N}{K}$$
+                Dấu bất đẳng thức được đảo ngược trở lại đúng chiều mong muốn!
+            </p>
+        </div>
+
+        <h3 style="margin-top: 24px;">Ví dụ 9</h3>
+        <p>Cho hai số thực dương $a, b > 0$ thỏa mãn $a + b \le 2$. Tìm giá trị nhỏ nhất của biểu thức:</p>
+        $$P = \frac{1}{1 + a^2} + \frac{1}{1 + b^2}$$
+
+        <p><b>Phân tích & Lời giải:</b></p>
+        <p>Dự đoán điểm rơi tại $a = b = 1$.</p>
+        <p>Nếu đánh giá trực tiếp mẫu: $1 + a^2 \ge 2a \implies \dfrac{1}{1 + a^2} \le \dfrac{1}{2a}$, bị ngược dấu.</p>
+        <p>Áp dụng kỹ thuật AM — GM ngược dấu bằng cách thêm bớt ở tử số:</p>
+        $$\frac{1}{1 + a^2} = \frac{1 + a^2 - a^2}{1 + a^2} = 1 - \frac{a^2}{1 + a^2}$$
+        <p>Đến đây, áp dụng AM — GM cho mẫu số của phân thức bị trừ:</p>
+        $$1 + a^2 \ge 2a > 0 \implies \frac{a^2}{1 + a^2} \le \frac{a^2}{2a} = \frac{a}{2}$$
+        <p>Nhân $(-1)$ vào hai vế và cộng thêm 1:</p>
+        $$1 - \frac{a^2}{1 + a^2} \ge 1 - \frac{a}{2} \iff \frac{1}{1 + a^2} \ge 1 - \frac{a}{2}$$
+        <p>Thiết lập hoàn toàn tương tự cho biến $b$:</p>
+        $$\frac{1}{1 + b^2} \ge 1 - \frac{b}{2}$$
+        <p>Cộng hai bất đẳng thức trên:</p>
+        $$P \ge \left(1 - \frac{a}{2}\right) + \left(1 - \frac{b}{2}\right) = 2 - \frac{a + b}{2}$$
+        <p>Kết hợp với giả thiết $a + b \le 2 \implies -\dfrac{a+b}{2} \ge -1$, ta có:</p>
+        $$P \ge 2 - 1 = 1$$
+        <p>Dấu bằng xảy ra khi $\begin{cases} a = b \\ a + b = 2 \end{cases} \iff a = b = 1$. Vậy $\min P = 1$.</p>
+
+        <h3 style="margin-top: 24px;">Mô hình mở rộng</h3>
+        <p>Kỹ thuật AM — GM ngược dấu thường xuyên xuất hiện dưới dạng phân thức chứa biến ở tử:</p>
+        <div style="background: rgba(92, 225, 230, 0.05); border-left: 3px solid var(--accent-cyan); padding: 14px 18px; border-radius: 6px; margin: 14px 0;">
+            <p style="margin: 0; line-height: 1.7;">
+                <b>Dạng 1: Tử bậc một, mẫu bậc hai</b>
+                $$\frac{a}{1 + b^2} = \frac{a(1 + b^2) - ab^2}{1 + b^2} = a - \frac{ab^2}{1 + b^2} \ge a - \frac{ab^2}{2b} = a - \frac{ab}{2}$$
+                <b>Dạng 2: Tử bậc năm, mẫu bậc ba </b>
+                $$\frac{a^5}{b^3 + 1} = \frac{a^5(b^3 + 1) - a^5 b^3}{b^3 + 1} = a^5 - \frac{a^5 b^3}{b^3 + 1} \ge a^5 - \frac{a^5 b^3}{2\sqrt{b^3}} = a^5 - \frac{1}{2}a^5 b^{3/2}$$
+                hoặc ghép với hằng số để hạ bậc trực tiếp.
+            </p>
+        </div>
+        <p>Sau khi triệt tiêu mẫu số, các phân thức phức tạp được chuyển hóa hoàn toàn về dạng đa thức bậc thấp ở tử số, giúp ta dễ dàng kết hợp với giả thiết tổng $a + b + c$ hoặc $ab + bc + ca$.</p>
+
+        <!-- ========================================================================= -->
+        <!-- PHẦN TỔNG KẾT & ĐIỀU HƯỚNG BÀI TẬP -->
+        <!-- ========================================================================= -->
+        <div style="background: rgba(201, 169, 110, 0.08); border: 1px solid rgba(201, 169, 110, 0.25); border-radius: 8px; padding: 20px 24px; margin: 40px 0 20px 0; text-align: center;">
+            <h3 style="color: var(--accent-gold); margin-top: 0; font-size: 1.2rem;">Luyện Tập Ngay Hệ Thống Bài Tập Tuyển Chọn</h3>
+            <p style="margin: 10px 0 16px 0; line-height: 1.6;">
+                Bạn đã nắm vững lý thuyết nền tảng, ý nghĩa hình học và các kỹ thuật cốt lõi của Bất đẳng thức AM — GM. Bây giờ hãy bước sang phần thực chiến với 18 bài toán phân hóa chuyên sâu từ cơ bản đến nâng cao.
+            </p>
+            <a href="/posts/math/thcs/dai-so/bat-dang-thuc-am-gm.html" style="display: inline-block; padding: 10px 24px; background: var(--accent-cyan); color: #000; font-weight: 700; border-radius: 6px; text-decoration: none; box-shadow: 0 4px 14px rgba(92, 225, 230, 0.3); transition: transform 0.2s ease;">
+                Xem Bài Tập 4.2: Bất Đẳng Thức AM — GM (18 Bài Tuyển Chọn) →
+            </a>
+        </div>
+
+        <p class="exam-end" style="text-align: center; color: var(--smp-header-text-muted); letter-spacing: 4px; margin: 45px 0 20px 0; font-weight: bold;">─── HẾT BÀI GIẢNG 4.1 ───</p>
+    </div>
+</body>
+</html>
