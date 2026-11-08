@@ -627,8 +627,9 @@
             /* --- GỢI Ý TỰ ĐỘNG (AUTOCOMPLETE POPUP) --- */
             .smp-autocomplete-popup {
                 position: absolute;
-                top: 40px;
-                left: 10px;
+                top: 0;
+                left: 0;
+                min-width: 220px;
                 max-width: 380px;
                 max-height: 200px;
                 overflow-y: auto;
@@ -1925,6 +1926,90 @@
     }
 
     /**
+     * Tính toán vị trí con trỏ (Caret) trong Textarea để neo popup
+     */
+    function getCaretCoordinates(element, position) {
+        const mirror = document.createElement('div');
+        const computed = window.getComputedStyle(element);
+
+        mirror.style.position = 'fixed';
+        mirror.style.top = '-9999px';
+        mirror.style.left = '-9999px';
+        mirror.style.visibility = 'hidden';
+        mirror.style.whiteSpace = 'pre-wrap';
+        mirror.style.wordWrap = 'break-word';
+        mirror.style.overflowWrap = 'break-word';
+        mirror.style.boxSizing = computed.boxSizing;
+        mirror.style.width = computed.width;
+        mirror.style.padding = computed.padding;
+        mirror.style.border = computed.border;
+        mirror.style.fontFamily = computed.fontFamily;
+        mirror.style.fontSize = computed.fontSize;
+        mirror.style.fontWeight = computed.fontWeight;
+        mirror.style.lineHeight = computed.lineHeight;
+        mirror.style.letterSpacing = computed.letterSpacing;
+        mirror.style.tabSize = computed.tabSize;
+
+        mirror.textContent = element.value.substring(0, position);
+        const span = document.createElement('span');
+        span.textContent = element.value.substring(position, position + 1) || ' ';
+        mirror.appendChild(span);
+
+        document.body.appendChild(mirror);
+
+        const left = span.offsetLeft;
+        const top = span.offsetTop;
+        const height = span.offsetHeight || parseInt(computed.lineHeight) || 20;
+
+        document.body.removeChild(mirror);
+
+        return { left, top, height };
+    }
+
+    /**
+     * Định vị popup gợi ý lệnh ngay sát bên dưới (hoặc trên) vị trí con trỏ đang gõ
+     */
+    function positionAutocompletePopup(textarea, popupEl) {
+        if (!textarea || !popupEl) return;
+        if (popupEl.parentElement !== textarea.parentElement) {
+            textarea.parentElement.appendChild(popupEl);
+        }
+
+        const cur = textarea.selectionStart;
+        const coords = getCaretCoordinates(textarea, cur);
+
+        const caretVisualTop = coords.top - textarea.scrollTop;
+        const caretVisualLeft = coords.left - textarea.scrollLeft;
+
+        const baseTop = textarea.offsetTop;
+        const baseLeft = textarea.offsetLeft;
+        const editorWidth = textarea.clientWidth;
+        const editorHeight = textarea.clientHeight;
+        const popupWidth = popupEl.offsetWidth || 260;
+        const popupHeight = popupEl.offsetHeight || 130;
+
+        let left = baseLeft + caretVisualLeft;
+        let top = baseTop + caretVisualTop + coords.height + 4;
+
+        // Tránh tràn viền bên phải
+        if (left + popupWidth > baseLeft + editorWidth - 10) {
+            left = Math.max(baseLeft + 10, baseLeft + editorWidth - popupWidth - 10);
+        }
+        if (left < baseLeft + 10) left = baseLeft + 10;
+
+        // Tránh tràn đáy textarea: Lật lên trên con trỏ nếu ở gần cuối
+        if (top + popupHeight > baseTop + editorHeight - 10) {
+            const aboveTop = baseTop + caretVisualTop - popupHeight - 4;
+            if (aboveTop >= baseTop) {
+                top = aboveTop;
+            }
+        }
+
+        popupEl.style.left = `${Math.round(left)}px`;
+        popupEl.style.top = `${Math.round(top)}px`;
+    }
+
+    /**
      * Quản lý Autocomplete Hint khi gõ \
      */
     function handleAutocompleteInput(textarea, popupEl) {
@@ -1950,6 +2035,7 @@
         activeHintIndex = 0;
         renderHintList(popupEl);
         popupEl.classList.add('show');
+        positionAutocompletePopup(textarea, popupEl);
     }
 
     function renderHintList(popupEl) {
@@ -2184,6 +2270,12 @@
             });
 
             // Xử lý phím mũi tên & Enter cho Autocomplete & Tự đóng ngoặc
+            composeInput.addEventListener('scroll', () => {
+                if (autocompletePopup && autocompletePopup.classList.contains('show')) {
+                    positionAutocompletePopup(composeInput, autocompletePopup);
+                }
+            });
+
             composeInput.addEventListener('keydown', (e) => {
                 if (autocompletePopup && autocompletePopup.classList.contains('show') && filteredHints.length > 0) {
                     if (e.key === 'ArrowDown') {
