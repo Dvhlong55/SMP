@@ -1137,7 +1137,7 @@
 
         // Bổ sung chuẩn hóa tốc ký toán học:
         // Vectơ
-        s = s.replace(/\b(?:vecto|vt|vec)\s*\(\s*([A-Za-z0-9_']+)\s*\)/gi, '\\vec{$1}');
+        s = s.replace(/(?:\\(?=vec)|(?<!\\)\b(?:vecto|vt|vec))\s*\(\s*([A-Za-z0-9_']+)\s*\)/gi, '\\vec{$1}');
         s = s.replace(/(?<![\\a-zA-Z])vt\s+([A-Z]{2})\b/g, '\\vec{$1}');
 
         // Góc
@@ -1176,8 +1176,8 @@
         s = s.replace(/(?<![\\a-zA-Z])delta(?![a-zA-Z])/g, '\\delta');
 
         // Chuẩn hóa sqrt{...} hoặc căn{...} thành \sqrt{...} TRƯỚC KHI escapeSetBraces
-        s = s.replace(/(?:(?<=\\)sqrt|(?<!\\)\bsqrt|căn|can)\s*\{([^{}]+)\}/gi, '\\sqrt{$1}');
-        s = s.replace(/(?:(?<=\\)cbrt|(?<!\\)\bcbrt)\s*\{([^{}]+)\}/gi, '\\sqrt[3]{$1}');
+        s = s.replace(/(?<!\\)\b(?:sqrt|căn|can)\s*\{([^{}]+)\}/gi, '\\sqrt{$1}');
+        s = s.replace(/(?<!\\)\b(?:cbrt)\s*\{([^{}]+)\}/gi, '\\sqrt[3]{$1}');
 
 
         s = s.replace(/`([^`\n]+)`/g, '$1');
@@ -1467,6 +1467,9 @@
 
         s = s.replace(/([0-9a-zA-Z\)\}'])\s*,\s*(?=[0-9a-zA-Z\\])/g, '$1, ');
 
+        // Khử triệt để lỗi vô tình nhân đôi dấu gạch chéo trước tên lệnh (\\sqrt -> \sqrt)
+        s = s.replace(/\\\\([a-zA-Z]+)/g, '\\$1');
+
         return s;
     }
 
@@ -1480,6 +1483,8 @@
 
         // Bỏ ký tự gạch chéo ngược đứng đơn độc ở cuối chuỗi gây lỗi cú pháp KaTeX
         s = s.replace(/(?<!\\)\\$/, '');
+        // Khử lỗi \\cmd thành \cmd tránh KaTeX hiểu nhầm thành ngắt dòng gây gián đoạn
+        s = s.replace(/\\\\([a-zA-Z]+)/g, '\\$1');
 
         // 1. Cân bằng dấu ngoặc nhọn { và } (bỏ qua \{ và \})
         let openBraces = 0;
