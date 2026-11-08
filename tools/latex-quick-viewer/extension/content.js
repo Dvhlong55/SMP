@@ -28,8 +28,7 @@
     let filteredHints = [];
     let currentEditorTarget = null; // Textarea đang nhận autocomplete
     let currentTranslateRawText = ''; // Lưu vết văn bản gốc để tái biên dịch tức thì khi đổi model
-    let currentModelPreference = 'max'; // 'max' (mặc định) | 'min'
-
+    
     // Danh sách gợi ý lệnh quen thuộc chuẩn SMP LaTeX Editor
     const LATEX_SNIPPETS = [
         { text: "\\frac{}{}", displayText: "\\frac{}{} — Phân số", offset: 3 },
@@ -819,39 +818,7 @@
                 align-items: center;
                 gap: 8px;
             }
-            /* Thiết kế bộ chọn Model AI kiểu Segmented Pill */
-            .smp-model-pill {
-                display: inline-flex;
-                align-items: center;
-                background: rgba(255, 255, 255, 0.06);
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                border-radius: 14px;
-                padding: 2px;
-                gap: 2px;
-            }
-            .smp-model-btn {
-                background: transparent;
-                border: none;
-                color: #94a3b8;
-                font-size: 11px;
-                font-weight: 600;
-                padding: 2px 10px;
-                border-radius: 10px;
-                cursor: pointer;
-                transition: all 0.2s ease;
-                line-height: 1.3;
-                letter-spacing: 0.3px;
-                font-family: inherit;
-            }
-            .smp-model-btn.active {
-                background: #0ea5e9;
-                color: #ffffff;
-                box-shadow: 0 1px 4px rgba(14, 165, 233, 0.4);
-            }
-            .smp-model-btn:hover:not(.active) {
-                color: #e2e8f0;
-                background: rgba(255, 255, 255, 0.08);
-            }
+            
             .smp-footer-actions {
                 display: flex;
                 align-items: center;
@@ -1062,22 +1029,7 @@
                 background: #f8fafc;
                 border-top-color: #e2e8f0;
             }
-            .smp-dialog.light-theme .smp-model-pill {
-                background: #e2e8f0;
-                border-color: #cbd5e1;
-            }
-            .smp-dialog.light-theme .smp-model-btn {
-                color: #64748b;
-            }
-            .smp-dialog.light-theme .smp-model-btn.active {
-                background: #009eb3;
-                color: #ffffff;
-                box-shadow: 0 1px 4px rgba(0, 158, 179, 0.3);
-            }
-            .smp-dialog.light-theme .smp-model-btn:hover:not(.active) {
-                color: #0f172a;
-                background: #f1f5f9;
-            }
+            
             .smp-dialog.light-theme .smp-action-btn {
                 background: rgba(0, 158, 179, 0.09);
                 border-color: rgba(0, 158, 179, 0.3);
@@ -1277,11 +1229,7 @@
 
                     <div class="smp-footer">
                         <div class="smp-footer-left">
-                            <div class="smp-model-pill" id="smp-model-pill" title="Chuyển đổi mô hình nhận diện LaTeX (Max: Micro-AI v5.0 | Min: Heuristic rút gọn)">
-                                <button type="button" class="smp-model-btn active" id="smp-model-btn-max" data-model="max">Max</button>
-                                <button type="button" class="smp-model-btn" id="smp-model-btn-min" data-model="min">Min</button>
                             </div>
-                        </div>
                         <div class="smp-footer-actions">
                             <button class="smp-action-btn btn-primary" id="smp-btn-insert" title="Chèn vào bình luận (Ctrl+Enter)">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
@@ -1300,7 +1248,7 @@
             root.appendChild(backdrop);
             bindModalEvents(backdrop);
             initThemePreference(backdrop);
-            initModelPreference(backdrop);
+            // Model pill removed for clean UI
         }
         return backdrop;
     }
@@ -1348,75 +1296,6 @@
             });
         }
     }
-
-    /**
-     * Khởi tạo và quản lý chuyển đổi Model AI (Max / Min)
-     */
-    function applyModelPreference(backdrop, model) {
-        currentModelPreference = model === 'min' ? 'min' : 'max';
-        if (window.SMPNormalizer && typeof window.SMPNormalizer.setModel === 'function') {
-            window.SMPNormalizer.setModel(currentModelPreference);
-        }
-        localStorage.setItem('smp_latex_model', currentModelPreference);
-        if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
-            chrome.storage.local.set({ smp_latex_model: currentModelPreference });
-        }
-
-        const btnMax = backdrop.querySelector('#smp-model-btn-max');
-        const btnMin = backdrop.querySelector('#smp-model-btn-min');
-        if (btnMax && btnMin) {
-            if (currentModelPreference === 'min') {
-                btnMin.classList.add('active');
-                btnMax.classList.remove('active');
-            } else {
-                btnMax.classList.add('active');
-                btnMin.classList.remove('active');
-            }
-        }
-
-        // Tái biên dịch realtime văn bản hiện hành nếu đang mở
-        if (currentTranslateRawText) {
-            const normalized = window.SMPNormalizer ? 
-                window.SMPNormalizer.normalizeMathText(currentTranslateRawText, currentModelPreference) : 
-                { cleanLatex: currentTranslateRawText, mathCount: 1 };
-
-            const translateView = backdrop.querySelector('#smp-translate-view');
-            const rawTextarea = backdrop.querySelector('#smp-raw-textarea');
-            if (rawTextarea) rawTextarea.value = normalized.cleanLatex;
-            if (translateView) renderLatexContent(translateView, normalized.cleanLatex);
-        }
-    }
-
-    function initModelPreference(backdrop) {
-        const savedModel = localStorage.getItem('smp_latex_model') || 'max';
-        applyModelPreference(backdrop, savedModel);
-
-        if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
-            chrome.storage.local.get(['smp_latex_model'], (res) => {
-                if (res && res.smp_latex_model) {
-                    applyModelPreference(backdrop, res.smp_latex_model);
-                }
-            });
-        }
-
-        const btnMax = backdrop.querySelector('#smp-model-btn-max');
-        const btnMin = backdrop.querySelector('#smp-model-btn-min');
-        if (btnMax) {
-            btnMax.addEventListener('click', (e) => {
-                e.stopPropagation();
-                applyModelPreference(backdrop, 'max');
-                showToast(backdrop, 'Đã chuyển sang mô hình Max (AI v5.0)');
-            });
-        }
-        if (btnMin) {
-            btnMin.addEventListener('click', (e) => {
-                e.stopPropagation();
-                applyModelPreference(backdrop, 'min');
-                showToast(backdrop, 'Đã chuyển sang mô hình Min (Heuristic)');
-            });
-        }
-    }
-
 
     /**
      * Hiển thị thông báo Toast
@@ -1948,7 +1827,7 @@
 
         currentTranslateRawText = rawText || '';
         const normalized = window.SMPNormalizer ? 
-            window.SMPNormalizer.normalizeMathText(currentTranslateRawText, currentModelPreference) : 
+            window.SMPNormalizer.normalizeMathText(currentTranslateRawText) : 
             { cleanLatex: currentTranslateRawText, mathCount: 1 };
 
         const translateView = root.querySelector('#smp-translate-view');
