@@ -770,66 +770,36 @@ body:not(.dark-mode) .guide-header {
 }
 
 /* ========================================================
-   SMP Extension Showcase & Advertising Section
+   SMP Extension Showcase — Minimal & Clean
    ======================================================== */
 
 .extension-showcase-section {
-    margin: 32px 0 40px 0;
+    margin: 20px 0 36px 0;
 }
 
-.showcase-header {
-    text-align: center;
-    margin-bottom: 24px;
-}
-
-.showcase-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.55rem;
-    color: var(--exam-title-color);
-    margin: 0 0 8px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.showcase-subtitle {
-    font-size: 0.92rem;
-    color: var(--text-muted);
-    max-width: 680px;
-    margin: 0 auto;
-    line-height: 1.5;
-}
-
-/* Tabs switcher */
+/* Tabs switcher: chỉ Ví dụ 1, Ví dụ 2, Ví dụ 3 */
 .showcase-tabs {
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 24px;
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
 .showcase-tab {
     background: var(--pane-bg);
     border: 1px solid var(--border-light);
     color: var(--text-muted);
-    padding: 9px 18px;
-    border-radius: 24px;
+    padding: 7px 18px;
+    border-radius: 8px;
     font-family: inherit;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     font-weight: 500;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.22s ease;
+    transition: all 0.2s ease;
 }
 
 .showcase-tab:hover {
     color: var(--exam-title-color);
     border-color: var(--accent-cyan);
-    background: var(--btn-hover);
 }
 
 .showcase-tab.active {
@@ -837,38 +807,23 @@ body:not(.dark-mode) .guide-header {
     border-color: var(--accent-cyan);
     color: var(--accent-cyan);
     font-weight: 600;
-    box-shadow: 0 2px 10px rgba(92, 225, 230, 0.15);
-}
-
-.tab-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    padding: 2px 7px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.08);
-}
-
-.showcase-tab.active .tab-badge {
-    background: var(--accent-cyan);
-    color: #0b1111;
-    font-weight: 700;
 }
 
 /* Panels */
 .showcase-panel {
     display: none;
-    animation: fadeIn 0.3s ease-out forwards;
+    animation: fadeIn 0.25s ease-out forwards;
 }
 
 .showcase-panel.active {
     display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 24px;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 20px;
     align-items: stretch;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(4px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -876,79 +831,25 @@ body:not(.dark-mode) .guide-header {
 .mock-comment-card {
     background: var(--pane-bg);
     border: 1px solid var(--pane-border);
-    border-radius: 14px;
-    padding: 22px;
+    border-radius: 10px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-    position: relative;
-}
-
-.comment-card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border-light);
-}
-
-.user-avatar {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #0ea5e9, #6366f1);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 0.85rem;
-    flex-shrink: 0;
-}
-
-.comment-meta {
-    flex: 1;
-}
-
-.comment-user-name {
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: var(--exam-bold-color);
-    margin-bottom: 2px;
-}
-
-.comment-source-tag {
-    font-size: 0.76rem;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.source-badge {
-    display: inline-block;
-    padding: 1px 6px;
-    border-radius: 3px;
-    background: rgba(24, 119, 242, 0.15);
-    color: #3b82f6;
-    font-weight: 600;
-    font-size: 0.68rem;
 }
 
 .comment-raw-text {
-    font-family: 'JetBrains Mono', 'Segoe UI', monospace;
-    font-size: 0.86rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.84rem;
     line-height: 1.6;
     color: var(--exam-text-color);
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid var(--border-light);
-    border-radius: 8px;
-    padding: 16px;
+    border-radius: 6px;
+    padding: 14px;
     white-space: pre-wrap;
     word-break: break-word;
-    margin: 0 0 16px 0;
+    margin: 0;
     flex: 1;
 }
 
@@ -956,195 +857,70 @@ body:not(.dark-mode) .comment-raw-text {
     background: #f1f5f9;
 }
 
-.comment-action-hint {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 14px;
-    border-radius: 8px;
-    background: rgba(92, 225, 230, 0.08);
-    border: 1px dashed rgba(92, 225, 230, 0.3);
-    font-size: 0.82rem;
-    color: var(--accent-cyan);
-    font-weight: 500;
-}
-
-.comment-action-hint kbd {
-    background: rgba(255, 255, 255, 0.12);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--exam-title-color);
-    font-weight: 600;
-}
-
-/* Cột phải: Mock Extension Window Preview */
+/* Cột phải: Image Preview */
 .mock-extension-preview {
     background: var(--pane-bg);
     border: 1px solid var(--pane-border);
-    border-radius: 14px;
+    border-radius: 10px;
     overflow: hidden;
     display: flex;
-    flex-direction: column;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
-}
-
-.extension-window-header {
-    background: rgba(0, 0, 0, 0.25);
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--pane-border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-body:not(.dark-mode) .extension-window-header {
-    background: #f1f5f9;
-}
-
-.window-dots {
-    display: flex;
-    gap: 6px;
-}
-
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-}
-
-.dot.red { background: #ef4444; }
-.dot.yellow { background: #f59e0b; }
-.dot.green { background: #10b981; }
-
-.window-title {
-    font-size: 0.78rem;
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.window-status-pill {
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    border-radius: 10px;
-    background: rgba(16, 185, 129, 0.15);
-    color: #10b981;
-    font-weight: 600;
-}
-
-.preview-img-container {
-    padding: 14px;
-    background: var(--input-bg);
-    display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex: 1;
-    position: relative;
+    padding: 12px;
     cursor: pointer;
 }
 
 .showcase-img {
     max-width: 100%;
     height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-    transition: transform 0.25s ease, filter 0.25s ease;
+    border-radius: 6px;
+    transition: transform 0.2s ease;
 }
 
-.preview-img-container:hover .showcase-img {
-    transform: scale(1.015);
-    filter: brightness(1.03);
+.mock-extension-preview:hover .showcase-img {
+    transform: scale(1.01);
 }
 
-.img-zoom-tip {
-    margin-top: 10px;
-    font-size: 0.76rem;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    opacity: 0.8;
+/* Phần Soạn Thảo & Chèn Trực Tiếp (Image 3) */
+.composer-showcase-section {
+    margin: 36px 0 20px 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-light);
 }
 
-/* Feature Highlights 4-Grid */
-.feature-highlights-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin: 40px 0 32px 0;
+.composer-header {
+    margin-bottom: 16px;
 }
 
-.feature-card {
-    background: var(--exam-paper-bg);
-    border: 1px solid var(--exam-paper-border);
-    border-radius: 12px;
-    padding: 20px;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--accent-cyan);
-}
-
-.feature-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background: rgba(92, 225, 230, 0.12);
-    color: var(--accent-cyan);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 12px;
-}
-
-.feature-card h4 {
-    font-size: 0.95rem;
-    font-weight: 700;
+.composer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
     color: var(--exam-title-color);
     margin: 0 0 6px 0;
 }
 
-.feature-card p {
-    font-size: 0.82rem;
+.composer-desc {
+    font-size: 0.88rem;
     color: var(--text-muted);
-    line-height: 1.5;
     margin: 0;
+    line-height: 1.5;
 }
 
-/* Bottom CTA Banner */
-.showcase-bottom-cta {
-    background: linear-gradient(135deg, rgba(92, 225, 230, 0.08), rgba(201, 169, 110, 0.08));
-    border: 1px solid rgba(92, 225, 230, 0.25);
-    border-radius: 14px;
-    padding: 28px;
-    text-align: center;
-    margin-top: 24px;
-}
-
-.cta-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.35rem;
-    color: var(--exam-title-color);
-    margin: 0 0 8px 0;
-}
-
-.cta-desc {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin: 0 0 20px 0;
-}
-
-.cta-buttons {
+.composer-img-wrap {
+    background: var(--pane-bg);
+    border: 1px solid var(--pane-border);
+    border-radius: 10px;
+    padding: 12px;
+    overflow: hidden;
+    cursor: pointer;
     display: flex;
-    gap: 12px;
     justify-content: center;
-    flex-wrap: wrap;
+}
+
+.composer-img-wrap .showcase-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
 }
 
 /* Lightbox Modal */
@@ -1199,25 +975,8 @@ body:not(.dark-mode) .extension-window-header {
     background: rgba(255, 255, 255, 0.3);
 }
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
+@media (max-width: 860px) {
     .showcase-panel.active {
         grid-template-columns: 1fr;
-    }
-    .feature-highlights-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    .feature-highlights-grid {
-        grid-template-columns: 1fr;
-    }
-    .showcase-tabs {
-        flex-direction: column;
-    }
-    .showcase-tab {
-        width: 100%;
-        justify-content: flex-start;
     }
 }
