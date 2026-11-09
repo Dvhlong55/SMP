@@ -889,7 +889,8 @@ body:not(.dark-mode) .comment-raw-text {
 }
 
 .composer-header {
-    margin-bottom: 16px;
+    max-width: 680px;
+    margin: 0 auto 16px auto;
 }
 
 .composer-title {
@@ -910,17 +911,24 @@ body:not(.dark-mode) .comment-raw-text {
     background: var(--pane-bg);
     border: 1px solid var(--pane-border);
     border-radius: 10px;
-    padding: 12px;
+    padding: 10px;
     overflow: hidden;
     cursor: pointer;
     display: flex;
     justify-content: center;
+    max-width: 680px;
+    margin: 0 auto;
 }
 
 .composer-img-wrap .showcase-img {
     max-width: 100%;
     height: auto;
     border-radius: 6px;
+    transition: transform 0.2s ease;
+}
+
+.composer-img-wrap:hover .showcase-img {
+    transform: scale(1.01);
 }
 
 /* Lightbox Modal */
