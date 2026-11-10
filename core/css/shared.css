@@ -60,7 +60,7 @@ html.dark-mode body {
 
 /* === PARCHMENT / ACADEMIC READING THEME (CHẾ ĐỘ HÀN LÂM / SÁCH GIẤY) === */
 html.parchment-mode, body.parchment-mode {
-    --sidebar-bg: #241b14;
+    --sidebar-bg: #201610;
     --sidebar-text: #ebdcc4;
     --sidebar-title: #fdf5e6;
     --sidebar-link: #a8947e;
@@ -68,25 +68,25 @@ html.parchment-mode, body.parchment-mode {
     --topbar-bg: #f4ecdc;
     --main-bg: #fbf5e6;
     --card-bg: #fffdf7;
-    --text-dark: #2a1f18;
-    --text-muted: #7d6b5b;
+    --text-dark: #201610;
+    --text-muted: #745f4d;
     --accent-cyan: #ab3334;
     --accent-gold: #c9933e;
     --accent-cyan-dim: rgba(171, 51, 52, 0.12);
     --border-light: #e5dac4;
-    --border-color: #45362a;
+    --border-color: #3d2c20;
     --shadow-soft: 0 4px 24px rgba(60, 40, 20, 0.08);
     --shadow-hover: 0 12px 36px rgba(60, 40, 20, 0.14);
 }
 
 html.parchment-mode {
     background-color: #fbf5e6;
-    color: #2a1f18;
+    color: #201610;
 }
 
 html.parchment-mode body {
     background-color: #fbf5e6;
-    color: #2a1f18;
+    color: #201610;
 }
 
 html.parchment-mode .search-input,
