@@ -129,6 +129,24 @@ body.parchment-mode .mobile-bottom-nav {
     background-color: #f4ecdc !important;
     border-top: 1px solid #e5dac4 !important;
 }
+body.parchment-mode .sidebar-logo {
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 12px rgba(171, 51, 52, 0.35));
+}
+body.parchment-mode .sidebar-logo:hover {
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 16px rgba(171, 51, 52, 0.55));
+}
+body.parchment-mode .header-box {
+    border-color: var(--accent-cyan, #ab3334);
+    background: rgba(171, 51, 52, 0.04);
+}
+body.parchment-mode .modal-expand-btn {
+    border-color: rgba(171, 51, 52, 0.35);
+    color: #ab3334;
+}
+body.parchment-mode .modal-expand-btn:hover {
+    background: rgba(171, 51, 52, 0.1);
+    border-color: #ab3334;
+}
 
 /* === RESET & BASE === */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v105') caches.delete(name);
+                if (name !== 'smp-cache-v106') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -669,10 +669,6 @@
                     </span>
                     <div id="search-results" class="search-results"></div>
                 </div>
-
-                <button id="theme-toggle-btn" class="topbar-nav-btn" onclick="if(window.ThemeManager) window.ThemeManager.cycle(event); else if(window.DarkMode) window.DarkMode.toggle(event);" title="Chuyển chế độ giao diện (Tối / Hàn lâm / Sáng)" style="flex-shrink:0;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
-                </button>
                 
                 <div class="notif-wrapper" style="position: relative;">
                     <button id="notif-toggle-btn" class="topbar-nav-btn" onclick="if(window.toggleNotificationDropdown) window.toggleNotificationDropdown(event)" title="Thông báo" style="position: relative;">
