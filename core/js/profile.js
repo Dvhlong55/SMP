@@ -64,7 +64,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             
             // Sync Theme buttons (Dark / Parchment / Light)
-            const currentTheme = (window.ThemeManager && window.ThemeManager.get) ? window.ThemeManager.get() : (localStorage.getItem('smp-theme') || (localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light'));
+            const currentTheme = (window.ThemeManager && window.ThemeManager.get) ? window.ThemeManager.get() : (function(){
+                var s = localStorage.getItem('smp-theme');
+                var d = localStorage.getItem('smp-dark-mode');
+                return s || (d !== null ? (d === 'true' ? 'dark' : 'light') : 'parchment');
+            })();
             if (window.syncProfileThemeButtons) {
                 window.syncProfileThemeButtons(currentTheme);
             }
@@ -376,7 +380,11 @@ window.selectProfileTheme = function(theme) {
 
 window.syncProfileThemeButtons = function(theme) {
     if (!theme) {
-        theme = (window.ThemeManager && window.ThemeManager.get) ? window.ThemeManager.get() : (localStorage.getItem('smp-theme') || (localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light'));
+        theme = (window.ThemeManager && window.ThemeManager.get) ? window.ThemeManager.get() : (function(){
+            var s = localStorage.getItem('smp-theme');
+            var d = localStorage.getItem('smp-dark-mode');
+            return s || (d !== null ? (d === 'true' ? 'dark' : 'light') : 'parchment');
+        })();
     }
     document.querySelectorAll('.prof-theme-btn').forEach(btn => {
         if (btn.getAttribute('data-theme') === theme) {

@@ -7,7 +7,9 @@ var API_BASE = 'https://smp-backend-kcwn.onrender.com';
 
 // === EARLY THEME & SIDEBAR APPLY (áp dụng ngay lập tức trước bất kì render nào) ===
 (function() {
-    var theme = localStorage.getItem('smp-theme') || (localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light');
+    var s = localStorage.getItem('smp-theme');
+    var d = localStorage.getItem('smp-dark-mode');
+    var theme = s || (d !== null ? (d === 'true' ? 'dark' : 'light') : 'parchment');
     if (theme === 'dark') {
         document.documentElement.classList.add('dark-mode');
     } else if (theme === 'parchment') {
@@ -18,7 +20,9 @@ var API_BASE = 'https://smp-backend-kcwn.onrender.com';
         else if (theme === 'parchment') document.body.classList.add('parchment-mode');
     } else {
         document.addEventListener('DOMContentLoaded', function() {
-            var t = localStorage.getItem('smp-theme') || (localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light');
+            var st = localStorage.getItem('smp-theme');
+            var dt = localStorage.getItem('smp-dark-mode');
+            var t = st || (dt !== null ? (dt === 'true' ? 'dark' : 'light') : 'parchment');
             if (t === 'dark') document.body.classList.add('dark-mode');
             else if (t === 'parchment') document.body.classList.add('parchment-mode');
         }, { once: true });
@@ -35,11 +39,13 @@ window.ThemeManager = {
     get() {
         const saved = localStorage.getItem('smp-theme');
         if (saved && this.THEMES.includes(saved)) return saved;
-        return localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light';
+        const oldDark = localStorage.getItem('smp-dark-mode');
+        if (oldDark !== null) return oldDark === 'true' ? 'dark' : 'light';
+        return 'parchment';
     },
 
     set(theme, save = true) {
-        if (!this.THEMES.includes(theme)) theme = 'dark';
+        if (!this.THEMES.includes(theme)) theme = 'parchment';
         const root = document.documentElement;
         const b = document.body;
 

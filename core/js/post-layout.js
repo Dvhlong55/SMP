@@ -1,6 +1,8 @@
 // Áp dụng ngay lập tức trước khi parse/render để triệt tiêu chớp nháy trắng & giật sidebar
 (function() {
-    var t = localStorage.getItem('smp-theme') || (localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light');
+    var s = localStorage.getItem('smp-theme');
+    var d = localStorage.getItem('smp-dark-mode');
+    var t = s || (d !== null ? (d === 'true' ? 'dark' : 'light') : 'parchment');
     if (t === 'dark') {
         document.documentElement.classList.add('dark-mode');
     } else if (t === 'parchment') {
@@ -45,7 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // 3. Clear body and build the full layout
     document.body.innerHTML = '';
     document.body.style.display = 'none'; // Giấu đi chờ render xong
-    var postTheme = localStorage.getItem('smp-theme') || (localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light');
+    var sPost = localStorage.getItem('smp-theme');
+    var dPost = localStorage.getItem('smp-dark-mode');
+    var postTheme = sPost || (dPost !== null ? (dPost === 'true' ? 'dark' : 'light') : 'parchment');
     if (postTheme === 'dark') {
         document.body.classList.add('dark-mode');
     } else if (postTheme === 'parchment') {

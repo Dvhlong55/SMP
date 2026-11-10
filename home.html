@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
     <link rel="manifest" href="/manifest.json">
@@ -19,7 +19,7 @@
             }
         };
     </script>
-    <script>(function(){var t=localStorage.getItem('smp-theme')||(localStorage.getItem('smp-dark-mode')==='true'?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='parchment')document.documentElement.classList.add('parchment-mode');if(localStorage.getItem('smp-sidebar-collapsed')==='true')document.documentElement.classList.add('sidebar-collapsed');})();</script>
+    <script>(function(){var s=localStorage.getItem('smp-theme'),d=localStorage.getItem('smp-dark-mode'),t=s||(d!==null?(d==='true'?'dark':'light'):'parchment');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='parchment')document.documentElement.classList.add('parchment-mode');if(localStorage.getItem('smp-sidebar-collapsed')==='true')document.documentElement.classList.add('sidebar-collapsed');})();</script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="/core/css/shared.css?v=99">
     <link rel="stylesheet" href="/core/css/mailbox.css">
@@ -899,7 +899,7 @@
                                             <div class="mailbox-row">
                                                 <div class="mailbox-field">
                                                     <label class="mailbox-label" for="sol-name">Tên / Biệt danh <span class="req">*</span></label>
-                                                    <input type="text" id="sol-name" class="mailbox-input" placeholder="Ví dụ: Hoàng Long...">
+                                                    <input type="text" id="sol-name" class="mailbox-input" placeholder="Ví dụ: SMP...">
                                                 </div>
                                                 <div class="mailbox-field">
                                                     <label class="mailbox-label" for="sol-contact">Email / Liên hệ <span class="req">*</span></label>

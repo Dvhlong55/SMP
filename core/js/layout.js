@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v112') caches.delete(name);
+                if (name !== 'smp-cache-v113') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -965,19 +965,30 @@ function runManimLogic() {
 
     const curTheme = (window.ThemeManager && typeof window.ThemeManager.get === 'function')
         ? window.ThemeManager.get()
-        : (localStorage.getItem('smp-theme') || (localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light'));
+        : (function(){
+            var s = localStorage.getItem('smp-theme');
+            var d = localStorage.getItem('smp-dark-mode');
+            return s || (d !== null ? (d === 'true' ? 'dark' : 'light') : 'parchment');
+          })();
 
     let CYAN_COLOR   = "#4DE8D0";
     let SHADOW_COLOR = "#1E6B9A";
+    let BLOCK_SHADOW = "0 0 0 1.5px #0b0f19, 0 0 10px rgba(77, 232, 208, 0.25)";
+    let dx = 0.13;
+    let dy = -0.13;
     if (curTheme === 'parchment' || document.documentElement.classList.contains('parchment-mode')) {
-        CYAN_COLOR   = "#ab3334"; // Đỏ Mận Học Thuật (Ý 1)
-        SHADOW_COLOR = "#5c191a"; // Đỏ Rượu Trầm / Bóng 3D
+        CYAN_COLOR   = "#b93838"; // Đỏ Học Thuật sắc nét, tương phản cao trên giấy kem
+        SHADOW_COLOR = "#4a1415"; // Đỏ Rượu Trầm / Bóng 3D sâu
+        BLOCK_SHADOW = "0 0 0 2px #fbf5e6, 0 3px 8px rgba(60, 20, 20, 0.16)"; // Cắt rãnh giấy kem tách bạch từng nét chữ SMP
+        dx = 0.09;
+        dy = -0.09;
     } else if (curTheme === 'light' || (!document.documentElement.classList.contains('dark-mode') && !document.documentElement.classList.contains('parchment-mode'))) {
         CYAN_COLOR   = "#009eb3";
         SHADOW_COLOR = "#08505c";
+        BLOCK_SHADOW = "0 0 0 2px #ffffff, 0 2px 6px rgba(0, 0, 0, 0.1)";
+        dx = 0.10;
+        dy = -0.10;
     }
-    const dx = 0.13;
-    const dy = -0.13;
 
     // Trục Y của Web bị ngược so với Manim (+Y là đi xuống)
     const webX = (x) => x * UNIT;
@@ -1069,6 +1080,7 @@ function runManimLogic() {
         block.style.height = `${s.h * UNIT}px`;
         block.style.backgroundColor = CYAN_COLOR;
         block.style.borderRadius = `${CR * UNIT}px`;
+        block.style.boxShadow = BLOCK_SHADOW;
         block.style.left = `${finalLeft}px`;
         block.style.top = `${finalTop}px`;
         block.style.opacity = '0';
