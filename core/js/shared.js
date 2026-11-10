@@ -171,6 +171,27 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '§ Luyện Tập Về Thặng Dư Chính Phương',
+        date: 'November 10, 2026',
+        url: '/posts/math/vmo/luyen-tap-ve-thang-du-chinh-phuong.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '§ Khảo Sát Ước Nguyên Tố & Biểu Diễn Số',
+        date: 'November 10, 2026',
+        url: '/posts/math/vmo/khao-sat-uoc-nguyen-to-va-bieu-dien-so.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: '§ Mở Đầu Về Thặng Dư Bậc Hai',
+        date: 'November 10, 2026',
+        url: '/posts/math/vmo/mo-dau-ve-thang-du-bac-hai.html',
+        tags: ['Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '§ Thách Thức (Số 3)',
         date: 'November 2, 2026',
         url: '/challenges/ThachThucKiNaySo32026.html',

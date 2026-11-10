@@ -211,17 +211,22 @@ window.SMP_ROADMAP_SOHOC = {
                 {
                     title: 'Tiêu chuẩn Euler & kí hiệu Legendre',
                     desc: 'Nhận biết thặng dư bậc hai, tính chất nhân tính và các giá trị đặc biệt $\\left(\\frac{-1}{p}\\right)$, $\\left(\\frac{2}{p}\\right)$.',
-                    url: null
+                    url: '/posts/math/vmo/mo-dau-ve-thang-du-bac-hai.html'
                 },
                 {
                     title: 'Luật tương hỗ Gauss & kí hiệu Jacobi',
                     desc: 'Luật tương hỗ bậc hai, mở rộng sang kí hiệu Jacobi và ứng dụng vào chia hết, dãy số.',
-                    url: null
+                    url: '/posts/math/vmo/mo-dau-ve-thang-du-bac-hai.html'
                 },
                 {
                     title: 'Bổ đề Thue & biểu diễn số nguyên tố',
-                    desc: 'Công cụ chứng minh tồn tại nghiệm đồng dư; định lý Fermat về tổng hai bình phương.',
-                    url: '/posts/math/BoDeThueVaBieuDienSoNguyenTo.html'
+                    desc: 'Công cụ chứng minh tồn tại nghiệm đồng dư; khảo sát ước nguyên tố và biểu diễn số dạng $x^2 + dy^2$.',
+                    url: '/posts/math/vmo/khao-sat-uoc-nguyen-to-va-bieu-dien-so.html'
+                },
+                {
+                    title: 'Luyện tập về Thặng dư chính phương',
+                    desc: 'Tuyển tập 16 bài toán phương trình nghiệm nguyên, hệ đồng dư và ứng dụng thặng dư chính phương chuyên sâu.',
+                    url: '/posts/math/vmo/luyen-tap-ve-thang-du-chinh-phuong.html'
                 }
             ]
         },
