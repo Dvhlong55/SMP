@@ -171,6 +171,9 @@ window.ThemeManager = {
         if (profileSwitch) {
             profileSwitch.checked = (theme === 'dark');
         }
+        if (window.syncProfileThemeButtons) {
+            window.syncProfileThemeButtons(theme);
+        }
     },
 
     async syncRemote(theme) {

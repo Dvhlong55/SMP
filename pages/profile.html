@@ -522,6 +522,44 @@
             transform: translateX(20px);
         }
 
+        /* 3-Theme Selector */
+        .prof-theme-selector {
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--prof-line);
+            border-radius: 8px;
+            padding: 3px;
+            gap: 4px;
+        }
+        .prof-theme-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            color: var(--prof-text-muted);
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .prof-theme-btn:hover {
+            color: var(--prof-text);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .prof-theme-btn.active {
+            background: var(--accent-cyan, #5ce1e6);
+            color: #111;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        body.parchment-mode .prof-theme-btn.active {
+            background: #ab3334 !important;
+            color: #ffffff !important;
+        }
+
         /* Inline Forms & Inputs */
         .prof-inline-form {
             display: flex;
@@ -842,16 +880,27 @@
             <!-- Tab 2: Cài đặt (Dạng hàng, không dạng thẻ) -->
             <div id="tab-sec-settings" class="prof-tab-content" style="display: none;">
                 <div class="prof-settings-container">
-                    <!-- Chế độ tối -->
+                    <!-- Giao diện hiển thị (3 Chế độ) -->
                     <div class="prof-setting-row">
                         <div class="prof-row-info">
-                            <div class="prof-row-title">Chế độ tối</div>
+                            <div class="prof-row-title">Giao diện hiển thị</div>
+                            <div class="prof-row-desc">Chọn phong cách hiển thị khi đọc tài liệu và làm bài.</div>
                         </div>
                         <div class="prof-row-ctrl">
-                            <label class="prof-switch">
-                                <input type="checkbox" id="profile-dark-switch" onchange="toggleProfileThemeSwitch(this)">
-                                <span class="prof-slider"></span>
-                            </label>
+                            <div class="prof-theme-selector" id="prof-theme-group">
+                                <button type="button" class="prof-theme-btn" data-theme="dark" onclick="selectProfileTheme('dark')">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                                    <span>Tối</span>
+                                </button>
+                                <button type="button" class="prof-theme-btn" data-theme="parchment" onclick="selectProfileTheme('parchment')">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+                                    <span>Hàn Lâm</span>
+                                </button>
+                                <button type="button" class="prof-theme-btn" data-theme="light" onclick="selectProfileTheme('light')">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                                    <span>Sáng</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
 

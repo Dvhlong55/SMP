@@ -63,25 +63,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 pointsHintEl.textContent = pointsVal > 0 ? `${pointsVal} điểm tích lũy` : 'Giải bài đầu tiên';
             }
             
-            // Sync Dark Mode switch
-            const darkSwitch = document.getElementById('profile-dark-switch');
-            const isDark = document.body.classList.contains('dark-mode') || 
-                           document.documentElement.classList.contains('dark-mode') || 
-                           localStorage.getItem('smp-dark-mode') === 'true';
-            
-            if (darkSwitch) {
-                darkSwitch.checked = isDark;
+            // Sync Theme buttons (Dark / Parchment / Light)
+            const currentTheme = (window.ThemeManager && window.ThemeManager.get) ? window.ThemeManager.get() : (localStorage.getItem('smp-theme') || (localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light'));
+            if (window.syncProfileThemeButtons) {
+                window.syncProfileThemeButtons(currentTheme);
             }
 
-            const localTheme = localStorage.getItem('smp-dark-mode');
+            const localTheme = localStorage.getItem('smp-theme') || localStorage.getItem('smp-dark-mode');
             if (localTheme === null && user.theme_preference) {
-                if (window.DarkMode) {
-                    if (user.theme_preference === 'dark') window.DarkMode.enable(true);
-                    else window.DarkMode.disable(true);
+                if (window.ThemeManager) {
+                    window.ThemeManager.set(user.theme_preference, true);
                 }
-                if (darkSwitch) darkSwitch.checked = (user.theme_preference === 'dark');
-            } else if (localTheme !== null && user.theme_preference !== (isDark ? 'dark' : 'light')) {
-                updateThemePreference(isDark ? 'dark' : 'light');
+                if (window.syncProfileThemeButtons) window.syncProfileThemeButtons(user.theme_preference);
+            } else if (localTheme !== null && user.theme_preference && user.theme_preference !== currentTheme) {
+                updateThemePreference(currentTheme);
             }
             // Check admin indicators in profile response
             if (user.is_admin || user.role === 'admin' || (user.username && user.username.toUpperCase() === 'SMP')) {
@@ -368,26 +363,33 @@ window.toggleStreakGuide = function() {
 // ============================================
 // SETTINGS: THEME, USERNAME, PASSWORD, DELETE
 // ============================================
+window.selectProfileTheme = function(theme) {
+    if (window.ThemeManager) {
+        window.ThemeManager.set(theme);
+    } else if (window.DarkMode) {
+        if (theme === 'dark') window.DarkMode.enable();
+        else window.DarkMode.disable();
+    }
+    window.syncProfileThemeButtons(theme);
+    updateThemePreference(theme);
+};
+
+window.syncProfileThemeButtons = function(theme) {
+    if (!theme) {
+        theme = (window.ThemeManager && window.ThemeManager.get) ? window.ThemeManager.get() : (localStorage.getItem('smp-theme') || (localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light'));
+    }
+    document.querySelectorAll('.prof-theme-btn').forEach(btn => {
+        if (btn.getAttribute('data-theme') === theme) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+};
+
 window.toggleProfileThemeSwitch = function(checkbox) {
     const isDark = checkbox.checked;
-    if (window.DarkMode) {
-        if (isDark) {
-            window.DarkMode.enable();
-        } else {
-            window.DarkMode.disable();
-        }
-    } else {
-        if (isDark) {
-            document.documentElement.classList.add('dark-mode');
-            document.body.classList.add('dark-mode');
-            localStorage.setItem('smp-dark-mode', 'true');
-        } else {
-            document.documentElement.classList.remove('dark-mode');
-            document.body.classList.remove('dark-mode');
-            localStorage.setItem('smp-dark-mode', 'false');
-        }
-    }
-    updateThemePreference(isDark ? 'dark' : 'light');
+    window.selectProfileTheme(isDark ? 'dark' : 'light');
 };
 
 async function updateThemePreference(theme) {
