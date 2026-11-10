@@ -58,6 +58,78 @@ html.dark-mode body {
     color: #e8e8e8;
 }
 
+/* === PARCHMENT / ACADEMIC READING THEME (CHẾ ĐỘ HÀN LÂM / SÁCH GIẤY) === */
+html.parchment-mode, body.parchment-mode {
+    --sidebar-bg: #241b14;
+    --sidebar-text: #ebdcc4;
+    --sidebar-title: #fdf5e6;
+    --sidebar-link: #a8947e;
+    --sidebar-link-hover: rgba(171, 51, 52, 0.15);
+    --topbar-bg: #f4ecdc;
+    --main-bg: #fbf5e6;
+    --card-bg: #fffdf7;
+    --text-dark: #2a1f18;
+    --text-muted: #7d6b5b;
+    --accent-cyan: #ab3334;
+    --accent-gold: #c9933e;
+    --accent-cyan-dim: rgba(171, 51, 52, 0.12);
+    --border-light: #e5dac4;
+    --border-color: #45362a;
+    --shadow-soft: 0 4px 24px rgba(60, 40, 20, 0.08);
+    --shadow-hover: 0 12px 36px rgba(60, 40, 20, 0.14);
+}
+
+html.parchment-mode {
+    background-color: #fbf5e6;
+    color: #2a1f18;
+}
+
+html.parchment-mode body {
+    background-color: #fbf5e6;
+    color: #2a1f18;
+}
+
+html.parchment-mode .search-input,
+body.parchment-mode .search-input {
+    background: #f0e6d2;
+    border-color: #dfd2be;
+    color: #2a1f18;
+}
+html.parchment-mode .search-input:focus,
+body.parchment-mode .search-input:focus {
+    border-color: #ab3334;
+    background: #fffdf7;
+}
+body.parchment-mode .topbar-sidebar-toggle {
+    color: #ab3334;
+}
+body.parchment-mode .topbar-sidebar-toggle:hover {
+    background: rgba(171, 51, 52, 0.12);
+    color: #ab3334;
+}
+body.parchment-mode .sidebar-toggle {
+    background: #241b14;
+    border-color: #241b14;
+    color: #ebdcc4;
+}
+body.parchment-mode .sidebar-toggle:hover {
+    background: #382b20;
+    border-color: #382b20;
+}
+body.parchment-mode .reading-progress-fill {
+    background: #ab3334 !important;
+}
+body.parchment-mode .topbar-nav-btn:hover,
+body.parchment-mode .topbar-nav-btn.active {
+    color: #ab3334 !important;
+    background-color: rgba(171, 51, 52, 0.1) !important;
+    border-color: rgba(171, 51, 52, 0.25) !important;
+}
+body.parchment-mode .mobile-bottom-nav {
+    background-color: #f4ecdc !important;
+    border-top: 1px solid #e5dac4 !important;
+}
+
 /* === RESET & BASE === */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
