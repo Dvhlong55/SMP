@@ -118,17 +118,14 @@ button { cursor: pointer; border: none; outline: none; background: none; }
 }
 
 .sidebar-logo {
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 12px;
-    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 10px rgba(255, 250, 212, 0.25));
-    transition: filter 0.3s, transform 0.2s;
+    width: 100px;
+    height: 115px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 12px rgba(92,225,230,0.3));
+    transition: filter 0.3s;
 }
-.sidebar-logo:hover {
-    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 16px rgba(255, 250, 212, 0.45));
-}
+.sidebar-logo:hover { filter: drop-shadow(0 0 20px rgba(92,225,230,0.6)); }
 
 .sidebar-title {
     font-family: 'Playfair Display', serif;

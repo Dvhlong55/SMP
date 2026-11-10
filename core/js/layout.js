@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v102') caches.delete(name);
+                if (name !== 'smp-cache-v103') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -18,7 +18,7 @@
         const link = document.createElement('link');
         link.rel = 'icon';
         link.type = 'image/png';
-        link.href = '/core/image/favicon.png?v=102';
+        link.href = '/core/image/favicon.png?v=103';
         document.head.appendChild(link);
     }
 
@@ -565,7 +565,7 @@
     <aside class="${initialSidebarClass}" id="main-sidebar">
         <div class="sidebar-inner">
             <a href="/demo.html" style="display: block; cursor: pointer; border: none; outline: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" title="Xem tính năng hệ sinh thái">
-                <img src="/core/image/image_49b1a4.png?v=102" alt="SMP Logo" class="sidebar-logo">
+                <img src="/core/image/image_49b1a4.png?v=103" alt="SMP Logo" class="sidebar-logo">
             </a>
                         <div class="sidebar-divider"></div>
             <div class="sidebar-socials">
