@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v110') caches.delete(name);
+                if (name !== 'smp-cache-v111') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -18,7 +18,7 @@
         const link = document.createElement('link');
         link.rel = 'icon';
         link.type = 'image/png';
-        link.href = '/core/image/favicon.png?v=103';
+        link.href = '/core/image/favicon.png?v=111';
         document.head.appendChild(link);
     }
 
