@@ -1591,9 +1591,14 @@
         s = s.replace(/([0-9]+)\s+[xX]\s+([\[\(])/g, '$1 \\cdot $2');
         s = s.replace(/([0-9]+)\s+[xX]\s+([0-9]+)/g, '$1 \\times $2');
 
+        s = s.replace(/<==+>/g, ' \\Leftrightarrow ');
         s = s.replace(/<=>/g, ' \\Leftrightarrow ');
+        s = s.replace(/==+>/g, ' \\Rightarrow ');
         s = s.replace(/=>/g, ' \\Rightarrow ');
+        s = s.replace(/<==+/g, ' \\Leftarrow ');
+        s = s.replace(/--+>/g, ' \\to ');
         s = s.replace(/->/g, ' \\to ');
+        s = s.replace(/<--+/g, ' \\leftarrow ');
         s = s.replace(/<-/g, ' \\leftarrow ');
         s = s.replace(/>=/g, ' \\ge ');
         s = s.replace(/<=/g, ' \\le ');
@@ -1734,7 +1739,12 @@
             // 1. Nhận diện các đề mục suy luận: TH1:, Trường hợp 1:, Kn1:...
             const thMatch = line.match(/^(\s*(?:TH\d+|Trường\s+hợp\s+\d+|Kn\d+)\s*:)(.*)$/i);
             if (thMatch) {
-                outputLines.push(`**${thMatch[1].trim()}**${thMatch[2]}`);
+                // Nếu dòng có chứa mã/ký hiệu LaTeX thì không in đậm để tránh lệch độ đậm với MathJax
+                if (/\$|\\|\^|_|[=><]|√|∈|∉|⊂|⊆|∪|∩|∀|∃|≤|≥|≠|±|→|⇒|⇔/.test(line)) {
+                    outputLines.push(`${thMatch[1].trim()} ${thMatch[2].trim()}`);
+                } else {
+                    outputLines.push(`**${thMatch[1].trim()}**${thMatch[2]}`);
+                }
                 i++;
                 continue;
             }

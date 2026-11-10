@@ -154,8 +154,8 @@ body.light-mode .side-widget-title {
     margin: 7px 0;
     transition: color 0.3s ease;
 }
-.exam-paper h1 { font-size: 2.2rem; letter-spacing: 0.5px; }
-.exam-paper h2 { font-size: 1.6rem; font-weight: normal; }
+.exam-paper h1 { font-size: 2.2rem; letter-spacing: 0.5px; font-weight: 600; }
+.exam-paper h2 { font-size: 1.6rem; font-weight: 500; }
 
 .exam-paper h3 { 
     font-size: 1.35rem;
@@ -165,6 +165,17 @@ body.light-mode .side-widget-title {
     font-family: "Times New Roman", Times, serif;
     border-left: 3px solid var(--accent-cyan, #5ce1e6);
     padding-left: 12px;
+    font-weight: 600;
+}
+
+/* Với tiêu đề/dòng có công thức LaTeX: giữ font-weight vừa phải để chữ và MathJax đồng bộ, không bị chữ quá đậm mà math quá mảnh */
+.exam-paper h1:has(mjx-container),
+.exam-paper h2:has(mjx-container),
+.exam-paper h3:has(mjx-container),
+.exam-paper h4:has(mjx-container),
+.exam-paper h5:has(mjx-container),
+.exam-paper h6:has(mjx-container) {
+    font-weight: 500 !important;
 }
 
 /* === LATEX & MATHJAX SIZING & ALIGNMENT === */

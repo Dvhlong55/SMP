@@ -33,6 +33,12 @@
             margin-bottom: 24px;
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        html.parchment-mode .featured-hero {
+            background: #fffdf7 !important;
+            border: 1px solid #e5dac4 !important;
+            box-shadow: 0 4px 20px rgba(60, 40, 20, 0.04) !important;
         }
         .featured-hero::after {
             content: '✦';
@@ -43,6 +49,9 @@
             line-height: 1;
             pointer-events: none;
         }
+        html.parchment-mode .featured-hero::after {
+            color: rgba(171, 51, 52, 0.06) !important;
+        }
         .featured-label {
             font-size: 0.7rem;
             color: var(--accent-gold);
@@ -50,6 +59,9 @@
             text-transform: uppercase;
             font-family: 'JetBrains Mono', monospace;
             margin-bottom: 10px;
+        }
+        html.parchment-mode .featured-label {
+            color: #ab3334 !important;
         }
         .featured-hero h2 {
             font-family: 'Playfair Display', serif;
@@ -59,6 +71,9 @@
             line-height: 1.5;
             max-width: 100%;
         }
+        html.parchment-mode .featured-hero h2 {
+            color: #201610 !important;
+        }
         .featured-hero p {
             color: #888;
             font-size: 0.88rem;
@@ -66,6 +81,9 @@
             margin-bottom: 14px;
             max-width: 100%;
             font-family: 'JetBrains Mono', monospace;
+        }
+        html.parchment-mode .featured-hero p {
+            color: #5a483a !important;
         }
         .featured-link {
             display: inline-flex;
@@ -84,6 +102,14 @@
             transition: all 0.3s;
         }
         .featured-link:hover { background: var(--accent-gold); transform: translateX(3px); }
+        html.parchment-mode .featured-link {
+            background: #ab3334 !important;
+            color: #ffffff !important;
+        }
+        html.parchment-mode .featured-link:hover {
+            background: #c9933e !important;
+            color: #ffffff !important;
+        }
 
         /* Daily Challenge & Latest Posts 50/50 Layout */
         .home-challenge-row {
@@ -113,7 +139,7 @@
             transform: translateX(4px);
         }
 
-        /* Redesigned Daily Challenge Card */
+        /* Redesigned Daily Challenge Card (Hướng B - Sách Ngà Cao Cấp khi Parchment) */
         .home-challenge-box .challenge-card {
             padding: 26px 26px;
             margin-bottom: 0;
@@ -121,9 +147,16 @@
             border: 1px solid rgba(92,225,230,0.22);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
             position: relative;
-            /* Card luôn nền tối → ép chữ sáng ở cả 2 chế độ */
             color: #e5e5e5;
             --exam-text-color: #e5e5e5;
+            transition: all 0.3s ease;
+        }
+        html.parchment-mode .home-challenge-box .challenge-card {
+            background: #fffdf7 !important;
+            border: 1px solid #e5dac4 !important;
+            box-shadow: 0 4px 20px rgba(60, 40, 20, 0.04) !important;
+            color: #201610 !important;
+            --exam-text-color: #201610 !important;
         }
         .home-challenge-box .solution-mailbox,
         .home-challenge-box .mailbox-subtitle,
@@ -133,14 +166,31 @@
         .home-challenge-box .latex-preview-toggle {
             color: #e5e5e5 !important;
         }
+        html.parchment-mode .home-challenge-box .solution-mailbox,
+        html.parchment-mode .home-challenge-box .mailbox-subtitle,
+        html.parchment-mode .home-challenge-box .mailbox-hint,
+        html.parchment-mode .home-challenge-box .mailbox-file-label,
+        html.parchment-mode .home-challenge-box .mailbox-note,
+        html.parchment-mode .home-challenge-box .latex-preview-toggle {
+            color: #201610 !important;
+        }
         .home-challenge-box .mailbox-file-label strong { color: #fff; }
+        html.parchment-mode .home-challenge-box .mailbox-file-label strong { color: #201610 !important; }
         .home-challenge-box .mailbox-input::placeholder,
         .home-challenge-box .mailbox-textarea::placeholder {
             color: rgba(229, 229, 229, 0.45);
         }
+        html.parchment-mode .home-challenge-box .mailbox-input::placeholder,
+        html.parchment-mode .home-challenge-box .mailbox-textarea::placeholder {
+            color: rgba(120, 110, 100, 0.5) !important;
+        }
         .home-challenge-box .mailbox-select option {
             background: #1a1a1a;
             color: #e5e5e5;
+        }
+        html.parchment-mode .home-challenge-box .mailbox-select option {
+            background: #fffdf7 !important;
+            color: #201610 !important;
         }
         .home-challenge-box .challenge-card::before {
             content: '∑';
@@ -152,6 +202,12 @@
             line-height: 1;
             pointer-events: none;
         }
+        html.parchment-mode .home-challenge-box .challenge-card::before {
+            color: rgba(171, 51, 52, 0.04) !important;
+        }
+        html.parchment-mode .home-challenge-box .challenge-card h3 {
+            color: #201610 !important;
+        }
         .home-challenge-box .challenge-problem {
             padding: 16px 18px;
             margin-bottom: 18px;
@@ -162,11 +218,20 @@
             border-radius: 0 8px 8px 0;
             color: #ddd;
         }
+        html.parchment-mode .home-challenge-box .challenge-problem {
+            background: #fbf5e6 !important;
+            border: 1px solid #e5dac4 !important;
+            border-left: 3px solid #ab3334 !important;
+            color: #201610 !important;
+        }
         .home-challenge-box .challenge-problem p {
             margin: 0;
         }
         .home-challenge-box .challenge-problem p + p {
             margin-top: 10px;
+        }
+        html.parchment-mode .home-challenge-box .challenge-problem p {
+            color: #201610 !important;
         }
         .home-challenge-box .challenge-actions {
             display: flex;
@@ -175,14 +240,32 @@
             align-items: center;
         }
         .challenge-btn-submit {
-            border-color: var(--accent-pink, #ff69b4) !important;
-            color: var(--accent-pink, #ff69b4) !important;
+            border: 1px solid var(--accent-cyan, #5ce1e6) !important;
+            color: var(--accent-cyan, #5ce1e6) !important;
+            background: transparent !important;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.25s;
         }
         .challenge-btn-submit:hover,
         .challenge-btn-submit.active {
-            background: var(--accent-pink, #ff69b4) !important;
+            background: var(--accent-cyan, #5ce1e6) !important;
             color: #111 !important;
-            box-shadow: 0 0 16px rgba(255, 105, 180, 0.35);
+            box-shadow: 0 0 16px rgba(92, 225, 230, 0.35);
+        }
+        html.parchment-mode .challenge-btn-submit {
+            border-color: #ab3334 !important;
+            color: #ab3334 !important;
+            background: #fbf5e6 !important;
+        }
+        html.parchment-mode .challenge-btn-submit:hover,
+        html.parchment-mode .challenge-btn-submit.active {
+            background: #ab3334 !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px rgba(171, 51, 52, 0.25) !important;
         }
         .home-challenge-box .challenge-answer {
             margin-top: 16px;
@@ -199,22 +282,32 @@
             background: rgba(92,225,230,0.08);
             color: #e5e5e5;
         }
+        html.parchment-mode .home-challenge-box .challenge-answer {
+            background: #fbf5e6 !important;
+            border-color: #e5dac4 !important;
+            color: #201610 !important;
+        }
 
-        /* Scoped Form Mailbox inside Home 50% Column */
+        /* Scoped Form Mailbox inside Home 50% Column (Minimalist / Clean) */
         .home-challenge-box .solution-mailbox {
-            margin-top: 18px;
-            padding: 20px 18px;
+            margin-top: 16px;
+            padding: 18px 20px;
             border-radius: 10px;
-            background: linear-gradient(145deg, rgba(255, 105, 180, 0.04), rgba(255, 20, 147, 0.015));
-            border: 1px solid rgba(255, 105, 180, 0.22);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(92, 225, 230, 0.25);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+        html.parchment-mode .home-challenge-box .solution-mailbox {
+            background: #fffdf7 !important;
+            border: 1px solid #e5dac4 !important;
+            box-shadow: 0 4px 18px rgba(60, 40, 20, 0.05) !important;
         }
         .home-challenge-box .mailbox-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 10px;
-            margin-bottom: 4px;
+            margin-bottom: 12px;
         }
         .home-challenge-box .mailbox-header-main {
             display: flex;
@@ -222,45 +315,54 @@
             gap: 8px;
         }
         .home-challenge-box .mailbox-icon {
-            font-size: 1.25rem;
-            color: var(--accent-pink, #ff69b4);
+            font-size: 1.15rem;
+            color: var(--accent-cyan, #5ce1e6);
             display: flex;
             align-items: center;
         }
+        html.parchment-mode .home-challenge-box .mailbox-icon {
+            color: #ab3334 !important;
+        }
         .home-challenge-box .mailbox-title {
-            font-size: 1.2rem;
-            color: var(--accent-pink, #ff69b4);
+            font-size: 1.1rem;
+            color: var(--accent-cyan, #5ce1e6);
             font-family: 'Playfair Display', serif;
             font-weight: 700;
         }
+        html.parchment-mode .home-challenge-box .mailbox-title {
+            color: #ab3334 !important;
+        }
         .mailbox-close-btn {
             background: transparent;
-            border: 1px solid rgba(255, 105, 180, 0.3);
-            color: var(--accent-pink, #ff69b4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #94a3b8;
             border-radius: 50%;
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             transition: all 0.2s;
             flex-shrink: 0;
         }
         .mailbox-close-btn:hover {
-            background: var(--accent-pink, #ff69b4);
+            background: var(--accent-cyan, #5ce1e6);
             color: #111;
         }
-        .home-challenge-box .mailbox-subtitle {
-            font-size: 0.8rem;
-            line-height: 1.5;
-            padding-left: 0;
-            margin-bottom: 14px;
-            opacity: 0.82;
+        html.parchment-mode .mailbox-close-btn {
+            border-color: #e5dac4 !important;
+            color: #745f4d !important;
+        }
+        html.parchment-mode .mailbox-close-btn:hover {
+            background: #ab3334 !important;
+            color: #fff !important;
         }
         .home-challenge-box .mailbox-form {
-            gap: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         .home-challenge-box .mailbox-row {
             display: grid;
@@ -279,40 +381,47 @@
         }
         .home-challenge-box .mailbox-label {
             font-size: 0.72rem;
-            letter-spacing: 0.8px;
-            color: var(--accent-pink, #ff69b4);
+            letter-spacing: 0.6px;
+            color: var(--accent-cyan, #5ce1e6);
             font-family: 'JetBrains Mono', monospace;
             text-transform: uppercase;
+            font-weight: 600;
+        }
+        html.parchment-mode .home-challenge-box .mailbox-label {
+            color: #ab3334 !important;
         }
         .home-challenge-box .mailbox-input,
-        .home-challenge-box .mailbox-select,
         .home-challenge-box .mailbox-textarea {
             padding: 8px 10px;
             font-size: 0.86rem;
             border-radius: 6px;
-            background: rgba(255, 105, 180, 0.03);
-            border: 1px solid rgba(255, 105, 180, 0.22);
-            color: var(--exam-text-color, #ddd);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #f1f5f9;
             outline: none;
             width: 100%;
             box-sizing: border-box;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
-        body:not(.dark-mode) .home-challenge-box .mailbox-input,
-        body:not(.dark-mode) .home-challenge-box .mailbox-select,
-        body:not(.dark-mode) .home-challenge-box .mailbox-textarea {
-            background: rgba(255, 105, 180, 0.05);
-            color: #e5e5e5;
+        html.parchment-mode .home-challenge-box .mailbox-input,
+        html.parchment-mode .home-challenge-box .mailbox-textarea {
+            background: #fbf5e6 !important;
+            border: 1px solid #e5dac4 !important;
+            color: #201610 !important;
         }
         .home-challenge-box .mailbox-input:focus,
-        .home-challenge-box .mailbox-select:focus,
         .home-challenge-box .mailbox-textarea:focus {
-            border-color: var(--accent-pink, #ff69b4);
-            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.15);
+            border-color: var(--accent-cyan, #5ce1e6);
+            box-shadow: 0 0 0 2px rgba(92, 225, 230, 0.2);
+        }
+        html.parchment-mode .home-challenge-box .mailbox-input:focus,
+        html.parchment-mode .home-challenge-box .mailbox-textarea:focus {
+            border-color: #ab3334 !important;
+            box-shadow: 0 0 0 2px rgba(171, 51, 52, 0.15) !important;
         }
         .home-challenge-box .mailbox-textarea {
-            min-height: 100px;
-            font-size: 0.9rem;
+            min-height: 90px;
+            font-size: 0.88rem;
             line-height: 1.5;
             resize: vertical;
         }
@@ -321,33 +430,37 @@
             opacity: 0.7;
         }
         .home-challenge-box .latex-preview-wrap {
-            margin-top: 6px;
-            border: 1px solid rgba(255, 105, 180, 0.2);
+            margin-top: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 6px;
             overflow: hidden;
         }
+        html.parchment-mode .home-challenge-box .latex-preview-wrap {
+            border-color: #e5dac4 !important;
+            background: #fbf5e6 !important;
+        }
         .home-challenge-box .latex-preview-toggle {
             width: 100%;
-            background: rgba(255, 105, 180, 0.12);
-            color: var(--exam-text-color, #ddd);
+            background: rgba(255, 255, 255, 0.05);
+            color: inherit;
             border: none;
-            padding: 6px 10px;
+            padding: 5px 10px;
             text-align: left;
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             cursor: pointer;
             font-family: 'JetBrains Mono', monospace;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
             transition: background 0.2s;
         }
-        .home-challenge-box .latex-preview-toggle:hover {
-            background: rgba(255, 105, 180, 0.25);
-            color: #fff;
+        html.parchment-mode .home-challenge-box .latex-preview-toggle {
+            background: rgba(171, 51, 52, 0.05) !important;
+            color: #ab3334 !important;
         }
         .home-challenge-box .latex-preview-box {
             display: none;
-            padding: 10px 12px;
-            font-size: 0.88rem;
+            padding: 8px 12px;
+            font-size: 0.86rem;
             line-height: 1.6;
             background: #fff;
             color: #111;
@@ -357,21 +470,43 @@
         .home-challenge-box .latex-preview-box.active {
             display: block;
         }
-        .home-challenge-box .mailbox-file-zone {
-            padding: 12px 10px;
-            border: 1.5px dashed rgba(255, 105, 180, 0.35);
-            border-radius: 8px;
-            background: rgba(255, 105, 180, 0.04);
-            text-align: center;
-            cursor: pointer;
+        .home-challenge-box .mailbox-bottom-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .home-challenge-box .mailbox-attach-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             position: relative;
-            transition: border-color 0.2s, background 0.2s;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px dashed rgba(255, 255, 255, 0.25);
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.2s ease;
         }
-        .home-challenge-box .mailbox-file-zone:hover {
-            border-color: var(--accent-pink, #ff69b4);
-            background: rgba(255, 105, 180, 0.08);
+        .home-challenge-box .mailbox-attach-btn:hover {
+            border-color: var(--accent-cyan, #5ce1e6);
+            color: var(--accent-cyan, #5ce1e6);
         }
-        .home-challenge-box .mailbox-file-zone input[type="file"] {
+        html.parchment-mode .home-challenge-box .mailbox-attach-btn {
+            border-color: #e5dac4 !important;
+            color: #745f4d !important;
+            background: #fbf5e6 !important;
+        }
+        html.parchment-mode .home-challenge-box .mailbox-attach-btn:hover {
+            border-color: #ab3334 !important;
+            color: #ab3334 !important;
+        }
+        .home-challenge-box .mailbox-attach-btn input[type="file"] {
             position: absolute;
             inset: 0;
             width: 100%;
@@ -379,62 +514,48 @@
             opacity: 0;
             cursor: pointer;
         }
-        .home-challenge-box .mailbox-file-icon {
-            font-size: 1.2rem;
-            margin-bottom: 2px;
-            display: inline-block;
-            opacity: 0.8;
-            color: var(--accent-pink, #ff69b4);
-        }
-        .home-challenge-box .mailbox-file-label {
-            font-size: 0.76rem;
-            margin: 0;
-            opacity: 0.88;
-        }
         .home-challenge-box .mailbox-file-names {
-            margin-top: 6px;
-            font-size: 0.76rem;
-            color: var(--accent-pink, #ff69b4);
-            background: rgba(0,0,0,0.3);
-            padding: 6px 8px;
-            border-radius: 4px;
-            text-align: left;
+            font-size: 0.72rem;
+            color: var(--accent-cyan, #5ce1e6);
             display: none;
+            margin-top: 4px;
+        }
+        html.parchment-mode .home-challenge-box .mailbox-file-names {
+            color: #ab3334 !important;
         }
         .home-challenge-box .mailbox-file-names:not(:empty) {
-            display: flex;
+            display: block;
         }
         .home-challenge-box .mailbox-send-btn {
-            background: rgba(255, 105, 180, 0.15);
-            border: 1px solid var(--accent-pink, #ff69b4);
-            color: var(--accent-pink, #ff69b4);
+            background: var(--accent-cyan, #5ce1e6);
+            border: none;
+            color: #111;
             font-family: 'JetBrains Mono', monospace;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
-            padding: 9px 18px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 8px 18px;
+            font-size: 0.78rem;
+            font-weight: 700;
             border-radius: 6px;
             cursor: pointer;
             transition: 0.25s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            width: 100%;
+            gap: 6px;
         }
         .home-challenge-box .mailbox-send-btn:hover {
-            background: var(--accent-pink, #ff69b4);
+            background: var(--accent-gold, #c9933e);
             color: #111;
-            box-shadow: 0 0 16px rgba(255, 105, 180, 0.35);
+            box-shadow: 0 4px 14px rgba(201, 147, 62, 0.35);
         }
-        .home-challenge-box .mailbox-note {
-            font-size: 0.72rem;
-            color: var(--exam-text-color, #888);
-            opacity: 0.55;
-            font-style: italic;
-            margin: 3px 0 0 0;
-            text-align: center;
+        html.parchment-mode .home-challenge-box .mailbox-send-btn {
+            background: #ab3334 !important;
+            color: #ffffff !important;
+        }
+        html.parchment-mode .home-challenge-box .mailbox-send-btn:hover {
+            background: #8e2a2b !important;
+            box-shadow: 0 4px 14px rgba(171, 51, 52, 0.35) !important;
         }
 
         /* Label tags */
@@ -761,79 +882,58 @@
                                     </button>
                                 </div>
 
-                                <!-- Biểu mẫu Gửi Lời Giải Của Bạn (tinh chỉnh gọn gàng) -->
+                                <!-- Biểu mẫu Gửi Lời Giải Của Bạn (Tinh gọn & Thanh lịch) -->
                                 <div id="solution-mailbox-wrap" style="display: none;">
                                     <div class="solution-mailbox">
                                         <div class="mailbox-header">
                                             <div class="mailbox-header-main">
-                                                <div class="mailbox-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+                                                <div class="mailbox-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
                                                 <div class="mailbox-title">Gửi Lời Giải Của Bạn</div>
                                             </div>
                                             <button type="button" class="mailbox-close-btn" onclick="toggleSolutionForm()" title="Đóng biểu mẫu">✕</button>
                                         </div>
-                                        <p class="mailbox-subtitle">
-                                            Nếu bạn có lời giải cho câu đố này hoặc cách tiếp cận mới, hãy gửi cho chúng tôi — lời giải sẽ được <em>đăng lên hệ thống</em> và ghi nhận đóng góp của bạn!
-                                        </p>
 
                                         <div class="mailbox-form" id="solution-form">
+                                            <input type="hidden" id="sol-problem" value="Câu đố trong ngày: Đẳng thức phần nguyên của hai đa thức">
+
                                             <div class="mailbox-row">
                                                 <div class="mailbox-field">
-                                                    <label class="mailbox-label" for="sol-name">Họ &amp; Tên <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
-                                                    <input type="text" id="sol-name" class="mailbox-input" placeholder="Nguyễn Văn A...">
+                                                    <label class="mailbox-label" for="sol-name">Tên / Biệt danh <span class="req">*</span></label>
+                                                    <input type="text" id="sol-name" class="mailbox-input" placeholder="Ví dụ: Hoàng Long...">
                                                 </div>
                                                 <div class="mailbox-field">
-                                                    <label class="mailbox-label" for="sol-contact">Email <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
-                                                    <input type="text" id="sol-contact" class="mailbox-input" placeholder="Nhập địa chỉ email...">
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="mailbox-row">
-                                                <div class="mailbox-field">
-                                                    <label class="mailbox-label" for="sol-problem">Bài toán <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
-                                                    <select id="sol-problem" class="mailbox-input mailbox-select">
-                                                        <option value="Câu đố trong ngày: Đẳng thức phần nguyên của hai đa thức" selected>Câu đố trong ngày: Đẳng thức phần nguyên của hai đa thức</option>
-                                                        <option value="Đóng góp câu đố mới">Đóng góp câu đố mới</option>
-                                                        <option value="Đóng góp bài toán khác">Đóng góp bài toán khác</option>
-                                                        <option value="" style="display:none;"></option>
-                                                    </select>
-                                                </div>
-                                                <div class="mailbox-field">
-                                                    <label class="mailbox-label" for="sol-fb">Facebook / Nickname <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
-                                                    <input type="text" id="sol-fb" class="mailbox-input" placeholder="Tên hiển thị trên web...">
+                                                    <label class="mailbox-label" for="sol-contact">Email / Liên hệ <span class="req">*</span></label>
+                                                    <input type="text" id="sol-contact" class="mailbox-input" placeholder="Để SMP phản hồi...">
                                                 </div>
                                             </div>
 
                                             <div class="mailbox-field">
-                                                <label class="mailbox-label" for="sol-content">Nội dung lời giải <span class="req" style="color:#f87171;margin-left:3px">*</span></label>
+                                                <label class="mailbox-label" for="sol-content">Lời giải (hỗ trợ gõ LaTeX) <span class="req">*</span></label>
                                                 <textarea id="sol-content" class="mailbox-textarea"
-                                                    placeholder="Viết lời giải của bạn tại đây. Hỗ trợ gõ LaTeX như $x^2 + y^2 = z^2$ hoặc \[ \sum_{k=1}^n k = \frac{n(n+1)}{2} \]..."></textarea>
-                                                <span class="mailbox-hint">Hỗ trợ LaTeX inline <code>$ ... $</code> và display <code>\[ ... \]</code></span>
+                                                    placeholder="Gõ lời giải tại đây (hỗ trợ $inline$ và \[display\])..."></textarea>
                                                 <div class="latex-preview-wrap">
-                                                    <button type="button" class="latex-preview-toggle" id="preview-toggle" onclick="togglePreview()">▶ Xem preview LaTeX</button>
+                                                    <button type="button" class="latex-preview-toggle" id="preview-toggle" onclick="togglePreview()">▶ Xem trước LaTeX</button>
                                                     <div class="latex-preview-box" id="latex-preview">
                                                         <span class="latex-preview-empty">Bắt đầu gõ để xem preview...</span>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="mailbox-field">
-                                                <label class="mailbox-label">Đính kèm ảnh / tài liệu (tuỳ chọn)</label>
-                                                <div class="mailbox-file-zone" id="file-drop-zone">
-                                                    <input type="file" id="sol-images" accept="image/*,.pdf" multiple>
-                                                    <span class="mailbox-file-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-bottom: 2px;"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span>
-                                                    <p class="mailbox-file-label"><strong>Nhấn để chọn file</strong> hoặc kéo &amp; thả vào đây</p>
-                                                    <p class="mailbox-file-label" style="margin-top:2px; font-size:0.75rem; opacity: 0.7;">Hỗ trợ ảnh (PNG, JPG...) và PDF</p>
+                                            <div class="mailbox-bottom-bar">
+                                                <div>
+                                                    <label class="mailbox-attach-btn" for="sol-images" title="Đính kèm file ảnh hoặc PDF">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                                                        <span>Đính kèm ảnh / PDF</span>
+                                                        <input type="file" id="sol-images" accept="image/*,.pdf" multiple>
+                                                    </label>
                                                     <div class="mailbox-file-names" id="file-names"></div>
                                                 </div>
-                                            </div>
 
-                                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                                                 <button type="button" class="mailbox-send-btn" id="sol-send-btn" onclick="sendSolution()">
-                                                    <span id="sol-submit-icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
-                                                    <span id="sol-submit-text">Gửi Lời Giải (Đính Kèm Tự Động)</span>
+                                                    <span id="sol-submit-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+                                                    <span id="sol-submit-text">Gửi lời giải</span>
                                                 </button>
                                             </div>
-                                            <p class="mailbox-note">Lời giải và toàn bộ file đính kèm sẽ được nén và đẩy thẳng đến tác giả!</p>
                                         </div>
                                     </div>
                                 </div>

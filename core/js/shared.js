@@ -61,6 +61,9 @@ window.ThemeManager = {
         }
 
         this.updateButtons(theme);
+        if (typeof window.runManimLogic === 'function' && document.getElementById('smp-logo-center')) {
+            window.runManimLogic();
+        }
     },
 
     cycle(evt) {

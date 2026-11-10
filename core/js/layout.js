@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v111') caches.delete(name);
+                if (name !== 'smp-cache-v112') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -949,6 +949,7 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(container);
 });
 
+window.runManimLogic = runManimLogic;
 function runManimLogic() {
     const center = document.getElementById('smp-logo-center');
     if (!center) return;
@@ -962,8 +963,19 @@ function runManimLogic() {
     const U  = 0.60;
     const GAP = U * 0.55;
 
-    const CYAN_COLOR   = "#4DE8D0";
-    const SHADOW_COLOR = "#1E6B9A";
+    const curTheme = (window.ThemeManager && typeof window.ThemeManager.get === 'function')
+        ? window.ThemeManager.get()
+        : (localStorage.getItem('smp-theme') || (localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light'));
+
+    let CYAN_COLOR   = "#4DE8D0";
+    let SHADOW_COLOR = "#1E6B9A";
+    if (curTheme === 'parchment' || document.documentElement.classList.contains('parchment-mode')) {
+        CYAN_COLOR   = "#ab3334"; // Đỏ Mận Học Thuật (Ý 1)
+        SHADOW_COLOR = "#5c191a"; // Đỏ Rượu Trầm / Bóng 3D
+    } else if (curTheme === 'light' || (!document.documentElement.classList.contains('dark-mode') && !document.documentElement.classList.contains('parchment-mode'))) {
+        CYAN_COLOR   = "#009eb3";
+        SHADOW_COLOR = "#08505c";
+    }
     const dx = 0.13;
     const dy = -0.13;
 
