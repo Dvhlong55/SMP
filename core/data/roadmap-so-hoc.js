@@ -216,7 +216,7 @@ window.SMP_ROADMAP_SOHOC = {
                 {
                     title: 'Luật tương hỗ Gauss & kí hiệu Jacobi',
                     desc: 'Luật tương hỗ bậc hai, mở rộng sang kí hiệu Jacobi và ứng dụng vào chia hết, dãy số.',
-                    url: '/posts/math/vmo/mo-dau-ve-thang-du-bac-hai.html'
+                    url: null
                 },
                 {
                     title: 'Bổ đề Thue & biểu diễn số nguyên tố',
