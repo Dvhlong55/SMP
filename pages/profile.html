@@ -23,7 +23,7 @@
     <!-- SMP SEO END -->
 
     <!-- Early Dark Mode Apply -->
-    <script>if(localStorage.getItem('smp-dark-mode')==='true')document.documentElement.classList.add('dark-mode');if(localStorage.getItem('smp-sidebar-collapsed')==='true')document.documentElement.classList.add('sidebar-collapsed');</script>
+    <script>(function(){var t=localStorage.getItem('smp-theme')||(localStorage.getItem('smp-dark-mode')==='true'?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='parchment')document.documentElement.classList.add('parchment-mode');if(localStorage.getItem('smp-sidebar-collapsed')==='true')document.documentElement.classList.add('sidebar-collapsed');})();</script>
     <!-- CSS -->
     <link rel="stylesheet" href="/core/css/shared.css?v=99">
     <link rel="stylesheet" href="/core/css/post.css?v=36">
@@ -56,6 +56,61 @@
             --prof-h2: #007799;
             --prof-h3: #00a8cc;
             --prof-h4: #5ce1e6;
+        }
+
+        html.parchment-mode,
+        body.parchment-mode {
+            --prof-accent: #ab3334;
+            --prof-ink: #201610;
+            --prof-muted: #745f4d;
+            --prof-line: #e5dac4;
+            --prof-paper: #fbf5e6;
+            --prof-card-bg: #fffdf7;
+            --prof-danger: #ab3334;
+            --prof-h0: #efe7d3;
+            --prof-h1: #eed4a8;
+            --prof-h2: #dfa85a;
+            --prof-h3: #c9933e;
+            --prof-h4: #ab3334;
+        }
+
+        html.parchment-mode .prof-avatar,
+        body.parchment-mode .prof-avatar {
+            border-color: #ab3334 !important;
+            color: #ab3334 !important;
+            background: rgba(171, 51, 52, 0.08) !important;
+        }
+
+        html.parchment-mode .prof-tab-btn.active,
+        body.parchment-mode .prof-tab-btn.active {
+            color: #ab3334 !important;
+            border-bottom-color: #ab3334 !important;
+        }
+
+        html.parchment-mode .prof-tab-btn:hover,
+        body.parchment-mode .prof-tab-btn:hover {
+            color: #ab3334 !important;
+        }
+
+        html.parchment-mode .prof-btn-save,
+        body.parchment-mode .prof-btn-save {
+            background: #ab3334 !important;
+            color: #ffffff !important;
+        }
+
+        html.parchment-mode .prof-btn-save:hover,
+        body.parchment-mode .prof-btn-save:hover {
+            background: #8e2a2b !important;
+        }
+
+        html.parchment-mode .prof-input:focus,
+        body.parchment-mode .prof-input:focus {
+            border-color: #ab3334 !important;
+        }
+
+        html.parchment-mode .prof-switch input:checked + .prof-slider,
+        body.parchment-mode .prof-switch input:checked + .prof-slider {
+            background-color: #ab3334 !important;
         }
 
         /* ── Profile Outer Container ── */

@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
     <title>SMP — Toán Học</title>
     <!-- Early Dark Mode Apply -->
-    <script>if(localStorage.getItem('smp-dark-mode')==='true')document.documentElement.classList.add('dark-mode');if(localStorage.getItem('smp-sidebar-collapsed')==='true')document.documentElement.classList.add('sidebar-collapsed');</script>
+    <script>(function(){var t=localStorage.getItem('smp-theme')||(localStorage.getItem('smp-dark-mode')==='true'?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='parchment')document.documentElement.classList.add('parchment-mode');if(localStorage.getItem('smp-sidebar-collapsed')==='true')document.documentElement.classList.add('sidebar-collapsed');})();</script>
     <script>
         window.MathJax = {
             tex: {
@@ -158,6 +158,12 @@
             background: #0d9488 !important;
             color: #ffffff !important;
             border-color: #0d9488 !important;
+        }
+        html.parchment-mode .math-subnav-btn.active,
+        body.parchment-mode .math-subnav-btn.active {
+            background: #ab3334 !important;
+            color: #ffffff !important;
+            border-color: #ab3334 !important;
         }
 
         /* Dòng hiển thị Chuyên Mục hiện tại dưới các chip: font Playfair Display và cỡ chữ ngang title của card (1.15rem) */

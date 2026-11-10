@@ -22,7 +22,7 @@
             }
         };
     </script>
-    <script>if(localStorage.getItem('smp-dark-mode')==='true')document.documentElement.classList.add('dark-mode');if(localStorage.getItem('smp-sidebar-collapsed')==='true')document.documentElement.classList.add('sidebar-collapsed');</script>
+    <script>(function(){var t=localStorage.getItem('smp-theme')||(localStorage.getItem('smp-dark-mode')==='true'?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='parchment')document.documentElement.classList.add('parchment-mode');if(localStorage.getItem('smp-sidebar-collapsed')==='true')document.documentElement.classList.add('sidebar-collapsed');})();</script>
     <link class="theme-link" rel="stylesheet" href="/core/css/shared.css?v=99">
     
     <link rel="stylesheet" href="/core/css/mathtype-v2.css?v=36">

@@ -1,10 +1,15 @@
 // Áp dụng ngay lập tức trước khi parse/render để triệt tiêu chớp nháy trắng & giật sidebar
-if (localStorage.getItem('smp-dark-mode') === 'true') {
-    document.documentElement.classList.add('dark-mode');
-}
-if (localStorage.getItem('smp-sidebar-collapsed') === 'true') {
-    document.documentElement.classList.add('sidebar-collapsed');
-}
+(function() {
+    var t = localStorage.getItem('smp-theme') || (localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light');
+    if (t === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+    } else if (t === 'parchment') {
+        document.documentElement.classList.add('parchment-mode');
+    }
+    if (localStorage.getItem('smp-sidebar-collapsed') === 'true') {
+        document.documentElement.classList.add('sidebar-collapsed');
+    }
+})();
 
 document.addEventListener('DOMContentLoaded', function () {
     // 1. Get configurations from meta tags
@@ -40,6 +45,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // 3. Clear body and build the full layout
     document.body.innerHTML = '';
     document.body.style.display = 'none'; // Giấu đi chờ render xong
+    var postTheme = localStorage.getItem('smp-theme') || (localStorage.getItem('smp-dark-mode') === 'true' ? 'dark' : 'light');
+    if (postTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+    } else if (postTheme === 'parchment') {
+        document.body.classList.add('parchment-mode');
+    }
     
     // Thêm các CSS cần thiết nếu chưa có trong thẻ head
     const head = document.head;

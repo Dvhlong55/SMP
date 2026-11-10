@@ -121,6 +121,13 @@ body.dark-mode .rm-nav-btn.active {
     border-color: #0d9488 !important;
 }
 
+html.parchment-mode .rm-nav-btn.active,
+body.parchment-mode .rm-nav-btn.active {
+    background: #ab3334 !important;
+    color: #ffffff !important;
+    border-color: #ab3334 !important;
+}
+
 .rm-nav-btn.active .chip-icon,
 .rm-nav-btn.active .chip-latex,
 .rm-nav-btn.active svg,

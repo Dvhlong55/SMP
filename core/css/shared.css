@@ -100,52 +100,91 @@ body.parchment-mode .search-input:focus {
     border-color: #ab3334;
     background: #fffdf7;
 }
+html.parchment-mode .topbar-sidebar-toggle,
 body.parchment-mode .topbar-sidebar-toggle {
     color: #ab3334;
 }
+html.parchment-mode .topbar-sidebar-toggle:hover,
 body.parchment-mode .topbar-sidebar-toggle:hover {
     background: rgba(171, 51, 52, 0.12);
     color: #ab3334;
 }
+html.parchment-mode .sidebar-toggle,
 body.parchment-mode .sidebar-toggle {
     background: #241b14;
     border-color: #241b14;
     color: #ebdcc4;
 }
+html.parchment-mode .sidebar-toggle:hover,
 body.parchment-mode .sidebar-toggle:hover {
     background: #382b20;
     border-color: #382b20;
 }
+html.parchment-mode .reading-progress-fill,
 body.parchment-mode .reading-progress-fill {
     background: #ab3334 !important;
 }
+html.parchment-mode .topbar-nav-btn:hover,
+html.parchment-mode .topbar-nav-btn.active,
 body.parchment-mode .topbar-nav-btn:hover,
 body.parchment-mode .topbar-nav-btn.active {
     color: #ab3334 !important;
     background-color: rgba(171, 51, 52, 0.1) !important;
     border-color: rgba(171, 51, 52, 0.25) !important;
 }
+html.parchment-mode .mobile-bottom-nav,
 body.parchment-mode .mobile-bottom-nav {
     background-color: #f4ecdc !important;
     border-top: 1px solid #e5dac4 !important;
 }
+html.parchment-mode .sidebar-logo,
 body.parchment-mode .sidebar-logo {
     filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 12px rgba(171, 51, 52, 0.35));
 }
+html.parchment-mode .sidebar-logo:hover,
 body.parchment-mode .sidebar-logo:hover {
     filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 16px rgba(171, 51, 52, 0.55));
 }
+html.parchment-mode .header-box,
 body.parchment-mode .header-box {
     border-color: var(--accent-cyan, #ab3334);
     background: rgba(171, 51, 52, 0.04);
 }
+html.parchment-mode .modal-expand-btn,
 body.parchment-mode .modal-expand-btn {
     border-color: rgba(171, 51, 52, 0.35);
     color: #ab3334;
 }
+html.parchment-mode .modal-expand-btn:hover,
 body.parchment-mode .modal-expand-btn:hover {
     background: rgba(171, 51, 52, 0.1);
     border-color: #ab3334;
+}
+
+/* Parchment mode overrides for chips, tabs, buttons across site */
+html.parchment-mode .math-subnav-btn.active,
+body.parchment-mode .math-subnav-btn.active,
+html.parchment-mode .rm-nav-btn.active,
+body.parchment-mode .rm-nav-btn.active {
+    background: #ab3334 !important;
+    color: #ffffff !important;
+    border-color: #ab3334 !important;
+}
+html.parchment-mode .math-subnav-btn.active *,
+body.parchment-mode .math-subnav-btn.active *,
+html.parchment-mode .rm-nav-btn.active *,
+body.parchment-mode .rm-nav-btn.active * {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+}
+html.parchment-mode .math-nav-btn.active,
+body.parchment-mode .math-nav-btn.active {
+    color: #ab3334 !important;
+    border-bottom-color: #ab3334 !important;
+}
+html.parchment-mode .challenge-btn:hover,
+body.parchment-mode .challenge-btn:hover {
+    color: #ffffff !important;
 }
 
 /* === RESET & BASE === */

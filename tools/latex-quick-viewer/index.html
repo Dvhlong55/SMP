@@ -14,8 +14,7 @@
     <meta name="description" content="Tiện ích biên dịch và soạn thảo công thức LaTeX trực tiếp trên bình luận mạng xã hội">
 
     <script>
-        if(localStorage.getItem('smp-dark-mode')==='true') document.documentElement.classList.add('dark-mode');
-        if(localStorage.getItem('smp-sidebar-collapsed')==='true') document.documentElement.classList.add('sidebar-collapsed');
+        (function(){var t=localStorage.getItem('smp-theme')||(localStorage.getItem('smp-dark-mode')==='true'?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='parchment')document.documentElement.classList.add('parchment-mode');if(localStorage.getItem('smp-sidebar-collapsed')==='true')document.documentElement.classList.add('sidebar-collapsed');})();
     </script>
 
     <!-- SMP Shared Styles -->
