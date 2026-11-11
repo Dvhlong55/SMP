@@ -275,9 +275,9 @@ window.SMP_ROADMAP_SOHOC = {
             title: 'Đa thức số học',
             tiles: [
                 {
-                    title: 'Đa thức hệ số nguyên & số đại số',
-                    desc: 'Số đại số, đa thức tối tiểu, tính chất $a - b \\mid P(a) - P(b)$ và các tiêu chuẩn bất khả quy Eisenstein, Perron, Cohn.',
-                    url: '/posts/math/vmo/so-dai-so-va-da-thuc-toi-tieu.html'
+                    title: 'Đa thức hệ số nguyên',
+                    desc: 'Tính chất $a - b \\mid P(a) - P(b)$, nghiệm hữu tỉ và các bài toán chia hết cơ bản.',
+                    url: null
                 },
                 {
                     title: 'Ước nguyên tố của $P(n)$',
@@ -288,6 +288,11 @@ window.SMP_ROADMAP_SOHOC = {
                     title: 'Đồng dư đa thức & định lý Lagrange',
                     desc: 'Số nghiệm của đa thức theo modulo nguyên tố, kết hợp định lý thặng dư Trung Hoa.',
                     url: null
+                },
+                {
+                    title: 'Số đại số & đa thức tối tiểu',
+                    desc: 'Số đại số, số nguyên đại số, đa thức tối tiểu và các tiêu chuẩn bất khả quy Eisenstein, Perron, Cohn.',
+                    url: '/posts/math/vmo/so-dai-so-va-da-thuc-toi-tieu.html'
                 }
             ]
         },
