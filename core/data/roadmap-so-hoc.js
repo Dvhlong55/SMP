@@ -275,9 +275,9 @@ window.SMP_ROADMAP_SOHOC = {
             title: 'Đa thức số học',
             tiles: [
                 {
-                    title: 'Đa thức hệ số nguyên',
-                    desc: 'Tính chất $a - b \\mid P(a) - P(b)$, nghiệm hữu tỉ và các bài toán chia hết cơ bản.',
-                    url: null
+                    title: 'Đa thức hệ số nguyên & số đại số',
+                    desc: 'Số đại số, đa thức tối tiểu, tính chất $a - b \\mid P(a) - P(b)$ và các tiêu chuẩn bất khả quy Eisenstein, Perron, Cohn.',
+                    url: '/posts/math/vmo/so-dai-so-va-da-thuc-toi-tieu.html'
                 },
                 {
                     title: 'Ước nguyên tố của $P(n)$',

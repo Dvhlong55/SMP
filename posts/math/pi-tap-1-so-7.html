@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 7)</title>
+    
+    <meta name="post-id" content="PiTap1So7">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 1 Số 7 (Tháng 07/2017), từ bài P71 đến P80.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 7)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 1 Số 7 kèm gợi ý lời giải bám sát tư duy Olympic.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-1-so-7.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 7)">
+    <meta name="twitter:description" content="Đề bài P71 - P80 Tạp chí Pi Tập 1 Số 7 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            width: fit-content;
+            outline: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            border-radius: 4px;
+            background: rgba(2, 132, 199, 0.08);
+            transition: background 0.2s;
+        }
+        summary.igo-hint-trigger:hover {
+            background: rgba(2, 132, 199, 0.16);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker,
+        summary.igo-hint-trigger::marker {
+            display: none;
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.75rem;
+            transition: transform 0.2s ease-in-out;
+            color: var(--accent-cyan, #0284c7);
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            padding: 10px 0 10px 18px;
+            margin-top: 8px;
+            border-left: 2px solid var(--accent-cyan, #0284c7);
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: var(--exam-text-color, #334155);
+        }
+        body.dark-mode .igo-hint-content {
+            border-left-color: rgba(56, 189, 248, 0.6);
+        }
+        .igo-level-heading {
+            color: var(--exam-bold-color, #111);
+            font-size: 1.35rem;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1));
+            font-weight: 700;
+        }
+        body.dark-mode .igo-level-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--accent-cyan, #0284c7) !important;
+            text-decoration: none !important;
+            margin: 12px 0 20px 0;
+            transition: transform 0.2s ease;
+        }
+        .igo-nav-link:hover {
+            transform: translateX(-3px);
+        }
+        .igo-mini-toc {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 16px 0 24px 0;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-size: 0.9rem;
+        }
+        body.dark-mode .igo-mini-toc {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .igo-mini-toc a {
+            color: var(--exam-bold-color, #111) !important;
+            text-decoration: none !important;
+            transition: color 0.2s;
+        }
+        .igo-mini-toc a:hover {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+        .author-tag {
+            font-style: italic;
+            color: var(--text-muted, #64748b);
+            font-size: 0.92rem;
+            margin-top: -4px;
+            margin-bottom: 10px;
+        }
+        .source-ref {
+            font-size: 0.88rem;
+            color: var(--text-muted, #64748b);
+            margin-top: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content">
+        <div class="header-box">
+            <h1>Tạp Chí Pi — Tập 1 Số 7</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Chuyên mục Thách thức Toán học (Tháng 07/2017)</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Hệ thống Gợi ý tư duy độc lập biên soạn bởi SMP</h2>
+        </div>
+
+        <!-- LỐI DẪN ĐẦU TRANG ĐẾN TỔNG QUAN -->
+        <div>
+            <a href="thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" class="igo-nav-link">← Tổng quan Thách thức Toán học Tạp chí Pi (2017 – 2024)</a>
+        </div>
+
+        <!-- MỤC LỤC MINI CHO SỐ PHÁT HÀNH -->
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Khối thi:</span>
+            <a href="#thcs">Khối THCS (Bài P71 – P74)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#thpt">Khối THPT (Bài P75 – P80)</a>
+        </div>
+
+        <!-- ================= KHỐI THCS ================= -->
+        <h2 id="thcs" class="igo-level-heading">Khối THCS (Dành cho Trung học Cơ sở)</h2>
+
+        <!-- BÀI P71 -->
+        <h3>Bài P71. Đúng một số không phải là số nguyên</h3>
+        <div class="author-tag">Đề xuất: Lưu Thanh Hà (Kiên Giang)</div>
+        <p>Tìm tất cả các số thực $x$ sao cho trong 4 số:
+        \[
+        x^2 + 4\sqrt{3}, \quad x^2 - \frac{4}{x}, \quad x^2 + \frac{4}{x}, \quad x^4 + 40\sqrt{3}
+        \]
+        có đúng một số không phải là số nguyên.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Gọi 4 số đã cho lần lượt là $s_1, s_2, s_3, s_4$.</p>
+                <ul>
+                    <li>Nếu $s_1 = x^2 + 4\sqrt{3}$ là số không nguyên: Khi đó ba số còn lại $s_2, s_3, s_4$ đều phải là các số nguyên.
+                    Từ $s_2, s_3 \in \mathbb{Z} \implies s_3 - s_2 = \dfrac{8}{x} \in \mathbb{Z}$ và $s_3 + s_2 = 2x^2 \in \mathbb{Z}$.
+                    Suy ra $x$ là số hữu tỉ có dạng $x = \dfrac{8}{k}$ ($k \in \mathbb{Z}^*$). Nhưng khi đó $x^4 \in \mathbb{Q}$, kéo theo $s_4 = x^4 + 40\sqrt{3}$ là một số vô tỉ (không nguyên), mâu thuẫn với giả thiết chỉ có đúng một số không nguyên!</li>
+                    <li>Do đó $s_1 \in \mathbb{Z}$ bắt buộc phải đúng, kéo theo $x^2 = m - 4\sqrt{3}$ với $m \in \mathbb{Z}$.</li>
+                    <li>Khai thác $s_4 = x^4 + 40\sqrt{3} = (m - 4\sqrt{3})^2 + 40\sqrt{3} = m^2 + 48 + (40 - 8m)\sqrt{3}$. Để $s_4 \in \mathbb{Z}$ thì hệ số của $\sqrt{3}$ phải triệt tiêu: $40 - 8m = 0 \implies m = 5$.</li>
+                    <li>Từ đó $x^2 = 5 - 4\sqrt{3} < 0$ (vô nghiệm). Biện luận đầy đủ các trường hợp để rút ra kết luận tập giá trị của $x$.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 9.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P72 -->
+        <h3>Bài P72. Bộ ba số nguyên dương và hàm phần nguyên căn thức</h3>
+        <div class="author-tag">Đề xuất: Hà Duy Hưng (Hà Nội)</div>
+        <p>Tìm tất cả các bộ 3 số nguyên dương $(a, b, c)$ thỏa mãn đồng thời các điều kiện sau:</p>
+        <ol style="line-height: 1.8;">
+            <li>$a = b + [\sqrt{4c - 1}]$;</li>
+            <li>$ab = c^2 + 1$.</li>
+        </ol>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $k = [\sqrt{4c - 1}] \implies k \le \sqrt{4c - 1} < k + 1 \implies k^2 \le 4c - 1 < (k + 1)^2$.</p>
+                <p>Từ điều kiện (1) ta có $a - b = k$. Sử dụng đẳng thức hằng:
+                \[
+                (a + b)^2 = (a - b)^2 + 4ab = k^2 + 4(c^2 + 1) = 4c^2 + k^2 + 4.
+                \]
+                Đánh giá chặn bình phương hoàn hảo:
+                \[
+                (2c)^2 = 4c^2 < 4c^2 + k^2 + 4 \le 4c^2 + 4c + 3 < (2c + 1)^2 \quad (\text{khi } k^2 + 4 \le 4c + 3).
+                \]
+                Vì $(a+b)^2$ là số chính phương kẹp giữa $(2c)^2$ và $(2c+1)^2$, điều này chỉ có thể xảy ra khi đẳng thức biên xảy ra hoặc $k$ nhận các giá trị nhỏ $k \in \{1, 2\}$. Thử trực tiếp các giá trị nhỏ của $k$ để tìm ra các bộ $(a, b, c)$ thỏa mãn.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 9.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P73 -->
+        <h3>Bài P73. Điểm nằm trên đường tròn Euler liên hợp</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Thanh Giang (TP. Hồ Chí Minh) sưu tầm</div>
+        <p>Gọi $O, I, H$ tương ứng là tâm đường tròn ngoại tiếp, tâm đường tròn nội tiếp, trực tâm của tam giác nhọn, không đều $ABC$. Chứng minh rằng không có đỉnh nào của tam giác $ABC$ nằm trên đường tròn ngoại tiếp tam giác $OIH$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Giả sử phản chứng đỉnh $A$ nằm trên đường tròn ngoại tiếp tam giác $OIH$, tức là tứ giác $AOIH$ nội tiếp.</p>
+                <p>Trong tam giác $ABC$, đường thẳng $AI$ là phân giác trong của góc $\widehat{BAC}$. Đồng thời, đường cao $AH$ và bán kính $AO$ là hai đường đẳng giác đối với góc $A$, tức là $\widehat{HAI} = \widehat{OAI}$.</p>
+                <p>Vì tứ giác $AOIH$ nội tiếp nên các góc chắn cung tương ứng thỏa mãn: $\widehat{HAI} = \widehat{HOI}$ và $\widehat{OAI} = \widehat{OHI} \implies \widehat{HOI} = \widehat{OHI} \implies IH = IO$.</p>
+                <p>Sử dụng các hệ thức khoảng cách Euler: $OI^2 = R^2 - 2Rr$ và $IH^2 = 4R^2 + 4Rr + 3r^2 - p^2$. Kết hợp đẳng thức $IO = IH$ dẫn tới điều kiện $p^2 = 2R^2 + 6Rr + 3r^2$, biến đổi đẳng thức lượng giác chỉ ra điều này chỉ xảy ra khi tam giác cân hoặc đều, mâu thuẫn với giả thiết.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 9.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P74 -->
+        <h3>Bài P74. Tô màu cạnh và đường chéo của 2017-giác đều</h3>
+        <div class="author-tag">Đề xuất: Hà Thanh (Cần Thơ) sưu tầm</div>
+        <p>Người ta tô tất cả các cạnh và các đường chéo của một 2017-giác đều bởi $k$ màu, sao cho các điều kiện sau được đồng thời thỏa mãn:</p>
+        <p>a) Với mỗi màu $x$ và với mỗi cặp đỉnh $A, B$ của 2017-giác đều, hoặc đoạn thẳng $AB$ được tô bởi màu $x$, hoặc tồn tại đỉnh $C$ sao cho các đoạn thẳng $AC$ và $BC$ cùng được tô bởi màu $x$;</p>
+        <p>b) Với $X, Y, Z$ là 3 đỉnh đôi một phân biệt tùy ý của 2017-giác đều, tất cả các cạnh của tam giác $XYZ$ được tô bởi tối đa 2 màu.</p>
+        <p>Chứng minh rằng $k \le 2$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Điều kiện (b) có nghĩa là đồ thị không chứa bất kỳ tam giác nào có 3 cạnh tô bởi 3 màu khác nhau (tam giác cầu vồng - rainbow triangle).</p>
+                <p>Theo <strong>Định lý Gallai về đồ thị không chứa tam giác cầu vồng</strong>, một đồ thị đầy đủ tô cạnh không có tam giác cầu vồng có thể phân rã thành một cấu hình đồ thị hai phía hoặc đồ thị khối có tính chất thay thế.</p>
+                <p>Kết hợp với điều kiện (a): Mỗi lớp màu có đường kính không quá $2$ (mọi cặp đỉnh hoặc nối trực tiếp bằng màu đó, hoặc có đỉnh trung gian cùng màu đó). Đếm số cạnh và số cặp đỉnh độc lập của 2017-giác đều để chứng minh số màu $k$ không thể vượt quá $2$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 9.</div>
+            </div>
+        </details>
+
+        <!-- ================= KHỐI THPT ================= -->
+        <h2 id="thpt" class="igo-level-heading">Khối THPT (Dành cho Trung học Phổ thông)</h2>
+
+        <!-- BÀI P75 -->
+        <h3>Bài P75. Bất đẳng thức tổng dãy số thực dương</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Đình Toàn (Paris, CH Pháp)</div>
+        <p>Cho dãy số thực dương $(a_n)_{n \ge 1}$ thỏa mãn điều kiện:
+        \[
+        a_1 + a_2 + \dots + a_n + a_{n+1} < 4a_n
+        \]
+        với mọi $n$ nguyên dương. Chứng minh rằng:
+        \[
+        a_1 + a_2 + \dots + a_n \le a_{n+1}
+        \]
+        với mọi $n$ nguyên dương.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $S_n = \sum_{k=1}^n a_k$. Khi đó $a_n = S_n - S_{n-1}$ (với $S_0 = 0$) và $a_{n+1} = S_{n+1} - S_n$.</p>
+                <p>Giả thiết bài toán viết lại dưới dạng tổng tích lũy:
+                \[
+                S_{n+1} < 4(S_n - S_{n-1}) \iff S_{n+1} - 4S_n + 4S_{n-1} < 0.
+                \]
+                Nhận xét phương trình đặc trưng có nghiệm kép: $t^2 - 4t + 4 = (t - 2)^2 = 0$.</p>
+                <p>Bất đẳng thức $S_{n+1} - 2S_n < 2(S_n - 2S_{n-1})$ gợi ý việc dùng quy nạp và phân tích hiệu để chỉ ra $S_n \le a_{n+1} \iff S_{n+1} \ge 2S_n$. Khảo sát tính dương nghiêm ngặt của dãy số để kết luận bất đẳng thức luôn đúng.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 9.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P76 -->
+        <h3>Bài P76. Điểm đối xứng của tâm nội tiếp tam giác cân</h3>
+        <div class="author-tag">Đề xuất: Nhóm “TTTH” sưu tầm</div>
+        <p>Cho tam giác $ABC$ với $AB = AC \neq BC$. Gọi $I$ là tâm đường tròn nội tiếp tam giác đó. Đường thẳng $BI$ cắt $AC$ tại $D$; đường thẳng đi qua $D$ và vuông góc với $AC$ cắt $AI$ tại $E$. Chứng minh rằng điểm đối xứng với $I$ qua $AC$ nằm trên đường tròn ngoại tiếp tam giác $BDE$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Gọi $I'$ là điểm đối xứng với $I$ qua đường thẳng $AC$. Khi đó $DI' = DI$ và $\widehat{ADI'} = \widehat{ADI}$.</p>
+                <p>Vì $DE \perp AC$, tam giác $EDI$ vuông tại $D$ và $AC$ là phân giác ngoài của góc $\widehat{IDI'}$.</p>
+                <p>Do $AB = AC$, $AI$ là trục đối xứng của tam giác $ABC$. Tính toán các góc $\widehat{DBE}$ và $\widehat{DI'E}$ thông qua số đo góc $\widehat{BAC} = 2\alpha$, chứng minh $\widehat{EBI'} = \widehat{EDI'} = 90^\circ$ hoặc sử dụng phép quay vị tự để chỉ ra tứ giác $BDI'E$ nội tiếp.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 9.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P77 -->
+        <h3>Bài P77. Bất đẳng thức phân thức ba biến chứa căn bậc ba</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Văn Quý (Hà Nội)</div>
+        <p>Cho $a, b, c$ là các số thực dương. Chứng minh rằng:
+        \[
+        \frac{a}{\sqrt[3]{4(b^3 + c^3)}} + \frac{b}{c + a} + \frac{c}{a + b} \ge \frac{3}{2}.
+        \]
+        Hỏi đẳng thức xảy ra khi và chỉ khi nào?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Áp dụng bất đẳng thức AM-GM cho biểu thức dưới căn bậc ba:</p>
+                \[
+                4(b^3 + c^3) = 4(b + c)(b^2 - bc + c^2) = 2(b + c) \cdot (2b^2 - 2bc + 2c^2).
+                \]
+                Mặt khác, với mọi số thực dương $b, c$ ta luôn có hằng đẳng thức $4(b^3 + c^3) \le (b + c)^3 \dots$ Đảo lại, theo bất đẳng thức giữa trung bình cộng và trung bình lũy thừa bậc 3:
+                \[
+                \sqrt[3]{\frac{b^3 + c^3}{2}} \ge \frac{b + c}{2} \iff \sqrt[3]{4(b^3 + c^3)} \ge b + c.
+                \]
+                Từ đó suy ra $\dfrac{a}{\sqrt[3]{4(b^3+c^3)}} \ge \dfrac{a}{b+c}$ (hoặc dùng kỹ thuật Cauchy ngược dấu). Kết hợp với bất đẳng thức Nesbitt ba biến $\dfrac{a}{b+c} + \dfrac{b}{c+a} + \dfrac{c}{a+b} \ge \dfrac{3}{2}$, ta thu được bất đẳng thức cần chứng minh. Đẳng thức xảy ra khi và chỉ khi $a = b = c$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 9.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P78 -->
+        <h3>Bài P78. Chọn dấu vector trong chuẩn L1</h3>
+        <div class="author-tag">Đề xuất: Nhóm “TTTH” sưu tầm</div>
+        <p>Tìm tất cả các số nguyên $n \ge 3$ có tính chất: Với $2n$ số thực $a_1, a_2, \dots, a_n$ và $b_1, b_2, \dots, b_n$ tùy ý thỏa mãn điều kiện $|a_k| + |b_k| = 1$, luôn tồn tại $n$ số $x_1, x_2, \dots, x_n \in \{-1; 1\}$ sao cho:
+        \[
+        \left| \sum_{k=1}^n x_k a_k \right| + \left| \sum_{k=1}^n x_k b_k \right| \le 1.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Mỗi cặp $(a_k, b_k)$ biểu diễn một điểm $v_k$ nằm trên biên của hình vuông chuẩn $\ell_1$: $\|v_k\|_1 = |a_k| + |b_k| = 1$.</p>
+                <p>Bài toán tương đương với việc chọn chiều vector $\pm v_k$ sao cho vector tổng $S = \sum_{k=1}^n x_k v_k$ có chuẩn $\|S\|_1 \le 1$.</p>
+                <p>Sử dụng phương pháp hình học lồi và nguyên lý cực hạn: Khi $n = 3$, chứng minh luôn chọn được dấu nhờ tính đối xứng của 3 vector trong 4 góc phần tư. Khảo sát trường hợp $n \ge 4$ để tìm các phản ví dụ khi các vector dồn về cùng một hướng.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 9.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P79 -->
+        <h3>Bài P79. Tích cosin âm với mọi bội số lẻ</h3>
+        <div class="author-tag">Đề xuất: TS. Vũ Thế Khôi (Hà Nội)</div>
+        <p>Cho số nguyên $n > 1$. Giả sử $p, q$ là các số nguyên dương lẻ thỏa mãn đồng thời các điều kiện sau:</p>
+        <ol style="line-height: 1.8;">
+            <li>$1 \le p, q \le 2^n$;</li>
+            <li>$\cos\left(\dfrac{kp\pi}{2^n}\right) \cdot \cos\left(\dfrac{kq\pi}{2^n}\right) < 0$, với mọi số nguyên dương lẻ $k$.</li>
+        </ol>
+        <p>Chứng minh rằng $p + q = 2^n$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Biến đổi tích thành tổng:
+                \[
+                2\cos\left(\frac{kp\pi}{2^n}\right)\cos\left(\frac{kq\pi}{2^n}\right) = \cos\left(\frac{k(p+q)\pi}{2^n}\right) + \cos\left(\frac{k(p-q)\pi}{2^n}\right) < 0.
+                \]
+                <ul>
+                    <li>Nếu $p + q = 2^n$: Khi đó $\dfrac{k(p+q)\pi}{2^n} = k\pi$. Vì $k$ là số nguyên lẻ nên $\cos(k\pi) = -1$. Biểu thức trở thành $-1 + \cos\left(\dfrac{k(p-q)\pi}{2^n}\right) < 0$, luôn đúng với mọi $k$ lẻ (do $p, q$ lẻ $\implies p - q$ chẵn và khác bội của $2^{n+1}$).</li>
+                    <li>Chứng minh tính duy nhất: Lấy trung bình cộng của biểu thức trên toàn bộ nhóm nhân modulo $2^n$. Dùng tính chất trực giao của các hàm điều hòa để suy ra nếu $p + q \neq 2^n$ thì luôn tồn tại một giá trị $k$ lẻ làm cho tích cosin mang dấu dương.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 9.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P80 -->
+        <h3>Bài P80. Cặp quen nhau tối đa tại Festival quốc tế</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Khắc Minh (Hà Nội)</div>
+        <p>Có 2017 người tham dự một Festival quốc tế. Biết rằng, trong mỗi nhóm tùy ý gồm 7 người (trong số 2017 người vừa nêu) đều có tối đa 12 cặp quen nhau. Hỏi, trong Festival có thể có tối đa bao nhiêu cặp quen nhau?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Mô hình hóa bài toán bằng lý thuyết đồ thị: Xét đồ thị $G = (V, E)$ có $|V| = 2017$ đỉnh, số cạnh $|E|$ là số cặp quen nhau.</p>
+                <p>Xét đồ thị bù $\overline{G} = (V, \overline{E})$ (cạnh nối hai người không quen nhau):</p>
+                <ul>
+                    <li>Trong mỗi tập con gồm $7$ đỉnh, số cặp quen nhau $\le 12$. Vì tổng số cặp trong nhóm $7$ người là $\binom{7}{2} = 21$, nên số cặp không quen nhau trong mỗi nhóm $7$ người ít nhất là $21 - 12 = 9$ cạnh.</li>
+                    <li>Sử dụng phương pháp đếm hai cách trên tất cả $\binom{2017}{7}$ nhóm 7 người:
+                    \[
+                    \sum_{S \subset V, |S|=7} e(S) \le 12 \binom{2017}{7}.
+                    \]
+                    </li>
+                    <li>Mỗi cạnh trong $G$ xuất hiện trong đúng $\binom{2017 - 2}{7 - 2} = \binom{2015}{5}$ nhóm 7 người. Do đó:
+                    \[
+                    |E| \cdot \binom{2015}{5} \le 12 \binom{2017}{7} \implies |E| \le 12 \cdot \frac{2017 \times 2016}{7 \times 6} = 12 \cdot \frac{2017 \times 2016}{42} = 1161792.
+                    \]
+                    </li>
+                </ul>
+                <p><strong>Kết luận:</strong> Số cặp quen nhau tối đa là $1.161.792$ cặp.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 9.</div>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT SỐ 7 ───</b></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 12)</title>
+    
+    <meta name="post-id" content="PiTap1So12">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 1 Số 12 (Tháng 12/2017), từ bài P121 đến P130.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 12)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 1 Số 12 kèm gợi ý giải của SMP.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-1-so-12.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 12)">
+    <meta name="twitter:description" content="Đề bài P121 - P130 Tạp chí Pi Tập 1 Số 12 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            font-size: 0.88rem;
+            font-weight: bold;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            border: 1px dashed rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.03);
+            transition: all 0.15s ease;
+            width: fit-content;
+        }
+        [data-theme="dark"] summary.igo-hint-trigger {
+            color: #eee;
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker {
+            display: none;
+        }
+        summary.igo-hint-trigger:hover {
+            border-style: solid;
+            background: rgba(0, 0, 0, 0.07);
+        }
+        [data-theme="dark"] summary.igo-hint-trigger:hover {
+            background: rgba(255, 255, 255, 0.09);
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.72rem;
+            transition: transform 0.2s ease;
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            margin-top: 10px;
+            padding: 12px 16px;
+            border-left: 2px solid #555;
+            background: rgba(0, 0, 0, 0.02);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        [data-theme="dark"] .igo-hint-content {
+            border-left-color: #888;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .pi-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 4px;
+            background: #e3f2fd;
+            color: #1565c0;
+            margin-right: 6px;
+        }
+        [data-theme="dark"] .pi-badge {
+            background: #1a2733;
+            color: #90caf9;
+        }
+        .pi-author {
+            display: block;
+            margin-top: 6px;
+            font-style: italic;
+            font-size: 0.88rem;
+            color: #666;
+            text-align: right;
+        }
+        [data-theme="dark"] .pi-author {
+            color: #aaa;
+        }
+        .pi-ref-note {
+            margin-top: 10px;
+            padding: 6px 10px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 4px;
+            font-size: 0.82rem;
+            color: #666;
+        }
+        [data-theme="dark"] .pi-ref-note {
+            background: rgba(255, 255, 255, 0.03);
+            color: #999;
+        }
+    </style>
+</head>
+<body class="post-template">
+    <div id="smp-post-content">
+        <div class="header-container">
+            <h1>Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 12)</h1>
+            <p class="post-subtitle">Chuyên mục Thách thức Toán học — Tạp chí Pi số 12 (Tháng 12/2017) với 10 bài toán từ P121 đến P130 kèm gợi ý tư duy độc lập của SMP.</p>
+        </div>
+
+        <div style="background: rgba(0, 123, 255, 0.06); border-left: 4px solid #007bff; padding: 12px 16px; margin: 20px 0; border-radius: 4px;">
+            <strong>Tổng quan chuyên mục:</strong>
+            <ul style="margin: 6px 0 0 18px; padding: 0;">
+                <li><strong>Cấp THCS:</strong> 4 bài toán (P121 – P124).</li>
+                <li><strong>Cấp THPT:</strong> 6 bài toán (P125 – P130), khép lại Tập 1 trọn vẹn với các bài toán hình học đối cực, đa thức phần nguyên, phương trình hàm và tổ hợp xác suất.</li>
+                <li><strong>Gợi ý:</strong> Được SMP biên soạn độc lập dưới dạng các mốc định hướng tư duy giúp bạn đọc tự mình chinh phục bài toán.</li>
+            </ul>
+        </div>
+
+        <p><a href="./thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; text-decoration: none; margin-bottom: 20px;">← Quay lại Mục lục Thách thức Toán học Tạp chí Pi (2017 – 2024)</a></p>
+
+        <!-- ==================== CẤP THCS ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THCS</h2>
+
+        <!-- Bài P121 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P121</span> Cho $M$ là trung điểm của cạnh huyền $AB$ của tam giác vuông $ABC$. Trên cạnh góc vuông $CB$, lấy điểm $P$ sao cho $CP : PB = 1 : 2$. Một đường thẳng đi qua $B$ cắt các đoạn thẳng $AC, AP$ và $PM$ tương ứng tại các điểm $X, Y$ và $Z$. Chứng minh rằng phân giác trong của góc $\angle PZY$ đi qua điểm $C$ khi và chỉ khi phân giác trong của góc $\angle PYX$ đi qua $C$.</p>
+            <span class="pi-author">Nhóm TTTH st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tính chất phân giác qua chân góc:</strong></p>
+                    <p>Tia $CZ$ là phân giác của $\angle PZY$ khi và chỉ khi tỉ số khoảng cách từ $C$ đến hai cạnh $ZP$ và $ZY$ bằng nhau.</p>
+                    <p>Tương tự, tia $CY$ là phân giác của $\angle PYX$ khi và chỉ khi tỉ số khoảng cách từ $C$ đến $YP$ và $YX$ bằng nhau.</p>
+
+                    <p><strong>2. Sử dụng định lý hàm số sin và tỉ số kép:</strong></p>
+                    <p>Xét chùm đường thẳng xuất phát từ $B$ và các điểm $X, Y, Z$.</p>
+                    <p>Vì $\triangle ABC$ vuông tại $C$ và $M$ là trung điểm của cạnh huyền $AB$, ta có $MA = MB = MC$. Tỉ lệ $CP : PB = 1 : 2$ tạo nên mối liên hệ hình học điều hòa khi chiếu lên các đoạn thẳng.</p>
+
+                    <p><strong>3. Biến đổi tương đương:</strong></p>
+                    <p>Chứng minh rằng cả hai điều kiện phân giác trên đều tương đương với một hệ thức duy nhất về góc giữa đường thẳng $BX$ và các cạnh của tam giác $ABC$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 2</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P122 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P122</span> Chứng minh rằng, với mọi số thực dương $a, b, c$, ta luôn có bất đẳng thức:</p>
+            <p style="text-align: center; overflow-x: auto;">$$\sqrt{\frac{a^2 + bc}{a(b+c)}} + \sqrt{\frac{b^2 + ca}{b(c+a)}} + \sqrt{\frac{c^2 + ab}{c(a+b)}} \ge 3.$$</p>
+            <p>Hỏi đẳng thức xảy ra khi và chỉ khi nào?</p>
+            <span class="pi-author">Nguyễn Việt Hùng (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Đánh giá từng căn thức bằng AM-GM:</strong></p>
+                    <p>Xét biểu thức dưới căn:
+                    $$\frac{a^2 + bc}{a(b+c)} = \frac{a^2 + bc + a(b+c) - a(b+c)}{a(b+c)} = \frac{(a+b)(a+c)}{a(b+c)} - 1.$$
+                    Hoặc sử dụng bất đẳng thức AM-GM dạng $\sqrt{u} \ge \frac{2u}{u+1}$ hoặc đánh giá trực tiếp:
+                    $$\sqrt{\frac{a^2 + bc}{a(b+c)}} \ge \frac{2(a^2 + bc)}{a^2 + bc + a(b+c)} = \frac{2(a^2 + bc)}{(a+b)(a+c)}.$$</p>
+
+                    <p><strong>2. Khai triển và cộng tổng ba biểu thức:</strong></p>
+                    <p>Ta có:
+                    $$\frac{a^2 + bc}{(a+b)(a+c)} = \frac{a(a+b) - ab + bc}{(a+b)(a+c)} = \frac{a}{a+c} - \frac{b(a-c)}{(a+b)(a+c)}.$$
+                    Lấy tổng đối xứng ba biến theo vòng quanh, các số hạng triệt tiêu nhau một cách tự nhiên và tổng đại số đạt giá trị $\ge 3$.</p>
+
+                    <p><strong>3. Điều kiện đẳng thức:</strong> Đẳng thức xảy ra khi và chỉ khi $a = b = c$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 2</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P123 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P123</span> Chứng minh rằng trong 18 số nguyên dương liên tiếp, mà mỗi số đều có 3 chữ số, tồn tại ít nhất một số có tính chất: số đó chia hết cho tổng các chữ số của nó.</p>
+            <span class="pi-author">Hà Huy Khoái (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tính chia hết cho 18:</strong></p>
+                    <p>Trong 18 số nguyên dương liên tiếp bất kỳ, luôn tồn tại đúng một số chia hết cho 18. Gọi số đó là $N$.</p>
+                    <p>Vì $N \ \vdots \ 18$, nên $N$ là số chẵn và $N \ \vdots \ 9$.</p>
+                    <p>Theo dấu hiệu chia hết cho 9, tổng các chữ số của $N$, kí hiệu là $S(N)$, phải chia hết cho 9.</p>
+
+                    <p><strong>2. Miền giá trị của $S(N)$ với số có 3 chữ số:</strong></p>
+                    <p>Với $100 \le N \le 999$, tổng các chữ số thỏa mãn $1 \le S(N) \le 27$.</p>
+                    <p>Do $S(N) \ \vdots \ 9$, ta chỉ có ba khả năng:
+                    $$S(N) \in \{9, 18, 27\}.$$</p>
+
+                    <p><strong>3. Xét từng khả năng:</strong></p>
+                    <ul>
+                        <li>Nếu $S(N) = 18$: vì $N \ \vdots \ 18$, nên $N \ \vdots \ S(N)$ (thỏa mãn ngay lập tức).</li>
+                        <li>Nếu $S(N) = 9$: vì $N \ \vdots \ 18 \implies N \ \vdots \ 9$, nên $N \ \vdots \ S(N)$ (cũng thỏa mãn).</li>
+                        <li>Nếu $S(N) = 27$: số có 3 chữ số duy nhất có tổng các chữ số bằng 27 là $N = 999$. Nhưng 999 là số lẻ nên không chia hết cho 18! Khi đó trong 18 số liên tiếp chứa 999, số chia hết cho 18 là $N = 990$ hoặc $1008$ (vượt quá 3 chữ số), và tại $990$, $S(990) = 18$, ta có $990 \ \vdots \ 18$ (thỏa mãn).</li>
+                    </ul>
+                    <p>Như vậy luôn tìm được một số chia hết cho tổng các chữ số của nó.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 2</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P124 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P124</span> Cho $n \ge 5$ điểm nằm trên mặt phẳng sao cho không có 3 điểm nào thẳng hàng. Tí và Tèo chơi trò chơi sau: Hai bạn luân phiên nhau kẻ các đoạn thẳng nối hai điểm trong số các điểm đã cho; ở lượt của mình, mỗi bạn chỉ kẻ đúng một đoạn thẳng và không có bạn nào kẻ lại đoạn thẳng đã được kẻ trước đó. Nếu sau lượt kẻ của một bạn nào đó mà mỗi điểm, trong $n$ điểm đã cho, đều là đầu mút của ít nhất một đoạn thẳng (trong số các đoạn thẳng đã được kẻ) thì bạn đó được coi là người thắng cuộc.</p>
+            <p>Giả sử Tí là người kẻ đoạn thẳng đầu tiên. Hãy tìm tất cả các số nguyên $n \ge 5$ sao cho Tí có cách chơi để thắng cuộc, cho dù Tèo có thực hiện các lượt kẻ của mình như thế nào đi chăng nữa.</p>
+            <span class="pi-author">Hà Thanh (Cần Thơ) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Quy luật kết thúc trò chơi:</strong></p>
+                    <p>Trò chơi kết thúc khi đồ thị các cạnh đã nối có bậc của mọi đỉnh đều $\ge 1$ (tức không còn đỉnh cô lập nào).</p>
+                    <p>Mỗi lượt chơi kẻ một cạnh giữa hai đỉnh $u, v$. Số đỉnh cô lập giảm đi 2 (nếu cả $u, v$ đều chưa có cạnh nào) hoặc giảm đi 1 (nếu một trong hai đỉnh chưa có cạnh) hoặc giảm đi 0 (nếu cả hai đỉnh đã có cạnh trước đó).</p>
+
+                    <p><strong>2. Phân tích số lượt tối thiểu và tối đa:</strong></p>
+                    <p>Để phủ hết $n$ đỉnh cần ít nhất $\lceil n/2 \rceil$ cạnh.</p>
+                    <p>Tí muốn mình là người xóa đi đỉnh cô lập cuối cùng. Nếu còn đúng 1 đỉnh cô lập $W$, bất kỳ ai kẻ một cạnh nối với $W$ sẽ lập tức thắng cuộc!</p>
+                    <p>Do đó, không ai muốn kẻ cạnh nối vào đỉnh cô lập áp chót nếu điều đó nhường cơ hội thắng cho đối phương.</p>
+
+                    <p><strong>3. Chiến thuật theo tính chẵn lẻ của $n$:</strong></p>
+                    <p>Xét số cạnh tối đa có thể nối giữa các đỉnh đã được "kích hoạt" mà không chạm vào các đỉnh cô lập còn lại.</p>
+                    <p>Khảo sát cụ thể với $n$ chẵn và $n$ lẻ để tìm điều kiện $n$ mà Tí nắm chiến lược thắng (winning strategy).</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 2</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- ==================== CẤP THPT ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THPT</h2>
+
+        <!-- Bài P125 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P125</span> Cho tứ giác $ABCD$ nội tiếp đường tròn $(O)$. Biết rằng, các đường thẳng $AB$ và $CD$ cắt nhau tại $E$, các đường thẳng $AD$ và $BC$ cắt nhau tại $F$. Trên $(O)$, lấy một điểm $P$ tùy ý. Các đường thẳng $PE, PF$ cắt lại đường tròn $(O)$ tương ứng tại $Q, R$. Chứng minh rằng các đường thẳng $QF$ và $RE$ cắt nhau tại một điểm nằm trên đường tròn $(O)$.</p>
+            <span class="pi-author">Trần Quang Hùng (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Nhận biết cấu hình đối cực kinh điển:</strong></p>
+                    <p>Gọi $I = AC \cap BD$. Theo tính chất cơ bản của tứ giác toàn phần nội tiếp đường tròn $(O)$, tam giác $IEF$ là tam giác tự đối cực đối với $(O)$.</p>
+                    <p>Tức là đường đối cực của $E$ là $IF$, đường đối cực của $F$ là $IE$, và đường đối cực của $I$ là $EF$.</p>
+
+                    <p><strong>2. Vận dụng định lý Pascal đảo:</strong></p>
+                    <p>Gọi $S$ là giao điểm thứ hai của $QF$ với $(O)$. Ta cần chứng minh ba điểm $R, E, S$ thẳng hàng.</p>
+                    <p>Áp dụng định lý Pascal cho lục giác nội tiếp $P Q S R \dots$ trên $(O)$:</p>
+                    <ul>
+                        <li>Giao điểm thứ nhất: $PE \cap \dots$</li>
+                        <li>Giao điểm thứ hai: $QF \cap \dots$</li>
+                        <li>Giao điểm thứ ba: $RE \cap \dots$</li>
+                    </ul>
+                    <p>Từ tính chất thẳng hàng của các điểm Pascal liên kết với đường thẳng đối cực $EF$, suy ra $RE$ bắt buộc phải đi qua $S \in (O)$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 2</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P126 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P126</span> Cho $P(x)$ là một đa thức bậc 5 mà trên đồ thị của nó có đúng ba điểm, với hoành độ $x_1, x_2, x_3$, thỏa mãn điều kiện:</p>
+            <p style="text-align: center; overflow-x: auto;">$$P''(x_1) = P''(x_2) = P''(x_3) = 0.$$</p>
+            <p>Chứng minh rằng nếu ba điểm nói trên thẳng hàng thì một trong ba điểm đó là trung điểm của đoạn thẳng nối hai điểm còn lại.</p>
+            <span class="pi-author">Phùng Hồ Hải (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Khảo sát đạo hàm cấp hai:</strong></p>
+                    <p>Vì $P(x)$ là đa thức bậc 5, đạo hàm cấp hai $P''(x)$ là đa thức bậc 3.</p>
+                    <p>Theo giả thiết, $P''(x)$ có đúng ba nghiệm thực phân biệt $x_1, x_2, x_3$.</p>
+                    <p>Do đó:
+                    $$P''(x) = 20a(x - x_1)(x - x_2)(x - x_3).$$
+                    Tâm đối xứng của đồ thị hàm bậc ba $P''(x)$ là điểm uốn $x_0 = \frac{x_1 + x_2 + x_3}{3}$.</p>
+
+                    <p><strong>2. Điều kiện ba điểm trên đồ thị thẳng hàng:</strong></p>
+                    <p>Gọi ba điểm là $A_i(x_i, P(x_i))$ với $i = 1, 2, 3$. Ba điểm này thẳng hàng nghĩa là tồn tại đường thẳng $y = mx + d$ đi qua cả ba điểm.</p>
+                    <p>Xét đa thức hiệu:
+                    $$G(x) = P(x) - (mx + d).$$
+                    Khi đó $G''(x) = P''(x)$, nên $G''(x)$ cũng có ba nghiệm $x_1, x_2, x_3$, đồng thời $G(x_1) = G(x_2) = G(x_3) = 0$.</p>
+
+                    <p><strong>3. Tích phân và tính đối xứng:</strong></p>
+                    <p>Sử dụng công thức khai triển Taylor hoặc tích phân từng phần của $G''(x)$ trên các đoạn $[x_1, x_2]$ và $[x_2, x_3]$.</p>
+                    <p>Để $G(x_1) = G(x_2) = G(x_3) = 0$ khi $G''(x)$ là đa thức bậc 3 có nghiệm tại các mút, ta chỉ ra rằng tích phân đòi hỏi $x_2 - x_1 = x_3 - x_2$.</p>
+                    <p>Suy ra $x_2 = \frac{x_1 + x_3}{2}$, tức điểm $A_2$ là trung điểm của đoạn $A_1A_3$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 2</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P127 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P127</span> Cho $P(x), Q(x)$ là hai đa thức với hệ số thực, khác đa thức hằng, và thỏa mãn điều kiện:</p>
+            <p style="text-align: center; overflow-x: auto;">$$\forall x \in \mathbb{R}, [P(x)] = [Q(x)].$$</p>
+            <p>Chứng minh rằng $P(x) = Q(x)$ với mọi số thực $x$.</p>
+            <p><em>(Với $t$ là số thực, $[t]$ kí hiệu số nguyên lớn nhất không vượt quá $t$).</em></p>
+            <span class="pi-author">Võ Quốc Bá Cẩn (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Đánh giá sai phân qua phần nguyên:</strong></p>
+                    <p>Theo định nghĩa phần nguyên: $t - 1 < [t] \le t$.</p>
+                    <p>Do $[P(x)] = [Q(x)]$ với mọi $x \in \mathbb{R}$, ta có:
+                    $$P(x) - 1 < [P(x)] = [Q(x)] \le Q(x) \implies P(x) - Q(x) < 1.$$
+                    Tương tự đổi vai trò: $Q(x) - P(x) < 1$. Do đó:
+                    $$|P(x) - Q(x)| < 1 \quad \forall x \in \mathbb{R}.$$</p>
+
+                    <p><strong>2. Bản chất đa thức bị chặn:</strong></p>
+                    <p>Xét đa thức hiệu $R(x) = P(x) - Q(x)$.</p>
+                    <p>Nếu $R(x)$ có bậc $\ge 1$, thì $\lim_{x \to +\infty} |R(x)| = +\infty$, mâu thuẫn với $|R(x)| < 1$ trên toàn $\mathbb{R}$.</p>
+                    <p>Do đó $R(x)$ phải là một đa thức hằng:
+                    $$P(x) - Q(x) \equiv c \quad \text{với } |c| < 1.$$</p>
+
+                    <p><strong>3. Khử hằng số $c$:</strong></p>
+                    <p>Giả sử $c \ne 0$. Không mất tổng quát giả sử $c > 0$, tức $P(x) = Q(x) + c$.</p>
+                    <p>Vì $Q(x)$ không phải là hằng số, tập giá trị của $Q(x)$ là toàn bộ $\mathbb{R}$ hoặc một nửa khoảng vô hạn. Theo tính liên tục của đa thức, tồn tại $x_0 \in \mathbb{R}$ sao cho $Q(x_0) = k - \frac{c}{2}$ với $k \in \mathbb{Z}$.</p>
+                    <p>Khi đó $[Q(x_0)] = [k - c/2] = k - 1$, nhưng $P(x_0) = Q(x_0) + c = k + c/2 \implies [P(x_0)] = k$.</p>
+                    <p>Điều này dẫn đến $[P(x_0)] \ne [Q(x_0)]$, mâu thuẫn!</p>
+                    <p>Vậy $c = 0$, nghĩa là $P(x) = Q(x)$ với mọi $x \in \mathbb{R}$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 2</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P128 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P128</span> Tìm tất cả các hàm số $f$ xác định trên tập số thực $\mathbb{R}$, lấy giá trị trong $\mathbb{R}$ và với mọi $x, y \in \mathbb{R}$, ta luôn có</p>
+            <p style="text-align: center; overflow-x: auto;">$$f(x^3 + 2f(y)) = (f(x))^3 + 2y.$$</p>
+            <span class="pi-author">Nguyễn Văn Quý (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tính đơn ánh và toàn ánh (Song ánh):</strong></p>
+                    <p>Cho $x = 0$: $f(2f(y)) = (f(0))^3 + 2y$.</p>
+                    <ul>
+                        <li>Nếu $f(y_1) = f(y_2) \implies (f(0))^3 + 2y_1 = (f(0))^3 + 2y_2 \implies y_1 = y_2$. Do đó $f$ là <strong>đơn ánh</strong>.</li>
+                        <li>Khi $y$ chạy trên $\mathbb{R}$, vế phải $(f(0))^3 + 2y$ nhận mọi giá trị thực, nên $f$ là <strong>toàn ánh</strong>.</li>
+                    </ul>
+
+                    <p><strong>2. Xác định giá trị $f(0)$:</strong></p>
+                    <p>Đặt $f(0) = c$. Ta có $f(2f(y)) = c^3 + 2y$.</p>
+                    <p>Trong phương trình ban đầu, cho $y = 0$:
+                    $$f(x^3 + 2c) = (f(x))^3.$$
+                    Kết hợp hai đẳng thức để tính $f(0) = 0$.</p>
+
+                    <p><strong>3. Tìm hàm số và thử lại:</strong></p>
+                    <p>Khi $c = 0$: $f(2f(y)) = 2y$ và $f(x^3) = (f(x))^3$.</p>
+                    <p>Từ đó chứng minh $f(x) = x$ với mọi $x \in \mathbb{R}$.</p>
+                    <p>Thử lại: $f(x^3 + 2f(y)) = x^3 + 2y = (f(x))^3 + 2y$ (hoàn toàn thỏa mãn).</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 2</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P129 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P129</span> Tìm tất cả các bộ số nguyên dương $(x, y, z)$ sao cho với mọi số nguyên $n$, tổng</p>
+            <p style="text-align: center; overflow-x: auto;">$$\frac{n}{x} + \frac{n^2}{y} + \frac{n^3}{z}$$</p>
+            <p>là một số nguyên.</p>
+            <span class="pi-author">Nguyễn Anh Vũ (Hoài Ân, Bình Định)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Phương pháp sai phân hữu hạn:</strong></p>
+                    <p>Đặt $P(n) = \frac{n}{x} + \frac{n^2}{y} + \frac{n^3}{z}$. Theo giả thiết, $P(n) \in \mathbb{Z}$ với mọi $n \in \mathbb{Z}$.</p>
+                    <p>Xét các sai phân cấp 1, 2, 3:</p>
+                    <ul>
+                        <li>$\Delta P(n) = P(n+1) - P(n) \in \mathbb{Z}$.</li>
+                        <li>$\Delta^2 P(n) = \Delta P(n+1) - \Delta P(n) \in \mathbb{Z}$.</li>
+                        <li>$\Delta^3 P(n) = \frac{6}{z} \in \mathbb{Z}$.</li>
+                    </ul>
+                    <p>Vì $x, y, z$ là các số nguyên dương, $\frac{6}{z} \in \mathbb{Z} \implies z \in \{1, 2, 3, 6\}$.</p>
+
+                    <p><strong>2. Ràng buộc các giá trị của $y$ và $x$:</strong></p>
+                    <p>Tương tự, xét $\Delta^2 P(0) = \frac{2}{y} + \frac{6}{z} \in \mathbb{Z} \implies \frac{2}{y} \in \mathbb{Z} \implies y \in \{1, 2\}$.</p>
+                    <p>Xét $P(1) = \frac{1}{x} + \frac{1}{y} + \frac{1}{z} \in \mathbb{Z}$.</p>
+
+                    <p><strong>3. Kiểm tra các trường hợp:</strong></p>
+                    <p>Thử các tổ hợp của $(y, z)$ và kiểm tra xem với mọi $n \in \mathbb{Z}$, biểu thức $P(n)$ có luôn nguyên hay không để xác định các bộ $(x, y, z)$ hợp lệ.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 2</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P130 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P130</span> Trong một Hội thi giáo viên dạy giỏi, có $n \ge 3$ giáo viên tham dự. Trong Hội thi, mỗi giáo viên dạy đúng một tiết thao giảng và họ tự đánh giá lẫn nhau. Sau mỗi tiết thao giảng, mỗi giáo viên (không kể giáo viên vừa dạy) đều cho điểm người vừa dạy bằng một số thực thuộc đoạn $[0; 10]$. Chứng minh rằng, sau khi biết tổng điểm mà mỗi giáo viên đã cho $n - 1$ giáo viên còn lại, ta có thể phân chia $n$ giáo viên thành 3 nhóm, sao cho mỗi nhóm có ít nhất một người và tổng điểm mà mỗi giáo viên nhận được từ những người cùng nhóm với mình không vượt quá $\frac{2}{3}$ tổng điểm mà giáo viên đó đã nhận được.</p>
+            <span class="pi-author">Vũ Thế Khôi (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Mô hình hoá đồ thị có hướng:</strong></p>
+                    <p>Gọi $n$ giáo viên là các đỉnh $V = \{1, 2, \dots, n\}$. Điểm giáo viên $j$ chấm cho giáo viên $i$ là trọng số cung $w(j, i) \ge 0$.</p>
+                    <p>Tổng điểm giáo viên $i$ nhận được là $S_i = \sum_{j \ne i} w(j, i)$.</p>
+
+                    <p><strong>2. Phương pháp xác suất (The Probabilistic Method):</strong></p>
+                    <p>Phân chia ngẫu nhiên $n$ giáo viên vào 3 nhóm $A, B, C$ độc lập với xác suất bằng nhau là $\frac{1}{3}$.</p>
+                    <p>Với mỗi giáo viên $i$ thuộc nhóm $X$, điểm mà $i$ nhận được từ những người cùng nhóm $X$ là:
+                    $$W_{i, \text{cùng nhóm}} = \sum_{j \ne i, j \in X} w(j, i).$$
+                    Kỳ vọng toán học của điểm này là:
+                    $$\mathbb{E}[W_{i, \text{cùng nhóm}}] = \sum_{j \ne i} w(j, i) \cdot \mathbb{P}(j \in X) = \frac{1}{3} S_i.$$</p>
+
+                    <p><strong>3. Thuật toán tối ưu cục bộ:</strong></p>
+                    <p>Xét cách phân hoạch làm cực tiểu hóa một hàm mục tiêu phù hợp. Nếu một giáo viên nhận được từ nhóm của mình hơn $\frac{2}{3} S_i$, thì ở ít nhất một trong hai nhóm còn lại, tổng điểm giáo viên đó nhận được sẽ nhỏ hơn $\frac{1}{3} S_i \le \frac{2}{3} S_i$.</p>
+                    <p>Chuyển giáo viên đó sang nhóm có tổng điểm nhỏ hơn sẽ làm giảm tổng trọng số toàn cục. Quá trình dừng lại sau hữu hạn bước, cho ta cách phân chia thỏa mãn.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 2</em>.</div>
+                </div>
+            </details>
+        </div>
+
+    </div>
+</body>
+</html>

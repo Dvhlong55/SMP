@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Tuyển Tập Thách Thức Toán Học Tạp Chí Pi (2017 – 2024)</title>
+    
+    <meta name="post-id" content="ThachThucPi20172024">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Tổng quan và tuyển tập đề bài kèm gợi ý giải chuyên mục Thách thức Toán học trên Tạp chí Pi (Hội Toán học Việt Nam) từ năm 2017 đến 2024.">
+    <meta property="og:title" content="SMP — Tuyển Tập Thách Thức Toán Học Tạp Chí Pi (2017 – 2024)">
+    <meta property="og:description" content="Tổng hợp toàn bộ các bài toán Thách thức Toán học Tạp chí Pi kèm gợi ý tư duy độc lập của SMP.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Tuyển Tập Thách Thức Toán Học Tạp Chí Pi (2017 – 2024)">
+    <meta name="twitter:description" content="Đề thi và gợi ý giải chuyên mục Thách thức Toán học Tạp chí Pi qua các năm.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Mục Lục Kiểu Roadmap Bàn Cờ Chuẩn SMP (Kế thừa từ series IGO) */
+        .pi-toc-section {
+            margin: 36px 0 48px 0;
+        }
+        .pi-toc-heading {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--exam-bold-color, #111);
+            margin: 0 0 24px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-light, rgba(0,0,0,0.1));
+        }
+        body.dark-mode .pi-toc-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .pi-toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px 48px;
+        }
+        .pi-toc-col {
+            display: flex;
+            flex-direction: column;
+        }
+        .pi-toc-year-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--exam-bold-color, #111);
+            margin: 0 0 10px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-weight: 700;
+        }
+        body.dark-mode .pi-toc-year-name {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .pi-toc-items {
+            display: flex;
+            flex-direction: column;
+        }
+        .pi-toc-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 8px 0;
+            text-decoration: none !important;
+            color: var(--exam-text-color, #333);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .pi-toc-row:hover .pi-toc-num,
+        .pi-toc-row:hover .pi-toc-title {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+        .pi-toc-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted, #888);
+            width: 24px;
+            flex-shrink: 0;
+        }
+        .pi-toc-title {
+            font-size: 0.95rem;
+            color: var(--exam-bold-color, #111);
+            transition: color 0.2s;
+            white-space: nowrap;
+        }
+        .pi-toc-dots {
+            flex: 1;
+            border-bottom: 1px dotted var(--border-light, #cbd5e1);
+            margin: 0 6px;
+            min-width: 20px;
+            position: relative;
+            top: -4px;
+        }
+        body.dark-mode .pi-toc-dots {
+            border-bottom-color: rgba(255,255,255,0.15);
+        }
+        .pi-toc-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.74rem;
+            color: var(--text-muted, #888);
+            flex-shrink: 0;
+        }
+        .pi-toc-status.ready {
+            color: #10b981;
+            font-weight: 600;
+        }
+        .pi-intro-banner {
+            background: rgba(2, 132, 199, 0.05);
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 20px 0 28px 0;
+            line-height: 1.75;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content">
+        <div class="header-box">
+            <h1>Thách Thức Toán Học — Tạp Chí Pi</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Ấn phẩm Hội Toán học Việt Nam (2017 – 2024)</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Hệ thống Gợi ý tư duy & Lời giải độc lập biên soạn bởi SMP</h2>
+        </div>
+
+        <div class="pi-intro-banner">
+            <p><strong>Chuyên mục "Thách thức Toán học"</strong> là linh hồn của Tạp chí Pi kể từ số đầu tiên phát hành vào tháng 01/2017. Được bảo trợ và dẫn dắt bởi các nhà toán học hàng đầu như <em>GS. Ngô Bảo Châu, GS. Hà Huy Khoái, TS. Trần Nam Dũng</em>, chuyên mục là nơi hội tụ các bài toán độc đáo, giàu tư duy dành cho học sinh yêu toán THCS và THPT trên cả nước.</p>
+            <p style="margin-bottom: 0;">Tại SMP, chúng tôi hệ thống hóa lại các bài toán theo từng số báo kèm theo <strong>hệ thống gợi ý (Hints)</strong> dạng ẩn/hiện để bạn đọc có cơ hội tự suy nghĩ, khám phá vẻ đẹp của toán học trước khi tham khảo hướng giải.</p>
+        </div>
+
+        <!-- MỤC LỤC CÁC TẬP VÀ SỐ BÁO -->
+        <div class="pi-toc-section">
+            <div class="pi-toc-heading">Mục Lục Các Số Phát Hành Theo Năm</div>
+            <div class="pi-toc-grid">
+                
+                <!-- NĂM 2017 (TẬP 1) -->
+                <div class="pi-toc-col">
+                    <div class="pi-toc-year-name">Tập 1 (Năm 2017)</div>
+                    <div class="pi-toc-items">
+                        <a href="pi-tap-1-so-1.html" class="pi-toc-row">
+                            <span class="pi-toc-num">01</span>
+                            <span class="pi-toc-title">Số 1 (Tháng 01/2017)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P11 – P20</span>
+                        </a>
+                        <a href="pi-tap-1-so-2.html" class="pi-toc-row">
+                            <span class="pi-toc-num">02</span>
+                            <span class="pi-toc-title">Số 2 (Tháng 02/2017)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P21 – P30</span>
+                        </a>
+                        <a href="pi-tap-1-so-3.html" class="pi-toc-row">
+                            <span class="pi-toc-num">03</span>
+                            <span class="pi-toc-title">Số 3 (Tháng 03/2017)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P31 – P40</span>
+                        </a>
+                        <a href="pi-tap-1-so-4.html" class="pi-toc-row">
+                            <span class="pi-toc-num">04</span>
+                            <span class="pi-toc-title">Số 4 (Tháng 04/2017)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P41 – P50</span>
+                        </a>
+                        <a href="pi-tap-1-so-5.html" class="pi-toc-row">
+                            <span class="pi-toc-num">05</span>
+                            <span class="pi-toc-title">Số 5 (Tháng 05/2017)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P51 – P60</span>
+                        </a>
+                        <a href="pi-tap-1-so-6.html" class="pi-toc-row">
+                            <span class="pi-toc-num">06</span>
+                            <span class="pi-toc-title">Số 6 (Tháng 06/2017)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P61 – P70</span>
+                        </a>
+                        <a href="pi-tap-1-so-7.html" class="pi-toc-row">
+                            <span class="pi-toc-num">07</span>
+                            <span class="pi-toc-title">Số 7 (Tháng 07/2017)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P71 – P80</span>
+                        </a>
+                        <a href="pi-tap-1-so-8.html" class="pi-toc-row">
+                            <span class="pi-toc-num">08</span>
+                            <span class="pi-toc-title">Số 8 (Tháng 08/2017)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P81 – P90</span>
+                        </a>
+                        <a href="pi-tap-1-so-9.html" class="pi-toc-row">
+                            <span class="pi-toc-num">09</span>
+                            <span class="pi-toc-title">Số 9 (Tháng 09/2017)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P91 – P100</span>
+                        </a>
+                        <a href="pi-tap-1-so-10.html" class="pi-toc-row">
+                            <span class="pi-toc-num">10</span>
+                            <span class="pi-toc-title">Số 10 (Tháng 10/2017)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P101 – P110</span>
+                        </a>
+                        <a href="pi-tap-1-so-11.html" class="pi-toc-row">
+                            <span class="pi-toc-num">11</span>
+                            <span class="pi-toc-title">Số 11 (Tháng 11/2017)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P111 – P120</span>
+                        </a>
+                        <a href="pi-tap-1-so-12.html" class="pi-toc-row">
+                            <span class="pi-toc-num">12</span>
+                            <span class="pi-toc-title">Số 12 (Tháng 12/2017)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P121 – P130</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- NĂM 2018 (TẬP 2) -->
+                <div class="pi-toc-col">
+                    <div class="pi-toc-year-name">Tập 2 (Năm 2018)</div>
+                    <div class="pi-toc-items">
+                        <a href="pi-tap-2-so-1.html" class="pi-toc-row">
+                            <span class="pi-toc-num">01</span>
+                            <span class="pi-toc-title">Số 1 (Tháng 01/2018)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P131 – P140</span>
+                        </a>
+                        <a href="pi-tap-2-so-2.html" class="pi-toc-row">
+                            <span class="pi-toc-num">02</span>
+                            <span class="pi-toc-title">Số 2 (Tháng 02/2018)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P141 – P150</span>
+                        </a>
+                        <a href="pi-tap-2-so-3.html" class="pi-toc-row">
+                            <span class="pi-toc-num">03</span>
+                            <span class="pi-toc-title">Số 3 (Tháng 03/2018)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P151 – P160</span>
+                        </a>
+                        <a href="pi-tap-2-so-4.html" class="pi-toc-row">
+                            <span class="pi-toc-num">04</span>
+                            <span class="pi-toc-title">Số 4 (Tháng 04/2018)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status ready">P161 – P170</span>
+                        </a>
+                        <a href="pi-tap-2-so-5.html" class="pi-toc-row">
+                            <span class="pi-toc-num">05</span>
+                            <span class="pi-toc-title">Số 5 (Tháng 05/2018)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status">P171 – P180</span>
+                        </a>
+                        <a href="pi-tap-2-so-6.html" class="pi-toc-row">
+                            <span class="pi-toc-num">06</span>
+                            <span class="pi-toc-title">Số 6 (Tháng 06/2018)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status">P181 – P190</span>
+                        </a>
+                        <a href="pi-tap-2-so-7.html" class="pi-toc-row">
+                            <span class="pi-toc-num">07</span>
+                            <span class="pi-toc-title">Số 7 (Tháng 07/2018)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status">P191 – P200</span>
+                        </a>
+                        <a href="pi-tap-2-so-8.html" class="pi-toc-row">
+                            <span class="pi-toc-num">08</span>
+                            <span class="pi-toc-title">Số 8 (Tháng 08/2018)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status">P201 – P210</span>
+                        </a>
+                        <a href="pi-tap-2-so-9.html" class="pi-toc-row">
+                            <span class="pi-toc-num">09</span>
+                            <span class="pi-toc-title">Số 9 (Tháng 09/2018)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status">P211 – P220</span>
+                        </a>
+                        <a href="pi-tap-2-so-10.html" class="pi-toc-row">
+                            <span class="pi-toc-num">10</span>
+                            <span class="pi-toc-title">Số 10 (Tháng 10/2018)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status">P221 – P230</span>
+                        </a>
+                        <a href="pi-tap-2-so-11.html" class="pi-toc-row">
+                            <span class="pi-toc-num">11</span>
+                            <span class="pi-toc-title">Số 11 (Tháng 11/2018)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status">P231 – P240</span>
+                        </a>
+                        <a href="pi-tap-2-so-12.html" class="pi-toc-row">
+                            <span class="pi-toc-num">12</span>
+                            <span class="pi-toc-title">Số 12 (Tháng 12/2018)</span>
+                            <span class="pi-toc-dots"></span>
+                            <span class="pi-toc-status">P241 – P250</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- NĂM 2019 (TẬP 3) -->
+                <div class="pi-toc-col">
+                    <div class="pi-toc-year-name">Tập 3 (Năm 2019)</div>
+                    <div class="pi-toc-items">
+                        <div class="pi-toc-row"><span class="pi-toc-num">01</span><span class="pi-toc-title">Số 1 đến Số 12</span><span class="pi-toc-dots"></span><span class="pi-toc-status">12 số</span></div>
+                    </div>
+                </div>
+
+                <!-- NĂM 2020 (TẬP 4) -->
+                <div class="pi-toc-col">
+                    <div class="pi-toc-year-name">Tập 4 (Năm 2020)</div>
+                    <div class="pi-toc-items">
+                        <div class="pi-toc-row"><span class="pi-toc-num">01</span><span class="pi-toc-title">Số 1-2 đến Số 12</span><span class="pi-toc-dots"></span><span class="pi-toc-status">10 số</span></div>
+                    </div>
+                </div>
+
+                <!-- NĂM 2021 (TẬP 5) -->
+                <div class="pi-toc-col">
+                    <div class="pi-toc-year-name">Tập 5 (Năm 2021)</div>
+                    <div class="pi-toc-items">
+                        <div class="pi-toc-row"><span class="pi-toc-num">01</span><span class="pi-toc-title">Số 1-2 đến Số 12</span><span class="pi-toc-dots"></span><span class="pi-toc-status">10 số</span></div>
+                    </div>
+                </div>
+
+                <!-- NĂM 2022 (TẬP 6) -->
+                <div class="pi-toc-col">
+                    <div class="pi-toc-year-name">Tập 6 (Năm 2022)</div>
+                    <div class="pi-toc-items">
+                        <div class="pi-toc-row"><span class="pi-toc-num">01</span><span class="pi-toc-title">Số 1-2 đến Số 12</span><span class="pi-toc-dots"></span><span class="pi-toc-status">10 số</span></div>
+                    </div>
+                </div>
+
+                <!-- NĂM 2023 (TẬP 7) -->
+                <div class="pi-toc-col">
+                    <div class="pi-toc-year-name">Tập 7 (Năm 2023)</div>
+                    <div class="pi-toc-items">
+                        <div class="pi-toc-row"><span class="pi-toc-num">01</span><span class="pi-toc-title">Số 1-2 đến Số 12</span><span class="pi-toc-dots"></span><span class="pi-toc-status">10 số</span></div>
+                    </div>
+                </div>
+
+                <!-- NĂM 2024 (TẬP 8) -->
+                <div class="pi-toc-col">
+                    <div class="pi-toc-year-name">Tập 8 (Năm 2024)</div>
+                    <div class="pi-toc-items">
+                        <div class="pi-toc-row"><span class="pi-toc-num">01</span><span class="pi-toc-title">Số 1-2 đến Số 10</span><span class="pi-toc-dots"></span><span class="pi-toc-status">8 số</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <p class="exam-end"><b>─── SMP MATH ARCHIVE ───</b></p>
+    </div>
+</body>
+</html>

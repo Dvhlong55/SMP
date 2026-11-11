@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 9)</title>
+    
+    <meta name="post-id" content="PiTap1So9">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 1 Số 9 (Tháng 09/2017), từ bài P91 đến P100.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 9)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 1 Số 9 kèm gợi ý giải của SMP.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-1-so-9.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 9)">
+    <meta name="twitter:description" content="Đề bài P91 - P100 Tạp chí Pi Tập 1 Số 9 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            font-size: 0.88rem;
+            font-weight: bold;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            border: 1px dashed rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.03);
+            transition: all 0.15s ease;
+            width: fit-content;
+        }
+        [data-theme="dark"] summary.igo-hint-trigger {
+            color: #eee;
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker {
+            display: none;
+        }
+        summary.igo-hint-trigger:hover {
+            border-style: solid;
+            background: rgba(0, 0, 0, 0.07);
+        }
+        [data-theme="dark"] summary.igo-hint-trigger:hover {
+            background: rgba(255, 255, 255, 0.09);
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.72rem;
+            transition: transform 0.2s ease;
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            margin-top: 10px;
+            padding: 12px 16px;
+            border-left: 2px solid #555;
+            background: rgba(0, 0, 0, 0.02);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        [data-theme="dark"] .igo-hint-content {
+            border-left-color: #888;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .pi-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 4px;
+            background: #e3f2fd;
+            color: #1565c0;
+            margin-right: 6px;
+        }
+        [data-theme="dark"] .pi-badge {
+            background: #1a2733;
+            color: #90caf9;
+        }
+        .pi-author {
+            display: block;
+            margin-top: 6px;
+            font-style: italic;
+            font-size: 0.88rem;
+            color: #666;
+            text-align: right;
+        }
+        [data-theme="dark"] .pi-author {
+            color: #aaa;
+        }
+        .pi-ref-note {
+            margin-top: 10px;
+            padding: 6px 10px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 4px;
+            font-size: 0.82rem;
+            color: #666;
+        }
+        [data-theme="dark"] .pi-ref-note {
+            background: rgba(255, 255, 255, 0.03);
+            color: #999;
+        }
+    </style>
+</head>
+<body class="post-template">
+    <div id="smp-post-content">
+        <div class="header-container">
+            <h1>Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 9)</h1>
+            <p class="post-subtitle">Chuyên mục Thách thức Toán học — Tạp chí Pi số 9 (Tháng 09/2017) với 10 bài toán từ P91 đến P100 kèm gợi ý tư duy độc lập của SMP.</p>
+        </div>
+
+        <div style="background: rgba(0, 123, 255, 0.06); border-left: 4px solid #007bff; padding: 12px 16px; margin: 20px 0; border-radius: 4px;">
+            <strong>Tổng quan chuyên mục:</strong>
+            <ul style="margin: 6px 0 0 18px; padding: 0;">
+                <li><strong>Cấp THCS:</strong> 4 bài toán (P91 – P94).</li>
+                <li><strong>Cấp THPT:</strong> 6 bài toán (P95 – P100), bao gồm các bài toán đề xuất cho IMO 2017 từ Đan Mạch và các bài toán chọn lọc đặc sắc.</li>
+                <li><strong>Gợi ý:</strong> Được SMP biên soạn độc lập dưới dạng các mốc định hướng tư duy giúp bạn đọc tự mình chinh phục bài toán.</li>
+            </ul>
+        </div>
+
+        <p><a href="./thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; text-decoration: none; margin-bottom: 20px;">← Quay lại Mục lục Thách thức Toán học Tạp chí Pi (2017 – 2024)</a></p>
+
+        <!-- ==================== CẤP THCS ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THCS</h2>
+
+        <!-- Bài P91 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P91</span> Cho $a, b, c$ là các số thực dương thỏa mãn điều kiện $a+b+c = 1$. Chứng minh rằng</p>
+            <p style="text-align: center; overflow-x: auto;">$$(1+ab+bc+ca)\left(\frac{1}{a+bc} + \frac{1}{b+ca} + \frac{1}{c+ab}\right) \le \frac{1}{a} + \frac{1}{b} + \frac{1}{c}.$$</p>
+            <p>Hỏi đẳng thức xảy ra khi và chỉ khi nào?</p>
+            <span class="pi-author">Nguyễn Việt Hùng (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Phân tích nhân tử các mẫu số:</strong></p>
+                    <p>Vì $a+b+c = 1$, ta có biến đổi đại số quen thuộc:
+                    $$a+bc = a(a+b+c) + bc = a^2 + ab + ac + bc = (a+b)(a+c).$$
+                    Tương tự, $b+ca = (b+a)(b+c)$ và $c+ab = (c+a)(c+b)$.</p>
+
+                    <p><strong>2. Rút gọn tổng trong ngoặc thứ hai:</strong></p>
+                    <p>Cộng ba phân thức có chung mẫu số chung $(a+b)(b+c)(c+a)$:
+                    $$\frac{1}{a+bc} + \frac{1}{b+ca} + \frac{1}{c+ab} = \frac{(b+c) + (c+a) + (a+b)}{(a+b)(b+c)(c+a)} = \frac{2(a+b+c)}{(a+b)(b+c)(c+a)} = \frac{2}{(a+b)(b+c)(c+a)}.$$</p>
+
+                    <p><strong>3. Biến đổi vế phải:</strong></p>
+                    <p>Vế phải là $\frac{1}{a} + \frac{1}{b} + \frac{1}{c} = \frac{ab+bc+ca}{abc}$.</p>
+                    <p>Chú ý hằng đẳng thức $(a+b)(b+c)(c+a) = (a+b+c)(ab+bc+ca) - abc = ab+bc+ca - abc$. Đặt $q = ab+bc+ca, r = abc$. Ta cần chứng minh:
+                    $$\frac{2(1+q)}{q-r} \le \frac{q}{r} \iff 2r(1+q) \le q(q-r) \iff q^2 - 3qr - 2r \ge 0.$$
+                    Sử dụng các đánh giá quen thuộc $q \ge 9r$ và $q \le \frac{1}{3}(a+b+c)^2 = \frac{1}{3}$.</p>
+
+                    <p><strong>4. Kết luận đẳng thức:</strong> Đẳng thức xảy ra khi và chỉ khi $a = b = c = \frac{1}{3}$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 11</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P92 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P92</span> Cho ngũ giác lồi $ABCDE$ có $AB = BC = CD$, $\angle EAB = \angle BCD$ và $\angle EDC = \angle CBA$. Chứng minh rằng các đường thẳng $AC, BD$ và đường thẳng đi qua $E$, vuông góc với $BC$ đồng quy.</p>
+            <span class="pi-author">Bài do Italia đề xuất cho IMO 2017</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Nhận biết tính đối xứng hình học:</strong></p>
+                    <p>Gọi $I = AC \cap BD$. Ta cần chứng minh đường thẳng $EI \perp BC$.</p>
+                    <p>Vì $AB = BC = CD$, ta có hai tam giác cân: $\triangle BAC$ cân tại $B$ và $\triangle CBD$ cân tại $C$.</p>
+                    <p>Đặt $\angle BAC = \angle BCA = \alpha$ và $\angle CBD = \angle CDB = \beta$.</p>
+
+                    <p><strong>2. Phân tích góc và toạ độ/vectơ:</strong></p>
+                    <p>Theo giả thiết $\angle EAB = \angle BCD = 180^\circ - 2\beta$ và $\angle EDC = \angle CBA = 180^\circ - 2\alpha$.</p>
+                    <p>Xét góc $\angle EAC = \angle EAB - \angle BAC = 180^\circ - 2\beta - \alpha$ và $\angle EDB = \angle EDC - \angle BDC = 180^\circ - 2\alpha - \beta$.</p>
+
+                    <p><strong>3. Sử dụng định lý Céva dạng sin hoặc hình chiếu:</strong></p>
+                    <p>Đường thẳng qua $E$ vuông góc với $BC$ cắt $BC$ tại $H$. Hạ hình chiếu $I$ lên $BC$ là $K$.</p>
+                    <p>Hãy chứng minh rằng $H \equiv K$ bằng cách tính độ dài đại số các đoạn $BH, CH$ thông qua định lý hình chiếu hoặc sử dụng phép quay/đối xứng gương.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 11</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P93 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P93</span> Tìm tất cả các số nguyên tố $p > 2$ sao cho</p>
+            <p style="text-align: center; overflow-x: auto;">$$\frac{(p+2)^{p+2}\cdot (p-2)^{p-2} - 1}{(p+2)^{p-2}\cdot (p-2)^{p+2} - 1}$$</p>
+            <p>là một số nguyên.</p>
+            <span class="pi-author">Hà Thanh (Cần Thơ)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Thử nghiệm với các số nguyên tố nhỏ:</strong></p>
+                    <ul>
+                        <li>Với $p = 3$:
+                        $$(p+2) = 5,\quad (p-2) = 1.$$
+                        Tử số: $5^5 \cdot 1^1 - 1 = 3125 - 1 = 3124$.<br>
+                        Mẫu số: $5^1 \cdot 1^5 - 1 = 5 - 1 = 4$.<br>
+                        Phân thức: $\frac{3124}{4} = 781 \in \mathbb{Z}$. Do đó $p = 3$ thỏa mãn!</li>
+                    </ul>
+
+                    <p><strong>2. Phân tích với $p \ge 5$:</strong></p>
+                    <p>Đặt $A = (p+2)^{p+2}(p-2)^{p-2} - 1$ và $B = (p+2)^{p-2}(p-2)^{p+2} - 1$.</p>
+                    <p>Nhận xét rằng $(p+2)(p-2) = p^2 - 4$. Ta có thể viết tử số thành:
+                    $$A = (p+2)^4 \cdot \left[(p+2)^{p-2}(p-2)^{p-2}\right] - 1 = \left(\frac{p+2}{p-2}\right)^4 \cdot (B + 1) - 1.$$
+                    Do đó $(p-2)^4 A = (p+2)^4 (B + 1) - (p-2)^4 = (p+2)^4 B + \left[(p+2)^4 - (p-2)^4\right]$.</p>
+
+                    <p><strong>3. Đánh giá tính chia hết:</strong></p>
+                    <p>Để $A \ \vdots \ B$, bắt buộc $B$ phải là ước của $(p+2)^4 - (p-2)^4 = 16p(p^2+4)$.</p>
+                    <p>Tuy nhiên với $p \ge 5$, $B = (p+2)^{p-2}(p-2)^{p+2} - 1 \ge 7^3 \cdot 3^7 - 1 = 343 \cdot 2187 - 1$, tăng nhanh hơn hàm đa thức bậc 3 là $16p(p^2+4)$ rất nhiều. Từ đó chỉ ra $B > 16p(p^2+4)$ với mọi $p \ge 5$, dẫn đến không có thêm nghiệm nguyên tố nào khác.</p>
+
+                    <p><strong>Đáp số duy nhất:</strong> $p = 3$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 11</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P94 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P94</span> Một điểm trong mặt phẳng với hệ trục toạ độ vuông góc $Oxy$ được gọi là <em>điểm nguyên</em> nếu cả hoành độ và tung độ của điểm đó đều là các số nguyên. Chứng minh rằng với mọi số nguyên dương $n$, luôn tồn tại một đường tròn chứa đúng $n$ điểm nguyên bên trong.</p>
+            <span class="pi-author">Trần Nam Dũng (Tp. Hồ Chí Minh) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Ý tưởng chọn tâm đặc biệt:</strong></p>
+                    <p>Khoảng cách từ một tâm $I(x_0, y_0)$ đến điểm nguyên $(x, y) \in \mathbb{Z}^2$ là:
+                    $$d(I, (x, y)) = \sqrt{(x - x_0)^2 + (y - y_0)^2}.$$
+                    Nếu ta chọn tâm $I$ sao cho không tồn tại hai điểm nguyên phân biệt nào có cùng khoảng cách tới $I$, thì tập các khoảng cách tới mọi điểm nguyên sẽ tạo thành một dãy số thực dương đôi một phân biệt!</p>
+
+                    <p><strong>2. Chọn toạ độ vô tỉ độc lập tuyến tính:</strong></p>
+                    <p>Hãy chọn tâm $I = \left(\sqrt{2}, \frac{1}{3}\right)$.</p>
+                    <p>Giả sử hai điểm nguyên $(x_1, y_1) \ne (x_2, y_2)$ có cùng khoảng cách tới $I$:
+                    $$(x_1 - \sqrt{2})^2 + \left(y_1 - \frac{1}{3}\right)^2 = (x_2 - \sqrt{2})^2 + \left(y_2 - \frac{1}{3}\right)^2.$$
+                    Khai triển và gom các số hạng chứa $\sqrt{2}$ sang một vế:
+                    $$2\sqrt{2}(x_2 - x_1) = (x_2^2 - x_1^2) + \left(y_2 - \frac{1}{3}\right)^2 - \left(y_1 - \frac{1}{3}\right)^2 \in \mathbb{Q}.$$
+                    Vì $\sqrt{2}$ là số vô tỉ, điều này chỉ xảy ra khi $x_2 - x_1 = 0 \implies x_1 = x_2$.</p>
+                    <p>Khi đó $\left(y_1 - \frac{1}{3}\right)^2 = \left(y_2 - \frac{1}{3}\right)^2 \implies y_1 - \frac{1}{3} = -(y_2 - \frac{1}{3}) \implies y_1 + y_2 = \frac{2}{3}$, điều này vô lý vì $y_1, y_2 \in \mathbb{Z}$. Do đó giả thiết phản chứng sai.</p>
+
+                    <p><strong>3. Kết luận chọn bán kính:</strong></p>
+                    <p>Sắp xếp khoảng cách từ $I$ đến các điểm nguyên theo thứ tự tăng ngặt:
+                    $$0 < d_1 < d_2 < \dots < d_n < d_{n+1} < \dots$$
+                    Chỉ cần chọn bán kính $R$ nằm giữa $d_n$ và $d_{n+1}$ (ví dụ $R = \frac{d_n + d_{n+1}}{2}$), khi đó đường tròn $(I, R)$ chứa đúng $n$ điểm nguyên bên trong.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 11</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- ==================== CẤP THPT ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THPT</h2>
+
+        <!-- Bài P95 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P95</span> Kí hiệu $\omega$ là đường tròn bàng tiếp góc $A$ của tam giác $ABC$. Gọi $D, E, F$ tương ứng là các tiếp điểm của $\omega$ với các đường thẳng $BC, CA, AB$. Đường tròn $(AEF)$ cắt đường thẳng $BC$ tại $P$ và $Q$. Gọi $M$ là trung điểm của đoạn thẳng $AD$. Chứng minh rằng đường tròn $(MPQ)$ tiếp xúc với đường tròn $\omega$.</p>
+            <span class="pi-author">Bài do Đan Mạch đề xuất cho IMO 2017</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tính chất các tiếp điểm của đường tròn bàng tiếp:</strong></p>
+                    <p>Ta có $AE = AF = p$ (với $p$ là nửa chu vi $\triangle ABC$). Do đó tam giác $AEF$ cân tại $A$.</p>
+                    <p>Đường tròn $(AEF)$ đi qua $A$ và nhận phân giác góc $\angle BAC$ làm trục đối xứng.</p>
+
+                    <p><strong>2. Vị trí tiếp điểm dự kiến:</strong></p>
+                    <p>Điểm tiếp xúc giữa đường tròn $\omega$ và $(MPQ)$ chính là tiếp điểm $D$ trên $BC$, hoặc một điểm đối xứng đặc biệt. Hãy chú ý $M$ là trung điểm của dây $AD$.</p>
+
+                    <p><strong>3. Khảo sát phương tích và phép vị tự / nghịch đảo:</strong></p>
+                    <p>Sử dụng phép nghịch đảo tâm $A$ hoặc xét phương tích của điểm $D$ đối với $(AEF)$:
+                    $$DP \cdot DQ = DE \cdot DF \cdot \dots$$
+                    Hoặc chứng minh trực tiếp rằng tiếp tuyến chung tại tiếp điểm vuông góc với đường nối tâm, từ đó chỉ ra $(MPQ)$ tiếp xúc với $\omega$ tại $D$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 11</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P96 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P96</span> Cho dãy số nguyên dương $(a_n)_{n \ge 0}$ có tính chất: Với mỗi số tự nhiên $m$, đa thức</p>
+            <p style="text-align: center; overflow-x: auto;">$$P_m(x) = a_m x^m + a_{m-1} x^{m-1} + \dots + a_1 x + a_0$$</p>
+            <p>có $m$ nghiệm thực phân biệt. Chứng minh rằng $a_n \ge n$ với mọi số tự nhiên $n$.</p>
+            <span class="pi-author">Kiều Đình Minh (Phú Thọ)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Áp dụng định lý Rolle cho đạo hàm:</strong></p>
+                    <p>Nếu một đa thức có $m$ nghiệm thực phân biệt, thì đạo hàm cấp bất kỳ $P_m^{(k)}(x)$ cũng có đủ số nghiệm thực phân biệt tương ứng với bậc của nó.</p>
+
+                    <p><strong>2. Bất đẳng thức Newton về các hệ số:</strong></p>
+                    <p>Với đa thức bậc $m$ có $m$ nghiệm thực, các hệ số thỏa mãn bất đẳng thức Newton:
+                    $$\left(\frac{a_k}{\binom{m}{k}}\right)^2 \ge \left(\frac{a_{k-1}}{\binom{m}{k-1}}\right) \left(\frac{a_{k+1}}{\binom{m}{k+1}}\right).$$</p>
+
+                    <p><strong>3. Khai thác tính nguyên dương và sự tồn tại vô hạn của $m$:</strong></p>
+                    <p>Vì dãy $(a_n)$ cố định nhưng tính chất nghiệm thực thỏa mãn với <em>mọi</em> bậc $m$ tùy ý lớn, việc cho $m \to \infty$ đặt ra ràng buộc rất chặt lên tỷ số giữa các hệ số kế tiếp.</p>
+                    <p>Kết hợp điều kiện $a_n \in \mathbb{Z}^+$, ta chứng minh bằng quy nạp rằng $a_n \ge n$ với mọi $n \ge 0$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 11</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P97 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P97</span> Cho ba số thực không âm $a, b, c$ thỏa mãn điều kiện $(b+c)(c+2a)(c+4a) > 0$. Chứng minh rằng</p>
+            <p style="text-align: center; overflow-x: auto;">$$\frac{a}{b+c} + \frac{b}{c+4a} + \frac{2c}{c+2a} \ge 1.$$</p>
+            <p>Hỏi đẳng thức xảy ra khi và chỉ khi nào?</p>
+            <span class="pi-author">Nguyễn Văn Huyện (Tp. Hồ Chí Minh)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Biến đổi phân thức thứ ba:</strong></p>
+                    <p>Nhận xét biểu thức có phân thức thứ ba chứa $c$:
+                    $$\frac{2c}{c+2a} = 2 - \frac{4a}{c+2a}.$$
+                    Khi đó bất đẳng thức cần chứng minh tương đương với:
+                    $$\frac{a}{b+c} + \frac{b}{c+4a} + 1 \ge \frac{4a}{c+2a}.$$</p>
+
+                    <p><strong>2. Kỹ thuật thêm bớt và áp dụng Cauchy-Schwarz:</strong></p>
+                    <p>Cộng 1 vào phân thức đầu tiên:
+                    $$\frac{a}{b+c} + 1 = \frac{a+b+c}{b+c}.$$
+                    Xét tổng $\frac{a+b+c}{b+c} + \frac{b}{c+4a}$, sử dụng đánh giá bất đẳng thức Cauchy-Schwarz để ghép cặp các mẫu số $b+c$ và $c+4a$.</p>
+
+                    <p><strong>3. Trường hợp biên và điểm rơi:</strong></p>
+                    <p>Kiểm tra tại $b = 0$: Biểu thức trở thành $\frac{a}{c} + \frac{2c}{c+2a} \ge 1 \iff \frac{a}{c} + 1 - \frac{2a}{c+2a} \ge 0$, luôn đúng.<br>
+                    Khảo sát đẳng thức xảy ra khi nào: Thử $a = c$ hoặc các giá trị biên để xác định điều kiện đẳng thức.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 11</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P98 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P98</span> Cho số nguyên dương $n$ và cho đa thức</p>
+            <p style="text-align: center; overflow-x: auto;">$$P(x) = x^n - a_1 x^{n-1} + \dots + (-1)^n a_n$$</p>
+            <p>có tất cả các nghiệm đều thực và thuộc đoạn $[0; 1]$. Chứng minh rằng với mọi $k \in \{1; 2; \dots; n\}$ ta có:</p>
+            <p style="text-align: center; overflow-x: auto;">$$a_k - a_{k+1} + \dots + (-1)^{n-k} a_n \ge 0.$$</p>
+            <span class="pi-author">Navid Safaei (Iran)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Biểu diễn qua các nghiệm của đa thức:</strong></p>
+                    <p>Gọi các nghiệm của $P(x)$ là $x_1, x_2, \dots, x_n \in [0, 1]$. Theo định lý Viète:
+                    $$a_j = e_j(x_1, x_2, \dots, x_n)$$
+                    là đa thức đối xứng cơ bản bậc $j$.</p>
+
+                    <p><strong>2. Biểu diễn hàm sinh hoặc quy nạp theo số biến:</strong></p>
+                    <p>Xét hàm sinh: $P(1 - t) = \prod_{i=1}^n (1 - t - x_i)$.</p>
+                    <p>Hoặc sử dụng phương pháp quy nạp theo $n$:</p>
+                    <ul>
+                        <li>Khi thêm một biến $x_{n+1} \in [0, 1]$, các đa thức đối xứng thỏa mãn:
+                        $$e_j(x_1, \dots, x_{n+1}) = e_j(x_1, \dots, x_n) + x_{n+1} e_{j-1}(x_1, \dots, x_n).$$</li>
+                        <li>Thiết lập tổng đan dấu và phân tích nhân tử theo $x_{n+1}$ để tận dụng giả thiết quy nạp và $0 \le x_{n+1} \le 1$.</li>
+                    </ul>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 11</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P99 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P99</span> Gọi $S$ là số các số có 2017 chữ số, được tạo nên từ các chữ số $0, 1, 2, 3$, và trong mỗi số, tổng của 2 chữ số đứng cạnh nhau là một số khác 2. Chứng minh rằng</p>
+            <p style="text-align: center; overflow-x: auto;">$$S \equiv 3 \pmod 7.$$</p>
+            <span class="pi-author">Hà Huy Khoái (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Điều kiện cấm giữa các chữ số kề nhau:</strong></p>
+                    <p>Tổng hai chữ số kề nhau $u + v \ne 2$ nghĩa là các cặp liền kề $(u, v)$ bị cấm là: $(0, 2), (2, 0)$ và $(1, 1)$.</p>
+                    <p>Lưu ý chữ số đầu tiên của một số có 2017 chữ số phải khác $0$, tức là thuộc $\{1, 2, 3\}$.</p>
+
+                    <p><strong>2. Lập ma trận chuyển trạng thái:</strong></p>
+                    <p>Gọi $a_n, b_n, c_n, d_n$ lần lượt là số chuỗi hợp lệ độ dài $n$ kết thúc bằng chữ số $0, 1, 2, 3$.</p>
+                    <p>Thiết lập hệ phương trình truy hồi:
+                    $$\begin{cases}
+                    a_{n+1} = a_n + b_n + d_n \\
+                    b_{n+1} = a_n + c_n + d_n \\
+                    c_{n+1} = b_n + c_n + d_n \\
+                    d_{n+1} = a_n + b_n + c_n + d_n
+                    \end{cases}$$
+                    Nhận xét tính đối xứng giữa các biến $a_n$ và $c_n$ để thu gọn hệ phương trình bậc thấp hơn.</p>
+
+                    <p><strong>3. Xét chu kỳ theo modulo 7:</strong></p>
+                    <p>Tìm phương trình đặc trưng của dãy số truy hồi và tính chu kỳ của dãy số dư theo modulo 7 (chu kỳ Pisano). Sau đó tính số dư của $S_{2017} \pmod 7$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 11</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P100 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P100</span> Ở một Vương quốc nọ, các học sinh phải học $n$ môn học ($n \ge 3$). Một ngày nọ, thương học sinh phải học tập vất vả, Quốc vương bèn quyết định tích hợp $n$ môn lại để chỉ còn 3 môn học. Mỗi phương án tích hợp là một phân hoạch tập $n$ môn học thành 3 tập con khác rỗng (các môn trong cùng một tập con sẽ được dính lại với nhau để thành môn học mới). Hai phương án tích hợp, $\{S_1, S_2, S_3\}$ và $\{T_1, T_2, T_3\}$, được coi là <em>khác nhau</em> nếu tồn tại các chỉ số $i, j, k$ với $1 \le i, j, k \le 3$ và $i \ne j$, sao cho $S_i \cup S_j \subseteq T_k$.</p>
+            <p>Để xây dựng các phương án tích hợp, Quốc vương ra chiếu và cấp bạc cho Bộ Học tổ chức các hội thảo, với yêu cầu trong mỗi hội thảo phải đưa ra được ít nhất một phương án tích hợp mới và hai phương án tích hợp bất kì được đưa ra ở hai hội thảo khác nhau phải khác nhau. Hỏi Bộ Học của Vương quốc đó có thể tổ chức tối đa bao nhiêu hội thảo?</p>
+            <p><em>($\{X, Y, Z\}$ kí hiệu một phân hoạch tập các môn học thành 3 tập con khác rỗng $X, Y, Z$).</em></p>
+            <span class="pi-author">Vũ Thế Khôi (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Giải nghĩa điều kiện "khác nhau":</strong></p>
+                    <p>Hai phân hoạch $\mathcal{S} = \{S_1, S_2, S_3\}$ và $\mathcal{T} = \{T_1, T_2, T_3\}$ khác nhau khi có $S_i \cup S_j \subseteq T_k$ với $i \ne j$.</p>
+                    <p>Vì $S_1 \cup S_2 \cup S_3 = X$ (tập $n$ môn ban đầu) và $S_1, S_2, S_3$ đôi một rời nhau, nên $S_i \cup S_j = X \setminus S_l$ (với $l$ là chỉ số còn lại).</p>
+                    <p>Do đó, $S_i \cup S_j \subseteq T_k \iff X \setminus S_l \subseteq T_k \iff X \setminus T_k \subseteq S_l$.</p>
+
+                    <p><strong>2. Liên hệ với họ tập hợp đối ngẫu:</strong></p>
+                    <p>Mỗi phân hoạch 3 phần tử tương ứng với việc chọn phần tử bù của mỗi khối. Điều kiện này tương đương với cấu trúc chuỗi đối ngẫu trong poset các phân hoạch.</p>
+
+                    <p><strong>3. Vận dụng định lý tổ hợp cực trị (dạng Sperner):</strong></p>
+                    <p>Sử dụng định lý Sperner hoặc lý thuyết chuỗi đối xích trong dàn phân hoạch để chặn cận trên của số lượng phân hoạch tối đa không vi phạm tính tương thích chéo.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 11</em>.</div>
+                </div>
+            </details>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 4)</title>
+    
+    <meta name="post-id" content="PiTap2So4">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 2 Số 4 (Tháng 04/2018), từ bài P161 đến P170.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 4)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 2 Số 4 kèm gợi ý giải của SMP.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-2-so-4.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 4)">
+    <meta name="twitter:description" content="Đề bài P161 - P170 Tạp chí Pi Tập 2 Số 4 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            font-size: 0.88rem;
+            font-weight: bold;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            border: 1px dashed rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.03);
+            transition: all 0.15s ease;
+            width: fit-content;
+        }
+        [data-theme="dark"] summary.igo-hint-trigger {
+            color: #eee;
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker {
+            display: none;
+        }
+        summary.igo-hint-trigger:hover {
+            border-style: solid;
+            background: rgba(0, 0, 0, 0.07);
+        }
+        [data-theme="dark"] summary.igo-hint-trigger:hover {
+            background: rgba(255, 255, 255, 0.09);
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.72rem;
+            transition: transform 0.2s ease;
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            margin-top: 10px;
+            padding: 12px 16px;
+            border-left: 2px solid #555;
+            background: rgba(0, 0, 0, 0.02);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        [data-theme="dark"] .igo-hint-content {
+            border-left-color: #888;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .pi-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 4px;
+            background: #e3f2fd;
+            color: #1565c0;
+            margin-right: 6px;
+        }
+        [data-theme="dark"] .pi-badge {
+            background: #1a2733;
+            color: #90caf9;
+        }
+        .pi-author {
+            display: block;
+            margin-top: 6px;
+            font-style: italic;
+            font-size: 0.88rem;
+            color: #666;
+            text-align: right;
+        }
+        [data-theme="dark"] .pi-author {
+            color: #aaa;
+        }
+        .pi-ref-note {
+            margin-top: 10px;
+            padding: 6px 10px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 4px;
+            font-size: 0.82rem;
+            color: #666;
+        }
+        [data-theme="dark"] .pi-ref-note {
+            background: rgba(255, 255, 255, 0.03);
+            color: #999;
+        }
+    </style>
+</head>
+<body class="post-template">
+    <div id="smp-post-content">
+        <div class="header-container">
+            <h1>Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 4)</h1>
+            <p class="post-subtitle">Chuyên mục Thách thức Toán học — Tạp chí Pi số 4 (Tháng 04/2018) với 10 bài toán từ P161 đến P170 kèm gợi ý tư duy độc lập của SMP.</p>
+        </div>
+
+        <div style="background: rgba(0, 123, 255, 0.06); border-left: 4px solid #007bff; padding: 12px 16px; margin: 20px 0; border-radius: 4px;">
+            <strong>Tổng quan chuyên mục:</strong>
+            <ul style="margin: 6px 0 0 18px; padding: 0;">
+                <li><strong>Cấp THCS:</strong> 4 bài toán (P161 – P164), bao gồm bất đẳng thức đối xứng, hình học đối xứng tâm nội tiếp của Thầy Trần Quang Hùng, số học và tổ hợp đa giác lồi của Thầy Lê Phúc Lữ.</li>
+                <li><strong>Cấp THPT:</strong> 6 bài toán (P165 – P170), bao gồm hình học tam giác đều Belarus, phương trình đa thức giai thừa, phương trình hàm, dãy số nguyên tố và bài toán tô màu lưới ô vuông của TS. Trần Nam Dũng.</li>
+                <li><strong>Gợi ý:</strong> Được SMP biên soạn độc lập dưới dạng các mốc định hướng tư duy giúp bạn đọc tự mình chinh phục bài toán.</li>
+            </ul>
+        </div>
+
+        <p><a href="./thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; text-decoration: none; margin-bottom: 20px;">← Quay lại Mục lục Thách thức Toán học Tạp chí Pi (2017 – 2024)</a></p>
+
+        <!-- ==================== CẤP THCS ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THCS</h2>
+
+        <!-- Bài P161 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P161</span> Chứng minh rằng với mọi số thực dương $a, b, c$, ta luôn có:</p>
+            <p style="text-align: center; overflow-x: auto;">$$\frac{ab}{\sqrt{(a^2+bc)(b^2+ca)}} + \frac{bc}{\sqrt{(b^2+ca)(c^2+ab)}} + \frac{ca}{\sqrt{(c^2+ab)(a^2+bc)}} \le \frac{3}{2}.$$</p>
+            <p>Hỏi đẳng thức xảy ra khi và chỉ khi nào?</p>
+            <span class="pi-author">Nguyễn Việt Hùng (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Đánh giá căn thức bằng bất đẳng thức AM-GM:</strong></p>
+                    <p>Áp dụng bất đẳng thức Cauchy-Schwarz dưới dấu căn hoặc AM-GM cho hai số dương $a^2+bc$ và $b^2+ca$:</p>
+                    $$\sqrt{(a^2+bc)(b^2+ca)} \ge ab + c\sqrt{ab}.$$
+                    <p>Hoặc sử dụng đánh giá:
+                    $$\frac{2ab}{\sqrt{(a^2+bc)(b^2+ca)}} \le \frac{ab}{a^2+bc} + \frac{ab}{b^2+ca}.$$</p>
+
+                    <p><strong>2. Ghép cặp đối xứng:</strong></p>
+                    <p>Cộng ba bất đẳng thức hoán vị vòng quanh, ta thu được:
+                    $$\sum_{\text{cyc}} \frac{ab}{\sqrt{(a^2+bc)(b^2+ca)}} \le \frac{1}{2} \sum_{\text{cyc}} \frac{ab+bc}{b^2+ca}.$$
+                    Chứng minh rằng tổng $\sum_{\text{cyc}} \frac{b(a+c)}{b^2+ca} \le 3$.</p>
+
+                    <p><strong>3. Đẳng thức xảy ra:</strong> Khi và chỉ khi $a = b = c$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 6</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P162 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P162</span> Cho đường tròn $(O)$ cố định và cho hai điểm $B, C$ cố định nằm trên đường tròn đó, sao cho ba điểm $B, O, C$ không thẳng hàng. Xét điểm $A$ di động trên $(O)$ sao cho $ABC$ là tam giác nhọn, không cân. Gọi $I$ và $r$ tương ứng là tâm và bán kính đường tròn nội tiếp tam giác $ABC$. Gọi $E$ là điểm đối xứng với $B$ qua $IC$ và gọi $F$ là điểm đối xứng với $C$ qua $IB$. Chứng minh rằng giá trị biểu thức</p>
+            <p style="text-align: center; overflow-x: auto;">$$\frac{BC^2 - EF^2}{r}$$</p>
+            <p>không phụ thuộc vào vị trí của điểm $A$.</p>
+            <span class="pi-author">Trần Quang Hùng (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Vị trí các điểm đối xứng:</strong></p>
+                    <p>Vì $IC$ là đường phân giác trong của góc $C$, phép đối xứng trục $IC$ biến đường thẳng $CB$ thành đường thẳng $CA$. Do đó điểm $E$ nằm trên cạnh $AC$ và $CE = CB = a$.</p>
+                    <p>Tương tự, phép đối xứng trục $IB$ biến đường thẳng $BC$ thành đường thẳng $BA$, nên $F$ nằm trên cạnh $AB$ và $BF = BC = a$.</p>
+
+                    <p><strong>2. Tính độ dài $EF$ theo định lý côsin:</strong></p>
+                    <p>Ta có $AE = |b - a|$ và $AF = |c - a|$.</p>
+                    <p>Trong tam giác $AEF$, áp dụng định lý côsin:
+                    $$EF^2 = AE^2 + AF^2 - 2 AE \cdot AF \cos A = (b - a)^2 + (c - a)^2 - 2(b - a)(c - a)\cos A.$$</p>
+
+                    <p><strong>3. Rút gọn hiệu $BC^2 - EF^2$:</strong></p>
+                    <p>Khai triển và sử dụng hằng đẳng thức $a^2 = b^2 + c^2 - 2bc \cos A$:
+                    $$BC^2 - EF^2 = a^2 - EF^2 = 2a(b + c - a)(1 - \cos A) = 4a(p - a)\sin^2(A/2).$$
+                    Chú ý công thức lượng giác: $r = (p - a)\tan(A/2)$ và $\sin A = 2\sin(A/2)\cos(A/2)$.</p>
+                    <p>Khi đó chia cho $r$, biểu thức rút gọn thành:
+                    $$\frac{BC^2 - EF^2}{r} = 4R$$
+                    (với $R$ là bán kính của đường tròn ngoại tiếp cố định $(O)$). Giá trị này hoàn toàn không đổi!</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 6</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P163 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P163</span> Tìm tất cả các số nguyên dương $n$ có tính chất: Với mọi $a, b$ nguyên dương, nếu $a^2b + 1$ chia hết cho $n$ thì $a^2 + b$ cũng chia hết cho $n$.</p>
+            <span class="pi-author">Lê Huy (Nam Định) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Thử nghiệm với các giá trị đặc biệt:</strong></p>
+                    <ul>
+                        <li>Với $n = 1$: luôn đúng.</li>
+                        <li>Với $n = 2$: $a^2b + 1 \ \vdots \ 2 \implies a, b$ đều lẻ $\implies a^2 + b$ là tổng của hai số lẻ nên chia hết cho 2 (thỏa mãn).</li>
+                        <li>Với $n = 3$: $a^2b \equiv -1 \equiv 2 \pmod 3$. Vì số chính phương $a^2 \equiv 1 \pmod 3$ với $a \not\vdots 3$, ta có $b \equiv 2 \pmod 3$. Khi đó $a^2 + b \equiv 1 + 2 = 3 \equiv 0 \pmod 3$ (thỏa mãn).</li>
+                    </ul>
+
+                    <p><strong>2. Phản ví dụ cho $n \ge 4$:</strong></p>
+                    <p>Nếu $n$ có ước nguyên tố $p \ge 5$: chọn $a$ sao cho $a^2$ không đồng dư 1 modulo $p$.</p>
+                    <p>Nếu $n = 4$: chọn $a = 1, b = 3 \implies a^2b + 1 = 4 \ \vdots \ 4$, nhưng $a^2 + b = 1 + 3 = 4$ vẫn thỏa. Tuy nhiên thử $a = 3, b = 3 \implies a^2b + 1 = 28 \ \vdots \ 4$, và $a^2 + b = 12 \ \vdots \ 4$. Thử các cặp khác để tìm phản ví dụ cho $n \ \vdots \ 4$.</p>
+
+                    <p><strong>3. Kết luận:</strong> $n \in \{1, 2, 3\}$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 6</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P164 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P164</span> Cho đa giác lồi $P$ có 2018 đỉnh. Lấy điểm $M$ nằm trong đa giác $P$ sao cho $M$ không nằm trên một đường chéo nào của $P$. Gọi $m$ là số tam giác chứa điểm $M$ và có cả 3 đỉnh là đỉnh của $P$. Chứng minh rằng $m$ là một số chẵn.</p>
+            <span class="pi-author">Lê Phúc Lữ (TP. Hồ Chí Minh)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Đếm bằng hai cách (Double Counting) qua các cạnh:</strong></p>
+                    <p>Một tam giác tạo bởi 3 đỉnh $A, B, C$ của đa giác chứa điểm $M$ khi và chỉ khi mọi đường thẳng qua $M$ chia bộ 3 đỉnh thành hai phía (1 đỉnh một bên, 2 đỉnh bên kia).</p>
+                    <p>Nối $M$ với tất cả 2018 đỉnh của đa giác bởi các đoạn thẳng $MA_1, MA_2, \dots, MA_{2018}$. Vì $M$ không nằm trên đường chéo nào, không có hai đỉnh nào thẳng hàng với $M$.</p>
+
+                    <p><strong>2. Phân loại các tam giác không chứa $M$:</strong></p>
+                    <p>Một tam giác $A_iA_jA_k$ <em>không</em> chứa $M$ khi và chỉ khi cả 3 đỉnh đều nằm về một phía của một đường thẳng qua $M$, tức là góc quét từ $M$ nhỏ hơn $180^\circ$.</p>
+                    <p>Đếm số cặp đỉnh $(A_i, A_j)$ sao cho đoạn $A_iA_j$ "nhìn" thấy $M$.</p>
+
+                    <p><strong>3. Tính chẵn lẻ với $N = 2018$:</strong></p>
+                    <p>Với mỗi đỉnh $A_i$, đường thẳng nối $M$ và $A_i$ chia $N - 1 = 2017$ đỉnh còn lại thành hai nửa: một bên có $k_i$ đỉnh và bên kia có $2017 - k_i$ đỉnh.</p>
+                    <p>Vì tổng số đỉnh là 2018 (số chẵn), tích $k_i(2017 - k_i)$ luôn là số chẵn!</p>
+                    <p>Lấy tổng theo tất cả các đỉnh, ta chứng minh được số tam giác $m$ chứa điểm $M$ phải là một số chẵn.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 6</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- ==================== CẤP THPT ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THPT</h2>
+
+        <!-- Bài P165 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P165</span> Cho $K$ và $M$ tương ứng là trung điểm của các cạnh $AB$ và $AC$ của tam giác $ABC$. Dựng ra phía ngoài tam giác $ABC$ các tam giác đều $AMN$ và $BKL$. Gọi $F$ là trung điểm của $LN$. Tính góc $\angle KFM$.</p>
+            <span class="pi-author">Sergei Marzanik (CH Belarus)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Biểu diễn số phức trên mặt phẳng:</strong></p>
+                    <p>Chọn gốc toạ độ và gán các số phức cho các điểm $A, B, C$.</p>
+                    <p>Tọa độ trung điểm: $K = \frac{A+B}{2}, M = \frac{A+C}{2}$.</p>
+                    <p>Phép dựng tam giác đều ra phía ngoài tương ứng với phép quay một góc $60^\circ$, biểu diễn bằng phép nhân với số phức $\omega = e^{i\pi/3}$.</p>
+
+                    <p><strong>2. Tìm toạ độ trung điểm $F$:</strong></p>
+                    <p>Xác định toạ độ của $N$ qua phép quay tâm $M$ và toạ độ của $L$ qua phép quay tâm $K$.</p>
+                    <p>Tọa độ của $F$ là trung bình cộng: $F = \frac{L + N}{2}$.</p>
+
+                    <p><strong>3. Tính góc $\angle KFM$:</strong></p>
+                    <p>Xét tỉ số vectơ $\frac{M - F}{K - F}$.</p>
+                    <p>Biến đổi đại số cho thấy tam giác $KFM$ là một tam giác đều! Suy ra góc $\angle KFM = 60^\circ$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 6</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P166 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P166</span> Tìm tất cả các đa thức $P(x)$ và $Q(x)$ với hệ số thực, sao cho tồn tại vô hạn số nguyên dương $n$ thỏa mãn hệ thức:</p>
+            <p style="text-align: center; overflow-x: auto;">$$P(1) \cdot P(2) \dots P(n) = Q(n!).$$</p>
+            <span class="pi-author">Navid Safaei (CH Iran)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. So sánh bậc của hai vế:</strong></p>
+                    <p>Giả sử $P(x)$ có bậc $d$ và $Q(x)$ có bậc $k$.</p>
+                    <p>Khi $n$ lớn, vế trái có độ tăng trưởng cỡ $(n!)^d$, trong khi vế phải $Q(n!)$ có độ tăng trưởng cỡ $(n!)^k$.</p>
+                    <p>Để hệ thức đúng với vô hạn số nguyên dương $n$, bắt buộc bậc phải bằng nhau: $d = k$.</p>
+
+                    <p><strong>2. Khảo sát nghiệm của $P(x)$:</strong></p>
+                    <p>Nếu $P(x)$ có nghiệm thực hoặc phức $x_0 \notin \{0\}$, thì tại các giá trị $n \ge x_0$, tích vế trái sẽ có tính chất số học đặc biệt hoặc triệt tiêu.</p>
+                    <p>Bằng cách xét tỷ số hai bước liên tiếp $\frac{Q((n+1)!)}{Q(n!)} = P(n+1)$, chỉ ra rằng $P(x)$ chỉ có thể có dạng lũy thừa đơn thức $c x^d$.</p>
+
+                    <p><strong>3. Kết luận nghiệm đa thức:</strong></p>
+                    <p>$P(x) = x^d$ và $Q(x) = x^d$ (với $d \in \mathbb{N}$), hoặc các trường hợp hằng số tầm thường.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 6</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P167 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P167</span> Tìm tất cả các số thực dương $\alpha$ sao cho tồn tại dãy vô hạn các số dương $(x_n)_{n \ge 1}$, thỏa mãn điều kiện:</p>
+            <p style="text-align: center; overflow-x: auto;">$$x_{n+2} = \sqrt{\alpha x_{n+1}} - x_n,$$</p>
+            <p>với mọi số nguyên dương $n$.</p>
+            <span class="pi-author">Igor Voronovich (CH Belarus)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Viết lại hệ thức truy hồi:</strong></p>
+                    <p>Ta có $x_{n+2} + x_n = \sqrt{\alpha x_{n+1}}$.</p>
+                    <p>Để dãy $(x_n)$ luôn dương với mọi $n \ge 1$, ta phải có $\sqrt{\alpha x_{n+1}} > x_n$, tức là $\alpha x_{n+1} > x_n^2$.</p>
+
+                    <p><strong>2. Sử dụng bất đẳng thức AM-GM:</strong></p>
+                    <p>Áp dụng AM-GM cho hai số dương $x_{n+2}$ và $x_n$:
+                    $$\sqrt{\alpha x_{n+1}} = x_{n+2} + x_n \ge 2\sqrt{x_{n+2} x_n}.$$
+                    Bình phương hai vế:
+                    $$\alpha x_{n+1} \ge 4 x_{n+2} x_n \iff \frac{x_{n+1}}{x_n x_{n+2}} \ge \frac{4}{\alpha}.$$</p>
+
+                    <p><strong>3. Đánh giá tích vô hạn và xác định $\alpha$:</strong></p>
+                    <p>Nếu $\alpha < 4$, đại lượng sẽ tạo ra sự co ngặt làm dãy số rơi vào miền âm sau hữu hạn bước.</p>
+                    <p>Tìm điều kiện cần và đủ của tham số $\alpha \ge 4$ để tồn tại dãy số dương tuần hoàn hoặc dừng ở điểm bất động.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 6</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P168 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P168</span> Giả sử hàm số $f: \mathbb{R} \to \mathbb{R}$ có tính chất: Với mọi số thực $x, y$, nếu $f(x) \ne f(y)$ thì</p>
+            <p style="text-align: center; overflow-x: auto;">$$\min\{f(x), f(y)\} \le x+y \le \max\{f(x), f(y)\}.$$</p>
+            <p>Chứng minh rằng $f(x) \le f(y)$ nếu $x < y$.</p>
+            <span class="pi-author">Nguyễn Khắc Minh (Hà Nội) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Phản chứng giả thiết giảm:</strong></p>
+                    <p>Giả sử ngược lại, tồn tại hai số thực $x_1 < x_2$ sao cho $f(x_1) > f(x_2)$.</p>
+                    <p>Khi đó theo giả thiết của bài toán:
+                    $$f(x_2) \le x_1 + x_2 \le f(x_1).$$</p>
+
+                    <p><strong>2. Chọn điểm thứ ba để tạo mâu thuẫn:</strong></p>
+                    <p>Xét một điểm $z$ nằm rất xa về phía âm hoặc phía dương (hoặc điểm giữa $z = \frac{x_1 + x_2}{2}$).</p>
+                    <p>Nếu $f(z) = f(x_1)$ hoặc $f(z) = f(x_2)$, áp dụng điều kiện cho cặp còn lại.</p>
+                    <p>Nếu $f(z)$ khác cả hai, ta có hai bất đẳng thức kép chứa $x_1 + z$ và $x_2 + z$.</p>
+
+                    <p><strong>3. Dẫn tới mâu thuẫn độ dài đoạn:</strong></p>
+                    <p>Cho $z \to +\infty$, khoảng cách $x_1 + z$ và $x_2 + z$ tiến ra vô cực, không thể đồng thời bị kẹp giữa các giá trị hữu hạn của $f$. Từ mâu thuẫn này suy ra điều giả sử sai, tức $f$ luôn là hàm không giảm.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 6</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P169 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P169</span> Cho số nguyên tố lẻ $p$ và số nguyên dương $a$ không chia hết cho $p$. Xét dãy số nguyên dương $(x_n)_{n \ge 0}$, xác định bởi</p>
+            <p style="text-align: center; overflow-x: auto;">$$x_{n+1} = x_n^p + a,$$</p>
+            <p>với mọi số tự nhiên $n$; trong đó, $x_0$ là một số nguyên dương tùy ý cho trước.</p>
+            <p>Chứng minh rằng tồn tại vô hạn số tự nhiên $n$ sao cho $x_n$ là hợp số và đồng thời không chia hết cho $p$.</p>
+            <span class="pi-author">Nguyễn Thọ Tùng (ĐH Chicago, Mĩ)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Chu kỳ số dư modulo $p$:</strong></p>
+                    <p>Theo định lý Fermat nhỏ, với mọi số nguyên $x$, ta luôn có $x^p \equiv x \pmod p$.</p>
+                    <p>Do đó:
+                    $$x_{n+1} \equiv x_n + a \pmod p \implies x_n \equiv x_0 + na \pmod p.$$
+                    Vì $\gcd(a, p) = 1$, trong mỗi chu kỳ $p$ bước liên tiếp, có đúng 1 chỉ số làm $x_n \ \vdots \ p$, và có đúng $p - 1$ chỉ số làm $x_n \not\vdots \ p$.</p>
+
+                    <p><strong>2. Tìm ước nguyên tố ngoài $p$:</strong></p>
+                    <p>Dãy $(x_n)$ tăng ngặt ra vô cùng: $x_0 < x_1 < x_2 < \dots$</p>
+                    <p>Chọn một chỉ số $k$ sao cho $x_k$ có một ước nguyên tố $q \ne p$.</p>
+                    <p>Xét dãy số dư modulo $q$: vì số dư modulo $q$ chỉ nhận hữu hạn giá trị, dãy $(x_n \bmod q)$ phải tuần hoàn theo nguyên lý Dirichlet.</p>
+
+                    <p><strong>3. Kết luận tồn tại vô hạn hợp số:</strong></p>
+                    <p>Sử dụng định lý phần dư Trung Hoa hoặc tính tuần hoàn đồng dư theo $q$ và $p$, chứng minh có vô hạn chỉ số $n$ thỏa mãn đồng thời:
+                    $$x_n \ \vdots \ q \quad \text{và} \quad x_n \not\vdots \ p.$$
+                    Vì $x_n > q$ với mọi $n$ đủ lớn, các số hạng này chắc chắn là hợp số không chia hết cho $p$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 6</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P170 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P170</span> Trên mặt phẳng tọa độ, tô mỗi điểm nguyên $(x, y)$, với $0 \le x, y \le 9$, bởi màu xanh hoặc màu đỏ. Tiếp theo, tô màu tất cả các đoạn thẳng đơn vị có cả hai đầu mút nằm trong số các điểm vừa được tô màu nêu trên, theo quy tắc: Mỗi đoạn thẳng đơn vị có hai đầu mút cùng màu được tô bởi màu chung của hai đầu mút ấy; mỗi đoạn thẳng đơn vị có hai đầu mút khác màu được tô bởi màu vàng.</p>
+            <p>Biết rằng, có tất cả 49 điểm được tô màu đỏ và có tất cả 100 đoạn thẳng đơn vị được tô màu vàng. Hỏi, có thể có nhiều nhất bao nhiêu đoạn thẳng đơn vị được tô màu xanh?</p>
+            <span class="pi-author">Trần Nam Dũng (TP. Hồ Chí Minh)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Thống kê tổng số đoạn thẳng đơn vị trong lưới:</strong></p>
+                    <p>Lưới gồm $10 \times 10 = 100$ điểm nguyên.</p>
+                    <ul>
+                        <li>Số đoạn thẳng ngang: 10 hàng, mỗi hàng có 9 đoạn $\implies 10 \times 9 = 90$ đoạn.</li>
+                        <li>Số đoạn thẳng dọc: 10 cột, mỗi cột có 9 đoạn $\implies 10 \times 9 = 90$ đoạn.</li>
+                    </ul>
+                    <p>Tổng số đoạn thẳng đơn vị là $E = 90 + 90 = 180$ đoạn.</p>
+                    <p>Gọi số đoạn đỏ, xanh, vàng lần lượt là $E_R, E_B, E_Y$. Theo giả thiết:
+                    $$E_R + E_B + E_Y = 180 \implies E_R + E_B + 100 = 180 \implies E_R + E_B = 80.$$
+                    Để số đoạn xanh $E_B$ lớn nhất, số đoạn đỏ $E_R$ phải nhỏ nhất!</p>
+
+                    <p><strong>2. Bổ đề bắt tay (Handshaking lemma) cho các điểm đỏ:</strong></p>
+                    <p>Mỗi đoạn thẳng đỏ có 2 đầu mút đỏ. Mỗi đoạn thẳng vàng có đúng 1 đầu mút đỏ.</p>
+                    <p>Do đó tổng bậc của các điểm đỏ trong lưới là:
+                    $$\sum_{v \in \text{Đỏ}} \deg(v) = 2 E_R + E_Y = 2 E_R + 100.$$</p>
+
+                    <p><strong>3. Tối thiểu hóa $E_R$:</strong></p>
+                    <p>Có 49 điểm đỏ. Bậc tối đa của mỗi điểm trong lưới là: 4 (điểm trong), 3 (điểm biên), 2 (điểm góc).</p>
+                    <p>Để tổng bậc nhỏ nhất, ta nên xếp các điểm đỏ vào các vị trí có bậc nhỏ nhất (4 đỉnh góc bậc 2, $4 \times 8 = 32$ điểm biên bậc 3, và $49 - 36 = 13$ điểm trong bậc 4).</p>
+                    <p>Tính tổng bậc nhỏ nhất có thể của 49 điểm đỏ:
+                    $$\sum \deg(v) \ge 4 \times 2 + 32 \times 3 + 13 \times 4 = 8 + 96 + 52 = 156.$$
+                    Suy ra $2 E_R + 100 \ge 156 \implies 2 E_R \ge 56 \implies E_R \ge 28$.</p>
+                    <p>Khi đó $E_B = 80 - E_R \le 80 - 28 = 52$.</p>
+                    <p><strong>Đáp số:</strong> Có thể có nhiều nhất 52 đoạn thẳng đơn vị màu xanh.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 6</em>.</div>
+                </div>
+            </details>
+        </div>
+
+    </div>
+</body>
+</html>

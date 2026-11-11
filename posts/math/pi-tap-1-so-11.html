@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 11)</title>
+    
+    <meta name="post-id" content="PiTap1So11">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 1 Số 11 (Tháng 11/2017), từ bài P111 đến P120.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 11)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 1 Số 11 kèm gợi ý giải của SMP.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-1-so-11.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 11)">
+    <meta name="twitter:description" content="Đề bài P111 - P120 Tạp chí Pi Tập 1 Số 11 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            font-size: 0.88rem;
+            font-weight: bold;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            border: 1px dashed rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.03);
+            transition: all 0.15s ease;
+            width: fit-content;
+        }
+        [data-theme="dark"] summary.igo-hint-trigger {
+            color: #eee;
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker {
+            display: none;
+        }
+        summary.igo-hint-trigger:hover {
+            border-style: solid;
+            background: rgba(0, 0, 0, 0.07);
+        }
+        [data-theme="dark"] summary.igo-hint-trigger:hover {
+            background: rgba(255, 255, 255, 0.09);
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.72rem;
+            transition: transform 0.2s ease;
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            margin-top: 10px;
+            padding: 12px 16px;
+            border-left: 2px solid #555;
+            background: rgba(0, 0, 0, 0.02);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        [data-theme="dark"] .igo-hint-content {
+            border-left-color: #888;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .pi-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 4px;
+            background: #e3f2fd;
+            color: #1565c0;
+            margin-right: 6px;
+        }
+        [data-theme="dark"] .pi-badge {
+            background: #1a2733;
+            color: #90caf9;
+        }
+        .pi-author {
+            display: block;
+            margin-top: 6px;
+            font-style: italic;
+            font-size: 0.88rem;
+            color: #666;
+            text-align: right;
+        }
+        [data-theme="dark"] .pi-author {
+            color: #aaa;
+        }
+        .pi-ref-note {
+            margin-top: 10px;
+            padding: 6px 10px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 4px;
+            font-size: 0.82rem;
+            color: #666;
+        }
+        [data-theme="dark"] .pi-ref-note {
+            background: rgba(255, 255, 255, 0.03);
+            color: #999;
+        }
+    </style>
+</head>
+<body class="post-template">
+    <div id="smp-post-content">
+        <div class="header-container">
+            <h1>Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 11)</h1>
+            <p class="post-subtitle">Chuyên mục Thách thức Toán học — Tạp chí Pi số 11 (Tháng 11/2017) với 10 bài toán từ P111 đến P120 kèm gợi ý tư duy độc lập của SMP.</p>
+        </div>
+
+        <div style="background: rgba(0, 123, 255, 0.06); border-left: 4px solid #007bff; padding: 12px 16px; margin: 20px 0; border-radius: 4px;">
+            <strong>Tổng quan chuyên mục:</strong>
+            <ul style="margin: 6px 0 0 18px; padding: 0;">
+                <li><strong>Cấp THCS:</strong> 4 bài toán (P111 – P114).</li>
+                <li><strong>Cấp THPT:</strong> 6 bài toán (P115 – P120), bao gồm bài toán hình học Pascal sáng tạo, bài toán hàm liên tục và bài toán đa giác lồi của GS. Nguyễn Hùng Sơn.</li>
+                <li><strong>Gợi ý:</strong> Được SMP biên soạn độc lập dưới dạng các mốc định hướng tư duy giúp bạn đọc tự mình chinh phục bài toán.</li>
+            </ul>
+        </div>
+
+        <p><a href="./thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; text-decoration: none; margin-bottom: 20px;">← Quay lại Mục lục Thách thức Toán học Tạp chí Pi (2017 – 2024)</a></p>
+
+        <!-- ==================== CẤP THCS ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THCS</h2>
+
+        <!-- Bài P111 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P111</span> Cho tam giác $ABC$. $D$ là một điểm tùy ý nằm trong cạnh $AB$. Các đường phân giác trong của các góc $\angle ABC$ và $\angle ADC$ cắt nhau tại $E$. Các đường phân giác trong của các góc $\angle BAC$ và $\angle BDC$ cắt nhau tại $F$. Gọi $J$ là trung điểm của đoạn thẳng $EF$. Chứng minh rằng các đường thẳng $JD$ và $AB$ vuông góc với nhau khi và chỉ khi đường tròn nội tiếp tam giác $ADC$ tiếp xúc với đường tròn nội tiếp tam giác $BDC$.</p>
+            <span class="pi-author">Nhóm TTTH st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Điều kiện tiếp xúc của hai đường tròn nội tiếp:</strong></p>
+                    <p>Hai đường tròn nội tiếp của tam giác $ADC$ và $BDC$ tiếp xúc ngoài với nhau khi và chỉ khi điểm tiếp xúc của chúng trên cạnh chung $CD$ trùng nhau.</p>
+                    <p>Theo công thức tiếp điểm đường tròn nội tiếp:
+                    $$\frac{AD + CD - AC}{2} = \frac{BD + CD - BC}{2} \iff AD - AC = BD - BC \iff AC + BD = BC + AD.$$</p>
+
+                    <p><strong>2. Khảo sát toạ độ các phân giác $E$ và $F$:</strong></p>
+                    <p>Điểm $E$ là tâm bàng tiếp hoặc giao của phân giác $\angle B$ và $\angle ADC$. Điểm $F$ là giao của phân giác $\angle A$ và $\angle BDC$.</p>
+                    <p>Thiết lập hệ thức hình chiếu của $E$ và $F$ lên $AB$. Trung điểm $J$ của $EF$ có hình chiếu lên $AB$ trùng với $D$ khi và chỉ khi tổng các khoảng cách đại số từ $E$ và $F$ tới đường thẳng qua $D$ vuông góc với $AB$ bằng 0.</p>
+
+                    <p><strong>3. Biến đổi lượng giác và kết luận:</strong></p>
+                    <p>Sử dụng định lý sin trong các tam giác con để đưa điều kiện $JD \perp AB$ về đúng đẳng thức độ dài cạnh $AC + BD = BC + AD$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 1</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P112 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P112</span> Tìm tất cả các cặp số nguyên $(a, b)$ để đa thức $P(x) = x^2 - ax + b$ có tính chất: tồn tại ba số nguyên đôi một khác nhau $m, n, p$ thuộc đoạn $[1; 9]$ sao cho</p>
+            <p style="text-align: center; overflow-x: auto;">$$|P(m)| = |P(n)| = |P(p)| = 7.$$</p>
+            <span class="pi-author">Nhóm TTTH st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Nguyên lý Dirichlet và tính đối xứng Parabol:</strong></p>
+                    <p>Đa thức bậc hai $P(x)$ chỉ có thể nhận mỗi giá trị tại tối đa 2 điểm phân biệt.</p>
+                    <p>Vì $|P(x)| = 7$ tại 3 điểm phân biệt $m, n, p$, nên theo nguyên lý Dirichlet, phải có hai điểm nhận cùng một giá trị (chẳng hạn $+7$) và một điểm nhận giá trị đối ($-7$), hoặc ngược lại.</p>
+
+                    <p><strong>2. Trục đối xứng:</strong></p>
+                    <p>Giả sử $P(m) = P(n) = 7$. Đồ thị parabol đối xứng qua đường thẳng $x = \frac{a}{2}$.</p>
+                    <p>Do đó $m + n = a$. Vì $m, n$ là các số nguyên phân biệt thuộc $[1; 9]$, $a$ là một số nguyên.</p>
+                    <p>Khi đó $P(x) = (x - m)(x - n) + 7$.</p>
+
+                    <p><strong>3. Tìm điểm thứ ba $p$:</strong></p>
+                    <p>Giá trị tại điểm thứ ba phải thỏa mãn $P(p) = -7$:</p>
+                    $$(p - m)(p - n) + 7 = -7 \iff (p - m)(p - n) = -14.$$
+                    Vì $p, m, n$ là các số nguyên, tích của hai số nguyên $(p - m)$ và $(p - n)$ bằng $-14$.</p>
+                    <p>Phân tích $-14 = (-1) \cdot 14 = (-2) \cdot 7 = (-7) \cdot 2 = (-14) \cdot 1$.</p>
+                    <p>Kết hợp điều kiện $m, n, p \in [1; 9]$ để kiểm tra các khả năng và tìm ra tất cả các cặp $(a, b)$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 1</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P113 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P113</span> Tìm tất cả các bộ ba số nguyên dương $(x, y, z)$ thỏa mãn điều kiện:</p>
+            <p style="text-align: center; overflow-x: auto;">$$5^x \cdot 3^y = 3z^2 + 2z - 1.$$</p>
+            <span class="pi-author">Trương Quang An (Quảng Ngãi)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Phân tích nhân tử vế phải:</strong></p>
+                    <p>Ta có:
+                    $$3z^2 + 2z - 1 = (3z - 1)(z + 1).$$
+                    Do đó:
+                    $$(3z - 1)(z + 1) = 5^x \cdot 3^y.$$</p>
+
+                    <p><strong>2. Tìm ước chung lớn nhất của hai nhân tử:</strong></p>
+                    <p>Xét $\gcd(3z - 1, z + 1) = \gcd(3(z + 1) - 4, z + 1) = \gcd(4, z + 1) \in \{1, 2, 4\}$.</p>
+                    <p>Nhưng tích $(3z - 1)(z + 1) = 5^x \cdot 3^y$ là một số lẻ (vì chỉ chứa thừa số nguyên tố 3 và 5), do đó hai thừa số $3z - 1$ và $z + 1$ đều lẻ. Suy ra $\gcd(3z - 1, z + 1) = 1$.</p>
+
+                    <p><strong>3. Phân chia các lũy thừa nguyên tố:</strong></p>
+                    <p>Vì $\gcd(3z - 1, z + 1) = 1$, một trong hai thừa số phải là lũy thừa của $3$ và thừa số còn lại là lũy thừa của $5$:</p>
+                    <ul>
+                        <li><strong>Trường hợp 1:</strong> $\begin{cases} z + 1 = 3^y \\ 3z - 1 = 5^x \end{cases} \implies 5^x = 3(3^y - 1) - 1 = 3^{y+1} - 4$.
+                        Khảo sát theo modulo 3 và modulo 8: Với $x = 1 \implies 5 = 3^{y+1} - 4 \implies 3^{y+1} = 9 \implies y = 1$. Khi đó $z + 1 = 3 \implies z = 2$. Bộ nghiệm: $(x, y, z) = (1, 1, 2)$.</li>
+                        <li><strong>Trường hợp 2:</strong> $\begin{cases} z + 1 = 5^x \\ 3z - 1 = 3^y \end{cases} \implies 3(5^x - 1) - 1 = 3^y \implies 3 \cdot 5^x - 4 = 3^y$, vô nghiệm vì vế trái $\equiv -1 \pmod 3$.</li>
+                    </ul>
+                    <p><strong>Đáp số duy nhất:</strong> $(x, y, z) = (1, 1, 2)$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 1</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P114 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P114</span> Cho bảng ô vuông kích thước $111 \times 2017$ (bảng gồm 111 hàng và 2017 cột). Điền vào mỗi ô vuông con của bảng một số 0 hoặc 1 sao cho trong mỗi cột có ít nhất 85 số 1. Chứng minh rằng ta có thể bỏ đi 106 hàng sao cho ở bảng mới nhận được (gồm 5 hàng và 2017 cột), chỉ có thể có tối đa 1 cột chứa toàn số 0.</p>
+            <span class="pi-author">Nguyễn Khắc Minh (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Chuyển qua ngôn ngữ phần bù (số các số 0):</strong></p>
+                    <p>Vì mỗi cột gồm 111 ô và có ít nhất 85 số 1, nên trong mỗi cột có không quá $111 - 85 = 26$ số 0.</p>
+                    <p>Một cột trở thành "toàn số 0" trong bảng 5 hàng khi và chỉ khi cả 5 hàng được chọn đều chứa số 0 tại cột đó.</p>
+
+                    <p><strong>2. Đếm số bộ 5 hàng ứng với các số 0:</strong></p>
+                    <p>Tổng số cách chọn ra 5 hàng từ 111 hàng ban đầu là $\binom{111}{5}$.</p>
+                    <p>Tại một cột $j$ bất kỳ, vì cột có tối đa 26 số 0, số bộ 5 hàng mà tại đó cột $j$ toàn số 0 là không quá $\binom{26}{5}$.</p>
+                    <p>Tổng số lần xuất hiện cột toàn số 0 tính trên tất cả các cách chọn 5 hàng là:</p>
+                    $$T \le 2017 \times \binom{26}{5}.$$
+
+                    <p><strong>3. Đánh giá xác suất / trung bình:</strong></p>
+                    <p>Ta cần chỉ ra tồn tại ít nhất một bộ 5 hàng có số cột toàn số 0 không vượt quá 1.</p>
+                    <p>Giả sử ngược lại, mọi bộ 5 hàng đều có ít nhất 2 cột toàn số 0, thì tổng số lần xuất hiện phải thỏa mãn:
+                    $$T \ge 2 \binom{111}{5}.$$
+                    Hãy so sánh tỉ số $\frac{2017 \binom{26}{5}}{\binom{111}{5}}$: tính toán cho thấy tỉ số này nhỏ hơn 2, dẫn tới mâu thuẫn!</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 1</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- ==================== CẤP THPT ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THPT</h2>
+
+        <!-- Bài P115 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P115</span> Trên một đường tròn cho trước, lần lượt, theo chiều kim đồng hồ, lấy các điểm đôi một phân biệt $A, B, D, E, F, C$ sao cho $AB = AC$. $AD$ cắt $BE, BF$ tương ứng tại $P, S$; $AF$ cắt $CD, CE$ tương ứng tại $T, R$. Gọi $Q$ là giao điểm của $BF$ và $CD$. Trên đoạn thẳng $ST$, lấy điểm $K$ sao cho $\angle SKQ = \angle ACE$. Chứng minh rằng</p>
+            <p style="text-align: center; overflow-x: auto;">$$\frac{KS}{KT} = \frac{QP}{QR}.$$</p>
+            <span class="pi-author">Trần Tiến Mạnh (Học sinh lớp 12, THPT chuyên, ĐH Vinh)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Nhận dạng cấu hình định lý Pascal:</strong></p>
+                    <p>Xét 6 điểm trên đường tròn: $A, B, D, E, F, C$.</p>
+                    <p>Đường chéo $AD$ và $BF$ cắt nhau tại $S$; $AF$ và $CD$ cắt nhau tại $T$; $BE$ và $CD$ cắt nhau hoặc liên hệ với $Q = BF \cap CD$.</p>
+                    <p>Áp dụng định lý Pascal cho các bộ 6 điểm thích hợp trên đường tròn để xác định các bộ điểm thẳng hàng.</p>
+
+                    <p><strong>2. Khai thác giả thiết $AB = AC$:</strong></p>
+                    <p>Cung $AB$ bằng cung $AC$ cho ta các góc nội tiếp chắn hai cung này bằng nhau, tạo ra các cặp đường thẳng phân giác đối xứng.</p>
+
+                    <p><strong>3. Sử dụng tỉ số lượng giác và tam giác đồng dạng:</strong></p>
+                    <p>Từ điều kiện góc $\angle SKQ = \angle ACE$, xét các tam giác đồng dạng hoặc dựng các chùm đường thẳng chiếu từ $Q$. Áp dụng định lý sin cho tam giác $QSK$ và $QTK$ để tính tỉ số $\frac{KS}{KT}$ và rút gọn về $\frac{QP}{QR}$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 1</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P116 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P116</span> Cho các số thực $a, b$, với $a < b$. Cho hàm số $f(x)$ xác định, liên tục trên đoạn $[a; b]$ và thỏa mãn điều kiện: $f(a) \cdot f(b) < 0$. Chứng minh rằng với mọi số nguyên $n \ge 3$, tồn tại cấp số cộng tăng $x_1, x_2, \dots, x_n$ có tất cả các số hạng đều thuộc đoạn $[a; b]$ và thỏa mãn điều kiện:</p>
+            <p style="text-align: center; overflow-x: auto;">$$\sum_{i=1}^n f(x_i) = 0.$$</p>
+            <span class="pi-author">Trần Minh Hiền (Bình Phước)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Định lượng hoá cấp số cộng trong đoạn $[a; b]$:</strong></p>
+                    <p>Một cấp số cộng tăng có $n$ số hạng trong $[a, b]$ được xác định bởi điểm đầu $x_1$ và công sai $d > 0$ sao cho $x_n = x_1 + (n-1)d \le b$.</p>
+                    <p>Xét hàm số liên tục hai biến:
+                    $$F(x_1, d) = \sum_{i=1}^n f(x_1 + (i-1)d).$$</p>
+
+                    <p><strong>2. Khảo sát dấu tại biên khi công sai $d \to 0^+$:</strong></p>
+                    <p>Khi $d \to 0$, $F(x_1, 0) = n f(x_1)$.</p>
+                    <p>Tại $x_1 = a$, $F(a, 0) = n f(a)$. Tại $x_1 = b$, $F(b, 0) = n f(b)$.</p>
+                    <p>Vì $f(a) \cdot f(b) < 0$, hai giá trị này trái dấu nhau!</p>
+
+                    <p><strong>3. Áp dụng định lý giá trị trung gian:</strong></p>
+                    <p>Chọn $d > 0$ đủ nhỏ, ta vẫn có $F(a, d)$ và $F(b - (n-1)d, d)$ mang dấu ngược nhau.</p>
+                    <p>Do hàm $F(t, d)$ liên tục theo $t \in [a, b - (n-1)d]$, theo định lý Bolzano-Cauchy, luôn tồn tại $t_0$ sao cho $F(t_0, d) = 0$. Cấp số cộng tương ứng chính là dãy cần tìm.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 1</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P117 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P117</span> Cho dãy vô hạn số thực $x_1, x_2, \dots$ thỏa mãn điều kiện:</p>
+            <p style="text-align: center; overflow-x: auto;">$$x_n = - \max_{i_1 + i_2 + \dots + i_{11} = n} (x_{i_1} + x_{i_2} + \dots + x_{i_{11}})$$</p>
+            <p>với mọi $n > 2017$. Chứng minh rằng dãy đã cho là dãy bị chặn.</p>
+            <span class="pi-author">Nguyễn Thanh Giang (TP. Hồ Chí Minh) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Hiểu bản chất phương trình cực trị đối xứng:</strong></p>
+                    <p>Phương trình có dạng $x_n + \max (x_{i_1} + \dots + x_{i_{11}}) = 0$. Dấu trừ ở vế phải đóng vai trò "triệt tiêu" và phản hồi âm (negative feedback), ngăn cản dãy bùng nổ ra vô hạn.</p>
+
+                    <p><strong>2. Khảo sát cận trên và cận dưới:</strong></p>
+                    <p>Đặt $M = \max_{1 \le k \le 2017} |x_k|$.</p>
+                    <p>Nếu các số hạng có xu hướng tăng dương lớn, vế phải sẽ bị kéo về một số âm rất lớn. Ngược lại, nếu các số hạng âm lớn, $\max$ của tổng các số âm sẽ kéo số tiếp theo về gần 0 hoặc dương.</p>
+
+                    <p><strong>3. Chứng minh quy nạp chặn biên:</strong></p>
+                    <p>Chứng minh bằng quy nạp tồn tại hằng số $C > 0$ phụ thuộc vào 2017 số hạng đầu sao cho $|x_n| \le C$ với mọi $n \ge 1$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 1</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P118 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P118</span> Cho số nguyên dương $k$. Cho đa thức $P(x)$ với hệ số nguyên, khác hằng và không có nghiệm nguyên. Chứng minh rằng tồn tại đa thức $Q(x)$ với hệ số nguyên, khác đa thức 0 và thỏa mãn điều kiện:</p>
+            <p style="text-align: center; overflow-x: auto;">$$Q\left(\left[\frac{n}{k}\right]\right) \equiv 0 \pmod{P(n)},$$</p>
+            <p>với mọi số nguyên $n$.</p>
+            <span class="pi-author">Tô Minh Hoàng (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Phân tích phép chia có dư cho $k$:</strong></p>
+                    <p>Mỗi số nguyên $n$ được biểu diễn duy nhất dưới dạng $n = km + r$ với $m = [\frac{n}{k}] \in \mathbb{Z}$ và $r \in \{0, 1, \dots, k-1\}$.</p>
+                    <p>Điều kiện bài toán tương đương với: với mỗi $r \in \{0, 1, \dots, k-1\}$, ta cần:
+                    $$Q(m) \equiv 0 \pmod{P(km + r)} \quad \forall m \in \mathbb{Z}.$$</p>
+
+                    <p><strong>2. Xây dựng đa thức $Q(x)$ chia hết theo nghĩa đa thức:</strong></p>
+                    <p>Để một đồng dư thức modulo $P(km+r)$ luôn đúng với mọi $m$, cách tự nhiên nhất là chọn đa thức $Q(x)$ sao cho đa thức $P(kx + r)$ là một ước đa thức của $Q(x)$!</p>
+                    <p>Xét tích của $k$ đa thức tương ứng với $k$ số dư:
+                    $$H(x) = \prod_{r=0}^{k-1} P(kx + r).$$</p>
+
+                    <p><strong>3. Kết luận:</strong></p>
+                    <p>Đa thức $H(x)$ có hệ số nguyên và khác hằng. Với mỗi $n = km + r$, $P(n) = P(km + r)$ là một thừa số trong tích $H(m)$. Do đó $H(m) \ \vdots \ P(n)$ với mọi $n$. Chọn $Q(x) = H(x)$, bài toán được chứng minh.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 1</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P119 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P119</span> Tìm tất cả các số nguyên $n \ge 2$ có tính chất: Với $n$ số nguyên $a_1, a_2, \dots, a_n$ tùy ý mà tổng của chúng không chia hết cho $n$, luôn tồn tại chỉ số $i$, với $1 \le i \le n$, sao cho tất cả các số</p>
+            <p style="text-align: center; overflow-x: auto;">$$a_i, a_i + a_{i+1}, \dots, a_i + a_{i+1} + \dots + a_{i+n-1}$$</p>
+            <p>đều không chia hết cho $n$. (Qui ước, $a_k = a_{k-n}$ nếu $k > n$).</p>
+            <span class="pi-author">Nhóm TTTH st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Xét trường hợp $n$ là hợp số:</strong></p>
+                    <p>Giả sử $n = d \cdot m$ với $1 < d < n$.</p>
+                    <p>Hãy thử xây dựng một dãy tuần hoàn chu kỳ $d$ sao cho ở mọi vị trí $i$, tổng tích lũy sau đúng $d$ bước sẽ tạo thành một bội số của $n$.</p>
+                    <p>Ví dụ chọn các phần tử sao cho tổng của mỗi khối $d$ phần tử bằng $d \cdot m' \equiv 0 \pmod n$, khi đó ở bất kỳ vị trí xuất phát nào cũng sẽ gặp một tổng chia hết cho $n$. Do đó các hợp số không thỏa mãn.</p>
+
+                    <p><strong>2. Xét trường hợp $n = p$ là số nguyên tố:</strong></p>
+                    <p>Đặt $S_k = \sum_{j=1}^k a_j$. Điều kiện bài toán tương đương với việc tìm một điểm bắt đầu trên đường tròn sao cho hành trình không bao giờ chạm lại thặng dư ban đầu modulo $p$.</p>
+                    <p>Sử dụng định lý về dãy thặng dư trên nhóm cyclic $\mathbb{Z}_p$ (liên quan đến định lý Raney hoặc nguyên lý chu trình xoay), chứng minh rằng với mọi số nguyên tố $p$, luôn tồn tại ít nhất một chỉ số $i$ như vậy.</p>
+                    <p><strong>Kết luận:</strong> $n$ là tất cả các số nguyên tố.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 1</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P120 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P120</span> Trong mặt phẳng, cho một đa giác lồi có độ dài mỗi cạnh là $\lfloor \pi \rfloor$ hoặc $\lceil \pi \rceil$. Chứng minh rằng nếu số đỉnh và chu vi của đa giác đó là các số chẵn thì luôn tồn tại hai đỉnh chia đôi chu vi của đa giác ấy.</p>
+            <p><em>(Với $x$ là số thực, $\lfloor x \rfloor$ kí hiệu số nguyên lớn nhất không vượt quá $x$ và $\lceil x \rceil$ kí hiệu số nguyên nhỏ nhất không nhỏ hơn $x$).</em></p>
+            <span class="pi-author">Nguyễn Hùng Sơn (Varsava, Ba Lan)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Xác định giá trị các cạnh:</strong></p>
+                    <p>Vì $3 < \pi < 4$, ta có $\lfloor \pi \rfloor = 3$ và $\lceil \pi \rceil = 4$. Như vậy mỗi cạnh của đa giác có độ dài hoặc bằng 3 hoặc bằng 4.</p>
+
+                    <p><strong>2. Phân tích chu vi và tính chẵn lẻ:</strong></p>
+                    <p>Gọi số đỉnh (và số cạnh) của đa giác là $2m$ (chẵn). Gọi $k$ là số cạnh có độ dài 3 và $(2m - k)$ là số cạnh có độ dài 4.</p>
+                    <p>Chu vi đa giác là $C = 3k + 4(2m - k) = 8m - k$. Giả thiết cho chu vi $C$ là số chẵn, suy ra $k$ phải là số chẵn. Đặt $k = 2u$.</p>
+                    <p>Nửa chu vi của đa giác là $P = \frac{C}{2} = 4m - u$ (là một số nguyên).</p>
+
+                    <p><strong>3. Xét hiệu khoảng cách giữa các đỉnh đối diện:</strong></p>
+                    <p>Đánh số các đỉnh từ $A_1$ đến $A_{2m}$. Với mỗi đỉnh $A_i$, xét đỉnh đối diện qua số cạnh $A_{i+m}$.</p>
+                    <p>Gọi $d(A_i, A_{i+m})$ là độ dài đường đi theo chu vi từ $A_i$ đến $A_{i+m}$ theo một chiều. Ta có $d(A_i, A_{i+m}) + d(A_{i+m}, A_i) = C = 2P$.</p>
+                    <p>Xét đại lượng sai lệch $\Delta_i = d(A_i, A_{i+m}) - P$. Khi chỉ số $i$ chạy một vòng quanh đa giác, mỗi bước nhảy $\Delta_{i+1} - \Delta_i$ chỉ thay đổi trong phạm vi hiệu độ dài hai cạnh (tức $4 - 3 = 1$ hoặc $3 - 4 = -1$ hoặc $0$).</p>
+                    <p>Vì $\sum_{i=1}^m (\Delta_{i+1} - \Delta_i) + \Delta_1 = \Delta_{m+1} = -\Delta_1$, giá trị $\Delta_i$ đổi dấu từ dương sang âm (hoặc ngược lại) với các bước nhảy nguyên kích thước 1, do đó bắt buộc phải đi qua giá trị 0!</p>
+                    <p>Khi $\Delta_i = 0$, ta có $d(A_i, A_{i+m}) = P$, tức hai đỉnh $A_i$ và $A_{i+m}$ chia đôi chu vi của đa giác.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 1</em>.</div>
+                </div>
+            </details>
+        </div>
+
+    </div>
+</body>
+</html>

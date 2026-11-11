@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 8)</title>
+    
+    <meta name="post-id" content="PiTap1So8">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 1 Số 8 (Tháng 08/2017), từ bài P81 đến P90 (Bao gồm trọn bộ đề thi IMO 2017).">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 8)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 1 Số 8 kèm phân tích lời giải IMO 2017.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-1-so-8.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 8)">
+    <meta name="twitter:description" content="Đề bài P81 - P90 Tạp chí Pi Tập 1 Số 8 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            width: fit-content;
+            outline: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            border-radius: 4px;
+            background: rgba(2, 132, 199, 0.08);
+            transition: background 0.2s;
+        }
+        summary.igo-hint-trigger:hover {
+            background: rgba(2, 132, 199, 0.16);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker,
+        summary.igo-hint-trigger::marker {
+            display: none;
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.75rem;
+            transition: transform 0.2s ease-in-out;
+            color: var(--accent-cyan, #0284c7);
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            padding: 10px 0 10px 18px;
+            margin-top: 8px;
+            border-left: 2px solid var(--accent-cyan, #0284c7);
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: var(--exam-text-color, #334155);
+        }
+        body.dark-mode .igo-hint-content {
+            border-left-color: rgba(56, 189, 248, 0.6);
+        }
+        .igo-level-heading {
+            color: var(--exam-bold-color, #111);
+            font-size: 1.35rem;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1));
+            font-weight: 700;
+        }
+        body.dark-mode .igo-level-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--accent-cyan, #0284c7) !important;
+            text-decoration: none !important;
+            margin: 12px 0 20px 0;
+            transition: transform 0.2s ease;
+        }
+        .igo-nav-link:hover {
+            transform: translateX(-3px);
+        }
+        .igo-mini-toc {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 16px 0 24px 0;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-size: 0.9rem;
+        }
+        body.dark-mode .igo-mini-toc {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .igo-mini-toc a {
+            color: var(--exam-bold-color, #111) !important;
+            text-decoration: none !important;
+            transition: color 0.2s;
+        }
+        .igo-mini-toc a:hover {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+        .author-tag {
+            font-style: italic;
+            color: var(--text-muted, #64748b);
+            font-size: 0.92rem;
+            margin-top: -4px;
+            margin-bottom: 10px;
+        }
+        .source-ref {
+            font-size: 0.88rem;
+            color: var(--text-muted, #64748b);
+            margin-top: 8px;
+            font-style: italic;
+        }
+        .imo-banner {
+            background: rgba(201, 169, 110, 0.08);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            border-radius: 8px;
+            padding: 12px 18px;
+            margin: 18px 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content">
+        <div class="header-box">
+            <h1>Tạp Chí Pi — Tập 1 Số 8</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Chuyên mục Thách thức Toán học (Tháng 08/2017)</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Hệ thống Gợi ý tư duy độc lập biên soạn bởi SMP</h2>
+        </div>
+
+        <!-- LỐI DẪN ĐẦU TRANG ĐẾN TỔNG QUAN -->
+        <div>
+            <a href="thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" class="igo-nav-link">← Tổng quan Thách thức Toán học Tạp chí Pi (2017 – 2024)</a>
+        </div>
+
+        <!-- MỤC LỤC MINI CHO SỐ PHÁT HÀNH -->
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Khối thi:</span>
+            <a href="#thcs">Khối THCS (Bài P81 – P84)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#thpt">Khối THPT (Bài P85 – P90: Đặc Biệt IMO 2017)</a>
+        </div>
+
+        <!-- ================= KHỐI THCS ================= -->
+        <h2 id="thcs" class="igo-level-heading">Khối THCS (Dành cho Trung học Cơ sở)</h2>
+
+        <!-- BÀI P81 -->
+        <h3>Bài P81. Tổng số ước và chuỗi điều hòa</h3>
+        <div class="author-tag">Đề xuất: Olympic Toán học Brazil 1992</div>
+        <p>Kí hiệu $d(n)$ là số các ước dương của số nguyên dương $n$ (kể cả 1 và chính nó). Chứng minh rằng:
+        \[
+        n\left(\frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n}\right) \le d(1) + d(2) + \dots + d(n) \le n\left(1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n}\right)
+        \]
+        với mọi $n$ nguyên dương.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Bổ đề cơ bản về tổng số ước:</strong> Sử dụng phương pháp đếm bằng hai cách trên tập các cặp $(i, j)$ sao cho $i \cdot j \le n$:</p>
+                \[
+                \sum_{k=1}^n d(k) = \sum_{k=1}^n \left[\frac{n}{k}\right].
+                \]
+                <p>Với mỗi số nguyên dương $k$, ta luôn có bất đẳng thức phần nguyên:</p>
+                \[
+                \frac{n}{k} - 1 < \left[\frac{n}{k}\right] \le \frac{n}{k}.
+                \]
+                <ul>
+                    <li>Lấy tổng vế phải: $\sum_{k=1}^n \left[\frac{n}{k}\right] \le \sum_{k=1}^n \frac{n}{k} = n\left(1 + \frac{1}{2} + \dots + \frac{1}{n}\right)$.</li>
+                    <li>Lấy tổng vế trái: $\sum_{k=1}^n \left[\frac{n}{k}\right] \ge \sum_{k=1}^n \left(\frac{n}{k} - 1\right) = n\left(1 + \frac{1}{2} + \dots + \frac{1}{n}\right) - n = n\left(\frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n}\right)$.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 10.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P82 -->
+        <h3>Bài P82. Nghiệm hữu tỉ chung của hai đa thức</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Thành Nhân (Bình Dương)</div>
+        <p>Cho số nguyên dương $n$ và số nguyên tố $p$. Cho hai đa thức bậc $n$, với hệ số nguyên:
+        \[
+        P(x) = a_n x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0,
+        \]
+        \[
+        Q(x) = b_n x^n + b_{n-1} x^{n-1} + \dots + b_1 x + b_0,
+        \]
+        thỏa mãn điều kiện: $a_{n-1} - b_{n-1} = 0$ và $a_n - b_n = p$. Hỏi có tồn tại hay không một số hữu tỉ không nguyên là nghiệm chung của hai đa thức đó?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Giả sử tồn tại nghiệm hữu tỉ chung $x_0 = \dfrac{u}{v}$ với $u, v \in \mathbb{Z}, v > 1$ và $\gcd(u, v) = 1$.</p>
+                <p>Khi đó $x_0$ cũng là nghiệm của đa thức hiệu:
+                \[
+                R(x) = P(x) - Q(x) = p x^n + c_{n-2} x^{n-2} + \dots + c_1 x + c_0 \quad (\text{do } a_{n-1} = b_{n-1}).
+                \]
+                Theo định lý nghiệm hữu tỉ của đa thức hệ số nguyên, mẫu số $v$ phải là ước của hệ số cao nhất $p$. Vì $p$ là số nguyên tố và $v > 1$, bắt buộc $v = p$.</p>
+                <p>Thay $x_0 = \dfrac{u}{p}$ vào phương trình $R(x_0) = 0$, nhân cả hai vế với $p^{n-1}$, xét tính chia hết theo modulo $p$ để chỉ ra mâu thuẫn về bậc của số mũ nguyên tố $p$. Kết luận: <strong>Không tồn tại</strong> số hữu tỉ không nguyên nào thỏa mãn.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 10.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P83 -->
+        <h3>Bài P83. Tứ giác vừa nội tiếp vừa ngoại tiếp</h3>
+        <div class="author-tag">Đề xuất: Lưu Thanh Hà (Kiên Giang)</div>
+        <p>Cho tam giác $ABC$; gọi $I$ là tâm đường tròn nội tiếp tam giác đó. Đường tròn tâm $A$ bán kính $AI$ cắt đường tròn ngoại tiếp tam giác $ABC$ tại $M$ và $N$. Đường thẳng $MN$ cắt các cạnh $AB$ và $AC$ lần lượt tại $L$ và $K$. Chứng minh rằng $BLKC$ vừa là tứ giác nội tiếp, vừa là tứ giác ngoại tiếp.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Chứng minh $BLKC$ nội tiếp:</strong> Đường thẳng $MN$ là trục đẳng phương của đường tròn ngoại tiếp $(O)$ và đường tròn $(A, AI)$. Bằng biến đổi phương tích hoặc góc định hướng, chứng minh $AL \cdot AB = AK \cdot AC$, suy ra tứ giác $BLKC$ nội tiếp đường tròn.</p>
+                <p><strong>Chứng minh $BLKC$ ngoại tiếp:</strong> Điều kiện để tứ giác nội tiếp $BLKC$ ngoại tiếp được một đường tròn là tổng hai cạnh đối bằng nhau:
+                \[
+                BL + CK = BC + LK.
+                \]
+                Sử dụng hệ thức $AL = c - r_L, AK = b - r_K$ và tính chất đường phân giác trong $AI$ để biến đổi đại số độ dài các đoạn thẳng, kiểm tra đẳng thức Pitot hoàn toàn thỏa mãn.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 10.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P84 -->
+        <h3>Bài P84. Chiếu sáng cánh đồng thanh long</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Khắc Minh (Hà Nội)</div>
+        <p>Một cánh đồng trồng thanh long có dạng một bảng ô vuông kích thước $2017 \times 2018$ (bảng có $2017 \times 2018$ ô vuông đơn vị). Ta gọi mỗi đỉnh của mỗi ô vuông đơn vị là một nút. Để chiếu sáng cánh đồng về ban đêm, người ta cắm những cái que ở các nút (ở một nút cắm một que), ở đầu mỗi que có treo một bóng điện. Biết rằng mỗi bóng điện chỉ có thể chiếu sáng toàn bộ các ô vuông đơn vị có chung nút mà ở đó có cắm que treo bóng điện ấy.</p>
+        <p>Hỏi cần dùng tối thiểu bao nhiêu bóng điện để có thể chiếu sáng toàn bộ cánh đồng, kể cả trong trường hợp không may có một bóng điện bị cháy?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Để đảm bảo một ô vuông vẫn được chiếu sáng khi có một bóng đèn bất kỳ bị cháy, mỗi ô vuông đơn vị phải có <strong>ít nhất 2 đỉnh</strong> được cắm bóng điện.</p>
+                <p>Mô hình hóa bài toán phủ đỉnh trên lưới $m \times n$ ($m = 2017, n = 2018$):</p>
+                <ul>
+                    <li>Mỗi ô vuông đơn vị cần ít nhất 2 bóng điện ở 4 góc của nó. Tổng số lượt chiếu sáng cần thiết là $2mn$.</li>
+                    <li>Mỗi bóng điện ở góc chiếu sáng tối đa 4 ô vuông. Đánh giá số bóng điện $N \ge \left\lceil \dfrac{2mn + m + n}{4} \right\rceil$.</li>
+                    <li>Xây dựng cấu hình cắm bóng tối ưu bằng cách cắm trên các hàng/cột chẵn lẻ đan xen để đạt được số lượng tối thiểu.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 10.</div>
+            </div>
+        </details>
+
+        <!-- ================= KHỐI THPT: IMO 2017 ================= -->
+        <h2 id="thpt" class="igo-level-heading">Khối THPT (Đặc Biệt: Toàn Bộ Đề Thi IMO 2017)</h2>
+
+        <div class="imo-banner">
+            <strong>Chuyên đề đặc biệt:</strong> Phỏng theo ý tưởng của Tạp chí <em>Kvant</em> (CHLB Nga), Tạp chí Pi số này đăng tải toàn bộ 6 bài toán của Kỳ thi Olympic Toán học Quốc tế lần thứ 58 (IMO 2017) kèm phân tích định hướng lời giải độc lập của SMP.
+        </div>
+
+        <!-- BÀI P85 -->
+        <h3>Bài P85 (IMO 2017 - Bài 4). Tiếp xúc của đường tròn ngoại tiếp</h3>
+        <div class="author-tag">Đề xuất: Luxembourg | Đề thi IMO 2017</div>
+        <p>Cho $R$ và $S$ là hai điểm phân biệt trên đường tròn $\Omega$ sao cho $RS$ không phải là đường kính. Cho $\ell$ là tiếp tuyến tại $R$ của $\Omega$. Lấy điểm $T$ sao cho $S$ là trung điểm của đoạn thẳng $RT$. Lấy điểm $J$ trên cung nhỏ $\wideparen{RS}$ của $\Omega$ sao cho đường tròn ngoại tiếp $\Gamma$ của tam giác $JST$ cắt $\ell$ tại hai điểm phân biệt. Gọi $A$ là giao điểm gần $R$ nhất của $\Gamma$ và $\ell$. Đường thẳng $AJ$ cắt lại $\Omega$ tại $K$. Chứng minh rằng $KT$ tiếp xúc với $\Gamma$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Để chứng minh $KT$ tiếp xúc với $\Gamma$ tại $T$, ta cần chứng minh $\widehat{KTJ} = \widehat{TSJ}$ hoặc sử dụng phương tích.</p>
+                <p>Do $A, J, S, T$ cùng thuộc $\Gamma$, ta có $\widehat{TAJ} = \widehat{TSJ}$. Vì $\ell$ tiếp xúc $\Omega$ tại $R$, góc tạo bởi tiếp tuyến và dây cung cho ta $\widehat{ARJ} = \widehat{RKJ}$.</p>
+                <p>Sử dụng tính chất tam giác đồng dạng và trung điểm $S$ của $RT$: Kẻ tiếp tuyến phụ và dùng phép nghịch đảo cực $R$ biến đường tròn $\Omega$ thành đường thẳng, biến đường tròn $\Gamma$ thành đường tròn tiếp xúc để suy ra điều phải chứng minh.</p>
+                <div class="source-ref">Lời giải chi tiết và bình luận mở rộng đăng tại Tạp chí Pi Tập 1 Số 10.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P86 -->
+        <h3>Bài P86 (IMO 2017 - Bài 1). Dãy số căn thức và số học lặp lại vô hạn</h3>
+        <div class="author-tag">Đề xuất: Nam Phi | Đề thi IMO 2017</div>
+        <p>Với mỗi số nguyên $a_0 > 1$, xét dãy số nguyên dương $a_0, a_1, a_2, \dots$ xác định bởi:
+        \[
+        a_{n+1} = \begin{cases} \sqrt{a_n} & \text{nếu } \sqrt{a_n} \text{ là số nguyên,} \\ a_n + 3 & \text{trong trường hợp ngược lại,} \end{cases}
+        \]
+        với mỗi số nguyên $n \ge 0$. Hãy xác định tất cả các số $a_0$ sao cho tồn tại số $A$ mà $a_n = A$ với vô hạn số $n$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Xét tính chất chia hết theo modulo $3$ của các phần tử trong dãy:</p>
+                <ul>
+                    <li>Nếu $a_0 \equiv 0 \pmod 3$: Khi cộng thêm $3$ thì số dư vẫn là $0 \pmod 3$. Khi gặp một số chính phương chia hết cho $3$, căn bậc hai của nó cũng chia hết cho $3$. Chu trình nhỏ nhất xuất hiện là $3 \to 6 \to 9 \to \sqrt{9} = 3$. Mọi giá trị $a_0$ chia hết cho $3$ đều sẽ rơi vào chu trình tuần hoàn này.</li>
+                    <li>Nếu $a_0 \not\equiv 0 \pmod 3$: Số dư theo modulo $3$ là $1$ hoặc $2$. Một số chính phương chỉ có thể có số dư là $0$ hoặc $1$ khi chia cho $3$. Chứng minh rằng dãy số sẽ tăng nghiêm ngặt không bị chặn và không bao giờ rơi vào chu trình lặp lại.</li>
+                </ul>
+                <p><strong>Kết luận:</strong> Điều kiện cần và đủ là $a_0$ là bội số của $3$ ($a_0 \equiv 0 \pmod 3$).</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 10.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P87 -->
+        <h3>Bài P87 (IMO 2017 - Bài 2). Phương trình hàm tích số thực</h3>
+        <div class="author-tag">Đề xuất: Albani | Đề thi IMO 2017</div>
+        <p>Kí hiệu $\mathbb{R}$ là tập số thực. Hãy tìm tất cả các hàm số $f: \mathbb{R} \to \mathbb{R}$ sao cho với mọi số thực $x$ và $y$:
+        \[
+        f(f(x)f(y)) + f(x + y) = f(xy).
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Bước 1:</strong> Cho $x = y = 0 \implies f((f(0))^2) + f(0) = f(0) \implies f((f(0))^2) = 0$. Đặt $c = (f(0))^2 \implies f(c) = 0$.</p>
+                <p><strong>Bước 2:</strong> Cho $y = 0 \implies f(f(x)f(0)) + f(x) = f(0)$.</p>
+                <ul>
+                    <li>Nếu $f(0) = 0$: Thay $y = 1$ ta được $f(0) + f(x+1) = f(x) \implies f(x+1) = f(x)$. Khai thác tính tuần hoàn và phương trình hàm tích để suy ra $f(x) \equiv 0$.</li>
+                    <li>Nếu $f(0) \neq 0$: Chứng minh $f(0) = 1$ hoặc $f(0) = -1$. Từ đó chỉ ra tính đơn ánh và suy ra hai nghiệm hàm $f(x) = x - 1$ và $f(x) = 1 - x$.</li>
+                </ul>
+                <p><strong>Kết luận:</strong> Các hàm số thỏa mãn là $f(x) = 0$, $f(x) = x - 1$ và $f(x) = 1 - x$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 10.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P88 -->
+        <h3>Bài P88 (IMO 2017 - Bài 6). Đa thức đồng thổ nhận giá trị 1 tại tập điểm nguyên thủy</h3>
+        <div class="author-tag">Đề xuất: Hoa Kỳ | Đề thi IMO 2017</div>
+        <p>Cặp có thứ tự các số nguyên $(x, y)$ được gọi là điểm nguyên thủy nếu ước số chung lớn nhất của $x$ và $y$ bằng 1. Cho tập $S$ gồm hữu hạn điểm nguyên thủy. Chứng minh rằng tồn tại số nguyên dương $n$ và các số nguyên $a_0, a_1, a_2, \dots, a_n$ sao cho với mỗi điểm $(x, y)$ thuộc $S$, ta có:
+        \[
+        a_0 x^n + a_1 x^{n-1} y + a_2 x^{n-2} y^2 + \dots + a_{n-1} x y^{n-1} + a_n y^n = 1.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Đây là bài toán số 6 kinh điển của IMO 2017. Viết đa thức dưới dạng đồng thổ bậc $n$: $P(x, y) = \sum_{k=0}^n a_k x^{n-k} y^k$.</p>
+                <p>Với mỗi điểm $(u, v) \in S$, do $\gcd(u, v) = 1$, theo <strong>Định lý Bézout</strong> luôn tồn tại các số nguyên $c, d$ sao cho $cu - dv = 1$. Khi đó đa thức $(cx - dy)^k$ tại $(u, v)$ có giá trị đúng bằng $1^k = 1$.</p>
+                <p>Sử dụng phép nội suy đại số và xấp xỉ dạng modulo: Xây dựng các đa thức cơ sở triệt tiêu tại các điểm khác trong $S$ và nhận giá trị chia hết cho bội số nguyên tại điểm đang xét, kết hợp với bổ đề đại số để hoàn thành chứng minh.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 10.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P89 -->
+        <h3>Bài P89 (IMO 2017 - Bài 5). Sắp xếp hàng cầu thủ theo chiều cao</h3>
+        <div class="author-tag">Đề xuất: Liên bang Nga | Đề thi IMO 2017</div>
+        <p>Cho số nguyên $N \ge 2$. Có $N(N+1)$ cầu thủ bóng đá, trong đó không có hai người nào có cùng chiều cao, đứng thành một hàng ngang. Ngài Alex muốn đưa $N(N-1)$ cầu thủ ra khỏi hàng sao cho ở hàng ngang mới nhận được, gồm $2N$ cầu thủ còn lại, $N$ điều kiện sau được đồng thời thỏa mãn:</p>
+        <ol style="line-height: 1.8;">
+            <li>Không có cầu thủ nào đứng giữa hai cầu thủ cao nhất;</li>
+            <li>Không có cầu thủ nào đứng giữa cầu thủ cao thứ ba và cầu thủ cao thứ tư;</li>
+            <li>$\dots$</li>
+            <li>Không có cầu thủ nào đứng giữa hai cầu thủ thấp nhất.</li>
+        </ol>
+        <p>Chứng minh rằng Ngài Alex luôn có thể làm được điều đó.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Ghép cặp các cầu thủ từ cao xuống thấp: Cặp 1 là $\{2N, 2N-1\}$, Cặp 2 là $\{2N-2, 2N-3\}$, ..., Cặp $N$ là $\{2, 1\}$. Điều kiện đề bài đòi hỏi trong hàng mới, hai người trong mỗi cặp phải đứng <strong>cạnh nhau ngay lập tức</strong>.</p>
+                <p>Xem xét vị trí ban đầu của $N(N+1)$ người. Sử dụng biến thể của <strong>Định lý Dilworth</strong> về tập sắp thứ tự bộ phận (Poset) hoặc thuật toán tô màu đồ thị dây chuyền.</p>
+                <p>Chứng minh bằng quy nạp theo $N$: Tìm một cặp kề nhau thích hợp rồi loại bỏ hai người này cùng tối đa $2(N-1)$ người khác để đưa bài toán về trường hợp $N-1$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 10.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P90 -->
+        <h3>Bài P90 (IMO 2017 - Bài 3). Trò chơi thợ săn và thỏ tàng hình</h3>
+        <div class="author-tag">Đề xuất: Cộng hòa Áo | Đề thi IMO 2017</div>
+        <p>Một cô thợ săn và một con thỏ tàng hình chơi trò chơi trên mặt phẳng. Điểm xuất phát $A_0$ của con thỏ và điểm xuất phát $B_0$ của cô thợ săn trùng nhau. Sau $n-1$ lượt chơi, con thỏ ở điểm $A_{n-1}$ và cô thợ săn ở điểm $B_{n-1}$. Ở lượt chơi thứ $n$, có ba điều lần lượt xảy ra theo thứ tự dưới đây:</p>
+        <ol style="line-height: 1.8;">
+            <li>Con thỏ di chuyển một cách không quan sát được tới điểm $A_n$ sao cho khoảng cách giữa $A_{n-1}$ và $A_n$ bằng đúng 1;</li>
+            <li>Một thiết bị định vị thông báo cho cô thợ săn về một điểm $P_n$, đảm bảo khoảng cách giữa $P_n$ và $A_n$ không lớn hơn 1;</li>
+            <li>Cô thợ săn di chuyển một cách quan sát được tới điểm $B_n$ sao cho khoảng cách giữa $B_{n-1}$ và $B_n$ bằng đúng 1.</li>
+        </ol>
+        <p>Hỏi điều sau đây sai hay đúng: Cho dù con thỏ có di chuyển như thế nào và các điểm được thiết bị định vị thông báo có là những điểm nào, cô thợ săn luôn có thể chọn cho mình cách di chuyển sao cho sau $10^9$ lượt chơi, cô ta có thể khẳng định chắc chắn rằng khoảng cách giữa mình và con thỏ không vượt quá 100?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Khẳng định của đề bài là <strong>ĐÚNG</strong>.</p>
+                <p><strong>Chiến lược hình học của cô thợ săn:</strong></p>
+                <ul>
+                    <li>Tại mỗi bước $n$, cô thợ săn duy trì một hình tròn ước lượng $C_n$ tâm $O_n$ bán kính $R_n$ chứa chắc chắn vị trí của con thỏ.</li>
+                    <li>Khi nhận tín hiệu $P_n$, con thỏ nằm trong giao của hình tròn bán kính $R_{n-1} + 1$ và hình tròn bán kính $1$ tâm $P_n$. Bằng cách di chuyển về phía tâm mới của miền giao này, khoảng cách giữa cô thợ săn và tâm ước lượng bị co lại.</li>
+                    <li>Chứng minh rằng bán kính bao phủ không bao giờ tăng vượt quá một hằng số $R_{\max} \approx \sqrt{2} \dots$ và khoảng cách giữa cô thợ săn và con thỏ luôn bị chặn trên bởi một giá trị nhỏ hơn $100$ với mọi số lượt chơi $n$.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 10.</div>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT SỐ 8 ───</b></p>
+    </div>
+</body>
+</html>

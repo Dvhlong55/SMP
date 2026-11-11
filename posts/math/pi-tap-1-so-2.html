@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 2)</title>
+    
+    <meta name="post-id" content="PiTap1So2">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 1 Số 2 (Tháng 02/2017), từ bài P21 đến P30.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 2)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 1 Số 2 kèm gợi ý lời giải bám sát tư duy Olympic.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-1-so-2.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 2)">
+    <meta name="twitter:description" content="Đề bài P21 - P30 Tạp chí Pi Tập 1 Số 2 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            width: fit-content;
+            outline: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            border-radius: 4px;
+            background: rgba(2, 132, 199, 0.08);
+            transition: background 0.2s;
+        }
+        summary.igo-hint-trigger:hover {
+            background: rgba(2, 132, 199, 0.16);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker,
+        summary.igo-hint-trigger::marker {
+            display: none;
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.75rem;
+            transition: transform 0.2s ease-in-out;
+            color: var(--accent-cyan, #0284c7);
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            padding: 10px 0 10px 18px;
+            margin-top: 8px;
+            border-left: 2px solid var(--accent-cyan, #0284c7);
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: var(--exam-text-color, #334155);
+        }
+        body.dark-mode .igo-hint-content {
+            border-left-color: rgba(56, 189, 248, 0.6);
+        }
+        .igo-level-heading {
+            color: var(--exam-bold-color, #111);
+            font-size: 1.35rem;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1));
+            font-weight: 700;
+        }
+        body.dark-mode .igo-level-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--accent-cyan, #0284c7) !important;
+            text-decoration: none !important;
+            margin: 12px 0 20px 0;
+            transition: transform 0.2s ease;
+        }
+        .igo-nav-link:hover {
+            transform: translateX(-3px);
+        }
+        .igo-mini-toc {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 16px 0 24px 0;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-size: 0.9rem;
+        }
+        body.dark-mode .igo-mini-toc {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .igo-mini-toc a {
+            color: var(--exam-bold-color, #111) !important;
+            text-decoration: none !important;
+            transition: color 0.2s;
+        }
+        .igo-mini-toc a:hover {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+        .author-tag {
+            font-style: italic;
+            color: var(--text-muted, #64748b);
+            font-size: 0.92rem;
+            margin-top: -4px;
+            margin-bottom: 10px;
+        }
+        .source-ref {
+            font-size: 0.88rem;
+            color: var(--text-muted, #64748b);
+            margin-top: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content">
+        <div class="header-box">
+            <h1>Tạp Chí Pi — Tập 1 Số 2</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Chuyên mục Thách thức Toán học (Tháng 02/2017)</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Hệ thống Gợi ý tư duy độc lập biên soạn bởi SMP</h2>
+        </div>
+
+        <!-- LỐI DẪN ĐẦU TRANG ĐẾN TỔNG QUAN -->
+        <div>
+            <a href="thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" class="igo-nav-link">← Tổng quan Thách thức Toán học Tạp chí Pi (2017 – 2024)</a>
+        </div>
+
+        <!-- MỤC LỤC MINI CHO SỐ PHÁT HÀNH -->
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Khối thi:</span>
+            <a href="#thcs">Khối THCS (Bài P21 – P24)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#thpt">Khối THPT (Bài P25 – P30)</a>
+        </div>
+
+        <!-- ================= KHỐI THCS ================= -->
+        <h2 id="thcs" class="igo-level-heading">Khối THCS (Dành cho Trung học Cơ sở)</h2>
+
+        <!-- BÀI P21 -->
+        <h3>Bài P21. Đường thẳng đi qua điểm cố định</h3>
+        <div class="author-tag">Đề xuất: Trần Quang Hùng (Hà Nội)</div>
+        <p>Cho tam giác $ABC$ nội tiếp đường tròn tâm $O$. Trên đường thẳng $OA$, lấy điểm $P$ tùy ý. Gọi $E$ và $F$ tương ứng là hình chiếu vuông góc của $P$ trên các đường thẳng $AC$ và $AB$. Xét điểm $Q$ di động trên đoạn thẳng $EF$. Đường thẳng vuông góc với $AQ$ tại $Q$ cắt $PE, PF$ tương ứng tại $M, N$. Gọi $K$ là tâm đường tròn ngoại tiếp tam giác $AMN$ và gọi $D$ là hình chiếu vuông góc của $K$ trên đường thẳng $BC$. Chứng minh rằng đường thẳng đi qua $D$ và song song với $AQ$ luôn đi qua một điểm cố định.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Bước 1:</strong> Tứ giác $AFPE$ có $\widehat{AFP} = \widehat{AEP} = 90^\circ$ nên nội tiếp đường tròn đường kính $AP$. Khi đó đường thẳng Simpson và tính chất đối xứng qua trục đẳng phương phát huy tác dụng.</p>
+                <p><strong>Bước 2:</strong> Tam giác $AMN$ có đường cao $AQ$. Do $QM \perp AQ$ và $K$ là tâm ngoại tiếp tam giác $AMN$, chú ý tính chất liên hợp đẳng giác của $AQ$ và đường kính đi qua $A$ của $(AMN)$.</p>
+                <p><strong>Bước 3:</strong> Xét hình chiếu $D$ của $K$ lên $BC$. Đường thẳng qua $D$ song song với $AQ$ sẽ đi qua trung điểm của đoạn thẳng nối trực tâm $H$ của tam giác $ABC$ với một điểm cố định trên đường tròn $(O)$.</p>
+                <div class="source-ref">Lời giải chi tiết và mở rộng đăng tại Tạp chí Pi Tập 1 Số 4.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P22 -->
+        <h3>Bài P22. Tập giá trị của biểu thức chứa dấu trị tuyệt đối</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Duy Thái Sơn (Đà Nẵng)</div>
+        <p>Xét các số thực $x, y, z$ khác 0. Tìm tất cả các giá trị có thể của biểu thức:
+        \[
+        P = \frac{|x+y|}{|x|+|y|} + \frac{|y+z|}{|y|+|z|} + \frac{|z+x|}{|z|+|x|}.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Nhận xét rằng giá trị của mỗi phân thức $\dfrac{|a+b|}{|a|+|b|}$ luôn thuộc đoạn $[0, 1]$. Cụ thể: bằng $1$ khi $a, b$ cùng dấu, và bằng $\dfrac{|a+b|}{|a|+|b|} < 1$ khi $a, b$ trái dấu.</p>
+                <ul>
+                    <li><strong>Trường hợp 1 (Cả 3 số cùng dấu):</strong> Nếu $x, y, z$ cùng dương hoặc cùng âm, thì $|x+y| = |x|+|y|, \dots$ Do đó $P = 1 + 1 + 1 = 3$.</li>
+                    <li><strong>Trường hợp 2 (Có 2 số cùng dấu, 1 số trái dấu):</strong> Giả sử $x, y > 0$ và $z < 0$. Khi đó số hạng thứ nhất bằng $1$. Hai số hạng còn lại có dạng $\dfrac{|u-1|}{u+1}$ với $u > 0$. Khảo sát hàm số hai biến liên tục để chỉ ra rằng tập giá trị phủ kín khoảng $[1, 2)$.</li>
+                </ul>
+                <p><strong>Kết luận:</strong> Tập giá trị của $P$ là $[1, 2) \cup \{3\}$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 4.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P23 -->
+        <h3>Bài P23. Trò chơi sinh số nguyên dương</h3>
+        <div class="author-tag">Đề xuất: Đỗ Minh Khoa (Hà Nội)</div>
+        <p>Bạn Pi ghi lên giấy các số nguyên dương theo quy tắc sau: Lần 1, ghi một số nguyên dương tùy ý; từ lần thứ hai, nếu trên giấy có số $a$ thì được phép ghi thêm các số $b$ mà $a + b + 1$ là ước của $a^2 + b^2 + 1$.</p>
+        <p>Bạn Pi khẳng định, nếu ở lần đầu tiên bạn ấy ghi số 1 thì bạn ấy có thể ghi lên giấy bất cứ số nguyên dương nào. Hỏi khẳng định của Pi đúng hay sai? Vì sao?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Biến đổi điều kiện chia hết:
+                \[
+                a^2 + b^2 + 1 = (a + b + 1)(a - b) + b(a + b + 1) - \dots
+                \]
+                Chính xác hơn: $a^2 + b^2 + 1 = (a+b+1)(a-b) + 2b^2 + b + 1$, hoặc tương đương:
+                \[
+                a+b+1 \mid (a^2+b^2+1) \iff a+b+1 \mid (a+b+1)^2 - 2(ab+a+b) \iff a+b+1 \mid 2ab.
+                \]
+                Phân tích tính chất số học của quan hệ sinh số giữa $a$ và $b$. Hãy thử kiểm tra từ $a = 1$, các số $b$ có thể sinh ra là gì? Ta cần $1 + b + 1 = b + 2$ là ước của $1^2 + b^2 + 1 = b^2 + 2 = (b+2)(b-2) + 6$. Như vậy $b+2 \mid 6 \implies b \in \{1, 4\}$.</p>
+                <p>Tiếp tục kiểm tra các nhánh sinh từ $4$, nhận xét tính chẵn lẻ hoặc các ước nguyên tố không thể vượt qua một lớp thặng dư cố định. Từ đó khẳng định của Pi là <strong>sai</strong>.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 4.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P24 -->
+        <h3>Bài P24. Bướm đậu trên lục giác đều</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Khắc Minh (Hà Nội)</div>
+        <p>Tại mỗi đỉnh của một hình lục giác đều cho trước, có một con bướm đậu. Vào cùng một thời điểm, tất cả 6 con bướm cùng bay lên khỏi các đỉnh của lục giác và lại vào cùng một thời điểm, cả 6 con bướm cùng đậu xuống các đỉnh của lục giác đó một cách tùy ý, sao cho tại mỗi đỉnh chỉ có một con bướm đậu (các con bướm không nhất thiết phải đậu xuống vị trí trước khi bay lên của mình).</p>
+        <p>Chứng minh rằng tồn tại 3 con bướm mà trước khi bay lên, chúng đậu tại 3 đỉnh, gọi là $A, B, C$, còn sau khi đậu xuống, chúng đậu tại 3 đỉnh, gọi là $A', B', C'$, có tính chất: tam giác tạo bởi 3 đỉnh $A', B', C'$ bằng tam giác tạo bởi 3 đỉnh $A, B, C$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Đánh số các đỉnh của lục giác đều từ $1$ đến $6$ theo chiều kim đồng hồ. Số cách chọn ra 3 đỉnh tạo thành một tam giác là $\binom{6}{3} = 20$ tam giác.</p>
+                <p>Phân loại các tam giác tạo bởi 3 đỉnh của lục giác đều theo độ dài các cạnh:</p>
+                <ul>
+                    <li><strong>Loại 1 (Tam giác đều):</strong> Cạnh bằng $\sqrt{3}R$ (có đúng $2$ tam giác: $\{1, 3, 5\}$ và $\{2, 4, 6\}$).</li>
+                    <li><strong>Loại 2 (Tam giác vuông):</strong> Có một cạnh là đường kính $2R$ (có $6 \times 2 = 12$ tam giác).</li>
+                    <li><strong>Loại 3 (Tam giác tù cân):</strong> Cạnh đáy $\sqrt{3}R$, hai cạnh bên $R$ (có đúng $6$ tam giác).</li>
+                </ul>
+                <p>Sự di chuyển của 6 con bướm chính là một <strong>hoán vị</strong> $\sigma \in S_6$. Sử dụng phương pháp đếm bằng hai cách hoặc cấu trúc chu trình của hoán vị để chỉ ra luôn tồn tại một tập 3 phần tử có ảnh qua $\sigma$ tạo thành tam giác cùng loại (do đó bằng nhau).</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 4.</div>
+            </div>
+        </details>
+
+        <!-- ================= KHỐI THPT ================= -->
+        <h2 id="thpt" class="igo-level-heading">Khối THPT (Dành cho Trung học Phổ thông)</h2>
+
+        <!-- BÀI P25 -->
+        <h3>Bài P25. Tam giác tạo bởi ba điểm cực trị</h3>
+        <div class="author-tag">Đề xuất: TS. Trần Nam Dũng (TP. Hồ Chí Minh)</div>
+        <p>Cho hàm số:
+        \[
+        f(x) = \frac{x^3 - 3x^2 + 3x + 5}{x + 1}.
+        \]
+        </p>
+        <p>a) Chứng minh rằng đồ thị hàm số đã cho có 3 điểm cực trị không thẳng hàng.</p>
+        <p>b) Gọi $A, B, C$ là ba điểm cực trị nói trên. Tính diện tích tam giác $ABC$ và bán kính đường tròn ngoại tiếp tam giác đó.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Câu a:</strong> Đặt $t = x + 1 \implies x = t - 1$. Khai triển tử số theo $t$ để đưa hàm số về dạng:
+                \[
+                f(x) = t^2 - 6t + 12 - \frac{2}{t}.
+                \]
+                Tính đạo hàm $f'(x) = 2t - 6 + \dfrac{2}{t^2} = \dfrac{2(t^3 - 3t^2 + 1)}{t^2}$. Phương trình $t^3 - 3t^2 + 1 = 0$ có 3 nghiệm thực phân biệt (khảo sát dấu qua các điểm $0, 1, 3$).</p>
+                <p><strong>Câu b:</strong> Viết tọa độ các điểm cực trị $(x_i, y_i)$ qua biểu thức bậc hai $y_i = 3x_i^2 - 6x_i + 3$. Sử dụng định lý Viète cho đa thức bậc 3 để tính nhanh tọa độ trọng tâm và định thức diện tích tam giác $S_{ABC}$, sau đó dùng công thức $R = \dfrac{abc}{4S}$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 4.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P26 -->
+        <h3>Bài P26. Bất đẳng thức ba biến đối xứng</h3>
+        <div class="author-tag">Đề xuất: Hoàng Lê Nhật Tùng (Hà Nội)</div>
+        <p>Cho $a, b, c$ là ba số thực dương thỏa mãn điều kiện $a^2 + b^2 + c^2 = 3$. Chứng minh rằng:
+        \[
+        \frac{a^3}{b^2 - bc + c^2} + \frac{b^3}{c^2 - ca + a^2} + \frac{c^3}{a^2 - ab + b^2} + \frac{3}{5abc} \ge \frac{18}{5}.
+        \]
+        Hỏi đẳng thức xảy ra khi và chỉ khi nào?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Nhận xét đồng bậc và hằng đẳng thức: $b^3 + c^3 = (b+c)(b^2 - bc + c^2)$. Áp dụng kỹ thuật phân tích:</p>
+                \[
+                \frac{a^3}{b^2 - bc + c^2} = \frac{a(a^2)}{b^2 - bc + c^2} \ge \frac{a(2a^2)}{b^2 + c^2} \dots
+                \]
+                Hoặc sử dụng bất đẳng thức Cauchy-Schwarz dạng Engel:
+                \[
+                \sum_{\text{cyc}} \frac{a^3}{b^2 - bc + c^2} = \sum_{\text{cyc}} \frac{a^4}{a(b^2 - bc + c^2)} \ge \frac{(a^2+b^2+c^2)^2}{\sum a(b^2 - bc + c^2)}.
+                \]
+                Kết hợp với đánh giá AM-GM cho số hạng $\dfrac{3}{5abc}$ khi $a^2+b^2+c^2 = 3 \implies abc \le 1$. Đẳng thức xảy ra khi và chỉ khi $a = b = c = 1$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 4.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P27 -->
+        <h3>Bài P27. Tính bất khả quy của đa thức hệ số nguyên</h3>
+        <div class="author-tag">Đề xuất: GS. Hà Huy Khoái (Hà Nội)</div>
+        <p>Cho số nguyên $n \ge 12$. Cho $P(x)$ là đa thức bậc $n$, với hệ số nguyên và thỏa mãn điều kiện: tồn tại ít nhất $\left[ \frac{n}{2} \right] + 1$ giá trị $x$ nguyên sao cho $P(x) = 1$. Chứng minh rằng không thể phân tích đa thức $P(x)$ thành tích của hai đa thức khác hằng, với hệ số nguyên.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Phản chứng: Giả sử $P(x) = Q(x)R(x)$ với $Q(x), R(x) \in \mathbb{Z}[x]$ có bậc $k$ và $n - k$ ($1 \le k \le n-1$). Không mất tính tổng quát giả sử $k \le \left[\frac{n}{2}\right]$.</p>
+                <p>Tại các điểm nguyên $x_1, x_2, \dots, x_m$ mà $P(x_i) = 1$ ($m \ge \left[\frac{n}{2}\right] + 1$), ta có $Q(x_i)R(x_i) = 1$. Vì $Q(x_i), R(x_i) \in \mathbb{Z}$ nên chỉ có thể xảy ra hai khả năng:</p>
+                <ul>
+                    <li>$Q(x_i) = R(x_i) = 1$ hoặc $Q(x_i) = R(x_i) = -1$.</li>
+                </ul>
+                <p>Do đó đa thức $Q(x) - R(x)$ có ít nhất $m \ge \left[\frac{n}{2}\right] + 1$ nghiệm nguyên phân biệt. Nhưng bậc của $Q(x) - R(x)$ không vượt quá $\max(\deg Q, \deg R) < n$. Đánh giá số nghiệm qua bổ đề chia hết $(a - b) \mid (Q(a) - Q(b))$ để suy ra mâu thuẫn khi $n \ge 12$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 4.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P28 -->
+        <h3>Bài P28. Tồn tại đa thức sinh dãy số chia hết</h3>
+        <div class="author-tag">Đề xuất: GS. Lê Anh Vinh (Hà Nội)</div>
+        <p>Chứng minh rằng với mỗi số nguyên dương $k$, tồn tại đa thức $P(x, y)$ bậc $k$ sao cho dãy số $(a_n)_{n \ge 1}$, xác định bởi:
+        \[
+        a_1 = 1, \quad a_2 = 2017 \quad \text{và} \quad a_{n+2} = P(a_n, a_{n+1}) \quad \text{với mọi } n \ge 1,
+        \]
+        thỏa mãn điều kiện: với mỗi số nguyên dương $m$, tồn tại số hạng $a_s \neq 0$ chia hết cho $m$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Xét đa thức đối xứng hoặc đa thức có dạng $P(x, y) = (x + y)^k - c$ hoặc $P(x, y) = x^k + y$.</p>
+                <p>Khi xét dãy số theo modulo $m$, do tập hợp các cặp số dư $(a_n \pmod m, a_{n+1} \pmod m)$ là hữu hạn (tối đa $m^2$ cặp), theo nguyên lý Dirichlet dãy số số dư bắt buộc phải tuần hoàn kể từ một chỉ số nào đó.</p>
+                <p>Thiết lập đa thức $P(x, y)$ sao cho phép biến đổi là khả nghịch modulo $m$ (dãy tuần hoàn thuần nhất), từ đó chứng minh số dư $0$ nhất định sẽ xuất hiện trong chu kỳ tuần hoàn đối với mọi môđun $m$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 4.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P29 -->
+        <h3>Bài P29. Tiếp tuyến chung và hệ thức điều hòa</h3>
+        <div class="author-tag">Đề xuất: Hạ Vũ Anh (Hà Nội)</div>
+        <p>Cho tứ giác $ABCD$ ngoại tiếp đường tròn $(O)$ và không có hai cạnh nào song song. Các tia $BA$ và $CD$ cắt nhau tại $P$; các tia $AD$ và $BC$ cắt nhau tại $Q$. Gọi $H$ là hình chiếu vuông góc của $D$ trên $PQ$. Gọi $(O_1)$ và $(O_2)$ tương ứng là đường tròn nội tiếp của các tam giác $PDA$ và $QDC$. $\Delta$ là một tiếp tuyến chung ngoài của $(O_1)$ và $(O_2)$; $\Delta$ tiếp xúc với $(O_1)$ và $(O_2)$ tương ứng tại $M$ và $N$. Các tiếp tuyến kẻ từ $H$ tới $(O_1)$ cắt $\Delta$ tại $X$ và $Y$; các tiếp tuyến kẻ từ $H$ tới $(O_2)$ cắt $\Delta$ tại $Z$ và $T$. Chứng minh rằng:
+        \[
+        \frac{1}{XM} + \frac{1}{YM} = \frac{1}{ZN} + \frac{1}{TN}.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Sử dụng định lý về trục đẳng phương và tâm vị tự của hai đường tròn nội tiếp $(O_1), (O_2)$:</p>
+                <ul>
+                    <li>Do tứ giác $ABCD$ ngoại tiếp đường tròn $(O)$, điểm $H$ (hình chiếu của $D$ trên $PQ$) có các tính chất liên hợp điều hòa đặc biệt đối với các đường phân giác góc $P$ và góc $Q$.</li>
+                    <li>Áp dụng hệ thức lượng cho tiếp tuyến kẻ từ một điểm ngoài đường tròn cắt một cát tuyến cố định $\Delta$. Hệ thức $\dfrac{1}{XM} + \dfrac{1}{YM}$ thực chất liên quan đến độ dài đoạn tiếp tuyến từ $H$ và bán kính của $(O_1)$ qua phép chiếu góc nhìn. Biến đổi đồng dạng hai vế sẽ dẫn tới đẳng thức cần chứng minh.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 4.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P30 -->
+        <h3>Bài P30. Đánh dấu ô vuông trên bảng 2016 x 2017</h3>
+        <div class="author-tag">Đề xuất: Hà Thanh (Cần Thơ)</div>
+        <p>Cho bảng ô vuông kích thước $2016 \times 2017$ (bảng gồm 2016 hàng và 2017 cột). Bạn Tí đánh dấu một số ô vuông con của bảng, một cách tùy ý. Chứng minh rằng bạn Tèo có thể đánh dấu thêm không quá $4032$ ô vuông con sao cho tổng số ô vuông con được cả hai bạn đánh dấu ở mỗi hàng là một số lẻ và ở mỗi cột là một số chẵn (số ô vuông con mà Tèo đánh dấu có thể bằng 0).</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Mô hình hóa bài toán bằng <strong>Đại số tuyến tính trên trường $\mathbb{F}_2$</strong> hoặc <strong>Lý thuyết đồ thị</strong>:</p>
+                <ul>
+                    <li>Mỗi ô $(i, j)$ được gán giá trị $x_{ij} \in \{0, 1\}$ (bằng $1$ nếu Tèo đánh dấu thêm).</li>
+                    <li>Điều kiện đề bài tương đương với một hệ phương trình tuyến tính trên $\mathbb{F}_2$: có $2016$ phương trình hàng (tổng modulo $2$ bằng $1$) và $2017$ phương trình cột (tổng modulo $2$ bằng $0$).</li>
+                    <li>Xét tính tương thích của hệ: Tổng các hàng là $2016 \times 1 \equiv 0 \pmod 2$, trùng khớp với tổng các cột ($2017 \times 0 \equiv 0 \pmod 2$). Vì vậy hệ luôn có nghiệm!</li>
+                    <li>Để tối ưu số ô đánh dấu $\le 4032 = 2 \times 2016$, chọn một cây khung (spanning forest) của đồ thị hai phía giữa các hàng và các cột để giải bù trừ các đỉnh có bậc sai.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và bình luận về đại số tuyến tính trên F2 đăng tại Tạp chí Pi Tập 1 Số 4.</div>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT SỐ 2 ───</b></p>
+    </div>
+</body>
+</html>

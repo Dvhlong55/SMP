@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link class="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — § Số Đại Số & Đa Thức Tối Tiểu (Algebraic Numbers)</title>
+    
+    <meta name="post-id" content="SoDaiSoVaDaThucToiTieu">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Đa thức & Số học Olympic VMO: Số đại số, số nguyên đại số, đa thức tối tiểu, các tiêu chuẩn bất khả quy Eisenstein, Perron, Cohn và 15 bài toán rèn luyện chuyên sâu.">
+    <meta property="og:title" content="SMP — § Số Đại Số & Đa Thức Tối Tiểu (Algebraic Numbers)">
+    <meta property="og:description" content="Chuyên đề Đa thức & Số học Olympic VMO: Số đại số, số nguyên đại số, đa thức tối tiểu, các tiêu chuẩn bất khả quy Eisenstein, Perron, Cohn và 15 bài toán rèn luyện chuyên sâu.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/so-dai-so-va-da-thuc-toi-tieu.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — § Số Đại Số & Đa Thức Tối Tiểu (Algebraic Numbers)">
+    <meta name="twitter:description" content="Chuyên đề Đa thức & Số học Olympic VMO: Số đại số, số nguyên đại số, đa thức tối tiểu, các tiêu chuẩn bất khả quy Eisenstein, Perron, Cohn và 15 bài toán rèn luyện chuyên sâu.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>$\S$ Số Đại Số &amp; Đa Thức Tối Tiểu (Algebraic Numbers)</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Đỗ Viết Hoàng Long</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">November 11, 2026</h2>
+        </div>
+
+        <p style="font-style: italic; color: var(--text-muted); margin-bottom: 24px;"><b>Lời dẫn.</b> Lý thuyết số thường được nghiên cứu như là về các tính chất các con số, và nhiều nhất là các số nguyên, số hữu tỷ. Nhưng còn các số thực, các số phức thì sao? Chúng có liên quan gì đến các số nguyên không?</p>
+
+        <h2 style="text-align: left !important; font-size: 1.55rem; font-weight: 700; color: var(--accent-gold); border-bottom: 1.5px solid var(--border-light); padding-bottom: 8px; margin-top: 36px; margin-bottom: 18px;">§1 Nhắc Lại Một Số Lý Thuyết</h2>
+
+        <h3 style="color: var(--accent-cyan); font-size: 1.2rem; margin-top: 24px; margin-bottom: 12px;">§1.1 Đa thức hệ số nguyên</h3>
+        <p>Đa thức với hệ số nguyên là đa thức có dạng</p>
+        $$P(x) = a_n x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$$
+        <p>với $a_i$ là các số nguyên. Ta ký hiệu tập hợp tất cả các đa thức với hệ số nguyên là $\mathbb{Z}[x]$.</p>
+
+        <div class="note-box" style="background: rgba(92, 225, 230, 0.06); border: 1px solid rgba(92, 225, 230, 0.25); border-left: 4px solid var(--accent-cyan); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: var(--accent-cyan); font-size: 1.05rem;">Một số tính chất quan trọng.</b> Cho đa thức $P(x) \in \mathbb{Z}[x]$:
+            <ol style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
+                <li>Nếu $P(x)$ có nghiệm nguyên $x = a$ thì phân tích được $P(x) = (x - a)Q(x)$ với $Q(x)$ là đa thức với hệ số nguyên.</li>
+                <li>Nếu $a, b$ nguyên phân biệt thì $P(a) - P(b)$ chia hết cho $a - b$.</li>
+                <li>Nếu $x = \dfrac{p}{q}$, $(p, q) = 1$ là một nghiệm hữu tỷ của $P(x)$ thì $p$ là ước của $a_0$ và $q$ là ước của $a_n$. Đặc biệt nếu $a_n = 1$ thì mọi nghiệm hữu tỷ đều là nghiệm nguyên.</li>
+            </ol>
+        </div>
+
+        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: #c084fc; font-size: 1.05rem;">Tính chất (Định lý Bézout) —</b> Cho hai đa thức hệ số nguyên $P(x)$ và $Q(x)$. Khi đó tồn tại đa thức hệ số hữu tỉ $H(x)$ và $R(x)$ sao cho $\deg R < \deg Q$ và
+            $$P(x) = Q(x) \cdot H(x) + R(x)$$
+            với mọi số thực $x$.
+        </div>
+
+        <p style="margin-top: 12px; margin-bottom: 12px;"><b>Chú ý.</b> Đặc biệt nếu $Q(x)$ monic thì $H(x)$ và $R(x)$ là hai đa thức hệ số nguyên.</p>
+
+        <p>Đa thức với hệ số nguyên sẽ nhận giá trị nguyên với mọi giá trị $x$ nguyên. Điều ngược lại không đúng, có những đa thức nhận giá trị nguyên với mọi $x$ nguyên nhưng các hệ số của nó không nguyên.</p>
+
+        <p><b>Đa thức nguyên:</b> Đa thức với hệ số hữu tỷ nhưng nhận giá trị nguyên với mọi $x$ nguyên được gọi là đa thức nguyên.</p>
+
+        <h3 style="color: var(--accent-cyan); font-size: 1.2rem; margin-top: 28px; margin-bottom: 12px;">§1.2 Đa thức bất khả quy</h3>
+        <p>Tiếp theo ta nhắc lại một số vấn đề về đa thức bất khả quy.</p>
+
+        <div class="note-box" style="background: rgba(92, 225, 230, 0.06); border: 1px solid rgba(92, 225, 230, 0.25); border-left: 4px solid var(--accent-cyan); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: var(--accent-cyan); font-size: 1.05rem;">Định nghĩa:</b> Cho $P(x)$ là đa thức với hệ số nguyên. Ta gọi $P(x)$ là <b>bất khả quy</b> trên $\mathbb{Z}[x]$ nếu $P(x)$ không phân tích được thành tích hai đa thức thuộc $\mathbb{Z}[x]$ với bậc lớn hơn hay bằng 1. Ngược lại thì $P(x)$ gọi là <b>khả quy</b> trên $\mathbb{Z}[x]$. Tương tự ta có định nghĩa đa thức bất khả quy trên $\mathbb{Q}[x]$; $\mathbb{R}[x]$.
+        </div>
+
+        <p><b>Ví dụ.</b> Đa thức $P(x) = x^2 + 1$ bất khả quy trên $\mathbb{Z}[x]$ và trên $\mathbb{Q}[x]$; $\mathbb{R}[x]$.</p>
+
+        <p>Ta gọi đa thức $P(x) \in \mathbb{Z}[x]$ là <b>nguyên bản</b> nếu các hệ số của nó nguyên tố cùng nhau.</p>
+
+        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: #c084fc; font-size: 1.05rem;">Tính chất (Bổ đề Gauss) —</b> Tích của hai đa thức nguyên bản là một đa thức nguyên bản.<br>
+            <span style="display: block; margin-top: 6px;">Từ đó ta có: Nếu đa thức $P(x) \in \mathbb{Z}[x]$ bất khả quy trên $\mathbb{Z}[x]$ thì cũng bất khả quy trên $\mathbb{Q}[x]$.</span>
+        </div>
+
+        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: #c084fc; font-size: 1.05rem;">Tính chất (Tiêu chuẩn Eisenstein) —</b> Đa thức $P(x) = a_n x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0 \in \mathbb{Z}[x]$, $\deg P \ge 2$ thỏa mãn: Tồn tại số nguyên tố $p$ sao cho $p \mid a_i$ ($i = \overline{0, n - 1}$); $a_n \not\vdots p$ và $a_0 \not\vdots p^2$. Khi đó, $P(x)$ là đa thức bất khả quy trên $\mathbb{Z}[x]$.
+        </div>
+
+        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: #c084fc; font-size: 1.05rem;">Tính chất (Tiêu chuẩn Perron) —</b> Cho đa thức $P(x) \in \mathbb{Z}[x]$ và hệ số cao nhất là 1 được viết thành $P(x) = x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$ với $a_0 \neq 0$. Nếu thỏa mãn một trong hai điều kiện sau:
+            <ol style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
+                <li>$|a_{n-1}| > 1 + \displaystyle\sum_{i=0}^{n-2} |a_i|$</li>
+                <li>$|a_{n-1}| = 1 + \displaystyle\sum_{i=0}^{n-2} |a_i|$ và $P(\pm 1) \neq 0$</li>
+            </ol>
+            thì $P(x)$ bất khả quy trên $\mathbb{Z}[x]$.
+        </div>
+
+        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: #c084fc; font-size: 1.05rem;">Tính chất (Tiêu chuẩn Cohn) —</b> Cho số nguyên tố $p$ được biểu diễn dưới cơ số 10:
+            $$p = a_m 10^m + a_{m-1} 10^{m-1} + \dots + a_1 \cdot 10 + a_0$$
+            (trong đó: $0 \le a_i \le 9$, $i = \overline{0, m}$). Khi đó: $P(x) = a_m x^m + a_{m-1} x^{m-1} + \dots + a_1 x + a_0$ bất khả quy trên $\mathbb{Z}[x]$.
+        </div>
+
+        <h3 style="color: var(--accent-cyan); font-size: 1.2rem; margin-top: 28px; margin-bottom: 12px;">§1.3 Căn bậc n đơn vị</h3>
+
+        <h2 style="text-align: left !important; font-size: 1.55rem; font-weight: 700; color: var(--accent-gold); border-bottom: 1.5px solid var(--border-light); padding-bottom: 8px; margin-top: 36px; margin-bottom: 18px;">§2 Số Đại Số &amp; Đa Thức Tối Tiểu</h2>
+
+        <div class="note-box" style="background: rgba(92, 225, 230, 0.06); border: 1px solid rgba(92, 225, 230, 0.25); border-left: 4px solid var(--accent-cyan); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: var(--accent-cyan); font-size: 1.05rem;">Định nghĩa 1.</b> Số $\alpha \in \mathbb{C}$ được gọi là <b>số đại số</b> nếu $\alpha$ là nghiệm của phương trình
+            $$a_n x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0 = 0$$
+            trong đó $a_i \in \mathbb{Q}$ ($\forall i = \overline{0, n}$) và $a_n \neq 0$.<br>
+            <span style="display: block; margin-top: 6px;">Tập các số đại số được kí hiệu là $\overline{\mathbb{Q}}$.</span>
+        </div>
+
+        <p><b>Ví dụ:</b></p>
+        <ul style="padding-left: 20px; line-height: 1.8;">
+            <li>Mọi số hữu tỷ là số đại số.</li>
+            <li>$\sqrt{2}$ là số đại số vì $\sqrt{2}$ là nghiệm của $x^2 - 2 \in \mathbb{Q}[x]$.</li>
+            <li>$i\sqrt[3]{2}$ là số đại số vì $i\sqrt[3]{2}$ là nghiệm của $x^6 + 4 \in \mathbb{Q}[x]$.</li>
+        </ul>
+
+        <p>$\ast$ Số không phải là số đại số được gọi là <b>số siêu việt</b> (transcendental number).</p>
+        <p>$\ast$ Một số số siêu việt đã được chứng minh:</p>
+        <ul style="padding-left: 20px; line-height: 1.8;">
+            <li>Liouville là người đầu tiên chỉ ra sự tồn tại của số siêu việt (1884), đó là số
+            $$L_b = \sum_{n=1}^\infty 10^{-n!}$$</li>
+            <li>$e = \displaystyle\lim_{n \to \infty}\left(1 + \dfrac{1}{n}\right)^n$ là số siêu việt.</li>
+            <li>$e^a$ với $a$ là số đại số khác 0.</li>
+            <li>$\pi, e^\pi, a^b, \ln a$ với $a$ là số đại số khác 0, 1 và $b$ là số vô tỉ đại số.</li>
+            <li>$\sin\alpha, \cos\alpha, \tan\alpha, \dfrac{1}{\tan\alpha}$ với $\alpha$ là số đại số khác 0.</li>
+        </ul>
+
+        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: #c084fc; font-size: 1.05rem;">Tính chất —</b> Tổng, hiệu, tích, thương của 2 số đại số là 1 số đại số, tức cho $\alpha$ và $\beta$ là số đại số:
+            <ol style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
+                <li>$\alpha \pm \beta$; $\alpha \cdot \beta$ là số đại số.</li>
+                <li>$\dfrac{1}{\alpha}$ là số đại số ($\alpha \neq 0$).</li>
+            </ol>
+        </div>
+
+        <p><i>Chứng minh.</i> Chứng minh bài toán này là một vấn đề khó, đòi hỏi kiến thức chuẩn bị về đại số tuyến tính và đại số trừu tượng — kiến thức năm nhất đại học. Hoặc nếu bạn nào chiến TST thì phải học rồi. $\square$</p>
+
+        <div class="note-box" style="background: rgba(92, 225, 230, 0.06); border: 1px solid rgba(92, 225, 230, 0.25); border-left: 4px solid var(--accent-cyan); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: var(--accent-cyan); font-size: 1.05rem;">Định nghĩa 2.</b> Một số phức $\alpha$ được gọi là <b>số nguyên đại số</b> nếu nó là nghiệm của một đa thức $f \in \mathbb{Z}[x]$ monic (hệ số cao nhất bằng 1). Tập hợp các số nguyên đại số được ký hiệu là $\overline{\mathbb{Z}}$.
+        </div>
+
+        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: #c084fc; font-size: 1.05rem;">Tính chất —</b> Như vậy ta có $\overline{\mathbb{Z}} \cap \mathbb{Q} = \mathbb{Z}$.
+        </div>
+
+        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: #c084fc; font-size: 1.05rem;">Tính chất —</b> Cho $\alpha$ là số đại số. Khi đó với số nguyên $n$ đủ lớn thì $n \cdot \alpha$ là số nguyên đại số.
+        </div>
+
+        <p><b>Chú ý.</b> Ví dụ $\dfrac{1}{2}$ không phải là số nguyên đại số nhưng nó là số đại số. Hãy thử chứng minh rằng $\dfrac{1}{\sqrt{2}}$ là số đại số nhưng không phải là số nguyên đại số.</p>
+
+        <h3 style="color: var(--accent-cyan); font-size: 1.2rem; margin-top: 24px; margin-bottom: 12px;">Định nghĩa về số đại số bậc n</h3>
+        <ol style="padding-left: 20px; line-height: 1.8;">
+            <li>$\alpha$ được gọi là số đại số bậc $n$ nếu nó là nghiệm của đa thức bậc $n$ với hệ số hữu tỷ và không tồn tại đa thức với hệ số hữu tỷ bậc $r < n$ nhận $\alpha$ làm nghiệm.</li>
+            <li>Nếu $\alpha$ là số đại số thì đa thức monic với hệ số hữu tỷ có bậc nhỏ nhất nhận $\alpha$ là nghiệm được gọi là <b>đa thức tối tiểu</b> của $\alpha$. Kí hiệu $P_\alpha(x)$.</li>
+        </ol>
+
+        <h3 style="color: var(--accent-cyan); font-size: 1.2rem; margin-top: 24px; margin-bottom: 12px;">Đa thức tối tiểu (Minimal Polynomial)</h3>
+        <p>Đa thức tối tiểu của số đại số $\alpha$, nói một cách đơn giản, là đa thức có bậc nhỏ nhất (khác 0) với hệ số nguyên sao cho $\alpha$ là nghiệm của đa thức đó. Nếu đa thức tối tiểu của $\alpha$ tồn tại thì nó là duy nhất. Hệ số bậc cao nhất của đa thức phải bằng 1.</p>
+
+        <p><b>Chú ý.</b> Thực tế các hệ số là số hữu tỷ thì các kết quả cũng không có mấy sự thay đổi do bổ đề Gauss.</p>
+
+        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: #c084fc; font-size: 1.05rem;">Tính chất kinh điển —</b> Cho $\alpha$ là số đại số. Khi đó:
+            <ol style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
+                <li>Nếu $f(x) \in \mathbb{Q}[x]$ là đa thức nhận $\alpha$ làm nghiệm thì
+                $$f(x) \;\vdots\; P_\alpha(x)$$</li>
+                <li>Nếu $P(x)$ là đa thức bất khả quy trên $\mathbb{Q}[x]$ nhận $\alpha$ làm nghiệm thì
+                $$P(x) = k \cdot P_\alpha(x), \quad k \in \mathbb{Q}, \; k \neq 0$$</li>
+            </ol>
+        </div>
+
+        <div class="note-box" style="background: rgba(92, 225, 230, 0.06); border: 1px solid rgba(92, 225, 230, 0.25); border-left: 4px solid var(--accent-cyan); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: var(--accent-cyan); font-size: 1.05rem;">Chú ý.</b> Như vậy để chứng minh một đa thức $P(x)$ là đa thức tối tiểu của số đại số $\alpha \in \overline{\mathbb{Q}}$ thì ta cần chứng tỏ:
+            <ul style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
+                <li>$P(\alpha) = 0$.</li>
+                <li>$P(x)$ là đa thức bất khả quy trên $\mathbb{Q}[x]$.</li>
+                <li>$P(x)$ là đa thức đơn khởi (hay là đa thức monic).</li>
+            </ul>
+        </div>
+
+        <p>Sau cùng ta sẽ vận dụng các tính chất của đa thức tối tiểu để giải quyết các bài toán:</p>
+        <ul style="padding-left: 20px; line-height: 1.8;">
+            <li>Phương trình hàm đa thức.</li>
+            <li>Chứng minh tính chất của đa thức, đặc biệt là các tính chất đa thức nguyên và phép chia đa thức,...</li>
+            <li>Ứng dụng giải quyết các bài toán số học và giải tích.</li>
+            <li>...</li>
+        </ul>
+
+        <p>Chúng ta tập trung một chút vào các số nguyên đại số. Chúng ta có thể nói gì về đa thức tối tiểu của một số nguyên đại số? Chúng ta biết rằng đa thức tối tiểu của một số đại số không phải là số nguyên đại số không thể chỉ có hệ số nguyên, nhưng điều ngược lại thì sao? Câu trả lời là có, như được chứng minh bởi mệnh đề sau.</p>
+
+        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: #c084fc; font-size: 1.05rem;">Tính chất —</b> Cho $\alpha \in \overline{\mathbb{Q}}$ là một số đại số. Khi đó, $P_\alpha \in \mathbb{Z}[x]$ nếu và chỉ nếu $\alpha \in \overline{\mathbb{Z}}$.
+        </div>
+
+        <h2 style="text-align: left !important; font-size: 1.55rem; font-weight: 700; color: var(--accent-gold); border-bottom: 1.5px solid var(--border-light); padding-bottom: 8px; margin-top: 36px; margin-bottom: 18px;">§3 Bài Tập Rèn Luyện</h2>
+
+        <h3>Bài toán 3.1</h3>
+        <p>Cho $\alpha$ là nghiệm của đa thức $x^3 - 3x + 5$. Chứng minh rằng:</p>
+        <p>1. $\alpha \pm 2$; $k\alpha$ ($k \in \mathbb{Q}$); $\alpha^2$; $\alpha^2 + 2$; $\alpha^5$; $\dfrac{1}{\alpha}$; $\dfrac{1}{\alpha - 1}$; $\dfrac{1}{\alpha^2 + \alpha - 1}$ là số đại số.</p>
+        <p>2. Đặt $M = \left\{ \dfrac{f(\alpha)}{g(\alpha)} \;\middle|\; f, g \in \mathbb{Q}[x]; \; g(\alpha) \neq 0 \right\}$. Khi đó mọi phần tử của $M$ đều là số đại số.</p>
+
+        <h3>Bài toán 3.2</h3>
+        <p>Tìm đa thức tối tiểu của:</p>
+        <p>1. $\sqrt{2} + \sqrt[4]{2}$</p>
+        <p>2. $1 + \sqrt[3]{2} + 2\sqrt[3]{4}$</p>
+        <p>3. (VMO 1994) $\sqrt{2} + \sqrt[3]{3}$</p>
+
+        <h3>Bài toán 3.3 (VMO 1997)</h3>
+        <p>1. Tìm đa thức bậc bé nhất hệ số hữu tỉ $P(x)$ sao cho $P(\sqrt[3]{3} + \sqrt[3]{9}) = \sqrt[3]{3} + 3$.</p>
+        <p>2. Tồn tại hay không đa thức hệ số nguyên $Q(x)$ sao cho $Q(\sqrt[3]{3} + \sqrt[3]{9}) = \sqrt[3]{3} + 3$.</p>
+
+        <h3>Bài toán 3.4 (Vietnam TST 2015)</h3>
+        <p>Cho $\alpha = \dfrac{\sqrt{21} - 1}{2}$, với $n \in \mathbb{Z}^+$, gọi $c_0, c_1, \dots, c_n \in \mathbb{Z}$ không âm thỏa</p>
+        $$c_0 + c_1 \alpha + \dots + c_n \alpha^n = 2015$$
+        <p>1. Chứng minh rằng $c_0 + c_1 + \dots + c_n \equiv 2 \pmod 3$.</p>
+        <p>2. Tìm giá trị nhỏ nhất của $c_0 + c_1 + \dots + c_n$.</p>
+
+        <h3>Bài toán 3.5 (VMO 2017)</h3>
+        <p>Tồn tại hay không đa thức $P(x)$ hệ số nguyên sao cho</p>
+        $$P(1 + \sqrt[3]{2}) = 1 + \sqrt[3]{2}; \quad P(1 + \sqrt{5}) = 2 + 3\sqrt{5}$$
+
+        <h3>Bài toán 3.6</h3>
+        <p>Xét đa thức $P(x) = x^3 + ax^2 + bx + c$ có các hệ số $a, b, c$ nguyên và có trị tuyệt đối không vượt quá 10. Biết</p>
+        $$|P(2 + \sqrt{2})| < \frac{9}{2023},$$
+        <p>chứng minh rằng $P(x)$ có ba nghiệm thực phân biệt.</p>
+
+        <h3>Bài toán 3.7</h3>
+        <p>Giả sử $P(x), Q(x)$ là các đa thức monic bất khả quy với hệ số hữu tỉ. Cho $\alpha, \beta$ là các nghiệm của $P(x)$ và $Q(x)$ thỏa $\alpha + \beta \in \mathbb{Q}$. Chứng minh rằng $R(x) = P^2(x) - Q^2(x)$ có nghiệm hữu tỉ.</p>
+
+        <h3>Bài toán 3.8</h3>
+        <p>Tồn tại hay không đa thức $P(x), Q(x), T(x) \in \mathbb{Z}[x]$ không âm thỏa mãn:</p>
+        <p>i. $P\left(\dfrac{2}{3} + \dfrac{\sqrt{11}}{3}i\right) = 0$; $Q\left(\dfrac{3}{2} + \dfrac{\sqrt{3}}{2}i\right) = 0$</p>
+        <p>ii. $T(x)$ là đa thức bậc nhỏ nhất chia hết cho cả $P(x)$ và $Q(x)$.</p>
+
+        <h3>Bài toán 3.9</h3>
+        <p>Chứng minh rằng với số nguyên dương $n > 2$, số nguyên tố $p$ và các số hữu tỉ $a_0, a_1, \dots, a_{n-1}$ thỏa mãn phương trình</p>
+        $$a_0 + a_1 \sqrt[n]{p} + a_2 \sqrt[n]{p^2} + \dots + a_{n-1} \sqrt[n]{p^{n-1}} = 0$$
+        <p>thì $a_0 = a_1 = \dots = a_{n-1} = 0$.</p>
+
+        <h3>Bài toán 3.10</h3>
+        <p>Xét dãy $(a_n)$ với</p>
+        $$a_0 = \sqrt{5} - \sqrt{5 + 2\sqrt{5}}, \quad a_{n+1} = \frac{a_n^3 - 6a_n - 4}{3a_n^2 + 6a_n + 2}$$
+        <p>Với $n \in \mathbb{N}$, chứng minh rằng $a_n \not\in \mathbb{Q}$ và đều là số nguyên đại số trên $\mathbb{Z}$.</p>
+
+        <h3>Bài toán 3.11</h3>
+        <p>Chứng minh rằng $\sqrt{2} + \sqrt{3} + \sqrt{6}$ là số nguyên đại số trên $\mathbb{Z}$ và tìm đa thức tối tiểu của nó. Xét dãy số $(a_n)$ cho bởi</p>
+        $$a_0 = \sqrt{2} + \sqrt{3} + \sqrt{6}; \quad a_{n+1} = \frac{a_n^2 - 5}{2(a_n + 2)}$$
+        <p>với $n \in \mathbb{N}$. Chứng minh rằng $a_n \not\in \mathbb{Q}$ với mọi $n \in \mathbb{N}$.</p>
+
+        <h3>Bài toán 3.12</h3>
+        <p>Cho đa thức $P(x)$ hệ số nguyên và $a \in \mathbb{Z}^+$ sao cho $\sqrt[3]{a} \not\in \mathbb{Z}^+$. Giả sử</p>
+        $$P(\sqrt[3]{a^2} + \sqrt[3]{a}) = m + n\sqrt[3]{a} + p\sqrt[3]{a^2}$$
+        <p>Chứng minh rằng $a - 1 \mid n - p$. Từ đó tìm tất cả các số nguyên $n$ sao cho tồn tại đa thức $P(x)$ hệ số nguyên và thỏa mãn</p>
+        $$P(\sqrt[3]{n^2} + \sqrt[3]{n}) = 2022n + 20\sqrt[3]{n^2} + 22\sqrt[3]{n}.$$
+
+        <h3>Bài toán 3.13</h3>
+        <p>Cho đa thức $P(x)$ có hệ số tự nhiên thỏa mãn $P(\sqrt[3]{3}) = 2023$. Hỏi tổng các hệ số của $P(x)$ nhỏ nhất là bao nhiêu?</p>
+
+        <h3>Bài toán 3.14</h3>
+        <p>Chứng minh rằng không tồn tại đa thức $P(x)$ hệ số hữu tỉ mà giá trị nhỏ nhất của $P(x)$ là $\sqrt{2}$.</p>
+
+        <h3>Bài toán 3.15</h3>
+        <p>Cho $t \in \mathbb{R}$, $m, n \in \mathbb{Z}^+$, $(m, n) = 1$ thỏa mãn:</p>
+        $$t^m + \frac{1}{t^m}, \; t^n + \frac{1}{t^n} \in \mathbb{Z}.$$
+        <p>Chứng minh rằng: $t + \dfrac{1}{t} \in \mathbb{Z}$.</p>
+
+        <p class="exam-end"><b>─── HẾT ───</b></p>
+    </div>
+</body>
+</html>

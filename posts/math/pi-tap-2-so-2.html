@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 2)</title>
+    
+    <meta name="post-id" content="PiTap2So2">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 2 Số 2 (Tháng 02/2018), từ bài P141 đến P150.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 2)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 2 Số 2 kèm gợi ý giải của SMP.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-2-so-2.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 2)">
+    <meta name="twitter:description" content="Đề bài P141 - P150 Tạp chí Pi Tập 2 Số 2 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            font-size: 0.88rem;
+            font-weight: bold;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            border: 1px dashed rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.03);
+            transition: all 0.15s ease;
+            width: fit-content;
+        }
+        [data-theme="dark"] summary.igo-hint-trigger {
+            color: #eee;
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker {
+            display: none;
+        }
+        summary.igo-hint-trigger:hover {
+            border-style: solid;
+            background: rgba(0, 0, 0, 0.07);
+        }
+        [data-theme="dark"] summary.igo-hint-trigger:hover {
+            background: rgba(255, 255, 255, 0.09);
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.72rem;
+            transition: transform 0.2s ease;
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            margin-top: 10px;
+            padding: 12px 16px;
+            border-left: 2px solid #555;
+            background: rgba(0, 0, 0, 0.02);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        [data-theme="dark"] .igo-hint-content {
+            border-left-color: #888;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .pi-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 4px;
+            background: #e3f2fd;
+            color: #1565c0;
+            margin-right: 6px;
+        }
+        [data-theme="dark"] .pi-badge {
+            background: #1a2733;
+            color: #90caf9;
+        }
+        .pi-author {
+            display: block;
+            margin-top: 6px;
+            font-style: italic;
+            font-size: 0.88rem;
+            color: #666;
+            text-align: right;
+        }
+        [data-theme="dark"] .pi-author {
+            color: #aaa;
+        }
+        .pi-ref-note {
+            margin-top: 10px;
+            padding: 6px 10px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 4px;
+            font-size: 0.82rem;
+            color: #666;
+        }
+        [data-theme="dark"] .pi-ref-note {
+            background: rgba(255, 255, 255, 0.03);
+            color: #999;
+        }
+    </style>
+</head>
+<body class="post-template">
+    <div id="smp-post-content">
+        <div class="header-container">
+            <h1>Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 2)</h1>
+            <p class="post-subtitle">Chuyên mục Thách thức Toán học — Tạp chí Pi số 2 năm thứ hai (Tháng 02/2018) với 10 bài toán từ P141 đến P150 kèm gợi ý tư duy độc lập của SMP.</p>
+        </div>
+
+        <div style="background: rgba(0, 123, 255, 0.06); border-left: 4px solid #007bff; padding: 12px 16px; margin: 20px 0; border-radius: 4px;">
+            <strong>Tổng quan chuyên mục:</strong>
+            <ul style="margin: 6px 0 0 18px; padding: 0;">
+                <li><strong>Cấp THCS:</strong> 4 bài toán (P141 – P144), bao gồm đại số đối xứng, hình học phép quay tam giác đều, số nguyên tố và tổ hợp khoảng cách cấm.</li>
+                <li><strong>Cấp THPT:</strong> 6 bài toán (P145 – P150), bao gồm dãy số nguyên hữu tỉ đặc sắc của TS. Trần Nam Dũng, trực tâm hình học, đa thức bất khả quy và bài toán bất biến lưới ô vuông của GS. Nguyễn Hùng Sơn.</li>
+                <li><strong>Gợi ý:</strong> Được SMP biên soạn độc lập dưới dạng các mốc định hướng tư duy giúp bạn đọc tự mình chinh phục bài toán.</li>
+            </ul>
+        </div>
+
+        <p><a href="./thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; text-decoration: none; margin-bottom: 20px;">← Quay lại Mục lục Thách thức Toán học Tạp chí Pi (2017 – 2024)</a></p>
+
+        <!-- ==================== CẤP THCS ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THCS</h2>
+
+        <!-- Bài P141 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P141</span> Xét các số thực $x, y, z$ khác $0$, đôi một khác nhau và thỏa mãn điều kiện:</p>
+            <p style="text-align: center; overflow-x: auto;">$$x^2 - xy = y^2 - yz = z^2 - zx.$$</p>
+            <p>Hãy tìm tất cả các giá trị có thể của biểu thức</p>
+            <p style="text-align: center; overflow-x: auto;">$$P = \frac{x}{z} + \frac{z}{y} + \frac{y}{x}.$$</p>
+            <span class="pi-author">Hà Thanh (Cần Thơ) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Trừ từng vế hai phương trình đầu:</strong></p>
+                    <p>Ta có $x^2 - xy = y^2 - yz \iff x^2 - y^2 = xy - yz \iff (x - y)(x + y) = y(x - z)$.</p>
+                    <p>Tương tự với hai phương trình còn lại:
+                    $$(y - z)(y + z) = z(y - x) \quad \text{và} \quad (z - x)(z + x) = x(z - y).$$</p>
+
+                    <p><strong>2. Nhân ba đẳng thức theo vế:</strong></p>
+                    <p>Vì $x, y, z$ đôi một khác nhau, tích $(x - y)(y - z)(z - x) \ne 0$.</p>
+                    <p>Nhân cả ba đẳng thức lại và rút gọn nhân tử khác không:
+                    $$(x + y)(y + z)(z + x) = -xyz.$$</p>
+
+                    <p><strong>3. Biến đổi biểu thức $P$:</strong></p>
+                    <p>Khai triển $(x + y)(y + z)(z + x) = (x + y + z)(xy + yz + zx) - xyz$.</p>
+                    <p>Suy ra $(x + y + z)(xy + yz + zx) = 0$.</p>
+                    <p>Chứng minh rằng trường hợp $xy + yz + zx = 0$ hoặc $x + y + z = 0$ dẫn tới giá trị duy nhất cho biểu thức hoán vị vòng quanh:
+                    $$P = \frac{x}{z} + \frac{z}{y} + \frac{y}{x} = -1.$$</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 4</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P142 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P142</span> Cho tứ giác lồi $ABCD$. Giả sử đường trung trực của cạnh $AB$ cắt đường trung trực của cạnh $CD$ tại điểm $M$ nằm trong tứ giác đã cho và</p>
+            <p style="text-align: center; overflow-x: auto;">$$\angle AMB = \angle CMD = 60^\circ.$$</p>
+            <p>Gọi $K, L$ và $N$ tương ứng là trung điểm của các đoạn thẳng $BC, AM$ và $DM$. Hãy tính số đo của góc $\angle LKN$.</p>
+            <span class="pi-author">Lê Huy (Nam Định) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Nhận biết các tam giác đều:</strong></p>
+                    <p>Vì $M$ nằm trên đường trung trực của $AB$, ta có $MA = MB$. Kết hợp với $\angle AMB = 60^\circ$, suy ra tam giác $MAB$ là tam giác đều.</p>
+                    <p>Tương tự, $MC = MD$ và $\angle CMD = 60^\circ$ nên tam giác $MCD$ cũng là tam giác đều.</p>
+
+                    <p><strong>2. Sử dụng phép quay $R_M^{60^\circ}$:</strong></p>
+                    <p>Xét phép quay tâm $M$, góc quay $60^\circ$ (theo chiều kim đồng hồ hoặc ngược lại):</p>
+                    <ul>
+                        <li>Biến điểm $A$ thành điểm $B$.</li>
+                        <li>Biến điểm $D$ thành điểm $C$.</li>
+                    </ul>
+                    <p>Do đó, phép quay biến đoạn thẳng $AD$ thành đoạn thẳng $BC$.</p>
+
+                    <p><strong>3. Tính số đo góc $\angle LKN$:</strong></p>
+                    <p>Trong tam giác $MAD$, $LN$ là đường trung bình nối trung điểm của $MA$ và $MD$, nên $LN \parallel AD$ và $LN = \frac{1}{2}AD$.</p>
+                    <p>Tương tự, xét quan hệ giữa các trung điểm $L, N, K$, chứng minh rằng tam giác $LKN$ là tam giác đều!</p>
+                    <p><strong>Đáp số:</strong> $\angle LKN = 60^\circ$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 4</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P143 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P143</span> Cho số nguyên tố $p$ có 3 chữ số. Kí hiệu $a, b, c$ tương ứng là chữ số hàng trăm, hàng chục, hàng đơn vị trong biểu diễn thập phân của $p$. Chứng minh rằng phương trình (ẩn $x$)</p>
+            <p style="text-align: center; overflow-x: auto;">$$ax^2 + bx + c = 0$$</p>
+            <p>không có nghiệm hữu tỉ.</p>
+            <span class="pi-author">Lưu Thanh Hà (Kiên Giang) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Điều kiện để phương trình bậc hai có nghiệm hữu tỉ:</strong></p>
+                    <p>Phương trình $ax^2 + bx + c = 0$ (với $1 \le a \le 9$, $0 \le b, c \le 9$) có nghiệm hữu tỉ khi và chỉ khi biệt thức $\Delta = b^2 - 4ac$ là bình phương của một số nguyên không âm $d \in \mathbb{N}$:</p>
+                    $$b^2 - 4ac = d^2 \iff 4ac = b^2 - d^2 = (b - d)(b + d).$$
+
+                    <p><strong>2. Liên hệ với biểu diễn của số nguyên tố $p$:</strong></p>
+                    <p>Số nguyên tố $p = 100a + 10b + c$. Nhân cả hai vế với $4a$:</p>
+                    $$4ap = 400a^2 + 40ab + 4ac = (20a + b)^2 - b^2 + 4ac = (20a + b)^2 - d^2.$$
+                    Phân tích hiệu hai bình phương:
+                    $$4ap = (20a + b - d)(20a + b + d).$$
+
+                    <p><strong>3. Đánh giá tính nguyên tố của $p$:</strong></p>
+                    <p>Vì $p$ là số nguyên tố, $p$ phải là ước của một trong hai thừa số ở vế phải, do đó thừa số đó phải $\ge p$.</p>
+                    <p>Nhưng thừa số lớn hơn là $20a + b + d$. Vì $a \le 9, b \le 9, d \le b \le 9$, ta có:
+                    $$20a + b + d \le 20(9) + 9 + 9 = 198.$$
+                    Nếu $p \mid (20a + b + d)$ thì vì $p$ có 3 chữ số ($p \ge 101$) và $20a + b + d \le 198$, khả năng duy nhất là $20a + b + d = p$.</p>
+                    <p>Khi đó $4a = 20a + b - d \implies b - d = -16a < 0$, mâu thuẫn vì $b \ge d \ge 0$! Vậy phương trình không thể có nghiệm hữu tỉ.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 4</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P144 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P144</span> Người ta chọn ra 590 số nguyên dương từ 2060 số nguyên dương đầu tiên, sao cho hai số tùy ý trong các số được chọn không hơn kém nhau $\lceil \pi \rceil$, $\lfloor 2\pi \rfloor$ hoặc $\lceil 3\pi \rceil$ (đơn vị). Chứng minh rằng 2018 là một trong các số được chọn.</p>
+            <p><em>(Với $x$ là số thực, $\lceil x \rceil$ kí hiệu số nguyên nhỏ nhất không nhỏ hơn $x$ và $\lfloor x \rfloor$ kí hiệu số nguyên lớn nhất không vượt quá $x$).</em></p>
+            <span class="pi-author">Nguyễn Khắc Minh (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Xác định các khoảng cách bị cấm:</strong></p>
+                    <p>Vì $3 < \pi < 4$:</p>
+                    <ul>
+                        <li>$\lceil \pi \rceil = 4$.</li>
+                        <li>$\lfloor 2\pi \rfloor = \lfloor 6.28\dots \rfloor = 6$.</li>
+                        <li>$\lceil 3\pi \rceil = \lceil 9.42\dots \rceil = 10$.</li>
+                    </ul>
+                    <p>Hai số bất kỳ trong tập chọn không được có hiệu bằng 4, 6, hoặc 10.</p>
+
+                    <p><strong>2. Khảo sát theo modulo 7:</strong></p>
+                    <p>Chú ý $4 \equiv -3 \pmod 7$, $6 \equiv -1 \pmod 7$, $10 \equiv 3 \pmod 7$.</p>
+                    <p>Trong mỗi chu kỳ 7 số liên tiếp $\{7k+1, 7k+2, \dots, 7k+7\}$, ta có thể chọn tối đa bao nhiêu số để không có hai số nào cách nhau 4, 6, 10?</p>
+                    <p>Kiểm tra cho thấy số phần tử tối đa có thể chọn trong 7 số liên tiếp là đúng 2 phần tử (tỉ lệ tối đa là $2/7$).</p>
+
+                    <p><strong>3. Đánh giá số lượng tối đa và tính duy nhất:</strong></p>
+                    <p>Chia 2060 số thành 294 khối độ dài 7 (từ 1 đến 2058) và 2 số còn lại $\{2059, 2060\}$.</p>
+                    <p>Số phần tử tối đa có thể chọn là $294 \times 2 + 1 = 589$ hoặc phải bố trí cực kỳ chặt chẽ ở biên để đạt được đúng 590 số.</p>
+                    <p>Chứng minh rằng cấu trúc duy nhất đạt được 590 số buộc số 2018 phải thuộc vào tập hợp được chọn.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 4</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- ==================== CẤP THPT ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THPT</h2>
+
+        <!-- Bài P145 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P145</span> Cho dãy số $(a_n)_{n \ge 1}$ xác định bởi:</p>
+            <p style="text-align: center; overflow-x: auto;">$$a_1 = a_2 = 1, a_3 = 2 \text{ và } a_{n+3} = \frac{a_{n+1}a_{n+2} + 7}{a_n},$$</p>
+            <p>với mọi $n$ nguyên dương.</p>
+            <p>1) Chứng minh rằng $a_n$ là số nguyên, với mọi $n$ nguyên dương.</p>
+            <p>2) Chứng minh rằng tồn tại các giới hạn hữu hạn $\lim_{n \to +\infty} \frac{a_{2n+2}}{a_{2n+1}}$, $\lim_{n \to +\infty} \frac{a_{2n+1}}{a_{2n}}$ và tìm các giới hạn đó.</p>
+            <span class="pi-author">Trần Nam Dũng (Tp. Hồ Chí Minh)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tuyến tính hóa hệ thức truy hồi (Hằng số tích sai phân):</strong></p>
+                    <p>Viết lại hệ thức: $a_{n+3} a_n - a_{n+1} a_{n+2} = 7$.</p>
+                    <p>Thay $n$ bằng $n+1$: $a_{n+4} a_{n+1} - a_{n+2} a_{n+3} = 7$.</p>
+                    <p>Trừ hai đẳng thức theo vế:
+                    $$a_{n+4} a_{n+1} - a_{n+3} a_n + a_{n+1} a_{n+2} - a_{n+2} a_{n+3} = 0 \iff a_{n+1}(a_{n+4} + a_{n+2}) = a_{n+3}(a_{n+2} + a_n).$$
+                    Suy ra:
+                    $$\frac{a_{n+4} + a_{n+2}}{a_{n+3}} = \frac{a_{n+2} + a_n}{a_{n+1}} = c \quad (\text{hằng số}).$$
+                    Tính với $n = 1$: $a_1 = 1, a_2 = 1, a_3 = 2, a_4 = \frac{1 \cdot 2 + 7}{1} = 9$.</p>
+                    <p>Khi đó $c = \frac{a_3 + a_1}{a_2} = \frac{2 + 1}{1} = 3$, hoặc xét chu kỳ bước nhảy 2 để thu được hệ thức tuyến tính:
+                    $$a_{n+2} = 3 a_{n+1} - a_n \quad \text{hoặc} \quad a_{n+2} = k a_n - a_{n-2}.$$
+                    Từ hệ thức tuyến tính có các hệ số nguyên và điều kiện đầu nguyên, suy ra mọi $a_n \in \mathbb{Z}^+$.</p>
+
+                    <p><strong>2. Tìm giới hạn tỉ số:</strong></p>
+                    <p>Giải phương trình đặc trưng của hệ thức truy hồi tuyến tính, tìm nghiệm lớn nhất $\lambda > 1$.</p>
+                    <p>Giới hạn của tỉ số các số hạng liên tiếp chính là nghiệm $\lambda$ tương ứng của đa thức đặc trưng.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 4</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P146 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P146</span> Cho $AA_1, BB_1$ và $CC_1$ là các đường cao của tam giác nhọn $ABC$ ($A_1 \in BC, B_1 \in CA, C_1 \in AB$). Gọi $I_a, I_b$ và $I_c$ tương ứng là tâm đường tròn nội tiếp các tam giác $AB_1C_1, BC_1A_1$ và $CA_1B_1$. Chứng minh rằng tam giác $ABC$ và tam giác $I_aI_bI_c$ có cùng trực tâm.</p>
+            <span class="pi-author">Hà Minh Thơ (Phú Thọ) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tính chất tam giác đồng dạng ven đỉnh:</strong></p>
+                    <p>Tam giác $AB_1C_1$ đồng dạng ngược hướng với tam giác $ABC$ theo tỉ số $\cos A$.</p>
+                    <p>Do đó bán kính nội tiếp của tam giác $AB_1C_1$ là $r_a = r \cos A$, và vị trí của tâm $I_a$ có thể biểu diễn qua toạ độ tỉ cự hoặc vectơ phát xuất từ $A$.</p>
+
+                    <p><strong>2. Phương hướng các cạnh của tam giác $I_aI_bI_c$:</strong></p>
+                    <p>Gọi $H$ là trực tâm của tam giác $ABC$.</p>
+                    <p>Chứng minh rằng vectơ $HI_a$ vuông góc với đoạn thẳng $I_bI_c$, tức đường thẳng qua $H$ nối với một đỉnh của tam giác $I_aI_bI_c$ chính là đường cao của tam giác đó.</p>
+
+                    <p><strong>3. Kết luận:</strong></p>
+                    <p>Bằng tính đối xứng ba đỉnh, cả ba đường cao của tam giác $I_aI_bI_c$ đều cùng đi qua trực tâm $H$ của tam giác $ABC$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 4</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P147 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P147</span> Cho $x, y, z$ là các số thực dương, có tổng bằng 1. Chứng minh rằng</p>
+            <p style="text-align: center; overflow-x: auto;">$$\frac{243}{16} \le \frac{1}{(x + yz)^2} + \frac{1}{(y + zx)^2} + \frac{1}{(z + xy)^2} \le \frac{9}{16xyz}.$$</p>
+            <p>Hỏi mỗi dấu đẳng thức xảy ra khi và chỉ khi nào?</p>
+            <span class="pi-author">Nguyễn Việt Hùng (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Biến đổi nhân tử mẫu số:</strong></p>
+                    <p>Vì $x+y+z = 1$, ta có biến đổi phân tích nhân tử:
+                    $$x + yz = x(x + y + z) + yz = (x + y)(x + z).$$
+                    Tương tự cho $y + zx = (y + z)(y + x)$ và $z + xy = (z + x)(z + y)$.</p>
+
+                    <p><strong>2. Rút gọn tổng ba phân thức:</strong></p>
+                    <p>Đặt $A = \frac{1}{(x+y)^2(x+z)^2} + \frac{1}{(y+z)^2(y+x)^2} + \frac{1}{(z+x)^2(z+y)^2}$.</p>
+                    <p>Quy đồng mẫu số chung là $(x+y)^2(y+z)^2(z+x)^2$:
+                    $$A = \frac{(x+y)^2 + (y+z)^2 + (z+x)^2}{(x+y)^2(y+z)^2(z+x)^2}.$$</p>
+
+                    <p><strong>3. Chứng minh hai vế bất đẳng thức:</strong></p>
+                    <ul>
+                        <li><strong>Vế trái:</strong> Áp dụng Cauchy-Schwarz và AM-GM:
+                        $$(x+y)(y+z)(z+x) \le \left(\frac{2(x+y+z)}{3}\right)^3 = \frac{8}{27}.$$
+                        Kết hợp $(x+y)^2 + (y+z)^2 + (z+x)^2 \ge \frac{4}{3}(x+y+z)^2 = \frac{4}{3}$, suy ra $A \ge \frac{4/3}{(8/27)^2} = \frac{243}{16}$.</li>
+                        <li><strong>Vế phải:</strong> Sử dụng đánh giá $xyz(x+y)(y+z)(z+x) \le \frac{1}{64}$ hoặc phân tích hiệu với $\frac{9}{16xyz}$.</li>
+                    </ul>
+                    <p><strong>Đẳng thức:</strong> Cả hai dấu bằng đều xảy ra khi và chỉ khi $x = y = z = \frac{1}{3}$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 4</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P148 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P148</span> Cho hai số nguyên tố lẻ $p, q$ ($p \ne q$) mà $p - 1$ và $p + 1$ đều không chia hết cho $q$. Cho số nguyên $n \ge 3$ và cho $n$ số nguyên đôi một phân biệt $a_1, a_2, \dots, a_n$ thỏa mãn điều kiện: $a_i - a_j$ chia hết cho $q$ với mọi $i, j \in \{1; 2; \dots; n\}$. Chứng minh rằng đa thức</p>
+            <p style="text-align: center; overflow-x: auto;">$$P(x) = (x - a_1)(x - a_2)\dots(x - a_n) - p$$</p>
+            <p>không thể phân tích được thành tích của hai đa thức khác hằng, với hệ số nguyên.</p>
+            <span class="pi-author">Huỳnh Phước Trường (Tp. Hồ Chí Minh)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Khảo sát theo modulo $q$:</strong></p>
+                    <p>Theo giả thiết, tất cả các số $a_i$ đều có cùng số dư khi chia cho $q$: đặt $a_i \equiv r \pmod q$.</p>
+                    <p>Khi đó xét trong vành đa thức $\mathbb{Z}_q[x]$:
+                    $$P(x) \equiv (x - r)^n - p \pmod q.$$</p>
+
+                    <p><strong>2. Phản chứng giả sử $P(x)$ khả quy:</strong></p>
+                    <p>Giả sử $P(x) = G(x) \cdot H(x)$ với $G(x), H(x) \in \mathbb{Z}[x]$ và $\deg G, \deg H \ge 1$.</p>
+                    <p>Khi đó modulo $q$, ta có $G(x) \cdot H(x) \equiv (x - r)^n - p \pmod q$.</p>
+
+                    <p><strong>3. Khai thác điều kiện $q \nmid (p - 1)$ và $q \nmid (p + 1)$:</strong></p>
+                    <p>Xét giá trị tại các điểm nguyên $a_i$: $P(a_i) = -p \implies G(a_i) H(a_i) = -p$.</p>
+                    <p>Vì $p$ là số nguyên tố, tập các ước nguyên của $-p$ chỉ gồm $\{\pm 1, \pm p\}$.</p>
+                    <p>Kết hợp với $n \ge 3$ và tính đồng dư, chỉ ra rằng một trong hai đa thức $G$ hoặc $H$ phải nhận giá trị cố định tại nhiều hơn bậc của nó điểm, dẫn tới điều vô lý.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 4</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P149 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P149</span> Tìm tất cả các số nguyên tố $p$ sao cho tổng bình phương của $p$ số nguyên liên tiếp là một số chính phương.</p>
+            <span class="pi-author">Lê Quốc Hán (Nghệ An)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Thiết lập công thức tổng bình phương:</strong></p>
+                    <p>Gọi $p$ số nguyên liên tiếp là $x, x+1, \dots, x+p-1$. Đặt số ở giữa hoặc trung bình cộng là $a$.</p>
+                    <ul>
+                        <li>Nếu $p = 2$: $x^2 + (x+1)^2 = 2x^2 + 2x + 1 = y^2 \iff (2x+1)^2 - 2y^2 = -1$ (Phương trình Pell, có vô số nghiệm nguyên $x$). Do đó $p = 2$ thỏa mãn.</li>
+                        <li>Nếu $p > 2$ (nguyên tố lẻ): đặt $p$ số là $a - k, \dots, a + k$ với $k = \frac{p-1}{2}$. Tổng là:
+                        $$S = \sum_{i=-k}^k (a + i)^2 = p a^2 + 2 \sum_{i=1}^k i^2 = p a^2 + \frac{p(p^2 - 1)}{12} = y^2.$$</li>
+                    </ul>
+
+                    <p><strong>2. Phân tích tính chia hết theo $p$:</strong></p>
+                    <p>Ta có $y^2 = p\left(a^2 + \frac{p^2 - 1}{12}\right)$.</p>
+                    <p>Do $p$ là số nguyên tố, $p \mid y^2 \implies p \mid y \implies y = p z$.</p>
+                    <p>Suy ra:
+                    $$a^2 + \frac{p^2 - 1}{12} = p z^2 \iff \frac{p^2 - 1}{12} = p z^2 - a^2.$$</p>
+
+                    <p><strong>3. Khảo sát theo các số nguyên tố lẻ:</strong></p>
+                    <p>Kiểm tra $p = 3$: $\frac{9-1}{12} = \frac{2}{3} \notin \mathbb{Z}$ (loại).</p>
+                    <p>Kiểm tra các số nguyên tố $p \equiv \pm 1 \pmod{12}$ hoặc dùng điều kiện thặng dư chính phương.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 4</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P150 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P150</span> Chia mặt phẳng tọa độ thành các ô vuông đơn vị bởi các đường thẳng song song với trục tung và đi qua các điểm nguyên trên trục hoành và các đường thẳng song song với trục hoành và đi qua các điểm nguyên trên trục tung. Xét bảng ô vuông gồm tất cả các ô vuông đơn vị nằm trong đường tròn bán kính 2018 và có tâm nằm ở gốc tọa độ. Điền vào mỗi ô vuông đơn vị của bảng một số $+1$. Cho phép thay đổi các số trong bảng theo quy tắc: Mỗi lần, lấy tất cả các số nằm trong cùng một hàng hoặc trong cùng một cột hoặc trong cùng một đường chéo, rồi thay mỗi số bởi số đối của nó.</p>
+            <p>Hỏi, sau một số hữu hạn lần thực hiện liên tiếp phép thay đổi số nói trên, ta có thể đưa bảng số ban đầu về bảng số mà trong đó có đúng một số $-1$ và tất cả các số còn lại đều là $+1$ hay không?</p>
+            <p><em>(Hai số được gọi là nằm trong cùng một đường chéo nếu góc giữa đường thẳng nối tâm hai ô vuông chứa hai số đó và đường thẳng chứa trục hoành bằng $45^\circ$).</em></p>
+            <span class="pi-author">Nguyễn Hùng Sơn (Varsava, Ba Lan)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Nhận biết tính đối xứng của bảng tròn:</strong></p>
+                    <p>Hình tròn tâm $(0, 0)$ bán kính $R = 2018$ có tính đối xứng hoàn hảo qua cả hai trục toạ độ $Ox, Oy$ và hai đường phân giác $y = x, y = -x$.</p>
+                    <p>Mỗi ô vuông đơn vị được định danh bởi toạ độ tâm $(u + 1/2, v + 1/2)$ với $u, v \in \mathbb{Z}$.</p>
+
+                    <p><strong>2. Tìm đại lượng bất biến (Invariant):</strong></p>
+                    <p>Mỗi phép đổi dấu một hàng, một cột, hay một đường chéo làm thay đổi dấu của các ô trên đường đó.</p>
+                    <p>Hãy xét tích của các số trên một tập hợp con các ô đặc biệt, hoặc xét tính chẵn lẻ của số lượng số $-1$ trên các tập đối xứng.</p>
+                    <p>Cụ thể, xét một lưới con 4 ô tạo thành đỉnh của một hình chữ nhật có các cạnh song song với các đường chéo: tích 4 ô này không đổi khi đổi dấu hàng, cột hay đường chéo.</p>
+
+                    <p><strong>3. Kết luận:</strong></p>
+                    <p>Trạng thái ban đầu có toàn số $+1$ nên tích trên mọi cấu hình con bất biến đều bằng $+1$. Nếu chuyển được về trạng thái chỉ có duy nhất một ô $-1$, đại lượng bất biến này sẽ bị đảo dấu thành $-1$, mâu thuẫn!</p>
+                    <p><strong>Đáp án:</strong> Không thể đưa về bảng chỉ có đúng một số $-1$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 4</em>.</div>
+                </div>
+            </details>
+        </div>
+
+    </div>
+</body>
+</html>

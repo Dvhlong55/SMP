@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 3)</title>
+    
+    <meta name="post-id" content="PiTap1So3">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 1 Số 3 (Tháng 03/2017), từ bài P31 đến P40.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 3)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 1 Số 3 kèm gợi ý lời giải bám sát tư duy Olympic.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-1-so-3.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 3)">
+    <meta name="twitter:description" content="Đề bài P31 - P40 Tạp chí Pi Tập 1 Số 3 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            width: fit-content;
+            outline: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            border-radius: 4px;
+            background: rgba(2, 132, 199, 0.08);
+            transition: background 0.2s;
+        }
+        summary.igo-hint-trigger:hover {
+            background: rgba(2, 132, 199, 0.16);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker,
+        summary.igo-hint-trigger::marker {
+            display: none;
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.75rem;
+            transition: transform 0.2s ease-in-out;
+            color: var(--accent-cyan, #0284c7);
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            padding: 10px 0 10px 18px;
+            margin-top: 8px;
+            border-left: 2px solid var(--accent-cyan, #0284c7);
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: var(--exam-text-color, #334155);
+        }
+        body.dark-mode .igo-hint-content {
+            border-left-color: rgba(56, 189, 248, 0.6);
+        }
+        .igo-level-heading {
+            color: var(--exam-bold-color, #111);
+            font-size: 1.35rem;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1));
+            font-weight: 700;
+        }
+        body.dark-mode .igo-level-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--accent-cyan, #0284c7) !important;
+            text-decoration: none !important;
+            margin: 12px 0 20px 0;
+            transition: transform 0.2s ease;
+        }
+        .igo-nav-link:hover {
+            transform: translateX(-3px);
+        }
+        .igo-mini-toc {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 16px 0 24px 0;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-size: 0.9rem;
+        }
+        body.dark-mode .igo-mini-toc {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .igo-mini-toc a {
+            color: var(--exam-bold-color, #111) !important;
+            text-decoration: none !important;
+            transition: color 0.2s;
+        }
+        .igo-mini-toc a:hover {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+        .author-tag {
+            font-style: italic;
+            color: var(--text-muted, #64748b);
+            font-size: 0.92rem;
+            margin-top: -4px;
+            margin-bottom: 10px;
+        }
+        .source-ref {
+            font-size: 0.88rem;
+            color: var(--text-muted, #64748b);
+            margin-top: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content">
+        <div class="header-box">
+            <h1>Tạp Chí Pi — Tập 1 Số 3</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Chuyên mục Thách thức Toán học (Tháng 03/2017)</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Hệ thống Gợi ý tư duy độc lập biên soạn bởi SMP</h2>
+        </div>
+
+        <!-- LỐI DẪN ĐẦU TRANG ĐẾN TỔNG QUAN -->
+        <div>
+            <a href="thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" class="igo-nav-link">← Tổng quan Thách thức Toán học Tạp chí Pi (2017 – 2024)</a>
+        </div>
+
+        <!-- MỤC LỤC MINI CHO SỐ PHÁT HÀNH -->
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Khối thi:</span>
+            <a href="#thcs">Khối THCS (Bài P31 – P34)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#thpt">Khối THPT (Bài P35 – P40)</a>
+        </div>
+
+        <!-- ================= KHỐI THCS ================= -->
+        <h2 id="thcs" class="igo-level-heading">Khối THCS (Dành cho Trung học Cơ sở)</h2>
+
+        <!-- BÀI P31 -->
+        <h3>Bài P31. Tiếp xúc của đường tròn ngoại tiếp</h3>
+        <div class="author-tag">Đề xuất: Trần Quang Hùng (Hà Nội)</div>
+        <p>Cho tam giác nhọn, không cân $ABC$ nội tiếp đường tròn $(O)$. $P$ là một điểm nằm trong tam giác sao cho $\widehat{PAB} = \widehat{PAC}$. Gọi $K$ là tâm đường tròn ngoại tiếp tam giác $PBC$. $PK$ cắt trung trực của đoạn thẳng $AP$ tại $L$. Đường thẳng qua $A$ song song với $BC$ cắt đường tròn $(O)$ tại điểm thứ hai $D \neq A$. Trên đường thẳng $AD$, lấy $E \neq A$ sao cho $LE = LA$. Gọi $F$ là điểm đối xứng với $A$ qua $OL$. Chứng minh rằng đường tròn ngoại tiếp tam giác $FED$ tiếp xúc đường tròn ngoại tiếp tam giác $PBC$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Do $AP$ là phân giác góc $\widehat{BAC}$ và $AD \parallel BC$, tứ giác $ABCD$ là hình thang cân nội tiếp $(O)$.</p>
+                <p>Chú ý tính chất đối xứng qua đường nối tâm $OL$ và trục đối xứng của hình thang cân. Sử dụng phép nghịch đảo cực $A$ phương tích bất kỳ hoặc biến đổi phương tích đối với các đường tròn $(PBC)$ và $(FED)$ để chứng minh điểm tiếp xúc chính là ảnh đối xứng của giao điểm các đường phân giác.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 5.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P32 -->
+        <h3>Bài P32. Chia hết của giai thừa cho đa thức bậc ba</h3>
+        <div class="author-tag">Đề xuất: Phạm Đức Hiệp (Hà Nội)</div>
+        <p>Chứng minh rằng có vô hạn số nguyên dương $n$ có tính chất: $n!$ chia hết cho $n^3 - 1$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Phân tích đa thức thành nhân tử: $n^3 - 1 = (n - 1)(n^2 + n + 1)$.</p>
+                <p>Để $n!$ chia hết cho $(n-1)(n^2+n+1)$, ta cần thừa số $n^2+n+1$ có thể phân tích thành các ước số nguyên dương nhỏ hơn $n$ và đôi một phân biệt với $n-1$.</p>
+                <p>Chọn $n$ sao cho $n^2+n+1$ là một hợp số. Cụ thể, xét dãy số dạng $n = k^2$ hoặc xây dựng dãy số qua phương trình nghiệm nguyên $n^2+n+1 = ab$ với $1 < a < b < n-1$. Do có vô số số nguyên tố dạng $6k+1$, áp dụng định lý số học để kết luận tồn tại vô hạn số $n$ thỏa mãn.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 5.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P33 -->
+        <h3>Bài P33. Cấu hình tam giác đôi một có đúng một đỉnh chung</h3>
+        <div class="author-tag">Đề xuất: Hà Thanh (Cần Thơ)</div>
+        <p>Hỏi, trên mặt phẳng, có thể vẽ được nhiều nhất bao nhiêu tam giác mà hai tam giác bất kì (trong số đó) đều có đúng một đỉnh chung và không có điểm nào là đỉnh chung của tất cả các tam giác được vẽ?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Gọi $\mathcal{F}$ là họ các tam giác thỏa mãn điều kiện. Mỗi tam giác là một tập hợp gồm 3 đỉnh. Điều kiện bài toán tương đương với: giao của hai tập bất kỳ có đúng 1 phần tử, và không có phần tử nào thuộc tất cả các tập.</p>
+                <p>Theo <strong>Định lý Erdős–Ko–Rado</strong> hoặc cấu hình mặt phẳng xạ ảnh Fano hữu hạn:</p>
+                <ul>
+                    <li>Nếu có hai tam giác rời đỉnh thứ 3, cấu hình tối đa chỉ có thể dựng được bằng cách ghép các đỉnh theo chu trình hoặc cấu hình 6 điểm.</li>
+                    <li>Chỉ ra ví dụ cực đại với 4 tam giác: Xét 6 điểm $A, B, C, D, E, F$, bốn tam giác là $ABC, ADE, BDF, CEF$. Kiểm tra thấy hai tam giác bất kỳ đều có đúng 1 đỉnh chung và không có đỉnh nào thuộc cả 4 tam giác. Chứng minh không thể vẽ được $\ge 5$ tam giác.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 5.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P34 -->
+        <h3>Bài P34. Bất đẳng thức bốn biến có tổng bằng 4</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Văn Quý (Hà Nội)</div>
+        <p>Cho $a, b, c, d$ là các số thực dương có tổng bằng $4$. Chứng minh rằng:
+        \[
+        \frac{1}{ab} + \frac{1}{cd} \ge \frac{a^2 + b^2 + c^2 + d^2}{2}.
+        \]
+        Hỏi đẳng thức xảy ra khi và chỉ khi nào?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $x = ab$ và $y = cd$. Theo bất đẳng thức AM-GM, ta có $a+b \ge 2\sqrt{x}$ và $c+d \ge 2\sqrt{y}$, suy ra $4 = a+b+c+d \ge 2(\sqrt{x} + \sqrt{y}) \implies \sqrt{x} + \sqrt{y} \le 2$.</p>
+                <p>Mặt khác:
+                \[
+                a^2+b^2+c^2+d^2 = (a+b)^2 - 2ab + (c+d)^2 - 2cd \le (a+b+c+d)^2 - 2(x+y) = 16 - 2(x+y).
+                \]
+                Bất đẳng thức cần chứng minh quy về đánh giá $\dfrac{x+y}{xy} \ge 8 - (x+y)$. Đặt $u = \sqrt{x}, v = \sqrt{y}$ và khảo sát bất đẳng thức hai biến để chỉ ra đẳng thức xảy ra khi và chỉ khi $a = b = c = d = 1$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 5.</div>
+            </div>
+        </details>
+
+        <!-- ================= KHỐI THPT ================= -->
+        <h2 id="thpt" class="igo-level-heading">Khối THPT (Dành cho Trung học Phổ thông)</h2>
+
+        <!-- BÀI P35 -->
+        <h3>Bài P35. Phương trình hàm bốn biến liên tục</h3>
+        <div class="author-tag">Đề xuất: Võ Quốc Bá Cẩn (Hà Nội)</div>
+        <p>Tìm tất cả các hàm số $f$ xác định, liên tục trên tập số thực $\mathbb{R}$, lấy giá trị trên $\mathbb{R}$ và thỏa mãn điều kiện:
+        \[
+        f(x + f(y+z+t)) + f(y + f(z+t+x)) + f(z + f(t+x+y)) + f(t + f(x+y+z)) = 0
+        \]
+        với mọi $x, y, z, t \in \mathbb{R}$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Bước 1:</strong> Đặt $x = y = z = t = 0 \implies 4f(f(0)) = 0 \implies f(f(0)) = 0$. Đặt $f(0) = c \implies f(c) = 0$.</p>
+                <p><strong>Bước 2:</strong> Thay $y = z = t = 0$, ta có $f(x+c) + 3f(f(x)) = 0 \implies f(x+c) = -3f(f(x))$.</p>
+                <p><strong>Bước 3:</strong> Khai thác tính liên tục và tính đơn điệu/cộng tính của hàm số. Từ phương trình đối xứng 4 biến, chứng minh $f$ phải là hàm tuyến tính $f(x) = ax + b$. Thử lại để rút ra hai nghiệm hàm thỏa mãn là $f(x) = 0$ với mọi $x$, hoặc $f(x) = -x$ với mọi $x$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 5.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P36 -->
+        <h3>Bài P36. Xấp xỉ căn bậc hai bằng số hữu tỷ</h3>
+        <div class="author-tag">Đề xuất: Nhóm “TTTH” sưu tầm</div>
+        <p>Cho số nguyên dương $n$. Chứng minh rằng tồn tại các số tự nhiên $a, b$ sao cho:
+        \[
+        0 < b \le \sqrt{n+1} \quad \text{và} \quad \sqrt{n} \le \frac{a}{b} \le \sqrt{n+1}.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Bất đẳng thức kép $\sqrt{n} \le \dfrac{a}{b} \le \sqrt{n+1}$ tương đương với $b\sqrt{n} \le a \le b\sqrt{n+1}$, tức là đoạn $I_b = [b\sqrt{n}, b\sqrt{n+1}]$ chứa ít nhất một số nguyên $a$.</p>
+                <p>Một đoạn $[u, v]$ chắc chắn chứa ít nhất một số nguyên nếu độ dài của nó $v - u \ge 1$ hoặc khoảng mở chứa một điểm nguyên. Độ dài của đoạn $I_b$ là:
+                \[
+                L(b) = b(\sqrt{n+1} - \sqrt{n}) = \frac{b}{\sqrt{n+1} + \sqrt{n}}.
+                \]
+                Khi $b = [\sqrt{n+1}]$, dùng tính chất phần nguyên và phân tích số dư theo định lý kẹp để chỉ ra luôn chọn được số tự nhiên $a$ nằm gọn trong đoạn $I_b$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 5.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P37 -->
+        <h3>Bài P37. Phần nguyên của dãy số hồi quy</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Duy Liên (Vĩnh Phúc) & Nguyễn Duy Thái Sơn (Đà Nẵng)</div>
+        <p>Cho dãy số thực $(x_n)_{n \ge 1}$ được xác định như sau: $x_1 = 1$ và
+        \[
+        x_n = x_{n-1} + \frac{1}{2x_{n-1}} \quad \text{với mọi } n \ge 2.
+        \]
+        Tính $[x_{2017}]$ ($[x]$ kí hiệu phần nguyên của số thực $x$).</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Bình phương hệ thức truy hồi:
+                \[
+                x_n^2 = \left(x_{n-1} + \frac{1}{2x_{n-1}}\right)^2 = x_{n-1}^2 + 1 + \frac{1}{4x_{n-1}^2}.
+                \]
+                Vì $x_n > 0$ và tăng nghiêm ngặt, từ $x_n^2 > x_{n-1}^2 + 1$ ta suy ra ngay $x_n^2 > x_1^2 + (n - 1) = n$. Do đó $x_{2017} > \sqrt{2017} \approx 44.911$.</p>
+                <p>Đánh giá chặn trên: $\sum_{k=1}^{n-1} \dfrac{1}{4x_k^2} < \dfrac{1}{4} \sum_{k=1}^{n-1} \dfrac{1}{k} \approx \dfrac{\ln n}{4}$. Với $n = 2017$, lượng dôi dư này nhỏ hơn $2$, do đó $2017 < x_{2017}^2 < 2017 + 2 = 2019 < 45^2 = 2025$.</p>
+                <p><strong>Kết luận:</strong> $44 < x_{2017} < 45 \implies [x_{2017}] = 44$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 5.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P38 -->
+        <h3>Bài P38. Tâm vị tự cố định của các đường tròn biến thiên</h3>
+        <div class="author-tag">Đề xuất: GS. Nguyễn Minh Hà (Hà Nội)</div>
+        <p>Cho tam giác $ABC$ nội tiếp đường tròn $(O)$. Gọi $D$ là hình chiếu vuông góc của $A$ trên $BC$. Các điểm $E, F$ di động trên $(O)$ sao cho $EF \parallel BC$. $M, N$ theo thứ tự là hình chiếu vuông góc của $B, C$ trên $AE$. $P, Q$ theo thứ tự là hình chiếu vuông góc của $B, C$ trên $AF$. Chứng minh rằng tâm vị tự ngoài và tâm vị tự trong của các đường tròn $(DMQ)$ và $(DNP)$ là các điểm cố định.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Nhận xét hình học:</strong> Tứ giác $BCEF$ là hình thang cân nội tiếp $(O)$. Các hình chiếu $M, N, P, Q$ tạo thành các tứ giác nội tiếp liên quan trực tiếp đến đường tròn đường kính $BC$ và đường cao $AD$.</p>
+                <p>Chứng minh điểm $D$ luôn là tâm đẳng phương hoặc tâm phối cảnh của hai đường tròn $(DMQ)$ và $(DNP)$. Sử dụng góc định hướng và trục đẳng phương để chứng minh tâm vị tự ngoài trùng với hình chiếu của trực tâm $H$, hoặc một điểm cố định trên đường thẳng Euler của tam giác $ABC$.</p>
+                <div class="source-ref">Lời giải chi tiết và mở rộng đăng tại Tạp chí Pi Tập 1 Số 5.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P39 -->
+        <h3>Bài P39. Độ dài tối đa của cấp số nhân trong 2017 số nguyên đầu tiên</h3>
+        <div class="author-tag">Đề xuất: GS. Hà Huy Khoái (Hà Nội)</div>
+        <p>Kí hiệu $S$ là tập hợp gồm 2017 số nguyên dương đầu tiên. Hỏi có nhiều nhất bao nhiêu phần tử của $S$ là những số hạng của cùng một cấp số nhân tăng, có các số hạng là số thực và công bội lớn hơn 1?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Giả sử cấp số nhân có $k$ số hạng: $u_1, u_2, \dots, u_k \in \{1, 2, \dots, 2017\}$ với $u_i = u_1 q^{i-1}$ ($q > 1$).</p>
+                <ul>
+                    <li>Chứng minh $q$ bắt buộc phải là một số hữu tỷ: $q = \dfrac{a}{b}$ với $a, b \in \mathbb{Z}^+$, $\gcd(a, b) = 1$ và $a > b \ge 1$.</li>
+                    <li>Khi đó $u_k = u_1 \left(\dfrac{a}{b}\right)^{k-1} \in \mathbb{Z}^+ \implies b^{k-1} \mid u_1$. Do đó $u_k \ge a^{k-1}$.</li>
+                    <li>Vì $a > b \ge 1 \implies a \ge 2$, nên $u_k \ge 2^{k-1}$. Điều kiện $u_k \le 2017 \implies 2^{k-1} \le 2017 \implies k - 1 \le 10 \implies k \le 11$.</li>
+                    <li>Chỉ ra ví dụ với $k = 11$: Chọn $a = 2, b = 1 \implies q = 2$, dãy số là $1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024 \in S$ (có đúng $11$ số hạng).</li>
+                </ul>
+                <p><strong>Kết luận:</strong> Số phần tử nhiều nhất là $11$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 5.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P40 -->
+        <h3>Bài P40. Bài toán phân hoạch kẹo và sô-cô-la</h3>
+        <div class="author-tag">Đề xuất: PGS. TS. Phan Thị Hà Dương (Hà Nội)</div>
+        <p>Chuẩn bị cho buổi giao lưu của Pi với các bạn học sinh Tiểu học yêu Toán, cô Lê Hương được giao nhiệm vụ chia 500 thanh chocolate (sô-cô-la) giống hệt nhau thành các gói sao cho mỗi gói đều có một số lẻ thanh; cô Cẩm Thơ được giao nhiệm vụ chia 500 cái kẹo mút giống hệt nhau thành các gói sao cho không có 2 gói nào có số kẹo bằng nhau. Kí hiệu $s$ và $t$ tương ứng là số cách chia mà cô Lê Hương và cô Cẩm Thơ có thể thực hiện. Hãy so sánh $s$ và $t$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Đây là bài toán tổ hợp phân hoạch kinh điển tương ứng với <strong>Định lý phân hoạch Euler (Euler's Partition Theorem)</strong>:</p>
+                <p><em>"Số cách phân hoạch một số nguyên dương $n$ thành các phần tử lẻ luôn bằng số cách phân hoạch $n$ thành các phần tử đôi một phân biệt."</em></p>
+                <p>Chứng minh bằng phương pháp hàm sinh (Generating Function):</p>
+                <ul>
+                    <li>Hàm sinh cho số cách chia thành các phần tử lẻ ($s$):
+                    \[
+                    F_{\text{lẻ}}(x) = \prod_{k=1}^\infty \frac{1}{1 - x^{2k-1}} = \frac{1}{(1-x)(1-x^3)(1-x^5)\dots}
+                    \]
+                    </li>
+                    <li>Hàm sinh cho số cách chia thành các phần tử phân biệt ($t$):
+                    \[
+                    F_{\text{phân biệt}}(x) = \prod_{k=1}^\infty (1 + x^k) = (1+x)(1+x^2)(1+x^3)\dots
+                    \]
+                    </li>
+                    <li>Sử dụng hằng đẳng thức $1 + x^k = \dfrac{1 - x^{2k}}{1 - x^k}$, toàn bộ các lũy thừa chẵn bị triệt tiêu với mẫu số, dẫn tới hai chuỗi hàm sinh đồng nhất bằng nhau: $F_{\text{lẻ}}(x) \equiv F_{\text{phân biệt}}(x)$.</li>
+                </ul>
+                <p><strong>Kết luận:</strong> $s = t$.</p>
+                <div class="source-ref">Lời giải chi tiết và bình luận mở rộng về phân hoạch Euler đăng tại Tạp chí Pi Tập 1 Số 5.</div>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT SỐ 3 ───</b></p>
+    </div>
+</body>
+</html>

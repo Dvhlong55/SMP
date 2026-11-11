@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 1)</title>
+    
+    <meta name="post-id" content="PiTap1So1">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 1 Số 1 (Tháng 01/2017), từ bài P11 đến P20.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 1)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 1 Số 1 kèm gợi ý lời giải bám sát tư duy Olympic.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-1-so-1.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 1)">
+    <meta name="twitter:description" content="Đề bài P11 - P20 Tạp chí Pi Tập 1 Số 1 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            width: fit-content;
+            outline: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            border-radius: 4px;
+            background: rgba(2, 132, 199, 0.08);
+            transition: background 0.2s;
+        }
+        summary.igo-hint-trigger:hover {
+            background: rgba(2, 132, 199, 0.16);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker,
+        summary.igo-hint-trigger::marker {
+            display: none;
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.75rem;
+            transition: transform 0.2s ease-in-out;
+            color: var(--accent-cyan, #0284c7);
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            padding: 10px 0 10px 18px;
+            margin-top: 8px;
+            border-left: 2px solid var(--accent-cyan, #0284c7);
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: var(--exam-text-color, #334155);
+        }
+        body.dark-mode .igo-hint-content {
+            border-left-color: rgba(56, 189, 248, 0.6);
+        }
+        .igo-level-heading {
+            color: var(--exam-bold-color, #111);
+            font-size: 1.35rem;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1));
+            font-weight: 700;
+        }
+        body.dark-mode .igo-level-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--accent-cyan, #0284c7) !important;
+            text-decoration: none !important;
+            margin: 12px 0 20px 0;
+            transition: transform 0.2s ease;
+        }
+        .igo-nav-link:hover {
+            transform: translateX(-3px);
+        }
+        .igo-mini-toc {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 16px 0 24px 0;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-size: 0.9rem;
+        }
+        body.dark-mode .igo-mini-toc {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .igo-mini-toc a {
+            color: var(--exam-bold-color, #111) !important;
+            text-decoration: none !important;
+            transition: color 0.2s;
+        }
+        .igo-mini-toc a:hover {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+        .author-tag {
+            font-style: italic;
+            color: var(--text-muted, #64748b);
+            font-size: 0.92rem;
+            margin-top: -4px;
+            margin-bottom: 10px;
+        }
+        .source-ref {
+            font-size: 0.88rem;
+            color: var(--text-muted, #64748b);
+            margin-top: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content">
+        <div class="header-box">
+            <h1>Tạp Chí Pi — Tập 1 Số 1</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Chuyên mục Thách thức Toán học (Tháng 01/2017)</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Hệ thống Gợi ý tư duy độc lập biên soạn bởi SMP</h2>
+        </div>
+
+        <!-- LỐI DẪN ĐẦU TRANG ĐẾN TỔNG QUAN -->
+        <div>
+            <a href="thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" class="igo-nav-link">← Tổng quan Thách thức Toán học Tạp chí Pi (2017 – 2024)</a>
+        </div>
+
+        <!-- MỤC LỤC MINI CHO SỐ PHÁT HÀNH -->
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Khối thi:</span>
+            <a href="#thcs">Khối THCS (Bài P11 – P14)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#thpt">Khối THPT (Bài P15 – P20)</a>
+        </div>
+
+        <!-- ================= KHỐI THCS ================= -->
+        <h2 id="thcs" class="igo-level-heading">Khối THCS (Dành cho Trung học Cơ sở)</h2>
+
+        <!-- BÀI P11 -->
+        <h3>Bài P11. Tổng lũy thừa các số nguyên liên tiếp</h3>
+        <div class="author-tag">Đề xuất: Lê Quốc Hán (Nghệ An)</div>
+        <p>Với $n$ là một số nguyên dương, gọi $P(n)$ là tổng lũy thừa bậc $n$ của $n$ số nguyên liên tiếp.</p>
+        <p>a) Chứng minh rằng $P(5)$ chia hết cho $25$.</p>
+        <p>b) Tìm tất cả các số nguyên dương $n > 1$ sao cho $P(n)$ chia hết cho $n^2$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Câu a:</strong> Giả sử $5$ số nguyên liên tiếp là $x-2, x-1, x, x+1, x+2$ với $x \in \mathbb{Z}$. Khi đó:
+                \[
+                P(5) = (x-2)^5 + (x-1)^5 + x^5 + (x+1)^5 + (x+2)^5
+                \]
+                Áp dụng khai triển nhị thức Newton đối xứng $(x+k)^5 + (x-k)^5 = 2x^5 + 20x^3k^2 + 10xk^4$. Nhận xét rằng $20x^3k^2 + 10xk^4 \equiv 10xk^4 \pmod{25}$, từ đó ghép cặp đối xứng để suy ra $P(5) \equiv 0 \pmod{25}$.</p>
+                <p><strong>Câu b:</strong> Xét hai trường hợp tính chẵn lẻ của $n$:</p>
+                <ul>
+                    <li>Nếu $n$ là số chẵn: Đặt $n = 2m$. Trong $n$ số nguyên liên tiếp luôn có đúng $m$ số lẻ và $m$ số chẵn, dẫn đến mâu thuẫn về tính chẵn lẻ khi xét modulo $2$ hoặc modulo $4$.</li>
+                    <li>Nếu $n$ là số lẻ: Viết dãy số dưới dạng đối xứng $x-m, \dots, x, \dots, x+m$ với $n = 2m+1$. Khai triển và chỉ ra điều kiện để triệt tiêu số dư modulo $n^2$ đòi hỏi mọi ước nguyên tố $p \mid n$ đều thỏa mãn $p \nmid (p-1)$. Kết luận tập hợp các số $n$ thỏa mãn là các số nguyên lẻ không chia hết cho $3$ (hoặc tổng quát $n$ lẻ và $\gcd(n, 6) = 1$).</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 3.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P12 -->
+        <h3>Bài P12. Tỉ số diện tích trong tam giác</h3>
+        <div class="author-tag">Đề xuất: Ngô Văn Minh (Hà Nội)</div>
+        <p>Cho hai điểm $M, N$ tương ứng nằm trên các cạnh $AC, AB$ của tam giác $ABC$. Giả sử $BM, CN$ cắt nhau tại $P$. Biết diện tích các tam giác $BPN, BPC, CPM$ lần lượt bằng $3, 4, 5$ (đơn vị diện tích). Hãy tính diện tích tam giác $ABC$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $S_{APN} = x$ và $S_{APM} = y$. Mục tiêu là tìm $x + y$ để suy ra $S_{ABC} = 3 + 4 + 5 + x + y = 12 + x + y$.</p>
+                <p>Áp dụng định lý tỉ số diện tích có chung chiều cao hoặc chung đáy:</p>
+                <ul>
+                    <li>Xét trên đoạn $AC$: $\dfrac{AM}{MC} = \dfrac{S_{ABM}}{S_{CBM}} = \dfrac{S_{APM}}{S_{CPM}} \implies \dfrac{x + y + 3}{4 + 3} = \dfrac{y}{5} \implies \dfrac{x + y + 3}{7} = \dfrac{y}{5}$.</li>
+                    <li>Xét trên đoạn $AB$: $\dfrac{AN}{NB} = \dfrac{S_{ACN}}{S_{BCN}} = \dfrac{S_{APN}}{S_{BPN}} \implies \dfrac{x + y + 5}{4 + 5} = \dfrac{x}{3} \implies \dfrac{x + y + 5}{9} = \dfrac{x}{3}$.</li>
+                </ul>
+                <p>Giải hệ phương trình bậc nhất hai ẩn trên sẽ thu được $x = \dfrac{21}{11}$ và $y = \dfrac{35}{11}$. Từ đó tính được $S_{ABC} = \dfrac{184}{11}$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 3.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P13 -->
+        <h3>Bài P13. Bộ ba số hữu tỷ nguyên hóa</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Tất Thu (Đồng Nai)</div>
+        <p>Tìm tất cả các bộ 3 số hữu tỷ dương $(a, b, c)$ sao cho:
+        \[
+        a + \frac{1}{bc}, \quad b + \frac{1}{ca}, \quad c + \frac{1}{ab}
+        \]
+        đều là các số nguyên.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $a + \dfrac{1}{bc} = x$, $b + \dfrac{1}{ca} = y$, $c + \dfrac{1}{ab} = z$ với $x, y, z \in \mathbb{Z}^+$.</p>
+                <p>Quy đồng mẫu số và nhân $abc$ vào từng biểu thức:
+                \[
+                abc + 1 = xbc = yca = zab
+                \]
+                Từ đó suy ra $ax = by = cz = \dfrac{abc + 1}{abc} \cdot abc$. Do $a, b, c$ đối xứng, không mất tính tổng quát giả sử $a \ge b \ge c > 0 \implies x \le y \le z$.</p>
+                <p>Đánh giá chặn tích $abc$ và sử dụng tính chất hữu tỷ để chỉ ra $a, b, c$ bắt buộc phải là các số nguyên hoặc các phân số có mẫu bị chặn nghiêm ngặt. Từ đó tìm được các bộ nghiệm đối xứng như $(1, 1, 1)$, $(2, 1, 1)$, $(3, 2, 1)$... </p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 3.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P14 -->
+        <h3>Bài P14. Trò chơi bốc bóng bất biến</h3>
+        <div class="author-tag">Đề xuất: Cuộc thi Toán quốc tế Paul Erdős (2016 – 2017)</div>
+        <p>Có 100 quả bóng đen và 100 quả bóng trắng để trong một chiếc hộp kín. Ta bốc ra ngẫu nhiên 3 quả bóng, và phụ thuộc vào màu của các quả bóng bốc được, ta sẽ bỏ trở lại hộp một số quả bóng theo quy tắc dưới đây:</p>
+        <table style="width: 100%; max-width: 500px; margin: 12px 0; border-collapse: collapse;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--border-light, #cbd5e1);">
+                    <th style="text-align: left; padding: 6px;">Bóng bốc ra</th>
+                    <th style="text-align: left; padding: 6px;">Bóng bỏ trở lại</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid var(--border-light, #e2e8f0);"><td style="padding: 6px;">3 quả đen</td><td style="padding: 6px;">1 quả đen</td></tr>
+                <tr style="border-bottom: 1px solid var(--border-light, #e2e8f0);"><td style="padding: 6px;">2 đen, 1 trắng</td><td style="padding: 6px;">1 đen, 1 trắng</td></tr>
+                <tr style="border-bottom: 1px solid var(--border-light, #e2e8f0);"><td style="padding: 6px;">1 đen, 2 trắng</td><td style="padding: 6px;">2 quả trắng</td></tr>
+                <tr style="border-bottom: 1px solid var(--border-light, #e2e8f0);"><td style="padding: 6px;">3 quả trắng</td><td style="padding: 6px;">1 quả trắng</td></tr>
+            </tbody>
+        </table>
+        <p>Một người đã làm như vậy cho đến khi trong hộp chỉ còn lại 2 quả bóng. Bây giờ ta cần bốc ra một quả bóng từ hộp, nhưng trước đó cần đoán màu của nó. Hỏi ta nên đoán quả bóng đó màu gì? Giải thích rõ câu trả lời.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Bước 1 (Tính bất biến về tổng số bóng):</strong> Ở mỗi thao tác, ta lấy ra 3 quả và bỏ lại 1 hoặc 2 quả. Vì tổng số bóng ban đầu là $200$, số bóng sẽ giảm dần về $2$.</p>
+                <p><strong>Bước 2 (Bất biến tính chẵn lẻ của số bóng trắng):</strong> Hãy theo dõi số lượng bóng trắng $W$ thay đổi ra sao sau mỗi thao tác:</p>
+                <ul>
+                    <li>Bốc 3 đen, trả 1 đen: $\Delta W = 0$ (không đổi).</li>
+                    <li>Bốc 2 đen 1 trắng, trả 1 đen 1 trắng: $\Delta W = -1 + 1 = 0$ (không đổi).</li>
+                    <li>Bốc 1 đen 2 trắng, trả 2 trắng: $\Delta W = -2 + 2 = 0$ (không đổi).</li>
+                    <li>Bốc 3 trắng, trả 1 trắng: $\Delta W = -3 + 1 = -2$ (giảm 2).</li>
+                </ul>
+                <p>Như vậy, số lượng bóng trắng luôn giữ nguyên hoặc giảm đi một số chẵn quả. Do ban đầu có $W_0 = 100$ là một <strong>số chẵn</strong>, nên số bóng trắng trong hộp ở bất kỳ thời điểm nào cũng luôn là một <strong>số chẵn</strong>.</p>
+                <p><strong>Kết luận:</strong> Khi trong hộp chỉ còn lại đúng 2 quả bóng, số bóng trắng có thể là $0$ quả (2 đen) hoặc $2$ quả (2 trắng). Xác suất bốc trúng bóng trắng là áp đảo.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 3.</div>
+            </div>
+        </details>
+
+        <!-- ================= KHỐI THPT ================= -->
+        <h2 id="thpt" class="igo-level-heading">Khối THPT (Dành cho Trung học Phổ thông)</h2>
+
+        <!-- BÀI P15 -->
+        <h3>Bài P15. Điểm nguyên sơ trong hình lồi</h3>
+        <div class="author-tag">Đề xuất: GS. Ngô Bảo Châu (Đại học Chicago, Hoa Kỳ)</div>
+        <p>Một điểm trên mặt phẳng tọa độ được gọi là điểm nguyên nếu cả hoành độ và tung độ của nó đều là số nguyên. Một điểm nguyên được gọi là điểm nguyên sơ nếu đoạn thẳng nối nó với gốc tọa độ không chứa điểm nguyên nào khác.</p>
+        <p>Cho $A$ là một hình lồi chứa gốc tọa độ $O$. Đặt tên các điểm nguyên sơ nằm trong $A$ lần lượt theo chiều kim đồng hồ, nhìn từ gốc tọa độ, bởi $X_1, X_2, \dots$. Xét hình lồi $B$ chứa $A$ và có duy nhất điểm nguyên sơ, gọi là $Y$, nằm giữa $X_1$ và $X_2$, nhìn từ gốc tọa độ. Chứng minh rằng:
+        \[
+        Y = X_1 + X_2
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Bổ đề cơ bản:</strong> Diện tích của một tam giác nguyên sơ (tam giác có ba đỉnh là các điểm nguyên và bên trong cũng như trên các cạnh không chứa điểm nguyên nào khác ngoài ba đỉnh) luôn có diện tích đúng bằng $\dfrac{1}{2}$ (theo công thức Pick: $S = I + \dfrac{B}{2} - 1 = 0 + \dfrac{3}{2} - 1 = \dfrac{1}{2}$).</p>
+                <p>Vì $X_1, X_2$ là hai điểm nguyên sơ liên tiếp trong hình lồi $A$, tam giác $OX_1X_2$ không chứa điểm nguyên nào khác nên $S_{\triangle OX_1X_2} = \dfrac{1}{2}$.</p>
+                <p>Khi hình lồi $B$ chứa thêm duy nhất một điểm nguyên sơ $Y$ nằm giữa góc nhìn $\widehat{X_1OX_2}$, hai tam giác $OX_1Y$ và $OYX_2$ cũng trở thành các tam giác nguyên sơ. Sử dụng định thức tọa độ biểu diễn diện tích tam giác để thiết lập hệ phương trình vector liên hệ giữa $Y$ với $X_1, X_2$, từ đó dẫn tới đẳng thức vector duy nhất thỏa mãn là $Y = X_1 + X_2$.</p>
+                <div class="source-ref">Lời giải chi tiết và bình luận mở rộng của GS. Ngô Bảo Châu đăng tại Tạp chí Pi Tập 1 Số 3.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P16 -->
+        <h3>Bài P16. Sự tiếp xúc của hai đường tròn</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Văn Linh (Hà Nội)</div>
+        <p>Cho tứ giác $ABCD$ nội tiếp đường tròn $(O)$ và có hai đường chéo $AC$ và $BD$ vuông góc nhau. Gọi $P$ là giao điểm của $AD$ và $BC$. Kẻ đường kính $PQ$ của đường tròn ngoại tiếp $(PCD)$. Gọi $M$ và $N$ lần lượt là điểm chính giữa cung $CD$ không chứa $P$ và cung $CD$ chứa $P$ của $(PCD)$. Biết $QM$ cắt $BD, CD$ lần lượt tại $E, F$; còn $QN$ cắt $AC, CD$ lần lượt tại $K, L$. Chứng minh rằng đường tròn ngoại tiếp $(EDF)$ tiếp xúc với đường tròn ngoại tiếp $(KCL)$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Gọi $J$ là giao điểm của đường kính $PQ$ với đoạn thẳng $CD$.</p>
+                <ul>
+                    <li>Do $M, N$ là các điểm chính giữa cung của $(PCD)$ nên $QM$ và $QN$ lần lượt là các đường phân giác trong và phân giác ngoài của góc $\widehat{CQD}$.</li>
+                    <li>Sử dụng tính chất chùm điều hòa: $(F, L; D, C) = -1$, suy ra các góc nhìn vuông góc tạo nên các tứ giác nội tiếp $FEDJ$ và $LJKC$.</li>
+                    <li>Từ đó kẻ tiếp tuyến chung $Jx$ tại điểm $J$ và biến đổi góc để chứng minh $Jx$ vừa là tiếp tuyến của $(EDF)$ vừa là tiếp tuyến của $(KCL)$, suy ra hai đường tròn tiếp xúc nhau tại điểm $J$.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và bình luận chuyên sâu đăng tại Tạp chí Pi Tập 1 Số 3.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P17 -->
+        <h3>Bài P17. Điểm đồng quy trên đường thẳng Euler</h3>
+        <div class="author-tag">Đề xuất: Trần Quang Hùng (Trường THPT Chuyên KHTN, ĐHQG Hà Nội)</div>
+        <p>Cho tam giác nhọn $ABC$ nội tiếp đường tròn $(O)$. Giả sử $OA, OB, OC$ cắt $BC, CA, AB$ lần lượt tại $D, E, F$ và cắt $EF, FD, DE$ lần lượt tại $X, Y, Z$. Gọi $U, V, W$ theo thứ tự là hình chiếu của $X, Y, Z$ lên $BC, CA, AB$. Chứng minh rằng $AU, BV, CW$ đồng quy tại một điểm nằm trên đường thẳng Euler của tam giác $ABC$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Hướng tiếp cận hình học xạ ảnh và tỉ cự:</strong></p>
+                <ul>
+                    <li>Xem phép chiếu vuông góc lên các cạnh tam giác như một dạng phép chiếu song song theo phương liên hợp.</li>
+                    <li>Sử dụng tọa độ tỉ cự (Barycentric Coordinates) đối với tam giác $ABC$ để xác định tọa độ các điểm $D, E, F$ và các điểm giao $X, Y, Z$.</li>
+                    <li>Áp dụng định lý Ceva dạng tỉ số kép hoặc lượng giác để chứng minh tính đồng quy của ba đường thẳng $AU, BV, CW$, đồng thời chỉ ra điểm đồng quy biểu diễn dưới dạng tổ hợp tuyến tính của tâm ngoại tiếp $O$ và trực tâm $H$, tức là thuộc đường thẳng Euler.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và các bài toán tổng quát hóa đăng tại Tạp chí Pi Tập 1 Số 3.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P18 -->
+        <h3>Bài P18. Bất đẳng thức hệ số Taylor của đa thức</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Duy Thái Sơn (Đà Nẵng)</div>
+        <p>Cho $P(x)$ là đa thức bậc $n$ với hệ số thực và cho số thực $a \ge 3$. Chứng minh rằng:
+        \[
+        \sum_{k=0}^n \frac{|P^{(k)}(0)|}{k!} \le \max_{x \in [-a, a]} |P(x)|
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Nhận xét rằng $\dfrac{P^{(k)}(0)}{k!}$ chính là các hệ số $c_k$ trong khai triển Taylor của đa thức $P(x) = \sum_{k=0}^n c_k x^k$.</p>
+                <p>Áp dụng công thức nội suy Lagrange hoặc biểu diễn qua hệ đa thức trực giao Chebyshev trên đoạn $[-a, a]$. Đánh giá chuẩn cực đại $\|P\|_\infty = \max_{x \in [-a, a]} |P(x)|$ thông qua các điểm cực trị của đa thức Chebyshev, kết hợp bất đẳng thức Cauchy-Schwarz để chứng minh tổng các trị tuyệt đối của hệ số luôn bị chặn bởi giá trị cực đại trên đoạn khi $a \ge 3$.</p>
+                <div class="source-ref">Lời giải chi tiết và đánh giá làm chặt bất đẳng thức đăng tại Tạp chí Pi Tập 1 Số 3.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P19 -->
+        <h3>Bài P19. Tổng thặng dư lũy thừa bậc ba</h3>
+        <div class="author-tag">Đề xuất: GS. Lê Anh Vinh (Hà Nội)</div>
+        <p>Cho $p$ là một số nguyên tố thỏa mãn $p \equiv 11 \pmod{12}$. Đặt $M = \{1, 2, \dots, p-1\}$ và lấy $S$ là một tập con bất kì của $M$ có $\dfrac{p-1}{2}$ phần tử. Ta kí hiệu $\Delta_s$ là thặng dư không âm bé nhất của $s^3$ theo modulo $p$. Đặt:
+        \[
+        T = \sum_{s \in S} \Delta_s
+        \]
+        Chứng minh rằng $T \equiv \dfrac{p(p-1)}{4} \pmod p$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Vì $p \equiv 11 \pmod{12}$ nên $\gcd(3, p-1) = 1$. Điều này dẫn tới tính chất quan trọng: ánh xạ $x \mapsto x^3 \pmod p$ là một <strong>song ánh</strong> (hoán vị) trên hệ thặng dư thu gọn $M$.</p>
+                <p>Sử dụng phép bù trừ qua phép lấy đối xứng $s \leftrightarrow p - s$. Khi đó $(p-s)^3 \equiv -s^3 \pmod p$, kéo theo $\Delta_{p-s} + \Delta_s = p$. Từ đó liên hệ tổng trên tập $S$ với tổng trên toàn bộ tập $M$ để suy ra đồng dư thức cần chứng minh.</p>
+                <div class="source-ref">Lời giải chi tiết và các nhận xét mở rộng cho $p \equiv 3 \pmod 4$ đăng tại Tạp chí Pi Tập 1 Số 3.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P20 -->
+        <h3>Bài P20. Tứ giác lồi từ 7 điểm phân biệt</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Minh Hà & Vũ Thế Khôi (Hà Nội)</div>
+        <p>Trong mặt phẳng, xét 7 điểm phân biệt sao cho không có 3 điểm nào thẳng hàng. Chứng minh rằng luôn tồn tại 4 điểm là các đỉnh của một tứ giác lồi.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Đây là bài toán hình học tổ hợp kinh điển (liên quan mật thiết đến bài toán Happy Ending Problem của Klein, Erdős và Szekeres):</p>
+                <ul>
+                    <li>Xét bao lồi $\mathcal{H}$ của tập 7 điểm:</li>
+                    <li>Nếu bao lồi có từ 4 đỉnh trở lên: Bất kỳ 4 đỉnh nào của bao lồi đều tạo thành một tứ giác lồi $\implies$ bài toán được chứng minh.</li>
+                    <li>Nếu bao lồi là một tam giác $ABC$: Khi đó có $4$ điểm nằm hoàn toàn bên trong tam giác $ABC$. Vẽ các đoạn thẳng nối từ một đỉnh tới 4 điểm trong để phân chia tam giác và áp dụng nguyên lý cực hạn hoặc nguyên lý Dirichlet, chứng minh luôn tìm được 1 điểm bên trong kết hợp với 3 điểm khác tạo thành một tứ giác lồi.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và các cách tiếp cận khác nhau đăng tại Tạp chí Pi Tập 1 Số 3.</div>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT SỐ 1 ───</b></p>
+    </div>
+</body>
+</html>

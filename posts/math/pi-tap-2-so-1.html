@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 1)</title>
+    
+    <meta name="post-id" content="PiTap2So1">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 2 Số 1 (Tháng 01/2018), từ bài P131 đến P140.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 1)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 2 Số 1 kèm gợi ý giải của SMP.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-2-so-1.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 1)">
+    <meta name="twitter:description" content="Đề bài P131 - P140 Tạp chí Pi Tập 2 Số 1 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            font-size: 0.88rem;
+            font-weight: bold;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            border: 1px dashed rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.03);
+            transition: all 0.15s ease;
+            width: fit-content;
+        }
+        [data-theme="dark"] summary.igo-hint-trigger {
+            color: #eee;
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker {
+            display: none;
+        }
+        summary.igo-hint-trigger:hover {
+            border-style: solid;
+            background: rgba(0, 0, 0, 0.07);
+        }
+        [data-theme="dark"] summary.igo-hint-trigger:hover {
+            background: rgba(255, 255, 255, 0.09);
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.72rem;
+            transition: transform 0.2s ease;
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            margin-top: 10px;
+            padding: 12px 16px;
+            border-left: 2px solid #555;
+            background: rgba(0, 0, 0, 0.02);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        [data-theme="dark"] .igo-hint-content {
+            border-left-color: #888;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .pi-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 4px;
+            background: #e3f2fd;
+            color: #1565c0;
+            margin-right: 6px;
+        }
+        [data-theme="dark"] .pi-badge {
+            background: #1a2733;
+            color: #90caf9;
+        }
+        .pi-author {
+            display: block;
+            margin-top: 6px;
+            font-style: italic;
+            font-size: 0.88rem;
+            color: #666;
+            text-align: right;
+        }
+        [data-theme="dark"] .pi-author {
+            color: #aaa;
+        }
+        .pi-ref-note {
+            margin-top: 10px;
+            padding: 6px 10px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 4px;
+            font-size: 0.82rem;
+            color: #666;
+        }
+        [data-theme="dark"] .pi-ref-note {
+            background: rgba(255, 255, 255, 0.03);
+            color: #999;
+        }
+    </style>
+</head>
+<body class="post-template">
+    <div id="smp-post-content">
+        <div class="header-container">
+            <h1>Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 1)</h1>
+            <p class="post-subtitle">Chuyên mục Thách thức Toán học — Tạp chí Pi số 1 mở đầu năm thứ hai (Tháng 01/2018) với 10 bài toán từ P131 đến P140 kèm gợi ý tư duy độc lập của SMP.</p>
+        </div>
+
+        <div style="background: rgba(0, 123, 255, 0.06); border-left: 4px solid #007bff; padding: 12px 16px; margin: 20px 0; border-radius: 4px;">
+            <strong>Tổng quan chuyên mục:</strong>
+            <ul style="margin: 6px 0 0 18px; padding: 0;">
+                <li><strong>Cấp THCS:</strong> 4 bài toán (P131 – P134), bao gồm bất đẳng thức lượng giác, hình học hình thang và bài toán cân tiền xu kinh điển.</li>
+                <li><strong>Cấp THPT:</strong> 6 bài toán (P135 – P140), bao gồm bài toán điểm cố định, hệ phương trình đối xứng vòng quanh, số học Vieta jumping và bài toán xếp lịch thi đấu tổ hợp.</li>
+                <li><strong>Gợi ý:</strong> Được SMP biên soạn độc lập dưới dạng các mốc định hướng tư duy giúp bạn đọc tự mình chinh phục bài toán.</li>
+            </ul>
+        </div>
+
+        <p><a href="./thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; text-decoration: none; margin-bottom: 20px;">← Quay lại Mục lục Thách thức Toán học Tạp chí Pi (2017 – 2024)</a></p>
+
+        <!-- ==================== CẤP THCS ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THCS</h2>
+
+        <!-- Bài P131 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P131</span> Cho $x, y, z$ là các số thực dương, thoả mãn điều kiện</p>
+            <p style="text-align: center; overflow-x: auto;">$$x^2 + y^2 + z^2 + 2xyz = 1.$$</p>
+            <p>Chứng minh rằng</p>
+            <p style="text-align: center; overflow-x: auto;">$$2(x^2 + y^2 + z^2 + xy + yz + zx) \le 3 \le 3(x^2 + y^2 + z^2) + xy + yz + zx.$$</p>
+            <span class="pi-author">Trần Nam Dũng (Tp. Hồ Chí Minh)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Mô hình lượng giác hóa tam giác nhọn:</strong></p>
+                    <p>Đẳng thức $x^2 + y^2 + z^2 + 2xyz = 1$ với các số thực dương $x, y, z$ là hệ thức lượng giác cơ bản giữa côsin của ba góc trong một tam giác nhọn $ABC$:</p>
+                    $$x = \cos A,\quad y = \cos B,\quad z = \cos C \quad (A, B, C < 90^\circ, A+B+C = 180^\circ).$$
+
+                    <p><strong>2. Chứng minh bất đẳng thức vế trái:</strong></p>
+                    <p>Ta có $x^2 + y^2 + z^2 = 1 - 2xyz$. Ta cần chứng minh:
+                    $$2(1 - 2xyz + xy + yz + zx) \le 3 \iff 2(xy + yz + zx) - 4xyz \le 1.$$
+                    Biểu diễn theo các góc tam giác và sử dụng bất đẳng thức Schur hoặc đánh giá cơ bản:
+                    $$xy + yz + zx \le \frac{(x+y+z)^2}{3} \le \frac{9/4}{3} = \frac{3}{4},$$
+                    kết hợp với $xyz > 0$ và bất đẳng thức Euler $R \ge 2r$.</p>
+
+                    <p><strong>3. Chứng minh bất đẳng thức vế phải:</strong></p>
+                    <p>Ta cần chứng minh:
+                    $$3(1 - 2xyz) + xy + yz + zx \ge 3 \iff xy + yz + zx \ge 6xyz \iff \frac{1}{x} + \frac{1}{y} + \frac{1}{z} \ge 6.$$
+                    Vì trong tam giác nhọn, $\cos A + \cos B + \cos C \le \frac{3}{2}$ và theo Cauchy-Schwarz:
+                    $$\frac{1}{\cos A} + \frac{1}{\cos B} + \frac{1}{\cos C} \ge \frac{9}{\cos A + \cos B + \cos C} \ge \frac{9}{3/2} = 6.$$
+                    Đẳng thức xảy ra khi tam giác đều, tức $x = y = z = \frac{1}{2}$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 3</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P132 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P132</span> Cho ngũ giác lồi $ABCDE$ có đường chéo $AD$ song song với cạnh $BC$, $AD = 2BC$, đồng thời $AD$ là phân giác trong của các góc $\angle EAB$ và $\angle CDE$. Các đường chéo $AC$ và $BD$ cắt nhau tại $P$. $EP$ cắt $AD$ tại $Q$. Chứng minh rằng</p>
+            <p style="text-align: center; overflow-x: auto;">$$QB = QC.$$</p>
+            <span class="pi-author">Trần Quang Hùng (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Khảo sát hình thang $ABCD$:</strong></p>
+                    <p>Vì $AD \parallel BC$ và $AD = 2BC$, tứ giác $ABCD$ là hình thang với đáy lớn gấp đôi đáy nhỏ.</p>
+                    <p>Giao điểm hai đường chéo $P = AC \cap BD$ chia đoạn chéo theo tỉ số:
+                    $$\frac{PA}{PC} = \frac{PD}{PB} = \frac{AD}{BC} = 2.$$</p>
+
+                    <p><strong>2. Tính chất phân giác và điểm đối xứng:</strong></p>
+                    <p>Giả thiết $AD$ là phân giác của $\angle EAB$ và $\angle CDE$ cho thấy các tia $AE, AB$ và $DE, DC$ có tính đối xứng qua đường thẳng chứa đáy $AD$.</p>
+                    <p>Dựng điểm đối xứng $E'$ của $E$ qua trục $AD$.</p>
+
+                    <p><strong>3. Xác định vị trí điểm $Q$:</strong></p>
+                    <p>Sử dụng định lý Menelaus hoặc tính chất chùm đường thẳng chiếu từ $E$, chứng minh rằng giao điểm $Q = EP \cap AD$ chính là trung điểm của đoạn thẳng $AD$.</p>
+                    <p>Do $AD \parallel BC$ và $AD = 2BC$, trung điểm $Q$ của đáy lớn cùng với hai đầu mút của đáy nhỏ tạo thành hình bình hành hoặc tam giác cân, từ đó suy ra $QB = QC$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 3</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P133 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P133</span> Tìm tất cả các cặp số nguyên dương $(a, b)$ có tính chất: $ab$ là ước của $a + b^2 + 1$.</p>
+            <span class="pi-author">Hà Duy Hưng (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Phân rã tính chia hết:</strong></p>
+                    <p>Điều kiện $ab \mid a + b^2 + 1$ dẫn tới hai điều kiện đồng thời:
+                    $$a \mid b^2 + 1 \quad \text{và} \quad b \mid a + 1.$$</p>
+
+                    <p><strong>2. Đặt thương nguyên:</strong></p>
+                    <p>Vì $b \mid a + 1$, tồn tại số nguyên dương $k$ sao cho:
+                    $$a + 1 = kb \implies a = kb - 1.$$
+                    Thay vào điều kiện thứ nhất:
+                    $$kb - 1 \mid b^2 + 1 \implies kb - 1 \mid k(b^2 + 1) = b(kb - 1) + b + k \implies kb - 1 \mid b + k.$$</p>
+
+                    <p><strong>3. Đánh giá chặn theo $k$:</strong></p>
+                    <ul>
+                        <li>Nếu $k = 1$: $b - 1 \mid b + 1 \implies b - 1 \mid 2 \implies b \in \{2, 3\}$.
+                            <ul>
+                                <li>$b = 2 \implies a = 1$: kiểm tra $ab = 2 \mid 1 + 4 + 1 = 6$ (thỏa mãn). Cặp: $(1, 2)$.</li>
+                                <li>$b = 3 \implies a = 2$: kiểm tra $ab = 6 \mid 2 + 9 + 1 = 12$ (thỏa mãn). Cặp: $(2, 3)$.</li>
+                            </ul>
+                        </li>
+                        <li>Nếu $k = 2$: $2b - 1 \mid b + 2 \implies 2b - 1 \le 2(b+2) \implies b \in \{1, 5\}$.
+                            <ul>
+                                <li>$b = 1 \implies a = 1$: kiểm tra $ab = 1 \mid 1 + 1 + 1 = 3$ (thỏa mãn). Cặp: $(1, 1)$.</li>
+                                <li>$b = 5 \implies a = 9$: kiểm tra $ab = 45 \mid 9 + 25 + 1 = 35$ (loại).</li>
+                            </ul>
+                        </li>
+                        <li>Nếu $k \ge 3$: vì $b, k \ge 1$, ta có $kb - 1 \le b + k \iff (k - 1)b \le k + 1 \implies b \le \frac{k+1}{k-1} \le 2$. Kiểm tra các giá trị nhỏ còn lại.</li>
+                    </ul>
+                    <p><strong>Kết luận các cặp nghiệm:</strong> $(1, 1), (1, 2), (2, 3)$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 3</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P134 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P134</span> Có 8 đồng xu, trong đó có 7 đồng xu thật và 1 đồng xu giả. Biết rằng các đồng xu thật có khối lượng như nhau và khối lượng của đồng xu giả khác khối lượng của đồng xu thật. Hỏi, chỉ dùng một chiếc cân đĩa (không có quả cân), ta có thể tìm ra đồng xu giả và biết nó nặng hơn hay nhẹ hơn đồng xu thật, sau đúng 4 lần cân hay không?</p>
+            <span class="pi-author">Nguyễn Khắc Minh (Hà Nội) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Đánh giá dung lượng thông tin:</strong></p>
+                    <p>Đồng xu giả có thể là một trong 8 đồng, và có 2 khả năng (nặng hơn hoặc nhẹ hơn). Do đó tổng số trạng thái cần xác định là $8 \times 2 = 16$.</p>
+                    <p>Mỗi lần cân đĩa cho ra 3 trạng thái (thăng bằng, đĩa trái nặng hơn, đĩa phải nặng hơn). Với 4 lần cân, không gian phân biệt tối đa là $3^4 = 81$ trạng thái, hoàn toàn lớn hơn 16 rất nhiều (thậm chí 3 lần cân với $3^3 = 27$ cũng đã đủ khả năng!).</p>
+                    <p>Do đó câu trả lời là <strong>hoàn toàn có thể</strong>.</p>
+
+                    <p><strong>2. Chiến lược cân mẫu:</strong></p>
+                    <ul>
+                        <li><strong>Lần 1:</strong> Đặt 3 đồng $\{1, 2, 3\}$ lên đĩa trái và 3 đồng $\{4, 5, 6\}$ lên đĩa phải; để 2 đồng $\{7, 8\}$ bên ngoài.</li>
+                        <li><strong>Trường hợp A (Cân thăng bằng):</strong> Đồng giả nằm trong $\{7, 8\}$ và cả 6 đồng $\{1, \dots, 6\}$ đều là đồng thật.
+                            <ul>
+                                <li>Lần 2: Cân đồng 7 với đồng thật 1. Nếu lệch thì 7 là giả (và biết nặng/nhẹ ngay); nếu thăng bằng thì 8 là giả. Lần 3 cân đồng 8 với đồng 1 để biết nặng hay nhẹ.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Trường hợp B (Cân bị lệch, giả sử bên trái nặng hơn):</strong> Đồng giả thuộc $\{1, 2, 3\}$ (và nặng hơn) hoặc thuộc $\{4, 5, 6\}$ (và nhẹ hơn). Lúc này các đồng $\{7, 8\}$ đã là chuẩn.
+                            <ul>
+                                <li>Lần 2: Đặt $\{1, 4\}$ lên đĩa trái, $\{2, 7\}$ lên đĩa phải. Phân tích kết quả lệch hay thăng bằng để khoanh vùng về 1 đồng duy nhất trong tối đa 2 lần cân tiếp theo.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 3</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- ==================== CẤP THPT ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THPT</h2>
+
+        <!-- Bài P135 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P135</span> Trong mặt phẳng, cho đường tròn $(O)$ cố định. $B$ và $C$ là hai điểm cố định nằm trên đường tròn đó, sao cho ba điểm $B, O, C$ không thẳng hàng. Một điểm $A$ di động trên cung lớn $BC$ của đường tròn $(O)$, sao cho tam giác $ABC$ không là tam giác cân. Gọi $H$ là trực tâm của tam giác $ABC$. Đường thẳng $AO$ cắt các đường thẳng $BH$ và $CH$ tương ứng tại $M$ và $N$. Gọi $T$ là tâm đường tròn ngoại tiếp tam giác $MNH$. Chứng minh rằng đường thẳng $AT$ luôn đi qua một điểm cố định.</p>
+            <span class="pi-author">Hà Minh Thơ (Phú Thọ) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tính chất đường thẳng đẳng giác qua tâm $O$:</strong></p>
+                    <p>Tia $AO$ và đường cao $AH$ là hai tia đối xứng (đẳng giác) qua đường phân giác trong của góc $\angle BAC$.</p>
+                    <p>Đường thẳng $AO$ cắt $BH$ tại $M$ và cắt $CH$ tại $N$. Vì $BH \perp AC$ và $CH \perp AB$, hãy tính các góc của tam giác $MNH$.</p>
+
+                    <p><strong>2. Cấu hình góc của tam giác $MNH$:</strong></p>
+                    <p>Xét góc $\angle MHN = \angle BHC = 180^\circ - \angle A$.</p>
+                    <p>Đường tròn $(MNH)$ có tâm là $T$. Hãy khảo sát vị trí tương đối giữa $T$ và đường tròn $(O)$ khi $A$ di chuyển.</p>
+
+                    <p><strong>3. Điểm cố định:</strong></p>
+                    <p>Sử dụng phương pháp toạ độ hoặc phép nghịch đảo / phép vị tự biến đổi điểm $T$.</p>
+                    <p>Đường thẳng $AT$ sẽ luôn đi qua giao điểm của hai tiếp tuyến của $(O)$ tại $B$ và $C$, hoặc điểm đối xứng của $O$ qua dây cung $BC$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 3</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P136 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P136</span> Tìm tất cả các số nguyên dương $n$ sao cho tồn tại các số thực $x, y, z$ thỏa mãn</p>
+            <p style="text-align: center; overflow-x: auto;">$$x = y - \frac{1}{y^n},\quad y = z - \frac{1}{z^n},\quad \text{và}\quad z = x - \frac{1}{x^n}.$$</p>
+            <span class="pi-author">Nguyễn Thanh Giang (Tp. Hồ Chí Minh) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Khảo sát hàm số $f(t) = t - \frac{1}{t^n}$:</strong></p>
+                    <p>Hệ phương trình có dạng hoán vị vòng quanh: $x = f(y), y = f(z), z = f(x)$.</p>
+                    <p>Đạo hàm: $f'(t) = 1 + \frac{n}{t^{n+1}}$.</p>
+
+                    <p><strong>2. Phân tích theo tính chẵn lẻ của $n$:</strong></p>
+                    <ul>
+                        <li><strong>Khi $n$ là số chẵn ($n = 2k$):</strong><br>
+                        Với mọi $t \ne 0$, ta luôn có $t^{2k} > 0 \implies \frac{1}{t^{2k}} > 0$.<br>
+                        Do đó: $x = y - \frac{1}{y^n} < y$, $y = z - \frac{1}{z^n} < z$, $z = x - \frac{1}{x^n} < x$.<br>
+                        Suy ra $x < y < z < x$, vô lý! Vậy $n$ không thể là số chẵn.</li>
+                        <li><strong>Khi $n$ là số lẻ ($n = 2k - 1$):</strong><br>
+                        Hàm số có thể nhận giá trị làm đổi chiều hoặc có nghiệm đan dấu. Khảo sát sự tồn tại nghiệm bằng cách chọn $x > 0 > y$ thích hợp.</li>
+                    </ul>
+                    <p><strong>Kết luận:</strong> $n$ là các số nguyên dương lẻ.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 3</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P137 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P137</span> Với mỗi số nguyên dương $n$, kí hiệu $\mathbb{Q}_n$ là tập tất cả các số hữu tỉ có dạng $\frac{m}{n}$, với $m$ là một số nguyên. Tìm tất cả các hàm số tăng ngặt $f: \mathbb{Q} \to \mathbb{R}$ có tính chất: Với mỗi số nguyên dương $n$, và với mọi cặp số $x, y \in \mathbb{Q}_n$, tồn tại số $z \in \mathbb{Q}_n$ sao cho</p>
+            <p style="text-align: center; overflow-x: auto;">$$f(z) = f(x) - f(y).$$</p>
+            <p><em>($\mathbb{Q}$ kí hiệu tập số hữu tỉ và $\mathbb{R}$ kí hiệu tập số thực).</em></p>
+            <span class="pi-author">Nguyễn Duy Thái Sơn (Đà Nẵng)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tính đơn ánh của $f$:</strong></p>
+                    <p>Vì $f$ tăng ngặt nên $f$ là đơn ánh. Do đó số $z \in \mathbb{Q}_n$ thỏa mãn $f(z) = f(x) - f(y)$ là duy nhất với mỗi cặp $(x, y)$.</p>
+
+                    <p><strong>2. Xác định giá trị tại 0:</strong></p>
+                    <p>Cho $x = y \in \mathbb{Q}_n$, tồn tại $z_0 \in \mathbb{Q}_n$ sao cho $f(z_0) = 0$.</p>
+                    <p>Vì $z_0$ không phụ thuộc vào $n$, $f(0) = 0$. Khi đó với $y = 0$, ta có $f(z) = f(x) \implies z = x$.</p>
+
+                    <p><strong>3. Khảo sát cấu trúc cộng tính:</strong></p>
+                    <p>Chứng minh rằng phép toán $z = x - y$ là nghiệm duy nhất cho $f(z) = f(x) - f(y)$.</p>
+                    <p>Từ đó $f(x - y) = f(x) - f(y)$ với mọi $x, y \in \mathbb{Q}$. Đây là phương trình hàm Cauchy kinh điển trên $\mathbb{Q}$.</p>
+                    <p>Kết hợp điều kiện $f$ tăng ngặt, ta thu được nghiệm duy nhất:
+                    $$f(x) = cx \quad (c > 0).$$</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 3</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P138 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P138</span> Cho số nguyên $n \ge 2$. Chứng minh rằng tồn tại vô số cặp số nguyên dương $(a, b)$ có tính chất:</p>
+            <p style="text-align: center; overflow-x: auto;">$$ab \mid a^n + b^{2n} + 1.$$</p>
+            <span class="pi-author">Hà Duy Hưng (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Ý tưởng bước nhảy Viète (Vieta Jumping):</strong></p>
+                    <p>Xét phương trình nghiệm nguyên:
+                    $$\frac{a^n + b^{2n} + 1}{ab} = k.$$
+                    Cố định $k$ và xây dựng một dãy nghiệm vô hạn $(a_m, b_m)$.</p>
+
+                    <p><strong>2. Tìm một nghiệm khởi đầu (Base solution):</strong></p>
+                    <p>Thử với $b = 1$: $a \mid a^n + 2 \implies a \mid 2 \implies a = 2$ hoặc $a = 1$.</p>
+                    <p>Với $(a, b) = (2, 1)$, tỉ số là $k = \frac{2^n + 2}{2} = 2^{n-1} + 1$.</p>
+
+                    <p><strong>3. Thiết lập hệ thức truy hồi sinh vô số nghiệm:</strong></p>
+                    <p>Coi phương trình là phương trình bậc hai hoặc quan hệ giữa hai biến liên tiếp trong một dãy số kiểu Lucas/Fibonacci tổng quát để sinh ra vô số cặp $(a, b)$ thỏa mãn.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 3</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P139 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P139</span> Cho số nguyên $n \ge 2$. Cho đa thức</p>
+            <p style="text-align: center; overflow-x: auto;">$$P(x) = x^n - a_1 x^{n-1} + \dots + (-1)^k a_k x^{n-k} + \dots + (-1)^{n-1} a_{n-1} x + (-1)^n a_n$$</p>
+            <p>có $n$ nghiệm nguyên dương, gọi là $x_1, x_2, \dots, x_n$, không đồng thời bằng nhau và có tính chất: tổng nghịch đảo của chúng là một số nguyên. Đặt $m = \frac{a_{n-1}}{a_n}$. Chứng minh rằng $m$ là số nguyên dương và đa thức</p>
+            <p style="text-align: center; overflow-x: auto;">$$Q(x) = a_n(x+1)^m - (x+x_1)(x+x_2)\dots(x+x_n)$$</p>
+            <p>không có nghiệm dương.</p>
+            <span class="pi-author">Nguyễn Lê Huy (Nam Định) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tính nguyên của $m$:</strong></p>
+                    <p>Theo hệ thức Viète cho đa thức $P(x) = \prod_{i=1}^n (x - x_i)$:
+                    $$a_n = \prod_{i=1}^n x_i,\quad a_{n-1} = \sum_{i=1}^n \prod_{j \ne i} x_j.$$
+                    Do đó:
+                    $$m = \frac{a_{n-1}}{a_n} = \sum_{i=1}^n \frac{1}{x_i}.$$
+                    Theo giả thiết, tổng nghịch đảo của các nghiệm nguyên dương là một số nguyên, và vì $x_i \ge 1$ nên $m > 0$. Do đó $m$ là số nguyên dương.</p>
+
+                    <p><strong>2. Khảo sát dấu của $Q(x)$ với $x > 0$:</strong></p>
+                    <p>Ta cần chứng minh $Q(x) < 0$ với mọi $x > 0$, tức là:
+                    $$(x + x_1)(x + x_2)\dots(x + x_n) > a_n (x + 1)^m \quad \forall x > 0.$$
+                    Chia hai vế cho $a_n = \prod_{i=1}^n x_i$:
+                    $$\prod_{i=1}^n \left(1 + \frac{x}{x_i}\right) > (1 + x)^m = (1 + x)^{\sum_{i=1}^n \frac{1}{x_i}}.$$</p>
+
+                    <p><strong>3. Vận dụng tính lồi / Bất đẳng thức Bernoulli:</strong></p>
+                    <p>Lấy logarit tự nhiên hai vế:
+                    $$\sum_{i=1}^n \ln\left(1 + \frac{x}{x_i}\right) > \left(\sum_{i=1}^n \frac{1}{x_i}\right) \ln(1 + x).$$
+                    Xét hàm số $g(t) = \ln(1 + tx)$. Vì $g''(t) = -\frac{x^2}{(1+tx)^2} < 0$, hàm $g(t)$ là hàm lõm ngặt với $t > 0$.</p>
+                    <p>Sử dụng bất đẳng thức Jensen hoặc đánh giá độ dốc dây cung với các số $x_i$ không đồng thời bằng nhau, ta thu được bất đẳng thức ngặt cần chứng minh. Suy ra $Q(x)$ vô nghiệm dương.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 3</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P140 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P140</span> Có 6 đội bóng đá tham gia một giải thi đấu bóng đá học sinh của một trường Trung học phổ thông chuyên. Biết rằng, giải đấu kéo dài 45 ngày và được tổ chức theo thể thức thi đấu vòng tròn (nghĩa là, hai đội bất kì đều thi đấu với nhau đúng một trận). Hỏi Ban tổ chức giải có tất cả bao nhiêu phương án sắp xếp lịch thi đấu sao cho các điều kiện sau được đồng thời thỏa mãn:</p>
+            <p>1) Ba trận đấu đầu tiên có sự góp mặt của cả 6 đội và diễn ra trong ba ngày liên tiếp, mỗi ngày một trận;</p>
+            <p>2) Kể từ trận đấu thứ ba, giữa hai trận đấu liên tiếp có ít nhất hai ngày không có trận đấu nào.</p>
+            <p><em>(Hai phương án sắp xếp được coi là khác nhau nếu tồn tại trận đấu thứ $k$ ($k \ge 1$) sao cho ở trận đấu đó, hai đội gặp nhau trong phương án này khác hai đội gặp nhau trong phương án kia hoặc tồn tại trận đấu thứ $k$ ($k \ge 3$) mà thời gian giữa trận đó và trận thứ $k+1$ ở phương án này khác ở phương án kia).</em></p>
+            <span class="pi-author">Lưu Thanh Hà (Kiên Giang)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Đếm số cách chọn các cặp đấu cho 3 trận đầu:</strong></p>
+                    <p>Giải có 6 đội, tổng số trận đấu theo thể thức vòng tròn là $\binom{6}{2} = 15$ trận.</p>
+                    <p>Ba trận đầu có mặt đủ 6 đội nghĩa là chia 6 đội thành 3 cặp đấu rời nhau. Số cách phân chia 6 đội thành 3 cặp đấu không phân biệt thứ tự là:
+                    $$\frac{\binom{6}{2}\binom{4}{2}\binom{2}{2}}{3!} = \frac{15 \times 6 \times 1}{6} = 15 \text{ cách}.$$
+                    Vì 3 trận diễn ra trong 3 ngày liên tiếp (ngày 1, 2, 3) có thứ tự ngày, số cách xếp lịch cho 3 trận đầu là:
+                    $$15 \times 3! = 15 \times 6 = 90 \text{ cách}.$$</p>
+
+                    <p><strong>2. Thứ tự 12 trận đấu còn lại:</strong></p>
+                    <p>Còn lại 12 trận đấu chưa đấu, có $12!$ cách sắp xếp thứ tự diễn ra của 12 trận này.</p>
+
+                    <p><strong>3. Chọn ngày thi đấu cho 12 trận tiếp theo:</strong></p>
+                    <p>Trận thứ 3 diễn ra vào ngày 3. Kể từ trận thứ 3, giữa hai trận liên tiếp có ít nhất 2 ngày nghỉ, nghĩa là nếu trận thứ $k$ diễn ra ở ngày $d_k$, thì $d_{k+1} - d_k \ge 3$.</p>
+                    <p>Đặt $y_1 = d_4 - d_3 - 3 \ge 0$, $y_2 = d_5 - d_4 - 3 \ge 0$, ..., $y_{12} = d_{15} - d_{14} - 3 \ge 0$, và $y_{13} = 45 - d_{15} \ge 0$.</p>
+                    <p>Tổng các biến:
+                    $$y_1 + y_2 + \dots + y_{12} + y_{13} = 45 - d_3 - 12 \times 3 = 45 - 3 - 36 = 6.$$
+                    Số nghiệm không âm của phương trình này theo bài toán chia kẹo Euler là:
+                    $$\binom{6 + 13 - 1}{6} = \binom{18}{6}.$$</p>
+
+                    <p><strong>4. Kết quả cuối cùng:</strong></p>
+                    <p>Nhân tất cả các công đoạn lại:
+                    $$N = 90 \times 12! \times \binom{18}{6}.$$</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 3</em>.</div>
+                </div>
+            </details>
+        </div>
+
+    </div>
+</body>
+</html>

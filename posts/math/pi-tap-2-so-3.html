@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 3)</title>
+    
+    <meta name="post-id" content="PiTap2So3">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 2 Số 3 (Tháng 03/2018), từ bài P151 đến P160.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 3)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 2 Số 3 kèm gợi ý giải của SMP.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-2-so-3.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 3)">
+    <meta name="twitter:description" content="Đề bài P151 - P160 Tạp chí Pi Tập 2 Số 3 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            font-size: 0.88rem;
+            font-weight: bold;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            border: 1px dashed rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.03);
+            transition: all 0.15s ease;
+            width: fit-content;
+        }
+        [data-theme="dark"] summary.igo-hint-trigger {
+            color: #eee;
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker {
+            display: none;
+        }
+        summary.igo-hint-trigger:hover {
+            border-style: solid;
+            background: rgba(0, 0, 0, 0.07);
+        }
+        [data-theme="dark"] summary.igo-hint-trigger:hover {
+            background: rgba(255, 255, 255, 0.09);
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.72rem;
+            transition: transform 0.2s ease;
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            margin-top: 10px;
+            padding: 12px 16px;
+            border-left: 2px solid #555;
+            background: rgba(0, 0, 0, 0.02);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        [data-theme="dark"] .igo-hint-content {
+            border-left-color: #888;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .pi-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 4px;
+            background: #e3f2fd;
+            color: #1565c0;
+            margin-right: 6px;
+        }
+        [data-theme="dark"] .pi-badge {
+            background: #1a2733;
+            color: #90caf9;
+        }
+        .pi-author {
+            display: block;
+            margin-top: 6px;
+            font-style: italic;
+            font-size: 0.88rem;
+            color: #666;
+            text-align: right;
+        }
+        [data-theme="dark"] .pi-author {
+            color: #aaa;
+        }
+        .pi-ref-note {
+            margin-top: 10px;
+            padding: 6px 10px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 4px;
+            font-size: 0.82rem;
+            color: #666;
+        }
+        [data-theme="dark"] .pi-ref-note {
+            background: rgba(255, 255, 255, 0.03);
+            color: #999;
+        }
+    </style>
+</head>
+<body class="post-template">
+    <div id="smp-post-content">
+        <div class="header-container">
+            <h1>Thách Thức Toán Học: Tạp Chí Pi (Tập 2 Số 3)</h1>
+            <p class="post-subtitle">Chuyên mục Thách thức Toán học — Tạp chí Pi số 3 (Tháng 03/2018) với 10 bài toán từ P151 đến P160 kèm gợi ý tư duy độc lập của SMP.</p>
+        </div>
+
+        <div style="background: rgba(0, 123, 255, 0.06); border-left: 4px solid #007bff; padding: 12px 16px; margin: 20px 0; border-radius: 4px;">
+            <strong>Tổng quan chuyên mục:</strong>
+            <ul style="margin: 6px 0 0 18px; padding: 0;">
+                <li><strong>Cấp THCS:</strong> 4 bài toán (P151 – P154), bao gồm hình học đường cao góc $45^\circ$, đại số Belarus, lý thuyết số chính phương và định lý Dirichlet hình chữ nhật đơn sắc.</li>
+                <li><strong>Cấp THPT:</strong> 6 bài toán (P155 – P160), bao gồm trục đẳng phương bàn đạp của Thầy Trần Quang Hùng, đa thức nhận giá trị nguyên, phương trình hàm, dãy số nguyên và bổ đề Cartan của GS. Hà Huy Khoái.</li>
+                <li><strong>Gợi ý:</strong> Được SMP biên soạn độc lập dưới dạng các mốc định hướng tư duy giúp bạn đọc tự mình chinh phục bài toán.</li>
+            </ul>
+        </div>
+
+        <p><a href="./thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; text-decoration: none; margin-bottom: 20px;">← Quay lại Mục lục Thách thức Toán học Tạp chí Pi (2017 – 2024)</a></p>
+
+        <!-- ==================== CẤP THCS ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THCS</h2>
+
+        <!-- Bài P151 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P151</span> Cho tam giác nhọn $ABC$ nội tiếp đường tròn bán kính 1 và có $\angle BAC = 45^\circ$. Gọi $E$ và $F$ là chân các đường cao hạ từ $B$ và $C$ của tam giác đó. Hãy tính độ dài đoạn thẳng $EF$.</p>
+            <span class="pi-author">Hà Minh Thơ (Phú Thọ) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tính chất tam giác đồng dạng ven đỉnh:</strong></p>
+                    <p>Tứ giác $BCEF$ có $\angle BEC = \angle BFC = 90^\circ$ nên là tứ giác nội tiếp đường tròn đường kính $BC$.</p>
+                    <p>Suy ra $\triangle AEF \backsim \triangle ABC$ với tỉ số đồng dạng là $k = \cos A = \cos 45^\circ = \frac{\sqrt{2}}{2}$.</p>
+                    <p>Do đó:
+                    $$EF = BC \cdot \cos A = BC \cdot \frac{\sqrt{2}}{2}.$$</p>
+
+                    <p><strong>2. Tính cạnh $BC$ theo định lý sin:</strong></p>
+                    <p>Trong tam giác $ABC$ nội tiếp đường tròn $(O; R)$ với $R = 1$ và $\angle A = 45^\circ$:
+                    $$BC = 2R \sin A = 2 \cdot 1 \cdot \sin 45^\circ = 2 \cdot \frac{\sqrt{2}}{2} = \sqrt{2}.$$</p>
+
+                    <p><strong>3. Kết quả độ dài $EF$:</strong></p>
+                    <p>Thay giá trị $BC = \sqrt{2}$ vào hệ thức trên:
+                    $$EF = \sqrt{2} \cdot \frac{\sqrt{2}}{2} = 1.$$</p>
+                    <p><strong>Đáp số:</strong> $EF = 1$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 5</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P152 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P152</span> Tìm tất cả các số thực $a$ sao cho tồn tại ba số thực khác $0$, đôi một khác nhau $x, y, z$ thỏa mãn điều kiện:</p>
+            <p style="text-align: center; overflow-x: auto;">$$x - \frac{y}{z} - \frac{z}{y} = y - \frac{z}{x} - \frac{x}{z} = z - \frac{x}{y} - \frac{y}{x} = a.$$</p>
+            <span class="pi-author">Igor Voronovich (CH Belarus)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Trừ từng vế hai biểu thức đầu:</strong></p>
+                    <p>Ta có:
+                    $$x - y - \left(\frac{y}{z} - \frac{x}{z}\right) - \left(\frac{z}{y} - \frac{z}{x}\right) = 0 \iff (x - y) + \frac{x - y}{z} - z \cdot \frac{x - y}{xy} = 0.$$
+                    Vì $x \ne y$, chia hai vế cho $x - y$:
+                    $$1 + \frac{1}{z} - \frac{z}{xy} = 0 \iff xy(z + 1) = z^2.$$</p>
+
+                    <p><strong>2. Hệ phương trình tích:</strong></p>
+                    <p>Bằng cách tương tự, ta có hệ 3 phương trình:
+                    $$\begin{cases}
+                    xy(z + 1) = z^2 \\
+                    yz(x + 1) = x^2 \\
+                    zx(y + 1) = y^2
+                    \end{cases}$$
+                    Nhân cả ba phương trình lại và khảo sát các tỉ số để rút ra $x = y = z$ (mâu thuẫn) hoặc $(x+1)(y+1)(z+1) = -1$.</p>
+
+                    <p><strong>3. Xác định giá trị $a$:</strong></p>
+                    <p>Cộng cả ba phương trình ban đầu và thay các quan hệ tích vào để rút ra giá trị duy nhất của tham số $a = -4$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 5</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P153 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P153</span> Tìm số nguyên dương $k \ge 4$ nhỏ nhất sao cho trong $k$ số nguyên dương tùy ý, mà mỗi số đều chỉ có các ước nguyên tố không vượt quá 5, luôn tồn tại 4 số có tích là một số chính phương.</p>
+            <span class="pi-author">Nguyễn Tiến Lâm (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Mô hình không gian vectơ $\mathbb{F}_2^3$:</strong></p>
+                    <p>Các ước nguyên tố không vượt quá 5 chỉ gồm $\{2, 3, 5\}$. Mỗi số nguyên dương có dạng $2^a 3^b 5^c$.</p>
+                    <p>Ánh xạ mỗi số vào vectơ parity trong không gian $\mathbb{F}_2^3$:
+                    $$v = (a \bmod 2, b \bmod 2, c \bmod 2) \in \{0, 1\}^3.$$
+                    Tích của các số là một số chính phương khi và chỉ khi tổng các vectơ của chúng trong $\mathbb{F}_2^3$ bằng vectơ không $\vec{0}$.</p>
+
+                    <p><strong>2. Bài toán không tồn tại 4 số có tổng $\vec{0}$:</strong></p>
+                    <p>Cần tìm số lượng phần tử $k$ nhỏ nhất để bất kỳ đa tập (multiset) kích thước $k$ trong $\mathbb{F}_2^3$ luôn chứa một tập con 4 phần tử có tổng bằng $\vec{0}$.</p>
+                    <p>Xây dựng phản ví dụ cho các giá trị $k$ nhỏ bằng cách lặp lại các vectơ cơ sở.</p>
+
+                    <p><strong>3. Áp dụng bổ đề Davenport / Ramsey hữu hạn:</strong></p>
+                    <p>Đánh giá số lượng tối đa các phần tử không chứa 4 phần tử có tổng không để kết luận giá trị nhỏ nhất cần tìm.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 5</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P154 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P154</span> Trên mặt phẳng tọa độ, mỗi điểm có tọa độ $(x, y)$, với $x$ và $y$ là các số nguyên mà $1 \le x \le 19$ và $1 \le y \le 4$, được tô bởi màu đỏ, hoặc màu tím, hoặc màu vàng. Chứng minh rằng tồn tại một hình chữ nhật có các cạnh song song với các trục tọa độ mà tất cả các đỉnh của nó được tô bởi cùng một màu.</p>
+            <span class="pi-author">Hà Thanh (Cần Thơ) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Khảo sát một cột gồm 4 điểm:</strong></p>
+                    <p>Xét một cột $x = c$ cố định gồm 4 điểm $(c, 1), (c, 2), (c, 3), (c, 4)$.</p>
+                    <p>Vì có 4 điểm nhưng chỉ có 3 màu (Đỏ, Tím, Vàng), theo nguyên lý Dirichlet, trong cột này luôn tồn tại ít nhất 2 điểm có cùng một màu.</p>
+
+                    <p><strong>2. Đếm số loại cặp điểm cùng màu:</strong></p>
+                    <p>Một cặp 2 vị trí tung độ được chọn từ 4 vị trí $\{1, 2, 3, 4\}$ có:
+                    $$\binom{4}{2} = 6 \text{ cặp vị trí hàng}.$$
+                    Vì mỗi cặp vị trí có thể mang một trong 3 màu, tổng số loại cặp cùng màu có thể xuất hiện là:
+                    $$6 \times 3 = 18 \text{ loại}.$$</p>
+
+                    <p><strong>3. Áp dụng nguyên lý Dirichlet cho 19 cột:</strong></p>
+                    <p>Mỗi cột trong số 19 cột đều chứa ít nhất một loại cặp cùng màu.</p>
+                    <p>Vì $19 > 18$, theo nguyên lý Dirichlet, phải tồn tại ít nhất hai cột $x_1 < x_2$ có cùng một loại cặp điểm cùng màu (nghĩa là cùng hai tung độ $y_1 < y_2$ và cùng màu sắc).</p>
+                    <p>Bốn điểm $(x_1, y_1), (x_1, y_2), (x_2, y_1), (x_2, y_2)$ chính là 4 đỉnh của một hình chữ nhật có các cạnh song song với các trục toạ độ và cùng một màu!</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 5</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- ==================== CẤP THPT ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THPT</h2>
+
+        <!-- Bài P155 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P155</span> Trong mặt phẳng, cho tam giác $ABC$ cố định. Xét một điểm $P$ di động trong mặt phẳng sao cho $P$ không nằm trên các đường thẳng $CA$ và $AB$. Gọi $(\omega_b)$ là đường tròn đi qua các hình chiếu vuông góc của $B$ trên các đường thẳng chứa các cạnh của tam giác $PCA$. Gọi $(\omega_c)$ là đường tròn đi qua các hình chiếu vuông góc của $C$ trên các đường thẳng chứa các cạnh của tam giác $PAB$. Chứng minh rằng trục đẳng phương của hai đường tròn $(\omega_b)$ và $(\omega_c)$ luôn đi qua một điểm cố định khi $P$ di động trong mặt phẳng.</p>
+            <span class="pi-author">Trần Quang Hùng (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Nhận biết đường tròn bàn đạp (Pedal Circle):</strong></p>
+                    <p>Đường tròn $(\omega_b)$ đi qua các hình chiếu của $B$ lên các cạnh tam giác $PCA$, đây chính là đường tròn bàn đạp của điểm $B$ ứng với $\triangle PCA$.</p>
+                    <p>Tương tự, $(\omega_c)$ là đường tròn bàn đạp của $C$ ứng với $\triangle PAB$.</p>
+
+                    <p><strong>2. Tâm và phương tích đối với các đường tròn đường kính:</strong></p>
+                    <p>Tâm của đường tròn bàn đạp của một điểm $X$ đối với tam giác là trung điểm của đoạn nối $X$ với điểm liên hợp đẳng giác của nó.</p>
+                    <p>Xét phương tích của trung điểm $M$ của cạnh $BC$ đối với hai đường tròn $(\omega_b)$ và $(\omega_c)$.</p>
+
+                    <p><strong>3. Điểm cố định:</strong></p>
+                    <p>Chứng minh rằng phương tích từ trung điểm $M$ của $BC$ (hoặc trực tâm $H$ của $\triangle ABC$) tới cả hai đường tròn $(\omega_b)$ và $(\omega_c)$ luôn bằng nhau với mọi vị trí của $P$. Suy ra trục đẳng phương luôn đi qua điểm cố định này.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 5</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P156 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P156</span> Cho $P(x)$ và $Q(x)$ là hai đa thức với hệ số thực, có tính chất: Với mọi $a \in \mathbb{R}$, $P(a)$ là số nguyên khi và chỉ khi $Q(a)$ là số nguyên. Chứng minh rằng ít nhất một trong hai đa thức $P(x) + Q(x)$ và $P(x) - Q(x)$ là đa thức hằng.</p>
+            <span class="pi-author">Võ Quốc Bá Cẩn (Hà Nội) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Quan sát sự thay đổi giá trị của hai hàm đa thức:</strong></p>
+                    <p>Vì tập các điểm thỏa mãn $P(x) \in \mathbb{Z}$ trùng khớp hoàn toàn với tập các điểm thỏa mãn $Q(x) \in \mathbb{Z}$, nên trên mọi khoảng đơn điệu của $P(x)$, $Q(x)$ cũng phải biến thiên đơn điệu.</p>
+
+                    <p><strong>2. Liên hệ bước nhảy nguyên:</strong></p>
+                    <p>Khi $x$ tăng liên tục làm $P(x)$ tăng từ $k$ lên $k+1$, thì $Q(x)$ cũng phải đi từ một giá trị nguyên $m$ sang $m+1$ (nếu cùng chiều) hoặc $m-1$ (nếu ngược chiều) mà không được đi qua bất kỳ số nguyên nào khác ở giữa.</p>
+                    <p>Điều này đòi hỏi đạo hàm của hai đa thức phải thỏa mãn:
+                    $$P'(x) = Q'(x) \quad \text{hoặc} \quad P'(x) = -Q'(x)$$
+                    trên vô hạn khoảng, và do đó đúng trên toàn bộ $\mathbb{R}$.</p>
+
+                    <p><strong>3. Kết luận:</strong></p>
+                    <p>Tích phân đạo hàm suy ra $P(x) - Q(x) = C$ (hằng số) hoặc $P(x) + Q(x) = C$ (hằng số).</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 5</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P157 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P157</span> Tìm tất cả các hàm số $f$ xác định trên tập số thực $\mathbb{R}$, lấy giá trị trong $\mathbb{R}$ và thỏa mãn hệ thức</p>
+            <p style="text-align: center; overflow-x: auto;">$$f(x^2 + f(xy)) = x \cdot f(x+y)$$</p>
+            <p>với mọi số thực $x, y$.</p>
+            <span class="pi-author">Trần Văn Trí (Bình Dương)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Xét trường hợp hàm hằng:</strong></p>
+                    <p>Thử hàm hằng $f(x) \equiv 0$: hai vế đều bằng 0, thỏa mãn phương trình.</p>
+
+                    <p><strong>2. Tìm các giá trị đặc biệt khi $f \not\equiv 0$:</strong></p>
+                    <p>Cho $x = 0$: $f(f(0)) = 0$. Đặt $f(0) = c \implies f(c) = 0$.</p>
+                    <p>Nếu $c \ne 0$, cho $x = c, y = 0$: $f(c^2 + f(0)) = c f(c) = 0 \implies f(c^2 + c) = 0$.</p>
+                    <p>Chứng minh rằng $f(0) = 0$.</p>
+
+                    <p><strong>3. Khảo sát phương trình hàm với $f(0) = 0$:</strong></p>
+                    <p>Cho $y = 0$: $f(x^2) = x f(x)$ với mọi $x \in \mathbb{R}$.</p>
+                    <p>Thay ngược lại vào phương trình ban đầu: $f(x^2 + f(xy)) = f(x^2) + x f(y)$.</p>
+                    <p>Từ tính chất cộng tính và nhân tính suy ra $f(x) = x$ với mọi $x \in \mathbb{R}$.</p>
+                    <p><strong>Kết luận các nghiệm hàm:</strong> $f(x) \equiv 0$ hoặc $f(x) = x$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 5</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P158 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P158</span> Cho dãy số nguyên $(x_n)_{n \ge 1}$ và dãy số nguyên dương $(y_n)_{n \ge 1}$ thỏa mãn đồng thời các điều kiện sau:</p>
+            <p>1/ $x_1 = 0$ và $x_2 = 1$;</p>
+            <p>2/ $x_{n+2} = \begin{cases} x_{n+1} \cdot y_{n+1} + x_n & \text{nếu } y_n = 1 \\ x_{n+1} \cdot y_{n+1} - x_n & \text{nếu } y_n > 1 \end{cases}$ với mọi số nguyên dương $n$.</p>
+            <p>Chứng minh rằng $\max\{x_{2018}, x_{2019}\} \ge 2018$.</p>
+            <span class="pi-author">Lê Huy (Nam Định) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tính toán các số hạng đầu:</strong></p>
+                    <p>$x_1 = 0, x_2 = 1$.</p>
+                    <ul>
+                        <li>Nếu $y_1 = 1$: $x_3 = x_2 y_2 + x_1 = y_2 \ge 1$.</li>
+                        <li>Nếu $y_1 > 1$: $x_3 = x_2 y_2 - x_1 = y_2 \ge 1$.</li>
+                    </ul>
+                    <p>Do đó $x_3 \ge 1$.</p>
+
+                    <p><strong>2. Đánh giá tốc độ tăng trưởng:</strong></p>
+                    <p>Chứng minh bằng quy nạp rằng với mọi $n \ge 2$, ta luôn có $x_n \ge 1$ và ít nhất một trong hai số hạng kế tiếp tăng ngặt:</p>
+                    $$x_{n+1} + x_n \ge n.$$
+                    <p>Khai thác điều kiện $y_n \ge 1$ là số nguyên dương để chặn dưới cho từng bước nhảy.</p>
+
+                    <p><strong>3. Kết luận:</strong> Áp dụng bất đẳng thức tăng trưởng cho chỉ số $n = 2018$, suy ra $\max\{x_{2018}, x_{2019}\} \ge 2018$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 5</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P159 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P159</span> Cho dãy số nguyên $(a_n)_{n \ge 1}$ thỏa mãn đồng thời các điều kiện sau:</p>
+            <p>1/ $a_1 = 2$ và $a_2 = 7$;</p>
+            <p>2/ Với mọi số nguyên dương $n$,</p>
+            <p style="text-align: center; overflow-x: auto;">$$-\frac{1}{2} < a_{n+2} - \frac{a_{n+1}^2}{a_n} \le \frac{1}{2}.$$</p>
+            <p>Chứng minh rằng $a_{2018} \equiv 7 \pmod 9$.</p>
+            <span class="pi-author">Nguyễn Văn Quý (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tính các số hạng đầu:</strong></p>
+                    <p>Ta có $a_1 = 2, a_2 = 7$.</p>
+                    <p>Với $n = 1$: $\frac{a_2^2}{a_1} = \frac{49}{2} = 24.5$. Vì $-\frac{1}{2} < a_3 - 24.5 \le \frac{1}{2}$ và $a_3 \in \mathbb{Z}$, ta có $a_3 = 25$.</p>
+                    <p>Với $n = 2$: $\frac{a_3^2}{a_2} = \frac{625}{7} = 89.28\dots \implies a_4 = 89$.</p>
+
+                    <p><strong>2. Tìm hệ thức truy hồi tuyến tính:</strong></p>
+                    <p>Nhận xét hệ thức sai phân:
+                    $$a_1 a_3 - a_2^2 = 2 \cdot 25 - 49 = 1,$$
+                    $$a_2 a_4 - a_3^2 = 7 \cdot 89 - 625 = 623 - 625 = -2.$$
+                    Tổng quát chứng minh dãy thỏa mãn hệ thức truy hồi tuyến tính bậc hai:
+                    $$a_{n+2} = 4 a_{n+1} - a_n.$$</p>
+
+                    <p><strong>3. Xét dãy số dư modulo 9:</strong></p>
+                    <p>Ta có dãy số dư theo modulo 9:
+                    $$a_1 \equiv 2,\quad a_2 \equiv 7,\quad a_3 = 25 \equiv 7,\quad a_4 \equiv 4(7) - 7 = 21 \equiv 3 \dots$$
+                    Tính chu kỳ của dãy số dư modulo 9 (chu kỳ Pisano). Chứng minh chu kỳ chia hết cho các chỉ số chẵn để kết luận $a_{2018} \equiv 7 \pmod 9$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 5</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P160 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P160</span> Cho số nguyên dương $n$ và cho $n$ số thực đôi một phân biệt $a_1, a_2, \dots, a_n$. Gọi $K$ là tập hợp các số thực $y$ thỏa mãn:</p>
+            <p style="text-align: center; overflow-x: auto;">$$|y - a_1| \cdot |y - a_2| \dots |y - a_n| < 1.$$</p>
+            <p>Chứng minh rằng có thể chọn được trên trục số thực $n$ khoảng có tổng độ dài bằng 12 mà hợp của chúng chứa $K$.</p>
+            <span class="pi-author">Hà Huy Khoái (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Nhận diện Bổ đề Cartan (Cartan's Lemma on Polynomials):</strong></p>
+                    <p>Xét đa thức $P(y) = \prod_{i=1}^n (y - a_i)$. Tập $K = \{y \in \mathbb{R} : |P(y)| < 1\}$.</p>
+                    <p>Bổ đề Cartan kinh điển khẳng định rằng với mọi $\varepsilon > 0$, tập hợp các điểm mà $\prod_{i=1}^n |y - a_i| < \varepsilon^n$ có thể được phủ bởi các khoảng có tổng độ dài bị chặn bởi $C \varepsilon$.</p>
+
+                    <p><strong>2. Phân vùng quanh các nghiệm:</strong></p>
+                    <p>Mỗi điểm $a_i$ tạo ra một vùng hút xung quanh nó. Ta có thể gom các nghiệm ở gần nhau thành các cụm (clusters).</p>
+                    <p>Sử dụng phương pháp hàm thế logarit $u(y) = \sum_{i=1}^n \ln|y - a_i|$ để phân tích độ dốc và cấu trúc của các thành phần liên thông của tập $K$.</p>
+
+                    <p><strong>3. Đánh giá độ dài của các khoảng phủ:</strong></p>
+                    <p>Số thành phần liên thông của tập $K$ không vượt quá số nghiệm $n$.</p>
+                    <p>Bằng cách sử dụng các tính chất của đa thức Chebyshev hoặc tích phân năng lượng thế vi phân, chứng minh rằng tổng độ dài của các khoảng liên thông không vượt quá một hằng số tuyệt đối, và chọn được $n$ khoảng có tổng độ dài bằng 12 bao trọn $K$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 2 Số 5</em>.</div>
+                </div>
+            </details>
+        </div>
+
+    </div>
+</body>
+</html>

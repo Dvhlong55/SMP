@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 10)</title>
+    
+    <meta name="post-id" content="PiTap1So10">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 1 Số 10 (Tháng 10/2017), từ bài P101 đến P110.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 10)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 1 Số 10 kèm gợi ý giải của SMP.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-1-so-10.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 10)">
+    <meta name="twitter:description" content="Đề bài P101 - P110 Tạp chí Pi Tập 1 Số 10 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            font-size: 0.88rem;
+            font-weight: bold;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            border: 1px dashed rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.03);
+            transition: all 0.15s ease;
+            width: fit-content;
+        }
+        [data-theme="dark"] summary.igo-hint-trigger {
+            color: #eee;
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker {
+            display: none;
+        }
+        summary.igo-hint-trigger:hover {
+            border-style: solid;
+            background: rgba(0, 0, 0, 0.07);
+        }
+        [data-theme="dark"] summary.igo-hint-trigger:hover {
+            background: rgba(255, 255, 255, 0.09);
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.72rem;
+            transition: transform 0.2s ease;
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            margin-top: 10px;
+            padding: 12px 16px;
+            border-left: 2px solid #555;
+            background: rgba(0, 0, 0, 0.02);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        [data-theme="dark"] .igo-hint-content {
+            border-left-color: #888;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .pi-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 4px;
+            background: #e3f2fd;
+            color: #1565c0;
+            margin-right: 6px;
+        }
+        [data-theme="dark"] .pi-badge {
+            background: #1a2733;
+            color: #90caf9;
+        }
+        .pi-author {
+            display: block;
+            margin-top: 6px;
+            font-style: italic;
+            font-size: 0.88rem;
+            color: #666;
+            text-align: right;
+        }
+        [data-theme="dark"] .pi-author {
+            color: #aaa;
+        }
+        .pi-ref-note {
+            margin-top: 10px;
+            padding: 6px 10px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 4px;
+            font-size: 0.82rem;
+            color: #666;
+        }
+        [data-theme="dark"] .pi-ref-note {
+            background: rgba(255, 255, 255, 0.03);
+            color: #999;
+        }
+    </style>
+</head>
+<body class="post-template">
+    <div id="smp-post-content">
+        <div class="header-container">
+            <h1>Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 10)</h1>
+            <p class="post-subtitle">Chuyên mục Thách thức Toán học — Tạp chí Pi số 10 (Tháng 10/2017) với 10 bài toán từ P101 đến P110 kèm gợi ý tư duy độc lập của SMP.</p>
+        </div>
+
+        <div style="background: rgba(0, 123, 255, 0.06); border-left: 4px solid #007bff; padding: 12px 16px; margin: 20px 0; border-radius: 4px;">
+            <strong>Tổng quan chuyên mục:</strong>
+            <ul style="margin: 6px 0 0 18px; padding: 0;">
+                <li><strong>Cấp THCS:</strong> 4 bài toán (P101 – P104).</li>
+                <li><strong>Cấp THPT:</strong> 6 bài toán (P105 – P110), bao gồm các đề xuất Olympic quốc tế và bài toán tổ hợp phân hoạch kinh điển.</li>
+                <li><strong>Gợi ý:</strong> Được SMP biên soạn độc lập dưới dạng các mốc định hướng tư duy giúp bạn đọc tự mình chinh phục bài toán.</li>
+            </ul>
+        </div>
+
+        <p><a href="./thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; text-decoration: none; margin-bottom: 20px;">← Quay lại Mục lục Thách thức Toán học Tạp chí Pi (2017 – 2024)</a></p>
+
+        <!-- ==================== CẤP THCS ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THCS</h2>
+
+        <!-- Bài P101 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P101</span> Cho phương trình $3x^2 - 5\sqrt{3}x - 1 = 0$.</p>
+            <p>1/ Chứng minh rằng phương trình đã cho có hai nghiệm thực phân biệt, khác $\frac{2\sqrt{3}}{3}$. Gọi hai nghiệm đó là $x_1$ và $x_2$, với $x_1 < x_2$.</p>
+            <p>2/ Không giải phương trình đã cho, hãy tính số trị của biểu thức sau:</p>
+            <p style="text-align: center; overflow-x: auto;">$$P = \frac{1}{(2 - \sqrt{3}x_1)^3} - \frac{1}{(2 - \sqrt{3}x_2)^3}.$$</p>
+            <span class="pi-author">Nguyễn Khắc Minh (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Kiểm tra nghiệm và điều kiện khác $\frac{2\sqrt{3}}{3}$:</strong></p>
+                    <p>Phương trình bậc hai có $a \cdot c = 3 \cdot (-1) = -3 < 0$ nên luôn có hai nghiệm thực phân biệt trái dấu $x_1 < 0 < x_2$.</p>
+                    <p>Thay $x = \frac{2\sqrt{3}}{3}$ vào vế trái: $3\left(\frac{2\sqrt{3}}{3}\right)^2 - 5\sqrt{3}\left(\frac{2\sqrt{3}}{3}\right) - 1 = 4 - 10 - 1 = -7 \ne 0$. Do đó cả hai nghiệm đều khác $\frac{2\sqrt{3}}{3}$.</p>
+
+                    <p><strong>2. Đổi biến thông minh:</strong></p>
+                    <p>Mẫu số xuất hiện đại lượng $2 - \sqrt{3}x$. Hãy đặt $y = 2 - \sqrt{3}x \implies x = \frac{2 - y}{\sqrt{3}}$.</p>
+                    <p>Thay $x$ vào phương trình ban đầu:
+                    $$3\left(\frac{2 - y}{\sqrt{3}}\right)^2 - 5\sqrt{3}\left(\frac{2 - y}{\sqrt{3}}\right) - 1 = 0 \iff (y - 2)^2 - 5(2 - y) - 1 = 0.$$
+                    Khai triển và rút gọn:
+                    $$y^2 - 4y + 4 - 10 + 5y - 1 = 0 \iff y^2 + y - 7 = 0.$$
+                    Gọi hai nghiệm của phương trình theo $y$ tương ứng là $y_1 = 2 - \sqrt{3}x_2$ và $y_2 = 2 - \sqrt{3}x_1$. Chú ý rằng vì $x_1 < x_2$ nên $y_2 > y_1$.</p>
+
+                    <p><strong>3. Tính giá trị $P$ theo Viète:</strong></p>
+                    <p>Theo định lý Viète: $y_1 + y_2 = -1$ và $y_1 y_2 = -7$.</p>
+                    <p>Biểu thức $P$ trở thành:
+                    $$P = \frac{1}{y_2^3} - \frac{1}{y_1^3} = \frac{y_1^3 - y_2^3}{(y_1 y_2)^3} = \frac{(y_1 - y_2)(y_1^2 + y_1 y_2 + y_2^2)}{(y_1 y_2)^3}.$$
+                    Ta có:
+                    $$(y_1 - y_2)^2 = (y_1 + y_2)^2 - 4y_1 y_2 = (-1)^2 - 4(-7) = 29 \implies y_1 - y_2 = -\sqrt{29},$$
+                    $$y_1^2 + y_1 y_2 + y_2^2 = (y_1 + y_2)^2 - y_1 y_2 = 1 - (-7) = 8.$$
+                    Từ đó thay vào tính $P = \frac{-\sqrt{29} \cdot 8}{(-7)^3} = \frac{8\sqrt{29}}{343}$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 12</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P102 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P102</span> Tìm tất cả các cặp số nguyên tố $(p, q)$ sao cho $p^2 + 15pq + q^2$ là</p>
+            <p>a) một lũy thừa của 17.</p>
+            <p>b) một số chính phương.</p>
+            <span class="pi-author">Lưu Thanh Hà (Kiên Giang)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Câu a — Lũy thừa của 17:</strong></p>
+                    <p>Đặt $p^2 + 15pq + q^2 = 17^k$ ($k \ge 1$).</p>
+                    <ul>
+                        <li>Nếu $p = q$: $17p^2 = 17^k \implies p^2 = 17^{k-1}$. Vì $p$ nguyên tố nên $p = 17$, suy ra cặp $(17, 17)$ thỏa mãn.</li>
+                        <li>Nếu $p \ne q$: Viết lại $p^2 + 15pq + q^2 = (p - q)^2 + 17pq = 17^k$.
+                        Suy ra $(p - q)^2 \ \vdots \ 17 \implies (p - q) \ \vdots \ 17 \implies (p - q)^2 \ \vdots \ 289$.<br>
+                        Khi $k \ge 2$, ta có $17pq = 17^k - (p - q)^2 \ \vdots \ 289 \implies pq \ \vdots \ 17$. Do $p, q$ nguyên tố nên một trong hai số bằng 17. Giả sử $p = 17$, suy ra $q \ \vdots \ 17 \implies q = 17$ (trở về trường hợp trên).</li>
+                    </ul>
+                    <p>Vậy cặp nghiệm duy nhất ở câu a là $(17, 17)$.</p>
+
+                    <p><strong>2. Câu b — Số chính phương:</strong></p>
+                    <p>Đặt $p^2 + 15pq + q^2 = m^2$ ($m \in \mathbb{Z}^+$). Không mất tổng quát giả sử $p \le q$.</p>
+                    <p>Nhận xét $(p + q)^2 < p^2 + 15pq + q^2 < (p + 8q)^2$. Viết lại phương trình dưới dạng:
+                    $$(2p + 15q)^2 - 221q^2 = 4m^2 \iff (2p + 15q - 2m)(2p + 15q + 2m) = 221q^2 = 13 \cdot 17 \cdot q^2.$$
+                    Khảo sát các ước nguyên tố và kiểm tra các số nguyên tố nhỏ $p \in \{2, 3, 5\}$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 12</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P103 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P103</span> Cho tứ giác lồi $ABCD$ ngoại tiếp đường tròn tâm $I$. Gọi $I_1, I_2, I_3$ và $I_4$ tương ứng là tâm đường tròn nội tiếp của các tam giác $DAB, ABC, BCD$ và $CDA$. Gọi $O_1, O_2, O_3$ và $O_4$ tương ứng là tâm đường tròn ngoại tiếp của các tam giác $AI_2I_4, BI_1I_3, CI_2I_4$ và $DI_1I_3$. Chứng minh rằng</p>
+            <p>1/ $I_2I_4 \perp AC$ và $I_1I_3 \perp BD$.</p>
+            <p>2/ Các điểm $O_1, O_2, O_3$ và $O_4$ tương ứng nằm trên các đường thẳng $AI, BI, CI$ và $DI$.</p>
+            <span class="pi-author">Nhóm TTTH st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Chứng minh ý 1 — Vuông góc:</strong></p>
+                    <p>Vì $I_2$ là tâm nội tiếp $\triangle ABC$ và $I_4$ là tâm nội tiếp $\triangle ADC$, tia $AI_2$ và tia $AI_4$ lần lượt là phân giác của $\angle BAC$ và $\angle DAC$.</p>
+                    <p>Đường thẳng $AI$ là phân giác của góc $\angle BAD = \angle BAC + \angle CAD$. Do đó $AI$ chính là đường phân giác của góc $\angle I_2AI_4$.</p>
+                    <p>Sử dụng công thức tính góc hoặc tính đối xứng để chứng minh tam giác $AI_2I_4$ cân hoặc chân đường cao từ $A$ trùng với giao điểm, suy ra $I_2I_4 \perp AC$. Tương tự $I_1I_3 \perp BD$.</p>
+
+                    <p><strong>2. Chứng minh ý 2 — Tâm ngoại tiếp thuộc đường phân giác:</strong></p>
+                    <p>Trong tam giác $AI_2I_4$, đường phân giác của góc $A$ chính là đường thẳng $AI$.</p>
+                    <p>Tâm đường tròn ngoại tiếp $O_1$ của $\triangle AI_2I_4$ nằm trên đường phân giác $AI$ khi và chỉ khi tam giác cân tại đỉnh $A$ hoặc góc $\angle AO_1I_2$ đối xứng qua $AI$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 12</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P104 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P104</span> Tìm số nguyên $n \ge 3$ nhỏ nhất có tính chất: Với mọi cách tô $n$ điểm $A_1, A_2, \dots, A_n$ đôi một phân biệt và theo thứ tự đó nằm cách đều nhau trên một đường thẳng, bởi hai màu, luôn tồn tại ba điểm $A_i, A_j, A_{2j-i}$ ($1 \le i < 2j-i \le n$) được tô cùng màu.</p>
+            <span class="pi-author">Hà Minh Thơ (Phú Thọ) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Nhận diện bài toán lý thuyết Ramsey:</strong></p>
+                    <p>Bộ ba chỉ số $i, j, 2j - i$ chính là một cấp số cộng 3 số hạng (bởi vì $j - i = (2j - i) - j$).</p>
+                    <p>Bài toán hỏi số phần tử nhỏ nhất $n$ để bất kỳ cách tô 2 màu nào cho $\{1, 2, \dots, n\}$ cũng chứa một cấp số cộng đơn sắc độ dài 3 (monochromatic 3-AP). Đây chính là số van der Waerden $W(2, 3)$.</p>
+
+                    <p><strong>2. Xây dựng phản ví dụ cho $n = 8$:</strong></p>
+                    <p>Xét chuỗi 8 điểm tô màu Đỏ (R) và Xanh (B) theo cấu trúc hai khối đôi:
+                    $$\text{R R B B R R B B}$$
+                    Hãy kiểm tra tất cả các cấp số cộng độ dài 3 có bước nhảy $d = 1, 2, 3$: không có cấp số cộng nào đơn sắc!</p>
+
+                    <p><strong>3. Chứng minh mọi cách tô với $n = 9$ đều tồn tại cấp số cộng đơn sắc:</strong></p>
+                    <p>Bằng phương pháp chia trường hợp màu của cụm tâm hoặc các điểm $\{4, 5, 6\}$, chỉ ra rằng luôn bị dồn vào thế xuất hiện một bộ 3 số cùng màu.</p>
+                    <p><strong>Đáp số:</strong> $n = 9$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 12</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- ==================== CẤP THPT ==================== -->
+        <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 6px; margin-top: 36px; color: #007bff;">Dành Cho Cấp THPT</h2>
+
+        <!-- Bài P105 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P105</span> Cho số thực $a > 0$ và cho dãy số $(x_n)$, $n = 1, 2, \dots$, được xác định bởi:</p>
+            <p style="text-align: center; overflow-x: auto;">$$x_1 = a \text{ và } x_{n+1} = x_n + \frac{\sqrt{x_n}}{n^2}, \text{ với mọi } n \ge 1.$$</p>
+            <p>Chứng minh rằng dãy $(x_n)$ có giới hạn hữu hạn khi $n \to +\infty$.</p>
+            <span class="pi-author">Trần Nam Dũng (Tp. Hồ Chí Minh) st.</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Tính đơn điệu:</strong></p>
+                    <p>Vì $x_1 = a > 0$ và $x_{n+1} - x_n = \frac{\sqrt{x_n}}{n^2} > 0$ nên dãy $(x_n)$ là dãy số thực dương tăng ngặt.</p>
+                    <p>Để chứng minh $(x_n)$ có giới hạn hữu hạn, theo tiêu chuẩn Weierstrass, ta chỉ cần chứng minh dãy bị chặn trên.</p>
+
+                    <p><strong>2. Kỹ thuật đánh giá căn thức (sai phân):</strong></p>
+                    <p>Sử dụng hằng đẳng thức $x_{n+1} - x_n = (\sqrt{x_{n+1}} - \sqrt{x_n})(\sqrt{x_{n+1}} + \sqrt{x_n})$.</p>
+                    <p>Suy ra:
+                    $$\sqrt{x_{n+1}} - \sqrt{x_n} = \frac{x_{n+1} - x_n}{\sqrt{x_{n+1}} + \sqrt{x_n}} = \frac{\sqrt{x_n}}{n^2(\sqrt{x_{n+1}} + \sqrt{x_n})}.$$
+                    Do dãy tăng nên $\sqrt{x_{n+1}} > \sqrt{x_n}$, dẫn đến:
+                    $$\sqrt{x_{n+1}} - \sqrt{x_n} < \frac{\sqrt{x_n}}{n^2(2\sqrt{x_n})} = \frac{1}{2n^2} < \frac{1}{n^2}.$$</p>
+
+                    <p><strong>3. Lấy tổng sai phân (Telescoping):</strong></p>
+                    <p>Cộng bất đẳng thức từ $n = 1$ đến $N - 1$:
+                    $$\sqrt{x_N} - \sqrt{x_1} < \sum_{n=1}^{N-1} \frac{1}{2n^2} < \frac{1}{2} \sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{12}.$$
+                    Suy ra $\sqrt{x_N} < \sqrt{a} + \frac{\pi^2}{12}$, nghĩa là dãy $(\sqrt{x_n})$ và do đó dãy $(x_n)$ bị chặn trên. Hoàn tất chứng minh.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 12</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P106 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P106</span> Cho dãy số $(u_n)_{n \ge 1}$ được xác định như sau:</p>
+            <p>i) $u_n \in \{-1; 1\}$, với mọi $n$ nguyên dương;</p>
+            <p>ii) $u_1 = -1, u_2 = 1$;</p>
+            <p>iii) Với mỗi số nguyên dương $k$, đứng giữa số 1 thứ $k$ và số 1 thứ $(k+1)$ trong dãy (tính từ trái qua phải) có đúng $k+1$ số $-1$.</p>
+            <p>Hãy tìm một công thức tính tổng $n$ số hạng đầu tiên của dãy số đã cho.</p>
+            <span class="pi-author">Nguyễn Duy Thái Sơn (Đà Nẵng)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Quan sát cấu trúc chuỗi:</strong></p>
+                    <p>Dãy số bắt đầu như sau:
+                    $$\underbrace{-1}_{1 \text{ số}}, \mathbf{1}, \underbrace{-1, -1}_{2 \text{ số}}, \mathbf{1}, \underbrace{-1, -1, -1}_{3 \text{ số}}, \mathbf{1}, \dots$$
+                    Chia dãy thành các khối, khối thứ $k$ ($k \ge 1$) gồm số $\mathbf{1}$ thứ $k$ và theo sau là $(k+1)$ số $-1$.</p>
+
+                    <p><strong>2. Độ dài và tổng của từng khối:</strong></p>
+                    <p>Khối mở đầu có 1 số $-1$ đứng trước số 1 đầu tiên. Ta có thể gom số $-1$ đầu tiên này riêng, hoặc coi khối thứ $k$ bắt đầu từ số 1 thứ $k$.</p>
+                    <p>Mỗi khối thứ $k$ có 1 số $1$ và $k+1$ số $-1$, nên tổng các phần tử trong khối thứ $k$ là:
+                    $$1 + (k+1)(-1) = -k.$$</p>
+
+                    <p><strong>3. Xác định vị trí của phần tử thứ $n$:</strong></p>
+                    <p>Số phần tử tính đến hết khối thứ $m$ là:
+                    $$N(m) = 1 + \sum_{k=1}^m (k + 2) = 1 + \frac{m(m+1)}{2} + 2m = \frac{m^2 + 5m + 2}{2}.$$
+                    Tìm số nguyên lớn nhất $m$ sao cho $N(m) \le n$. Phần dư $r = n - N(m)$ sẽ xác định số lượng phần tử thuộc khối thứ $m+1$. Từ đó thiết lập công thức tường minh dạng phần nguyên cho $S_n$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 12</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P107 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P107</span> Tìm tất cả các hàm số $f: \mathbb{R} \to \mathbb{R}$ thỏa mãn điều kiện:</p>
+            <p style="text-align: center; overflow-x: auto;">$$4xy \cdot f(x^2 - y^2) = (x^2 - y^2) \cdot f(2x) \cdot f(2y),$$</p>
+            <p>với mọi số thực $x, y$. ($\mathbb{R}$ kí hiệu tập số thực).</p>
+            <span class="pi-author">Bài thi chọn Đội tuyển Belarus tham dự IMO 2017</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Xét các trường hợp tầm thường:</strong></p>
+                    <p>Nếu $f \equiv 0$, thay vào phương trình ta thấy thỏa mãn.</p>
+                    <p>Giả sử tồn tại $t_0 \ne 0$ sao cho $f(t_0) \ne 0$. Cho $x = y \ne 0$, hai vế bằng 0.</p>
+
+                    <p><strong>2. Chuẩn hoá tỉ số hàm tuyến tính:</strong></p>
+                    <p>Với $x \ne 0, y \ne 0$ và $x^2 \ne y^2$, chia hai vế cho $4xy(x^2 - y^2)$:
+                    $$\frac{f(x^2 - y^2)}{x^2 - y^2} = \frac{f(2x)}{2x} \cdot \frac{f(2y)}{2y}.$$
+                    Đặt $g(u) = \frac{f(u)}{u}$ với mọi $u \ne 0$. Phương trình trở thành:
+                    $$g(x^2 - y^2) = g(2x) \cdot g(2y).$$</p>
+
+                    <p><strong>3. Tìm dạng của $g(u)$ và kết luận:</strong></p>
+                    <p>Bằng cách hoán vị và thay đổi biến số thích hợp, chứng minh rằng $g(u)$ phải là hằng số $c$.</p>
+                    <p>Khi đó $c = c^2 \implies c = 1$. Suy ra $f(x) = x$ hoặc $f(x) = -x$ hoặc $f(x) = 0$. Kiểm tra lại để kết luận tập nghiệm hàm thỏa mãn.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 12</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P108 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P108</span> Các đường phân giác trong xuất phát từ $A, B, C$ của tam giác nhọn $ABC$ tương ứng cắt các cạnh $BC, CA, AB$ tại $A_1, B_1, C_1$. Gọi $I$ là tâm đường tròn nội tiếp tam giác $ABC$ và gọi $H$ là trực tâm của tam giác $A_1B_1C_1$. Chứng minh rằng</p>
+            <p style="text-align: center; overflow-x: auto;">$$AH + BH + CH \ge AI + BI + CI.$$</p>
+            <span class="pi-author">Bài dự tuyển IMO 2016</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Đặc điểm tam giác phân giác $A_1B_1C_1$:</strong></p>
+                    <p>Đây là bài toán hình học nổi tiếng được chọn vào Shortlist IMO 2016 (Problem G4).</p>
+                    <p>Chú ý rằng $I$ chính là tâm nội tiếp của tam giác $ABC$. Khoảng cách từ $A, B, C$ đến $I$ được biểu diễn qua $r$ và các góc: $AI = \frac{r}{\sin(A/2)}$.</p>
+
+                    <p><strong>2. Vị trí của trực tâm $H$:</strong></p>
+                    <p>Sử dụng phương pháp vectơ hoặc toạ độ tỉ cự để xác định vị trí của $H$ đối với tam giác $A_1B_1C_1$.</p>
+                    <p>Chiếu các đoạn thẳng lên các trục phân giác và sử dụng bất đẳng thức khoảng cách: tổng khoảng cách từ ba đỉnh của tam giác tới trực tâm tam giác phân giác luôn lớn hơn hoặc bằng tổng khoảng cách tới tâm nội tiếp.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 12</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P109 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P109</span> Cho số nguyên $q$ và cho dãy số $(a_n)$, $n = 0, 1, 2, \dots$, được xác định bởi:</p>
+            <p style="text-align: center; overflow-x: auto;">$$a_0 = 1, a_1 = q \text{ và } a_n = qa_{n-1} + (n-1)a_{n-2},$$</p>
+            <p>với mọi $n \ge 2$. Chứng minh rằng với mọi số nguyên tố $p > 2$, ta đều có $a_p - q^p$ chia hết cho $p$.</p>
+            <span class="pi-author">Phùng Hồ Hải (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Thiết lập hàm sinh mũ (EGF):</strong></p>
+                    <p>Đặt $A(x) = \sum_{n=0}^\infty a_n \frac{x^n}{n!}$. Nhân hệ thức truy hồi với $\frac{x^{n-1}}{(n-1)!}$ và lấy tổng từ $n = 2$ trở đi:
+                    $$\sum_{n=2}^\infty a_n \frac{x^{n-1}}{(n-1)!} = q \sum_{n=2}^\infty a_{n-1} \frac{x^{n-1}}{(n-1)!} + x \sum_{n=2}^\infty a_{n-2} \frac{x^{n-2}}{(n-2)!}.$$
+                    Ta thu được phương trình vi phân:
+                    $$A'(x) - q = q(A(x) - 1) + x A(x) \iff A'(x) = (q + x)A(x).$$</p>
+
+                    <p><strong>2. Giải phương trình vi phân:</strong></p>
+                    <p>Nghiệm của phương trình vi phân với điều kiện đầu $A(0) = a_0 = 1$ là:
+                    $$A(x) = e^{qx + \frac{x^2}{2}} = e^{qx} \cdot e^{x^2/2}.$$</p>
+
+                    <p><strong>3. Khai triển và trích xuất hệ số của $a_p$:</strong></p>
+                    <p>Ta có:
+                    $$A(x) = \left(\sum_{k=0}^\infty \frac{q^k x^k}{k!}\right) \left(\sum_{m=0}^\infty \frac{x^{2m}}{2^m m!}\right).$$
+                    Số hạng bậc $p$ ứng với $k + 2m = p$. Vì $p$ là số nguyên tố lẻ ($p > 2$):
+                    $$a_p = p! [x^p] A(x) = \sum_{m=0}^{\frac{p-1}{2}} \frac{p!}{(p - 2m)! \cdot 2^m m!} q^{p - 2m}.$$
+                    Với $m = 0$, số hạng đó đúng bằng $q^p$.<br>
+                    Với $1 \le m \le \frac{p-1}{2}$, hệ số là $\frac{p!}{(p - 2m)! \cdot 2^m m!} = \binom{p}{2m} \frac{(2m)!}{2^m m!} = \binom{p}{2m} (2m - 1)!!$.<br>
+                    Vì $p$ nguyên tố và $1 \le 2m < p$, hệ số nhị thức $\binom{p}{2m}$ luôn chia hết cho $p$!<br>
+                    Do đó mọi số hạng với $m \ge 1$ đều chia hết cho $p$, suy ra $a_p \equiv q^p \pmod p$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 12</em>.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bài P110 -->
+        <div class="problem-box" style="margin-top: 20px;">
+            <p><span class="pi-badge">P110</span> Cho số nguyên $k$, với $1 < k < 2017$. Cho một đống sỏi có 2017 hòn giống hệt nhau. Gọi $s$ là số cách chia đống sỏi đó thành $k$ đống con sao cho mỗi đống con có ít nhất một hòn. Gọi $t$ là số cách chia đống sỏi đã cho thành các đống con (bao nhiêu đống con cũng được) sao cho mỗi đống con có ít nhất một hòn và đống nhiều nhất có đúng $k$ hòn. Hãy so sánh $s$ và $t$.</p>
+            <span class="pi-author">Phan Thị Hà Dương (Hà Nội)</span>
+
+            <details class="igo-hint-clean">
+                <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+                <div class="igo-hint-content">
+                    <p><strong>1. Mô hình hóa bài toán bằng phân hoạch số nguyên (Integer Partitions):</strong></p>
+                    <p>Vì các hòn sỏi giống hệt nhau, việc chia đống 2017 hòn sỏi thành các đống con tương ứng với việc viết 2017 thành tổng các số nguyên dương không kể thứ tự:
+                    $$2017 = \lambda_1 + \lambda_2 + \dots + \lambda_m \quad (\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_m \ge 1).$$</p>
+                    <ul>
+                        <li>$s$ là số phân hoạch của 2017 có <em>đúng $k$ số hạng</em> ($m = k$).</li>
+                        <li>$t$ là số phân hoạch của 2017 có <em>số hạng lớn nhất bằng $k$</em> ($\lambda_1 = k$).</li>
+                    </ul>
+
+                    <p><strong>2. Biểu đồ Ferrers (Young Diagram) và phép chuyển vị:</strong></p>
+                    <p>Mỗi phân hoạch có thể biểu diễn trực quan bằng một biểu đồ Ferrers: hàng thứ $i$ có $\lambda_i$ dấu chấm (hoặc ô vuông), căn lề trái.</p>
+                    <ul>
+                        <li>Số đống con chính là <em>số hàng</em> của biểu đồ Ferrers. Do đó phân hoạch đóng góp vào $s$ có biểu đồ gồm đúng $k$ hàng.</li>
+                        <li>Số hòn sỏi trong đống lớn nhất chính là <em>chiều dài hàng đầu tiên</em>, và khi chuyển vị qua đường chéo chính (hoán đổi hàng thành cột), nó trở thành <em>số hàng</em> của biểu đồ chuyển vị!</li>
+                    </ul>
+
+                    <p><strong>3. Song ánh Ferrers:</strong></p>
+                    <p>Phép lấy đối xứng (chuyển vị ma trận) của biểu đồ Ferrers thiết lập một <strong>song ánh 1 - 1</strong> giữa tập hợp các phân hoạch có đúng $k$ phần và tập hợp các phân hoạch có phần tử lớn nhất bằng $k$.</p>
+                    <p><strong>Kết luận:</strong> $s = t$.</p>
+                    <div class="pi-ref-note">Tham khảo phân tích và bài giải đầy đủ trong chuyên mục ở <em>Tập 1 Số 12</em>.</div>
+                </div>
+            </details>
+        </div>
+
+    </div>
+</body>
+</html>

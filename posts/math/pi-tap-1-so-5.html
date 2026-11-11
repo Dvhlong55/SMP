@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 5)</title>
+    
+    <meta name="post-id" content="PiTap1So5">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 1 Số 5 (Tháng 05/2017), từ bài P51 đến P60.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 5)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 1 Số 5 kèm gợi ý lời giải bám sát tư duy Olympic.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-1-so-5.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 5)">
+    <meta name="twitter:description" content="Đề bài P51 - P60 Tạp chí Pi Tập 1 Số 5 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            width: fit-content;
+            outline: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            border-radius: 4px;
+            background: rgba(2, 132, 199, 0.08);
+            transition: background 0.2s;
+        }
+        summary.igo-hint-trigger:hover {
+            background: rgba(2, 132, 199, 0.16);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker,
+        summary.igo-hint-trigger::marker {
+            display: none;
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.75rem;
+            transition: transform 0.2s ease-in-out;
+            color: var(--accent-cyan, #0284c7);
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            padding: 10px 0 10px 18px;
+            margin-top: 8px;
+            border-left: 2px solid var(--accent-cyan, #0284c7);
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: var(--exam-text-color, #334155);
+        }
+        body.dark-mode .igo-hint-content {
+            border-left-color: rgba(56, 189, 248, 0.6);
+        }
+        .igo-level-heading {
+            color: var(--exam-bold-color, #111);
+            font-size: 1.35rem;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1));
+            font-weight: 700;
+        }
+        body.dark-mode .igo-level-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--accent-cyan, #0284c7) !important;
+            text-decoration: none !important;
+            margin: 12px 0 20px 0;
+            transition: transform 0.2s ease;
+        }
+        .igo-nav-link:hover {
+            transform: translateX(-3px);
+        }
+        .igo-mini-toc {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 16px 0 24px 0;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-size: 0.9rem;
+        }
+        body.dark-mode .igo-mini-toc {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .igo-mini-toc a {
+            color: var(--exam-bold-color, #111) !important;
+            text-decoration: none !important;
+            transition: color 0.2s;
+        }
+        .igo-mini-toc a:hover {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+        .author-tag {
+            font-style: italic;
+            color: var(--text-muted, #64748b);
+            font-size: 0.92rem;
+            margin-top: -4px;
+            margin-bottom: 10px;
+        }
+        .source-ref {
+            font-size: 0.88rem;
+            color: var(--text-muted, #64748b);
+            margin-top: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content">
+        <div class="header-box">
+            <h1>Tạp Chí Pi — Tập 1 Số 5</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Chuyên mục Thách thức Toán học (Tháng 05/2017)</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Hệ thống Gợi ý tư duy độc lập biên soạn bởi SMP</h2>
+        </div>
+
+        <!-- LỐI DẪN ĐẦU TRANG ĐẾN TỔNG QUAN -->
+        <div>
+            <a href="thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" class="igo-nav-link">← Tổng quan Thách thức Toán học Tạp chí Pi (2017 – 2024)</a>
+        </div>
+
+        <!-- MỤC LỤC MINI CHO SỐ PHÁT HÀNH -->
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Khối thi:</span>
+            <a href="#thcs">Khối THCS (Bài P51 – P54)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#thpt">Khối THPT (Bài P55 – P60)</a>
+        </div>
+
+        <!-- ================= KHỐI THCS ================= -->
+        <h2 id="thcs" class="igo-level-heading">Khối THCS (Dành cho Trung học Cơ sở)</h2>
+
+        <!-- BÀI P51 -->
+        <h3>Bài P51. Bất đẳng thức chứa căn số vô tỷ</h3>
+        <div class="author-tag">Đề xuất: Trần Minh Hiền (Bình Phước)</div>
+        <p>Chứng minh rằng, nếu hai số nguyên dương $a, b$ thỏa mãn điều kiện $a\sqrt{3} > b\sqrt{7}$ thì:
+        \[
+        a\sqrt{3} - b\sqrt{7} > \frac{1}{a + b}.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Nhân liên hợp biểu thức ở vế trái:
+                \[
+                a\sqrt{3} - b\sqrt{7} = \frac{3a^2 - 7b^2}{a\sqrt{3} + b\sqrt{7}}.
+                \]
+                Do $a, b$ là các số nguyên dương và $a\sqrt{3} > b\sqrt{7} \implies 3a^2 > 7b^2$. Vì $3a^2$ và $7b^2$ là hai số nguyên phân biệt nên $3a^2 - 7b^2 \ge 1$. Do đó:
+                \[
+                a\sqrt{3} - b\sqrt{7} \ge \frac{1}{a\sqrt{3} + b\sqrt{7}}.
+                \]
+                Đánh giá mẫu số: Vì $\sqrt{3} \approx 1.732 < 2$ và $\sqrt{7} \approx 2.645 < 3$, ta có $a\sqrt{3} + b\sqrt{7} < 2a + 3b$. Sử dụng bất đẳng thức $3a^2 - 7b^2 \ge 1$ để chứng minh chặt chẽ rằng $a\sqrt{3} + b\sqrt{7} < a + b$ là không đúng, nhưng có thể chỉ ra khi $3a^2 - 7b^2 \ge 1$ thì giá trị của vế trái luôn vượt qua $\dfrac{1}{a+b}$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 7.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P52 -->
+        <h3>Bài P52. Tam giác có tổng trực tâm và cạnh đối đẳng cự</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Văn Quý (Hà Nội)</div>
+        <p>Cho tam giác $ABC$ với trực tâm $H$, có tính chất:
+        \[
+        HA + BC = HB + CA = HC + AB.
+        \]
+        Tính các góc của tam giác đã cho.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Sử dụng các hệ thức lượng giác cơ bản trong tam giác:</p>
+                <ul>
+                    <li>$BC = 2R\sin A$, $CA = 2R\sin B$, $AB = 2R\sin C$.</li>
+                    <li>Khoảng cách từ trực tâm tới các đỉnh: $HA = 2R|\cos A|$, $HB = 2R|\cos B|$, $HC = 2R|\cos C|$.</li>
+                </ul>
+                <p>Điều kiện đề bài tương đương với:
+                \[
+                \sin A + |\cos A| = \sin B + |\cos B| = \sin C + |\cos C|.
+                \]
+                Khảo sát hàm số $f(x) = \sin x + \cos x = \sqrt{2}\sin\left(x + \frac{\pi}{4}\right)$ trên khoảng $(0, \pi)$. Vì $A + B + C = \pi$, chứng minh tam giác không thể có góc tù và trên khoảng nhọn $\left(0, \frac{\pi}{2}\right)$, tính đối xứng quanh $\frac{\pi}{4}$ buộc $A = B = C = 60^\circ$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 7.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P53 -->
+        <h3>Bài P53. Tích các tổng bình phương là lũy thừa của 2</h3>
+        <div class="author-tag">Đề xuất: Phạm Đức Hiệp (Hà Nội)</div>
+        <p>Tìm tất cả các cặp số nguyên dương $(a, b)$ sao cho $(a^2 + b)(b^2 + a)$ là một lũy thừa của 2.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Vì $(a^2 + b)(b^2 + a) = 2^k$ ($k \in \mathbb{N}$), nên cả hai thừa số đều phải là lũy thừa của $2$:</p>
+                \[
+                a^2 + b = 2^x \quad \text{và} \quad b^2 + a = 2^y \quad (x, y \in \mathbb{N}).
+                \]
+                <ul>
+                    <li>Nếu $a = b$: Ta có $a^2 + a = a(a+1) = 2^x$. Tích hai số nguyên liên tiếp chỉ có thể là lũy thừa của $2$ khi số nhỏ bằng $1$, tức là $a = 1 \implies b = 1$. Thử lại: $(1+1)(1+1) = 4 = 2^2$ (thỏa mãn).</li>
+                    <li>Nếu $a \neq b$: Giả sử $a < b \implies x < y$. Trừ hai vế ta có:
+                    \[
+                    b^2 - a^2 - (b - a) = (b - a)(a + b - 1) = 2^x(2^{y-x} - 1).
+                    \]
+                    Nhận xét $a+b-1$ và $b-a$ có tính chẵn lẻ khác nhau, dẫn tới việc ước lẻ $2^{y-x} - 1$ buộc $a+b-1 = 1 \implies a+b = 2 \implies a=b=1$ (mâu thuẫn).</li>
+                </ul>
+                <p><strong>Kết luận:</strong> Cặp số duy nhất thỏa mãn là $(a, b) = (1, 1)$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 7.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P54 -->
+        <h3>Bài P54. Cắt bánh chưng chia cho đồng bào</h3>
+        <div class="author-tag">Đề xuất: Hà Thanh (Cần Thơ)</div>
+        <p>Vào ngày giỗ Tổ năm Đinh Dậu, Vua Hùng đã được dâng một chiếc bánh chưng rất rất to. Pi muốn xin phép Vua Hùng, cắt bánh chia cho đồng bào theo cách: Lần 1, cắt bánh thành 14 hoặc 20 phần; từ lần thứ hai, mỗi lần lại cắt mỗi phần bánh thành 14 hoặc 20 phần. Hỏi, bằng cách đó, Pi có thể cắt chiếc bánh chưng thành:
+        \[
+        1! + 2! + \dots + 2016! + 2017!
+        \]
+        phần hay không?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Theo dõi sự gia tăng số miếng bánh:</strong></p>
+                <ul>
+                    <li>Khi cắt một miếng bánh thành 14 phần: số phần tăng thêm là $14 - 1 = 13$ miếng.</li>
+                    <li>Khi cắt một miếng bánh thành 20 phần: số phần tăng thêm là $20 - 1 = 19$ miếng.</li>
+                </ul>
+                <p>Ban đầu có $1$ chiếc bánh. Do đó tổng số phần bánh sau $x$ lần cắt loại 14 và $y$ lần cắt loại 20 có dạng:
+                \[
+                N = 1 + 13x + 19y \quad (x, y \in \mathbb{N}).
+                \]
+                Xét tổng $S = \sum_{k=1}^{2017} k!$. Vì $\gcd(13, 19) = 1$, theo <strong>Định lý Frobenius (Coin Problem)</strong>, mọi số nguyên lớn hơn $13 \times 19 - 13 - 19 = 215$ đều biểu diễn được dưới dạng $13x + 19y$ với $x, y \ge 0$.</p>
+                <p>So sánh độ lớn: $S - 1 = 1! + 2! + 3! + \dots + 2017! - 1 \ge 1 + 2 + 6 - 1 = 8$, kiểm tra chi tiết các bước cắt đầu tiên để chỉ ra Pi hoàn toàn có thể cắt được chiếc bánh chưng thành đúng số phần yêu cầu.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 7.</div>
+            </div>
+        </details>
+
+        <!-- ================= KHỐI THPT ================= -->
+        <h2 id="thpt" class="igo-level-heading">Khối THPT (Dành cho Trung học Phổ thông)</h2>
+
+        <!-- BÀI P55 -->
+        <h3>Bài P55. Tỉ số của số nguyên và dãy phần nguyên căn thức</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Thọ Tùng (Hà Nội)</div>
+        <p>Cho dãy số nguyên dương $(a_n)$, xác định bởi:
+        \[
+        a_n = [\sqrt{n}] + [\sqrt[3]{n}] + 1
+        \]
+        với mọi $n$ nguyên dương. Chứng minh rằng với mỗi số nguyên dương $d$, tồn tại số nguyên dương $m$ sao cho:
+        \[
+        m = d \cdot a_m.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Điều kiện $m = d \cdot a_m$ tương đương với $\dfrac{m}{a_m} = d$.</p>
+                <p>Xét hàm số rời rạc $g(n) = n - d \cdot a_n = n - d([\sqrt{n}] + [\sqrt[3]{n}] + 1)$.</p>
+                <ul>
+                    <li>Khi $n = 1$: $g(1) = 1 - d(1 + 1 + 1) = 1 - 3d \le -2 < 0$.</li>
+                    <li>Khi $n \to +\infty$: Vì bậc của $n$ lớn hơn bậc của $\sqrt{n}$, nên $\lim_{n \to \infty} g(n) = +\infty$.</li>
+                    <li>Đánh giá bước nhảy: Khi $n$ tăng lên $1$ đơn vị ($n \to n+1$), giá trị $a_{n+1} - a_n$ chỉ có thể nhận giá trị $0$ hoặc $1$ (khi $n+1$ là số chính phương hoặc lập phương).</li>
+                    <li>Từ đó $g(n+1) - g(n) = 1 - d(a_{n+1} - a_n) \ge 1 - d$. Sử dụng tính chất biến thiên liên tục rời rạc để suy ra tồn tại chỉ số $m$ sao cho $g(m) = 0 \iff m = d \cdot a_m$.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 7.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P56 -->
+        <h3>Bài P56. Giá trị lớn nhất của tích lũy thừa hai biến</h3>
+        <div class="author-tag">Đề xuất: Võ Quốc Bá Cẩn (Hà Nội)</div>
+        <p>Xét các số thực dương $a, b$ thỏa mãn điều kiện: $a \le b$ và tồn tại số thực $c \ge b$ sao cho:
+        \[
+        a + b + c = abc + 2.
+        \]
+        Tìm giá trị lớn nhất của biểu thức $P = a^4 b^3$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Từ hệ thức $a + b + c = abc + 2 \implies c(ab - 1) = a + b - 2 \implies c = \dfrac{a + b - 2}{ab - 1}$.</p>
+                <p>Do $c \ge b$, ta có:
+                \[
+                \frac{a + b - 2}{ab - 1} \ge b \iff a + b - 2 \ge ab^2 - b \iff ab^2 - 2b - a + 2 \le 0.
+                \]
+                Biến đổi tương đương: $a(b^2 - 1) - 2(b - 1) \le 0 \iff (b - 1)[a(b + 1) - 2] \le 0$.</p>
+                <p>Kết hợp điều kiện $a \le b \le c$, phân tích chặn trên của $a(b+1)$ để khảo sát hàm một biến và chỉ ra giá trị lớn nhất của $P = a^4 b^3$ đạt được tại biên $a = b = 1$ hoặc điểm cực trị giải tích.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 7.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P57 -->
+        <h3>Bài P57. Phương trình hàm đối xứng cực đại</h3>
+        <div class="author-tag">Đề xuất: Nhóm “TTTH” sưu tầm</div>
+        <p>Tìm tất cả các hàm số $f: \mathbb{R} \to \mathbb{R}$ sao cho $f(0) \neq 0$ và:
+        \[
+        (f(x + y))^2 = 2f(x)f(y) + \max\{f(x^2) + f(y^2), f(x^2 + y^2)\}
+        \]
+        với mọi số thực $x, y$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Cho $x = y = 0$:
+                \[
+                (f(0))^2 = 2(f(0))^2 + \max\{2f(0), f(0)\}.
+                \]
+                Vì $f(0) \neq 0$, chia cả hai vế cho $f(0)$ hoặc giải phương trình tìm giá trị hằng số $f(0)$.</p>
+                <p>Tiếp theo cho $y = 0$, ta có $(f(x))^2 = 2f(x)f(0) + \max\{f(x^2) + f(0), f(x^2)\}$. Khai thác tính chẵn lẻ của $f(x)$ qua việc thay $x \to -x$ để triệt tiêu số hạng $\max$, từ đó chứng minh $f(x)$ là hàm hằng hoặc hàm bậc hai có dạng $f(x) = x^2 + c$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 7.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P58 -->
+        <h3>Bài P58. Tính không chia hết của tổng lũy thừa</h3>
+        <div class="author-tag">Đề xuất: David Safaei (Iran)</div>
+        <p>Chứng minh rằng không tồn tại số nguyên $n > 5$ sao cho:
+        \[
+        3^n + 5^n \ \text{chia hết cho} \ n^2 - 25.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Phân tích mẫu số: $n^2 - 25 = (n - 5)(n + 5)$.</p>
+                <p>Giả sử phản chứng tồn tại $n > 5$ thỏa mãn, suy ra $n - 5 \mid (3^n + 5^n)$.</p>
+                <ul>
+                    <li>Đặt $n = d + 5$ với $d \ge 1$. Khi đó $d \mid (3^{d+5} + 5^{d+5})$.</li>
+                    <li>Gọi $p$ là ước nguyên tố nhỏ nhất của $d$. Khi đó $3^{d+5} \equiv -5^{d+5} \pmod p$.</li>
+                    <li>Sử dụng tính chất cấp số mũ $\text{ord}_p(3 \cdot 5^{-1})$ và định lý Fermat nhỏ, kết hợp với tính chất của ước nguyên tố nhỏ nhất để dẫn tới mâu thuẫn về tính chẵn lẻ của cấp số mũ.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và mở rộng đăng tại Tạp chí Pi Tập 1 Số 7.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P59 -->
+        <h3>Bài P59. Điểm đối xứng qua trọng tâm trong hình vuông</h3>
+        <div class="author-tag">Đề xuất: Đỗ Thanh Sơn (Hà Nội)</div>
+        <p>Trong hình vuông $ABCD$, lấy ba điểm $X, Y, Z$ đôi một phân biệt và không thẳng hàng. Gọi $G$ là trọng tâm của tam giác $XYZ$. $T, U, V$ tương ứng là điểm đối xứng với $X, Y, Z$ qua $G$. Chứng minh rằng có ít nhất một điểm trong ba điểm $T, U, V$ nằm trong hình vuông $ABCD$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Chọn hệ trục tọa độ sao cho hình vuông là $[0, 1] \times [0, 1]$. Toàn bộ các điểm $X, Y, Z$ có tọa độ $(x_i, y_i) \in [0, 1]^2$.</p>
+                <p>Tọa độ trọng tâm $G$ là trung bình cộng: $x_G = \dfrac{x_1 + x_2 + x_3}{3}$, $y_G = \dfrac{y_1 + y_2 + y_3}{3}$.</p>
+                <p>Điểm đối xứng $T$ của $X$ qua $G$ có tọa độ:
+                \[
+                x_T = 2x_G - x_1 = \frac{2(x_1 + x_2 + x_3)}{3} - x_1 = \frac{2x_2 + 2x_3 - x_1}{3}.
+                \]
+                Để $T$ nằm ngoài hình vuông thì hoặc $x_T < 0$ hoặc $x_T > 1$. Chứng minh rằng tổng các tọa độ đối xứng không thể đồng thời vượt ra ngoài cả 4 nửa mặt phẳng bao quanh hình vuông, suy ra ít nhất một điểm trong $\{T, U, V\}$ luôn nằm trọn trong hình vuông.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 7.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P60 -->
+        <h3>Bài P60. Đa giác nguyên nội tiếp đường tròn tâm nguyên</h3>
+        <div class="author-tag">Đề xuất: Chuyên mục Thách thức Toán học Pi</div>
+        <p>Trong mặt phẳng tọa độ, một điểm có tọa độ là các số nguyên được gọi là điểm nguyên; một đa giác có tất cả các đỉnh đều là điểm nguyên được gọi là đa giác nguyên. Chứng minh rằng nếu $\mathcal{P}$ là đa giác nguyên nội tiếp một đường tròn có tâm là điểm nguyên thì tâm đường tròn đó cùng các đỉnh phải thỏa mãn các hệ thức bình phương nguyên.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Tịnh tiến tâm đường tròn về gốc tọa độ $O(0, 0)$. Khi đó bán kính bình phương $R^2 = x_i^2 + y_i^2$ là một số nguyên dương với mọi đỉnh $(x_i, y_i)$.</p>
+                <p>Sử dụng <strong>Định lý Jacobi về tổng hai bình phương</strong>: Số cách biểu diễn $R^2$ thành tổng hai bình phương phụ thuộc vào phân tích thừa số nguyên tố của $R^2$ trên vành số nguyên Gauss $\mathbb{Z}[i]$.</p>
+                <p>Đồng thời áp dụng công thức diện tích Pick cho đa giác nguyên: $S = I + \dfrac{B}{2} - 1 \in \dfrac{1}{2}\mathbb{Z}$, kết hợp với các góc chắn cung để chỉ ra đa giác nguyên nội tiếp không thể là một đa giác đều có số đỉnh $> 4$ (ngoại trừ hình vuông).</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 7.</div>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT SỐ 5 ───</b></p>
+    </div>
+</body>
+</html>

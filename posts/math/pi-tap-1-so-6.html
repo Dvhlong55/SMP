@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 6)</title>
+    
+    <meta name="post-id" content="PiTap1So6">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 1 Số 6 (Tháng 06/2017), từ bài P61 đến P70.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 6)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 1 Số 6 kèm gợi ý lời giải bám sát tư duy Olympic.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-1-so-6.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 6)">
+    <meta name="twitter:description" content="Đề bài P61 - P70 Tạp chí Pi Tập 1 Số 6 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            width: fit-content;
+            outline: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            border-radius: 4px;
+            background: rgba(2, 132, 199, 0.08);
+            transition: background 0.2s;
+        }
+        summary.igo-hint-trigger:hover {
+            background: rgba(2, 132, 199, 0.16);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker,
+        summary.igo-hint-trigger::marker {
+            display: none;
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.75rem;
+            transition: transform 0.2s ease-in-out;
+            color: var(--accent-cyan, #0284c7);
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            padding: 10px 0 10px 18px;
+            margin-top: 8px;
+            border-left: 2px solid var(--accent-cyan, #0284c7);
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: var(--exam-text-color, #334155);
+        }
+        body.dark-mode .igo-hint-content {
+            border-left-color: rgba(56, 189, 248, 0.6);
+        }
+        .igo-level-heading {
+            color: var(--exam-bold-color, #111);
+            font-size: 1.35rem;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1));
+            font-weight: 700;
+        }
+        body.dark-mode .igo-level-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--accent-cyan, #0284c7) !important;
+            text-decoration: none !important;
+            margin: 12px 0 20px 0;
+            transition: transform 0.2s ease;
+        }
+        .igo-nav-link:hover {
+            transform: translateX(-3px);
+        }
+        .igo-mini-toc {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 16px 0 24px 0;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-size: 0.9rem;
+        }
+        body.dark-mode .igo-mini-toc {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .igo-mini-toc a {
+            color: var(--exam-bold-color, #111) !important;
+            text-decoration: none !important;
+            transition: color 0.2s;
+        }
+        .igo-mini-toc a:hover {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+        .author-tag {
+            font-style: italic;
+            color: var(--text-muted, #64748b);
+            font-size: 0.92rem;
+            margin-top: -4px;
+            margin-bottom: 10px;
+        }
+        .source-ref {
+            font-size: 0.88rem;
+            color: var(--text-muted, #64748b);
+            margin-top: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content">
+        <div class="header-box">
+            <h1>Tạp Chí Pi — Tập 1 Số 6</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Chuyên mục Thách thức Toán học (Tháng 06/2017)</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Hệ thống Gợi ý tư duy độc lập biên soạn bởi SMP</h2>
+        </div>
+
+        <!-- LỐI DẪN ĐẦU TRANG ĐẾN TỔNG QUAN -->
+        <div>
+            <a href="thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" class="igo-nav-link">← Tổng quan Thách thức Toán học Tạp chí Pi (2017 – 2024)</a>
+        </div>
+
+        <!-- MỤC LỤC MINI CHO SỐ PHÁT HÀNH -->
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Khối thi:</span>
+            <a href="#thcs">Khối THCS (Bài P61 – P64)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#thpt">Khối THPT (Bài P65 – P70)</a>
+        </div>
+
+        <!-- ================= KHỐI THCS ================= -->
+        <h2 id="thcs" class="igo-level-heading">Khối THCS (Dành cho Trung học Cơ sở)</h2>
+
+        <!-- BÀI P61 -->
+        <h3>Bài P61. Bất đẳng thức cạnh tam giác</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Tất Thu (Đồng Nai)</div>
+        <p>Cho $a, b, c$ là độ dài ba cạnh của một tam giác. Chứng minh rằng:
+        \[
+        \frac{a}{b + c} + \frac{b}{c + a} + \frac{c}{a + b} + \frac{2(ab + bc + ca)}{a^2 + b^2 + c^2} \le \frac{7}{2}.
+        \]
+        Hỏi dấu bằng xảy ra khi và chỉ khi nào?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Nhận xét hai vế: Biểu thức đầu tiên liên quan đến bất đẳng thức Nesbitt $\sum \dfrac{a}{b+c} \ge \dfrac{3}{2}$.</p>
+                <p>Để đánh giá chặn trên, sử dụng tính chất $a, b, c$ là ba cạnh của một tam giác. Áp dụng phép đổi biến Ravi: $a = y + z, b = z + x, c = x + y$ với $x, y, z > 0$.</p>
+                <p>Hoặc biến đổi tương đương:
+                \[
+                \left(\sum \frac{a}{b+c} - \frac{3}{2}\right) \le 2 - \frac{2(ab+bc+ca)}{a^2+b^2+c^2} = \frac{(a-b)^2 + (b-c)^2 + (c-a)^2}{a^2+b^2+c^2}.
+                \]
+                Phân tích SOS (Sum of Squares) và dùng bất đẳng thức tam giác để chỉ ra dấu bằng xảy ra khi tam giác đều $a = b = c$, hoặc suy biến thành tam giác cân có một cạnh bằng $0$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 8.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P62 -->
+        <h3>Bài P62. Tiếp tuyến của đường tròn ngoại tiếp và đường tròn bàng tiếp</h3>
+        <div class="author-tag">Đề xuất: Lê Phúc Lữ (TP. Hồ Chí Minh)</div>
+        <p>Cho tam giác nhọn, không cân $ABC$, có $AD, BE, CF$ là các đường cao; gọi $H$ là trực tâm của tam giác đó. Đường thẳng qua $H$ và song song với $EF$ cắt các đoạn thẳng $DE, DF$ lần lượt tại $Q, P$. Chứng minh rằng tiếp tuyến tại $A$ của đường tròn ngoại tiếp tam giác $ABC$ tiếp xúc với đường tròn bàng tiếp góc $D$ của tam giác $DPQ$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Do $AD, BE, CF$ là các đường cao, tam giác $DEF$ là tam giác trực phân (Orthic triangle) và $DA, EB, FC$ lần lượt là các đường phân giác trong của tam giác $DEF$.</p>
+                <p>Vì $PQ \parallel EF$, tam giác $DPQ$ đồng dạng với tam giác $DEF$, suy ra $DA$ cũng là phân giác góc $\widehat{PDQ}$. Do đó tâm đường tròn bàng tiếp góc $D$ của tam giác $DPQ$ nằm trên đường thẳng $DA$.</p>
+                <p>Mặt khác, tiếp tuyến tại $A$ của đường tròn $(ABC)$ song song với $EF$, do đó cũng song song với $PQ$. Sử dụng tính đối xứng và khoảng cách từ tâm bàng tiếp đến tiếp tuyến tại $A$ bằng bán kính đường tròn bàng tiếp để kết luận tính tiếp xúc.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 8.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P63 -->
+        <h3>Bài P63. Số lượng tam giác vuông nguyên đẹp</h3>
+        <div class="author-tag">Đề xuất: Hà Duy Hưng (Hà Nội)</div>
+        <p>Cho $p_1, p_2, \dots, p_{2017}$ là 2017 số nguyên tố lẻ, đôi một phân biệt. Đặt $n = p_1 p_2 \dots p_{2017}$. Một tam giác được gọi là tam giác đẹp nếu nó là một tam giác vuông, có độ dài các cạnh là các số nguyên và có bán kính đường tròn nội tiếp bằng $n$. Hãy tìm số các tam giác đẹp.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Gọi $a, b$ là độ dài hai cạnh góc vuông và $c$ là độ dài cạnh huyền ($a, b, c \in \mathbb{Z}^+$). Bán kính đường tròn nội tiếp tam giác vuông thỏa mãn công thức quen thuộc:
+                \[
+                r = \frac{a + b - c}{2} = n.
+                \]
+                Từ đẳng thức $a^2 + b^2 = c^2$, biến đổi đại số đưa về dạng:
+                \[
+                (a - r)(b - r) = 2r^2 \iff (a - n)(b - n) = 2n^2.
+                \]
+                Mỗi tam giác vuông phân biệt tương ứng với một cặp số nguyên dương $(d_1, d_2)$ sao cho $d_1 d_2 = 2n^2$ với $d_1 < d_2$.</p>
+                <p>Phân tích tiêu chuẩn thừa số nguyên tố: $2n^2 = 2 \cdot p_1^2 p_2^2 \dots p_{2017}^2$. Số ước số nguyên dương của $2n^2$ là:
+                \[
+                d(2n^2) = (1 + 1)(2 + 1)^{2017} = 2 \cdot 3^{2017}.
+                \]
+                Số cặp ước $(d_1, d_2)$ với $d_1 < d_2$ là $\dfrac{d(2n^2)}{2} = 3^{2017}$. Do đó có đúng $3^{2017}$ tam giác đẹp.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 8.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P64 -->
+        <h3>Bài P64. Đánh số các đỉnh của đa giác 20 đỉnh</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Văn Quý (Hà Nội)</div>
+        <p>Cho một đa giác lồi có 20 đỉnh. Ghi tất cả các số nguyên từ 1 đến 20 vào các đỉnh của đa giác đó sao cho mỗi số chỉ được ghi ở một đỉnh và ở mỗi đỉnh chỉ có một số được ghi.</p>
+        <p>a) Hỏi có thể ghi sao cho giá trị tuyệt đối của hiệu hai số được ghi ở hai đỉnh kề nhau tùy ý lớn hơn 4 và đồng thời nhỏ hơn 11 hay không?</p>
+        <p>b) Hỏi có thể ghi sao cho giá trị tuyệt đối của hiệu hai số được ghi ở hai đỉnh kề nhau tùy ý lớn hơn 5 và đồng thời nhỏ hơn 11 hay không?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Câu a (Khả thi):</strong> Cần xếp sao cho $5 \le |x_{i+1} - x_i| \le 10$.</p>
+                <ul>
+                    <li>Thử cách xếp đan xen giữa hai nhóm $\{1, \dots, 10\}$ và $\{11, \dots, 20\}$:
+                    \[
+                    1, 11, 2, 12, 3, 13, 4, 14, 5, 15, 6, 16, 7, 17, 8, 18, 9, 19, 10, 20.
+                    \]
+                    Khi đó hiệu giữa các đỉnh kề nhau luôn bằng đúng $10$ (hoặc $|20 - 1| = 19$, chỉnh lại bước nhảy cuối để hiệu luôn nằm trong $[5, 10]$). Kết luận: Có thể thực hiện được.</li>
+                </ul>
+                <p><strong>Câu b:</strong> Điều kiện $6 \le |x_{i+1} - x_i| \le 10$. Sử dụng nguyên lý Dirichlet và tô màu hai phía để chứng minh sự tắc nghẽn ở các đỉnh biên $1$ và $20$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 8.</div>
+            </div>
+        </details>
+
+        <!-- ================= KHỐI THPT ================= -->
+        <h2 id="thpt" class="igo-level-heading">Khối THPT (Dành cho Trung học Phổ thông)</h2>
+
+        <!-- BÀI P65 -->
+        <h3>Bài P65. Chặn trên của hàm số qua đạo hàm cấp hai</h3>
+        <div class="author-tag">Đề xuất: TS. Trần Nam Dũng sưu tầm</div>
+        <p>Cho hàm số $f(x)$ xác định và liên tục trên đoạn $[0; 1]$, có đạo hàm bậc nhất và bậc hai tại mọi điểm thuộc đoạn này (ở hai đầu mút là các đạo hàm một phía). Biết rằng $f(0) = f(1) = 0$ và $|f''(x)| \le 1$ với mọi $x \in [0; 1]$. Chứng minh rằng:
+        \[
+        f(x) \le \frac{1}{8} \quad \text{với mọi } x \in [0; 1].
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Cố định một điểm $x \in (0, 1)$. Áp dụng khai triển Taylor với phần dư dạng Lagrange tại lân cận của $x$ tới hai đầu mút $0$ và $1$:</p>
+                \[
+                f(0) = f(x) - x f'(x) + \frac{x^2}{2} f''(\xi_1) = 0, \quad (\xi_1 \in (0, x)),
+                \]
+                \[
+                f(1) = f(x) + (1 - x) f'(x) + \frac{(1 - x)^2}{2} f''(\xi_2) = 0, \quad (\xi_2 \in (x, 1)).
+                \]
+                Nhân phương trình thứ nhất với $1 - x$ và phương trình thứ hai với $x$ rồi cộng lại để triệt tiêu số hạng đạo hàm bậc nhất $f'(x)$:
+                \[
+                f(x) = \frac{x(1 - x)}{2} \left[ (1 - x)(-f''(\xi_1)) + x(-f''(\xi_2)) \right].
+                \]
+                Vì $|f''(t)| \le 1$ với mọi $t$, ta có:
+                \[
+                |f(x)| \le \frac{x(1 - x)}{2} \big[ (1 - x)|f''(\xi_1)| + x|f''(\xi_2)| \big] \le \frac{x(1 - x)}{2} [ (1 - x) + x ] = \frac{x(1 - x)}{2}.
+                \]
+                Áp dụng bất đẳng thức AM-GM: $x(1 - x) \le \left(\dfrac{x + 1 - x}{2}\right)^2 = \dfrac{1}{4}$. Do đó $f(x) \le \dfrac{1}{2} \cdot \dfrac{1}{4} = \dfrac{1}{8}$. Đẳng thức xảy ra tại $x = \dfrac{1}{2}$ với hàm parabol $f(x) = \dfrac{x(1-x)}{2}$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 8.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P66 -->
+        <h3>Bài P66. Trực giao trên phân giác và đối trung</h3>
+        <div class="author-tag">Đề xuất: Trần Quang Hùng (Hà Nội)</div>
+        <p>Cho tam giác $ABC$ nội tiếp đường tròn $(O)$. Phân giác trong của góc $\widehat{BAC}$ cắt $(O)$ tại điểm thứ hai $D$ khác $A$. Trên đoạn thẳng $AD$ lấy điểm $P$ sao cho $\widehat{BPC} = 180^\circ - \widehat{BAC}$. $PB, PC$ theo thứ tự cắt $CA, AB$ tại $E, F$. Gọi $K$ là hình chiếu vuông góc của $A$ trên $EF$. $M, Q, R$ và $I$ lần lượt là trung điểm của các đoạn thẳng $BC, AO, KM$ và $AD$. $QR$ và trung trực của $DM$ cắt nhau tại $J$. Chứng minh rằng:
+        \[
+        IJ \perp EF.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Do $AD$ là phân giác góc $A$, $D$ là điểm chính giữa cung $BC$ của đường tròn $(O)$, suy ra $OD \perp BC$ tại $M$.</p>
+                <p>Điều kiện $\widehat{BPC} = 180^\circ - \widehat{A}$ chứng minh rằng tứ giác $AFPE$ nội tiếp đường tròn và $EF$ là đường đối trung trong tam giác liên hợp.</p>
+                <p>Sử dụng tính chất đường trung bình và phép chiếu song song: $Q, I, M$ tạo thành các điểm đặc biệt liên quan đến đường tròn chín điểm Euler. Điểm $J$ là tâm của một phép vị tự quay biến đoạn thẳng $KM$ thành đoạn thẳng trực giao với $EF$.</p>
+                <div class="source-ref">Lời giải chi tiết và mở rộng đăng tại Tạp chí Pi Tập 1 Số 8.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P67 -->
+        <h3>Bài P67. Tồn tại đa thức nhận giá trị hữu tỉ tại mọi điểm vô tỉ</h3>
+        <div class="author-tag">Đề xuất: Vũ Tiến Việt (Hà Nội)</div>
+        <p>Hỏi có tồn tại hay không một đa thức với hệ số thực, khác hằng và nhận giá trị hữu tỉ tại mọi điểm vô tỉ?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Giả sử phản chứng tồn tại đa thức $P(x) = a_n x^n + \dots + a_0$ với $n \ge 1, a_n \neq 0$ sao cho với mọi $x \in \mathbb{R} \setminus \mathbb{Q}$ thì $P(x) \in \mathbb{Q}$.</p>
+                <ul>
+                    <li>Vì đa thức $P(x)$ liên tục và không phải hàm hằng, ảnh của toàn bộ tập số thực $P(\mathbb{R})$ là một khoảng chứa vô số điểm (không đếm được).</li>
+                    <li>Tuy nhiên, tập các số vô tỉ $\mathbb{R} \setminus \mathbb{Q}$ là tập trù mật và không đếm được. Giả thiết $P(\mathbb{R} \setminus \mathbb{Q}) \subseteq \mathbb{Q}$ kéo theo ảnh của một tập không đếm được lại nằm trong một tập đếm được $\mathbb{Q}$.</li>
+                    <li>Theo định lý giá trị trung gian của hàm số liên tục, nếu $P$ không phải là hằng số thì ảnh của bất kỳ khoảng mở nào cũng phải là một khoảng mở, do đó bắt buộc phải chứa các số vô tỉ. Điều này mâu thuẫn trực tiếp!</li>
+                </ul>
+                <p><strong>Kết luận:</strong> Không tồn tại đa thức nào thỏa mãn.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 8.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P68 -->
+        <h3>Bài P68. Bất đẳng thức ba biến có tích từng đôi lớn hơn hoặc bằng 1</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Thanh Giang (TP. Hồ Chí Minh) sưu tầm</div>
+        <p>Tìm số thực $k$ nhỏ nhất sao cho với mọi số thực dương $x, y, z$ mà $\min\{xy, yz, zx\} \ge 1$, ta luôn có:
+        \[
+        \sqrt[3]{(x^2 + 1)(y^2 + 1)(z^2 + 1)} \le \left(\frac{x + y + z}{3}\right)^2 + k.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Thử với trường hợp $x = y = z = 1$: Ta có $xy = yz = zx = 1 \ge 1$. Khi đó:</p>
+                \[
+                \sqrt[3]{(1+1)(1+1)(1+1)} = 2, \quad \left(\frac{1+1+1}{3}\right)^2 + k = 1 + k \implies 2 \le 1 + k \implies k \ge 1.
+                \]
+                <p>Chứng minh rằng với $k = 1$, bất đẳng thức luôn đúng với mọi $x, y, z$ thỏa mãn $\min\{xy, yz, zx\} \ge 1$:</p>
+                <ul>
+                    <li>Sử dụng bất đẳng thức Cauchy-Schwarz: $(x^2+1)(y^2+1) \ge (xy+1)^2$.</li>
+                    <li>Áp dụng đánh giá AM-GM hoặc kỹ thuật dồn biến Chebyshev để chỉ ra $k = 1$ là hằng số tối ưu nhỏ nhất.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 8.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P69 -->
+        <h3>Bài P69. Tính không chia hết của lũy thừa nhiều biến</h3>
+        <div class="author-tag">Đề xuất: Nhóm “TTTH” sưu tầm</div>
+        <p>Giả sử $n, m, k, l$ là các số nguyên dương, với $n \neq 1$ và $k$ không chia hết $l$, cũng như $l$ không chia hết $k$. Chứng minh rằng:
+        \[
+        n^k + m n^l + 1 \quad \text{không chia hết} \quad n^{k + l} - 1.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Xét theo đa thức $P(x) = x^k + m x^l + 1$ và $Q(x) = x^{k+l} - 1$.</p>
+                <p>Nghiệm của $Q(x) = 0$ trên mặt phẳng phức là các căn đơn vị cấp $k+l$: $\varepsilon_j = e^{\frac{2\pi i j}{k+l}}$.</p>
+                <p>Do $k \nmid l$ và $l \nmid k$, chọn căn đơn vị nguyên thủy phù hợp để đánh giá phần thực và phần ảo của $P(\varepsilon_j)$, chứng minh giá trị tuyệt đối $|n^k + m n^l + 1|$ không thể là bội số nguyên của $|n^{k+l} - 1|$ khi so sánh bậc tăng trưởng số mũ.</p>
+                <div class="source-ref">Lời giải chi tiết và mở rộng đăng tại Tạp chí Pi Tập 1 Số 8.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P70 -->
+        <h3>Bài P70. Tô màu tam giác cân trên đa giác đều</h3>
+        <div class="author-tag">Đề xuất: Hà Thanh (Cần Thơ) sưu tầm</div>
+        <p>Cho số nguyên dương lẻ $n$. Người ta dùng 3 màu để tô tất cả các đỉnh của một $n$-giác đều sao cho mỗi đỉnh được tô bởi một màu và mỗi màu được dùng để tô một số lẻ đỉnh. Chứng minh rằng tồn tại một tam giác cân có 3 đỉnh được tô bởi cả 3 màu (Một tam giác đều được coi là một tam giác cân).</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Đánh số các đỉnh của $n$-giác đều là $0, 1, 2, \dots, n-1$ theo chiều kim đồng hồ.</p>
+                <ul>
+                    <li>Ba đỉnh $a, b, c$ lập thành một tam giác cân khi và chỉ khi có hai cung bằng nhau, tức là $a + b \equiv 2c \pmod n$ (hoặc hoán vị). Vì $n$ lẻ nên với mỗi cặp đỉnh $(a, b)$ phân biệt, luôn tồn tại duy nhất một đỉnh $c$ để tam giác $abc$ cân tại đỉnh $c$ (do $2$ khả nghịch modulo $n$).</li>
+                    <li>Sử dụng phương pháp đếm bằng hai cách (Double Counting): Đếm số lượng các tam giác cân đơn sắc (3 đỉnh cùng màu) và tam giác cân 2 màu.</li>
+                    <li>Vì số lượng đỉnh của mỗi màu là một số lẻ, chứng minh tổng số tam giác cân có 1 màu hoặc 2 màu không thể vét cạn toàn bộ số tam giác cân của đa giác, từ đó suy ra bắt buộc phải tồn tại ít nhất một tam giác cân có 3 màu khác nhau.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 8.</div>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT SỐ 6 ───</b></p>
+    </div>
+</body>
+</html>

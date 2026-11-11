@@ -243,6 +243,13 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '§ Số Đại Số & Đa Thức Tối Tiểu',
+        date: 'November 11, 2026',
+        url: '/posts/math/vmo/so-dai-so-va-da-thuc-toi-tieu.html',
+        tags: ['Đa Thức', 'Số Học', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '§ Luyện Tập Về Thặng Dư Chính Phương',
         date: 'November 10, 2026',
         url: '/posts/math/vmo/luyen-tap-ve-thang-du-chinh-phuong.html',

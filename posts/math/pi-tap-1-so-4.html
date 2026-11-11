@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="../../core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 4)</title>
+    
+    <meta name="post-id" content="PiTap1So4">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="../../pages/toanhoc.html">
+    <meta name="subcategory-name" content="TẠP CHÍ PI">
+    <meta name="subcategory-filter" content="challenge">
+
+    <script src="../../core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề bài và gợi ý tư duy độc lập của SMP cho 10 bài toán Thách thức Toán học trên Tạp chí Pi Tập 1 Số 4 (Tháng 04/2017), từ bài P41 đến P50.">
+    <meta property="og:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 4)">
+    <meta property="og:description" content="10 bài toán Thách thức Toán học Tạp chí Pi Tập 1 Số 4 kèm gợi ý lời giải bám sát tư duy Olympic.">
+    <meta property="og:image" content="https://smp-math.com/core/image/favicon-192.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/pi-tap-1-so-4.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Thách Thức Toán Học: Tạp Chí Pi (Tập 1 Số 4)">
+    <meta name="twitter:description" content="Đề bài P41 - P50 Tạp chí Pi Tập 1 Số 4 kèm gợi ý tư duy của SMP.">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Accordion Gợi Ý Tối Giản Kiểu IGO */
+        details.igo-hint-clean {
+            margin: 10px 0 24px 0;
+            border: none;
+            background: transparent;
+        }
+        summary.igo-hint-trigger {
+            list-style: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            user-select: none;
+            color: var(--exam-bold-color, #111);
+            width: fit-content;
+            outline: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            border-radius: 4px;
+            background: rgba(2, 132, 199, 0.08);
+            transition: background 0.2s;
+        }
+        summary.igo-hint-trigger:hover {
+            background: rgba(2, 132, 199, 0.16);
+        }
+        summary.igo-hint-trigger::-webkit-details-marker,
+        summary.igo-hint-trigger::marker {
+            display: none;
+        }
+        .igo-arrow {
+            display: inline-block;
+            font-size: 0.75rem;
+            transition: transform 0.2s ease-in-out;
+            color: var(--accent-cyan, #0284c7);
+        }
+        details.igo-hint-clean[open] .igo-arrow {
+            transform: rotate(90deg);
+        }
+        .igo-hint-content {
+            padding: 10px 0 10px 18px;
+            margin-top: 8px;
+            border-left: 2px solid var(--accent-cyan, #0284c7);
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: var(--exam-text-color, #334155);
+        }
+        body.dark-mode .igo-hint-content {
+            border-left-color: rgba(56, 189, 248, 0.6);
+        }
+        .igo-level-heading {
+            color: var(--exam-bold-color, #111);
+            font-size: 1.35rem;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1));
+            font-weight: 700;
+        }
+        body.dark-mode .igo-level-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--accent-cyan, #0284c7) !important;
+            text-decoration: none !important;
+            margin: 12px 0 20px 0;
+            transition: transform 0.2s ease;
+        }
+        .igo-nav-link:hover {
+            transform: translateX(-3px);
+        }
+        .igo-mini-toc {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 16px 0 24px 0;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-size: 0.9rem;
+        }
+        body.dark-mode .igo-mini-toc {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .igo-mini-toc a {
+            color: var(--exam-bold-color, #111) !important;
+            text-decoration: none !important;
+            transition: color 0.2s;
+        }
+        .igo-mini-toc a:hover {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+        .author-tag {
+            font-style: italic;
+            color: var(--text-muted, #64748b);
+            font-size: 0.92rem;
+            margin-top: -4px;
+            margin-bottom: 10px;
+        }
+        .source-ref {
+            font-size: 0.88rem;
+            color: var(--text-muted, #64748b);
+            margin-top: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content">
+        <div class="header-box">
+            <h1>Tạp Chí Pi — Tập 1 Số 4</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Chuyên mục Thách thức Toán học (Tháng 04/2017)</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Hệ thống Gợi ý tư duy độc lập biên soạn bởi SMP</h2>
+        </div>
+
+        <!-- LỐI DẪN ĐẦU TRANG ĐẾN TỔNG QUAN -->
+        <div>
+            <a href="thach-thuc-toan-hoc-tap-chi-pi-2017-2024.html" class="igo-nav-link">← Tổng quan Thách thức Toán học Tạp chí Pi (2017 – 2024)</a>
+        </div>
+
+        <!-- MỤC LỤC MINI CHO SỐ PHÁT HÀNH -->
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Khối thi:</span>
+            <a href="#thcs">Khối THCS (Bài P41 – P44)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#thpt">Khối THPT (Bài P45 – P50)</a>
+        </div>
+
+        <!-- ================= KHỐI THCS ================= -->
+        <h2 id="thcs" class="igo-level-heading">Khối THCS (Dành cho Trung học Cơ sở)</h2>
+
+        <!-- BÀI P41 -->
+        <h3>Bài P41. Cặp số nguyên dương thỏa mãn 3 trong 4 điều kiện</h3>
+        <div class="author-tag">Đề xuất: GS. Hà Huy Khoái (Hà Nội)</div>
+        <p>Tìm tất cả các cặp số nguyên dương $(a, b)$ thỏa mãn đúng 3 trong 4 điều kiện dưới đây:</p>
+        <ol style="line-height: 1.8;">
+            <li>$a = 5b + 9$;</li>
+            <li>$a + 6$ chia hết cho $b$;</li>
+            <li>$a + 2017b$ chia hết cho $5$;</li>
+            <li>$a + 7b$ là số nguyên tố.</li>
+        </ol>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Xét tính tương thích giữa các điều kiện:</p>
+                <ul>
+                    <li>Nếu điều kiện (1) đúng: $a = 5b + 9$. Thay vào (4), ta có $a + 7b = 12b + 9 = 3(4b + 3)$ luôn là bội số của $3$. Do $b \ge 1$ nên $4b+3 \ge 7 > 1$, suy ra $a + 7b$ luôn là hợp số. Do đó <strong>điều kiện (4) bắt buộc phải là điều kiện sai</strong>!</li>
+                    <li>Từ đó ba điều kiện (1), (2), (3) phải đồng thời đúng:
+                    <ul>
+                        <li>Từ (2): $a + 6 = 5b + 15$ chia hết cho $b \implies b \mid 15 \implies b \in \{1, 3, 5, 15\}$.</li>
+                        <li>Từ (3): $a + 2017b = 5b + 9 + 2017b = 2022b + 9 \equiv 2b + 4 \pmod 5$. Để biểu thức chia hết cho $5$ thì $2b + 4 \equiv 0 \pmod 5 \implies b \equiv 3 \pmod 5$.</li>
+                    </ul>
+                    </li>
+                    <li>Đối chiếu tập ước $b \in \{1, 3, 5, 15\}$, ta chọn được $b = 3 \implies a = 5(3) + 9 = 24$.</li>
+                    <li>Xét các trường hợp giả sử điều kiện (1) sai: Biện luận tương tự để kiểm tra xem có cặp $(a, b)$ nào thỏa mãn (2), (3), (4) hay không.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 6.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P42 -->
+        <h3>Bài P42. Chọn số có tổng lập phương không chia hết cho 4</h3>
+        <div class="author-tag">Đề xuất: Lưu Thanh Hà (Kiên Giang)</div>
+        <p>Hỏi có thể chọn ra tối đa bao nhiêu số từ 2017 số nguyên dương đầu tiên, sao cho tổng lập phương của hai số bất kì trong các số được chọn ra là một số không chia hết cho 4?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Khảo sát số dư của $x^3$ khi chia cho $4$:</p>
+                <ul>
+                    <li>Nếu $x$ chẵn: $x \equiv 0, 2 \pmod 4 \implies x^3 \equiv 0 \pmod 4$.</li>
+                    <li>Nếu $x \equiv 1 \pmod 4 \implies x^3 \equiv 1 \pmod 4$.</li>
+                    <li>Nếu $x \equiv 3 \pmod 4 \implies x^3 \equiv 27 \equiv 3 \pmod 4$.</li>
+                </ul>
+                <p>Để tổng lập phương hai số bất kỳ không chia hết cho $4$:</p>
+                <ul>
+                    <li>Không thể chọn $\ge 2$ số chẵn, vì tổng hai lập phương chẵn sẽ có dạng $0 + 0 = 0 \equiv 0 \pmod 4$. Do đó <strong>chỉ được chọn tối đa $1$ số chẵn</strong>.</li>
+                    <li>Không thể đồng thời chọn một số dạng $4k+1$ và một số dạng $4k+3$, vì $1 + 3 = 4 \equiv 0 \pmod 4$. Do đó toàn bộ các số lẻ được chọn phải cùng thuộc lớp $4k+1$ hoặc cùng thuộc lớp $4k+3$.</li>
+                </ul>
+                <p>Đếm số lượng số dạng $4k+1$ trong tập $\{1, 2, \dots, 2017\}$ là $505$ số. Cộng thêm $1$ số chẵn tùy ý, ta thu được tối đa $505 + 1 = 506$ số.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 6.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P43 -->
+        <h3>Bài P43. Bất đẳng thức ba biến trên mặt cầu</h3>
+        <div class="author-tag">Đề xuất: Võ Quốc Bá Cẩn (Hà Nội)</div>
+        <p>Cho $a, b, c$ là ba số thực thỏa mãn điều kiện $a^2 + b^2 + c^2 = 3$. Chứng minh bất đẳng thức sau:
+        \[
+        (2 - a)(2 - b)(2 - c) \ge abc.
+        \]
+        Hỏi đẳng thức xảy ra khi và chỉ khi nào?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $p = a + b + c$, $q = ab + bc + ca$, $r = abc$. Theo giả thiết: $p^2 - 2q = 3 \implies 2q = p^2 - 3$.</p>
+                <p>Khai triển vế trái:
+                \[
+                (2 - a)(2 - b)(2 - c) = 8 - 4p + 2q - r = 8 - 4p + (p^2 - 3) - r = p^2 - 4p + 5 - r.
+                \]
+                Bất đẳng thức trở thành: $p^2 - 4p + 5 \ge 2r \iff (p - 2)^2 + 1 \ge 2r$.</p>
+                <p>Sử dụng bất đẳng thức Cauchy-Schwarz hoặc đánh giá $r = abc \le \left(\dfrac{a^2+b^2+c^2}{3}\right)^{3/2} = 1$. Vì $(p - 2)^2 \ge 0$ nên $(p - 2)^2 + 1 \ge 1 \ge 2r$ (chú ý phân tích trường hợp khi $p$ biến thiên). Đẳng thức xảy ra khi và chỉ khi $a = b = c = 1$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 6.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P44 -->
+        <h3>Bài P44. Tỉ số tiếp tuyến và trực tâm</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Lê Phước (Hà Nội)</div>
+        <p>Cho tam giác nhọn $ABC$, với $AB < AC$, nội tiếp đường tròn $(O)$. Tiếp tuyến tại $A$ của $(O)$ cắt $BC$ tại $T$. Gọi $H$ là hình chiếu vuông góc của $A$ trên $OT$. Đường tròn ngoại tiếp tam giác $TBH$ cắt $(O)$ tại điểm thứ hai $D$ khác $B$, $BD$ cắt $AO$ tại $L$. Gọi $K$ là giao điểm của $AD$ và $BC$. Chứng minh rằng:
+        \[
+        \frac{HT}{HO} = 2\frac{KT}{KO}.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Do $TA$ là tiếp tuyến của $(O)$ và $AH \perp OT$, theo hệ thức lượng trong tam giác vuông $OAT$ ta có $TA^2 = TH \cdot TO$.</p>
+                <p>Mặt khác theo phương tích của điểm $T$ đối với đường tròn $(O)$: $TA^2 = TB \cdot TC$. Do tứ giác $TBHD$ nội tiếp nên $TH \cdot TO = TB \cdot TC = TD \cdot \dots$, suy ra $D$ có các tính chất đối xứng qua cực và đối cực.</p>
+                <p>Sử dụng chùm điều hòa xác định bởi tiếp tuyến $TA$ và cát tuyến $TBC$, kết hợp với hệ thức Newton cho hàng điểm điều hòa để suy ra tỉ số cần chứng minh.</p>
+                <div class="source-ref">Lời giải chi tiết và mở rộng đăng tại Tạp chí Pi Tập 1 Số 6.</div>
+            </div>
+        </details>
+
+        <!-- ================= KHỐI THPT ================= -->
+        <h2 id="thpt" class="igo-level-heading">Khối THPT (Dành cho Trung học Phổ thông)</h2>
+
+        <!-- BÀI P45 -->
+        <h3>Bài P45. Điểm đối xứng qua trực tâm hình thang</h3>
+        <div class="author-tag">Đề xuất: Trần Quang Hùng (Hà Nội)</div>
+        <p>Cho hình thang $ABCD$ có hai đáy là $AB$ và $CD$, $CD = 2AB$. Gọi $P$ là trung điểm của $CD$. Trên các đường thẳng $BC, AD$, lấy các điểm $M, N$ tùy ý ($M \in BC, N \in AD$). $PA$ cắt $DM$ tại $R$ và $PB$ cắt $CN$ tại $Q$. Các đường tròn $(PAB)$ và $(PQR)$ cắt nhau tại điểm thứ hai $X$ khác $P$. Trên đường tròn $(PQR)$, lấy điểm $Y$ sao cho $PY \parallel QR$. Gọi $H$ là trực tâm của tam giác $PAB$ và gọi $K$ là điểm đối xứng với $H$ qua $QR$. Chứng minh rằng:
+        \[
+        XK \perp XY.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Nhận xét rằng $AB = DP = PC$ và $AB \parallel CD$, do đó các tứ giác $ABPD$ và $ABCP$ đều là các hình bình hành.</p>
+                <p>Áp dụng định lý Pappus cho hai bộ ba điểm thẳng hàng trên các cạnh hình thang để xác định tính chất thẳng hàng và đồng quy của các đường chéo.</p>
+                <p>Sử dụng tính chất đối xứng của trực tâm qua dây cung của đường tròn ngoại tiếp: Điểm đối xứng của trực tâm qua một cạnh luôn nằm trên đường tròn ngoại tiếp. Từ đó suy ra $K$ thuộc đường tròn $(PQR)$, kết hợp với $PY \parallel QR$ để chứng minh $XY$ là đường kính hoặc góc $\widehat{XKY} = 90^\circ$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 6.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P46 -->
+        <h3>Bài P46. Nghiệm phân biệt và khoảng cách giữa các nghiệm</h3>
+        <div class="author-tag">Đề xuất: Nhóm “TTTH” sưu tầm</div>
+        <p>Cho đa thức $P(x)$ với hệ số thực, bậc $n$ và có $n$ nghiệm thực đôi một phân biệt ($n \ge 2$).</p>
+        <p>a) Chứng minh rằng đa thức $Q(x) = P(x) + P'(x)$ cũng có $n$ nghiệm thực đôi một phân biệt.</p>
+        <p>b) Gọi $a_1 < a_2 < \dots < a_n$ là các nghiệm của $P(x)$ và $b_1 < b_2 < \dots < b_n$ là các nghiệm của $Q(x)$. Chứng minh rằng:
+        \[
+        \min_{1 \le i \le n-1} (a_{i+1} - a_i) \le \min_{1 \le i \le n-1} (b_{i+1} - b_i).
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Câu a:</strong> Xét hàm số phụ $g(x) = e^x P(x)$. Khi đó $g'(x) = e^x (P(x) + P'(x)) = e^x Q(x)$. Vì $P(x)$ có $n$ nghiệm thực phân biệt $a_1 < a_2 < \dots < a_n$, theo <strong>Định lý Rolle</strong> trên mỗi khoảng $(a_i, a_{i+1})$ luôn tồn tại ít nhất một nghiệm của $g'(x) = 0 \implies Q(x) = 0$. Kết hợp với việc $\lim_{x \to -\infty} g(x) = 0$, ta chứng minh được $Q(x)$ có đúng $n$ nghiệm thực phân biệt xen kẽ.</p>
+                <p><strong>Câu b:</strong> Sử dụng đẳng thức vi phân $\dfrac{Q(x)}{P(x)} = 1 + \sum_{k=1}^n \dfrac{1}{x - a_k}$. Đánh giá độ dốc và đạo hàm cấp hai tại các nghiệm để suy ra khoảng cách giữa hai nghiệm gần nhau nhất của $Q(x)$ không thể co lại so với khoảng cách ban đầu của $P(x)$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 6.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P47 -->
+        <h3>Bài P47. Hằng số tốt nhất cho bất đẳng thức ba biến</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Văn Huyện (TP. Hồ Chí Minh)</div>
+        <p>Tìm số thực $k$ bé nhất sao cho với mọi bộ ba số thực không âm $a, b, c$, ta luôn có:
+        \[
+        abc + k\big((a - b)^2 + (b - c)^2 + (c - a)^2\big) + 2 \ge a + b + c.
+        \]
+        </p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Chặn dưới của $k$:</strong></p>
+                <ul>
+                    <li>Cho $a = b \to 1$ và $c \to 0$: Bất đẳng thức trở thành $0 + k(0 + 1 + 1) + 2 \ge 2 \implies 2k \ge 0 \implies k \ge 0$.</li>
+                    <li>Cho $a = 2, b = c = 0$: Bất đẳng thức trở thành $0 + k(4 + 0 + 4) + 2 \ge 2 \implies 8k \ge 0$.</li>
+                    <li>Khảo sát kỹ hơn khi $a = x, b = x, c = 0$ với $x > 0$: $2kx^2 + 2 \ge 2x \iff k \ge \dfrac{x - 1}{x^2}$. Giá trị lớn nhất của biểu thức $\dfrac{x - 1}{x^2}$ đạt tại $x = 2$, có giá trị bằng $\dfrac{1}{4}$. Do đó điều kiện cần là $k \ge \dfrac{1}{4}$.</li>
+                </ul>
+                <p><strong>Chứng minh $k = \dfrac{1}{4}$ thỏa mãn:</strong> Biến đổi đưa về tổng bình phương phân tích SOS (Sum of Squares) hoặc dồn biến về biên.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 6.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P48 -->
+        <h3>Bài P48. Đa thức nguyên phân tích được</h3>
+        <div class="author-tag">Đề xuất: Nguyễn Tuấn Ngọc (Tiền Giang)</div>
+        <p>Tìm tất cả các số nguyên $n \ge 2$ và tất cả các bộ $n$ số nguyên $a_1 < a_2 < \dots < a_n$ sao cho đa thức:
+        \[
+        S(x) = (x - a_1)(x - a_2)\dots(x - a_n) - 3
+        \]
+        phân tích được thành tích của hai đa thức khác hằng, với hệ số nguyên.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Giả sử $S(x) = G(x)H(x)$ với $G(x), H(x) \in \mathbb{Z}[x]$ có bậc $\ge 1$ và $\deg G + \deg H = n$.</p>
+                <p>Tại mỗi điểm $x = a_i$ ($i = 1, \dots, n$), ta có:
+                \[
+                G(a_i)H(a_i) = S(a_i) = -3.
+                \]
+                Vì $G(a_i), H(a_i)$ là các số nguyên và $-3$ là số nguyên tố nên tập giá trị của $G(a_i) + H(a_i)$ chỉ có thể nhận các giá trị $1 + (-3) = -2$ hoặc $(-1) + 3 = 2$.</p>
+                <p>Từ đó xét đa thức tổng $G(x) + H(x)$, đánh giá số nghiệm nguyên để chỉ ra $n$ không thể vượt quá $3$. Xét từng trường hợp $n = 2$ và $n = 3$ để tìm tường minh các nghiệm $a_i$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 6.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P49 -->
+        <h3>Bài P49. Tập hợp số nguyên chia hết lũy thừa bậc hai</h3>
+        <div class="author-tag">Đề xuất: Hà Duy Hưng (Hà Nội)</div>
+        <p>Kí hiệu $S$ là tập hợp gồm tất cả các số nguyên dương $n$ thỏa mãn điều kiện:
+        \[
+        (2^n + 3^n)(3^n + 5^n) \equiv 0 \pmod{n^2}.
+        \]
+        </p>
+        <p>a) Chứng minh rằng nếu $n \in S$ và $n \ge 5$ thì $n \equiv 0 \pmod{2015}$.</p>
+        <p>b) Chứng minh rằng $S$ là tập vô hạn.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p><strong>Câu a:</strong> Phân tích $2015 = 5 \times 13 \times 31$. Gọi $p$ là ước nguyên tố nhỏ nhất của $n$.</p>
+                <ul>
+                    <li>Nếu $p \mid (2^n + 3^n)$, theo tính chất cấp số mũ ta suy ra cấp của $2 \cdot 3^{-1}$ chia hết cho $2n$ nhưng không chia hết cho $n$. Do $p$ là ước nguyên tố nhỏ nhất nên $p - 1$ không có ước chung $> 1$ với $n$, từ đó buộc $p$ phải là một trong các ước nguyên tố đặc biệt.</li>
+                    <li>Sử dụng bổ đề nâng lũy thừa LTE (Lifting The Exponent Lemma) để kiểm tra số mũ của $5, 13, 31$ chia hết cho $n^2$.</li>
+                </ul>
+                <p><strong>Câu b:</strong> Xây dựng nghiệm bằng quy nạp: Nếu $n_k \in S$, chọn ước nguyên tố mới $q$ thỏa mãn đồng dư để tạo ra $n_{k+1} = n_k \cdot q \in S$.</p>
+                <div class="source-ref">Lời giải chi tiết và danh sách bạn đọc giải đúng đăng tại Tạp chí Pi Tập 1 Số 6.</div>
+            </div>
+        </details>
+
+        <!-- BÀI P50 -->
+        <h3>Bài P50. Số cặp bạn bè tối đa trong 1000 số nguyên</h3>
+        <div class="author-tag">Đề xuất: TS. Trần Nam Dũng (TP. Hồ Chí Minh)</div>
+        <p>Hai số nguyên dương $a, b$ được gọi là bạn bè nếu $\dfrac{a}{b} \in \left\{2; 3; 5; \dfrac{1}{2}; \dfrac{1}{3}; \dfrac{1}{5}\right\}$. Hỏi trong 1000 số nguyên dương đôi một phân biệt có nhiều nhất bao nhiêu cặp bạn bè?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý của SMP</summary>
+            <div class="igo-hint-content">
+                <p>Xây dựng mô hình đồ thị $G = (V, E)$ với $1000$ đỉnh là các số nguyên đã cho. Hai đỉnh nối với nhau bằng một cạnh nếu tỉ số của chúng thuộc $\{2, 3, 5\}$.</p>
+                <ul>
+                    <li>Nhận xét: Mỗi số nguyên $x$ biểu diễn duy nhất dưới dạng $x = m \cdot 2^\alpha 3^\beta 5^\gamma$ với $\gcd(m, 30) = 1$. Do đó đồ thị $G$ phân rã thành các thành phần liên thông ứng với từng giá trị $m$.</li>
+                    <li>Trong mỗi thành phần, các đỉnh tương ứng với các điểm nguyên $(\alpha, \beta, \gamma)$ trên lưới 3 chiều. Hai đỉnh kề nhau khi và chỉ khi khoảng cách Manhattan bằng $1$.</li>
+                    <li>Vì đồ thị lưới là một <strong>đồ thị hai phía (bipartite graph)</strong> (tô màu theo tính chẵn lẻ của $\alpha + \beta + \gamma$), đồ thị không chứa chu trình lẻ. Áp dụng định lý cực trị về số cạnh của đồ thị hai phía để tính số cặp bạn bè tối đa.</li>
+                </ul>
+                <div class="source-ref">Lời giải chi tiết và mở rộng đăng tại Tạp chí Pi Tập 1 Số 6.</div>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT SỐ 4 ───</b></p>
+    </div>
+</body>
+</html>
