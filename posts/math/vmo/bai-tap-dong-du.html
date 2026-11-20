@@ -36,12 +36,12 @@
 <body>
     <div id="smp-post-content" style="display: none;">
         <div class="header-box">
-            <h1>Bài Tập Về Hệ Thặng Dư -- Phương Trình Đồng Dư</h1>
+            <h1><b>Bài Tập Về Hệ Thặng Dư -- Phương Trình Đồng Dư</b></h1>
             <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles</h2>
             <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">June 17, 2026</h2>
         </div>
 
-<h3>Bài 1</h3>
+<h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
         <p>Cho $p$ là số nguyên tố lẻ.</p>
         <ul style="list-style-type: none; padding-left: 0;">
             <li>a) Giả sử $p$ lớn hơn 3 và xét đa thức 
@@ -56,10 +56,10 @@
             Chứng minh rằng: với mọi số nguyên $n$ thì phương trình đồng dư $Q(x) \equiv n \pmod{p^p}$ luôn có nghiệm.</li>
         </ul>
 
-        <h3>Bài 2 (TCPi)</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span> (TCPi)</h3>
         <p>Ta gọi số nguyên dương \( n \) là "số đẹp", nếu trong 22 số: \( 5, \, n + 5, \, 2n + 5, \, \dots, \, 21n + 5 \), tồn tại một số có cùng số dư với tích tất cả các số đó, trong phép chia cho 23. Hãy tìm tất cả các số đẹp.</p>
 
-        <h3>Bài 3 (SMP)</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span> (SMP)</h3>
         <p>Với mỗi số nguyên dương $n$, ta kí hiệu $\mathcal{T} (n) = 2^n - 5$.</p>
         <ul style="list-style-type: none; padding-left: 0;">
             <li>a) Xét tập $\mathcal{S}$ là tập hợp tất cả các số nguyên tố sao cho $\forall p \in \mathcal{S}, \exists \  m \in \mathcal{S}: p \mid  \mathcal{T} (m)$. Chứng minh rằng $\mathcal{S}$ có vô hạn phần tử.</li>
@@ -67,13 +67,13 @@
             $$v^n \cdot \mathcal{T}(n) \equiv 2025 \pmod{p}$$</li>
         </ul>
 
-        <h3>Bài 4</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
         <p>Cho số nguyên tố $p\ge 3$ và dãy số tự nhiên $a_1,a_2,\dots,a_{p-2}$ thỏa mãn tính chất $p$ không chia hết $a_k\left(a_k^k-1\right)$ với mọi $k$. Chứng minh rằng từ dãy số trên ta có thể chọn được một số số sao cho tích các số này sau khi trừ đi 2 là bội của $p$.</p>
 
-        <h3>Bài 5</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
         <p>Cho đa thức \( P(x) = x^3 - 11x^2 - 87x + m \), trong đó \( m \in \mathbb{Z} \). Chứng minh rằng với mọi \( m \), tồn tại số nguyên \( n \) sao cho \( P(n) \equiv 0 \pmod{191} \).</p>
 
-        <h3>Bài 6</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 6</span></h3>
         <p>Cho \( S = \{0,1,2,\dots,22\} \) gồm 23 số tự nhiên đầu tiên. Xét các hàm số sau  
         \[f(x) = 3x^{15} + 3x^8 + x + 1 \quad \text{và} \quad g(x) = x^{2022}.\]</p>
         <ul style="list-style-type: none; padding-left: 0;">
@@ -86,10 +86,10 @@
             Chứng minh rằng có thể chuyển các số trong \( S \) về toàn bộ bằng 0 sau hữu hạn các bước như trên.</li>
         </ul>
 
-        <h3>Bài 7</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 7</span></h3>
         <p>Chứng minh rằng với mỗi số tự nhiên $n$, tồn tại một cấp số cộng gồm $n$ số hạng sao cho mọi số hạng của nó đều là lũy thừa của một số tự nhiên với số mũ lớn hơn 1.</p>
-        <div style="background: rgba(255, 255, 255, 0.02); border-left: 3px solid var(--accent-gold); padding: 12px 18px; margin: 14px 0; border-radius: 4px;">
-            <p style="margin: 0 0 8px 0; font-weight: bold; color: var(--accent-gold);">Gợi ý:</p>
+        <div class="smp-longnote">
+            <b>Gợi ý:</b>
             <ol style="margin: 0; padding-left: 20px; font-size: 0.92rem; color: var(--text-muted);">
                 <li>Việc chỉ ra một cấp số cộng nào là khó. Do đó việc đầu tiên là nghĩ đến chọn cấp số cộng nào cho dễ kiểm tra. Cấp số cộng đơn giản nhất là $1, 2, \dots, n$. Tuy nhiên dãy này không thỏa. Do đó ta nghĩ đến chọn cấp số cộng "tương tự như trên" là $a, 2a, 3a, \dots, na$.</li>
                 <li style="margin-top: 6px;">Vì mong muốn $a, 2a, \dots, na$ là lũy thừa của một số tự nhiên. Do đó số $a$ cần sự xuất hiện của các hạng tử $2, 3, \dots, n$ trong biểu diễn, tức cần có dạng:
@@ -97,26 +97,26 @@
             </ol>
         </div>
 
-        <h3>Bài 8 (IMO Shortlist 1999)</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 8</span> (IMO Shortlist 1999)</h3>
         <p>Tìm tất cả các số nguyên dương $n$ để tồn tại số nguyên $m$ thoả mãn $2^n - 1 \mid m^2 + 9$.</p>
-        <div style="background: rgba(255, 255, 255, 0.02); border-left: 3px solid var(--accent-gold); padding: 12px 18px; margin: 14px 0; border-radius: 4px;">
-            <p style="margin: 0 0 8px 0; font-weight: bold; color: var(--accent-gold);">Gợi ý:</p>
+        <div class="smp-longnote">
+            <b>Gợi ý:</b>
             <ol style="margin: 0; padding-left: 20px; font-size: 0.92rem; color: var(--text-muted);">
                 <li>Chứng minh được \(n\) là lũy thừa của \(2\).</li>
                 <li style="margin-top: 6px;">Phân tích \(2^n-1\) thành tích các nhân tử là các số "Fermat" \(F_n = 2^{2^n} + 1\) và áp dụng tính chất <i>hai số Fermat thì nguyên tố cùng nhau</i>.</li>
             </ol>
         </div>
 
-        <h3>Bài 9</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 9</span></h3>
         <p>Chứng minh rằng với mọi số nguyên dương $n$ thì 
         $$\left[\dfrac{(n-1)!}{n\cdot (n+1)} \right] \;\vdots \; 2$$</p>
 
-        <h3>Bài 10 (VMF)</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 10</span> (VMF)</h3>
         <p>Giả sử phương trình \( x^{2017} + ax^2 + bx + c = 0 \) với các hệ số nguyên \( a, b, c \) có 3 nghiệm nguyên là \( x_1, x_2, x_3 \). Chứng minh rằng:  
         \[(a + b + c + 1)(x_1 - x_2)(x_2 - x_3)(x_3 - x_1)\]  
         chia hết cho \(2017\).</p>
 
-        <h3>Bài 11 (Số Carmichael)</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 11</span> (Số Carmichael)</h3>
         <p>Chỉ ra sự tồn tại của các hợp số \( n \) sao cho với bất kì số nguyên \( a \) thì \( a^n - a \) chia hết cho \( n \).</p>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>

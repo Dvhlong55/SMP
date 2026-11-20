@@ -12,9 +12,9 @@
     --exam-paper-border: rgba(92,225,230,0.3);
     --exam-paper-shadow: 0 8px 32px rgba(0,0,0,0.5);
     --exam-text-color: #ddd;
-    --exam-bold-color: #f4f4f4;
-    --exam-title-color: #f0f0f0;
-    --exam-divider-color: rgba(92,225,230,0.1);
+    --exam-bold-color: #ffffff;
+    --exam-title-color: #f4f4f4;
+    --exam-divider-color: rgba(255, 255, 255, 0.12);
 }
 
 body:not(.dark-mode) {
@@ -27,8 +27,8 @@ body:not(.dark-mode) {
     --exam-paper-shadow: 0 10px 40px rgba(0,0,0,0.08);
     --exam-text-color: #334155;
     --exam-bold-color: #0f172a;
-    --exam-title-color: #1e293b;
-    --exam-divider-color: rgba(15,23,42,0.08);
+    --exam-title-color: #0f172a;
+    --exam-divider-color: rgba(15,23,42,0.10);
 }
 
 body.parchment-mode {
@@ -42,7 +42,7 @@ body.parchment-mode {
     --exam-text-color: #2a1f18;
     --exam-bold-color: #1a110b;
     --exam-title-color: #201610;
-    --exam-divider-color: rgba(116, 95, 77, 0.18);
+    --exam-divider-color: rgba(116, 95, 77, 0.22);
 }
 
 body.parchment-mode .exam-tag {
@@ -240,7 +240,45 @@ body.light-mode .side-widget-title {
 .exam-paper ol,
 .exam-paper ul  { margin: 10px 0; padding-left: 18px; }
 .exam-paper li  { margin: 8px 0; }
-.exam-paper b   { color: var(--exam-bold-color); transition: color 0.3s ease; }
+.exam-paper b,
+.exam-paper strong {
+    color: var(--exam-bold-color);
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+/* Bôi đen (selection) & highlight (<mark>) tùy biến theo 3 giao diện */
+body.dark-mode .exam-paper ::selection {
+    background: rgba(92, 225, 230, 0.28);
+    color: #ffffff;
+}
+body:not(.dark-mode):not(.parchment-mode) .exam-paper ::selection {
+    background: rgba(0, 158, 179, 0.22);
+    color: #0f172a;
+}
+body.parchment-mode .exam-paper ::selection {
+    background: rgba(171, 51, 52, 0.22);
+    color: #1a110b;
+}
+
+body.dark-mode .exam-paper mark {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+body:not(.dark-mode):not(.parchment-mode) .exam-paper mark {
+    background: rgba(15, 23, 42, 0.08);
+    color: #0f172a;
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+body.parchment-mode .exam-paper mark {
+    background: rgba(171, 51, 52, 0.10);
+    color: #1a110b;
+    padding: 1px 4px;
+    border-radius: 3px;
+}
 
 .exam-divider {
     border: none;
@@ -512,6 +550,13 @@ body.dark-mode .smp-progress-checkbox:checked::after {
    SMP ACADEMIC TEMPLATE (Based on template.tex / LaTeX Bookstyle)
    Hỗ trợ hoàn hảo cả 3 giao diện: Dark Mode, Light Mode, Parchment Mode
    ======================================================== */
+.exam-paper .header-box h1,
+.exam-paper .header-box h1:has(mjx-container) {
+    font-weight: 700 !important;
+}
+
+.exam-paper h2.smp-section-title,
+.exam-paper h2.smp-section-title:has(mjx-container),
 .smp-section-title {
     text-align: left !important;
     font-size: 1.45rem !important;
@@ -524,6 +569,8 @@ body.dark-mode .smp-progress-checkbox:checked::after {
     letter-spacing: 0.3px;
 }
 
+.exam-paper h3.smp-subsection-title,
+.exam-paper h3.smp-subsection-title:has(mjx-container),
 .smp-subsection-title {
     font-size: 1.18rem !important;
     font-weight: 700 !important;
@@ -534,6 +581,8 @@ body.dark-mode .smp-progress-checkbox:checked::after {
     margin-bottom: 12px !important;
 }
 
+.exam-paper h3.smp-problem-header,
+.exam-paper h3.smp-problem-header:has(mjx-container),
 .smp-problem-header {
     border-left: none !important;
     padding-left: 0 !important;
@@ -560,6 +609,24 @@ body.dark-mode .smp-progress-checkbox:checked::after {
     letter-spacing: 0.2px;
 }
 
+body.dark-mode .smp-problem-badge {
+    border-color: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.04);
+    color: #ffffff;
+}
+
+body:not(.dark-mode):not(.parchment-mode) .smp-problem-badge {
+    border-color: #1e293b;
+    background: #ffffff;
+    color: #0f172a;
+}
+
+body.parchment-mode .smp-problem-badge {
+    border-color: #ab3334;
+    background: rgba(171, 51, 52, 0.04);
+    color: #201610;
+}
+
 .smp-graybox {
     background: rgba(128, 128, 128, 0.08);
     border-radius: 6px;
@@ -570,15 +637,15 @@ body.dark-mode .smp-progress-checkbox:checked::after {
 }
 
 body.dark-mode .smp-graybox {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.055);
 }
 
 body:not(.dark-mode):not(.parchment-mode) .smp-graybox {
-    background: rgba(0, 0, 0, 0.045);
+    background: rgba(15, 23, 42, 0.045);
 }
 
 body.parchment-mode .smp-graybox {
-    background: rgba(60, 40, 20, 0.05);
+    background: rgba(60, 40, 20, 0.055);
 }
 
 .smp-longnote {
@@ -594,7 +661,7 @@ body.dark-mode .smp-longnote {
 }
 
 body:not(.dark-mode):not(.parchment-mode) .smp-longnote {
-    border-left-color: rgba(0, 0, 0, 0.35);
+    border-left-color: rgba(15, 23, 42, 0.35);
 }
 
 body.parchment-mode .smp-longnote {

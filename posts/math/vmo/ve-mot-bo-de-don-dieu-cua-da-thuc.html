@@ -36,22 +36,22 @@
 <body>
     <div id="smp-post-content" style="display: none;">
         <div class="header-box">
-            <h1>$\S$ Về Một Bổ Đề Đơn Điệu Của Đa Thức</h1>
+            <h1><b>$\S$ Về Một Bổ Đề Đơn Điệu Của Đa Thức</b></h1>
             <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles</h2>
             <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">November 2, 2026</h2>
         </div>
 
         <p style="font-style: italic; color: var(--text-muted); margin-bottom: 24px;">Trong các bài toán đa thức tại các kỳ thi học sinh giỏi quốc gia và Olympic, việc khảo sát giới hạn và tính chất đơn điệu của đa thức tại vô cực thường mang lại những lời giải rất ngắn gọn, bất ngờ và hiệu quả. Dưới đây là bổ đề quan trọng cùng một số ứng dụng tiêu biểu.</p>
 
-        <h2 style="text-align: left !important; font-size: 1.55rem; font-weight: 700; color: var(--accent-gold); border-bottom: 1.5px solid var(--border-light); padding-bottom: 8px; margin-top: 36px; margin-bottom: 18px;">I. Bổ Đề &amp; Chứng Minh</h2>
+        <h2 class="smp-section-title">I. Bổ Đề &amp; Chứng Minh</h2>
 
-        <div class="note-box" style="background: rgba(92, 225, 230, 0.06); border: 1px solid rgba(92, 225, 230, 0.25); border-left: 4px solid var(--accent-cyan); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
-            <b style="color: var(--accent-cyan); font-size: 1.05rem;">Bổ đề (Tính đơn điệu của đa thức ở vô cực):</b><br>
+        <div class="smp-graybox">
+            <b>Bổ đề (Tính đơn điệu của đa thức ở vô cực):</b><br>
             <p style="margin-top: 8px;">Cho đa thức $P(x) \in \mathbb{R}[x]$ khác đa thức hằng. Khi đó $P(x)$ là hàm đơn điệu nghiêm ngặt (tăng hoặc giảm) kể từ một giá trị nào đó. Cụ thể, nếu hệ số bậc cao nhất của $P(x)$ là số dương thì $P(x)$ là hàm tăng nghiêm ngặt kể từ một giá trị nào đó trở đi.</p>
         </div>
 
-        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
-            <b style="color: #c084fc; font-size: 1.05rem;">Chứng minh:</b>
+        <div class="smp-graybox">
+            <b>Chứng minh:</b>
             <p style="margin-top: 8px;">Xét đa thức $P(x) \in \mathbb{R}[x]$ khác hằng, có dạng:</p>
             \[
             P(x) = a_n x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0 \quad (a_n \neq 0, \; n \ge 1).
@@ -79,27 +79,27 @@
             <p style="margin-top: 10px; font-style: italic; color: var(--text-muted);">*Nhận xét:* Hoàn toàn tương tự, nếu hệ số cao nhất $a_n < 0$ thì $P(x)$ là hàm giảm nghiêm ngặt kể từ một giá trị nào đó. Đồng thời khi $x \to -\infty$, bằng cách đổi biến $t = -x$, đa thức cũng thể hiện tính đơn điệu nghiêm ngặt.</p>
         </div>
 
-        <h2 style="text-align: left !important; font-size: 1.55rem; font-weight: 700; color: var(--accent-gold); border-bottom: 1.5px solid var(--border-light); padding-bottom: 8px; margin-top: 42px; margin-bottom: 18px;">II. Các Bài Tập Ứng Dụng</h2>
+        <h2 class="smp-section-title">II. Các Bài Tập Ứng Dụng</h2>
 
-        <h3>Bài 1.</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
         <p>Cho $P, Q$ là hai đa thức hệ số thực khác đa thức hằng thỏa mãn:</p>
         \[
         \forall x \in \mathbb{R}, \quad \lfloor P(x) \rfloor = \lfloor Q(x) \rfloor.
         \]
         <p>Chứng minh rằng $P(x) \equiv Q(x)$.</p>
 
-        <h3>Bài 2.</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
         <p>Tìm tất cả các đa thức $f(x) \in \mathbb{R}[x]$ sao cho với mọi số nguyên dương $n \in \mathbb{N}^*$, phương trình $f(x) = n$:</p>
         <p style="padding-left: 20px;">a) Có ít nhất 1 nghiệm nguyên.</p>
         <p style="padding-left: 20px;">b) Có ít nhất 1 nghiệm hữu tỷ.</p>
 
-        <h3>Bài 3.</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
         <p>Cho $P(x)$ là đa thức hệ số thực khác hằng thỏa mãn: tồn tại vô số cặp số nguyên $m, n$ sao cho $P(m) + P(n) = 0$. Chứng minh rằng đồ thị của hàm số $y = P(x)$ có tâm đối xứng.</p>
 
-        <h3>Bài 4.</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
         <p>Cho $P(x)$ là đa thức hệ số thực khác hằng thỏa mãn: tồn tại vô số cặp số nguyên $m \neq n$ sao cho $P(m) = P(n)$. Chứng minh rằng đồ thị của hàm số $y = P(x)$ có trục đối xứng.</p>
 
-        <h3>Bài 5.</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
         <p>Tìm các đa thức $f(x), g(x) \in \mathbb{Z}[x]$ monic thỏa mãn:
         \[
         \sigma(f(p)) = g(p) \quad \text{với mọi số nguyên tố } p.

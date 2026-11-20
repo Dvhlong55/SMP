@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('link[href*="post.css"]')) {
         const linkPost = document.createElement('link');
         linkPost.rel = 'stylesheet';
-        linkPost.href = depthPrefix + 'core/css/post.css?v=37';
+        linkPost.href = depthPrefix + 'core/css/post.css?v=38';
         head.appendChild(linkPost);
     }
     if (contentHtml.includes('solution-mailbox') && !document.querySelector('link[href*="mailbox.css"]')) {
