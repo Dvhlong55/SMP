@@ -108,10 +108,10 @@
 
         <div class="smp-longnote">
             <b>Ví dụ mở đầu.</b> Cho $u_1 = a > 0$ và $u_{n+1} = \left[1 + \frac{1}{n(n+2)}\right] u_n + \frac{1}{n+2}$ với mọi $n \ge 1$. Chứng minh tồn tại vô số $n$ để $u_n > 99\,999$.<br><br>
-            <i>Lời giải:</i> Nhân hai vế với $\frac{n+2}{n+1}$, ta được $\frac{n+2}{n+1} u_{n+1} = \frac{n+1}{n} u_n + \frac{1}{n+1}$. Đặt $v_n = \frac{n+1}{n} u_n$ thì $v_{n+1} - v_n = \frac{1}{n+1}$. Cộng dồn lại ta có $v_n = 2a - 1 + H_n \to +\infty$, suy ra $u_n = \frac{n}{n+1} v_n \to +\infty$. $\square$
+            <i>Gợi ý:</i> Nhân hai vế với $\frac{n+2}{n+1}$ rồi đặt $v_n = \frac{n+1}{n} u_n$ để đưa về $v_{n+1} - v_n = \frac{1}{n+1}$, từ đó xuất hiện $H_n \to +\infty$.
         </div>
 
-        <h2 class="smp-section-title">§2. Các Bài Toán VMO Và Chuyên Đề Dãy Số</h2>
+        <h2 class="smp-section-title">§2. Các Bài Toán Chọn Lọc</h2>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2.1</span> (Trải nghiệm VMO 2025)</h3>
         <p>Cho dãy số $(x_n)_{n\ge 1}$ thỏa mãn $x_1 \in \mathbb{R}$ và</p>
@@ -120,38 +120,25 @@
             <li>Chứng minh rằng tồn tại vô hạn số nguyên dương $m$ sao cho $x_m \le \dfrac{1}{m}$.</li>
             <li>Chứng minh rằng dãy số $(x_n)$ có giới hạn hữu hạn và tìm giới hạn đó.</li>
         </ol>
-        <p><b>Lời giải.</b></p>
-        <p><b>a)</b> Giả sử phản chứng chỉ có hữu hạn số nguyên dương $m$ sao cho $x_m \le \frac{1}{m}$. Khi đó tồn tại $N_0 \in \mathbb{N}^*$ sao cho với mọi $n \ge N_0$, ta có $x_n > \frac{1}{n}$. Do đó $x_{n+1} = x_n - \frac{1}{n}$ với mọi $n \ge N_0$. Cộng dồn từ $N_0$ đến $n-1$:</p>
-        $$x_n = x_{N_0} - \sum_{k=N_0}^{n-1} \frac{1}{k}.$$
-        <p>Vì $\sum_{k=N_0}^{\infty} \frac{1}{k} = +\infty$, vế phải tiến ra $-\infty$ khi $n \to \infty$, dẫn tới $x_n < 0$ với $n$ đủ lớn, mâu thuẫn với $x_n \ge 0$. Vậy có vô hạn số nguyên dương $m$ thỏa mãn $x_m \le \frac{1}{m}$.</p>
-        <p><b>b)</b> Nếu tại bước $m$ có $x_m \le \frac{1}{m}$ thì $x_{m+1} = \left|x_m - \frac{1}{m}\right| \le \frac{1}{m}$, và bằng quy nạp ta thấy $0 \le x_n \le \frac{1}{m}$ với mọi $n \ge m$. Vì có vô hạn chỉ số $m$ như vậy nên theo nguyên lý kẹp, $\lim_{n\to\infty} x_n = 0$. $\square$</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Câu a) Giả sử phản chứng $x_n > \frac{1}{n}$ với mọi $n \ge N_0$, phá giá trị tuyệt đối rồi cộng dồn và dùng tính phân kỳ của $\sum \frac{1}{k}$ để suy ra $x_n < 0$ (vô lý). Câu b) Nếu $x_m \le \frac{1}{m}$ thì $0 \le x_n \le \frac{1}{m}$ với mọi $n \ge m$.
+        </div>
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2.2</span> (VMO 2022)</h3>
-        <p>Cho số thực $a \ge 0$ và dãy số $(u_n)_{n\ge 1}$ xác định bởi $u_1 = 6$ và</p>
-        $$u_{n+1} = \frac{2n+a}{n} + \sqrt{\frac{n+a}{n}u_n + 4}, \quad \forall n \ge 1.$$
-        <p>Chứng minh rằng với mọi $a \ge 0$, dãy số $(u_n)$ có giới hạn hữu hạn.</p>
-        <p><b>Lời giải.</b></p>
-        <p>Giải phương trình giới hạn $L = 2 + \sqrt{L + 4}$ ta được $L = 5$. Bằng quy nạp dễ chứng minh $u_n > 5$ với mọi $n \ge 1$. Ta biến đổi hiệu $u_{n+1} - 5$:</p>
-        $$u_{n+1} - 5 = \frac{a}{n} + \frac{\frac{n+a}{n}u_n - 5}{\sqrt{\frac{n+a}{n}u_n + 4} + 3} < \frac{a}{n} + \frac{1}{6}\left(\frac{n+a}{n}u_n - 5\right).$$
-        <p>Vì hệ số trước $u_n - 5$ nhỏ hơn $1$ (cụ thể là $\frac{1}{6}$), ta có thể kẹp $u_n - 5$ bởi một dãy phụ tuyến tính có hệ số co $\lambda \in \left(\frac{1}{6}, 1\right)$ và số hạng tự do tiến về $0$, từ đó suy ra $\lim_{n\to\infty} u_n = 5$. $\square$</p>
-
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2.3</span> (Chuyên đề Dãy số)</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2.2</span></h3>
         <p>Đặt $S_n = \sum_{k=2}^{n} k \cos\dfrac{\pi}{k}$. Tính giới hạn $\lim_{n\to+\infty} \dfrac{S_n}{n^2}$.</p>
-        <p><b>Lời giải.</b></p>
-        <p>Áp dụng bất đẳng thức $1 - \dfrac{x^2}{2} \le \cos x \le 1$ với $x = \dfrac{\pi}{k}$ ($k \ge 2$), nhân hai vế với $k$ rồi lấy tổng từ $k = 2$ đến $n$:</p>
-        $$\sum_{k=2}^{n} k - \frac{\pi^2}{2}\sum_{k=2}^{n} \frac{1}{k} \le S_n \le \sum_{k=2}^{n} k.$$
-        <p>Ta có $\sum_{k=2}^n k = \dfrac{n^2+n-2}{2}$ và $\sum_{k=2}^n \frac{1}{k} = H_n - 1 < \ln n$. Chia hai vế cho $n^2$ và dùng $\lim_{n\to\infty} \dfrac{\ln n}{n^2} = 0$, ta được $\lim_{n\to+\infty} \frac{S_n}{n^2} = \frac{1}{2}$. $\square$</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Áp dụng bất đẳng thức $1 - \frac{x^2}{2} \le \cos x \le 1$ với $x = \frac{\pi}{k}$ để kẹp $S_n$ bằng $\sum_{k=2}^n k - \frac{\pi^2}{2}(H_n - 1)$ và $\sum_{k=2}^n k$, rồi dùng $H_n < 1 + \ln n$.
+        </div>
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2.4</span> (Tổng hợp Dãy số)</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2.3</span></h3>
         <p>Cho các số thực $a, b, c$ và dãy số $(x_n)_{n\ge 1}$ xác định bởi</p>
         $$x_n = \frac{a}{3n-2} + \frac{b}{3n-1} + \frac{c}{3n}, \quad \forall n \ge 1.$$
         <p>Đặt $y_n = x_1 + x_2 + \dots + x_n$. Chứng minh rằng dãy $(y_n)$ có giới hạn hữu hạn khi và chỉ khi $a + b + c = 0$.</p>
-        <p><b>Lời giải.</b></p>
-        <p>Tách $x_n = \dfrac{a+b+c}{3n} + \dfrac{2a}{3n(3n-2)} + \dfrac{b}{3n(3n-1)}$. Khi đó:</p>
-        $$y_n = \sum_{k=1}^n x_k = \frac{a+b+c}{3} H_n + \sum_{k=1}^n \left(\frac{2a}{3k(3k-2)} + \frac{b}{3k(3k-1)}\right).$$
-        <p>Tổng thứ hai hội tụ khi $n \to \infty$ vì số hạng tổng quát có bậc $\frac{1}{k^2}$. Do $H_n \to +\infty$, dãy $(y_n)$ hội tụ khi và chỉ khi $a + b + c = 0$. $\square$</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Tách $x_k = \frac{a+b+c}{3k} + \frac{2a}{3k(3k-2)} + \frac{b}{3k(3k-1)}$. Tổng hai phân thức sau hội tụ do bị chặn bởi chuỗi $\sum \frac{1}{k^2}$, còn phần đầu cho $\frac{a+b+c}{3}H_n$.
+        </div>
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2.5</span> (China South East MO 2021)</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2.4</span> (China South East MO 2021)</h3>
         <p>Cho dãy số $(a_n)$ xác định bởi $a_1 = \dfrac{1}{2}$ và với mọi $n \ge 2$ ta có $0 < a_n \le a_{n-1}$ và</p>
         $$a_n^2(a_{n-1}+1) + a_{n-1}^2(a_n+1) - 2a_n a_{n-1}(a_n a_{n-1} + a_n + 1) = 0.$$
         <ol type="a" style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
@@ -160,79 +147,67 @@
             $$\ln\left(\frac{n}{2} + 1\right) < S_n < \ln(n+1).$$
             </li>
         </ol>
-        <p><b>Lời giải.</b></p>
-        <p><b>a)</b> Đặt $x_n = \dfrac{1}{a_n} > 0$, chia hai vế cho $a_n^2 a_{n-1}^2$ và rút gọn ta được $x_n - x_{n-1} = 1$. Suy ra $x_n = n + 1$, tức là $a_n = \dfrac{1}{n+1}$.</p>
-        <p><b>b)</b> Ta có $S_n = \sum_{k=1}^n \frac{1}{k+1} = H_{n+1} - 1$. Áp dụng bất đẳng thức $\ln(1+x) < x$ cho các đoạn thích hợp và $H_{n+1} - 1 < \int_1^{n+1} \frac{dx}{x} = \ln(n+1)$, ta suy ra điều phải chứng minh. $\square$</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Câu a) Chia hai vế cho $a_n^2 a_{n-1}^2$ và đặt $x_n = \frac{1}{a_n}$ để thu được $x_n - x_{n-1} = 1$, suy ra $a_n = \frac{1}{n+1}$. Câu b) Biểu diễn $S_n = H_{n+1} - 1$ rồi đánh giá bằng tích phân của $\frac{1}{x}$ hoặc $\ln(1+x) < x$.
+        </div>
 
-        <h2 class="smp-section-title">§3. Các Bài Toán Trong Kỷ Yếu Olympic Sinh Viên (OTSV)</h2>
+        <h2 class="smp-section-title">§3. Các Bài Toán Từ Olympic Sinh Viên (OTSV)</h2>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3.1</span> (OTSV 2022)</h3>
         <p>Cho dãy số $a_0, a_1, \dots, a_n$ ($n \ge 2$) xác định bởi $a_0 = 0$ và</p>
         $$a_k = \frac{1}{n+1} + \frac{1}{n+2} + \dots + \frac{1}{n+k}, \quad k = 1, 2, \dots, n.$$
         <p>Chứng minh bất đẳng thức:</p>
         $$\sum_{k=0}^{n-1} \frac{e^{a_k}}{n+k+1} + (\ln 2 - a_n)e^{a_n} < 1.$$
-        <p><b>Lời giải.</b></p>
-        <p>Nhận xét $a_k = H_{n+k} - H_n$, nên $a_{k+1} - a_k = \frac{1}{n+k+1}$ và $a_n < \ln 2$. Với mỗi $k$, vì hàm $e^x$ đồng biến nên:</p>
-        $$\frac{e^{a_k}}{n+k+1} = e^{a_k}(a_{k+1} - a_k) < \int_{a_k}^{a_{k+1}} e^x dx = e^{a_{k+1}} - e^{a_k}.$$
-        <p>Cộng từ $k = 0$ đến $n-1$ và kết hợp với $(\ln 2 - a_n)e^{a_n} < \int_{a_n}^{\ln 2} e^x dx = 2 - e^{a_n}$, ta thu được vế trái nhỏ hơn $e^{\ln 2} - e^0 = 1$. $\square$</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Nhận xét $a_k = H_{n+k} - H_n$, nên $a_{k+1} - a_k = \frac{1}{n+k+1}$ và $a_n < \ln 2$. Dùng đánh giá $e^{a_k}(a_{k+1} - a_k) < \int_{a_k}^{a_{k+1}} e^x dx = e^{a_{k+1}} - e^{a_k}$ rồi cộng dồn theo sai phân rút gọn.
+        </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3.2</span> (OTSV 2022)</h3>
         <p>Giả sử $a_1 = \dfrac{1}{2}$ và $a_{n+1} = a_n - a_n^2$. Chứng minh rằng giới hạn sau tồn tại hữu hạn:</p>
         $$\lim_{n\to\infty} \left(\frac{1}{a_n} - n - \ln n\right).$$
-        <p><b>Lời giải.</b></p>
-        <p>Xét sai phân nghịch đảo: $\dfrac{1}{a_{k+1}} - \dfrac{1}{a_k} = \dfrac{1}{1 - a_k} = 1 + a_k + \dfrac{a_k^2}{1-a_k}$. Dễ chứng minh $a_k \sim \frac{1}{k}$ (thực chất $a_k = \frac{1}{k} + O\left(\frac{\ln k}{k^2}\right)$). Khi cộng dồn từ $k = 1$ đến $n - 1$, số hạng $1$ cho $(n-1)$, số hạng $a_k$ tạo ra phần chính $H_{n-1} = \ln n + \gamma + o(1)$, còn $\sum \frac{a_k^2}{1-a_k}$ hội tụ. Do đó giới hạn tồn tại hữu hạn. $\square$</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Xét sai phân $\frac{1}{a_{k+1}} - \frac{1}{a_k} = 1 + a_k + \frac{a_k^2}{1-a_k}$, cộng dồn từ $k = 1$ đến $n - 1$ rồi đối chiếu tổng $\sum a_k$ với $H_{n-1}$ và $\ln n$.
+        </div>
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3.3</span> (OTSV 2019)</h3>
-        <p>Cho số thực $a > 1$. Tính giới hạn:</p>
-        $$\lim_{n\to\infty} \frac{n}{a^{n+1}}\left(a + \frac{a^2}{2} + \dots + \frac{a^n}{n}\right).$$
-        <p><b>Lời giải.</b></p>
-        <p>Đặt $x_n = \sum_{k=1}^n \frac{a^k}{k}$ và $y_n = \frac{a^{n+1}}{n}$. Vì $a > 1$ nên $y_n$ tăng (với $n$ đủ lớn) và $y_n \to +\infty$. Áp dụng định lý Stolz–Cesàro:</p>
-        $$\lim_{n\to\infty} \frac{x_{n+1} - x_n}{y_{n+1} - y_n} = \lim_{n\to\infty} \frac{\frac{a^{n+1}}{n+1}}{\frac{a^{n+2}}{n+1} - \frac{a^{n+1}}{n}} = \frac{1}{a - 1}. \quad \square$$
-
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3.4</span> (OTSV 2017)</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3.3</span> (OTSV 2017)</h3>
         <ol type="a" style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
             <li>Tính tổng chuỗi $\sum_{n=1}^{\infty} (-1)^{n-1}\ln\left(1 + \frac{1}{n}\right)$ (ĐH Ngoại thương).</li>
-            <li>Tính chuỗi $M = \sum_{n=1}^{\infty} \ln\left(1+\frac{1}{n}\right)\ln\left(1+\frac{1}{2n}\right)\ln\left(1+\frac{1}{2n+1}\right)$ (ĐH Thủy Lợi).</li>
             <li>Cho dãy $(a_n)$ giảm ngặt về $0$. Chứng minh $\sum_{n=1}^{\infty} a_n < \infty \iff \sum_{k=1}^{\infty} 2^k a_{2^k} < \infty$ (ĐH Quy Nhơn).</li>
         </ol>
-        <p><b>Lời giải.</b></p>
-        <p><b>a)</b> Xét tổng riêng chẵn $S_{2m} = \ln\left(\prod_{k=1}^m \frac{2k}{2k-1}\cdot\frac{2k}{2k+1}\right)$. Áp dụng công thức Wallis, khi $m \to \infty$ tích bên trong tiến tới $\frac{\pi}{2}$, nên tổng chuỗi bằng $\ln\left(\frac{\pi}{2}\right)$.</p>
-        <p><b>c)</b> Đây là tiêu chuẩn cô đặc Cauchy, chứng minh bằng cách kẹp từng khối từ $2^k$ đến $2^{k+1}-1$ tương tự phép chứng minh của Oresme. Thay $a_n = \frac{1}{n}$ ta có $2^k a_{2^k} = 1$, nên $\sum \frac{1}{n}$ phân kỳ. $\square$</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Câu a) Nhóm từng cặp $2k-1$ và $2k$ ở tổng riêng chẵn $S_{2m}$ để đưa về tích Wallis, kết quả là $\ln\left(\frac{\pi}{2}\right)$. Câu b) Kẹp từng khối từ $2^k$ đến $2^{k+1}-1$ tương tự phép chứng minh của Oresme.
+        </div>
 
         <h2 class="smp-section-title">§4. Một Số Bài Toán Về Giới Hạn Và Định Lý Stolz–Cesàro</h2>
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4.1</span> (Định lý Stolz–Cesàro)</h3>
-        <p>Cho $x_1 = 1$ và $x_{n+1} = x_n + \dfrac{1}{n^2+2}$ với mọi $n \ge 1$. Tính giới hạn:</p>
-        $$\lim_{n\to\infty} \frac{x_1 + x_2 + \dots + x_n}{1 + \frac{1}{2} + \dots + \frac{1}{n}} = \lim_{n\to\infty} \frac{\sum_{k=1}^n x_k}{H_n}.$$
-        <p><b>Lời giải.</b> Dãy $(x_n)$ tăng và bị chặn trên nên hội tụ về $L > 0$. Áp dụng định lý Stolz–Cesàro với tử số $\sum_{k=1}^n x_k$ và mẫu số $H_n \to +\infty$, ta có $\frac{x_{n+1}}{1/(n+1)} = (n+1)x_{n+1} \to +\infty$, suy ra giới hạn đã cho bằng $+\infty$. $\square$</p>
-
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4.2</span> (PTNK 2015–2016)</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4.1</span> (PTNK 2015–2016)</h3>
         <p>Cho $x_n = \dfrac{1}{n}\cos\dfrac{1}{n}$ với $n \ge 1$. Tính giới hạn:</p>
         $$\lim_{n\to\infty} \frac{x_1 + x_3 + \dots + x_{2n-1}}{x_2 + x_4 + \dots + x_{2n}}.$$
-        <p><b>Lời giải.</b> Ta có $\cos\frac{1}{k} = 1 - O\left(\frac{1}{k^2}\right)$, nên $\sum_{k=1}^{2n} \frac{1}{k}\left(1 - \cos\frac{1}{k}\right)$ hội tụ. Tử số có dạng $H_{2n} - \frac{1}{2}H_n + C_1 \sim \frac{1}{2}\ln n$, còn mẫu số là $\frac{1}{2}H_n + C_2 \sim \frac{1}{2}\ln n$. Vậy giới hạn tỉ số bằng $1$. $\square$</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Tách $x_k = \frac{1}{k} - \frac{1 - \cos(1/k)}{k}$. Do $0 \le 1 - \cos\frac{1}{k} \le \frac{1}{2k^2}$ nên phần dư tạo thành chuỗi hội tụ, còn phần chính ở tử số và mẫu số đều xấp xỉ $\frac{1}{2}\ln n$.
+        </div>
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4.3</span> (PTNK 2022–2023)</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4.2</span> (PTNK 2022–2023)</h3>
         <p>Cho $u_1 = 1$ và $u_{n+1} = \sqrt{2 + u_n}$ với mọi $n \ge 1$. Tính:</p>
         $$\lim_{n\to\infty} \frac{1}{\ln n}\left(u_1 + \frac{u_2}{2} + \dots + \frac{u_n}{n}\right).$$
-        <p><b>Lời giải.</b> Dễ thấy $(u_n)$ tăng và $\lim_{n\to\infty} u_n = 2$. Tách $\sum_{k=1}^n \frac{u_k}{k} = 2H_n + \sum_{k=1}^n \frac{u_k-2}{k}$. Vì $2 - u_k$ giảm theo cấp số nhân nên $\sum \frac{u_k-2}{k}$ hội tụ. Chia cho $\ln n$ ta thu được giới hạn bằng $2$. $\square$</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Chứng minh $\lim_{n\to\infty} u_n = 2$ (với tốc độ $|u_k - 2|$ giảm theo cấp số nhân), rồi tách $\sum_{k=1}^n \frac{u_k}{k} = 2H_n + \sum_{k=1}^n \frac{u_k-2}{k}$ và dùng $\lim_{n\to\infty} \frac{H_n}{\ln n} = 1$.
+        </div>
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4.4</span> (Tuyển tập Dãy số)</h3>
-        <p>Cho $x_1 = 1$ và $x_{n+1} = \sqrt{(x_1+1)\left(x_2+\frac{1}{2}\right)\cdots\left(x_n+\frac{1}{n}\right)}$ với mọi $n \ge 1$. Tính $\lim_{n\to\infty} \dfrac{x_n}{2023n + 2024\sqrt{n}}$.</p>
-        <p><b>Lời giải.</b> Tính trực tiếp ta có $x_2 = \sqrt{2} > 1$ và $x_3 = \sqrt{2\left(\sqrt{2}+\frac{1}{2}\right)} > \sqrt{3} > \frac{3}{2}$. Với mọi $n \ge 2$, bình phương hai vế của hệ thức truy hồi cho $x_{n+1}^2 = x_n^2\left(x_n + \frac{1}{n}\right) > x_n^3$. Do $x_3 > \frac{3}{2}$, bằng quy nạp suy ra $x_n$ tăng nhanh hơn cấp số nhân với công bội $\sqrt{\frac{3}{2}} > 1$, nên $\lim_{n\to\infty} \dfrac{x_n}{2023n + 2024\sqrt{n}} = +\infty$. $\square$</p>
-
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4.5</span> (Tuyển tập Dãy số)</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4.3</span></h3>
         <p>Cho số thực $a_1 > 0$ và dãy số $(a_n)$ xác định bởi $a_{n+1} = a_n + \dfrac{1}{a_1 + a_2 + \dots + a_n}$ với mọi $n \ge 1$. Chứng minh rằng $\lim_{n\to\infty} \dfrac{a_n}{\sqrt{2\ln n}} = 1$.</p>
-        <p><b>Lời giải.</b> Đặt $S_n = \sum_{k=1}^n a_k$. Ta có $a_{n+1} - a_n = \frac{1}{S_n}$, suy ra $a_{n+1}^2 - a_n^2 = \frac{2a_n}{S_n} + \frac{1}{S_n^2}$. Vì $S_n - S_{n-1} = a_n$, tổng $\sum \frac{a_n}{S_n}$ có dạng tương tự $\sum \frac{1}{n} = H_n \sim \ln n$. Áp dụng định lý Stolz–Cesàro cho $a_n^2$ và $2\ln n$, ta chứng minh được $\lim_{n\to\infty} \frac{a_n^2}{2\ln n} = 1$, suy ra điều phải chứng minh. $\square$</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Đặt $S_n = \sum_{k=1}^n a_k$, xét $a_{n+1}^2 - a_n^2 = \frac{2a_n}{S_n} + \frac{1}{S_n^2}$ và áp dụng định lý Stolz–Cesàro cho $\frac{a_n^2}{2\ln n}$.
+        </div>
 
         <h2 class="smp-section-title">§5. Bài Toán Mở Rộng</h2>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5.1</span> (Tạp chí Pi)</h3>
         <p>Với mỗi số nguyên dương $n$, ký hiệu $\sigma(n)$ là tổng tất cả các ước số nguyên dương của $n$. Chứng minh rằng với mọi số nguyên dương $n \ge 7$, ta luôn có:</p>
         $$\frac{\sigma(n)}{n} < \ln n.$$
-        <p><b>Lời giải.</b></p>
-        <p>Ta có $\dfrac{\sigma(n)}{n} = \sum_{d \mid n} \frac{1}{d} \le H_n$, nhưng đánh giá này lớn hơn $\ln n$ nên chưa đủ dùng. Thay vào đó, sử dụng tính nhân tính của hàm $\sigma(n)$:</p>
-        $$\frac{\sigma(n)}{n} = \prod_{p^\alpha \parallel n} \frac{\sigma(p^\alpha)}{p^\alpha} < \prod_{p \mid n} \frac{p}{p - 1}.$$
-        <p>Bằng cách xét riêng các ước nguyên tố nhỏ (như $2, 3, 5$) và so sánh với $\ln n$ khi $n \ge 7$, ta thu được bất đẳng thức cần chứng minh. $\square$</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Dù $\frac{\sigma(n)}{n} = \sum_{d \mid n} \frac{1}{d} \le H_n$ nhưng $H_n > \ln n$ nên đánh giá trực tiếp chưa đủ. Hãy dùng tính nhân tính của $\sigma(n)$ để chặn $\frac{\sigma(n)}{n} < \prod_{p \mid n} \frac{p}{p-1}$, rồi xét các trường hợp theo ước nguyên tố nhỏ của $n$.
+        </div>
 
         <div class="smp-longnote">
             <b>Lời kết.</b> Tổng điều hòa $H_n$ xuất hiện khá tự nhiên trong nhiều bài toán dãy số và giới hạn, từ việc kiểm tra tính hội tụ cho đến các đánh giá tiệm cận. Nắm chắc tính phân kỳ của chuỗi điều hòa cùng các bất đẳng thức cơ bản với $\ln n$ sẽ giúp việc xử lý nhóm bài tập này nhẹ nhàng và rõ ràng hơn.
