@@ -173,7 +173,7 @@
         <p>Cho $u_1 = 1$ và $u_{n+1} = \sqrt{2 + u_n}$ với mọi $n \ge 1$. Tính giới hạn:</p>
         $$\lim_{n\to\infty} \frac{1}{\ln n}\left(u_1 + \frac{u_2}{2} + \dots + \frac{u_n}{n}\right).$$
         <p><b>Lời giải.</b></p>
-        <p>Bằng quy nạp dễ dàng kiểm tra $1 \le u_n < 2$ với mọi $n \ge 1$ (vì $u_1 = 1 < 2$, và nếu $u_n < 2$ thì $u_{n+1} = \sqrt{2 + u_n} < \sqrt{4} = 2$). Ta đánh giá sai số $2 - u_n$:</p>
+        <p><b>Cách 1 (Đánh giá trực tiếp).</b> Bằng quy nạp dễ dàng kiểm tra $1 \le u_n < 2$ với mọi $n \ge 1$ (vì $u_1 = 1 < 2$, và nếu $u_n < 2$ thì $u_{n+1} = \sqrt{2 + u_n} < \sqrt{4} = 2$). Ta đánh giá sai số $2 - u_n$:</p>
         $$2 - u_{n+1} = 2 - \sqrt{2 + u_n} = \frac{2 - u_n}{2 + \sqrt{2 + u_n}} < \frac{2 - u_n}{2 + \sqrt{3}} < \frac{2 - u_n}{3}, \quad \forall n \ge 1.$$
         <p>Suy ra $0 < 2 - u_k < \dfrac{2 - u_1}{3^{k-1}} = \dfrac{1}{3^{k-1}}$ với mọi $k \ge 1$. Bây giờ tách tổng cần xét:</p>
         $$\sum_{k=1}^{n} \frac{u_k}{k} = 2\sum_{k=1}^{n} \frac{1}{k} - \sum_{k=1}^{n} \frac{2 - u_k}{k} = 2H_n - \sum_{k=1}^{n} \frac{2 - u_k}{k}.$$
@@ -181,7 +181,15 @@
         $$0 < \sum_{k=1}^{n} \frac{2 - u_k}{k} < \sum_{k=1}^{n} \frac{1}{3^{k-1}} < \sum_{k=1}^{\infty} \frac{1}{3^{k-1}} = \frac{3}{2}.$$
         <p>Do đó với mọi $n \ge 2$:</p>
         $$\frac{2H_n}{\ln n} - \frac{3}{2\ln n} < \frac{1}{\ln n}\sum_{k=1}^{n} \frac{u_k}{k} < \frac{2H_n}{\ln n}.$$
-        <p>Vì $\lim_{n\to\infty} \dfrac{H_n}{\ln n} = 1$ (theo §1.5) và $\lim_{n\to\infty} \dfrac{3}{2\ln n} = 0$, theo nguyên lý kẹp ta thu được giới hạn bằng $2$. $\square$</p>
+        <p>Vì $\lim_{n\to\infty} \dfrac{H_n}{\ln n} = 1$ (theo §1.5) và $\lim_{n\to\infty} \dfrac{3}{2\ln n} = 0$, theo nguyên lý kẹp ta thu được giới hạn bằng $2$.</p>
+
+        <p><b>Cách 2 (Tìm công thức tổng quát bằng lượng giác).</b> Đặt $u_n = 2a_n$ với mọi $n \ge 1$. Khi đó $a_1 = \dfrac{1}{2} = \cos\dfrac{\pi}{3}$ và hệ thức truy hồi trở thành:</p>
+        $$2a_{n+1} = \sqrt{2 + 2a_n} \iff a_{n+1} = \sqrt{\frac{1 + a_n}{2}}, \quad \forall n \ge 1.$$
+        <p>Nhờ công thức hạ bậc $\sqrt{\dfrac{1 + \cos\alpha}{2}} = \cos\dfrac{\alpha}{2}$ (với $\alpha \in [0, \pi]$), bằng quy nạp ta tìm được công thức tổng quát:</p>
+        $$a_n = \cos\left(\frac{\pi}{3 \cdot 2^{n-1}}\right) \implies u_n = 2\cos\left(\frac{\pi}{3 \cdot 2^{n-1}}\right), \quad \forall n \ge 1.$$
+        <p>Sử dụng $1 - \cos x = 2\sin^2\frac{x}{2}$ và bất đẳng thức $|\sin t| \le |t|$, ta có:</p>
+        $$0 < 2 - u_k = 4\sin^2\left(\frac{\pi}{3 \cdot 2^k}\right) \le \left(\frac{\pi}{3 \cdot 2^{k-1}}\right)^2 = \frac{\pi^2}{9 \cdot 4^{k-1}}.$$
+        <p>Suy ra $0 < \sum_{k=1}^n \dfrac{2 - u_k}{k} < \dfrac{\pi^2}{9}\sum_{k=1}^{\infty} \dfrac{1}{4^{k-1}} = \dfrac{4\pi^2}{27}$. Tách $\sum_{k=1}^n \frac{u_k}{k} = 2H_n - \sum_{k=1}^n \frac{2-u_k}{k}$ rồi chia cho $\ln n$ tương tự Cách 1, ta cũng thu được giới hạn bằng $2$. $\square$</p>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 4</span></h3>
         <p>Cho số thực $a_1 > 0$ và dãy số $(a_n)$ xác định bởi:</p>
