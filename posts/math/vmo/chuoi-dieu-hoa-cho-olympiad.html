@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link class="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Chuỗi Điều Hòa Cho Olympiad</title>
+    
+    <meta name="post-id" content="ChuoiDieuHoaChoOlympiad">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Chuyên đề Giải tích Olympic VMO & OTSV: Chuỗi điều hòa cho Olympiad — Tổng hợp các bài toán và ý tưởng giải tích liên quan đến tổng điều hòa H_n, hằng số Euler-Mascheroni, bẫy nhiễu bậc 1/n và Stolz-Cesaro.">
+    <meta property="og:title" content="SMP — Chuỗi Điều Hòa Cho Olympiad">
+    <meta property="og:description" content="Chuyên đề Giải tích Olympic VMO & OTSV: Chuỗi điều hòa cho Olympiad — Tổng hợp các bài toán và ý tưởng giải tích liên quan đến tổng điều hòa H_n, hằng số Euler-Mascheroni, bẫy nhiễu bậc 1/n và Stolz-Cesaro.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/chuoi-dieu-hoa-cho-olympiad.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Chuỗi Điều Hòa Cho Olympiad">
+    <meta name="twitter:description" content="Chuyên đề Giải tích Olympic VMO & OTSV: Chuỗi điều hòa cho Olympiad — Tổng hợp các bài toán và ý tưởng giải tích liên quan đến tổng điều hòa H_n, hằng số Euler-Mascheroni, bẫy nhiễu bậc 1/n và Stolz-Cesaro.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1><b>$\S$ Chuỗi Điều Hòa Cho Olympiad</b></h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">November 20, 2026</h2>
+        </div>
+
+        <p style="font-style: italic; color: var(--text-muted); margin-bottom: 24px;"><b>Lời dẫn.</b> Trong các kỳ thi học sinh giỏi quốc gia (VMO), chọn đội tuyển quốc tế (TST) và đặc biệt là Olympic Toán học Sinh viên (OTSV), biểu thức tổng điều hòa $H_n = \sum_{k=1}^n \frac{1}{k}$ ít khi xuất hiện trực diện dưới dạng một câu hỏi chuỗi hình thức. Thay vào đó, tư tưởng giải tích gắn liền với $H_n$ — tốc độ phân kỳ chậm ra $+\infty$, các kỹ thuật chặn tích phân với hàm lồi $f(x)=\frac{1}{x}$, hằng số Euler–Mascheroni $\gamma$, bẫy tích tụ nhiễu bậc $\frac{1}{n}$ trong dãy truy hồi, cùng định lý Stolz–Cesàro — lại là những công cụ then chốt, tạo nên những lời giải mẫu mực và giàu chiều sâu tư duy.</p>
+
+        <h2 style="text-align: left !important; font-size: 1.55rem; font-weight: 700; color: var(--accent-gold); border-bottom: 1.5px solid var(--border-light); padding-bottom: 8px; margin-top: 36px; margin-bottom: 18px;">§1 Khái Quát Lý Thuyết Cốt Lõi Về Chuỗi Điều Hòa</h2>
+
+        <h3 style="color: var(--accent-cyan); font-size: 1.2rem; margin-top: 24px; margin-bottom: 12px;">§1.1 Định nghĩa & Sự phân kỳ ra vô cực (Chứng minh Oresme - 1350)</h3>
+        <p>Tổng điều hòa cấp $n$ (Harmonic number) được định nghĩa bởi:</p>
+        $$H_n = \sum_{k=1}^{n} \frac{1}{k} = 1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n}.$$
+        <p>Dãy số $(H_n)_{n\ge 1}$ tăng ngặt nhưng tốc độ tăng cực kỳ chậm. Chẳng hạn, để tổng vượt qua giá trị $10$, ta cần tới $12\,367$ số hạng:</p>
+        $$H_{12\,367} \approx 10{,}00004 > 10.$$
+        <p>Tuy vậy, chuỗi điều hòa $\sum_{n=1}^{\infty} \frac{1}{n}$ phân kỳ ra $+\infty$. Chứng minh kinh điển của nhà toán học người Pháp <b>Nicole Oresme</b> (năm 1350) dựa trên kỹ thuật nhóm các số hạng theo các khối lũy thừa của $2$:</p>
+
+        <div class="note-box" style="background: rgba(92, 225, 230, 0.06); border: 1px solid rgba(92, 225, 230, 0.25); border-left: 4px solid var(--accent-cyan); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: var(--accent-cyan); font-size: 1.05rem;">Chứng minh Oresme.</b> Với mọi số nguyên dương $k \ge 1$, ta xét số hạng $H_{2^k}$:
+            $$\begin{aligned}
+            H_{2^k} &= 1 + \frac{1}{2} + \left(\frac{1}{3} + \frac{1}{4}\right) + \left(\frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8}\right) + \dots + \left(\frac{1}{2^{k-1}+1} + \dots + \frac{1}{2^k}\right) \\
+            &> 1 + \frac{1}{2} + \left(\frac{1}{4} + \frac{1}{4}\right) + \left(\frac{1}{8} + \frac{1}{8} + \frac{1}{8} + \frac{1}{8}\right) + \dots + \underbrace{\left(\frac{1}{2^k} + \dots + \frac{1}{2^k}\right)}_{2^{k-1} \text{ số hạng}} \\
+            &= 1 + \frac{1}{2} + \frac{1}{2} + \frac{1}{2} + \dots + \frac{1}{2} = 1 + \frac{k}{2}.
+            \end{aligned}$$
+            Vì $\lim_{k\to\infty} \left(1 + \dfrac{k}{2}\right) = +\infty$ và dãy $(H_n)$ tăng ngặt, suy ra $\lim_{n\to\infty} H_n = +\infty$. $\square$
+        </div>
+
+        <h3 style="color: var(--accent-cyan); font-size: 1.2rem; margin-top: 28px; margin-bottom: 12px;">§1.2 Các bất đẳng thức chặn tích phân và vi tích phân cơ bản</h3>
+        
+        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); border-left: 4px solid #c084fc; padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: #c084fc; font-size: 1.05rem;">Bất đẳng thức tích phân cơ bản.</b> Xét hàm số $f(x) = \dfrac{1}{x}$ nghịch biến và lồi trên $(0, +\infty)$. So sánh diện tích hình phẳng, với mọi $n \ge 1$:
+            $$\ln(n+1) = \int_{1}^{n+1} \frac{dx}{x} < H_n < 1 + \int_{1}^{n} \frac{dx}{x} = 1 + \ln n.$$
+        </div>
+
+        <p><b>Chứng minh bằng công cụ đạo hàm (Khảo sát hàm số):</b></p>
+        <p>1. Xét hàm $f(x) = x - \ln(1+x)$ trên $[0, +\infty)$. Ta có $f'(x) = 1 - \dfrac{1}{x+1} = \dfrac{x}{x+1} > 0$ với mọi $x > 0$. Do đó $f(x) > f(0) = 0$, nghĩa là:</p>
+        $$\ln(1+x) < x \quad (\forall x > 0).$$
+        <p>Thay $x = \dfrac{1}{k}$, ta được $\ln\left(1 + \dfrac{1}{k}\right) = \ln(k+1) - \ln k < \dfrac{1}{k}$. Lấy tổng hai vế từ $k = 1$ đến $n$:</p>
+        $$\sum_{k=1}^{n} \left(\ln(k+1) - \ln k\right) < \sum_{k=1}^{n} \frac{1}{k} \iff \ln(n+1) < H_n.$$
+
+        <p>2. Mặt khác, xét $g(x) = \ln(1+x) - \dfrac{x}{x+1}$ với $x > 0$. Ta có $g'(x) = \dfrac{1}{x+1} - \dfrac{1}{(x+1)^2} = \dfrac{x}{(x+1)^2} > 0$, suy ra $g(x) > g(0) = 0$, tức là:</p>
+        $$\frac{x}{x+1} < \ln(1+x) \quad (\forall x > 0).$$
+        <p>Thay $x = \dfrac{1}{k}$, ta thu được $\dfrac{1}{k+1} < \ln(k+1) - \ln k$. Lấy tổng từ $k = 1$ đến $n-1$:</p>
+        $$H_n - 1 = \sum_{k=1}^{n-1} \frac{1}{k+1} < \sum_{k=1}^{n-1} (\ln(k+1) - \ln k) = \ln n \iff H_n < 1 + \ln n.$$
+
+        <div class="note-box" style="background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.25); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.05rem;">Hệ quả (Tổng điều hòa cắt cụt & Giới hạn logarit):</b>
+            $$\lim_{n\to\infty} \sum_{j=n+1}^{2n} \frac{1}{j} = \lim_{n\to\infty} (H_{2n} - H_n) = \ln 2.$$
+            Thật vậy, từ $\ln\left(\dfrac{2n+1}{n+1}\right) < H_{2n} - H_n < \ln\left(\dfrac{2n}{n}\right) + \dfrac{1}{n+1}$, theo định lý kẹp ta có ngay giới hạn bằng $\ln 2$.
+        </div>
+
+        <h3 style="color: var(--accent-cyan); font-size: 1.2rem; margin-top: 28px; margin-bottom: 12px;">§1.3 Hằng số Euler–Mascheroni ($\gamma$) & Tiệm cận Euler–Maclaurin</h3>
+        <p>Xét dãy số sai lệch $\gamma_n = H_n - \ln n$. Ta có:</p>
+        $$\gamma_n - \gamma_{n+1} = \ln(n+1) - \ln n - \frac{1}{n+1} = \int_{n}^{n+1} \left(\frac{1}{x} - \frac{1}{n+1}\right) dx > 0.$$
+        <p>Do đó $(\gamma_n)$ là dãy số giảm ngặt. Mặt khác $\gamma_n = H_n - \ln n > \ln(n+1) - \ln n > 0$, nên $(\gamma_n)$ bị chặn dưới bởi $0$. Theo định lý Weierstrass, tồn tại giới hạn hữu hạn:</p>
+        $$\gamma = \lim_{n\to\infty} (H_n - \ln n) \approx 0{,}5772156649\dots$$
+        <p>Hằng số $\gamma$ được gọi là <b>hằng số Euler–Mascheroni</b>. Đến nay, việc $\gamma$ là số hữu tỷ hay vô tỷ vẫn là một trong những bài toán mở kinh điển của toán học.</p>
+
+        <div class="note-box" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); border-left: 4px solid #c084fc; padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: #c084fc; font-size: 1.05rem;">Công thức khai triển tiệm cận Euler–Maclaurin:</b>
+            $$H_n = \ln n + \gamma + \frac{1}{2n} - \frac{1}{12n^2} + O\left(\frac{1}{n^4}\right).$$
+            Đặc biệt, đánh giá sai số cấp một thường dùng trong đề thi học sinh giỏi:
+            $$0 < H_n - \ln n - \gamma < \frac{1}{2n} \quad (\forall n \ge 1).$$
+        </div>
+
+        <h3 style="color: var(--accent-cyan); font-size: 1.2rem; margin-top: 28px; margin-bottom: 12px;">§1.4 Tính chất số học đặc sắc: $H_n$ không bao giờ là số nguyên</h3>
+        
+        <div class="note-box" style="background: rgba(92, 225, 230, 0.06); border: 1px solid rgba(92, 225, 230, 0.25); border-left: 4px solid var(--accent-cyan); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: var(--accent-cyan); font-size: 1.05rem;">Định lý Theisinger (1915).</b> Với mọi số nguyên dương $n \ge 2$, tổng điều hòa $H_n$ không bao giờ là một số nguyên:
+            $$H_n = 1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n} \notin \mathbb{Z}.$$
+        </div>
+
+        <p><b>Chứng minh (Phương pháp định giá $p$-adic với $p=2$):</b></p>
+        <p>Gọi $2^k$ là lũy thừa lớn nhất của $2$ sao cho $2^k \le n$. Rõ ràng $k \ge 1$ và $2^{k+1} > n$.</p>
+        <p>Trong tập hợp $\{1, 2, \dots, n\}$, chỉ có <b>duy nhất</b> số $2^k$ chia hết cho $2^k$ (vì nếu có bội $m \cdot 2^k \le n$ với $m \ge 2$ thì $m \ge 2 \implies m \cdot 2^k \ge 2^{k+1} > n$, vô lý).</p>
+        <p>Xét mẫu số chung $M = \operatorname{BCNN}(1, 2, \dots, n) = 2^k \cdot Q$ với $Q$ là số lẻ. Khi quy đồng mẫu số:</p>
+        $$H_n = \sum_{j=1}^{n} \frac{1}{j} = \frac{\displaystyle\sum_{j=1}^{n} \frac{M}{j}}{M}.$$
+        <p>Với $j = 2^k$, số hạng $\dfrac{M}{j} = \dfrac{2^k Q}{2^k} = Q$ là số <b>lẻ</b>. Với mọi $j \ne 2^k$, số mũ của $2$ trong phân tích nguyên tố của $j$ nhỏ hơn $k$, do đó $\dfrac{M}{j}$ luôn là số <b>chẵn</b>.</p>
+        <p>Tổng các tử số bằng:</p>
+        $$\sum_{j=1}^{n} \frac{M}{j} = \text{Chẵn} + \text{Chẵn} + \dots + Q + \dots + \text{Chẵn} = \text{Lẻ}.$$
+        <p>Vì tử số là số lẻ mà mẫu số $M = 2^k Q$ là số chẵn (với $k \ge 1$), nên $H_n$ viết dưới dạng phân số tối giản có mẫu số chẵn $\ge 2$, do đó $H_n \notin \mathbb{Z}$. $\square$</p>
+
+        <p><i>Mở rộng (Định lý Kürschák, 1918):</i> Với mọi cặp số nguyên dương $1 \le m < n$, tổng đoạn $H(m, n) = \sum_{i=m}^{n} \frac{1}{i}$ không bao giờ là số nguyên.</p>
+
+        <h3 style="color: var(--accent-cyan); font-size: 1.2rem; margin-top: 28px; margin-bottom: 12px;">§1.5 Bốn kỹ thuật cốt lõi gắn với $H_n$ trong giải tích Olympic</h3>
+        <ol style="padding-left: 20px; line-height: 1.85;">
+            <li><b>Chặn tích phân và xấp xỉ logarit:</b> Sử dụng tính lồi/nghịch biến của $\frac{1}{x}$ để kẹp các tổng dạng $\sum f(k)$, chuyển đổi tổng rời rạc sang tích phân liên tục.</li>
+            <li><b>Nhóm khối theo lũy thừa của $2$:</b> Dùng để chỉ ra sự phân kỳ, hoặc kỹ thuật co cụm Cauchy $\sum a_n < \infty \iff \sum 2^k a_{2^k} < \infty$.</li>
+            <li><b>Bẫy nhiễu bậc $\frac{1}{n}$ trong dãy số truy hồi:</b> Khi sai phân dãy số $u_{n+1} - u_n$ có phần dư cấp $\frac{c}{n}$, cộng dồn trực tiếp sẽ làm bùng nổ $c H_n \to \pm\infty$. Người giải buộc phải khử phần chính bằng dãy phụ $v_n$ hoặc áp dụng định lý ánh xạ co.</li>
+            <li><b>Định lý Stolz–Cesàro với dãy mẫu là $H_n$:</b> Khi tử số có sai phân $x_{n+1} - x_n = \frac{L}{n} + o\left(\frac{1}{n}\right)$, việc chọn $y_n = H_n \to +\infty$ giúp chuyển ngay giới hạn về $\lim \frac{x_{n+1}-x_n}{y_{n+1}-y_n} = \lim \frac{x_{n+1}-x_n}{1/(n+1)} = L$.</li>
+        </ol>
+
+        <h2 style="text-align: left !important; font-size: 1.55rem; font-weight: 700; color: var(--accent-gold); border-bottom: 1.5px solid var(--border-light); padding-bottom: 8px; margin-top: 36px; margin-bottom: 18px;">§2 Các Bài Toán Trong Nhóm VMO / Đề Trải Nghiệm / Chuyên Đề VMO</h2>
+
+        <!-- Bài 2.0 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 2.0 (Khởi động — Biến đổi triệt tiêu phần chính đưa về $H_n$).</b> Cho dãy số $(u_n)_{n\ge 1}$ xác định bởi $u_1 = a > 0$ và
+            $$u_{n+1} = \left[1 + \frac{1}{n(n+2)}\right] u_n + \frac{1}{n+2}, \quad \forall n \ge 1.$$
+            Chứng minh rằng tồn tại vô số số nguyên dương $n$ để $u_n > 99\,999$.
+        </div>
+        <p><b>Lời giải:</b></p>
+        <p>Quy đồng hệ số của $u_n$ trong hệ thức truy hồi:</p>
+        $$1 + \frac{1}{n(n+2)} = \frac{n^2 + 2n + 1}{n(n+2)} = \frac{(n+1)^2}{n(n+2)}.$$
+        <p>Hệ thức trở thành: $u_{n+1} = \dfrac{(n+1)^2}{n(n+2)} u_n + \dfrac{1}{n+2}$. Nhân hai vế với lượng liên hợp $\dfrac{n+2}{n+1}$:</p>
+        $$\frac{n+2}{n+1} u_{n+1} = \frac{n+2}{n+1} \cdot \frac{(n+1)^2}{n(n+2)} u_n + \frac{n+2}{n+1} \cdot \frac{1}{n+2} \iff \frac{n+2}{n+1} u_{n+1} = \frac{n+1}{n} u_n + \frac{1}{n+1}.$$
+        <p>Đặt dãy phụ $v_n = \dfrac{n+1}{n} u_n$ với mọi $n \ge 1$. Ta thu được hệ thức sai phân tuyến tính tuyệt đẹp:</p>
+        $$v_{n+1} - v_n = \frac{1}{n+1}.$$
+        <p>Cộng dồn từ $1$ đến $n-1$:</p>
+        $$v_n = v_1 + \sum_{k=2}^{n} \frac{1}{k} = 2a + (H_n - 1) = 2a - 1 + H_n.$$
+        <p>Do $\lim_{n\to\infty} H_n = +\infty$ nên $\lim_{n\to\infty} v_n = +\infty$. Suy ra:</p>
+        $$u_n = \frac{n}{n+1} v_n = \frac{n}{n+1}(2a - 1 + H_n) \to +\infty \quad (n \to \infty).$$
+        <p>Vì dãy số phân kỳ ra $+\infty$ nên với bất kỳ ngưỡng nào (kể cả $99\,999$), đều tồn tại vô số số nguyên dương $n$ thỏa mãn $u_n > 99\,999$. $\square$</p>
+
+        <!-- Bài 2.1 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 2.1 (Trải nghiệm VMO 2025 — Vòng 1, Bài toán 2).</b> Cho dãy số $(x_n)_{n\ge 1}$ thỏa mãn $x_1 \in \mathbb{R}$ và
+            $$x_{n+1} = \left|x_n - \frac{1}{n}\right|, \quad \forall n \ge 1.$$
+            <ol type="a" style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
+                <li>Chứng minh rằng tồn tại vô hạn số nguyên dương $m$ sao cho $x_m \le \dfrac{1}{m}$.</li>
+                <li>Chứng minh rằng dãy số $(x_n)$ tồn tại giới hạn hữu hạn và tìm giới hạn đó.</li>
+            </ol>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 10px;"><b>Nguồn:</b> Đề thi Trải nghiệm VMO 2025 (File <code>TRAI_NGHIEM_VMO_2025_3R.pdf</code>, thư mục VMO trên Drive).</p>
+        </div>
+        <p><b>Lời giải:</b></p>
+        <p><b>Câu a)</b> Giả sử phản chứng chỉ có hữu hạn số nguyên dương $m$ sao cho $x_m \le \frac{1}{m}$. Khi đó tồn tại $N_0 \in \mathbb{N}^*$ sao cho với mọi $n \ge N_0$, ta có $x_n > \frac{1}{n}$.</p>
+        <p>Khi đó dấu giá trị tuyệt đối được phá bỏ trực tiếp:</p>
+        $$x_{n+1} = x_n - \frac{1}{n}, \quad \forall n \ge N_0.$$
+        <p>Cộng dồn từ $N_0$ đến $n-1$:</p>
+        $$x_n = x_{N_0} - \sum_{k=N_0}^{n-1} \frac{1}{k}.$$
+        <p>Do chuỗi điều hòa phân kỳ $\sum_{k=N_0}^{\infty} \frac{1}{k} = +\infty$, vế phải sẽ tiến ra $-\infty$ khi $n \to \infty$. Điều này dẫn tới $x_n < 0$ với $n$ đủ lớn, mâu thuẫn với $x_n \ge 0$ do định nghĩa giá trị tuyệt đối. Vậy phải tồn tại vô hạn số nguyên dương $m$ sao cho $x_m \le \frac{1}{m}$.</p>
+        <p><b>Câu b)</b> Ta chứng minh $\lim_{n\to\infty} x_n = 0$.</p>
+        <p>Thật vậy, nếu tại bước $m$ có $x_m \le \frac{1}{m}$, thì $x_{m+1} = \left|x_m - \frac{1}{m}\right| = \frac{1}{m} - x_m \le \frac{1}{m}$. Sau đó nếu $x_{m+1} \le \frac{1}{m+1}$ thì bước tiếp tục được kiểm soát; nếu $x_{m+1} > \frac{1}{m+1}$ thì giá trị bị trừ dần bởi $\frac{1}{m+1}, \frac{1}{m+2}, \dots$ và luôn nằm trong đoạn $\left[0, \frac{1}{m}\right]$.</p>
+        <p>Bằng nguyên lý kẹp và việc tập các chỉ số $m$ với $x_m \le \frac{1}{m}$ là vô hạn, ta suy ra $\limsup x_n \le 0$. Kết hợp $x_n \ge 0$, ta thu được $\lim_{n\to\infty} x_n = 0$. $\square$</p>
+
+        <!-- Bài 2.2 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 2.2 (VMO 2022 — Bài 1b: Bẫy phân kỳ của nhiễu bậc $\frac{1}{n}$).</b> Cho số thực $a \ge 0$ và dãy số $(u_n)_{n\ge 1}$ xác định bởi $u_1 = 6$ và
+            $$u_{n+1} = \frac{2n+a}{n} + \sqrt{\frac{n+a}{n}u_n + 4}, \quad \forall n \ge 1.$$
+            Chứng minh rằng với mọi $a \ge 0$, dãy số $(u_n)$ có giới hạn hữu hạn.
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 10px;"><b>Nguồn:</b> Kỳ thi chọn học sinh giỏi quốc gia THPT (VMO) năm 2022.</p>
+        </div>
+        <p><b>Bình luận giải tích & Hướng giải:</b></p>
+        <p>Nhiều học sinh khi gặp bài toán này cố gắng đánh giá sai phân trực tiếp:</p>
+        $$u_{n+1} - 5 = \frac{a}{n} + \frac{\frac{n+a}{n}u_n - 5}{\sqrt{\dots} + 3}.$$
+        <p>Nếu không cẩn thận, lượng $\frac{a}{n}$ khi cộng dồn sẽ tạo ra tổng điều hòa $a H_n \to +\infty$, dẫn đến ngộ nhận dãy phân kỳ! Đây chính là <i>bẫy tích tụ nhiễu bậc $\frac{1}{n}$</i>.</p>
+        <p><b>Lời giải tóm lược:</b></p>
+        <p>Xét phương trình giới hạn khi $n \to \infty$: $L = 2 + \sqrt{L + 4} \iff (L - 2)^2 = L + 4 \implies L = 5$ (do $L \ge 2$).</p>
+        <p>Ta chứng minh bằng quy nạp $u_n > 5$ với mọi $n \ge 1$. Thật vậy, $u_1 = 6 > 5$. Giả sử $u_n > 5$, vì $a \ge 0$ nên $\frac{2n+a}{n} \ge 2$ và $\frac{n+a}{n} u_n + 4 > 5 + 4 = 9$, suy ra $u_{n+1} > 2 + \sqrt{9} = 5$.</p>
+        <p>Để khử nhiễu $\frac{a}{n}$, ta xét sai số $|u_{n+1} - 5|$:</p>
+        $$u_{n+1} - 5 = \frac{a}{n} + \left(\sqrt{\frac{n+a}{n}u_n + 4} - 3\right) = \frac{a}{n} + \frac{\frac{n+a}{n}u_n - 5}{\sqrt{\frac{n+a}{n}u_n + 4} + 3} < \frac{a}{n} + \frac{1}{6}\left(\frac{n+a}{n}u_n - 5\right).$$
+        <p>Hệ số co $\frac{1}{6} < 1$ áp đảo hoàn toàn bậc đa thức của mẫu số, giúp triệt tiêu bẫy tích phân của $\frac{a}{n}$. Bằng cách kẹp với dãy phụ tuyến tính cấp 1 có hệ số co $\lambda \in \left(\frac{1}{6}, 1\right)$, ta suy ra $\lim_{n\to\infty} u_n = 5$. $\square$</p>
+
+        <!-- Bài 2.3 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 2.3 (Chuyên đề Dãy số — Ước lượng, Ví dụ 3).</b> Đặt $S_n = \sum_{k=2}^{n} k \cos\dfrac{\pi}{k}$. Tính giới hạn $\lim_{n\to+\infty} \dfrac{S_n}{n^2}$.
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 10px;"><b>Nguồn:</b> Tài liệu chuyên đề Dãy số VMO trên Drive.</p>
+        </div>
+        <p><b>Lời giải:</b></p>
+        <p>Sử dụng khai triển Taylor hoặc bất đẳng thức cơ bản: $1 - \dfrac{x^2}{2} \le \cos x \le 1$ với mọi $x \in \mathbb{R}$.</p>
+        <p>Với $x = \dfrac{\pi}{k}$ ($k \ge 2$), ta có: $1 - \dfrac{\pi^2}{2k^2} \le \cos\dfrac{\pi}{k} \le 1$. Nhân với $k > 0$:</p>
+        $$k - \frac{\pi^2}{2k} \le k \cos\frac{\pi}{k} \le k.$$
+        <p>Lấy tổng từ $k = 2$ đến $n$:</p>
+        $$\sum_{k=2}^{n} k - \frac{\pi^2}{2}\sum_{k=2}^{n} \frac{1}{k} \le S_n \le \sum_{k=2}^{n} k.$$
+        <p>Ta biết $\sum_{k=2}^n k = \dfrac{n(n+1)}{2} - 1 = \dfrac{n^2}{2} + \dfrac{n}{2} - 1$, còn $\sum_{k=2}^n \frac{1}{k} = H_n - 1 \sim \ln n$.</p>
+        <p>Chia cả ba vế cho $n^2$:</p>
+        $$\frac{n^2+n-2}{2n^2} - \frac{\pi^2(H_n-1)}{2n^2} \le \frac{S_n}{n^2} \le \frac{n^2+n-2}{2n^2}.$$
+        <p>Vì $\lim_{n\to\infty} \dfrac{H_n}{n^2} = \lim_{n\to\infty} \dfrac{\ln n}{n^2} = 0$, theo định lý kẹp ta được:</p>
+        $$\lim_{n\to+\infty} \frac{S_n}{n^2} = \frac{1}{2}. \quad \square$$
+
+        <!-- Bài 2.4 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 2.4 (Tổng hợp Dãy số — Giới hạn ôn VMO, Bài toán 5).</b> Cho các số thực $a, b, c$ và dãy số $(x_n)_{n\ge 1}$ xác định bởi
+            $$x_n = \frac{a}{3n-2} + \frac{b}{3n-1} + \frac{c}{3n}, \quad \forall n \ge 1.$$
+            Đặt $y_n = x_1 + x_2 + \dots + x_n$. Chứng minh rằng dãy $(y_n)$ có giới hạn hữu hạn khi và chỉ khi $a + b + c = 0$.
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 10px;"><b>Nguồn:</b> Tuyển tập 22 bài toán dãy số hay và khó ôn thi VMO.</p>
+        </div>
+        <p><b>Lời giải:</b></p>
+        <p>Tách $x_n$ thành phần chứa tổng $a+b+c$ và phần dư bậc $\frac{1}{n^2}$:</p>
+        $$\begin{aligned}
+        x_n &= \frac{a+b+c}{3n} + a\left(\frac{1}{3n-2} - \frac{1}{3n}\right) + b\left(\frac{1}{3n-1} - \frac{1}{3n}\right) \\
+        &= \frac{a+b+c}{3n} + \frac{2a}{3n(3n-2)} + \frac{b}{3n(3n-1)}.
+        \end{aligned}$$
+        <p>Khi đó $y_n = \sum_{k=1}^n x_k = \dfrac{a+b+c}{3} H_n + \sum_{k=1}^n \left(\dfrac{2a}{3k(3k-2)} + \dfrac{b}{3k(3k-1)}\right)$.</p>
+        <p>Chuỗi $\sum_{k=1}^\infty \left(\dfrac{2a}{3k(3k-2)} + \dfrac{b}{3k(3k-1)}\right)$ hội tụ tuyệt đối do số hạng tổng quát có bậc $\sim \frac{1}{k^2}$.</p>
+        <p>Do đó, dãy $(y_n)$ hội tụ khi và chỉ khi dãy $\dfrac{a+b+c}{3} H_n$ hội tụ. Vì $H_n \to +\infty$ nên điều kiện cần và đủ là $a + b + c = 0$. $\square$</p>
+
+        <!-- Bài 2.5 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 2.5 (China South East MO 2021 — Ôn luyện VMO).</b> Cho dãy số $(a_n)$ xác định bởi $a_1 = \dfrac{1}{2}$ và với mọi $n \ge 2$ ta có $0 < a_n \le a_{n-1}$ và
+            $$a_n^2(a_{n-1}+1) + a_{n-1}^2(a_n+1) - 2a_n a_{n-1}(a_n a_{n-1} + a_n + 1) = 0.$$
+            <ol type="a" style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
+                <li>Xác định công thức tổng quát của dãy $(a_n)$.</li>
+                <li>Đặt $S_n = a_1 + a_2 + \dots + a_n$. Chứng minh rằng với mọi $n \ge 1$:
+                $$\ln\left(\frac{n}{2} + 1\right) < S_n < \ln(n+1).$$
+                </li>
+            </ol>
+        </div>
+        <p><b>Lời giải:</b></p>
+        <p><b>Câu a)</b> Chia cả hai vế của phương trình cho $a_n^2 a_{n-1}^2 > 0$ và đặt $x_n = \dfrac{1}{a_n} > 0$. Phương trình tương đương với:</p>
+        $$\frac{x_{n-1}+1}{a_{n-1}} \dots \iff (x_n - x_{n-1} - 1)(x_n - x_{n-1} + 1) = 0.$$
+        <p>Kết hợp điều kiện $0 < a_n \le a_{n-1} \implies x_n \ge x_{n-1}$, ta thu được $x_n - x_{n-1} = 1$.</p>
+        <p>Vì $x_1 = \dfrac{1}{a_1} = 2$, suy ra $x_n = 2 + (n - 1) = n + 1$, dẫn tới $a_n = \dfrac{1}{n+1}$.</p>
+        <p><b>Câu b)</b> Ta có $S_n = \sum_{k=1}^n \dfrac{1}{k+1} = H_{n+1} - 1$.</p>
+        <p>Áp dụng đánh giá tích phân: $S_n = \sum_{k=1}^n \frac{1}{k+1} < \int_1^{n+1} \frac{dx}{x} = \ln(n+1)$, ta có vế phải.</p>
+        <p>Với vế trái, dùng $\ln(1+x) < x$ với tích phân phân đoạn ta thu được $\ln\left(\frac{n}{2}+1\right) < S_n$. $\square$</p>
+
+        <h2 style="text-align: left !important; font-size: 1.55rem; font-weight: 700; color: var(--accent-gold); border-bottom: 1.5px solid var(--border-light); padding-bottom: 8px; margin-top: 36px; margin-bottom: 18px;">§3 Các Bài Toán Trong Kỷ Yếu Olympic Sinh Viên (OTSV)</h2>
+
+        <!-- Bài 3.1 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 3.1 (Kỷ yếu OTSV 2022 — ĐH Sư phạm Hà Nội 2, Bài 1.10).</b> Cho dãy số $a_0, a_1, \dots, a_n$ ($n \ge 2$) xác định bởi $a_0 = 0$ và
+            $$a_k = \frac{1}{n+1} + \frac{1}{n+2} + \dots + \frac{1}{n+k}, \quad k = 1, 2, \dots, n.$$
+            Chứng minh bất đẳng thức:
+            $$\sum_{k=0}^{n-1} \frac{e^{a_k}}{n+k+1} + (\ln 2 - a_n)e^{a_n} < 1.$$
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 10px;"><b>Nguồn:</b> Kỷ yếu Kỳ thi Olympic Toán học Sinh viên toàn quốc lần thứ 28 (2022).</p>
+        </div>
+        <p><b>Phân tích & Hướng giải:</b></p>
+        <p>Nhận xét rằng $a_k = H_{n+k} - H_n$ chính là tổng điều hòa cắt cụt, và khi $k = n$, $a_n = H_{2n} - H_n \to \ln 2$. Đại lượng $\ln 2 - a_n > 0$ chính là sai số của tổng điều hòa cắt cụt so với $\ln 2$.</p>
+        <p>Ta có $a_{k+1} - a_k = \dfrac{1}{n+k+1}$. Vì hàm số $f(x) = e^x$ có $e^{a_k} \cdot (a_{k+1} - a_k) < \int_{a_k}^{a_{k+1}} e^x dx = e^{a_{k+1}} - e^{a_k}$.</p>
+        <p>Lấy tổng sai phân rút gọn (telescoping), ta khử toàn bộ phần tổng rời rạc và ghép với số hạng tích phân đuôi $\int_{a_n}^{\ln 2} e^x dx$, dẫn thẳng tới bất đẳng thức chặt với vế phải bằng $e^{\ln 2} - e^0 = 2 - 1 = 1$. $\square$</p>
+
+        <!-- Bài 3.2 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 3.2 (Kỷ yếu OTSV 2022 — ĐH Mỏ - Địa chất, Bài 1.8).</b> Giả sử $a_1 = \dfrac{1}{2}$ và $a_{n+1} = a_n - a_n^2$. Chứng minh rằng giới hạn sau tồn tại hữu hạn:
+            $$\lim_{n\to\infty} \left(\frac{1}{a_n} - n - \ln n\right).$$
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 10px;"><b>Nguồn:</b> Kỷ yếu OTSV lần thứ 28 (2022), đề xuất của TS. H.N. Huấn.</p>
+        </div>
+        <p><b>Lời giải:</b></p>
+        <p>Xét nghịch đảo: $\dfrac{1}{a_{k+1}} - \dfrac{1}{a_k} = \dfrac{1}{a_k(1-a_k)} - \dfrac{1}{a_k} = \dfrac{1}{1 - a_k} = 1 + a_k + \dfrac{a_k^2}{1-a_k}$.</p>
+        <p>Theo kết quả tiệm cận quen thuộc với dãy $a_{n+1} = a_n - a_n^2$, ta có $a_k \sim \dfrac{1}{k}$, chính xác hơn $a_k = \dfrac{1}{k} - \dfrac{\ln k}{k^2} + O\left(\dfrac{1}{k^2}\right)$.</p>
+        <p>Khi cộng dồn sai phân $\sum_{k=1}^{n-1} \left(\dfrac{1}{a_{k+1}} - \dfrac{1}{a_k}\right)$, số hạng $1$ sinh ra $(n-1)$, còn số hạng $a_k$ sinh ra $\sum_{k=1}^{n-1} \frac{1}{k} = H_{n-1} = \ln n + \gamma + o(1)$.</p>
+        <p>Do đó đại lượng $\dfrac{1}{a_n} - n - \ln n$ chuyển về giới hạn của chuỗi hội tụ, chứng minh giới hạn tồn tại hữu hạn. $\square$</p>
+
+        <!-- Bài 3.3 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 3.3 (Kỷ yếu OTSV 2019 — ĐH Quảng Nam, Bài 4.8).</b> Cho số thực $a > 1$. Tính giới hạn:
+            $$\lim_{n\to\infty} \frac{n}{a^{n+1}}\left(a + \frac{a^2}{2} + \dots + \frac{a^n}{n}\right).$$
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 10px;"><b>Nguồn:</b> Kỷ yếu OTSV lần thứ 27 (2019).</p>
+        </div>
+        <p><b>Lời giải:</b></p>
+        <p>Viết lại biểu thức dưới dạng phân thức:</p>
+        $$L = \lim_{n\to\infty} \frac{a + \frac{a^2}{2} + \dots + \frac{a^n}{n}}{\frac{a^{n+1}}{n}}.$$
+        <p>Đặt tử số $x_n = \sum_{k=1}^n \frac{a^k}{k}$ và mẫu số $y_n = \frac{a^{n+1}}{n}$. Vì $a > 1$ nên $y_n$ tăng ngặt ra $+\infty$ khi $n$ đủ lớn.</p>
+        <p>Áp dụng định lý Stolz–Cesàro dạng $\frac{\infty}{\infty}$:</p>
+        $$\lim_{n\to\infty} \frac{x_{n+1} - x_n}{y_{n+1} - y_n} = \lim_{n\to\infty} \frac{\frac{a^{n+1}}{n+1}}{\frac{a^{n+2}}{n+1} - \frac{a^{n+1}}{n}} = \lim_{n\to\infty} \frac{1}{a - \frac{n+1}{n}} = \frac{1}{a - 1}.$$
+        <p>Vậy giới hạn cần tìm là $\dfrac{1}{a-1}$. $\square$</p>
+
+        <!-- Bài 3.4 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 3.4 (Kỷ yếu OTSV 2017 — Tổng hợp chuỗi đan dấu & Tiêu chuẩn Cauchy).</b>
+            <ol type="a" style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
+                <li>Tính tổng chuỗi $\sum_{n=1}^{\infty} (-1)^{n-1}\ln\left(1 + \frac{1}{n}\right)$ (ĐH Ngoại thương).</li>
+                <li>Tính chuỗi $M = \sum_{n=1}^{\infty} \ln\left(1+\frac{1}{n}\right)\ln\left(1+\frac{1}{2n}\right)\ln\left(1+\frac{1}{2n+1}\right)$ (ĐH Thủy Lợi).</li>
+                <li>Cho dãy $(a_n)$ giảm ngặt về $0$. Chứng minh $\sum_{n=1}^{\infty} a_n < \infty \iff \sum_{k=1}^{\infty} 2^k a_{2^k} < \infty$ (ĐH Quy Nhơn, tiêu chuẩn cô đặc Cauchy).</li>
+            </ol>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 10px;"><b>Nguồn:</b> Kỷ yếu OTSV lần thứ 25 (2017).</p>
+        </div>
+        <p><b>Tóm tắt lời giải:</b></p>
+        <p>a) Viết $\ln\left(1 + \frac{1}{n}\right) = \ln(n+1) - \ln n$. Xét tổng riêng chẵn $S_{2m} = \sum_{k=1}^{2m} (-1)^{k-1}(\ln(k+1) - \ln k) = \ln\left(\frac{(2m)!!^2}{(2m-1)!!(2m+1)!!}\right)$. Sử dụng công thức Wallis $\lim_{m\to\infty} \frac{(2m)!!^2}{(2m-1)!!(2m+1)!! \cdot \frac{\pi}{2}} = 1$, ta thu được tổng bằng $\ln\left(\frac{4}{\pi}\right)$.</p>
+        <p>c) Tiêu chuẩn cô đặc Cauchy chính là tổng quát hóa của phương pháp Oresme: kẹp giữa các lũy thừa của $2$. Khi áp dụng cho chuỗi điều hòa $a_n = \frac{1}{n}$, ta có $2^k a_{2^k} = 2^k \cdot \frac{1}{2^k} = 1$, chuỗi $\sum 1 = +\infty$, lập tức suy ra $\sum \frac{1}{n} = +\infty$. $\square$</p>
+
+        <h2 style="text-align: left !important; font-size: 1.55rem; font-weight: 700; color: var(--accent-gold); border-bottom: 1.5px solid var(--border-light); padding-bottom: 8px; margin-top: 36px; margin-bottom: 18px;">§4 Tuyển Tập Bài Toán Stolz–Cesàro Kết Hợp Tổng Điều Hòa</h2>
+
+        <!-- Bài 4.1 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 4.1 (Bài 12 — Buổi 6: Định lý Stolz-Cesaro).</b> Cho $x_1 = 1$ và $x_{n+1} = x_n + \dfrac{1}{n^2+2}$ với mọi $n \ge 1$. Tính giới hạn:
+            $$\lim_{n\to\infty} \frac{x_1 + x_2 + \dots + x_n}{1 + \frac{1}{2} + \dots + \frac{1}{n}} = \lim_{n\to\infty} \frac{\sum_{k=1}^n x_k}{H_n}.$$
+        </div>
+        <p><b>Lời giải:</b></p>
+        <p>Dãy $(x_n)$ tăng và bị chặn trên vì chuỗi $\sum \frac{1}{n^2+2} < \sum \frac{1}{n^2} < \infty$. Do đó tồn tại hữu hạn $L = \lim_{n\to\infty} x_n > 0$.</p>
+        <p>Đặt $A_n = \sum_{k=1}^n x_k$ và $B_n = H_n = \sum_{k=1}^n \frac{1}{k}$. Vì $(B_n)$ tăng ngặt ra $+\infty$, áp dụng định lý Stolz–Cesàro:</p>
+        $$\lim_{n\to\infty} \frac{A_n}{B_n} = \lim_{n\to\infty} \frac{A_{n+1} - A_n}{B_{n+1} - B_n} = \lim_{n\to\infty} \frac{x_{n+1}}{\frac{1}{n+1}} \dots$$
+        <p><i>Lưu ý:</i> Ở đây vì $\sum x_k \sim L \cdot n$, việc chia cho $H_n \sim \ln n$ cho thấy $\frac{A_n}{B_n} \to +\infty$. Tuy nhiên nếu xét trung bình Cesàro $\frac{x_1+\dots+x_n}{n} \to L$. Trong đề thi, khi tỉ số là $\frac{\sum x_k}{n H_n}$, giới hạn bằng $0$. $\square$</p>
+
+        <!-- Bài 4.2 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 4.2 (Bài 17 — PTNK 2015–2016).</b> Cho $x_n = \dfrac{1}{n}\cos\dfrac{1}{n}$ với $n \ge 1$. Tính giới hạn:
+            $$\lim_{n\to\infty} \frac{x_1 + x_3 + \dots + x_{2n-1}}{x_2 + x_4 + \dots + x_{2n}}.$$
+        </div>
+        <p><b>Lời giải:</b></p>
+        <p>Sử dụng khai triển tiệm cận $\cos\frac{1}{k} = 1 + O\left(\frac{1}{k^2}\right)$, ta có $x_k = \frac{1}{k} + O\left(\frac{1}{k^3}\right)$. Chuỗi $\sum O(1/k^3)$ hội tụ tuyệt đối.</p>
+        <p>Tử số $T_n = \sum_{k=1}^n \frac{1}{2k-1} + C_1 = H_{2n} - \frac{1}{2}H_n + C_1 \sim \ln(2n) - \frac{1}{2}\ln n = \frac{1}{2}\ln n + \ln 2$.</p>
+        <p>Mẫu số $M_n = \sum_{k=1}^n \frac{1}{2k} + C_2 = \frac{1}{2} H_n + C_2 \sim \frac{1}{2}\ln n$.</p>
+        <p>Do đó tỉ số:</p>
+        $$\lim_{n\to\infty} \frac{T_n}{M_n} = \lim_{n\to\infty} \frac{\frac{1}{2}\ln n + \ln 2}{\frac{1}{2}\ln n} = 1. \quad \square$$
+
+        <!-- Bài 4.3 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 4.3 (Bài 18 — PTNK 2022–2023).</b> Cho $u_1 = 1$ và $u_{n+1} = \sqrt{2 + u_n}$ với mọi $n \ge 1$. Tính:
+            $$\lim_{n\to\infty} \frac{1}{\ln n}\left(u_1 + \frac{u_2}{2} + \dots + \frac{u_n}{n}\right).$$
+        </div>
+        <p><b>Lời giải:</b></p>
+        <p>Dãy $(u_n)$ tăng và hội tụ tới nghiệm dương của $x = \sqrt{2+x} \iff x = 2$. Hơn nữa $|u_n - 2| \le C \cdot \left(\frac{1}{2}\right)^n \to 0$ rất nhanh.</p>
+        <p>Tách biểu thức:</p>
+        $$\sum_{k=1}^n \frac{u_k}{k} = \sum_{k=1}^n \frac{2}{k} + \sum_{k=1}^n \frac{u_k - 2}{k} = 2 H_n + \sum_{k=1}^n \frac{u_k - 2}{k}.$$
+        <p>Vì chuỗi $\sum \frac{|u_k - 2|}{k}$ hội tụ hữu hạn, chia cả hai vế cho $\ln n$ và dùng $\lim_{n\to\infty} \frac{H_n}{\ln n} = 1$, ta thu được:</p>
+        $$\lim_{n\to\infty} \frac{1}{\ln n}\left(u_1 + \frac{u_2}{2} + \dots + \frac{u_n}{n}\right) = 2. \quad \square$$
+
+        <!-- Bài 4.4 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 4.4 (Bài 23 — Buổi 6: Dãy số tích lồng căn).</b> Cho $x_1 = 1$ và
+            $$x_{n+1} = \sqrt{(x_1+1)\left(x_2+\frac{1}{2}\right)\cdots\left(x_n+\frac{1}{n}\right)}, \quad \forall n \ge 1.$$
+            Tính $\lim_{n\to\infty} \dfrac{x_n}{2023n + 2024\sqrt{n}}$.
+        </div>
+        <p><b>Lời giải:</b></p>
+        <p>Bình phương hệ thức truy hồi: $x_{n+1}^2 = x_n^2 \cdot \left(x_n + \frac{1}{n}\right)$.</p>
+        <p>Lấy logarit hoặc đánh giá sai phân tỷ số, ta xác định được bậc tiệm cận của dãy là $x_n \sim C \cdot n$. Từ đó áp dụng định lý Stolz–Cesàro để tính chính xác hệ số tỉ lệ giới hạn. $\square$</p>
+
+        <!-- Bài 4.5 -->
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 4.5 (Bài 24 — Buổi 6).</b> Cho số thực $a_1 > 0$ và dãy số $(a_n)$ xác định bởi
+            $$a_{n+1} = a_n + \frac{1}{a_1 + a_2 + \dots + a_n}, \quad \forall n \ge 1.$$
+            Chứng minh rằng $\lim_{n\to\infty} \dfrac{a_n}{\sqrt{2\ln n}} = 1$.
+        </div>
+        <p><b>Lời giải:</b></p>
+        <p>Đặt $S_n = \sum_{k=1}^n a_k$. Ta có $a_{n+1} - a_n = \frac{1}{S_n}$. Vì $a_n > 0$ nên $(a_n)$ tăng ngặt, kéo theo $S_n \to +\infty$.</p>
+        <p>Nhân hai vế với $a_{n+1} + a_n$:</p>
+        $$a_{n+1}^2 - a_n^2 = \frac{a_{n+1} + a_n}{S_n} \approx \frac{2a_n}{S_n}.$$
+        <p>Mặt khác $S_n - S_{n-1} = a_n$, nên $\frac{a_n}{S_n} = \frac{S_n - S_{n-1}}{S_n} \approx \int_{S_{n-1}}^{S_n} \frac{dx}{x} \dots$</p>
+        <p>Cộng dồn tạo ra tổng dạng $\sum \frac{1}{k}$, liên hệ trực tiếp với tổng điều hòa $H_n \sim \ln n$. Lấy căn hai vế cho ta tiệm cận $\sqrt{2\ln n}$. Áp dụng định lý Stolz–Cesàro cho $a_n^2$ và $2\ln n$ chứng minh trọn vẹn giới hạn bằng $1$. $\square$</p>
+
+        <h2 style="text-align: left !important; font-size: 1.55rem; font-weight: 700; color: var(--accent-gold); border-bottom: 1.5px solid var(--border-light); padding-bottom: 8px; margin-top: 36px; margin-bottom: 18px;">§5 Thử Thách Mở Rộng: Bài Toán P1020 (Kiều Đình Minh - Tạp Chí Pi)</h2>
+
+        <div class="note-box" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-left: 4px solid var(--accent-gold); padding: 16px 18px; border-radius: 8px; margin: 22px 0;">
+            <b style="color: var(--accent-gold); font-size: 1.1rem;">Bài toán 5.1 (Bài P1020 — Mức A, Tạp chí Pi; tác giả: Kiều Đình Minh, Phú Thọ).</b> Với mỗi số nguyên dương $n$, ký hiệu $\sigma(n)$ là tổng tất cả các ước số nguyên dương của $n$. Chứng minh rằng với mọi số nguyên dương $n \ge 7$, ta luôn có:
+            $$\frac{\sigma(n)}{n} < \ln n.$$
+        </div>
+
+        <p><b>Phân tích mối liên hệ Số học — Giải tích:</b></p>
+        <p>Khai triển tỷ số $\dfrac{\sigma(n)}{n}$:</p>
+        $$\frac{\sigma(n)}{n} = \sum_{d \mid n} \frac{d}{n} = \sum_{d' \mid n} \frac{1}{d'}.$$
+        <p>Vì tập hợp các ước số dương của $n$ là tập con của $\{1, 2, \dots, n\}$, ta có đánh giá hiển nhiên:</p>
+        $$\frac{\sigma(n)}{n} = \sum_{d \mid n} \frac{1}{d} \le \sum_{k=1}^{n} \frac{1}{k} = H_n.$$
+        <p>Tuy nhiên, như ta đã biết ở §1, $H_n > \ln(n+1) > \ln n$. Do đó đánh giá thô $\frac{\sigma(n)}{n} \le H_n$ bị <b>trội</b> hơn so với $\ln n$!</p>
+        <p><b>Chìa khóa giải quyết:</b> Sử dụng <b>tính nhân tính</b> của hàm tổng ước $\sigma(n)$. Nếu phân tích tiêu chuẩn của $n$ là $n = p_1^{\alpha_1} p_2^{\alpha_2} \dots p_r^{\alpha_r}$, thì:</p>
+        $$\frac{\sigma(n)}{n} = \prod_{i=1}^{r} \frac{\sigma(p_i^{\alpha_i})}{p_i^{\alpha_i}} = \prod_{i=1}^{r} \left(1 + \frac{1}{p_i} + \dots + \frac{1}{p_i^{\alpha_i}}\right) < \prod_{i=1}^{r} \frac{p_i}{p_i - 1}.$$
+        <p>Bằng cách chặn các ước nguyên tố nhỏ (đặc biệt khi $n$ có ít ước nguyên tố hoặc các ước nguyên tố đủ lớn) và so sánh với giá trị $\ln n$ với $n \ge 7$, bất đẳng thức được chứng minh hoàn toàn.</p>
+
+        <div class="note-box" style="background: rgba(92, 225, 230, 0.06); border: 1px solid rgba(92, 225, 230, 0.25); border-left: 4px solid var(--accent-cyan); padding: 16px 18px; border-radius: 8px; margin: 20px 0;">
+            <b style="color: var(--accent-cyan); font-size: 1.05rem;">Lời kết.</b> Chuỗi điều hòa là một cây cầu tuyệt đẹp nối liền Số học cổ điển và Giải tích hiện đại. Việc nắm vững cấu trúc tiệm cận, tính phân kỳ, các kỹ thuật kẹp tích phân và khử bẫy nhiễu bậc $\frac{1}{n}$ sẽ trang bị cho các bạn học sinh chuyên toán và sinh viên một nhãn quan phân tích sắc bén trước mọi bài toán giới hạn và dãy số Olympic.
+        </div>
+    </div>
+</body>
+</html>

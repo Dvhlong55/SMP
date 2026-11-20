@@ -243,6 +243,13 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '§ Chuỗi Điều Hòa Cho Olympiad',
+        date: 'November 20, 2026',
+        url: '/posts/math/vmo/chuoi-dieu-hoa-cho-olympiad.html',
+        tags: ['Giải Tích', 'Dãy Số', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '§ Số Đại Số & Đa Thức Tối Tiểu',
         date: 'November 11, 2026',
         url: '/posts/math/vmo/so-dai-so-va-da-thuc-toi-tieu.html',
