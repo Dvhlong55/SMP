@@ -31,6 +31,25 @@ body:not(.dark-mode) {
     --exam-divider-color: rgba(15,23,42,0.08);
 }
 
+body.parchment-mode {
+    --widget-title-color: #201610;
+    --widget-link-color: #745f4d;
+    --widget-badge-bg: rgba(171, 51, 52, 0.08);
+    --widget-badge-color: #745f4d;
+    --exam-paper-bg: #fffdf7;
+    --exam-paper-border: #e5dac4;
+    --exam-paper-shadow: 0 6px 28px rgba(60, 40, 20, 0.07);
+    --exam-text-color: #2a1f18;
+    --exam-bold-color: #1a110b;
+    --exam-title-color: #201610;
+    --exam-divider-color: rgba(116, 95, 77, 0.18);
+}
+
+body.parchment-mode .exam-tag {
+    border-color: rgba(171, 51, 52, 0.3);
+    color: #ab3334;
+}
+
 .main-content-layout {
     display: grid;
     grid-template-columns: 200px 1fr;
@@ -140,9 +159,26 @@ body.light-mode .side-widget-title {
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+    .main-content-layout {
+        margin-top: 6px;
+        gap: 0;
+    }
+    .exam-meta {
+        margin-bottom: 14px;
+    }
     .exam-paper {
-        padding: 30px 20px;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 4px 18px 28px !important;
+        font-size: 1.02rem !important;
+        line-height: 1.72 !important;
+    }
+    .exam-paper mjx-container[jax="CHTML"][display="true"] {
+        font-size: 0.96em !important;
+        margin: 0.85em 0 !important;
     }
 }
 
@@ -193,7 +229,6 @@ body.light-mode .side-widget-title {
 .exam-paper mjx-container[jax="CHTML"][display="true"] {
     font-size: 1.02em !important;
     margin: 1em 0 !important;
-    padding: 2px 0;
 }
 
 .exam-paper h1 mjx-container[jax="CHTML"] { font-size: 0.85em !important; }
@@ -237,12 +272,12 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Allow long inline math formulas to scroll horizontally within their paragraphs/list items 
-   without breaking the baseline or causing the entire page to scroll */
+/* Keep paragraphs natural vertically; overflow-x scrolling is applied directly
+   to overflowing math formulas by MATHJAX OVERFLOW FIXER without vertical trapping */
 .exam-paper p, .exam-paper li {
     max-width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
 }
 
 body.focus-mode #main-sidebar,
@@ -289,9 +324,33 @@ body.focus-mode .exam-paper {
     background: transparent !important;
 }
 
+body.focus-mode .exam-paper .header-box {
+    border: none !important;
+    border-bottom: 1px solid var(--exam-divider-color) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 8px 0 20px 0 !important;
+    margin-bottom: 26px !important;
+}
+
 body.focus-mode .exam-paper h3 {
     font-size: 1.4rem !important;
     margin-top: 34px !important;
+}
+
+@media (max-width: 768px) {
+    body.focus-mode main {
+        padding: 18px 0 40px !important;
+    }
+    body.focus-mode .exam-paper {
+        font-size: 1.02rem !important;
+        line-height: 1.72 !important;
+        padding: 8px 18px 28px !important;
+    }
+    body.focus-mode .exam-paper h3 {
+        font-size: 1.12rem !important;
+        margin-top: 24px !important;
+    }
 }
 
 /* Button styles in normal and hover states: minimal icon buttons without box/border */
@@ -360,6 +419,16 @@ body.focus-mode #focus-mode-btn {
 
 body.focus-mode #exit-focus-btn {
     display: inline-flex !important;
+}
+
+body.parchment-mode #exit-focus-btn,
+body.light-mode #exit-focus-btn {
+    color: #ffffff;
+}
+
+body.parchment-mode #exit-focus-btn:hover {
+    background: #8e2728;
+    color: #ffffff;
 }
 
 #exit-focus-btn:hover {

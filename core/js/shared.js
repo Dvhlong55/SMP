@@ -1222,31 +1222,48 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 // === MATHJAX OVERFLOW FIXER ===
-// Liên tục kiểm tra và xử lý công thức Toán dài vượt quá màn hình
-setInterval(function() {
+// Chỉ kích hoạt trượt trái-phải cho những công thức thực sự vượt quá chiều ngang, tuyệt đối không trượt dọc
+window.fixMathJaxOverflow = function() {
     document.querySelectorAll('mjx-container:not([display="true"])').forEach(mjx => {
-        // Tránh so sánh với parentElement nếu là thẻ inline (b, span, strong, em, a...) vì clientWidth của thẻ inline luôn bằng 0
         const blockContainer = mjx.closest('p, li, dd, dt, div, td, th, blockquote, .exam-paper');
         if (blockContainer && blockContainer.clientWidth > 50) {
-            if (mjx.offsetWidth > blockContainer.clientWidth) {
+            const cs = getComputedStyle(blockContainer);
+            const availWidth = blockContainer.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+            const naturalWidth = Math.max(mjx.scrollWidth, mjx.getBoundingClientRect().width);
+            if (naturalWidth > availWidth + 2) {
                 mjx.style.display = 'inline-block';
                 mjx.style.verticalAlign = 'middle';
                 mjx.style.overflowX = 'auto';
                 mjx.style.overflowY = 'hidden';
                 mjx.style.maxWidth = '100%';
                 mjx.style.minWidth = '0';
-                mjx.style.paddingBottom = '4px';
+                mjx.style.padding = '5px 0';
+                mjx.style.touchAction = 'pan-x pan-y';
+                mjx.style.webkitOverflowScrolling = 'touch';
             } else if (mjx.style.display === 'block' || mjx.style.display === 'inline-block') {
                 mjx.style.display = '';
+                mjx.style.verticalAlign = '';
                 mjx.style.overflowX = '';
                 mjx.style.overflowY = '';
                 mjx.style.maxWidth = '';
                 mjx.style.minWidth = '';
-                mjx.style.paddingBottom = '';
+                mjx.style.padding = '';
+                mjx.style.touchAction = '';
+                mjx.style.webkitOverflowScrolling = '';
             }
         }
     });
-}, 1000);
+
+    document.querySelectorAll('mjx-container[display="true"]').forEach(mjx => {
+        if (mjx.scrollWidth > mjx.clientWidth + 2) {
+            mjx.classList.remove('mjx-no-overflow');
+        } else {
+            mjx.classList.add('mjx-no-overflow');
+        }
+    });
+};
+setInterval(window.fixMathJaxOverflow, 1000);
+window.addEventListener('resize', window.fixMathJaxOverflow);
 
 
 // === HIGHLIGHT ACTIVE NAV LINK ===
