@@ -41,7 +41,7 @@
             <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">November 20, 2026</h2>
         </div>
 
-        <p style="font-style: italic; color: var(--text-muted); margin-bottom: 24px;"><b>Lời dẫn.</b> Trong các kỳ thi học sinh giỏi quốc gia (VMO) hay Olympic Toán học Sinh viên (OTSV), tổng điều hòa $H_n = \sum_{k=1}^n \frac{1}{k}$ ít khi được hỏi trực tiếp, mà thường ẩn sau các bài toán dãy số và giới hạn. Việc nắm vững tính phân kỳ chậm của $H_n$, cách ước lượng bằng tích phân, hằng số Euler–Mascheroni $\gamma$ và định lý Stolz–Cesàro sẽ giúp ta nhìn ra hướng giải gọn gàng hơn.</p>
+        <p style="font-style: italic; color: var(--text-muted); margin-bottom: 24px;"><b>Lời dẫn.</b> Trong các kỳ thi học sinh giỏi quốc gia (VMO) hay Olympic Toán học Sinh viên (OTSV), tổng điều hòa $H_n = \sum_{k=1}^n \frac{1}{k}$ ít khi được hỏi trực tiếp, mà thường ẩn sau các bài toán dãy số và giới hạn. Việc nắm vững tính phân kỳ chậm của $H_n$, cách ước lượng bằng $\ln n$, hằng số Euler–Mascheroni $\gamma$ và định lý Stolz–Cesàro sẽ giúp ta nhìn ra hướng giải gọn gàng hơn.</p>
 
         <h2 class="smp-section-title">§1. Một Số Kiến Thức Cơ Bản Về Tổng Điều Hòa</h2>
 
@@ -73,20 +73,34 @@
         $$H_n - 1 = \sum_{k=1}^{n-1} \frac{1}{k+1} < \sum_{k=1}^{n-1} (\ln(k+1) - \ln k) = \ln n \iff H_n < 1 + \ln n.$$
 
         <div class="smp-graybox">
-            <b>Hệ quả.</b> Với mọi $n \ge 1$, $\ln\left(2 + \frac{1}{n}\right) - \frac{1}{n} < H_{2n} - H_n < \ln 2$, suy ra:
-            $$\lim_{n\to\infty} \sum_{j=n+1}^{2n} \frac{1}{j} = \lim_{n\to\infty} (H_{2n} - H_n) = \ln 2.$$
+            <b>Bổ đề (Tổng điều hòa từ $n+1$ đến $2n$).</b> Từ hai bất đẳng thức $\dfrac{x}{x+1} < \ln(1+x) < x$ với $x = \dfrac{1}{j}$ ($j \ge 2$), ta có $\ln\dfrac{j+1}{j} < \dfrac{1}{j} < \ln\dfrac{j}{j-1}$. Cộng vế theo vế từ $j = n+1$ đến $2n$ (rút gọn theo kiểu sai phân):
+            $$\ln\frac{2n+1}{n+1} < H_{2n} - H_n < \ln 2.$$
+            Cho $n \to \infty$, theo nguyên lý kẹp ta thu được $\lim_{n\to\infty} \sum_{j=n+1}^{2n} \dfrac{1}{j} = \lim_{n\to\infty} (H_{2n} - H_n) = \ln 2$.
         </div>
 
-        <h3 class="smp-subsection-title">§1.3 Hằng số Euler–Mascheroni ($\gamma$)</h3>
-        <p>Xét dãy $\gamma_n = H_n - \ln n$. Ta có:</p>
+        <h3 class="smp-subsection-title">§1.3 Tổng $\sum \frac{1}{k^2}$, hằng số Euler–Mascheroni ($\gamma$) và hàm Gamma</h3>
+        <p>Khác với chuỗi điều hòa $\sum \frac{1}{k}$ phân kỳ, chuỗi $\sum_{k=1}^{\infty} \frac{1}{k^2}$ lại hội tụ — kết quả này thường xuyên được dùng để chặn phần dư trong các bài toán dãy số.</p>
+
+        <div class="smp-graybox">
+            <b>Sự hội tụ của $\sum_{k=1}^{\infty} \frac{1}{k^2}$.</b> Đặt $S_n = \sum_{k=1}^n \frac{1}{k^2}$. Dãy $(S_n)$ tăng ngặt, và với mỗi $k \ge 2$ ta có $\dfrac{1}{k^2} < \dfrac{1}{k(k-1)} = \dfrac{1}{k-1} - \dfrac{1}{k}$, suy ra:
+            $$S_n = 1 + \sum_{k=2}^n \frac{1}{k^2} < 1 + \sum_{k=2}^n \left(\frac{1}{k-1} - \frac{1}{k}\right) = 2 - \frac{1}{n} < 2.$$
+            Vì $(S_n)$ tăng và bị chặn trên bởi $2$ nên $\lim_{n\to\infty} S_n$ tồn tại hữu hạn (Euler đã chứng minh giá trị của giới hạn này là $\frac{\pi^2}{6}$).
+        </div>
+
+        <p>Tương tự, xét dãy sai lệch $\gamma_n = H_n - \ln n$. Ta có:</p>
         $$\gamma_n - \gamma_{n+1} = \ln(n+1) - \ln n - \frac{1}{n+1} = \int_{n}^{n+1} \left(\frac{1}{x} - \frac{1}{n+1}\right) dx > 0.$$
-        <p>Do đó $(\gamma_n)$ giảm ngặt. Mặt khác $\gamma_n = H_n - \ln n > \ln(n+1) - \ln n > 0$, nên $(\gamma_n)$ bị chặn dưới bởi $0$. Vì vậy tồn tại giới hạn hữu hạn:</p>
+        <p>Do đó $(\gamma_n)$ giảm ngặt. Mặt khác $\gamma_n = H_n - \ln n > \ln(n+1) - \ln n > 0$, nên $(\gamma_n)$ bị chặn dưới bởi $0$. Vì vậy tồn tại giới hạn hữu hạn gọi là <b>hằng số Euler–Mascheroni</b>:</p>
         $$\gamma = \lim_{n\to\infty} (H_n - \ln n) \approx 0{,}5772156649\dots$$
 
         <div class="smp-graybox">
             <b>Công thức tiệm cận Euler–Maclaurin:</b>
             $$H_n = \ln n + \gamma + \frac{1}{2n} - \frac{1}{12n^2} + O\left(\frac{1}{n^4}\right).$$
             Đặc biệt, $0 < H_n - \ln n - \gamma < \dfrac{1}{2n}$ với mọi $n \ge 1$.
+        </div>
+
+        <div class="smp-longnote">
+            <b>Mở rộng (Liên hệ với hàm Gamma).</b> Hàm Gamma được định nghĩa với $x > 0$ bởi $\Gamma(x) = \int_0^{+\infty} t^{x-1} e^{-t}\, dt$, mở rộng giai thừa theo hệ thức $\Gamma(n) = (n-1)!$ ($n \in \mathbb{N}^*$). Khi lấy đạo hàm logarit của $\Gamma(x)$ (gọi là hàm digamma $\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}$), ta có $\Gamma'(1) = -\gamma$ và với mọi số nguyên dương $n$:
+            $$\psi(n) = \frac{\Gamma'(n)}{\Gamma(n)} = -\gamma + H_{n-1}.$$
         </div>
 
         <h3 class="smp-subsection-title">§1.4 Tính chất số học: $H_n$ không phải là số nguyên</h3>
@@ -98,12 +112,25 @@
 
         <p><b>Chứng minh.</b> Gọi $2^k$ là lũy thừa lớn nhất của $2$ không vượt quá $n$ ($k \ge 1$). Trong $\{1, 2, \dots, n\}$, chỉ có duy nhất số $2^k$ chia hết cho $2^k$ (vì nếu có $m \cdot 2^k \le n$ với $m \ge 2$ thì $m \cdot 2^k \ge 2^{k+1} > n$, vô lý). Mẫu số chung $M = \operatorname{BCNN}(1, 2, \dots, n)$ có dạng $2^k \cdot Q$ với $Q$ lẻ. Khi quy đồng, số hạng ứng với $j = 2^k$ có tử số là $Q$ (lẻ), còn mọi số hạng $j \ne 2^k$ đều có tử số chẵn. Suy ra tổng các tử số là số lẻ, trong khi mẫu số $M$ chẵn, nên $H_n \notin \mathbb{Z}$. $\square$</p>
 
-        <h3 class="smp-subsection-title">§1.5 Các hướng áp dụng thường gặp</h3>
+        <h3 class="smp-subsection-title">§1.5 Định lý Stolz–Cesàro và một vài đồng nhất thức</h3>
+
+        <div class="smp-graybox">
+            <b>Định lý Stolz–Cesàro (dạng $\frac{*}{\infty}$).</b> Cho hai dãy số thực $(x_n)$ và $(y_n)$ thỏa mãn $(y_n)$ tăng ngặt và $\lim_{n\to\infty} y_n = +\infty$. Nếu tồn tại giới hạn (hữu hạn hoặc $\pm\infty$)
+            $$\lim_{n\to\infty} \frac{x_{n+1} - x_n}{y_{n+1} - y_n} = L$$
+            thì $\lim_{n\to\infty} \dfrac{x_n}{y_n} = L$.
+        </div>
+
+        <p><b>Ví dụ áp dụng:</b> Chọn $x_n = H_n$ và $y_n = \ln n$. Ta có $\lim_{n\to\infty} \dfrac{H_{n+1} - H_n}{\ln(n+1) - \ln n} = \lim_{n\to\infty} \dfrac{\frac{1}{n+1}}{\ln\left(1 + \frac{1}{n}\right)} = 1$, suy ra $\lim_{n\to\infty} \dfrac{H_n}{\ln n} = 1$.</p>
+
+        <p>Ngoài ra, khi gặp tổng các $H_k$, phép biến đổi Abel cho ngay đồng nhất thức:</p>
+        $$\sum_{k=1}^{n} H_k = (n+1)H_n - n.$$
+
+        <h3 class="smp-subsection-title">§1.6 Các hướng áp dụng thường gặp</h3>
         <ol style="padding-left: 20px; line-height: 1.85;">
             <li><b>Ước lượng tổng bằng $\ln n$ và tích phân:</b> Dùng tính đơn điệu của $\frac{1}{x}$ hoặc bất đẳng thức $\ln(1+x) < x$ để kẹp tổng dạng $\sum \frac{1}{k}$.</li>
             <li><b>Nhóm số hạng theo lũy thừa của $2$:</b> Cách làm quen thuộc của Oresme và tiêu chuẩn cô đặc Cauchy ($\sum a_n < \infty \iff \sum 2^k a_{2^k} < \infty$ với $a_n \downarrow 0$).</li>
             <li><b>Dãy truy hồi có sai phân cỡ $\frac{1}{n}$:</b> Nếu cộng dồn trực tiếp, tổng $\sum \frac{c}{k}$ sẽ phân kỳ ra vô cực, nên thường cần đổi biến sang dãy phụ hoặc đánh giá tỉ số.</li>
-            <li><b>Định lý Stolz–Cesàro với mẫu số là $H_n$:</b> Khi gặp tỉ số có mẫu là $H_n$ hoặc $\ln n$, có thể dùng định lý Stolz–Cesàro vì $H_{n+1} - H_n = \frac{1}{n+1}$.</li>
+            <li><b>Định lý Stolz–Cesàro với mẫu số là $H_n$ hoặc $\ln n$:</b> Tiện lợi vì $H_{n+1} - H_n = \frac{1}{n+1}$ và $\ln(n+1) - \ln n \sim \frac{1}{n}$.</li>
         </ol>
 
         <div class="smp-longnote">
@@ -121,7 +148,7 @@
             <li>Chứng minh rằng dãy số $(x_n)$ có giới hạn hữu hạn và tìm giới hạn đó.</li>
         </ol>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Câu a) Giả sử phản chứng $x_n > \frac{1}{n}$ với mọi $n \ge N_0$, phá giá trị tuyệt đối rồi cộng dồn và dùng tính phân kỳ của $\sum \frac{1}{k}$ để suy ra $x_n < 0$ (vô lý). Câu b) Nếu $x_m \le \frac{1}{m}$ thì $0 \le x_n \le \frac{1}{m}$ với mọi $n \ge m$.
+            <b>Gợi ý.</b> Câu a) Giả sử phản chứng $x_n > \frac{1}{n}$ với mọi $n \ge N_0$, phá giá trị tuyệt đối rồi cộng dồn và dùng tính phân kỳ của $\sum \frac{1}{k}$ để suy ra $x_n < 0$ (mâu thuẫn với $x_n \ge 0$ khi $n \ge 2$). Câu b) Chọn $m \ge 2$ thỏa mãn $x_m \le \frac{1}{m}$ để có $x_m \ge 0$, khi đó $0 \le x_n \le \frac{1}{m}$ với mọi $n \ge m$.
         </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2.2</span></h3>
@@ -159,14 +186,14 @@
         <p>Chứng minh bất đẳng thức:</p>
         $$\sum_{k=0}^{n-1} \frac{e^{a_k}}{n+k+1} + (\ln 2 - a_n)e^{a_n} < 1.$$
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Nhận xét $a_k = H_{n+k} - H_n$, nên $a_{k+1} - a_k = \frac{1}{n+k+1}$ và $a_n < \ln 2$. Dùng đánh giá $e^{a_k}(a_{k+1} - a_k) < \int_{a_k}^{a_{k+1}} e^x dx = e^{a_{k+1}} - e^{a_k}$ rồi cộng dồn theo sai phân rút gọn.
+            <b>Gợi ý.</b> Nhận xét $a_k = H_{n+k} - H_n$, nên $a_{k+1} - a_k = \frac{1}{n+k+1}$ và $a_n < \ln 2$ (theo Bổ đề ở §1.2). Dùng $e^{a_k}(a_{k+1} - a_k) < \int_{a_k}^{a_{k+1}} e^x dx = e^{a_{k+1}} - e^{a_k}$ rồi cộng dồn sẽ được vế trái nhỏ hơn $(1 + \ln 2 - a_n)e^{a_n} - 1$. Cuối cùng, xét hàm $h(t) = (1 + \ln 2 - t)e^t$ đồng biến trên $[0, \ln 2]$ để suy ra $h(a_n) < h(\ln 2) = 2$.
         </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3.2</span> (OTSV 2022)</h3>
         <p>Giả sử $a_1 = \dfrac{1}{2}$ và $a_{n+1} = a_n - a_n^2$. Chứng minh rằng giới hạn sau tồn tại hữu hạn:</p>
         $$\lim_{n\to\infty} \left(\frac{1}{a_n} - n - \ln n\right).$$
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Xét sai phân $\frac{1}{a_{k+1}} - \frac{1}{a_k} = 1 + a_k + \frac{a_k^2}{1-a_k}$, cộng dồn từ $k = 1$ đến $n - 1$ rồi đối chiếu tổng $\sum a_k$ với $H_{n-1}$ và $\ln n$.
+            <b>Gợi ý.</b> Từ $\frac{1}{a_{k+1}} - \frac{1}{a_k} = 1 + a_k + \frac{a_k^2}{1-a_k}$, trước hết quy nạp chứng minh $\frac{1}{a_k} \ge k + 1$ (tức $a_k \le \frac{1}{k+1}$), rồi cộng dồn để được ước lượng sơ bộ $\frac{1}{a_k} = k + O(\ln k)$, suy ra $a_k = \frac{1}{k} + O\left(\frac{\ln k}{k^2}\right)$. Từ đó $\sum \left(a_k - \frac{1}{k}\right)$ và $\sum \frac{a_k^2}{1-a_k}$ đều hội tụ, đưa giới hạn cần tìm về $\lim(H_{n-1} - \ln n) = \gamma$ cộng với một hằng số hữu hạn.
         </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3.3</span> (OTSV 2017)</h3>
@@ -184,7 +211,7 @@
         <p>Cho $x_n = \dfrac{1}{n}\cos\dfrac{1}{n}$ với $n \ge 1$. Tính giới hạn:</p>
         $$\lim_{n\to\infty} \frac{x_1 + x_3 + \dots + x_{2n-1}}{x_2 + x_4 + \dots + x_{2n}}.$$
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Tách $x_k = \frac{1}{k} - \frac{1 - \cos(1/k)}{k}$. Do $0 \le 1 - \cos\frac{1}{k} \le \frac{1}{2k^2}$ nên phần dư tạo thành chuỗi hội tụ, còn phần chính ở tử số và mẫu số đều xấp xỉ $\frac{1}{2}\ln n$.
+            <b>Gợi ý.</b> Tách $x_k = \frac{1}{k} - \frac{1 - \cos(1/k)}{k}$. Do $0 \le 1 - \cos\frac{1}{k} \le \frac{1}{2k^2}$ nên phần dư tạo thành chuỗi hội tụ, còn phần chính ở tử số và mẫu số đều xấp xỉ $\frac{1}{2}H_n \sim \frac{1}{2}\ln n$.
         </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4.2</span> (PTNK 2022–2023)</h3>
@@ -197,7 +224,7 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4.3</span></h3>
         <p>Cho số thực $a_1 > 0$ và dãy số $(a_n)$ xác định bởi $a_{n+1} = a_n + \dfrac{1}{a_1 + a_2 + \dots + a_n}$ với mọi $n \ge 1$. Chứng minh rằng $\lim_{n\to\infty} \dfrac{a_n}{\sqrt{2\ln n}} = 1$.</p>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Đặt $S_n = \sum_{k=1}^n a_k$, xét $a_{n+1}^2 - a_n^2 = \frac{2a_n}{S_n} + \frac{1}{S_n^2}$ và áp dụng định lý Stolz–Cesàro cho $\frac{a_n^2}{2\ln n}$.
+            <b>Gợi ý.</b> Đặt $S_n = \sum_{k=1}^n a_k$. Áp dụng Stolz–Cesàro cho $\frac{a_n^2}{2\ln n}$ với $a_{n+1}^2 - a_n^2 = \frac{2a_n}{S_n} + \frac{1}{S_n^2}$ và $2\ln(1+\frac{1}{n}) \sim \frac{2}{n}$ sẽ đưa bài toán về chứng minh $\lim_{n\to\infty} \frac{n a_n}{S_n} = 1$ (và $a_n \to +\infty$). Bước khó nằm ở đây: trước tiên chứng minh $a_n \to +\infty$ bằng phản chứng (nếu $a_n$ bị chặn thì $S_n \le C n$, dẫn đến $a_{n+1} - a_n \ge \frac{1}{Cn}$ nên $a_n \to +\infty$, mâu thuẫn); sau đó từ $\frac{a_{n+1}}{a_n} \to 1$ kết hợp $S_n - S_{n-1} = a_n$, áp dụng Stolz–Cesàro cho $\frac{S_n}{n a_n}$ hoặc dùng $n(a_{n+1}-a_n) = \frac{n}{S_n} \to 0$ để suy ra $\frac{S_n}{n a_n} \to 1$.
         </div>
 
         <h2 class="smp-section-title">§5. Bài Toán Mở Rộng</h2>
