@@ -97,6 +97,12 @@ document.addEventListener('DOMContentLoaded', function () {
         linkPost.href = depthPrefix + 'core/css/post.css?v=38';
         head.appendChild(linkPost);
     }
+    if (!document.querySelector('link[href*="smp-template.css"]')) {
+        const linkTemplate = document.createElement('link');
+        linkTemplate.rel = 'stylesheet';
+        linkTemplate.href = depthPrefix + 'core/css/smp-template.css?v=1';
+        head.appendChild(linkTemplate);
+    }
     if (contentHtml.includes('solution-mailbox') && !document.querySelector('link[href*="mailbox.css"]')) {
         const linkMailbox = document.createElement('link');
         linkMailbox.rel = 'stylesheet';
@@ -196,6 +202,82 @@ document.addEventListener('DOMContentLoaded', function () {
     `;
 
     document.body.innerHTML = FULL_LAYOUT;
+
+    // 5.1. Chuẩn hóa tự động các bài viết cũ sang template chuẩn (smp-template.css)
+    (function normalizeSmpAcademicTemplate(paper) {
+        if (!paper) return;
+
+        // Chuẩn hóa Section <h2> (bỏ qua .header-box)
+        paper.querySelectorAll('h2').forEach(function (h2) {
+            if (h2.closest('.header-box') || h2.classList.contains('smp-section-title')) return;
+            var st = h2.getAttribute('style') || '';
+            if (st.includes('border-bottom') || st.includes('accent-gold') || st.includes('#007bff')) {
+                h2.removeAttribute('style');
+                h2.classList.add('smp-section-title');
+            }
+        });
+
+        // Chuẩn hóa Subsection <h3> và Bài toán <h3>
+        paper.querySelectorAll('h3').forEach(function (h3) {
+            if (
+                h3.classList.contains('smp-subsection-title') ||
+                h3.classList.contains('smp-problem-header') ||
+                h3.querySelector('.smp-problem-badge')
+            ) {
+                return;
+            }
+            var txt = (h3.textContent || '').trim();
+            var m = txt.match(/^(Bài toán|Bài|Problem|N)\s+(\d+(?:\.\d+)?)\b\.?\s*(.*)$/i);
+            if (m) {
+                var label = m[1].toLowerCase() === 'bài toán' ? 'Bài' : m[1];
+                var badgeText = label + ' ' + m[2];
+                var rest = (m[3] || '').trim();
+                h3.removeAttribute('style');
+                h3.classList.add('smp-problem-header');
+                h3.innerHTML = '<span class="smp-problem-badge"></span>' + (rest ? ' ' : '');
+                h3.querySelector('.smp-problem-badge').textContent = badgeText;
+                if (rest) h3.appendChild(document.createTextNode(rest));
+                return;
+            }
+            var st = h3.getAttribute('style') || '';
+            if (st.includes('accent-cyan') || st.includes('accent-gold')) {
+                h3.removeAttribute('style');
+                h3.classList.add('smp-subsection-title');
+            }
+        });
+
+        // Chuẩn hóa các box màu cũ (.note-box hoặc div có border-left / background rgba màu mè)
+        paper.querySelectorAll('div.note-box, div[style]').forEach(function (div) {
+            if (
+                div.classList.contains('smp-graybox') ||
+                div.classList.contains('smp-longnote') ||
+                div.classList.contains('header-box') ||
+                div.classList.contains('contact-box') ||
+                div.classList.contains('solution-mailbox')
+            ) {
+                return;
+            }
+            var st = div.getAttribute('style') || '';
+            if (st.includes('display: flex') || st.includes('display:flex')) return;
+            var isOldColoredBox =
+                div.classList.contains('note-box') ||
+                /border-left:\s*[34]px\s+solid\s+(?:var\(--accent-|#007bff)/i.test(st) ||
+                /background:\s*rgba\((?:92,\s*225,\s*230|168,\s*85,\s*247|167,\s*139,\s*250|201,\s*169,\s*110|0,\s*123,\s*255)/i.test(st);
+
+            if (!isOldColoredBox) return;
+
+            var txt = (div.textContent || '').trim();
+            var isLongNote = /^(Chú ý|Nhận xét|Định hướng|Gợi ý|Lời kết|Lưu ý)\b/i.test(txt);
+            div.classList.remove('note-box');
+            div.removeAttribute('style');
+            div.classList.add(isLongNote ? 'smp-longnote' : 'smp-graybox');
+
+            div.querySelectorAll('b[style], strong[style]').forEach(function (b) {
+                b.style.removeProperty('color');
+                b.style.removeProperty('font-size');
+            });
+        });
+    })(document.querySelector('.exam-paper'));
     
     // 6. Nhúng các script giao diện theo thứ tự tuần tự để tránh race condition
     const scriptsToLoad = [
