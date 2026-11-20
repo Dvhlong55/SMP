@@ -54,15 +54,8 @@
         summary.igo-hint-trigger::marker {
             display: none;
         }
-        .igo-arrow {
-            display: inline-block;
-            font-size: 0.78rem;
-            transition: transform 0.2s ease-in-out;
-            color: var(--exam-bold-color, #111);
-        }
-        details.igo-hint-clean[open] .igo-arrow {
-            transform: rotate(90deg);
-        }
+        .igo-arrow { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 4.5px 0 4.5px 7.5px; border-color: transparent transparent transparent currentColor; transition: transform 0.2s ease-in-out; margin-right: 8px; flex-shrink: 0; }
+        details.igo-hint-clean[open] .igo-arrow { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 4.5px 0 4.5px 7.5px; border-color: transparent transparent transparent currentColor; transition: transform 0.2s ease-in-out; margin-right: 8px; flex-shrink: 0; }
         .igo-hint-content {
             padding: 8px 0 8px 16px;
             margin-top: 6px;
@@ -152,7 +145,7 @@
         <p>Tất cả các đa giác trong hình vẽ cho trước đều là các đa giác đều. Chứng minh rằng tứ giác $ABCD$ là một hình thang cân.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $E$ là đỉnh chung của tam giác đều và các hình vuông kề cạnh. Hai tam giác $\triangle ADE$ và $\triangle BEC$ bằng nhau (c-g-c) vì $AE = BE, DE = CE$ và góc kẹp giữa $\angle AED = \angle BEC = 90^\circ$. Do đó $AD = BC$. Mặt khác $\angle DAE = \angle CBE$ và $\angle EAB = \angle EBA = 60^\circ$, suy ra $\angle DAB = \angle CBA$. Tứ giác $ABCD$ có hai cạnh bên bằng nhau và hai góc kề một đáy bằng nhau nên $ABCD$ là một hình thang cân ($AB \parallel CD$).</p>
             </div>
@@ -162,7 +155,7 @@
         <p>Trong tam giác cân $ABC$ ($AB = AC$) có $\angle A = 30^\circ$, lấy các điểm $L$ và $M$ lần lượt trên các cạnh $AB$ và $AC$ sao cho $AL = CM$. Điểm $K$ nằm trên cạnh $AB$ sao cho $\angle AMK = 45^\circ$. Nếu $\angle LMC = 75^\circ$, chứng minh rằng: $KM + ML = BC$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Kẻ qua $L$ đường thẳng song song với $BC$ cắt $KM$ tại $S$. Biến đổi góc cho thấy $\angle MKL = \angle KLS = 75^\circ$, suy ra tam giác $MLS$ cân tại $M$ với $\angle MSL = \angle MLS = 30^\circ$, do đó $ML = MS$. Hai tam giác $\triangle ALM \cong \triangle CMS$ bằng nhau (c-g-c) vì $AL = CM$ và góc xen kẽ bằng $45^\circ$, suy ra $SC = AM = AC - MC = AB - AL = BL$. Do $LS \parallel BC$ và $BL = SC$ nên $BCSL$ là hình bình hành, suy ra $SL = BC$. Tam giác $KSL$ cân tại $S$ có góc đáy $75^\circ$ nên $KS = SL = BC$. Vì $KS = KM + MS = KM + ML$, ta suy ra $KM + ML = BC$.</p>
             </div>
@@ -172,7 +165,7 @@
         <p>Cho hình vuông $ABCD$ có cạnh bằng 1. Có bao nhiêu điểm $P$ nằm bên trong hình vuông (không nằm trên các cạnh) thỏa mãn tính chất: Hình vuông có thể được cắt thành 10 tam giác có diện tích bằng nhau sao cho tất cả 10 tam giác này đều nhận $P$ làm một đỉnh?</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>ĐÁP SỐ: 16 ĐIỂM.\nGọi khoảng cách từ $P$ đến $DA$ và $AB$ lần lượt là $v$ và $u$. Mỗi tam giác trong số 10 tam giác có cạnh đáy nằm trên một trong 4 cạnh của hình vuông. Gọi $a, b, c, d$ lần lượt là số tam giác có đáy nằm trên $AB, BC, CD, DA$. Do diện tích các tam giác bằng nhau và tổng diện tích tam giác đối đỉnh bằng $\frac{1}{2}$ diện tích hình vuông, ta có $a + c = b + d = \frac{10}{2} = 5$. Với mỗi cặp số nguyên dương $(a, c)$ có tổng bằng 5 (có $5 - 1 = 4$ cách chọn) và $(b, d)$ có tổng bằng 5 (có 4 cách chọn), ta xác định được duy nhất một điểm $P$ với tọa độ $u = \frac{a}{5}, v = \frac{d}{5}$. Vậy tổng số điểm $P$ thỏa mãn là $4 \times 4 = 16$.</p>
             </div>
@@ -182,7 +175,7 @@
         <p>Cho $ABCD$ là một tứ giác lồi. Gọi $E$ là giao điểm của hai đường chéo $AC$ và $BD$. Giả sử rằng $CD = BC = BE$. Chứng minh rằng: $AD + DC \ge AB$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Lấy điểm $F$ đối xứng với $D$ qua đường chéo $AC$. Biến đổi góc: $\angle FCB = \angle ECB - \angle ECF = \angle CEB - \angle ECD = \angle CDB = \angle CBE$. Kết hợp với $BE = CD = CF$ và cạnh $BC$ chung, hai tam giác $\triangle BCE$ và $\triangle CBF$ bằng nhau (c-g-c). Suy ra $BF = CE \le DC$. Khi đó áp dụng bất đẳng thức tam giác cho $\triangle ABF$: $AD + DC = AF + DC \ge AF + FB \ge AB$.</p>
             </div>
@@ -192,7 +185,7 @@
         <p>Một đa giác được phân chia thành các tam giác bằng cách kẻ các đường chéo bên trong không cắt nhau, sao cho với mọi cặp tam giác kề nhau có chung cạnh, tổng hai góc đối diện với cạnh chung đó luôn lớn hơn $180^\circ$.\na) Chứng minh rằng đa giác này là đa giác lồi.\nb) Chứng minh rằng đường tròn ngoại tiếp của mọi tam giác trong phép phân chia đều chứa toàn bộ đa giác đó ở miền trong.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>a) Xét đỉnh $P$ tùy ý, gọi $T_1, \dots, T_k$ là các tam giác kề quanh $P$ và $x_i$ là góc tại $P$. Do mỗi cạnh chung có tổng hai góc đối $> 180^\circ$, ta có bất đẳng thức $180^\circ k > \sum (b_i + c_i) + \sum x_i > (k-1)180^\circ + \sum x_i$, suy ra $\sum x_i < 180^\circ$. Vì mọi góc tại đỉnh đều $< 180^\circ$, đa giác bắt buộc phải lồi.\nb) Giả sử phản chứng có đỉnh $X$ nằm ngoài đường tròn ngoại tiếp tam giác $\triangle ABC$. Đoạn thẳng $AX$ cắt các tam giác liên tiếp $T_1, T_2, \dots, T_k$. Dùng điều kiện tổng góc $> 180^\circ$, chứng minh quy nạp $X$ phải nằm ngoài đường tròn ngoại tiếp của tất cả các tam giác $T_i$. Khi đến tam giác cuối cùng $T_k$, ta nhận được mâu thuẫn trực tiếp với điều kiện tổng góc.</p>
             </div>
@@ -204,7 +197,7 @@
         <p>Gọi $M$ và $N$ lần lượt là trung điểm của các cạnh $AB$ và $BC$ của hình vuông $ABCD$. Trên các cạnh dựng ra phía ngoài một lục giác đều và một thập nhị giác (12-giác) đều như hình vẽ. Gọi $P, Q, R, S$ lần lượt là tâm của các đa giác này. Chứng minh rằng tứ giác $PQRS$ là một tứ giác nội tiếp.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Tính toán các góc của tứ giác $PQRS$ dựa vào các tâm đối xứng: Ta có $QR$ là trung trực của đoạn thẳng kề và $NQ \parallel BE$, suy ra $\angle NQR = 90^\circ$. Đoạn $NP = NQ$ và $\angle PNQ = 90^\circ + 60^\circ = 150^\circ$, nên $\angle NQP = 15^\circ$. Do đó góc $\angle PQR = \angle NQR - \angle NQP = 90^\circ - 15^\circ = 75^\circ$. Tương tự ở phía đỉnh $S$, tính được $\angle PMS = 120^\circ$ và tam giác cân cho $\angle PSM = 30^\circ, \angle MSR = 75^\circ$, suy ra $\angle PSR = 105^\circ$. Tổng hai góc đối diện $\angle PQR + \angle PSR = 75^\circ + 105^\circ = 180^\circ$, chứng tỏ $PQRS$ là một tứ giác nội tiếp.</p>
             </div>
@@ -214,7 +207,7 @@
         <p>Cho lục giác lồi $ABCDEF$ có một điểm $P$ nằm bên trong. Giả sử $BCEF$ là một hình vuông, và hai tam giác $\triangle ABP$ và $\triangle PCD$ là các tam giác vuông cân lần lượt vuông tại $B$ và $C$. Các đường thẳng $AF$ và $DE$ cắt nhau tại $G$. Chứng minh rằng: $GP \perp BC$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Các tam giác $\triangle ABF, \triangle PBC, \triangle DEC$ bằng nhau (c-g-c). Biến đổi góc tính được $\angle BPC = 180^\circ - \angle EGF$. Dựng điểm $Q$ đối xứng với $G$ qua $BC$ sao cho $\triangle BQC \cong \triangle FGE$. Hiển nhiên $GQ \perp BC$, ta chỉ cần chứng minh $Q, P, G$ thẳng hàng (tức $QP \perp BC$). Vì $\angle BPC + \angle BQC = 180^\circ$, tứ giác $BPCQ$ nội tiếp đường tròn. Khi đó $\angle BQP = \angle BCP$ và $\angle QBC = 90^\circ - \angle BCP$, suy ra $\angle BQP + \angle QBC = 90^\circ$, tức $\angle BPQ = 90^\circ$ hoặc $QP \perp BC$, hoàn tất chứng minh.</p>
             </div>
@@ -224,7 +217,7 @@
         <p>Cho $\omega$ là đường tròn ngoại tiếp của tam giác $ABC$ có $\angle B = 3\angle C$. Đường phân giác trong của góc $\angle A$ cắt $\omega$ và $BC$ lần lượt tại $M$ và $D$. Điểm $E$ nằm trên tia đối của tia $MC$ (kéo dài qua $M$) sao cho $ME$ bằng bán kính của đường tròn $\omega$. Chứng minh rằng đường tròn ngoại tiếp của hai tam giác $ACE$ và $BDM$ tiếp xúc với nhau.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $F$ là giao điểm thứ hai của $AB$ với đường tròn ngoại tiếp $\triangle BDM$. Đặt $\angle C = \alpha \implies \angle B = 3\alpha$. Bằng phương tích và tỉ số phân giác, chứng minh $AF = AC$. Tứ giác $AOME$ là hình thang cân (do $AO = OM = ME$), suy ra $AE \perp BC$ và tứ giác $ACEF$ nội tiếp. Kẻ tiếp tuyến $\ell$ của đường tròn $(ACEF)$ tại $F$, tính góc chỉ ra $\angle BFl = \angle BDF = 2\alpha$, chứng tỏ $\ell$ cũng chính là tiếp tuyến của đường tròn $(BDM)$. Vì hai đường tròn có chung tiếp tuyến tại giao điểm, chúng tiếp xúc với nhau.</p>
             </div>
@@ -234,7 +227,7 @@
         <p>Cho tam giác $ABC$ có trực tâm $H$ và $P$ là điểm chính giữa của cung $BAC$ của đường tròn ngoại tiếp tam giác $ABC$. Gọi $Q$ và $S$ là các điểm sao cho $HAPQ$ và $SACQ$ là các hình bình hành. Gọi $T$ là trung điểm của $AQ$, và $R$ là giao điểm của hai đường thẳng $SQ$ và $PB$. Chứng minh rằng ba đường thẳng $AB, SH$ và $TR$ đồng quy.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Đường tròn $(BHC)$ là ảnh của $(ABC)$ qua tịnh tiến theo vectơ $\vec{AH} = \vec{PQ}$, suy ra $BHQC$ nội tiếp. Biến đổi góc suy ra các tứ giác $SAHB$ và $SPQB$ đều nội tiếp. Gọi $X = AB \cap SH$. Ta có $XA \cdot XB = XH \cdot XS$ và $RQ \cdot RS = RP \cdot RB$. Do đó các điểm $X$ và $R$ đều nằm trên trục đẳng phương của hai đường tròn $(SHQ)$ và $(ABC)$. Vì $T$ là trung điểm của $AQ$ (nối tâm và các đoạn đối xứng), $T$ cũng thuộc trục đẳng phương này. Do đó ba điểm $X, T, R$ thẳng hàng, chứng tỏ ba đường thẳng $AB, SH$ và $TR$ đồng quy tại $X$.</p>
             </div>
@@ -244,7 +237,7 @@
         <p>Cho $n$ điểm trên mặt phẳng sao cho ít nhất 99% các tứ giác có đỉnh từ tập hợp các điểm này là tứ giác lồi. Hỏi có luôn luôn tìm được một đa giác lồi có ít nhất 90% số điểm ban đầu làm đỉnh hay không?</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>ĐÁP SỐ: KHÔNG THỂ.\nPhản ví dụ với $n = 3000$: Xét một đường tròn lớn và 1000 cụm điểm, mỗi cụm gồm 3 điểm tạo thành hình chữ "V" hướng ra ngoài nằm gần các đỉnh của một 1000-giác đều. Khi đó bất kỳ tứ giác nào có 4 đỉnh chọn từ 4 cụm khác nhau đều là tứ giác lồi, tổng số tứ giác lồi đạt ít nhất $3^4 \binom{1000}{4} > 99\% \binom{3000}{4}$. Tuy nhiên, trong mỗi cụm 3 điểm hình chữ V, một tập hợp lồi chỉ có thể chứa tối đa 2 điểm (không thể chứa cả 3 điểm vì điểm ở góc lõm sẽ vi phạm). Do đó bất kỳ đa giác lồi nào cũng chỉ có thể chứa tối đa $2 \times 1000 = 2000$ điểm, tức $\frac{2000}{3000} = 66.67\% < 90\%$, không thể đạt 90%.</p>
             </div>
@@ -256,7 +249,7 @@
         <p>Cho tam giác nhọn $ABC$. Đường phân giác trong của góc $\angle BAC$ cắt cạnh $BC$ tại $P$. Các điểm $D$ và $E$ lần lượt nằm trên các đoạn thẳng $AB$ và $AC$ sao cho $BC \parallel DE$. Lấy các điểm $K$ và $L$ lần lượt trên các đoạn thẳng $PD$ và $PE$ sao cho 5 điểm $A, D, E, K, L$ cùng thuộc một đường tròn. Chứng minh rằng 4 điểm $B, C, K, L$ cũng cùng thuộc một đường tròn.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Đường thẳng $AP$ cắt đường tròn ngoại tiếp của $ADE$ tại $Q$. Ta có $\angle ABP = \angle ADE = 180^\circ - \angle ALP$, suy ra tứ giác $ALPB$ nội tiếp. Khi đó biến đổi góc $\angle ELQ = \angle EAQ = \angle PAB = \angle PLB$, chứng tỏ ba điểm $L, Q, B$ thẳng hàng. Tương tự, $AKPC$ nội tiếp và $K, Q, C$ thẳng hàng. Theo phương tích của điểm $Q$ đối với hai đường tròn này: $BQ \cdot LQ = AQ \cdot QP = CQ \cdot KQ$, suy ra $BQ \cdot LQ = CQ \cdot KQ$. Đẳng thức phương tích này chứng tỏ 4 điểm $B, C, K, L$ cùng nằm trên một đường tròn.</p>
             </div>
@@ -266,7 +259,7 @@
         <p>Cho tam giác $ABC$ có tâm đường tròn nội tiếp là $I$. Các đường thẳng $BI, CI$ cắt các cạnh $AC, AB$ lần lượt tại $X, Y$. Gọi $M$ là trung điểm của cung $BAC$ của đường tròn ngoại tiếp tam giác $ABC$. Giả sử tứ giác $MXIY$ nội tiếp. Chứng minh rằng diện tích của tứ giác $MBIC$ bằng diện tích của ngũ giác $BCXIY$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Cần chứng minh $[MBIC] = [BCXIY]$, tương đương $[BCM] = [BCX] + [BCY]$, hay khoảng cách đại số từ các điểm xuống $BC$ thỏa mãn $\text{dist}(X, BC) + \text{dist}(Y, BC) = \text{dist}(M, BC)$. Điều này tương đương với việc điểm đối xứng của $M$ qua trung điểm của $XY$ nằm trên $BC$, tức tứ giác $MXZY$ là hình bình hành với $Z \in BC$. Bằng biến đổi góc nội tiếp và tứ giác $MXIY$ nội tiếp, chứng minh đường tròn $(MXB)$ cắt $BC$ tại $Z$ tạo ra các cặp cạnh song song $MY \parallel XZ$ và $YZ \parallel MX$. Áp dụng bổ đề hình bình hành cho thấy tổng khoảng cách bằng nhau, từ đó suy ra hai diện tích bằng nhau.</p>
             </div>
@@ -276,7 +269,7 @@
         <p>Chọn một số hữu hạn điểm $A_1, A_2, \dots, A_n$ trên đoạn thẳng $S$ có độ dài $L$. Với mỗi điểm $A_i$, gọi $c_i$ là một hình tròn đóng có tâm $A_i$ và bán kính không vượt quá 1. Gọi $C$ là hợp của tất cả các hình tròn $c_i$. Chứng minh rằng chu vi của $C$ nhỏ hơn $4L + 8$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Đặt đoạn thẳng $S$ nằm ngang trên trục hoành. Hợp các hình tròn $C$ đối xứng qua trục này. Xét đường biên phía trên của $C$ như đồ thị hàm số gồm các cung tròn nối tiếp nhau giữa các điểm cực tiểu và cực đại. Chứng minh rằng mỗi phần đường cong nối giữa một điểm cực tiểu và cực đại kề nhau có chiều rộng lớn hơn hoặc bằng chiều cao, do đó độ dài của phần cong này nhỏ hơn chiều rộng cộng chiều cao $\le 2 \times (\text{chiều rộng})$. Tổng chiều rộng của toàn bộ biên trên không vượt quá $L + 2$ (do bán kính $\le 1$), nên độ dài biên trên $< 2L + 4$. Tương tự cho biên dưới, tổng chu vi của cả miền $C$ nhỏ hơn $2(2L + 4) = 4L + 8$.</p>
             </div>
@@ -286,7 +279,7 @@
         <p>Cho tam giác $ABC$ có các đường phân giác $BE, CF$ cắt nhau tại $I$. Gọi $D$ là hình chiếu vuông góc của $I$ lên $BC$. Gọi $M$ và $N$ lần lượt là trực tâm của các tam giác $AIF$ và $AIE$. Các đường thẳng $EM$ và $FN$ cắt nhau tại $P$. Gọi $X$ là trung điểm của cạnh $BC$. Điểm $Y$ nằm trên đường thẳng $AD$ sao cho $XY \perp IP$. Chứng minh rằng đường thẳng $AI$ đi qua trung điểm của đoạn thẳng $XY$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Bổ đề 1: Cực của trực tâm $K$ của $\triangle IBC$ đối với $(I)$ là đường trung bình ứng với đỉnh $A$.\nBổ đề 2: Áp dụng định lý Pascal suy ra $IP \perp AK$.\nBổ đề 3: Gọi $J$ là tâm bàng tiếp góc $A$, khi đó $JM \parallel AD$.\nKết hợp các bổ đề: Vì $XY \perp IP$ và $AK \perp IP$ nên $XY \parallel AK$. Tứ giác $KBJC$ là hình bình hành nên $X$ là trung điểm chung của $BC$ và $JK$. Do $XK \parallel AY$ và $XY \parallel AK$, tứ giác $AKXY$ là hình bình hành, suy ra các vectơ $\vec{AY} = \vec{KX} = \vec{XJ}$. Do đó tứ giác $AXJY$ là hình bình hành, đường chéo $AJ$ (chính là đường phân giác $AI$) đi qua trung điểm của đường chéo $XY$.</p>
             </div>
@@ -296,7 +289,7 @@
         <p>Trong tam giác $ABC$, gọi $M, N$ lần lượt là trung điểm của các cạnh $AC, AB$ và $D$ là hình chiếu của $A$ lên $BC$. Gọi $O$ là tâm ngoại tiếp tam giác $ABC$. Đường tròn ngoại tiếp tam giác $BOC$ và tam giác $DMN$ cắt nhau tại hai điểm $R, T$. Các đường thẳng $DT, DR$ cắt đường thẳng $MN$ lần lượt tại $E$ và $F$. Các đường thẳng $CT, BR$ cắt nhau tại $K$. Điểm $P$ nằm trên đường thẳng $KD$ sao cho $PK$ là đường phân giác của góc $\angle BPC$. Chứng minh rằng đường tròn ngoại tiếp của hai tam giác $ART$ và $PEF$ tiếp xúc với nhau.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Khai thác phép nghịch đảo và tỉ số chùm điều hòa: Điểm $P$ nằm trên đường đối cực liên quan đến phân giác góc $\angle BPC$ trong tam giác bàn đạp. Đường thẳng $MN$ là trục đẳng phương của các đường tròn liên kết qua đường tròn chín điểm Euler. Sử dụng tính chất tiếp xúc của các chùm đường tròn trực giao qua các giao điểm $R, T$ và định lý đường thẳng Simson đối ngẫu để chứng minh hai đường tròn $(ART)$ và $(PEF)$ có cùng tiếp tuyến chung tại tiếp điểm trên $KD$.</p>
             </div>

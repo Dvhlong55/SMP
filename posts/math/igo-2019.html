@@ -54,15 +54,8 @@
         summary.igo-hint-trigger::marker {
             display: none;
         }
-        .igo-arrow {
-            display: inline-block;
-            font-size: 0.78rem;
-            transition: transform 0.2s ease-in-out;
-            color: var(--exam-bold-color, #111);
-        }
-        details.igo-hint-clean[open] .igo-arrow {
-            transform: rotate(90deg);
-        }
+        .igo-arrow { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 4.5px 0 4.5px 7.5px; border-color: transparent transparent transparent currentColor; transition: transform 0.2s ease-in-out; margin-right: 8px; flex-shrink: 0; }
+        details.igo-hint-clean[open] .igo-arrow { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 4.5px 0 4.5px 7.5px; border-color: transparent transparent transparent currentColor; transition: transform 0.2s ease-in-out; margin-right: 8px; flex-shrink: 0; }
         .igo-hint-content {
             padding: 8px 0 8px 16px;
             margin-top: 6px;
@@ -152,7 +145,7 @@
         <p>Cho một bàn hình chữ nhật kích thước $8 \times 5$ có 4 lỗ ở 4 góc. Sau khi bắn một quả bóng từ các điểm $A, B$ và $C$ theo các đường đi tạo với cạnh bàn một góc $45^\circ$ như hình vẽ, hỏi quả bóng có rơi vào bất kỳ lỗ nào sau 6 lần phản xạ hay không? (Giả thiết bóng phản xạ với góc phản xạ bằng góc tới sau khi chạm vào cạnh bàn).</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Truy vết quỹ đạo phản xạ của quả bóng từ từng điểm:\n- Từ điểm $A$: Bóng rơi vào lỗ sau đúng 1 lần phản xạ (theo một hướng) hoặc không rơi vào lỗ sau 6 lần phản xạ (theo hướng còn lại).\n- Từ điểm $B$: Bóng rơi vào lỗ sau đúng 5 lần phản xạ ở cả hai hướng xuất phát.\n- Từ điểm $C$: Bóng rơi vào lỗ sau đúng 6 lần phản xạ ở hướng thứ nhất, và rơi vào lỗ sau 4 lần phản xạ ở hướng thứ hai.\nNhư vậy, nếu xét trường hợp rơi vào lỗ sau đúng 6 lần phản xạ thì chỉ có đường đi từ $C$ thỏa mãn; còn nếu tính tối đa 6 lần phản xạ thì hầu hết các hướng (trừ một hướng từ $A$) đều rơi vào lỗ.</p>
             </div>
@@ -162,7 +155,7 @@
         <p>Cho hai hình chữ nhật $ABCD$ và $PQRD$ có cùng diện tích và các cặp cạnh tương ứng song song với nhau (như hình vẽ). Gọi các điểm $N, M, T$ lần lượt là trung điểm của các đoạn thẳng $QR, PC$ và $AB$. Chứng minh rằng 3 điểm $N, M$ và $T$ cùng nằm trên một đường thẳng.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $L = PQ \cap CR$ và $K = BC \cap AP$. Vì $QR \parallel PC$ nên $L, N, M$ thẳng hàng; tương tự $K, T, M$ thẳng hàng. Do đó chỉ cần chứng minh $PLCK$ là hình bình hành để suy ra $K, M, L$ thẳng hàng. Vì $PL \parallel CK$, ta chỉ cần chứng minh $PK \parallel CL$, tức $AP \parallel CR$. Do hai hình chữ nhật có cùng diện tích nên $PD \cdot DR = AD \cdot CD \implies \frac{PD}{CD} = \frac{AD}{DR}$, suy ra hai tam giác vuông $\triangle PDA$ và $\triangle CDR$ đồng dạng, dẫn tới $AP \parallel CR$. Do đó $N, M, T$ thẳng hàng.</p>
             </div>
@@ -172,7 +165,7 @@
         <p>Trên mặt phẳng cho $n > 2$ đường thẳng ở vị trí tổng quát (nghĩa là hai đường thẳng bất kỳ đều cắt nhau, nhưng không có 3 đường nào đồng quy). Tất cả các giao điểm của chúng đều được đánh dấu, sau đó tất cả các đường thẳng bị xóa đi chỉ còn lại các điểm được đánh dấu. Người ta không biết điểm đánh dấu nào thuộc về hai đường thẳng nào ban đầu. Hỏi có thể xác định lại vị trí của từng đường thẳng ban đầu và khôi phục lại tất cả các đường thẳng đó hay không?</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>CÂU TRẢ LỜI LÀ CÓ. Mỗi đường thẳng ban đầu chứa đúng $n - 1$ giao điểm với $n - 1$ đường thẳng còn lại. Hãy vẽ tất cả các đường thẳng đi qua ít nhất $n - 1$ điểm được đánh dấu. Hiển nhiên tất cả các đường thẳng ban đầu đều nằm trong số này. Ngược lại, giả sử có một đường thẳng $\ell$ nào đó đi qua $n - 1$ điểm đánh dấu; các điểm này là giao của các cặp đường thẳng ban đầu $(\ell_1, \ell_2), \dots, (\ell_{2n-3}, \ell_{2n-2})$. Vì $n > 2$ nên $2n - 2 > n$, theo nguyên lý Dirichlet phải có ít nhất hai đường thẳng trùng nhau $\ell_i = \ell_j$. Khi đó đường thẳng $\ell$ chứa hai điểm của $\ell_i$, buộc $\ell$ phải trùng với $\ell_i$. Do đó việc khôi phục hoàn toàn chính xác và duy nhất.</p>
             </div>
@@ -182,7 +175,7 @@
         <p>Cho tứ giác $ABCD$ thỏa mãn $\angle DAC = \angle CAB = 60^\circ$ và $AB = BD - AC$. Hai đường thẳng $AB$ và $CD$ cắt nhau tại điểm $E$. Chứng minh rằng: $\angle ADB = 2\angle BEC$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Lấy điểm $F$ trên tia đối của tia $AB$ (hoặc tia $BA$ qua $A$) sao cho $AF = AC$. Vì $AB = BD - AC$ nên $BF = AB + AF = BD$, suy ra tam giác $BFD$ cân tại $B$. Xét hai tam giác $\triangle FAD$ và $\triangle CAD$: có $AF = AC$, cạnh $AD$ chung và $\angle FAD = 180^\circ - \angle CAD - \angle CAB = 60^\circ = \angle CAD$. Do đó $\triangle FAD = \triangle CAD$, suy ra $\angle ADF = \angle ADC$. Khi đó góc ngoài $\angle BEC = \angle FAD - \angle ADC = 60^\circ - \angle ADF$. Mặt khác tam giác $BFD$ cân nên $\angle ADB = \angle FDB - \angle ADF = \angle BFD - \angle ADF = (120^\circ - \angle ADF) - \angle ADF = 120^\circ - 2\angle ADF = 2(60^\circ - \angle ADF) = 2\angle BEC$.</p>
             </div>
@@ -192,7 +185,7 @@
         <p>Đối với một đa giác lồi (tất cả các góc trong nhỏ hơn $180^\circ$), một đường chéo được gọi là "đường phân đôi" nếu nó đồng thời chia đôi cả diện tích và chu vi của đa giác. Hỏi số lượng đường chéo phân đôi nhiều nhất trong một ngũ giác lồi có thể là bao nhiêu?</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>ĐÁP SỐ LÀ 2. Nhận xét rằng qua mỗi đỉnh của ngũ giác lồi, có nhiều nhất một đường chéo phân đôi (vì nếu có hai đường chéo cùng xuất phát từ một đỉnh thì diện tích các phần chia ra sẽ khác nhau). Do đó số đường chéo phân đôi không thể vượt quá $\lfloor 5/2 \rfloor = 2$. Ta có thể dựng một ngũ giác lồi đối xứng có đúng 2 đường chéo phân đôi cắt nhau.</p>
             </div>
@@ -204,7 +197,7 @@
         <p>Hai đường tròn $\omega_1$ và $\omega_2$ có tâm lần lượt là $O_1$ và $O_2$ cắt nhau tại hai điểm $A, B$, và điểm $O_1$ nằm trên $\omega_2$. Gọi $P$ là một điểm tùy ý nằm trên $\omega_1$. Các đường thẳng $BP, AP$ và $O_1O_2$ cắt $\omega_2$ lần thứ hai tương ứng tại các điểm $X, Y$ và $C$. Chứng minh rằng tứ giác $XPYC$ là một hình bình hành.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Biểu diễn góc nội tiếp: $\angle APB = \frac{\text{sđ}\overparen{AO_1B}}{2} + \frac{\text{sđ}\overparen{XCY}}{2}$. Do $O_1$ là tâm ngoại tiếp tam giác $APB$, ta có $\angle APB = 180^\circ - \frac{\angle AO_1B}{2} = \frac{\text{sđ}\overparen{ABC}}{2}$. Cân bằng hai biểu thức suy ra cung $\overparen{XCY} = \overparen{BYC}$, do đó $BX \parallel CY$. Tương tự ta có $AY \parallel XC$. Hai cặp cạnh đối song song chứng tỏ $XPYC$ là hình bình hành.</p>
             </div>
@@ -214,7 +207,7 @@
         <p>Tìm tất cả các tứ giác $ABCD$ sao cho cả bốn tam giác $DAB, CDA, BCD$ và $ABC$ đôi một đồng dạng với nhau.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>ĐÁP SỐ: TẤT CẢ CÁC HÌNH CHỮ NHẬT.\n- Nếu $ABCD$ là tứ giác lõm, không mất tính tổng quát giả sử $D$ nằm trong $\triangle ABC$. Khi đó góc $\angle ADC = \angle ABC + \angle BAD + \angle BCD > \angle ABC$, lớn hơn mọi góc của $\triangle ABC$ nên hai tam giác không thể đồng dạng. Do đó $ABCD$ phải lồi.\n- Nếu $ABCD$ là tứ giác lồi: Giả sử $\angle B$ là góc lớn nhất. Vì $\triangle ABC \sim \triangle BCD$, ta suy ra $\angle ABC = \angle BCD$, và tương tự tất cả 4 góc của tứ giác phải bằng nhau, tức mỗi góc bằng $90^\circ$. Vậy tứ giác $ABCD$ bắt buộc phải là hình chữ nhật. Ngược lại, mọi hình chữ nhật đều thỏa mãn.</p>
             </div>
@@ -224,7 +217,7 @@
         <p>Ba đường tròn $\omega_1, \omega_2$ và $\omega_3$ cùng đi qua một điểm chung $P$. Tiếp tuyến của $\omega_1$ tại $P$ cắt $\omega_2$ và $\omega_3$ lần thứ hai tương ứng tại $P_{1,2}$ và $P_{1,3}$. Các điểm $P_{2,1}, P_{2,3}, P_{3,1}$ và $P_{3,2}$ được định nghĩa tương tự. Chứng minh rằng các đường trung trực của ba đoạn thẳng $P_{1,2}P_{1,3}$, $P_{2,1}P_{2,3}$ và $P_{3,1}P_{3,2}$ đồng quy.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Xét tam giác $XYZ$ tạo bởi ba đường thẳng $\ell_1 = P_{2,1}P_{3,1}, \ell_2 = P_{1,2}P_{3,2}, \ell_3 = P_{1,3}P_{2,3}$. Bằng biến đổi góc nội tiếp và góc tạo bởi tiếp tuyến và dây cung tại $P$, ta có $\angle P_{3,2}P_{1,2}P = \angle P_{3,2}PP_{2,3} = \angle PP_{1,3}P_{2,3}$, suy ra $XP_{1,2} = XP_{1,3}$. Tương tự $YP_{2,1} = YP_{2,3}$ và $ZP_{3,1} = ZP_{3,2}$. Do đó các đường trung trực của ba đoạn thẳng $P_{1,2}P_{1,3}, P_{2,1}P_{2,3}, P_{3,1}P_{3,2}$ chính là ba đường phân giác trong của các góc của tam giác $XYZ$, nên chúng đồng quy tại tâm đường tròn nội tiếp của tam giác $XYZ$ (trong trường hợp có đường song song, chúng đồng quy tại một điểm trên đường trung bình của hình thang).</p>
             </div>
@@ -234,7 +227,7 @@
         <p>Cho $ABCD$ là hình bình hành và điểm $K$ nằm trên đường thẳng $AD$ sao cho $BK = AB$. Giả sử $P$ là một điểm tùy ý trên cạnh $AB$, và đường trung trực của đoạn $PC$ cắt đường tròn ngoại tiếp tam giác $APD$ tại hai điểm $X, Y$. Chứng minh rằng đường tròn ngoại tiếp tam giác $ABK$ đi qua trực tâm của tam giác $AXY$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Kẻ đường cao $AN$ của tam giác $AXY$. Gọi $R$ là giao điểm của đường tròn $(ABK)$ với $AN$. Cần chứng minh $R$ là trực tâm của $\triangle AXY$. Đường thẳng $PC$ và $AN$ cắt $(APD)$ lần thứ hai tại $T$ và $S$; $AN$ cắt $CD$ tại $Q$. Vì $XY \perp PC$ và $XY \perp AN$ nên $AN \parallel PC$, suy ra $APCQ$ là hình bình hành. Sử dụng $\angle BRS = \angle AKB = \angle KAB = \angle PTD$ để chứng minh $\triangle ARB = \triangle CTD$, suy ra $CT = AR$. Từ đó chứng minh $CSRP$ là hình thang cân, suy ra $S$ và $R$ đối xứng nhau qua $XY$. Do $S$ nằm trên đường tròn ngoại tiếp của $\triangle AXY$, điểm đối xứng của nó qua cạnh đáy $XY$ chính là trực tâm của $\triangle AXY$, suy ra $R$ là trực tâm cần tìm.</p>
             </div>
@@ -244,7 +237,7 @@
         <p>Cho tam giác $ABC$ có $\angle A = 60^\circ$. Gọi $E, F$ lần lượt là chân các đường phân giác trong kẻ từ các đỉnh $B$ và $C$. Dựng các điểm $P$ và $Q$ sao cho các tứ giác $BFPE$ và $CEQF$ là các hình bình hành. Chứng minh rằng $\angle PAQ > 150^\circ$ (xét góc $\angle PAQ$ không chứa cạnh $AB$ của tam giác).</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $I$ là giao điểm của $BE$ và $CF$, $R = QE \cap PF$. Do $\angle A = 60^\circ$ nên $\angle BIC = 120^\circ$, tứ giác $AEIF$ nội tiếp, suy ra $CE \cdot CA = CI \cdot CF$. Góc $\angle PRQ = \angle BIC = 120^\circ$. Để chứng minh $\angle PAQ > 150^\circ$, chỉ cần chứng minh ít nhất một trong hai góc $\angle APR$ hoặc $\angle AQR$ lớn hơn hoặc bằng $30^\circ$. Giả sử phản chứng cả hai góc đều $< 30^\circ$, dựng điểm $K$ trên tia đối của $CA$ sao cho $\angle KQE = 30^\circ$. Khi đó tam giác $\triangle AIC \sim \triangle QKE$, dẫn tới tỉ số $\frac{CI}{CA} = \frac{KE}{QE} > \frac{AE}{CF}$, suy ra $AE < CE$. Tương tự suy ra $AF < BF$. Tuy nhiên ít nhất một trong hai góc $\angle B, \angle C$ phải $\ge 60^\circ$, nếu $\angle B \ge 60^\circ$ thì $AC \ge BC$ và theo tính chất đường phân giác thì $AF \ge BF$, mâu thuẫn!</p>
             </div>
@@ -256,7 +249,7 @@
         <p>Hai đường tròn $\omega_1, \omega_2$ cắt nhau tại hai điểm $A, B$. Điểm $C$ nằm trên tiếp tuyến kẻ từ $A$ tới $\omega_1$ sao cho $\angle ABC = 90^\circ$. Một đường thẳng $\ell$ tùy ý đi qua $C$ cắt $\omega_2$ tại hai điểm $P, Q$. Các đường thẳng $AP, AQ$ cắt $\omega_1$ lần thứ hai tương ứng tại $X, Z$. Gọi $Y$ là chân đường vuông góc kẻ từ $A$ đến đường thẳng $\ell$. Chứng minh rằng 3 điểm $X, Y, Z$ thẳng hàng.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Vì $\angle AYC = \angle ABC = 90^\circ$ nên tứ giác $AYBC$ nội tiếp. Suy ra $\angle BYC = \angle BAC = \angle BXA = \angle BXP$. Do đó tứ giác $PYBX$ nội tiếp. Tương tự tứ giác $QBYZ$ cũng nội tiếp. Khi đó biến đổi góc nội tiếp: $\angle BYX = \angle BPX = \angle AQB = \angle ZQB = 180^\circ - \angle ZYB$. Tổng hai góc kề bù bằng $180^\circ$ chứng tỏ ba điểm $X, Y, Z$ thẳng hàng.</p>
             </div>
@@ -266,7 +259,7 @@
         <p>Có đúng hay không nhận định: Trong mọi đa giác lồi $n$-giác ($n > 3$), luôn luôn tồn tại một đỉnh và một đường chéo đi qua đỉnh đó sao cho các góc tạo bởi đường chéo này với cả hai cạnh kề xuất phát từ đỉnh đó đều là các góc nhọn?</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>ĐÁP SỐ: ĐÚNG.\nChứng minh bằng phản chứng: Giả sử không tồn tại. Xét đường chéo dài nhất $AD$ của đa giác lồi. Gọi $B, C$ là hai đỉnh kề với $A$. Do không có đường chéo thỏa mãn nên ít nhất một góc tạo với cạnh kề không nhọn, giả sử $\angle BAD \ge 90^\circ$. Khi đó trong tam giác $ABD$, cạnh đối diện $BD > AD$, buộc $BD$ không thể là đường chéo (vì $AD$ dài nhất), nên $BD$ phải là một cạnh của đa giác. Tiếp tục lý luận tương tự cho đỉnh đối diện $D$ với đỉnh kề $C'$, ta suy ra $AC' > AD$ và số đỉnh $n = 4$. Khi đó tứ giác có hai góc tù đối nhau làm cho cạnh $BC > AD$, mâu thuẫn với việc $AD$ là đoạn dài nhất. Vậy khẳng định luôn đúng.</p>
             </div>
@@ -276,7 +269,7 @@
         <p>Hai đường tròn $\omega_1$ và $\omega_2$ có tâm lần lượt là $O_1$ và $O_2$ cắt nhau tại hai điểm $X, Y$. Gọi $AB$ là tiếp tuyến chung ngoài của hai đường tròn với $A \in \omega_1$ và $B \in \omega_2$. Tiếp tuyến của $\omega_1$ và $\omega_2$ tại $X$ cắt đường thẳng nối tâm $O_1O_2$ lần lượt tại $K$ và $L$. Giả sử đường thẳng $BL$ cắt $\omega_2$ lần thứ hai tại $M$, và đường thẳng $AK$ cắt $\omega_1$ lần thứ hai tại $N$. Chứng minh rằng ba đường thẳng $AM, BN$ và $O_1O_2$ đồng quy.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $P$ là trung điểm của $AB$. Do $P$ có cùng phương tích tới hai đường tròn nên $P$ nằm trên trục đẳng phương $XY$. Theo tính chất đối xứng và cực - đối cực, đường thẳng $AK$ chính là đường đối cực của $P$ đối với $\omega_1$, suy ra $PN$ tiếp xúc với $\omega_1$. Tương tự $PM$ tiếp xúc với $\omega_2$. Do đó $PA = PB = PM = PN$, 4 điểm $A, B, M, N$ cùng nằm trên đường tròn tâm $P$ đường kính $AB$, suy ra $\angle AMB = \angle ANB = 90^\circ$. Gọi $A', B'$ lần lượt là các điểm đối đường kính của $A$ trên $\omega_1$ và $B$ trên $\omega_2$. Khi đó $BN$ đi qua $A'$ và $AM$ đi qua $B'$. Tứ giác $AA'B'B$ là hình thang có hai đáy $AA' \parallel BB'$, và $O_1, O_2$ là trung điểm hai đáy. Do đó giao điểm của hai đường chéo $A'B$ và $B'A$ (chính là giao của $BN$ và $AM$) bắt buộc phải nằm trên đường nối trung điểm hai đáy $O_1O_2$. Vậy ba đường thẳng đồng quy.</p>
             </div>
@@ -286,7 +279,7 @@
         <p>Cho tam giác nhọn không cân $ABC$ nội tiếp đường tròn $\Gamma$. Gọi $M$ là trung điểm của $BC$ và $N$ là trung điểm của cung nhỏ $BC$ của $\Gamma$. Lấy các điểm $X, Y$ trên $\Gamma$ sao cho $BX \parallel CY \parallel AM$. Giả sử tồn tại điểm $Z$ trên cạnh $BC$ sao cho đường tròn ngoại tiếp tam giác $XYZ$ tiếp xúc với $BC$. Gọi $\omega$ là đường tròn ngoại tiếp tam giác $ZMN$, đường thẳng $AM$ cắt $\omega$ lần thứ hai tại $P$. Điểm $K$ nằm trên $\omega$ sao cho $KN \parallel AM$. Gọi $\omega_b$ là đường tròn đi qua $B, X$ và tiếp xúc với $BC$, và $\omega_c$ là đường tròn đi qua $C, Y$ và tiếp xúc với $BC$. Chứng minh rằng đường tròn tâm $K$ bán kính $KP$ tiếp xúc với cả ba đường tròn $\omega_b, \omega_c$ và $\Gamma$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $I, J, O$ lần lượt là tâm của $\omega_b, \omega_c, \Gamma$, ba điểm này thẳng hàng. Gọi $S = IJ \cap BC$. Tiếp tuyến $ST$ tới $\Gamma$ cắt lại tại $Q$, chứng minh $T$ thuộc $\omega$. Gọi $R = AM \cap TQ$, xét đường tròn $\Omega = (RTP)$, chứng minh $\Omega$ tiếp xúc với $\Gamma$ tại $T$. Bằng biến đổi hình học chiếu và trực giao, chứng minh $K$ chính là tâm của đường tròn $\Omega$, do đó bán kính của $\Omega$ chính là $KP$. Thực hiện phép nghịch đảo tâm $R$ bán kính $r = \sqrt{RZ \cdot RT}$ biến $\Omega$ thành đường thẳng $BC$, bảo toàn tính tiếp xúc của $\omega_b$ và $\omega_c$. Do $\Omega$ tiếp xúc với $BC$ sau nghịch đảo, suy ra $\Omega$ tiếp xúc với $\omega_b$ và $\omega_c$, hoàn tất chứng minh.</p>
             </div>
@@ -296,7 +289,7 @@
         <p>Cho các điểm $A, B$ và $C$ nằm trên một parabol $\Delta$ sao cho trực tâm $H$ của tam giác $ABC$ trùng với tiêu điểm của parabol $\Delta$. Chứng minh rằng khi thay đổi vị trí của các điểm $A, B, C$ trên $\Delta$ sao cho trực tâm luôn giữ nguyên tại $H$, thì bán kính đường tròn nội tiếp của tam giác $ABC$ không thay đổi.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Vì $H$ là tiêu điểm của parabol $\Delta$, các đường tròn $(A, AH), (B, BH), (C, CH)$ đều tiếp xúc với đường chuẩn $\ell$ của $\Delta$. Sử dụng hệ thức trực tâm $HA \cdot HA' = HB \cdot HB' = HC \cdot HC' = t = 4R^2 \cos A \cos B \cos C$. Thực hiện phép nghịch đảo cực $H$ phương tích $-2t$: phép nghịch đảo này biến ba đường tròn trên thành ba đường thẳng chứa các cạnh $BC, CA, AB$, và đường chuẩn $\ell$ biến thành đường tròn nội tiếp của tam giác $ABC$. Do đó $IH \perp \ell$ (tâm nội tiếp $I$ nằm trên trục đối xứng của $\Delta$) và trực tâm $H$ nằm trên đường tròn nội tiếp của tam giác $ABC$, suy ra $HI = r$. Tính toán hệ thức khoảng cách Euler $HI^2 = 2r^2 - 4R^2 \cos A \cos B \cos C = 2r^2 - t \implies r^2 = t$. Qua phép nghịch đảo, tích khoảng cách tới tiêu điểm và tiếp điểm cho $HK = r$ là khoảng cách cố định từ tiêu điểm tới đường chuẩn. Do đó bán kính nội tiếp $r$ là một hằng số không đổi.</p>
             </div>

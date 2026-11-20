@@ -54,15 +54,8 @@
         summary.igo-hint-trigger::marker {
             display: none;
         }
-        .igo-arrow {
-            display: inline-block;
-            font-size: 0.78rem;
-            transition: transform 0.2s ease-in-out;
-            color: var(--exam-bold-color, #111);
-        }
-        details.igo-hint-clean[open] .igo-arrow {
-            transform: rotate(90deg);
-        }
+        .igo-arrow { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 4.5px 0 4.5px 7.5px; border-color: transparent transparent transparent currentColor; transition: transform 0.2s ease-in-out; margin-right: 8px; flex-shrink: 0; }
+        details.igo-hint-clean[open] .igo-arrow { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 4.5px 0 4.5px 7.5px; border-color: transparent transparent transparent currentColor; transition: transform 0.2s ease-in-out; margin-right: 8px; flex-shrink: 0; }
         .igo-hint-content {
             padding: 8px 0 8px 16px;
             margin-top: 6px;
@@ -152,7 +145,7 @@
         <p>Một tác phẩm ghép gạch từ một nhà thờ Hồi giáo ở thành phố Isfahan được mô tả như hình vẽ. Hình được tạo bởi 5 loại đa giác khác nhau, bao gồm ngũ giác đều và thập giác (10-giác) đều, tất cả các cạnh đều có độ dài bằng nhau. Các lục giác trong hình có 4 góc bằng nhau và 2 góc còn lại cũng bằng nhau. Hãy tìm số đo của các góc được đánh dấu ($x, y, z$).</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Góc ở đỉnh của đa giác đều $n$-cạnh có số đo bằng $\frac{(n-2) \cdot 180^\circ}{n}$. Do đó góc của ngũ giác đều là $108^\circ$ và góc của thập giác đều là $144^\circ$. Tổng các góc quanh một điểm bằng $360^\circ$, từ đó tính được góc $x = 360^\circ - (108^\circ + 144^\circ) = 108^\circ$, góc $y = 360^\circ - (108^\circ + 108^\circ) = 144^\circ$. Trong lục giác có tổng các góc bằng $720^\circ$, ta có phương trình $2z + 4y = 720^\circ \implies 2z + 4(144^\circ) = 720^\circ \implies z = 72^\circ$. Vậy các góc cần tìm là $x = 108^\circ, y = 144^\circ, z = 72^\circ$.</p>
             </div>
@@ -162,7 +155,7 @@
         <p>Cho tam giác đều $ABC$. Các điểm $O_1, O_2$ lần lượt nằm trên các cạnh $AB, AC$. Biết rằng đường tròn tâm $O_1$ đi qua $B$ tiếp xúc ngoài với đường tròn tâm $O_2$ đi qua $C$ tại một điểm $P$ nằm bên trong tam giác. Hãy tính số đo của góc $\angle BPC$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Đặt $\angle PBO_1 = \angle BPO_1 = \alpha$ và $\angle PCO_2 = \angle CPO_2 = \beta$. Do $O_1, P, O_2$ thẳng hàng tại tiếp điểm, góc $\angle BPC = 180^\circ - \alpha - \beta$. Mặt khác tam giác $ABC$ đều nên $\angle B = \angle C = 60^\circ$, do đó $\angle PBC = 60^\circ - \alpha$ và $\angle PCB = 60^\circ - \beta$. Trong tam giác $PBC$, ta có $\angle BPC = 180^\circ - \angle PBC - \angle PCB = 180^\circ - (60^\circ - \alpha) - (60^\circ - \beta) = 60^\circ + \alpha + \beta$. Cân bằng hai biểu thức: $180^\circ - \alpha - \beta = 60^\circ + \alpha + \beta \implies \alpha + \beta = 60^\circ$. Do đó $\angle BPC = 180^\circ - 60^\circ = 120^\circ$.</p>
             </div>
@@ -172,7 +165,7 @@
         <p>Arash có một mảnh giấy hình tam giác vuông cân. Một phép gấp mảnh giấy được gọi là "tốt" nếu đa giác nhận được sau nếp gấp có tất cả các góc đều nhỏ hơn $180^\circ$. Arash thực hiện một phép gấp tốt. Sau đó Babak cầm lấy mảnh giấy và thực hiện hai phép gấp tốt tiếp theo, sao cho cuối cùng tờ giấy được gấp đúng ba lần. Arash muốn đa giác cuối cùng có nhiều cạnh nhất có thể, nhưng Babak muốn điều ngược lại (số cạnh ít nhất). Giả sử cả hai đều chơi tối ưu, hỏi đa giác cuối cùng có bao nhiêu cạnh?</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>ĐÁP SỐ: 3 CẠNH.\nBabak luôn có chiến lược để đưa đa giác cuối cùng về một tam giác vuông cân (3 cạnh), bất kể nếp gấp đầu tiên của Arash:\n- TH1: Nếp gấp của Arash cắt cạnh huyền $BC$ và một cạnh góc vuông $AC$. Nếp gấp này không thể cắt đường trung trực của $BC$. Babak chỉ cần gấp đối xứng qua đường trung trực $AM$, thu được một tam giác vuông cân mới, rồi tiếp tục gấp theo đường cao ứng với cạnh huyền, kết quả là tam giác có 3 cạnh.\n- TH2: Nếp gấp của Arash cắt hai cạnh góc vuông $AB$ và $AC$. Babak gấp theo đường trung trực của $BC$, rồi gấp theo đường trung bình nối hai trung điểm, đưa về tam giác vuông cân có đúng 3 cạnh.</p>
             </div>
@@ -182,7 +175,7 @@
         <p>Cho tứ giác lồi $ABCD$ có tính chất: Mỗi đường chéo đều dài hơn từng cạnh của tứ giác. Chứng minh rằng độ dài của mỗi đường chéo nhỏ hơn $\sqrt{3}$ lần độ dài của một cạnh nào đó của tứ giác.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Chứng minh bằng phản chứng: Giả sử ngược lại, độ dài mỗi đường chéo đều $\ge \sqrt{3}$ lần độ dài của tất cả các cạnh. Không mất tính tổng quát, giả sử $AC$ là đường chéo dài hơn. Vẽ hai đường tròn tâm $A$ và $C$ bán kính $\frac{AC}{\sqrt{3}}$, chúng cắt nhau tại $B', D'$. Vì $AB \le \frac{AC}{\sqrt{3}}$ và $CB \le \frac{AC}{\sqrt{3}}$, điểm $B$ (và tương tự $D$) phải nằm trong miền giao nhau của hai đường tròn này. Do tam giác $AB'D'$ và $CB'D'$ là các tam giác đều, ta có $\angle BAD < \angle B'AD' = 60^\circ$ và $\angle BCD < \angle B'CD' = 60^\circ$. Tổng 4 góc $\angle ABD + \angle CBD + \angle ADB + \angle CDB = 360^\circ - (\angle BAD + \angle BCD) > 240^\circ$. Theo nguyên lý Dirichlet, ít nhất một góc phải $> 60^\circ$, giả sử $\angle ABD > 60^\circ$. Khi đó trong $\triangle ABD$, $\angle ABD > 60^\circ > \angle BAD$, dẫn tới cạnh đối diện $AD > BD$, mâu thuẫn trực tiếp với giả thiết đường chéo $BD$ dài hơn cạnh $AD$.</p>
             </div>
@@ -192,7 +185,7 @@
         <p>Trong tam giác $ABC$ có $\angle CAB = 15^\circ$ và $\angle CBA = 30^\circ$, lấy các điểm $X$ và $Y$ nằm bên trong góc $\angle BCA$ sao cho $\angle BCX = \angle ACY = 45^\circ$ và $BC = CY, AC = CX$. Đường thẳng $XY$ cắt cạnh $AB$ tại điểm $Z$. Chứng minh rằng: $AZ = BC$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Lấy điểm $D$ trên tia $BC$ sao cho $BC = CD$. Bổ đề: Chứng minh $\angle DAC = 30^\circ$ bằng cách hạ đường cao và xét tam giác vuông cân. Khi đó $\angle ACD = 45^\circ = \angle XCY$. Do $CD = CY$ và $CA = CX$, hai tam giác $\triangle ACD \cong \triangle XCY$ bằng nhau, suy ra $\angle CXY = 30^\circ$. Tam giác $BYX$ cân có góc $60^\circ$ nên là tam giác đều ($BY = XY$). Chứng minh tam giác $\triangle BYA \cong \triangle XYA$, dẫn tới $AB = AX$. Cuối cùng tính góc $\angle ZXA = 15^\circ = \angle CAB$ và $\angle XZA = 135^\circ = \angle ACB$, suy ra hai tam giác $\triangle ABC \cong \triangle XAZ$ bằng nhau (g-c-g), từ đó suy ra hai cạnh tương ứng $AZ = BC$.</p>
             </div>
@@ -204,7 +197,7 @@
         <p>Cho hình thang vuông $PYXQ$ ($PY \perp PQ$ và $QX \perp PQ$). Các điểm $A$ và $B$ nằm trên đường thẳng $PQ$ sao cho $\angle AYQ = \angle BXP = 90^\circ$. Gọi $S$ là giao điểm của hai đường chéo của hình thang $PYXQ$. Chứng minh rằng: $\triangle AYS \sim \triangle BXS$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Vì $\angle AYS = \angle BXS = 90^\circ$, bài toán quy về chứng minh tỉ số cạnh $\frac{AY}{BX} = \frac{YS}{XS}$. Sử dụng các cặp tam giác vuông đồng dạng $\triangle APY \sim \triangle YPQ$ và tam giác $\triangle PXQ \sim \triangle XQB$, thiết lập tỉ số $\frac{AY}{YQ} = \frac{PY}{PQ}$ và $\frac{PX}{BX} = \frac{PQ}{QX}$. Do hai đường chéo cắt nhau tại $S$, $\triangle PSY \sim \triangle XSQ$, suy ra $\frac{PY}{QX} = \frac{SY}{SQ}$. Phân tích tỉ số đại số và nhân liên tiếp các đoạn thẳng cho thấy $\frac{AY}{BX} = \frac{YS}{XS}$, suy ra hai tam giác vuông $\triangle AYS \sim \triangle BXS$ đồng dạng.</p>
             </div>
@@ -214,7 +207,7 @@
         <p>Cho hình vuông $ABCD$. Gọi $E$ là trung điểm của cạnh $BC$ và $F$ là điểm nằm trên cạnh $AB$ sao cho $DE \perp EF$. Điểm $G$ nằm bên trong hình vuông sao cho $GF = EF$ và $GF \perp EF$. Hai đường thẳng $AC$ và $DE$ cắt nhau tại điểm $X$. Chứng minh rằng 4 điểm $G, B, E, X$ cùng nằm trên một đường tròn.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Ta cần chứng minh $\angle BEG = \angle BXG$. Ta có $\angle BEG = \angle BEF + 45^\circ = \angle CDE + 45^\circ = \angle CBX + 45^\circ = \angle BXA$, điều này tương đương với việc chứng minh 3 điểm $A, G, C$ thẳng hàng (vì đường chéo $AC$ tạo góc $45^\circ$). Tam giác vuông $\triangle BEF \sim \triangle CDE$ suy ra $BF = \frac{BC}{4} = \frac{AB}{4}$, do đó $AF = \frac{3AB}{4}$. Lấy điểm $T$ trên tia đối của $CB$ sao cho $BT = BF$, chứng minh hai tam giác $\triangle TEF \cong \triangle AFG$ bằng nhau (c-g-c), suy ra $\angle FAG = 45^\circ$. Vì $\angle CAB = 45^\circ$, tia $AG$ trùng với tia $AC$, chứng tỏ $A, G, C$ thẳng hàng, suy ra tứ giác $GBEX$ nội tiếp.</p>
             </div>
@@ -224,7 +217,7 @@
         <p>Cho tam giác $ABC$ nội tiếp đường tròn $\omega$. Gọi $T$ là trung điểm của cung nhỏ $BC$ của $\omega$. Đường thẳng $BT$ cắt đường phân giác ngoài của góc $\angle BAC$ tại điểm $P$. Gọi $H$ là hình chiếu vuông góc của $A$ lên tiếp tuyến của $\omega$ tại $T$, và $M$ là trung điểm của đoạn thẳng $AP$. Chứng minh rằng: $\angle AHM = \angle ACP$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Lấy $A', C'$ đối xứng với $A, C$ qua tiếp tuyến tại $T$ của $\omega$. Tứ giác $ACC'A'$ là hình thang cân nên nội tiếp. Tam giác $TC'C$ cân tại $T$ suy ra $\angle CTC' = 180^\circ - 2(90^\circ - \frac{1}{2}\angle A) = \angle A$, chứng tỏ $C'$ nằm trên đường thẳng $BT$. Biến đổi góc ngoài $\angle PAC = 90^\circ + \frac{1}{2}\angle A = 180^\circ - \angle TC'C$, chứng tỏ tứ giác $PACC'$ nội tiếp. Do đó 5 điểm $P, A, C, C', A'$ cùng thuộc một đường tròn. Khi đó theo góc nội tiếp và trung điểm đoạn thẳng, ta suy ra $\angle AHM = \angle AA'P = \angle ACP$.</p>
             </div>
@@ -234,7 +227,7 @@
         <p>Trong lục giác lồi $ABCYXD$, giả sử $\angle ACY = \angle BDX = 90^\circ$, $\angle BAC = 2\angle CAY$, $\angle ABD = 2\angle DBX$, và $XY = DX + CY$. Chứng minh rằng: $\sqrt{(CD - DX)(CD - CY)} \le \frac{AC + BD - AB}{2}$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Bổ đề: Trong tứ giác lồi $ABCD$ với $M, N$ là trung điểm hai cạnh đối $BC, AD$, ta có $MN \le \frac{1}{2}(AB + CD)$. Lấy điểm đối xứng $X', Y'$ của $X, Y$ qua $C, D$. Do $\angle CAB = 2\angle YAC$ và góc vuông, $Y'$ nằm trên đường phân giác trong của góc $A$. Chiếu $Y', X'$ xuống $AB$ tại $E, F$, ta có $YC = Y'E, AC = AE$ và $XD = X'F, BD = BF$. Tứ giác $FX'Y'E$ là hình thang vuông. Áp dụng bổ đề cho $2CD \le X'Y' + XY \implies X'Y' \ge 2CD - XY$. Tính độ dài cạnh đáy $EF^2 = X'Y'^2 - (DX - CY)^2 \ge 4(CD - DX)(CD - CY)$. Khai căn hai vế kết hợp với $EF = AC + BD - AB$ suy ra bất đẳng thức cần chứng minh.</p>
             </div>
@@ -244,7 +237,7 @@
         <p>Cho tam giác $ABC$ có $AB < AC$, và $\omega$ là một đường tròn tùy ý đi qua $B$ và $C$. Gọi $F$ và $E$ lần lượt là giao điểm của $\omega$ với các cạnh $AB$ và $AC$. Gọi $M$ và $N$ lần lượt là giao điểm của các đường trung trực của các đoạn thẳng $BF$ và $CE$ với cạnh $BC$. Gọi $P$ là giao điểm của đường trung trực đoạn thẳng $MN$ với $EF$. Chứng minh rằng khi đường tròn $\omega$ thay đổi, điểm $P$ luôn nằm trên một đường thẳng cố định.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $K$ là trung điểm của $BC$, $D = AK \cap EF$, và $Q = FM \cap EN$. Do $QE, QF$ là các tiếp tuyến của đường tròn $(AEF)$, $Q$ nằm trên đường đối trung của $\triangle AEF$, mà $\triangle AEF \sim \triangle ABC$ nên $Q$ nằm trên đường trung tuyến $AK$, và tỉ số $\frac{AD}{DQ}$ là một hằng số cố định khi $\omega$ thay đổi. Tâm $O$ của $\omega$ là tâm đường tròn nội tiếp của tam giác $QMN$, và $K$ là tiếp điểm của đường tròn nội tiếp này trên $MN$. Bằng phép vị tự tâm $K$, các đường phân giác và trung trực biến đổi thành các đường thẳng song song cố định. Dựng điểm phụ $S$ là giao của các tia cố định, qua phép vị tự tâm $S$, điểm $P$ luôn nằm trên một đường thẳng cố định đi qua $S$.</p>
             </div>
@@ -256,7 +249,7 @@
         <p>Cho tam giác cân $ABC$ ($AB = AC$). Các điểm $X$ và $Y$ nằm trên cạnh $BC$ sao cho $X$ nằm giữa $B$ và $Y$. Ký hiệu $\omega_1$ là đường tròn ngoại tiếp tam giác $AYB$. Đường tròn $\omega_2$ đi qua $C$ và $X$ đồng thời tiếp xúc với cạnh $AC$. Hai đường tròn $\omega_1$ và $\omega_2$ cắt nhau tại hai điểm $M$ và $N$. Chứng minh rằng: $\angle AMX = \angle BNX$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Vì tứ giác $ABMN$ nội tiếp $\omega_1$ và $\omega_2$ tiếp xúc với $AC$ tại $C$, biến đổi góc tiếp tuyến và góc nội tiếp: $\angle XMC = \angle XCA = \angle ABC = \angle ABY = \angle AMY$. Do đó $\angle AMX = \angle YMC$. Mặt khác, xét góc tại đỉnh $N$: $\angle BNX = \angle BNM - \angle XNM = \angle BYM - \angle XCM = \angle XYM - \angle YCM = \angle YMC = \angle AMX$. Vậy $\angle AMX = \angle BNX$.</p>
             </div>
@@ -266,7 +259,7 @@
         <p>Tứ giác $ABCD$ nội tiếp đường tròn $\omega$. Các điểm phân biệt $X, Y$ lần lượt nằm trên các tia $DB, CA$ sao cho $DA = DX$ và $CB = CY$. Các đường thẳng $AX, BY$ cắt cạnh $CD$ lần lượt tại $P$ và $Q$. Chứng minh rằng trục đẳng phương của hai đường tròn ngoại tiếp tam giác $APC$ và tam giác $BQD$ cắt đường trung trực của cạnh $AB$ tại một điểm nằm trên đường tròn $\omega$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $T$ là trung điểm của cung $AB$ (cung chứa $C, D$) của $\omega$. Biến đổi góc: $\angle TBQ = \angle YBC - \angle TBC = (90^\circ - \frac{1}{2}\angle BCA) - \angle TBC = \angle BDC$, suy ra đường thẳng $TB$ tiếp xúc với đường tròn ngoại tiếp $\triangle BQD$. Tương tự, $TA$ tiếp xúc với đường tròn ngoại tiếp $\triangle APC$. Vì $TA = TB$ (do $T$ là điểm chính giữa cung $AB$), phương tích của $T$ đối với hai đường tròn bằng nhau: $P_{T/(APC)} = TA^2 = TB^2 = P_{T/(BQD)}$. Do đó điểm $T$ nằm trên trục đẳng phương của hai đường tròn ngoại tiếp. Mặt khác, $T$ hiển nhiên nằm trên đường trung trực của $AB$ và nằm trên đường tròn $\omega$. Vậy giao điểm nằm trên $\omega$.</p>
             </div>
@@ -276,7 +269,7 @@
         <p>Cho $M$ là trung điểm của cạnh $BC$ của tam giác $ABC$ ($AB \ne AC$). Điểm $X$ là một điểm tùy ý trên đoạn thẳng $AM$. Điểm $A'$ nằm trên đường tròn ngoại tiếp tam giác $ABC$ sao cho $AA' \parallel BC$. Đường tròn ngoại tiếp tam giác $AXA'$ cắt các cạnh $AB, AC$ lần lượt tại $F, E$. Gọi $P$ là giao điểm của hai đường thẳng $BC$ và $A'X$. Chứng minh rằng 4 điểm $P, M, E, F$ cùng nằm trên một đường tròn.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $\omega$ là đường tròn ngoại tiếp tam giác $AXA'$, và $K$ là giao điểm của $EF$ và $BC$. Điểm $A'$ là điểm Miquel của tứ giác toàn phần $BFEC$, suy ra các tứ giác $A'ECK$ và $A'FBK$ nội tiếp. Biến đổi góc: $\angle EA'K = \angle ECB = \angle EAA'$, chứng tỏ $KA'$ tiếp xúc với $\omega$. Qua hàng điểm điều hòa chiếu từ đỉnh $A$: $(BC; M\infty) = -1 \implies (FE; XA')_\omega = -1$, suy ra tiếp tuyến $XK$ cũng đi qua $K$. Do đó $\angle MXK = \angle AA'X = \angle XPM$, chứng tỏ $KX$ tiếp xúc với đường tròn $(XPM)$. Khi đó hệ thức phương tích $KP \cdot KM = KX^2 = KE \cdot KF$ khẳng định tứ giác $PMEF$ nội tiếp.</p>
             </div>
@@ -286,7 +279,7 @@
         <p>Cho tam giác cân $ABC$ với $AB = AC$. Các điểm $M$ và $N$ nằm trên cạnh $BC$ sao cho $\angle MAN = \frac{1}{2}\angle BAC$ ($M$ nằm giữa $B$ và $N$). Gọi $P$ là tâm đường tròn ngoại tiếp tam giác $AMN$. Các đường trung trực của $AM$ và $AN$ cắt $BC$ lần lượt tại $R$ và $Q$. Các điểm $S$ và $T$ nằm trên $PR$ và $PQ$ sao cho $ST \perp PA$. Gọi $K$ và $L$ lần lượt là điểm đối xứng của $A$ qua các đường thẳng $QS$ và $RT$. Chứng minh rằng đường tròn ngoại tiếp của hai tam giác $CMK$ và $BNL$ cắt nhau tại một điểm nằm trên đường trung trực của cạnh $BC$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Sử dụng phép nghịch đảo cực $A$ bán kính $\sqrt{AM \cdot AN}$ kết hợp với phép lấy đối xứng trục qua đường phân giác trong của góc $\angle MAN$. Phép biến đổi này hoán vị vai trò của $M$ và $N$, biến $P$ thành điểm đối xứng của $A$ qua $BC$. Bài toán được đưa về bài toán đối ngẫu trong tam giác nhọn với trực tâm $H$ và tâm ngoại tiếp $O$: chứng minh hai đường tròn ngoại tiếp đi qua điểm liên hợp đẳng giác cùng nằm trên đường trung trực đối xứng của tam giác cân $ABC$.</p>
             </div>
@@ -296,7 +289,7 @@
         <p>Đường tròn nội tiếp của tam giác $ABC$ tiếp xúc với các cạnh $AC, AB$ lần lượt tại $E, F$. Đường tròn $\omega_1$ tiếp xúc với các đoạn thẳng $BE, CE$ và tiếp xúc ngoài với đường tròn ngoại tiếp tam giác $ABC$. Đường tròn $\omega_2$ tiếp xúc với các đoạn thẳng $CF, BF$ và tiếp xúc ngoài với đường tròn ngoại tiếp tam giác $ABC$. Chứng minh rằng tâm vị tự ngoài của hai đường tròn $\omega_1, \omega_2$ nằm trên trục đẳng phương của đường tròn nội tiếp và đường tròn ngoại tiếp của tam giác $ABC$.</p>
 
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $\omega$ và $\Gamma$ lần lượt là đường tròn nội tiếp và đường tròn ngoại tiếp của tam giác $ABC$, và $\ell$ là trục đẳng phương của chúng. Ta chứng minh tâm vị tự ngoài của $\omega_1$ và $\omega$ nằm trên $\ell$. Tương tự tâm vị tự ngoài của $\omega_2$ và $\omega$ nằm trên $\ell$. Theo định lý Monge-d'Alembert về ba tâm vị tự ngoài, tâm vị tự ngoài của $\omega_1$ và $\omega_2$ thẳng hàng với hai tâm vị tự trên, do đó nó bắt buộc phải nằm trên đường thẳng $\ell$ (trục đẳng phương của $\omega$ và $\Gamma$).</p>
             </div>

@@ -36,8 +36,8 @@
         details.igo-hint-clean { margin: 8px 0 22px 0; border: none; background: transparent; }
         summary.igo-hint-trigger { list-style: none; cursor: pointer; display: inline-flex; align-items: center; padding: 3px 6px; user-select: none; color: var(--exam-bold-color, #111); width: fit-content; outline: none; }
         summary.igo-hint-trigger::-webkit-details-marker, summary.igo-hint-trigger::marker { display: none; }
-        .igo-arrow { display: inline-block; font-size: 0.78rem; transition: transform 0.2s ease-in-out; color: var(--exam-bold-color, #111); margin-right: 6px; }
-        details.igo-hint-clean[open] .igo-arrow { transform: rotate(90deg); }
+        .igo-arrow { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 4.5px 0 4.5px 7.5px; border-color: transparent transparent transparent currentColor; transition: transform 0.2s ease-in-out; margin-right: 8px; flex-shrink: 0; }
+        details.igo-hint-clean[open] .igo-arrow { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 4.5px 0 4.5px 7.5px; border-color: transparent transparent transparent currentColor; transition: transform 0.2s ease-in-out; margin-right: 8px; flex-shrink: 0; }
         .igo-hint-content { padding: 8px 0 8px 16px; margin-top: 6px; border-left: 2px solid var(--border-light, #cbd5e1); font-size: 0.98rem; line-height: 1.8; color: var(--exam-text-color, #334155); }
         body.dark-mode .igo-hint-content { border-left-color: rgba(255, 255, 255, 0.15); }
         .igo-level-heading { color: var(--exam-bold-color, #111); font-size: 1.35rem; margin-top: 36px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1)); font-weight: 700; }
@@ -80,7 +80,7 @@
         a) $W(a_0, a_1, \dots, a_n) = W(-a_n, -a_{n-1}, \dots, -a_0)$.<br>
         b) $W(a_0, a_1, \dots, a_n) = W(p_0 a_0, p_1 a_1, \dots, p_n a_n)$ nếu $p_0, p_1, \dots, p_n$ là các số dương.</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>a) Đảo ngược thứ tự dãy và nhân với $-1$ không làm thay đổi tính trái dấu của bất kỳ cặp phần tử liên tiếp khác $0$ nào.<br>
                 b) Nhân mỗi $a_i$ với số dương $p_i > 0$ bảo toàn hoàn toàn dấu ($> 0, = 0, < 0$) của từng phần tử.</p>
@@ -92,7 +92,7 @@
         a) $W(P) \ge W(P')$, trong đó $P'(x)$ kí hiệu đạo hàm của đa thức $P(x)$.<br>
         b) $N(P)$ là một số chẵn nếu $a_0 a_n > 0$; $N(P)$ là một số lẻ nếu $a_0 a_n < 0$.</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>a) Dãy hệ số của $P'(x)$ là $(1\cdot a_1, 2\cdot a_2, \dots, n\cdot a_n)$, theo Bài 1b có số lần đổi dấu bằng $W(a_1, a_2, \dots, a_n) \le W(a_0, a_1, \dots, a_n) = W(P)$.<br>
                 b) Xét dấu của $P(0) = a_0$ và $\lim_{x \to +\infty} P(x)$ (cùng dấu với $a_n$). Mỗi nghiệm bội lẻ làm đổi dấu $P(x)$ khi đi qua nó, còn nghiệm bội chẵn không làm đổi dấu.</p>
@@ -102,7 +102,7 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
         <p>Chứng minh rằng nếu $W(P') \equiv N(P') \pmod 2$ thì $W(P) \equiv N(P) \pmod 2$.</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Không mất tổng quát giả sử $a_0 \neq 0$ (nếu không, chia $P$ cho $x^r$). Theo định lý Rolle, giữa hai nghiệm dương phân biệt liên tiếp của $P$ có ít nhất 1 nghiệm của $P'$, và có xét thêm tính chẵn lẻ bội nghiệm tại khoảng $(0, +\infty)$ tùy theo dấu $a_0 a_1$ và $a_0 a_n$ để suy ra $W(P) - N(P)$ chẵn.</p>
             </div>
@@ -112,7 +112,7 @@
         <p>Chứng minh rằng:<br>
         a) $W(P) \ge N(P)$; &nbsp;&nbsp;&nbsp; b) $W(P) - N(P)$ là một số chẵn.</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Quy nạp theo $\deg P$. Theo định lý Rolle, nếu $P$ có các nghiệm dương phân biệt $x_1 < \dots < x_k$ với số bội $m_1, \dots, m_k$, thì $P'$ có nghiệm tại mỗi $x_i$ với bội $m_i - 1$ và thêm ít nhất 1 nghiệm trong mỗi khoảng $(x_i, x_{i+1})$, nên $N(P') \ge N(P) - 1$. Kết hợp với $W(P) \ge W(P') \ge N(P')$ và xét tính chẵn lẻ ở Bài 3 (nếu $W(P) = N(P) - 1$ thì trái tính chẵn lẻ với Bài 3) suy ra $W(P) \ge N(P)$ và $W(P) \equiv N(P) \pmod 2$.</p>
             </div>
@@ -123,7 +123,7 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
         <p>Đa thức $x^{10} - x^2 - x - 1$ có bao nhiêu nghiệm dương?</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Dãy hệ số $(1, -1, -1, -1)$ có $W(P) = 1$. Theo Bài 4, $N(P) \le 1$ và $1 - N(P)$ chẵn, suy ra $N(P) = 1$ (có đúng 1 nghiệm dương).</p>
             </div>
@@ -132,7 +132,7 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 6</span></h3>
         <p>Chứng minh rằng đa thức $Q(x) = 30x^7 - 4x^6 - 1975x^4 - 30x^2 - 4x - 2019$ có đúng một nghiệm thực.</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Với $x > 0$: $W(Q(x)) = 1 \implies Q$ có đúng 1 nghiệm dương. Với $x < 0$: xét $Q(-x) = -30x^7 - 4x^6 - 1975x^4 - 30x^2 + 4x - 2019$, dãy hệ số $(-2019, +4, -30, -1975, -4, -30)$ có $W(Q(-x)) = 2$, suy ra $Q$ có $0$ hoặc $2$ nghiệm âm; đánh giá trực tiếp với $x < 0$ thấy $Q(x) \le -4x - 2019$ khi $x < -1$ và kiểm tra trên $[-1, 0)$ (như $30x^7 - 4x - 2019 < 0$ vì $|4x| \le 4 < 2019$), nên $Q(x) < 0$ với mọi $x \le 0$. Vậy $Q$ có đúng 1 nghiệm thực.</p>
             </div>
@@ -145,7 +145,7 @@
         \]
         Chứng minh rằng $P_n(x) \ge 0$ với mọi $x \ge 0$.</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Với $n \ge 4$, các số mũ giảm chặt theo thứ tự đã viết, dãy hệ số là $(1, -2, -3, -4, -5, 6, 7)$ có $W(P_n) = 2$, nên $P_n$ có $0$ hoặc $2$ nghiệm dương (tính cả bội). Kiểm tra giá trị tại $x = 1$: $P_n(1) = 1 - 2 - 3 - 4 - 5 + 6 + 7 = 0$! Hơn nữa $P_n'(1) = (5n^3+1) - 2(n^3+n) - 3(n^3-3n^2) - 4(n^2+n) - 5(n^2-1) + 6(n-1) = 0$! Như vậy $x = 1$ là nghiệm bội $\ge 2$, nên $P_n$ chỉ có duy nhất nghiệm dương $x = 1$ (bội 2), suy ra $P_n(x) \ge 0$ với mọi $x \ge 0$.</p>
             </div>
@@ -154,7 +154,7 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 8</span></h3>
         <p>Cho đa thức hệ số thực $R(x) = c_0 + c_1 x^{m_1} + c_2 x^{m_2} + \dots + c_n x^{m_n}$, trong đó $0 < m_1 < m_2 < \dots < m_n$ thỏa mãn $m_i \equiv i \pmod 2$ với mọi $1 \le i \le n$. Giả sử $c_0 \neq 0$. Chứng minh rằng $R(x)$ có không quá $n$ nghiệm thực.</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Vì $c_0 \neq 0$ nên $x = 0$ không là nghiệm. Áp dụng quy tắc dấu Descartes cho $R(x)$ và $R(-x)$: trong $R(-x)$, các số hạng ứng với $i$ lẻ ($m_i$ lẻ) đổi dấu còn $i$ chẵn giữ nguyên dấu. Do đó, tại mỗi bước chuyển $(i-1) \to i$, hoặc cặp $(c_{i-1}, c_i)$ đổi dấu trong $R(x)$, hoặc đổi dấu trong $R(-x)$ (chính xác một trong hai nếu $c_i \neq 0$). Tổng số lần đổi dấu $W(R(x)) + W(R(-x)) \le n$, suy ra tổng số nghiệm thực $N(R(x)) + N(R(-x)) \le n$.</p>
             </div>
@@ -163,7 +163,7 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 9</span></h3>
         <p>Cho các số nguyên dương $m_1 < m_2 < \dots < m_n$. Chứng minh rằng tồn tại các số thực $c_0, c_1, c_2, \dots, c_n$ sao cho đa thức $c_0 + c_1 x^{m_1} + c_2 x^{m_2} + \dots + c_n x^{m_n}$ có đúng $n$ nghiệm dương.</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Quy nạp theo $n$: giả sử đã chọn được $P_{n-1}(x) = c_0 + c_1 x^{m_1} + \dots + c_{n-1} x^{m_{n-1}}$ có $n-1$ nghiệm dương phân biệt $0 < r_1 < \dots < r_{n-1}$ đổi dấu tại các nghiệm này (chọn $c_{n-1} = 1$, $P_{n-1}$ xen kẽ dấu tại $n$ điểm $0 < t_1 < \dots < t_n$). Chọn $c_n$ đủ nhỏ về trị tuyệt đối và trái dấu với $c_{n-1}$ (cụ thể, sao cho dấu của $P_n(t_i)$ giống $P_{n-1}(t_i)$ trên $[0, t_n]$, trong khi khi $x \to +\infty$ thì $c_n x^{m_n}$ thắng và đổi dấu thêm 1 lần nữa tại $x > t_n$). Khi đó $P_n$ có ít nhất $n$ nghiệm dương, mà theo Bài 4 $W(P_n) \le n$ nên có đúng $n$ nghiệm dương.</p>
             </div>
@@ -179,7 +179,7 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
         <p>Chứng minh rằng dòng thứ $n$ của bảng có $2^{n-1} + 1$ số.</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $L_n$ là số phần tử dòng $n$. Khi chuyển từ dòng $n$ sang $n+1$, giữa $L_n$ số có $L_n - 1$ khoảng trống được chèn thêm, nên $L_{n+1} = 2L_n - 1$. Quy nạp với $L_1 = 2$ cho $L_n = 2^{n-1} + 1$.</p>
             </div>
@@ -188,7 +188,7 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
         <p>Trung bình cộng của các số trên dòng thứ $n$ bằng bao nhiêu?</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $S_n$ là tổng các số trên dòng $n$. Khi sang dòng $n+1$, mỗi số giữ lại (đóng góp $1$ lần) và xuất hiện trong 2 tổng hai bên, ngoại trừ hai số $1$ ở hai đầu chỉ xuất hiện trong 1 tổng. Do đó $S_{n+1} = 3S_n - 2$, với $S_1 = 2 \implies S_n = 3^{n-1} + 1$. Vậy trung bình cộng là $\frac{3^{n-1} + 1}{2^{n-1} + 1}$.</p>
             </div>
@@ -200,7 +200,7 @@
         b) Hai số liên tiếp trên mỗi dòng là nguyên tố cùng nhau;<br>
         c) Nếu $a, b, c$ là $3$ số liên tiếp, theo thứ tự đó, trên một dòng nào đó của bảng thì $b \mid a + c$.</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Quy nạp theo $n$:<br>
                 a) Tính đối xứng bảo toàn qua mỗi bước chèn tổng.<br>
@@ -219,7 +219,7 @@
         \]
         với mọi $n \ge 2$.</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Dòng thứ $k$ (sau khi bỏ số $1$ cuối) có $2^{k-1}$ phần tử, ứng với các chỉ số từ $2^{k-1}$ đến $2^k - 1$. Trong phép chuyển từ dòng $k$ sang $k+1$, phần tử thứ $j$ của dòng $k$ (chỉ số $n = 2^{k-1} + j - 1$) nằm ở vị trí chẵn $2n$ ở dòng $k+1$, còn các phần tử mới chen vào nằm ở vị trí lẻ $2n+1$ và bằng tổng hai phần tử kề bên ($s_n + s_{n+1}$).</p>
             </div>
@@ -228,7 +228,7 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
         <p>Giá trị của số thứ $304$ trên dòng thứ $2019$ của bảng Stern bằng bao nhiêu?</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Số thứ $304$ trên dòng $2019$ ứng với $s_{2^{2018} + 303}$. Dùng công thức truy hồi ở Bài 4 rút gọn theo $k$ (với $k \ge 10$): dễ kiểm tra $s_{2^{10}+303} = 87$ và $s_{2^{k+1}+303} = s_{2^k+303} + 32$ (do bước nhảy chia đôi dẫn về nhánh cộng thêm $s_{2^{k-9}} = 1$ với hệ số $32$). Do đó $s_{2^{2018}+303} = 87 + 32 \cdot (2018 - 10) = 64343$.</p>
             </div>
@@ -237,7 +237,7 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 6</span></h3>
         <p>Chứng minh rằng $s_{n+1}$ bằng số cách biểu diễn $n$ thành tổng của các lũy thừa với số mũ nguyên và không âm của $2$, mà mỗi lũy thừa có mặt không quá hai lần trong tổng (không kể thứ tự giữa các hạng tử trong tổng; chẳng hạn, $4 = 2^2 = 2^1 + 2^1 = 2^1 + 2^0 + 2^0$ và $s_5 = 3$).</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Gọi $f(n)$ là số cách biểu diễn như vậy (quy ước $f(0) = 1$). Kiểm tra $f$ thỏa cùng hệ thức truy hồi của $s_{n+1}$: nếu $n = 2k-1$ lẻ thì mọi biểu diễn phải chứa đúng một $2^0 = 1$, bỏ $1$ đi còn biểu diễn của $2k-2 = 2(k-1)$ chỉ gồm lũy thừa $\ge 2^1$, chia đôi còn $f(k-1)$, tức $f(2k-1) = f(k-1)$ (ứng với $s_{2k} = s_k$). Nếu $n = 2k$ chẵn thì số $2^0$ xuất hiện $0$ hoặc $2$ lần, cho $f(2k) = f(k) + f(k-1)$ (ứng với $s_{2k+1} = s_k + s_{k+1}$).</p>
             </div>
@@ -251,7 +251,7 @@
         b) Giá trị lớn nhất của các số trên dòng thứ $n$ của bảng Stern bằng $F_{n+1}$.<br>
         Ở đây, $(F_n)$ là dãy Fibonacci cho bởi $F_1 = F_2 = 1$ và $F_n = F_{n-1} + F_{n-2}$ với mọi $n \ge 3$.</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>a) Nhận xét $j(n+1) = 2j(n) + (-1)^n$, nên dựa vào tính chẵn lẻ của $j(n)$ (luôn lẻ) và dùng Bài 4 để kiểm tra $s_{j(n)} = s_{j(n-1)} + s_{j(n-2)}$.<br>
                 b) Quy nạp chứng minh rằng trên dòng $n$, tổng hai số liên tiếp bất kì không vượt quá $F_{n+2}$ và mỗi số không vượt quá $F_{n+1}$. Đẳng thức đạt được tại vị trí $j(n+1)$.</p>
@@ -264,7 +264,7 @@
         \frac{s_1}{s_2}, \frac{s_2}{s_3}, \frac{s_3}{s_4}, \dots, \frac{s_n}{s_{n+1}}, \dots
         \]</p>
         <details class="igo-hint-clean">
-            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
             <div class="igo-hint-content">
                 <p>Mọi phân số $\frac{s_n}{s_{n+1}}$ đều tối giản (do $\gcd(s_n, s_{n+1}) = 1$). Tính duy nhất & tồn tại chứng minh bằng quy nạp theo tổng $p + q$ của phân số tối giản $p/q > 0$: dựa vào công thức Bài 4, $\frac{s_{2k}}{s_{2k+1}} = \frac{s_k}{s_k + s_{k+1}} < 1$ và $\frac{s_{2k+1}}{s_{2k+2}} = \frac{s_k + s_{k+1}}{s_{k+1}} = 1 + \frac{s_k}{s_{k+1}} > 1$. Phép ánh xạ $x \mapsto \frac{x}{x+1}$ (khi $p < q$) và $x \mapsto x + 1$ (khi $p > q$) cho phép tìm duy nhất chỉ số $n$ (tương ứng cây Calkin–Wilf).</p>
             </div>
