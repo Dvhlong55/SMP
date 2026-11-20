@@ -243,6 +243,69 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: 'Tổng Quan Đề Thi Olympic Toán HSSV — Khối THPT (2016 – 2025)',
+        date: 'November 20, 2026',
+        url: '/posts/math/de-thi-olympic-toan-hssv-thpt.html',
+        tags: ['Đề Thi', 'VMO', 'OLPHSSV'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi Olympic Toán HSSV 2025 (Khối THPT)',
+        date: 'November 20, 2026',
+        url: '/posts/math/olphssv-2025.html',
+        tags: ['Đề Thi', 'Hình Học', 'Tổ Hợp', 'VMO', 'OLPHSSV'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi Olympic Toán HSSV 2024 (Khối THPT)',
+        date: 'November 20, 2026',
+        url: '/posts/math/olphssv-2024.html',
+        tags: ['Đề Thi', 'Số Học', 'Tổ Hợp', 'VMO', 'OLPHSSV'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi Olympic Toán HSSV 2023 (Khối THPT)',
+        date: 'November 20, 2026',
+        url: '/posts/math/olphssv-2023.html',
+        tags: ['Đề Thi', 'Đại Số', 'Hình Học', 'VMO', 'OLPHSSV'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi Olympic Toán HSSV 2022 (Khối THPT)',
+        date: 'November 20, 2026',
+        url: '/posts/math/olphssv-2022.html',
+        tags: ['Đề Thi', 'Số Học', 'Hình Học', 'VMO', 'OLPHSSV'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi Olympic Toán HSSV 2019 (Khối THPT)',
+        date: 'November 20, 2026',
+        url: '/posts/math/olphssv-2019.html',
+        tags: ['Đề Thi', 'Đại Số', 'Số Học', 'VMO', 'OLPHSSV'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi Olympic Toán HSSV 2018 (Khối THPT)',
+        date: 'November 20, 2026',
+        url: '/posts/math/olphssv-2018.html',
+        tags: ['Đề Thi', 'Đại Số', 'Tổ Hợp', 'VMO', 'OLPHSSV'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi Olympic Toán HSSV 2017 (Khối THPT)',
+        date: 'November 20, 2026',
+        url: '/posts/math/olphssv-2017.html',
+        tags: ['Đề Thi', 'Tổ Hợp', 'Số Học', 'VMO', 'OLPHSSV'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi Olympic Toán HSSV 2016 (Khối THPT)',
+        date: 'November 20, 2026',
+        url: '/posts/math/olphssv-2016.html',
+        tags: ['Đề Thi', 'Số Học', 'Giải Tích', 'VMO', 'OLPHSSV'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '§ Chuỗi Điều Hòa Cho Olympiad',
         date: 'November 20, 2026',
         url: '/posts/math/vmo/chuoi-dieu-hoa-cho-olympiad.html',

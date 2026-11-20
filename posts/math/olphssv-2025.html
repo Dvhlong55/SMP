@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Đề Thi Olympic Toán HSSV 2025 (Khối THPT)</title>
+    
+    <meta name="post-id" content="OLPHSSV2025">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề thi và gợi ý giải Kỳ thi Olympic Toán học Sinh viên và Học sinh Toàn quốc 2025 (Lần thứ 31 - TP.HCM) dành cho Khối THPT: Ngày 1 (Hệ thức lượng trong tam giác & tứ giác) và Ngày 2 (Trò chơi Zeckendorf).">
+    <meta property="og:title" content="SMP — Đề Thi Olympic Toán HSSV 2025 (Khối THPT)">
+    <meta property="og:description" content="Đề thi và gợi ý giải Olympic Toán HSSV 2025 Khối THPT.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/olphssv-2025.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Đề Thi Olympic Toán HSSV 2025 (Khối THPT)">
+    <meta name="twitter:description" content="Đề thi Olympic Toán HSSV 2025 Khối THPT kèm gợi ý giải bám sát đáp án chính thức.">
+    <!-- SMP SEO END -->
+
+    <style>
+        details.igo-hint-clean { margin: 8px 0 22px 0; border: none; background: transparent; }
+        summary.igo-hint-trigger { list-style: none; cursor: pointer; display: inline-flex; align-items: center; padding: 3px 6px; user-select: none; color: var(--exam-bold-color, #111); width: fit-content; outline: none; }
+        summary.igo-hint-trigger::-webkit-details-marker, summary.igo-hint-trigger::marker { display: none; }
+        .igo-arrow { display: inline-block; font-size: 0.78rem; transition: transform 0.2s ease-in-out; color: var(--exam-bold-color, #111); margin-right: 6px; }
+        details.igo-hint-clean[open] .igo-arrow { transform: rotate(90deg); }
+        .igo-hint-content { padding: 8px 0 8px 16px; margin-top: 6px; border-left: 2px solid var(--border-light, #cbd5e1); font-size: 0.98rem; line-height: 1.8; color: var(--exam-text-color, #334155); }
+        body.dark-mode .igo-hint-content { border-left-color: rgba(255, 255, 255, 0.15); }
+        .igo-level-heading { color: var(--exam-bold-color, #111); font-size: 1.35rem; margin-top: 36px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1)); font-weight: 700; }
+        body.dark-mode .igo-level-heading { border-bottom-color: rgba(255,255,255,0.12); }
+        .igo-nav-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--accent-cyan, #0284c7) !important; text-decoration: none !important; margin: 12px 0 20px 0; transition: transform 0.2s ease; }
+        .igo-nav-link:hover { transform: translateX(-3px); }
+        .igo-mini-toc { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 16px 0 24px 0; padding: 10px 0; border-top: 1px solid var(--border-light, rgba(0,0,0,0.08)); border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08)); font-size: 0.9rem; }
+        body.dark-mode .igo-mini-toc { border-color: rgba(255,255,255,0.1); }
+        .igo-mini-toc a { color: var(--exam-bold-color, #111) !important; text-decoration: none !important; transition: color 0.2s; }
+        .igo-mini-toc a:hover { color: var(--accent-cyan, #0284c7) !important; }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Đề Thi Olympic Toán HSSV 2025 — Khối THPT</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Lần thứ 31 · Đại học Sài Gòn (TP.HCM) · Hội Toán Học Việt Nam</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
+        </div>
+
+        <div>
+            <a href="/posts/math/de-thi-olympic-toan-hssv-thpt.html" class="igo-nav-link">← Tổng quan Olympic Toán HSSV Khối THPT (2016 – 2025)</a>
+        </div>
+
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Nội dung:</span>
+            <a href="#ngay-1">Ngày 1: Hình học (Hệ thức lượng)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#ngay-2">Ngày 2: Tổ hợp (Trò chơi Zeckendorf)</a>
+        </div>
+
+        <h2 id="ngay-1" class="igo-level-heading">Ngày 1 — Hình Học: Hệ Thức Lượng Trong Tam Giác & Tứ Giác</h2>
+        <p><em>Thí sinh được sử dụng kết quả của các câu trước trong chứng minh của câu sau. Nếu một câu được chứng minh không dựa vào kết quả của các câu trước thì có thể dùng để chứng minh các câu trước.</em></p>
+
+        <p><strong>A. Một số hệ thức lượng đặc biệt trong tam giác</strong></p>
+
+        <h3>Bài 1</h3>
+        <p>Chứng minh rằng với mọi tam giác $ABC$ ta có $a = b \cos C + c \cos B$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Áp dụng trực tiếp định lý Cosin cho $\cos C$ và $\cos B$, hoặc sử dụng độ dài đại số của hình chiếu trên trục $BC$ (định lý hình chiếu).</p>
+            </div>
+        </details>
+
+        <h3>Bài 2</h3>
+        <p>Cho tam giác $ABC$. Gọi $D, E, F$ tương ứng là chân các đường cao hạ từ $A, B, C$; gọi $X, Y, Z$ tương ứng là trung điểm của $BC, CA, AB$. Chứng minh rằng luôn có cách đặt các dấu $+$ hoặc $-$ sao cho hệ thức sau đây là đúng:
+        \[
+        \frac{DX}{DA} \pm \frac{EY}{EB} \pm \frac{FZ}{FC} = 0.
+        \]</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Dùng độ dài đại số trên các trục $\overrightarrow{BC}, \overrightarrow{CA}, \overrightarrow{AB}$: $\frac{2\overline{DX}}{DA} = \frac{\overline{DB} + \overline{DC}}{DA} = \cot B - \cot C$. Cộng ba biểu thức tương ứng thu được tổng đại số bằng $0$, suy ra khi bỏ dấu giá trị đại số ta chọn được dấu $\pm$ thích hợp.</p>
+            </div>
+        </details>
+
+        <h3>Bài 3 (Định lý Cosin mở rộng)</h3>
+        <p>Cho tam giác $ABC$ và một điểm $P$ trong mặt phẳng. Dựng hình bình hành $PBDC$. Đặt $\alpha = \widehat{BPC}$, $\theta = \widehat{PAD}$. Chứng minh rằng
+        \[
+        a^2 = b^2 + c^2 - 2PB \cdot PC \cos \alpha - 2PA \cdot AD \cos \theta.
+        \]</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Từ $a^2 = b^2 + c^2 - 2\overrightarrow{AB} \cdot \overrightarrow{AC}$, biến đổi $\overrightarrow{AB} \cdot \overrightarrow{AC} = (\overrightarrow{PB} - \overrightarrow{PA})(\overrightarrow{PC} - \overrightarrow{PA}) = \overrightarrow{PB}\cdot\overrightarrow{PC} - \overrightarrow{PA}\cdot(\overrightarrow{PB} + \overrightarrow{PC} - \overrightarrow{PA}) = PB \cdot PC \cos\alpha + \overrightarrow{AP}\cdot\overrightarrow{AD}$ (vì $\overrightarrow{PB} + \overrightarrow{PC} = \overrightarrow{PD}$).</p>
+            </div>
+        </details>
+
+        <h3>Bài 4</h3>
+        <p>Cho đa giác lồi $\mathcal{A} = A_1 A_2 \dots A_n$. Với $i = 1, \dots, n$, kí hiệu góc trong ở đỉnh $A_i$ của $\mathcal{A}$ là $\alpha_i$. Chứng minh rằng với mọi điểm $P$ nằm bên trong $\mathcal{A}$ ta có
+        \[
+        PA_1 \cos\frac{\alpha_1}{2} + PA_2 \cos\frac{\alpha_2}{2} + \dots + PA_n \cos\frac{\alpha_n}{2} \ge s,
+        \]
+        trong đó $s$ kí hiệu nửa chu vi của $\mathcal{A}$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Áp dụng Bài 1 cho từng tam giác $PA_i A_{i+1}$: $A_i A_{i+1} = PA_i \cos\widehat{PA_i A_{i+1}} + PA_{i+1} \cos\widehat{PA_{i+1} A_i}$. Cộng theo $i = 1, \dots, n$ rồi ghép từng cặp góc quanh $A_i$ bằng công thức tổng thành tích $\cos x + \cos y = 2\cos\frac{x+y}{2}\cos\frac{x-y}{2} \le 2\cos\frac{\alpha_i}{2}$.</p>
+            </div>
+        </details>
+
+        <p><strong>B. Một số hệ thức lượng và bất đẳng thức trong tứ giác</strong><br>
+        Trong các bài tập 5, 6, 7 và 8 ta kí hiệu $ABCD$ là một tứ giác lồi.</p>
+
+        <h3>Bài 5</h3>
+        <p>Dựng điểm $P$ bên trong tứ giác $ABCD$ sao cho các tam giác $APB$ và $ADC$ đồng dạng. Chứng minh rằng độ dài các đoạn thẳng $PB, PD$ và $BD$ tương ứng tỷ lệ với $CD \cdot AB$, $BC \cdot AD$ và $BD \cdot AC$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đây là phép dựng tam giác Ptolemy: từ $\triangle APB \sim \triangle ADC$ cùng hướng suy ra $\triangle APD \sim \triangle ABC$ (c.g.c), từ đó rút ra $PB \cdot AC = AB \cdot CD$ và $PD \cdot AC = AD \cdot BC$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 6</h3>
+        <p>Kí hiệu $\theta$ là tổng hai góc đối diện bất kỳ của tứ giác $ABCD$. Chứng minh rằng
+        \[
+        AC^2 \cdot BD^2 = AB^2 \cdot CD^2 + AD^2 \cdot BC^2 - 2AB \cdot CD \cdot AD \cdot BC \cos\theta.
+        \]</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Dựng điểm $P$ như Bài 5, khi đó $\widehat{BPD} = \theta$ hoặc $360^\circ - \theta$ (nên $\cos\widehat{BPD} = \cos\theta$). Áp dụng định lý Cosin trong $\triangle BPD$ và thay tỉ lệ từ Bài 5.</p>
+            </div>
+        </details>
+
+        <h3>Bài 7</h3>
+        <p>Đặt $\alpha = |\widehat{ADB} - \widehat{ACB}| = |\widehat{DAC} - \widehat{DBC}|$ và $\beta = |\widehat{ABD} - \widehat{ACD}| = |\widehat{BAC} - \widehat{BDC}|$. Chứng minh rằng
+        \[
+        AC \cdot BD = AD \cdot BC \cos\alpha + AB \cdot CD \cos\beta.
+        \]</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Dựng điểm $P$ như Bài 5, tính được $\widehat{PDB} = \alpha$ và $\widehat{PBD} = \beta$. Áp dụng Bài 1 cho $\triangle BPD$: $BD = PD \cos\alpha + PB \cos\beta$, sau đó nhân $AC$ và thay tỉ lệ từ Bài 5.</p>
+            </div>
+        </details>
+
+        <h3>Bài 8</h3>
+        <p>Chứng minh rằng $ABCD$ là hình chữ nhật khi và chỉ khi
+        \[
+        (AB + CD)^2 + (AD + BC)^2 = (AC + BD)^2.
+        \]</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Cộng bất đẳng thức Euler ($AB^2 + BC^2 + CD^2 + DA^2 \ge AC^2 + BD^2$) và bất đẳng thức Ptolemy ($2AB\cdot CD + 2AD\cdot BC \ge 2AC\cdot BD$). Dấu bằng xảy ra khi và chỉ khi $ABCD$ là hình bình hành nội tiếp, tức hình chữ nhật.</p>
+            </div>
+        </details>
+
+        <p><strong>C. Ứng dụng của một số hệ thức lượng</strong></p>
+
+        <h3>Bài 9</h3>
+        <p>Cho tam giác $ABC$ có đường tròn nội tiếp $\omega$ tiếp xúc với các cạnh $BC, CA, AB$ tương ứng tại $D, E, F$. Lấy một điểm $P$ trên đường thẳng đi qua $D$ và vuông góc với $BC$. Gọi $Q$ và $R$ tương ứng là giao điểm của $PC$ và $PB$ với $EF$. Gọi $K$ và $L$ tương ứng là hình chiếu của $R$ và $Q$ trên đường thẳng $BC$. Các đường thẳng $DQ$ và $DR$ cắt lại $\omega$ tại các điểm $M$ và $N$. Gọi $S$ là giao điểm của $KM$ và $LN$. Chứng minh rằng $DS$ đi qua trung điểm của đoạn thẳng $QR$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Dùng Menelaus cho $\triangle PBC$ với cát tuyến $G, Q, R$ ($G = EF \cap BC$) và Thales suy ra $\frac{LD}{KD} = \frac{QL}{RK}$, kéo theo $\triangle DKR \sim \triangle DLQ \implies MN \parallel KL$. Gọi $T$ là trung điểm $QR$, áp dụng định lý Ceva dạng lượng giác cho $\triangle DMN$ (hoặc $\triangle DKL$) chứng minh $DT, KM, LN$ đồng quy tại $S$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 10</h3>
+        <p>Cho tam giác $ABC$. Gọi $D$ và $E$ tương ứng là trung điểm của $AB$ và $CD$. Giả sử $\widehat{ACD} = 2\widehat{DEB}$. Chứng minh rằng $2\widehat{AED} = \widehat{DCB} + 180^\circ$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $\alpha = \widehat{ACD}, \beta = \widehat{BCD}, x = \widehat{BED}, y = \widehat{AED}$. Áp dụng hệ thức cotangent của đường trung tuyến trong $\triangle ECD$ (vì $DE$ là trung tuyến? Đúng hơn là trong $\triangle CAB$ với $CD$ trung tuyến, hoặc $\triangle ABC$ cho công thức $4\cot x = 3\cot\beta - \cot\alpha$ và $4\cot y = 3\cot\alpha - \cot\beta$). Chuyển sang $\tan\frac{\alpha}{2}$ và $\tan\frac{\beta}{2}$ thấy cả hai điều kiện $\alpha = 2x$ và $2y = 180^\circ + \beta$ đều tương đương $\tan\frac{\alpha}{2} = 3\tan\frac{\beta}{2}$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 11</h3>
+        <p>Cho hình chữ nhật $ABCD$ và một điểm $P$ nằm trong mặt phẳng. Gọi $X, Y, Z, W, S$ và $T$ tương ứng là hình chiếu vuông góc của $P$ trên các đường thẳng $AB, BC, CD, DA, AC$ và $BD$. Các đường trung trực của $XY$ và $WZ$ cắt nhau tại $Q$. Các đường trung trực của $YZ$ và $XW$ cắt nhau tại $R$. Chứng minh rằng $QR$ song song với $ST$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt hệ trục tọa độ Descartes gốc tại $P(0,0)$ với $X(0, a), Y(b, 0), Z(0, c), W(d, 0)$. Tính tọa độ $Q, R, S, T$ và kiểm tra tích vô hướng $\overrightarrow{QR} \cdot \overrightarrow{MN} = 0$ và $\overrightarrow{ST} \cdot \overrightarrow{MN} = 0$ (với $M, N$ là trung điểm $XZ, YW$), suy ra $QR \parallel ST$.</p>
+            </div>
+        </details>
+
+        <h2 id="ngay-2" class="igo-level-heading">Ngày 2 — Tổ Hợp: Trò Chơi Zeckendorf</h2>
+        <p><em>Thí sinh được sử dụng kết quả của các câu trước trong chứng minh của câu sau.</em><br>
+        Trong đề thi này, $(F_n)$ kí hiệu dãy số Fibonacci: $F_1 = 1, F_2 = 2, F_{n+1} = F_n + F_{n-1}$ với mọi $n \ge 2$.<br>
+        <strong>A. Trò chơi Zeckendorf: phiên bản 1 người</strong><br>
+        Ban đầu trên bảng có $n$ số $1$ ($n > 2$). Ở mỗi lượt, người chơi thực hiện một trong các thao tác $P$: (1) xóa $F_{i-1}, F_i$ viết $F_{i+1}$; (2a) xóa hai số $F_1$ viết $F_2$; (2b) xóa hai số $F_2$ viết $F_1, F_3$; (2c) với $i \ge 3$, xóa hai số $F_i$ viết $F_{i-2}, F_{i+1}$. Trò chơi kết thúc khi không thể thực hiện thao tác nào nữa.</p>
+
+        <h3>Bài 1</h3>
+        <p>Xét trò chơi Zeckendorf ứng với một số nguyên $n > 2$. Chứng minh rằng:<br>
+        a) Tổng các số trên bảng bằng $n$ ở mọi thời điểm.<br>
+        b) Tổng bình phương của các số trên bảng không giảm sau mỗi lượt chơi.<br>
+        c) Trò chơi luôn kết thúc sau một số hữu hạn thao tác.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Kiểm tra trực tiếp cả $4$ loại thao tác đều bảo toàn tổng các số ($= n$), đồng thời tổng bình phương $S$ luôn tăng thực sự (chẳng hạn $F_{i+1}^2 > F_i^2 + F_{i-1}^2$, $F_{i+1}^2 + F_{i-2}^2 > 2F_i^2$). Vì $S$ là số nguyên dương bị chặn trên bởi $n^2$, trò chơi dừng sau hữu hạn bước.</p>
+            </div>
+        </details>
+
+        <h3>Bài 2</h3>
+        <p>Xét $n = 6$. Nêu ví dụ về trò chơi Zeckendorf ứng với $n = 6$ kết thúc sau: a) $4$ thao tác; b) $5$ thao tác.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) $4$ bước: $\{1,1,1,1,1,1\} \to \{2,1,1,1,1\} \to \{3,1,1,1\} \to \{3,2,1\} \to \{5,1\}$.<br>
+                b) $5$ bước: $\{1,1,1,1,1,1\} \to \{2,1,1,1,1\} \to \{2,2,1,1\} \to \{2,2,2\} \to \{3,2,1\} \to \{5,1\}$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 3</h3>
+        <p>Chứng minh rằng mỗi số nguyên $n > 2$ đều có thể biểu diễn một cách duy nhất thành tổng của các số Fibonacci đôi một phân biệt và không liên tiếp. Ta gọi bộ các số Fibonacci trong tổng đó là <em>biểu diễn Zeckendorf</em> của $n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Tồn tại: quy nạp theo $n$ bằng cách chọn $F_j \le n < F_{j+1}$ (thuật toán tham lam). Duy nhất: phản chứng giả sử có hai biểu diễn phân biệt, khử các phần tử chung rồi dùng tính chất tổng các số Fibonacci không liên tiếp nhỏ hơn $F_c$ luôn nhỏ hơn hẳn $F_c$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 4</h3>
+        <p>Chứng minh rằng, với mọi cách chơi, trạng thái kết thúc của trò chơi Zeckendorf ứng với $n$ là duy nhất và chính là biểu diễn Zeckendorf của $n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Khi trò chơi kết thúc, trên bảng không còn hai số Fibonacci nào bằng nhau và không còn hai số liên tiếp, tổng bằng $n$, nên theo tính duy nhất ở Bài 3 đó chính là biểu diễn Zeckendorf của $n$.</p>
+            </div>
+        </details>
+
+        <p>Trong các bài toán 5, 6 và 7, ta kí hiệu $x_n$ là số thao tác được thực hiện trong một trò chơi Zeckendorf ứng với $n$.</p>
+
+        <h3>Bài 5</h3>
+        <p>Chứng minh rằng với mọi $n \ge 4$, $x_n$ có thể nhận cả giá trị chẵn và giá trị lẻ.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Với $4$ số $1$ đầu tiên, ta có thể đưa về $\{3, 1\}$ trong $2$ bước ($\{1,1,1,1\} \to \{2,1,1\} \to \{3,1\}$) hoặc $3$ bước ($\{1,1,1,1\} \to \{2,1,1\} \to \{2,2\} \to \{3,1\}$), giữ nguyên phần còn lại giống hệt nhau nên độ dài chênh lệch $1$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 6</h3>
+        <p>Chứng minh rằng với mọi số nguyên $n > 2$ thì $n - Z(n) \le x_n$, trong đó $Z(n)$ là số các số hạng trong biểu diễn Zeckendorf của $n$. Hơn nữa, hãy chỉ ra rằng dấu "$=$" có thể xảy ra.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Mỗi thao tác làm giảm số lượng số trên bảng tối đa $1$ số, nên $x_n \ge n - Z(n)$. Dấu bằng xảy ra bằng cách chia $n$ số $1$ thành $Z(n)$ nhóm ứng với các số hạng trong biểu diễn Zeckendorf của $n$, mỗi nhóm chỉ dùng thao tác kết hợp (giảm 1 số mỗi bước).</p>
+            </div>
+        </details>
+
+        <h3>Bài 7</h3>
+        <p>Chứng minh rằng
+        \[
+        x_n \le \ell \cdot n < \left\lfloor \log_\varphi(\sqrt{5}n + 1) \right\rfloor \cdot n \quad \text{(hoặc } \lceil\dots\rceil \text{)},
+        \]
+        trong đó $\ell$ là số nguyên dương lớn nhất sao cho $F_\ell \le n$ và $\varphi = \frac{\sqrt{5} + 1}{2}$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Dùng đơn biến $T_i$ = tổng các căn bậc hai của chỉ số Fibonacci trên bảng sau bước $i$ (hoặc dùng hàm thế $V_m$ = tổng chỉ số Fibonacci theo cách chứng minh gọn cho cận $x_n < 3n \le \ell n$ với $n$ đủ lớn; với đánh giá $\ell$, sử dụng công thức Binet $F_\ell = \frac{\varphi^\ell - (-\varphi)^{-\ell}}{\sqrt{5}}$ để suy ra $\ell < \log_\varphi(\sqrt{5}n + 1)$).</p>
+            </div>
+        </details>
+
+        <p><strong>B. Trò chơi Zeckendorf: phiên bản 2 người</strong><br>
+        Hai người chơi $A$ và $B$ luân phiên thực hiện một thao tác $P$ trên bảng ban đầu gồm $n$ số $1$, $A$ đi trước. Ai đến lượt mà không thực hiện được thao tác nào sẽ thua cuộc.</p>
+
+        <h3>Bài 8</h3>
+        <p>Xét trò chơi Zeckendorf cho hai người ứng với $n = 6$. Hãy chỉ ra một chiến lược thắng cuộc của $B$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Lượt 1: $A$ buộc phải ghép thành $\{2, 1, 1, 1, 1\}$. $B$ ghép $1+2$ thành $\{3, 1, 1, 1\}$. Lượt 2: $A$ buộc phải ghép $1+1$ thành $\{3, 2, 1, 1\}$. $B$ ghép $2+3$ thành $\{5, 1, 1\}$? Chú ý còn $2$ số $1$ nếu $n=6$: khi $\{3, 1, 1, 1\} \to \{3, 2, 1\}$ ($4$ số tất cả!), $B$ ghép $2+3$ thành $\{5, 1\}$ và kết thúc, $B$ thắng!</p>
+            </div>
+        </details>
+
+        <h3>Bài 9</h3>
+        <p>Chứng minh rằng với mọi $n > 9$, người chơi $B$ có chiến lược thắng cuộc trong trò chơi Zeckendorf ứng với $n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Phản chứng bằng phương pháp ăn cắp chiến lược (strategy stealing): giả sử $A$ thắng tại $\{1^n\} \in W_1$. Khi đó $\{2, 1^{n-2}\} \in W_2$, $B$ có thể chọn $\{3, 1^{n-3}\} \in W_1$, buộc $A$ đi về $\{3, 2, 1^{n-5}\} \in W_2$. Từ đó cả $\{5, 1^{n-5}\}$ và $\{3, 3, 1^{n-6}\}$ đều phải thuộc $W_1$. Xét nước đi của $A$ từ $\{3, 3, 1^{n-6}\}$ dẫn tới $\{3, 3, 2, 1^{n-8}\} \in W_2$, nhưng từ đây $B$ ghép $2+3=5$ đưa về $\{5, 2, 1^{n-7}\} \in W_1$, mâu thuẫn với việc $\{5, 1^{n-5}\} \in W_1$ buộc $\{5, 2, 1^{n-7}\} \in W_2$.</p>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT ĐỀ THI OLYMPIC TOÁN HSSV 2025 (KHỐI THPT) ───</b></p>
+    </div>
+</body>
+</html>

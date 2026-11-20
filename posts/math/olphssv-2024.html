@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Đề Thi Olympic Toán HSSV 2024 (Khối THPT)</title>
+    
+    <meta name="post-id" content="OLPHSSV2024">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề thi và gợi ý giải Kỳ thi Olympic Toán học Sinh viên và Học sinh Toàn quốc 2024 (Lần thứ 30 - Đà Nẵng) dành cho Khối THPT: Ngày 1 (Dãy Fibonacci & Lucas) và Ngày 2 (Ước lượng khoảng cách đơn vị).">
+    <meta property="og:title" content="SMP — Đề Thi Olympic Toán HSSV 2024 (Khối THPT)">
+    <meta property="og:description" content="Đề thi và gợi ý giải Olympic Toán HSSV 2024 Khối THPT.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/olphssv-2024.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Đề Thi Olympic Toán HSSV 2024 (Khối THPT)">
+    <meta name="twitter:description" content="Đề thi Olympic Toán HSSV 2024 Khối THPT kèm gợi ý giải bám sát đáp án chính thức.">
+    <!-- SMP SEO END -->
+
+    <style>
+        details.igo-hint-clean { margin: 8px 0 22px 0; border: none; background: transparent; }
+        summary.igo-hint-trigger { list-style: none; cursor: pointer; display: inline-flex; align-items: center; padding: 3px 6px; user-select: none; color: var(--exam-bold-color, #111); width: fit-content; outline: none; }
+        summary.igo-hint-trigger::-webkit-details-marker, summary.igo-hint-trigger::marker { display: none; }
+        .igo-arrow { display: inline-block; font-size: 0.78rem; transition: transform 0.2s ease-in-out; color: var(--exam-bold-color, #111); margin-right: 6px; }
+        details.igo-hint-clean[open] .igo-arrow { transform: rotate(90deg); }
+        .igo-hint-content { padding: 8px 0 8px 16px; margin-top: 6px; border-left: 2px solid var(--border-light, #cbd5e1); font-size: 0.98rem; line-height: 1.8; color: var(--exam-text-color, #334155); }
+        body.dark-mode .igo-hint-content { border-left-color: rgba(255, 255, 255, 0.15); }
+        .igo-level-heading { color: var(--exam-bold-color, #111); font-size: 1.35rem; margin-top: 36px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1)); font-weight: 700; }
+        body.dark-mode .igo-level-heading { border-bottom-color: rgba(255,255,255,0.12); }
+        .igo-nav-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--accent-cyan, #0284c7) !important; text-decoration: none !important; margin: 12px 0 20px 0; transition: transform 0.2s ease; }
+        .igo-nav-link:hover { transform: translateX(-3px); }
+        .igo-mini-toc { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 16px 0 24px 0; padding: 10px 0; border-top: 1px solid var(--border-light, rgba(0,0,0,0.08)); border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08)); font-size: 0.9rem; }
+        body.dark-mode .igo-mini-toc { border-color: rgba(255,255,255,0.1); }
+        .igo-mini-toc a { color: var(--exam-bold-color, #111) !important; text-decoration: none !important; transition: color 0.2s; }
+        .igo-mini-toc a:hover { color: var(--accent-cyan, #0284c7) !important; }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Đề Thi Olympic Toán HSSV 2024 — Khối THPT</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Lần thứ 30 · Đại học Duy Tân (Đà Nẵng) · Hội Toán Học Việt Nam</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
+        </div>
+
+        <div>
+            <a href="/posts/math/de-thi-olympic-toan-hssv-thpt.html" class="igo-nav-link">← Tổng quan Olympic Toán HSSV Khối THPT (2016 – 2025)</a>
+        </div>
+
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Nội dung:</span>
+            <a href="#ngay-1">Ngày 1: Số học (Fibonacci & Lucas)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#ngay-2">Ngày 2: Tổ hợp (Khoảng cách đơn vị)</a>
+        </div>
+
+        <h2 id="ngay-1" class="igo-level-heading">Ngày Thứ Nhất — Số Học: Dãy Số Fibonacci Và Lucas</h2>
+        <p><em>Thí sinh được sử dụng kết quả của các câu trước trong lời giải của câu sau.</em><br>
+        <strong>A. Các kết quả cơ bản về dãy số Fibonacci và Lucas</strong><br>
+        Dãy số Fibonacci $\{F_n\}_{n \in \mathbb{N}}$ định nghĩa bởi: $F_0 = 0, F_1 = 1, F_{n+2} = F_{n+1} + F_n$ với mọi $n \ge 0$.<br>
+        Dãy số Lucas $\{L_n\}_{n \in \mathbb{N}}$ định nghĩa bởi: $L_0 = 2, L_1 = 1, L_{n+2} = L_{n+1} + L_n$ với mọi $n \ge 0$.</p>
+
+        <h3>Bài 1</h3>
+        <p>Chứng minh rằng với mọi số tự nhiên $n$ ta có:<br>
+        a) $F_n = \frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2}\right)^n - \left(\frac{1-\sqrt{5}}{2}\right)^n\right]$; &nbsp;&nbsp;&nbsp;
+        b) $L_n = \left(\frac{1+\sqrt{5}}{2}\right)^n + \left(\frac{1-\sqrt{5}}{2}\right)^n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Quy nạp mạnh theo $n$, sử dụng tính chất $\alpha^2 = \alpha + 1$ và $\beta^2 = \beta + 1$ với $\alpha, \beta = \frac{1 \pm \sqrt{5}}{2}$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 2</h3>
+        <p>Chứng minh rằng với mọi số nguyên dương $n$ ta có $F_{n+1} \cdot F_{n-1} = F_n^2 + (-1)^n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Thay trực tiếp công thức Binet ở Bài 1a (hoặc quy nạp theo $n$ từ $F_{n+1}F_{n-1} - F_n^2 = -(F_n F_{n-2} - F_{n-1}^2)$).</p>
+            </div>
+        </details>
+
+        <h3>Bài 3</h3>
+        <p>a) Chứng minh rằng với mọi số nguyên dương $m \ge n$ ta có $F_m = F_n F_{m-n+1} + F_{n-1} F_{m-n}$.<br>
+        b) Với hai số tự nhiên $a, b$ không đồng thời bằng $0$, kí hiệu $(a, b)$ là ước chung lớn nhất của $a$ và $b$. Chứng minh rằng với mọi số nguyên dương $m, n$ ta có $(F_m, F_n) = F_{(m, n)}$.<br>
+        c) Biết rằng $F_n$ là số nguyên tố. Chứng minh rằng $n = 4$ hoặc $n$ là một số nguyên tố.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Quy nạp hoặc khai triển lùi từ $F_m = F_2 F_{m-1} + F_1 F_{m-2} = \dots$.<br>
+                b) Từ Bài 2 suy ra $(F_{n-1}, F_n) = 1$, nên từ a) có $(F_m, F_n) = (F_{m-n}, F_n)$. Lặp lại theo thuật toán Euclid.<br>
+                c) Nếu $n \neq 4$ là hợp số, viết $n = pq$ với $2 \le p \le q$ và $q \ge 3$. Khi đó $F_q \mid F_n$ và $1 < F_q < F_n$, nên $F_n$ là hợp số.</p>
+            </div>
+        </details>
+
+        <h3>Bài 4</h3>
+        <p>Chứng minh rằng, với mọi số tự nhiên $n$, ta có:<br>
+        a) $L_n^2 - 5 F_n^2 = (-1)^n \cdot 4$.<br>
+        b) $F_{2n} = F_n \cdot L_n$.<br>
+        c) Hơn nữa, nếu $n$ không chia hết cho $3$, thì $F_n$ và $L_n$ nguyên tố cùng nhau.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a, b) Kiểm tra trực tiếp bằng công thức ở Bài 1.<br>
+                c) Từ a) suy ra $(F_n, L_n) \mid 4$. Mặt khác dãy Fibonacci mod 2 tuần hoàn chu kì 3 ($0, 1, 1, 0, \dots$), nên khi $3 \nmid n$ thì $F_n$ lẻ, kéo theo $(F_n, L_n) = 1$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 5</h3>
+        <p>Kí hiệu $S_n = \sum_{i=1}^n \frac{F_i}{2^i}$, với $n \in \mathbb{N}^*$. Chứng minh rằng:<br>
+        a) $S_n = \frac{1}{2} + \frac{1}{2}S_{n-1} + \frac{1}{4}S_{n-2}$, với mọi số nguyên $n \ge 3$.<br>
+        b) $S_n < 2$ với mọi số nguyên dương $n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Tách $S_n = \frac{1}{2} + \frac{1}{4} + \sum_{i=3}^n \frac{F_{i-1} + F_{i-2}}{2^i}$ và đổi chỉ số tổng.<br>
+                b) Quy nạp từ $S_1 = \frac{1}{2} < 2, S_2 = \frac{3}{4} < 2$ và $S_n < \frac{1}{2} + \frac{1}{2}\cdot 2 + \frac{1}{4}\cdot 2 = 2$.</p>
+            </div>
+        </details>
+
+        <p><strong>B. Một số tính chất khác của dãy số Fibonacci và Lucas</strong></p>
+
+        <h3>Bài 6</h3>
+        <p>Ta gọi một dãy vô hạn các số nguyên dương $\{a_n\}_{n \in \mathbb{N}}$ là $F$-dãy nếu $a_{n+2} = a_{n+1} + a_n$ với mọi $n \in \mathbb{N}$. Có thể phân hoạch tập các số nguyên dương $\mathbb{N}^*$ thành hợp của hữu hạn $F$-dãy hay không? Giải thích vì sao.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Không! Nếu phân hoạch được thành $m$ $F$-dãy, xét $2m + 1$ số liên tiếp $2m, 2m+1, \dots, 4m$. Theo nguyên lý Dirichlet có ít nhất 3 số thuộc cùng một $F$-dãy, nhưng tổng 2 số bất kì trong đoạn $[2m, 4m]$ đều $\ge 4m + 1 > 4m$, không thể bằng số lớn hơn tiếp theo trong $F$-dãy (mâu thuẫn vì 3 số thuộc $F$-dãy phải có 1 số $\ge$ tổng 2 số còn lại hoặc tính tăng ngặt của $F$-dãy).</p>
+            </div>
+        </details>
+
+        <h3>Bài 7</h3>
+        <p>Tìm tất cả các cặp số nguyên dương $(k, m)$ với $m > k$, sao cho dãy $\{x_n\}$ được xác định như sau chứa một số hạng bằng $1$:
+        \[
+        x_1 = \frac{F_k}{F_m} \quad \text{và} \quad x_{n+1} = \begin{cases} \frac{2x_n - 1}{1 - x_n} & \text{nếu } x_n \neq 1, \\ 1 & \text{nếu } x_n = 1. \end{cases}
+        \]</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Nếu $m \ge k+2$ thì $x_1 \le \frac{1}{2} \implies x_n \le 0$ với mọi $n \ge 2$ (không chứa $1$). Do đó $m = k+1$. Khi đó $x_2 = \frac{2F_k - F_{k+1}}{F_{k+1} - F_k} = \frac{F_{k-2}}{F_{k-1}}$ ($k \ge 2$). Chỉ số giảm $2$ sau mỗi bước, nên dãy chạm $1$ khi và chỉ khi $k$ lẻ: $(k, m) = (2n-1, 2n)$ với $n \in \mathbb{N}^*$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 8</h3>
+        <p>Chứng minh rằng với mọi số nguyên dương $m$, tồn tại vô hạn số nguyên dương $n$ sao cho $m \mid (F_n^4 - F_n - 2)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Dãy Fibonacci modulo $m$ tuần hoàn (chu kì $p$), nên $F_{tp - 2} \equiv F_{-2} = -1 \pmod m$ với mọi $t \in \mathbb{N}^*$. Chọn $n = tp - 2$ thì $F_n^4 - F_n - 2 \equiv (-1)^4 - (-1) - 2 = 0 \pmod m$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 9</h3>
+        <p>Bạn Thịnh chọn một số trong tập $\{1, 2, \dots, 100\}$. Bạn Vượng muốn biết số mà bạn Thịnh chọn nên hai bạn chơi một trò chơi như sau: bạn Vượng lấy một tập con $M$ của tập $\{1, 2, \dots, 100\}$ rồi hỏi bạn Thịnh tập $M$ có chứa số đã chọn hay không. Nếu câu trả lời là có, bạn Vượng sẽ đưa cho bạn Thịnh $20.000$ đồng. Nếu câu trả lời là không, bạn Vượng sẽ chỉ phải đưa cho bạn Thịnh $10.000$ đồng. Hỏi bạn Vượng cần có ít nhất bao nhiêu tiền để chắc chắn biết được số bạn Thịnh đã chọn?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Gọi $f(n)$ là số tiền nhỏ nhất (đơn vị $10.000$đ) để tìm ra 1 số trong $n$ số. Ta có $f(n) \le \max\{f(m)+2, f(n-m)+1\}$. Chứng minh quy nạp $f(n) = k$ với $k$ là số nguyên duy nhất thỏa $F_k < n \le F_{k+1}$. Vì $F_{11} = 89 < 100 \le F_{12} = 144$, đáp số là $110.000$ đồng.</p>
+            </div>
+        </details>
+
+        <h3>Bài 10</h3>
+        <p>Cho số nguyên dương $a$. Chứng minh rằng điều kiện cần và đủ để $a$ xuất hiện trong dãy số Lucas là tồn tại một số nguyên dương $b$ sao cho $|a^2 - ab - b^2| = 5$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Chiều thuận: chứng minh đồng nhất thức $L_{n+1}^2 - L_{n+1}L_n - L_n^2 = 5(-1)^{n+1}$.<br>
+                Chiều đảo: quy nạp theo $b$ bằng phép lùi $(a, b) \mapsto (a-b, 2b-a)$ (khi $a^2 - ab - b^2 = 5$) và $(a, b) \mapsto (b+a, a)$ (khi $a^2 - ab - b^2 = -5$).</p>
+            </div>
+        </details>
+
+        <h2 id="ngay-2" class="igo-level-heading">Ngày Thứ Hai — Tổ Hợp: Ước Lượng Số Cặp Điểm Có Khoảng Cách 1</h2>
+        <p><strong>A. Ước lượng số cặp điểm có khoảng cách $1$ trên mặt phẳng</strong><br>
+        Cho số nguyên dương $n$. Với một tập $n$ điểm $P_n$ trong mặt phẳng, ta kí hiệu $f(P_n)$ là số các cặp điểm trong $P_n$ có khoảng cách bằng $1$. Kí hiệu $f(n) = \max_{P_n} f(P_n)$.</p>
+
+        <h3>Bài 1</h3>
+        <p>Cho $P = \{(x; y) \in \mathbb{N}^2 \mid 0 \le x; y \le 10\}$. Tính $|P|$ và $f(P)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>$|P| = 11^2 = 121$. Các cặp điểm khoảng cách 1 là các đoạn lưới ngang và dọc độ dài 1, nên $f(P) = 10 \times 11 \times 2 = 220$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 2</h3>
+        <p>Xác định giá trị của $f(4)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Với 2 tam giác đều cạnh 1 chung cạnh ghép thành hình thoi có $5$ cặp khoảng cách 1. Không thể có $6$ cặp vì 4 điểm đôi một cách nhau 1 không tồn tại trên mặt phẳng (nếu có thì đường chéo hình thoi $\sqrt{3} = 1$, vô lý). Vậy $f(4) = 5$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 3</h3>
+        <p>Chứng minh rằng tồn tại số nguyên dương $n_0$ sao cho $f(n) > 2n$ với mọi số nguyên $n > n_0$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xếp mạng lưới tam giác đều cạnh 1 dạng tháp tam giác có đáy $K$ điểm ($\frac{K(K+1)}{2} \le n < \frac{(K+1)(K+2)}{2}$), số cạnh đơn vị là $\frac{3(K-1)K}{2} \approx 3n > 2n$ với $K$ đủ lớn (chọn $n_0 = 10^{10}$).</p>
+            </div>
+        </details>
+
+        <h3>Bài 4</h3>
+        <p>Chứng minh rằng với mọi số thực dương $c$, tồn tại số nguyên dương $n$ sao cho $f(n) > cn$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xây dựng quy nạp tập $H_K$ gồm $2^K$ điểm sao cho mỗi điểm có ít nhất $K$ điểm khác cách nó 1 đơn vị, bằng cách tịnh tiến $H_{K-1}$ theo một vectơ đơn vị $\vec{u}$ có phương không trùng với bất kỳ vectơ nối 2 điểm nào của $H_{K-1}$ (cấu trúc siêu lập phương $K$ chiều chiếu lên mặt phẳng). Khi đó $f(2^K) \ge K \cdot 2^{K-1} = \frac{1}{2} n \log_2 n > cn$ khi $K$ đủ lớn.</p>
+            </div>
+        </details>
+
+        <h3>Bài 5</h3>
+        <p>Cho số nguyên dương $n$ và một tập $P_n$ gồm $n$ điểm trong mặt phẳng. Với mỗi điểm $X \in P_n$, ta gọi $d(X)$ là số các điểm $M \in P_n$ có khoảng cách bằng $1$ tới $X$. Xét $T$ là tập hợp các bộ ba điểm sắp thứ tự $(A, B, C)$ với $A, B, C$ là các điểm phân biệt thuộc $P_n$ và $AC = BC = 1$. Chứng minh rằng:<br>
+        a) $|T| \le 2n(n-1)$. &nbsp;&nbsp;&nbsp; b) $|T| = \sum_{X \in P_n} d(X)(d(X)-1)$. &nbsp;&nbsp;&nbsp; c) $\sum_{X \in P_n} d(X) \le 2f(n)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chọn cặp $(A, B)$ có $n(n-1)$ cách, với mỗi cặp có tối đa $2$ điểm $C$ nằm trên giao hai đường tròn tâm $A, B$ bán kính $1$.<br>
+                b) Đếm theo điểm $C$: có $d(C)(d(C)-1)$ cách chọn $(A, B)$.<br>
+                c) Bổ đề bắt tay trong đồ thị: $\sum d(X) = 2f(P_n) \le 2f(n)$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 6</h3>
+        <p>Chứng minh rằng tồn tại hằng số $c$ sao cho $f(n) < c n^{3/2}$ với mọi số nguyên dương $n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Từ Bài 5a, 5b và bất đẳng thức Cauchy–Schwarz: $2n(n-1) \ge \sum d(X)^2 - \sum d(X) \ge \frac{(2f(P_n))^2}{n} - 2f(P_n)$. Kết hợp $2f(P_n) < n^2$ suy ra $(2f(P_n))^2 < 3n^3 \implies f(n) < c n^{3/2}$.</p>
+            </div>
+        </details>
+
+        <p><strong>B. Ước lượng số cặp điểm có khoảng cách $1$ trong các tập đặc biệt</strong><br>
+        Ta gọi một tập điểm là <em>rộng rãi</em> nếu khoảng cách giữa $2$ điểm bất kì đều lớn hơn hoặc bằng $1$; là <em>chật chội</em> nếu khoảng cách giữa $2$ điểm bất kì nhỏ hơn hoặc bằng $1$. Kí hiệu $f_{\text{rr}}(n)$ và $f_{\text{cc}}(n)$ tương ứng là giá trị lớn nhất của $f(P_n)$ trên các tập rộng rãi và chật chội.</p>
+
+        <h3>Bài 7</h3>
+        <p>Chứng minh rằng $\lim_{n \to +\infty} \frac{f_{\text{rr}}(n)}{n} = 3$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Cận dưới: lưới tam giác đều ở Bài 3 là một tập rộng rãi, cho tỉ số tiến tới $3$. Cận trên: với mọi $X \in P_n$, $d(X) \le 6$ (nếu có $7$ điểm cách $X$ bằng $1$ thì có 2 điểm tạo góc $< 60^\circ$, khoảng cách $< 1$, vô lý), nên $f_{\text{rr}}(n) \le 3n$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 8</h3>
+        <p>Chứng minh rằng với mọi số nguyên $n \ge 3$, ta có $f_{\text{cc}}(n) = n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xây dựng cấu hình đạt $n$: đa giác đều $n$ cạnh (với $n$ lẻ: tam giác Reuleaux / đa giác sao có $n$ đường chéo dài $1$). Chứng minh $\le n$ bằng quy nạp: nếu có đỉnh bậc $\le 1$ thì xóa đi. Nếu mọi đỉnh bậc $\ge 2$ và có đỉnh $p$ bậc $\ge 3$ kề $q, r, s$ thì góc $\widehat{qps} \le 60^\circ$ (do đường kính $\le 1$), từ đó dẫn tới mâu thuẫn cạnh $> 1$ khi xét đỉnh kề với điểm ở giữa $r$.</p>
+            </div>
+        </details>
+
+        <p><strong>C. Ước lượng số cặp điểm có khoảng cách $1$ trong không gian</strong><br>
+        Kí hiệu $F(n)$ là giá trị lớn nhất của số cặp điểm khoảng cách $1$ trong một tập $n$ điểm trong không gian $\mathbb{R}^3$.</p>
+
+        <h3>Bài 9</h3>
+        <p>Chứng minh rằng tồn tại các hằng số dương $c_1, c_2$ sao cho $c_1 n^{4/3} \le F(n) \le c_2 n^{5/3}$ với mọi số nguyên dương $n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Cận dưới: xét lưới nguyên $\lfloor n^{1/3} \rfloor \times \lfloor n^{1/3} \rfloor \times \lfloor n^{1/3} \rfloor$, bình phương khoảng cách nhận tối đa $3 n^{2/3}$ giá trị, theo Dirichlet có một khoảng cách xuất hiện $\ge \frac{\binom{|Q|}{2}}{3n^{2/3}} \ge c_1 n^{4/3}$ lần, sau đó vị tự để khoảng cách đó bằng $1$.<br>
+                Cận trên: 3 điểm phân biệt trong không gian có tối đa 2 điểm cách đều chúng bằng 1 (giao 3 mặt cầu), nên đồ thị không chứa $K_{3,3}$. Đếm bằng 2 cách số bộ $(\{u,v,z\}, w)$ và dùng BĐT Jensen cho hàm lồi $g(x) = \binom{x}{3}$ ($x \ge 2$) để thu được $m \le c_2 n^{5/3}$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 10</h3>
+        <p>Cho số nguyên dương $n$. Với một tập rộng rãi $n$ điểm $R_n = \{A_1; A_2; \dots; A_n\}$ trên mặt phẳng, ta kí hiệu $T(R_n)$ là số các cặp điểm (không tính thứ tự) $\{A_i; A_j\}$ thỏa mãn $2023 < A_i A_j < 2024$. Kí hiệu $T(n) = \max_{R_n} T(R_n)$. Chứng minh rằng tồn tại số nguyên dương $n_0$ sao cho $T(n) \le \frac{n^2}{4}$ với mọi $n > n_0$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xét đồ thị $G$ nối hai điểm nếu $2023 < A_i A_j < 2024$. Với mỗi đỉnh $A_i$, các đỉnh kề $A_j$ nằm trong hình tròn bán kính $2024$, và các hình tròn tâm $A_j$ bán kính $1/2$ đôi một không giao nhau nằm gọn trong hình tròn tâm $A_i$ bán kính $2024,5$. So sánh diện tích suy ra bậc $d(A_i) < 4049^2$, từ đó $2T(R_n) = \sum d(A_i) < 4049^2 n \le \frac{n^2}{2}$ khi $n > 10^9$.</p>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT ĐỀ THI OLYMPIC TOÁN HSSV 2024 (KHỐI THPT) ───</b></p>
+    </div>
+</body>
+</html>

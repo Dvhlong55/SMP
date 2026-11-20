@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Đề Thi Olympic Toán HSSV 2016 (Khối THPT)</title>
+    
+    <meta name="post-id" content="OLPHSSV2016">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề thi và gợi ý giải Kỳ thi Olympic Toán học Sinh viên và Học sinh Toàn quốc 2016 (Lần thứ 24 - Quy Nhơn) dành cho Khối THPT: Ngày 1 (Định lý Dirichlet) và Ngày 2 (Bất đẳng thức Markov).">
+    <meta property="og:title" content="SMP — Đề Thi Olympic Toán HSSV 2016 (Khối THPT)">
+    <meta property="og:description" content="Đề thi và gợi ý giải Olympic Toán HSSV 2016 Khối THPT.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/olphssv-2016.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Đề Thi Olympic Toán HSSV 2016 (Khối THPT)">
+    <meta name="twitter:description" content="Đề thi Olympic Toán HSSV 2016 Khối THPT kèm gợi ý giải bám sát đáp án chính thức.">
+    <!-- SMP SEO END -->
+
+    <style>
+        details.igo-hint-clean { margin: 8px 0 22px 0; border: none; background: transparent; }
+        summary.igo-hint-trigger { list-style: none; cursor: pointer; display: inline-flex; align-items: center; padding: 3px 6px; user-select: none; color: var(--exam-bold-color, #111); width: fit-content; outline: none; }
+        summary.igo-hint-trigger::-webkit-details-marker, summary.igo-hint-trigger::marker { display: none; }
+        .igo-arrow { display: inline-block; font-size: 0.78rem; transition: transform 0.2s ease-in-out; color: var(--exam-bold-color, #111); margin-right: 6px; }
+        details.igo-hint-clean[open] .igo-arrow { transform: rotate(90deg); }
+        .igo-hint-content { padding: 8px 0 8px 16px; margin-top: 6px; border-left: 2px solid var(--border-light, #cbd5e1); font-size: 0.98rem; line-height: 1.8; color: var(--exam-text-color, #334155); }
+        body.dark-mode .igo-hint-content { border-left-color: rgba(255, 255, 255, 0.15); }
+        .igo-level-heading { color: var(--exam-bold-color, #111); font-size: 1.35rem; margin-top: 36px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1)); font-weight: 700; }
+        body.dark-mode .igo-level-heading { border-bottom-color: rgba(255,255,255,0.12); }
+        .igo-nav-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--accent-cyan, #0284c7) !important; text-decoration: none !important; margin: 12px 0 20px 0; transition: transform 0.2s ease; }
+        .igo-nav-link:hover { transform: translateX(-3px); }
+        .igo-mini-toc { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 16px 0 24px 0; padding: 10px 0; border-top: 1px solid var(--border-light, rgba(0,0,0,0.08)); border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08)); font-size: 0.9rem; }
+        body.dark-mode .igo-mini-toc { border-color: rgba(255,255,255,0.1); }
+        .igo-mini-toc a { color: var(--exam-bold-color, #111) !important; text-decoration: none !important; transition: color 0.2s; }
+        .igo-mini-toc a:hover { color: var(--accent-cyan, #0284c7) !important; }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Đề Thi Olympic Toán HSSV 2016 — Khối THPT</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Lần thứ 24 · Đại học Quy Nhơn · Hội Toán Học Việt Nam</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
+        </div>
+
+        <div>
+            <a href="/posts/math/de-thi-olympic-toan-hssv-thpt.html" class="igo-nav-link">← Tổng quan Olympic Toán HSSV Khối THPT (2016 – 2025)</a>
+        </div>
+
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Nội dung:</span>
+            <a href="#ngay-1">Ngày 1: Định lý Dirichlet</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#ngay-2">Ngày 2: Bất đẳng thức Markov</a>
+        </div>
+
+        <h2 id="ngay-1" class="igo-level-heading">Ngày Thi Thứ Nhất — Số Học: Định Lý Dirichlet</h2>
+        <p>Sự phân bố của số nguyên tố trong tập hợp số tự nhiên, cách xây dựng các số nguyên tố là những bài toán được quan tâm từ rất lâu trong Số học. Dưới đây chúng ta sẽ tìm cách chứng minh trường hợp đặc biệt của một trong những kết quả đẹp nhất của Số học: định lý Dirichlet về sự tồn tại vô hạn số nguyên tố trong một cấp số cộng mà số hạng đầu tiên và công sai nguyên tố cùng nhau.</p>
+
+        <p><strong>A. Khái niệm cấp</strong></p>
+
+        <h3>Bài 1.1</h3>
+        <p>Cho $a, n$ là các số nguyên nguyên tố cùng nhau với $n \ge 2$. Chứng minh rằng tồn tại một số nguyên dương $c$ nhỏ nhất với tính chất $a^c \equiv 1 \pmod n$. Số nguyên $c$ được gọi là <em>cấp của $a$ modulo $n$</em> và được kí hiệu là $\operatorname{ord}_n(a)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xét các lũy thừa $a^m$ ($m \ge 1$). Do chỉ có hữu hạn ($n$) lớp đồng dư modulo $n$, theo nguyên lý Dirichlet tồn tại $m_1 > m_2 \ge 1$ sao cho $a^{m_1} \equiv a^{m_2} \pmod n$. Vì $\gcd(a, n) = 1$, rút gọn ta được $a^{m_1 - m_2} \equiv 1 \pmod n$. Tập các số nguyên dương $k$ thỏa mãn $a^k \equiv 1 \pmod n$ khác rỗng nên có phần tử nhỏ nhất $c$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 1.2</h3>
+        <p>Chứng minh rằng với mọi số nguyên dương $k$, $a^k \equiv 1 \pmod n$ khi và chỉ khi $\operatorname{ord}_n(a) \mid k$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Chiều đảo: nếu $c = \operatorname{ord}_n(a) \mid k$ thì $a^c - 1 \mid a^k - 1$, suy ra $a^k \equiv 1 \pmod n$. Chiều thuận: chia có dư $k = cq + r$ với $0 \le r < c$. Khi đó $1 \equiv a^k = (a^c)^q a^r \equiv a^r \pmod n$. Theo tính nhỏ nhất của $c$, phải có $r = 0$, tức $c \mid k$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 1.3</h3>
+        <p>Chứng minh rằng $\operatorname{ord}_n(a) \mid \varphi(n)$, trong đó $\varphi$ kí hiệu hàm số phi của Euler, định nghĩa bởi công thức: $\varphi(1) = 1$ và với $n > 1$,
+        \[
+        \varphi(n) = n \prod_{p \text{ là ước nguyên tố của } n} \left(1 - \frac{1}{p}\right).
+        \]
+        (Nhắc lại rằng kí hiệu $x \mid y$ nghĩa là $x$ là một ước của $y$.)</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Theo định lý Euler, vì $\gcd(a, n) = 1$ nên $a^{\varphi(n)} \equiv 1 \pmod n$. Kết hợp trực tiếp với Bài 1.2 suy ra $\operatorname{ord}_n(a) \mid \varphi(n)$.</p>
+            </div>
+        </details>
+
+        <p><strong>B. Sự tồn tại số nguyên tố trong một số cấp số cộng</strong></p>
+
+        <h3>Bài 1.4</h3>
+        <p>Chứng minh rằng tồn tại vô hạn số nguyên tố có dạng $4k + 3$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Giả sử phản chứng chỉ có hữu hạn số nguyên tố dạng $4k+3$ là $p_1, p_2, \dots, p_n$. Xét $N = 4 p_1 p_2 \cdots p_n - 1$. Vì $N \equiv 3 \pmod 4$, $N$ nhất thiết phải có ít nhất một ước nguyên tố $p \equiv 3 \pmod 4$, và $p$ không thể trùng với bất kì $p_i$ nào, mâu thuẫn.</p>
+            </div>
+        </details>
+
+        <h3>Bài 1.5</h3>
+        <p>(i) Chứng minh rằng ước nguyên tố lẻ của một số có dạng $n^2 + 1$ luôn đồng dư với $1$ modulo $4$.<br>
+        (ii) Chứng minh rằng tồn tại vô hạn số nguyên tố có dạng $4k + 1$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(i) Nếu $p \mid n^2 + 1$ và $p$ lẻ, giả sử $p \equiv 3 \pmod 4$ ($p = 4k+3$). Khi đó $n^2 \equiv -1 \pmod p$, nâng lên lũy thừa $\frac{p-1}{2} = 2k+1$ và dùng định lý Fermat nhỏ cho $1 \equiv n^{p-1} \equiv (-1)^{2k+1} = -1 \pmod p$, vô lý.<br>
+                (ii) Giả sử chỉ có hữu hạn số nguyên tố dạng $4k+1$ là $p_1, \dots, p_n$. Xét số $(2 p_1 \cdots p_n)^2 + 1$, mọi ước nguyên tố của nó đều lẻ và theo (i) phải $\equiv 1 \pmod 4$ nhưng không chia hết cho $p_i$, mâu thuẫn.</p>
+            </div>
+        </details>
+
+        <h3>Bài 1.6</h3>
+        <p>(i) Chứng minh rằng ước nguyên tố $\neq 3$ của số tự nhiên có dạng $n^2 - n + 1$ phải đồng dư với $1$ modulo $6$.<br>
+        (ii) Chứng minh rằng tồn tại vô hạn số nguyên tố có dạng $6k + 1$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(i) Vì $n^2 - n + 1$ lẻ nên ước nguyên tố $p \neq 3$ thỏa $p \equiv 1$ hoặc $5 \pmod 6$. Nếu $p = 6k+5$, từ $p \mid n^2 - n + 1 \mid n^3 + 1$ ta có $n^3 \equiv -1 \pmod p$. Theo định lý Fermat nhỏ, $1 \equiv n^{p-1} = n^{6k+4} = (n^3)^{2k+1} n \equiv -n \pmod p \implies n \equiv -1 \pmod p \implies n^2 - n + 1 \equiv 3 \equiv 0 \pmod p$, vô lý vì $p \neq 3$.<br>
+                (ii) Giả sử chỉ có hữu hạn số nguyên tố dạng $6k+1$ là $p_1, \dots, p_r$. Đặt $n = 3 p_1 \cdots p_r$, xét các ước nguyên tố của $n^2 - n + 1$ (đều khác $3$) để suy ra mâu thuẫn.</p>
+            </div>
+        </details>
+
+        <p><strong>C. Sự tồn tại số nguyên tố trong cấp số cộng có dạng $nk + 1$</strong></p>
+        <p>Trong các bài tập sau đây, ta cố định một số nguyên $k \ge 3$. Với $a$ là một số nguyên $\neq 0$ và $p$ là một số nguyên tố, ta dùng kí hiệu $v_p(a)$ để chỉ số mũ đúng của $p$ trong phân tích của $a$ ra thừa số nguyên tố, nói cách khác $p^{v_p(a)} \mid a$ nhưng $p^{v_p(a)+1} \nmid a$.</p>
+
+        <h3>Bài 1.7</h3>
+        <p>Giả sử $p$ là một ước nguyên tố của $k^k - 1$. Kí hiệu $c$ là cấp của $k$ modulo $p$. Chứng minh rằng $v_p(k^c - 1) = v_p(k^k - 1)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Vì $p \mid k^k - 1$ nên $\gcd(k, p) = 1$ và $c \mid k$. Đặt $k = ck'$, suy ra $\gcd(p, k') = 1$. Phân tích $k^k - 1 = (k^c - 1)(k^{c(k'-1)} + \dots + k^c + 1)$. Do $k^c \equiv 1 \pmod p$, tổng trong ngoặc đồng dư với $k' \not\equiv 0 \pmod p$. Vậy $v_p(k^k - 1) = v_p(k^c - 1)$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 1.8</h3>
+        <p>Ta nhắc lại rằng một số nguyên dương được gọi là <em>không có ước chính phương</em> nếu trong phân tích ra thừa số nguyên tố của nó, mỗi số nguyên tố đều xuất hiện với số mũ $\le 1$. Kí hiệu $D$ là tập tất cả các ước nguyên dương $d$ của $k$ sao cho $d < k$ mà $\frac{k}{d}$ là một số nguyên không có ước chính phương. Kí hiệu $D_1 = \{d \in D \mid \text{số ước nguyên tố của } \frac{k}{d} \text{ là lẻ}\}$, $D_2 = \{d \in D \mid \text{số ước nguyên tố của } \frac{k}{d} \text{ là chẵn}\}$. Đặt
+        \[
+        A = \prod_{d \in D_1} (k^d - 1), \qquad B = \prod_{d \in D_2} (k^d - 1).
+        \]
+        (Ta quy ước $A = 1$ nếu $D_1 = \emptyset$ và tương tự $B = 1$ nếu $D_2 = \emptyset$.) Chứng minh rằng với mọi số nguyên tố $p$ mà $p \mid k^k - 1$ nhưng $p \not\equiv 1 \pmod k$ thì ta có $v_p(A) = v_p(B) + v_p(k^k - 1)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Gọi $c = \operatorname{ord}_p(k)$ và $v = v_p(k^k - 1)$. Theo Bài 1.7, với mọi $d \mid k$, nếu $p \mid k^d - 1$ (tức $c \mid d$) thì $v_p(k^d - 1) = v$. Do $p \not\equiv 1 \pmod k$, ta có $c < k$ (vì $c \mid p-1$). Gọi $q_1, \dots, q_N$ ($N \ge 1$) là các ước nguyên tố phân biệt của $\frac{k}{c}$. Số tập con có số phần tử lẻ của $\{q_1, \dots, q_N\}$ là $2^{N-1}$, tương ứng với $s_A = 2^{N-1}$ ước $d \in D_1$ chia hết cho $c$. Số tập con có số phần tử chẵn (khác tập rỗng ứng với $d = k$) là $s_B = 2^{N-1} - 1$. Do đó $v_p(A) = 2^{N-1}v = (2^{N-1} - 1)v + v = v_p(B) + v_p(k^k - 1)$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 1.9</h3>
+        <p>Chứng minh rằng $k^k - 1$ có một ước nguyên tố có dạng $nk + 1$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Giả sử phản chứng mọi ước nguyên tố của $k^k - 1$ đều $\not\equiv 1 \pmod k$. Khi đó theo Bài 1.8, với mọi ước nguyên tố $p$ của $A, B$ hay $k^k - 1$, ta có $v_p(A) = v_p(B) + v_p(k^k - 1)$, dẫn tới $A = (k^k - 1)B$. Chọn $d_0$ nhỏ nhất trong $D$. Khi đó mọi nhân tử trong $A, B, k^k - 1$ ngoại trừ $k^{d_0} - 1$ đều đồng dư $-1 \pmod{k^{d_0 + 1}}$, còn $k^{d_0} - 1 \equiv k^{d_0} - 1 \pmod{k^{d_0+1}}$. Rút gọn phương trình modulo $k^{d_0+1}$ thu được $(-1)^r \equiv (-1)^s (k^{d_0} + 1)$ (hoặc sai khác dấu), điều này vô lý vì $1 < k^{d_0} < k^{d_0+1} - 1$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 1.10</h3>
+        <p>Chứng minh rằng tồn tại vô hạn số nguyên tố có dạng $nk + 1$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Giả sử chỉ có hữu hạn số nguyên tố dạng $nk + 1$ và gọi $p = kn_0 + 1$ là số lớn nhất. Áp dụng Bài 1.9 cho $2kn_0$ thay vì $k$, tồn tại một ước nguyên tố $q$ của $(2kn_0)^{2kn_0} - 1$ thỏa $q \equiv 1 \pmod{2kn_0}$. Khi đó $q \equiv 1 \pmod k$ và $q \ge 2kn_0 + 1 > p$, mâu thuẫn với tính lớn nhất của $p$.</p>
+            </div>
+        </details>
+
+        <h2 id="ngay-2" class="igo-level-heading">Ngày Thi Thứ Hai — Đại Số & Giải Tích: Bất Đẳng Thức Markov</h2>
+        <p>Mục tiêu của bài thi này là tìm hiểu một số trường hợp riêng của định lý Markov: nếu $P(x)$ là một đa thức với hệ số thực và có bậc không vượt quá $n$ thì
+        \[
+        \max_{|x| \le 1} |P'(x)| \le n^2 \max_{|x| \le 1} |P(x)|.
+        \]
+        Trong các bài toán dưới đây, biến số $x$ chỉ nhận giá trị thực.</p>
+
+        <p><strong>A. Bất đẳng thức Markov cho đa thức bậc nhất</strong></p>
+
+        <h3>Bài 1.11</h3>
+        <p>Giả sử $a, b$ là hai số thực sao cho $|ax + b| \le 1$ khi $|x| \le 1$. Chứng minh rằng:<br>
+        (i) (2 điểm) $|a| \le 1$.<br>
+        (ii) (2 điểm) $|bx + a| \le 1$ khi $|x| \le 1$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Thay $x = 1$ và $x = -1$ vào giả thiết ta được $|a + b| \le 1$ và $|-a + b| \le 1$.<br>
+                (i) $|2a| = |(a + b) - (-a + b)| \le |a + b| + |-a + b| \le 2 \implies |a| \le 1$.<br>
+                (ii) Hàm bậc nhất $bx + a$ trên $[-1, 1]$ đạt cực trị tại hai đầu mút $x = \pm 1$, nên chỉ cần kiểm tra $|b + a| \le 1$ và $|-b + a| = |a - b| \le 1$, đều đã có sẵn.</p>
+            </div>
+        </details>
+
+        <p><strong>B. Bất đẳng thức Markov cho các đa thức bậc hai và bậc ba</strong></p>
+
+        <h3>Bài 1.12</h3>
+        <p>Giả sử $a, b, c$ là ba số thực sao cho các giá trị của đa thức $ax^2 + bx + c$ tại $1, 0, -1$ đều thuộc đoạn $[-1, 1]$.<br>
+        (i) (3 điểm) Chứng minh rằng $|2ax + b| \le 4$ khi $|x| \le 1$.<br>
+        (ii) (3 điểm) Chứng minh rằng $|cx^2 + bx + a| \le 2$ khi $|x| \le 1$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $d = a + b + c$, $e = a - b + c$ nên $|c|, |d|, |e| \le 1$, suy ra $a = \frac{1}{2}(d + e) - c$ và $b = \frac{1}{2}(d - e)$.<br>
+                (i) Hàm bậc nhất $2ax + b$ đạt GTLN của giá trị tuyệt đối tại $x = \pm 1$. Ta có $2a + b = \frac{3}{2}d - 2c + \frac{1}{2}e \implies |2a + b| \le \frac{3}{2} + 2 + \frac{1}{2} = 4$. Tương tự cho $|2a - b| \le 4$.<br>
+                (ii) Biểu diễn $cx^2 + bx + a = c(x^2 - 1) + \frac{d}{2}(1 + x) + \frac{e}{2}(1 - x)$. Với $|x| \le 1$, áp dụng BĐT tam giác: $|cx^2 + bx + a| \le |x^2 - 1| + \frac{1}{2}|1 + x| + \frac{1}{2}|1 - x| = (1 - x^2) + \frac{1}{2}(1 + x + 1 - x) = 2 - x^2 \le 2$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 1.13</h3>
+        <p>Giả sử $a, b, c, d$ là bốn số thực sao cho các giá trị $\alpha, \beta, \gamma, \delta$ của đa thức $ax^3 + bx^2 + cx + d$ tương ứng tại $-1, -\frac{1}{2}, \frac{1}{2}, 1$ đều thuộc đoạn $[-1, 1]$.<br>
+        (i) (1 điểm) Chứng minh rằng với mọi số thực $A, B$, ta có đẳng thức $|A + B| + |A - B| = 2 \max\{|A|, |B|\}$.<br>
+        (ii) (3 điểm) Bằng cách biểu diễn $3ax^2 + 2bx + c$ theo $\alpha, \beta, \gamma, \delta$ và $x$, hãy chứng minh rằng $|3ax^2 + 2bx + c| \le 9$ khi $|x| \le 1$.<br>
+        (iii) (2 điểm) Chứng minh rằng $|dx^3 + cx^2 + bx + a| \le 4$ khi $|x| \le 1$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(i) Do tính đối xứng khi đổi dấu hoặc hoán đổi $A, B$, chỉ cần xét $A \ge B \ge 0$, khi đó $|A+B| + |A-B| = 2A = 2\max\{|A|, |B|\}$.<br>
+                (ii) Giải hệ biểu diễn $a, b, c, d$ theo $\alpha, \beta, \gamma, \delta$ rồi thay vào $g(x) = 3ax^2 + 2bx + c$:
+                $g(x) = -\frac{\alpha}{6}(12x^2 - 8x - 1) + \frac{4\beta}{3}(3x^2 - x - 1) - \frac{4\gamma}{3}(3x^2 + x - 1) + \frac{\delta}{6}(12x^2 + 8x - 1)$.
+                Ghép từng cặp $(\alpha, \delta)$ và $(\beta, \gamma)$ rồi áp dụng (i) trên $|x| \le 1$: $|g(x)| \le \frac{1}{3}\max\{|12x^2-1|, 8|x|\} + \frac{8}{3}\max\{|3x^2-1|, |x|\} \le \frac{11}{3} + \frac{16}{3} = 9$.<br>
+                (iii) Tương tự, biểu diễn $h(x) = dx^3 + cx^2 + bx + a$ theo $\alpha, \beta, \gamma, \delta$ bằng nội suy và dùng BĐT tam giác với $1 - x^2 \ge 0, 1 \pm x \ge 0$ để thu được $|h(x)| \le 4 - 3x^2 \le 4$.</p>
+            </div>
+        </details>
+
+        <p><strong>C. Hai bất đẳng thức khác cho các tam thức</strong></p>
+
+        <h3>Bài 1.14</h3>
+        <p>Cho $a, b, c$ là ba số thực và $n$ là một số nguyên dương. Giả sử đa thức $f(x) = ax^{2n} + bx + c$ có các giá trị tại $1, 0, -1$ thuộc đoạn $[-1, 1]$. Chứng minh rằng:<br>
+        (i) (2 điểm) $|f(x)| \le \frac{2n - 1}{\sqrt[2n-1]{4n^{2n}}} + 1$ khi $|x| \le 1$.<br>
+        (ii) (2 điểm) Với mỗi $1 \le M < \infty$, ta có $|f(x)| \le 2M^{2n} - 1$ khi $1 \le |x| \le M$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $d = f(1) = a + b + c$, $e = f(-1) = a - b + c$, $c = f(0)$. Ta có $f(x) = \frac{d}{2}(x^{2n} + x) + \frac{e}{2}(x^{2n} - x) + c(1 - x^{2n})$. Áp dụng BĐT tam giác và Bài 1.13(i):<br>
+                (i) Khi $|x| \le 1$: $|f(x)| \le \max\{x^{2n}, |x|\} + 1 - x^{2n} = 1 + |x| - x^{2n}$. Khảo sát hàm $g(t) = 1 + t - t^{2n}$ trên $[0, 1]$ (đạt cực đại tại $t_* = (2n)^{-\frac{1}{2n-1}}$) hoặc dùng AM-GM cho $2n$ số suy ra $\max_{t \in [0, 1]} g(t) = \frac{2n-1}{\sqrt[2n-1]{4n^{2n}}} + 1$.<br>
+                (ii) Khi $1 \le |x| \le M$: $\max\{x^{2n}, |x|\} + |1 - x^{2n}| = x^{2n} + (x^{2n} - 1) = 2x^{2n} - 1 \le 2M^{2n} - 1$.</p>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT ĐỀ THI OLYMPIC TOÁN HSSV 2016 (KHỐI THPT) ───</b></p>
+    </div>
+</body>
+</html>

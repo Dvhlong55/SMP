@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Đề Thi Olympic Toán HSSV 2022 (Khối THPT)</title>
+    
+    <meta name="post-id" content="OLPHSSV2022">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề thi và gợi ý giải Kỳ thi Olympic Toán học Sinh viên và Học sinh Toàn quốc 2022 (Lần thứ 28 - Trực tuyến) dành cho Khối THPT: Ngày 1 (Dãy số Fibonacci modulo m) và Ngày 2 (Điểm Fermat-Torricelli).">
+    <meta property="og:title" content="SMP — Đề Thi Olympic Toán HSSV 2022 (Khối THPT)">
+    <meta property="og:description" content="Đề thi và gợi ý giải Olympic Toán HSSV 2022 Khối THPT.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/olphssv-2022.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Đề Thi Olympic Toán HSSV 2022 (Khối THPT)">
+    <meta name="twitter:description" content="Đề thi Olympic Toán HSSV 2022 Khối THPT kèm gợi ý giải bám sát đáp án chính thức.">
+    <!-- SMP SEO END -->
+
+    <style>
+        details.igo-hint-clean { margin: 8px 0 22px 0; border: none; background: transparent; }
+        summary.igo-hint-trigger { list-style: none; cursor: pointer; display: inline-flex; align-items: center; padding: 3px 6px; user-select: none; color: var(--exam-bold-color, #111); width: fit-content; outline: none; }
+        summary.igo-hint-trigger::-webkit-details-marker, summary.igo-hint-trigger::marker { display: none; }
+        .igo-arrow { display: inline-block; font-size: 0.78rem; transition: transform 0.2s ease-in-out; color: var(--exam-bold-color, #111); margin-right: 6px; }
+        details.igo-hint-clean[open] .igo-arrow { transform: rotate(90deg); }
+        .igo-hint-content { padding: 8px 0 8px 16px; margin-top: 6px; border-left: 2px solid var(--border-light, #cbd5e1); font-size: 0.98rem; line-height: 1.8; color: var(--exam-text-color, #334155); }
+        body.dark-mode .igo-hint-content { border-left-color: rgba(255, 255, 255, 0.15); }
+        .igo-level-heading { color: var(--exam-bold-color, #111); font-size: 1.35rem; margin-top: 36px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1)); font-weight: 700; }
+        body.dark-mode .igo-level-heading { border-bottom-color: rgba(255,255,255,0.12); }
+        .igo-nav-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--accent-cyan, #0284c7) !important; text-decoration: none !important; margin: 12px 0 20px 0; transition: transform 0.2s ease; }
+        .igo-nav-link:hover { transform: translateX(-3px); }
+        .igo-mini-toc { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 16px 0 24px 0; padding: 10px 0; border-top: 1px solid var(--border-light, rgba(0,0,0,0.08)); border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08)); font-size: 0.9rem; }
+        body.dark-mode .igo-mini-toc { border-color: rgba(255,255,255,0.1); }
+        .igo-mini-toc a { color: var(--exam-bold-color, #111) !important; text-decoration: none !important; transition: color 0.2s; }
+        .igo-mini-toc a:hover { color: var(--accent-cyan, #0284c7) !important; }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Đề Thi Olympic Toán HSSV 2022 — Khối THPT</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Lần thứ 28 · Tổ chức trực tuyến · Hội Toán Học Việt Nam</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
+        </div>
+
+        <div>
+            <a href="/posts/math/de-thi-olympic-toan-hssv-thpt.html" class="igo-nav-link">← Tổng quan Olympic Toán HSSV Khối THPT (2016 – 2025)</a>
+        </div>
+
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Nội dung:</span>
+            <a href="#ngay-1">Ngày 1: Số học (Fibonacci mod m)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#ngay-2">Ngày 2: Hình học (Fermat-Torricelli)</a>
+        </div>
+
+        <h2 id="ngay-1" class="igo-level-heading">Ngày Thứ Nhất — Số Học: Dãy Số Fibonacci Modulo Một Số Nguyên Dương</h2>
+        <p><em>Thí sinh được sử dụng kết quả của các câu trước trong chứng minh của câu sau.</em><br>
+        Nhắc lại rằng dãy số Fibonacci là dãy số tự nhiên định nghĩa bởi $F_0 = 0, F_1 = 1$ và $F_{n+1} = F_n + F_{n-1}$ với mọi số nguyên dương $n$. Công thức tổng quát:
+        \[
+        F_n = \frac{\left(\frac{1+\sqrt{5}}{2}\right)^n - \left(\frac{1-\sqrt{5}}{2}\right)^n}{\sqrt{5}}.
+        \]</p>
+
+        <p><strong>A. Một vài hệ thức cơ bản, định nghĩa và một số tính chất đầu tiên của $k(m)$</strong></p>
+
+        <h3>Bài 1</h3>
+        <p>a) Chứng minh rằng với mọi số tự nhiên $u, v$, trong đó $u \ge 1$, thì $F_{u+v} = F_{u-1} F_v + F_u F_{v+1}$.<br>
+        b) Chứng minh rằng với mọi số nguyên dương $n$ thì $F_{2n} = F_n(F_{n-1} + F_{n+1})$ và $F_{2n+1} = F_n^2 + F_{n+1}^2$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Quy nạp theo $v$: với $v = 0$, $F_u = F_{u-1}\cdot 0 + F_u \cdot 1$ đúng. Bước quy nạp dùng $F_{u+v+1} = F_{(u+1)+v} = F_u F_v + F_{u+1} F_{v+1}$ và thay $F_{u+1} = F_{u-1} + F_u$.<br>
+                b) Áp dụng câu a) lần lượt với $(u, v) = (n, n)$ và $(u, v) = (n+1, n)$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 2</h3>
+        <p>Cho số nguyên dương $m$.<br>
+        a) Chứng minh rằng tồn tại các số nguyên $0 \le i < j \le m^2$ sao cho $F_i \equiv F_j \pmod m$ và $F_{i+1} \equiv F_{j+1} \pmod m$.<br>
+        b) Chứng minh rằng tồn tại số nguyên dương $k$ sao cho $F_{n+k} \equiv F_n \pmod m$ với mọi số tự nhiên $n$. Kí hiệu $k(m)$ là số nguyên dương nhỏ nhất sao cho $F_{n+k(m)} \equiv F_n \pmod m$ với mọi số tự nhiên $n$.<br>
+        c) Chứng minh rằng $k(m)$ là số nguyên dương nhỏ nhất mà $F_{k(m)} \equiv 0 \pmod m$ và $F_{k(m)+1} \equiv 1 \pmod m$.<br>
+        d) Cho số nguyên dương $k$. Chứng minh rằng $F_{n+k} \equiv F_n \pmod m$ với mọi số tự nhiên $n$ khi và chỉ khi $k$ chia hết cho $k(m)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Xét $m^2 + 1$ cặp số dư $(F_r \bmod m, F_{r+1} \bmod m)$ với $r = 0, \dots, m^2$ theo nguyên lý Dirichlet.<br>
+                b) Đặt $k = j - i$, dùng công thức truy hồi tiến $F_{n+1} = F_n + F_{n-1}$ và truy hồi lùi $F_{n-1} = F_{n+1} - F_n$ để chứng minh tuần hoàn từ $n = 0$.<br>
+                c, d) Chia có dư $k = q k(m) + r$ ($0 \le r < k(m)$) để thấy tính nhỏ nhất kéo theo $k(m) \mid k$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 3</h3>
+        <p>Cho số nguyên dương $N$. Chứng minh rằng có vô hạn số hạng của dãy Fibonacci chia hết cho $N$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Với mọi $n$ là bội của chu kì $k(N)$, ta có $F_n \equiv F_0 = 0 \pmod N$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 4</h3>
+        <p>a) Chứng minh rằng với mọi số nguyên dương $m_1, m_2$ thì $k([m_1, m_2]) = [k(m_1), k(m_2)]$ (trong đó $[a, b]$ kí hiệu bội số chung nhỏ nhất của $a$ và $b$).<br>
+        b) Xác định $k(2), k(4), k(5), k(10)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chú ý nếu $m \mid n$ thì $k(m) \mid k(n)$ (theo Bài 2d). Do đó $[k(m_1), k(m_2)] \mid k([m_1, m_2])$. Ngược lại, đặt $L = [k(m_1), k(m_2)]$, vì $k(m_i) \mid L$ nên $F_L \equiv 0, F_{L+1} \equiv 1 \pmod{m_i}$ ($i=1,2$), suy ra đúng theo mod $[m_1, m_2]$, kéo theo $k([m_1, m_2]) \mid L$.<br>
+                b) Tính trực tiếp theo định nghĩa: $k(2) = 3, k(4) = 6, k(5) = 20 \implies k(10) = [k(2), k(5)] = 60$.</p>
+            </div>
+        </details>
+
+        <p><strong>B. Một số tính chất khác của $k(m)$</strong></p>
+
+        <h3>Bài 5</h3>
+        <p>Giả sử $p$ là số nguyên tố lẻ sao cho $p \equiv \pm 1 \pmod 5$. Chứng minh rằng:<br>
+        a) $5^{\frac{p-1}{2}} \equiv 1 \pmod p$.<br>
+        b) $F_{p-1} \equiv 0 \pmod p$.<br>
+        c) $k(p) \mid p - 1$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Dùng luật thuận nghịch toàn phương: $\left(\frac{5}{p}\right) = \left(\frac{p}{5}\right) = \left(\frac{\pm 1}{5}\right) = 1$, theo tiêu chuẩn Euler suy ra $5^{\frac{p-1}{2}} \equiv 1 \pmod p$.<br>
+                b) Khai triển Binet: $2^{p-2} F_{p-1} = \sum_{i=0}^{(p-3)/2} \binom{p-1}{2i+1} 5^i$. Nhận xét $\binom{p-1}{2i+1} \equiv (-1)^{2i+1} = -1 \pmod p$, suy ra $2^{p-2} F_{p-1} \equiv -\frac{5^{(p-1)/2} - 1}{4} \equiv 0 \pmod p$.<br>
+                c) Tương tự tính $2^{p-1} F_p = \sum \binom{p}{2i+1} 5^i \equiv 5^{(p-1)/2} \equiv 1 \pmod p$, kết hợp $2^{p-1} \equiv 1 \pmod p$ được $F_p \equiv 1 \pmod p$. Vậy $k(p) \mid p - 1$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 6</h3>
+        <p>Giả sử $p$ là số nguyên tố lẻ sao cho $p \equiv \pm 2 \pmod 5$. Chứng minh rằng:<br>
+        a) $F_{p+1} \equiv 0 \pmod p$.<br>
+        b) $k(p) \mid 2p + 2$.<br>
+        c) $k(p)$ chia hết cho $4$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Khi $p \equiv \pm 2 \pmod 5$, $\left(\frac{5}{p}\right) = -1 \implies 5^{\frac{p-1}{2}} \equiv -1 \pmod p$. Khai triển $2^p F_{p+1} = \sum \binom{p+1}{2i+1} 5^i \equiv 1 + 5^{(p-1)/2} \equiv 0 \pmod p$.<br>
+                b) Tương tự câu 5c, $F_p \equiv -1 \pmod p$. Dùng Bài 1b: $F_{2p+1} = F_p^2 + F_{p+1}^2 \equiv 1$, $F_{2p+2} \equiv 0 \pmod p \implies k(p) \mid 2(p+1)$.<br>
+                c) Vì $F_{p+2} = F_p + F_{p+1} \equiv -1 \not\equiv 1 \pmod p$ nên $k(p) \nmid (p+1)$, mà $k(p) \mid 2(p+1)$ (chú ý $p+1$ chẵn), suy ra $4 \mid k(p)$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 7</h3>
+        <p>Cho số nguyên dương $s$. Chứng minh rằng:<br>
+        a) $F_{3 \cdot 2^{s-1}} \equiv 0 \pmod{2^s}$ và $F_{3 \cdot 2^{s-1} + 1} \equiv 1 \pmod{2^s}$.<br>
+        b) $k(2^s) = 3 \cdot 2^{s-1}$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Quy nạp theo $s$, dùng công thức nhân đôi ở Bài 1b: $F_{3\cdot 2^s} = F_{3\cdot 2^{s-1}}(F_{3\cdot 2^{s-1}-1} + F_{3\cdot 2^{s-1}+1}) \equiv 0 \pmod{2^{s+1}}$ và $F_{3\cdot 2^s + 1} = F_{3\cdot 2^{s-1}}^2 + F_{3\cdot 2^{s-1}+1}^2 \equiv 1 \pmod{2^{s+1}}$.<br>
+                b) Từ a) suy ra $k(2^{s+1}) \mid 3 \cdot 2^s$, và từ $2^s \mid 2^{s+1}$ suy ra $k(2^s) = 3 \cdot 2^{s-1} \mid k(2^{s+1})$. Để loại khả năng $k(2^{s+1}) = 3 \cdot 2^{s-1}$, chứng minh quy nạp $F_{3\cdot 2^{s-1}+1} \equiv 2^s + 1 \pmod{2^{s+1}}$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 8</h3>
+        <p>Chứng minh rằng $k(m)$ là số chẵn với mọi $m > 2$.<br>
+        <em>(Chú ý: Điểm số của Bài 8 chỉ được dùng để xếp hạng các thí sinh có điểm tuyệt đối.)</em></p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Mở rộng dãy Fibonacci cho chỉ số âm theo $F_{-n} = (-1)^{n+1} F_n$. Tính tuần hoàn $F_n \equiv F_{n+k(m)} \pmod m$ vẫn đúng với $n$ âm. Từ $F_{k(m)} \equiv 0$ và $F_{k(m)+1} \equiv 1 \pmod m$ suy ra $F_{k(m)-1} \equiv 1 \pmod m$. Suy ra $1 \equiv F_{k(m)-1} \equiv F_{-1} \dots$ hay chính xác hơn xét $1 \equiv F_{1} \equiv F_{1-k(m)} = (-1)^{k(m)} F_{k(m)-1} \equiv (-1)^{k(m)} \pmod m$. Với $m > 2$ thì $1 \not\equiv -1 \pmod m$, nên $(-1)^{k(m)} = 1$, tức $k(m)$ chẵn.</p>
+            </div>
+        </details>
+
+        <h2 id="ngay-2" class="igo-level-heading">Ngày Thứ Hai — Hình Học: Điểm Fermat-Torricelli</h2>
+        <p><strong>A. Điểm Fermat-Torricelli của tam giác</strong><br>
+        Trong suốt phần này ta luôn giả sử $ABC$ là một tam giác có các góc nhỏ hơn $120^\circ$.</p>
+
+        <h3>Bài 1 [Điểm Fermat-Torricelli]</h3>
+        <p>Chứng minh rằng tồn tại duy nhất một điểm $T$ nằm trong tam giác $ABC$ sao cho $\widehat{BTC} = \widehat{CTA} = \widehat{ATB} = 120^\circ$. Điểm $T$ xác định như vậy được gọi là <em>điểm Fermat-Torricelli</em> của tam giác $ABC$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Dựng 2 cung chứa góc $120^\circ$ trên cạnh $BC$ và $CA$ nằm trong tam giác $ABC$. Do $\widehat{C} < 120^\circ$, hai cung này cắt nhau tại duy nhất một điểm $T$ khác $C$ nằm trong tam giác $ABC$, khi đó $\widehat{ATB} = 360^\circ - 120^\circ - 120^\circ = 120^\circ$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 2 [Cách dựng khác cho điểm Fermat-Torricelli]</h3>
+        <p>Dựng ra ngoài tam giác $ABC$ ba tam giác đều $BCD, CAE, ABF$. Chứng minh rằng $AD, BE, CF$ đồng quy tại $T$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Vì $\widehat{BTC} = \widehat{CTA} = \widehat{ATB} = 120^\circ$ nên các tứ giác $ATCE, BTCD, BTAF$ nội tiếp. Cộng góc: $\widehat{ATF} = \widehat{ABF} = 60^\circ$, $\widehat{FTB} = \widehat{FAB} = 60^\circ$, $\widehat{BTD} = \widehat{BCD} = 60^\circ \implies \widehat{ATD} = 180^\circ$, tức $A, T, D$ thẳng hàng. Tương tự $BE, CF$ đi qua $T$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 3 [Bài toán Fermat]</h3>
+        <p>Xét một điểm $P$ nằm trong mặt phẳng chứa tam giác $ABC$. Gọi $T$ là điểm Fermat-Torricelli của tam giác $ABC$. Chứng minh rằng:<br>
+        a) $\frac{\overrightarrow{TA}}{TA} + \frac{\overrightarrow{TB}}{TB} + \frac{\overrightarrow{TC}}{TC} = \overrightarrow{0}$.<br>
+        b) $PA + PB + PC \ge \overrightarrow{PA}\cdot\frac{\overrightarrow{TA}}{TA} + \overrightarrow{PB}\cdot\frac{\overrightarrow{TB}}{TB} + \overrightarrow{PC}\cdot\frac{\overrightarrow{TC}}{TC}$.<br>
+        c) $PA + PB + PC \ge TA + TB + TC$ và đẳng thức xảy ra khi và chỉ khi $P$ trùng với $T$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Ba vectơ đơn vị $\frac{\overrightarrow{TA}}{TA}, \frac{\overrightarrow{TB}}{TB}, \frac{\overrightarrow{TC}}{TC}$ có cùng độ dài $1$ và đôi một tạo góc $120^\circ$ nên tổng bằng $\overrightarrow{0}$.<br>
+                b) Với mỗi đỉnh, $\overrightarrow{PA}\cdot\frac{\overrightarrow{TA}}{TA} \le PA \cdot 1 = PA$.<br>
+                c) Tách $\overrightarrow{PA} = \overrightarrow{PT} + \overrightarrow{TA}$ (tương tự cho $B, C$), sử dụng câu a) và $\overrightarrow{TA}\cdot\frac{\overrightarrow{TA}}{TA} = TA$ thu được vế phải bằng $TA + TB + TC$.</p>
+            </div>
+        </details>
+
+        <p><strong>B. Một vài mở rộng bài toán Fermat</strong></p>
+
+        <h3>Bài 4</h3>
+        <p>Giả sử tam giác $ABC$ nhọn. Đặt $a = BC, b = CA, c = AB$.<br>
+        a) Kí hiệu $H$ là trực tâm của tam giác $ABC$. Chứng minh rằng $a\cdot\frac{\overrightarrow{HA}}{HA} + b\cdot\frac{\overrightarrow{HB}}{HB} + c\cdot\frac{\overrightarrow{HC}}{HC} = \overrightarrow{0}$.<br>
+        b) Xét một điểm $P$ nằm trong mặt phẳng. Chứng minh rằng tổng $aPA + bPB + cPC$ đạt giá trị nhỏ nhất khi và chỉ khi $P$ trùng với $H$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Đặt $\vec{u} = a\frac{\overrightarrow{HA}}{HA} + b\frac{\overrightarrow{HB}}{HB} + c\frac{\overrightarrow{HC}}{HC}$. Kiểm tra $\vec{u} \cdot \overrightarrow{AB} = 0$ và $\vec{u} \cdot \overrightarrow{BC} = 0$ (nhờ $\overrightarrow{HA} \perp \overrightarrow{BC}$ và $\frac{\overrightarrow{HB}}{HB}\cdot\overrightarrow{BC} + \dots$ dựa vào $\cos \widehat{HBC} = \sin C$), suy ra $\vec{u} = \overrightarrow{0}$.<br>
+                b) Dùng tích vô hướng tương tự Bài 3b, 3c với trọng số $a, b, c$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 5 [Bài toán Steiner]</h3>
+        <p>Cho tứ giác lồi $MNPQ$. Giả sử tồn tại hai điểm $U$ và $V$ nằm trong tứ giác thỏa mãn
+        \[
+        \widehat{MUN} = \widehat{MUV} = \widehat{NUV} = \widehat{QVU} = \widehat{PVU} = \widehat{PVQ}.
+        \]
+        Xét hai điểm $X$ và $Y$ trong mặt phẳng. Chứng minh rằng tổng $XM + XN + XY + YP + YQ$ đạt giá trị nhỏ nhất khi và chỉ khi $X \equiv U, Y \equiv V$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Các góc tại $U$ và $V$ đều bằng $120^\circ$ nên $\frac{\overrightarrow{UM}}{UM} + \frac{\overrightarrow{UN}}{UN} + \frac{\overrightarrow{UV}}{UV} = \overrightarrow{0}$ và $\frac{\overrightarrow{VP}}{VP} + \frac{\overrightarrow{VQ}}{VQ} + \frac{\overrightarrow{VU}}{VU} = \overrightarrow{0}$. Chiếu $\overrightarrow{XM}, \overrightarrow{XN}, \overrightarrow{XY}, \overrightarrow{YP}, \overrightarrow{YQ}$ lên các vectơ đơn vị này và phân tích $\overrightarrow{XY} = \overrightarrow{XU} + \overrightarrow{UV} + \overrightarrow{VY}$.</p>
+            </div>
+        </details>
+
+        <p><strong>C. Một số tính chất hình học của điểm Fermat-Torricelli</strong><br>
+        Trong suốt phần này ta lại giả sử $ABC$ là một tam giác có các góc nhỏ hơn $120^\circ$ và $T$ là điểm Fermat-Torricelli của nó.</p>
+
+        <h3>Bài 6</h3>
+        <p>Gọi $G$ là trọng tâm của tam giác $ABC$. Chứng minh rằng $G$ cách đều các đường trung trực của các đoạn thẳng $TA, TB, TC$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Gọi $X, Y, Z$ là tâm các tam giác đều $BCD, CAE, ABF$ dựng ra ngoài $\triangle ABC$. Theo Bài 2, $YZ, ZX, XY$ là trung trực của $TA, TB, TC$, và $\triangle XYZ$ là tam giác đều (định lý Napoleon). Dùng phép quay vectơ $30^\circ$ chứng minh $\overrightarrow{AY} + \overrightarrow{CX} + \overrightarrow{BZ} = \overrightarrow{0}$, tức $\triangle ABC$ và $\triangle XYZ$ có cùng trọng tâm $G$, suy ra $G$ là tâm tam giác đều $XYZ$ nên cách đều $YZ, ZX, XY$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 7</h3>
+        <p>Gọi $H_a, H_b, H_c$ tương ứng là trực tâm các tam giác $TBC, TCA, TAB$.<br>
+        a) Chứng minh rằng $T$ là trọng tâm của tam giác $H_a H_b H_c$.<br>
+        b) Gọi $D, E, F$ tương ứng là giao điểm của $H_c H_b$ và cạnh $BC$, $H_c H_a$ và cạnh $CA$, $H_a H_b$ và cạnh $AB$. Chứng minh rằng tam giác $DEF$ đều.<br>
+        c) Chứng minh rằng các đường thẳng đi qua $D, E, F$ và tương ứng vuông góc với $BC, CA, AB$ đồng quy tại một điểm. Kí hiệu điểm đó là $S$.<br>
+        d) Chứng minh rằng $TS$ song song với đường thẳng Euler của tam giác $ABC$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Gọi $M_a, M_b, M_c$ là trung điểm $BC, CA, AB$ và $X, Y, Z$ là tâm ngoại tiếp $\triangle TBC, \triangle TCA, \triangle TAB$. Do $\overrightarrow{TH_a} = 2\overrightarrow{XM_a}$ và $\triangle XYZ, \triangle M_a M_b M_c$ cùng trọng tâm $G$, suy ra $\overrightarrow{TH_a} + \overrightarrow{TH_b} + \overrightarrow{TH_c} = \overrightarrow{0}$.<br>
+                b, c) Chứng minh bổ đề: với hai điểm đẳng giác $P, Q$ trong $\triangle ABC$, $K, L$ là trực tâm $\triangle PCA, \triangle PAB$, thì $KL$ đi qua hình chiếu $D$ của $Q$ lên $BC$. Áp dụng với $P = T$ và $Q = S$ (điểm đẳng giác của $T$) suy ra $D, E, F$ là hình chiếu của $S$ lên 3 cạnh và $\triangle DEF$ đều.<br>
+                d) Tam giác $DEF$ và $XYZ$ có các cạnh tương ứng song song (cùng vuông góc $TA, TB, TC$), nên phép vị tự biến $\triangle DEF \to \triangle XYZ$ biến trung điểm $J$ của $ST$ (tâm ngoại tiếp $\triangle DEF$) thành $G$, và biến $S$ thành $O$ (tâm ngoại tiếp $\triangle ABC$), suy ra $TS \parallel OG$.</p>
+            </div>
+        </details>
+
+        <h3>Bài 8</h3>
+        <p>Cho tam giác $ABC$ có điểm Fermat-Torricelli là $T$. Gọi $(N_a)$ là đường tròn ngoại tiếp tam giác $TBC$. Lấy $X$ trên $(N_a)$ sao cho $TX \perp BC$. Gọi giao điểm của đoạn thẳng $BC$ và đường tròn ngoại tiếp tam giác $T N_a X$ là $D$. Định nghĩa tương tự các điểm $Y, Z, E, F$. Các đường thẳng đối xứng của đường thẳng Euler của tam giác $ABC$ qua $BC, CA$ và $AB$, theo thứ tự, cắt $XD, YE$ và $ZF$ tại $P, Q$ và $R$. Chứng minh rằng $AP \perp QR$ khi và chỉ khi $AB = AC$ hoặc $2BC^2 = AB^2 + AC^2$.<br>
+        <em>(Chú ý: Điểm số của Bài 8 chỉ được dùng để xếp hạng các thí sinh có điểm tuyệt đối.)</em></p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Chứng minh bổ đề: $XD$ và đường thẳng Euler của $\triangle TBC$ đối xứng nhau qua $BC$. Từ đó đối chiếu tính đẳng giác, xác định vị trí $P, Q, R$ và chuyển điều kiện $AP \perp QR$ về điều kiện độ dài $AB = AC$ hoặc $2BC^2 = AB^2 + AC^2$ (trung tuyến ứng với $A$ và đường đối trung / tính chất góc đường thẳng Euler).</p>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT ĐỀ THI OLYMPIC TOÁN HSSV 2022 (KHỐI THPT) ───</b></p>
+    </div>
+</body>
+</html>

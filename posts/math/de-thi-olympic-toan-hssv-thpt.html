@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Tổng Quan Đề Thi Olympic Toán HSSV Khối THPT (2016 – 2025)</title>
+    
+    <meta name="post-id" content="DeThiOLPHSSVTHPT">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=10"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Tổng quan hệ thống đề thi và gợi ý giải Kỳ thi Olympic Toán học Sinh viên và Học sinh Toàn quốc — Khối THPT Chuyên từ năm 2016 đến 2025.">
+    <meta property="og:title" content="SMP — Tổng Quan Đề Thi Olympic Toán HSSV Khối THPT (2016 – 2025)">
+    <meta property="og:description" content="Tổng quan hệ thống đề thi và gợi ý giải Kỳ thi Olympic Toán học Sinh viên và Học sinh Toàn quốc — Khối THPT Chuyên (2016 – 2025).">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/de-thi-olympic-toan-hssv-thpt.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SMP — Tổng Quan Đề Thi Olympic Toán HSSV Khối THPT (2016 – 2025)">
+    <meta name="twitter:description" content="Hệ thống đề thi Olympic Toán HSSV Khối THPT từ 2016 đến 2025 kèm gợi ý giải chi tiết.">
+    <meta name="twitter:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <!-- SMP SEO END -->
+
+    <style>
+        /* Mục Lục Kiểu Roadmap / IGO (Thanh Lịch, Chữ Đen, Không Đóng Box) */
+        .igo-toc-section {
+            margin: 36px 0 48px 0;
+        }
+        .igo-toc-heading {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--exam-bold-color, #111);
+            margin: 0 0 24px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-light, rgba(0,0,0,0.1));
+        }
+        body.dark-mode .igo-toc-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px 48px;
+        }
+        .igo-toc-col {
+            display: flex;
+            flex-direction: column;
+        }
+        .igo-toc-year-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--exam-bold-color, #111);
+            margin: 0 0 10px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-weight: 700;
+        }
+        body.dark-mode .igo-toc-year-name {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-toc-items {
+            display: flex;
+            flex-direction: column;
+        }
+        .igo-toc-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 8px 0;
+            text-decoration: none !important;
+            color: var(--exam-text-color, #333);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .igo-toc-row:hover .igo-toc-num,
+        .igo-toc-row:hover .igo-toc-title {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+        .igo-toc-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted, #888);
+            width: 24px;
+            flex-shrink: 0;
+        }
+        .igo-toc-title {
+            font-size: 0.96rem;
+            color: var(--exam-bold-color, #111);
+            transition: color 0.2s;
+            white-space: nowrap;
+        }
+        .igo-toc-dots {
+            flex: 1;
+            border-bottom: 1px dotted var(--border-light, #cbd5e1);
+            margin: 0 6px;
+            min-width: 20px;
+            position: relative;
+            top: -4px;
+        }
+        body.dark-mode .igo-toc-dots {
+            border-bottom-color: rgba(255,255,255,0.15);
+        }
+        .igo-toc-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.74rem;
+            color: var(--text-muted, #888);
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Tổng Quan Đề Thi Olympic Toán HSSV — Khối THPT (2016 – 2025)</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Hội Toán Học Việt Nam · Kỳ Thi Olympic Toán Học Sinh Viên Và Học Sinh Toàn Quốc</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
+        </div>
+
+        <h2 style="color: var(--exam-bold-color, #111); margin-top: 28px; margin-bottom: 14px; font-weight: 700;">Giới Thiệu Kỳ Thi & Đặc Điểm Đề Thi Khối THPT</h2>
+        <p><strong>Kỳ thi Olympic Toán học Sinh viên và Học sinh Toàn quốc</strong> do Hội Toán học Việt Nam phối hợp cùng các trường Đại học đăng cai tổ chức thường niên. Từ năm <strong>2016</strong> (lần thứ 24 tại Quy Nhơn), kỳ thi chính thức mở rộng thêm bảng thi dành riêng cho <strong>Học sinh THPT chuyên (Khối THPT)</strong> bên cạnh khối Đại học truyền thống (giai đoạn 2020 – 2021 tạm hoãn do ảnh hưởng của đại dịch COVID-19).</p>
+        <p>Điểm đặc sắc nhất của đề thi Khối THPT nằm ở cấu trúc <strong>bài toán dẫn dắt theo chủ đề chuyên sâu</strong>: mỗi buổi thi (180 phút) thường xoay quanh một định lý kinh điển hoặc mô hình toán học hiện đại (như định lý Dirichlet, bất đẳng thức Markov, cây Markov, bài toán đàn gà, quy tắc dấu Descartes, dãy Stern, chu kỳ Fibonacci, điểm Fermat-Torricelli, đa thức bất khả quy, đường đối trung, trò chơi Zeckendorf...), được chia thành các bài toán nhỏ nối tiếp nhau từ cơ bản đến nâng cao. Thí sinh được phép sử dụng kết quả của các câu trước để giải các câu sau.</p>
+
+        <!-- MỤC LỤC KIỂU IGO -->
+        <div class="igo-toc-section">
+            <div class="igo-toc-heading">Mục lục các năm (2016 – 2025)</div>
+            <div class="igo-toc-grid">
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">Năm 2016 · Lần thứ 24 (Quy Nhơn)</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/olphssv-2016.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1: Số học (Định lý Dirichlet)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">10 bài</span>
+                        </a>
+                        <a href="/posts/math/olphssv-2016.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2: Bất đẳng thức Markov</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">Năm 2017 · Lần thứ 25 (Phú Yên)</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/olphssv-2017.html#to-hop" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Môn Tổ hợp (Lát đôminô)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">9 bài</span>
+                        </a>
+                        <a href="/posts/math/olphssv-2017.html#so-hoc" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Môn Số học (Phương trình Markov)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">9 bài</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">Năm 2018 · Lần thứ 26 (Quảng Bình)</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/olphssv-2018.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1: Biến đổi Abel & Ứng dụng</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">8 bài</span>
+                        </a>
+                        <a href="/posts/math/olphssv-2018.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2: Bài toán về đàn gà</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">9 bài</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">Năm 2019 · Lần thứ 27 (Nha Trang)</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/olphssv-2019.html#dai-so" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Đại số (Quy tắc dấu Descartes)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">9 bài</span>
+                        </a>
+                        <a href="/posts/math/olphssv-2019.html#so-hoc" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Số học (Bảng & Dãy Stern)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">8 bài</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">Năm 2022 · Lần thứ 28 (Trực tuyến)</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/olphssv-2022.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1: Số học (Fibonacci mod m)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">8 bài</span>
+                        </a>
+                        <a href="/posts/math/olphssv-2022.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2: Hình học (Fermat-Torricelli)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">8 bài</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">Năm 2023 · Lần thứ 29 (Huế)</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/olphssv-2023.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1: Đại số (Đa thức bất khả quy)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">10 bài</span>
+                        </a>
+                        <a href="/posts/math/olphssv-2023.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2: Hình học (Đường đối trung)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">10 bài</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">Năm 2024 · Lần thứ 30 (Đà Nẵng)</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/olphssv-2024.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1: Số học (Fibonacci & Lucas)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">10 bài</span>
+                        </a>
+                        <a href="/posts/math/olphssv-2024.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2: Tổ hợp (Khoảng cách đơn vị)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">10 bài</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">Năm 2025 · Lần thứ 31 (TP.HCM)</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/olphssv-2025.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1: Hình học (Hệ thức lượng)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">11 bài</span>
+                        </a>
+                        <a href="/posts/math/olphssv-2025.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2: Tổ hợp (Trò chơi Zeckendorf)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">9 bài</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="exam-end"><b>─── HẾT MỤC LỤC TỔNG QUAN OLYMPIC TOÁN HSSV (2016 – 2025) ───</b></p>
+    </div>
+</body>
+</html>
