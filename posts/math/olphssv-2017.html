@@ -75,7 +75,7 @@
 
         <p><strong>A. Sự tồn tại cách lát đôminô</strong></p>
 
-        <h3>Bài PT.1</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.1</span></h3>
         <p>Chứng minh rằng với mọi $m, n$ nguyên dương bảng $m \times n$ có thể lát được bởi các quân đôminô khi và chỉ khi $mn$ là một số chẵn.</p>
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
@@ -84,7 +84,7 @@
             </div>
         </details>
 
-        <h3>Bài PT.2</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.2</span></h3>
         <p>Với các giá trị nào của $m, n$ thì bảng $m \times n$ bị khuyết ô $(1, 1)$ có thể lát được bởi các quân đôminô?</p>
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
@@ -93,7 +93,7 @@
             </div>
         </details>
 
-        <h3>Bài PT.3</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.3</span></h3>
         <p>Cùng câu hỏi trên cho bảng $m \times n$ bị khuyết $2$ ô $(1, 1)$ và $(m, n)$.</p>
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
@@ -104,7 +104,7 @@
 
         <p><strong>B. Số cách lát và quan hệ truy hồi</strong></p>
 
-        <h3>Bài PT.4</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.4</span></h3>
         <p>Với mỗi số nguyên dương $n$, gọi $u_n$ là số cách lát đôminô của một bảng chữ nhật $2 \times n$. Chứng minh rằng với mọi $n \ge 3$ thì
         \[
         u_n = u_{n-1} + u_{n-2}.
@@ -117,7 +117,7 @@
             </div>
         </details>
 
-        <h3>Bài PT.5</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.5</span></h3>
         <p>a) Với $n$ nguyên dương, gọi $t_n$ là số cách lát đôminô của một bảng $3 \times n$ và $s_n$ là số cách lát một bảng $3 \times n$ bị khuyết ô $(3, 1)$. Chứng minh rằng với mọi $n \ge 3$ thì
         \[
         \begin{cases} t_n = 2s_{n-1} + t_{n-2} \\ s_n = t_{n-1} + s_{n-2}. \end{cases}
@@ -131,7 +131,7 @@
             </div>
         </details>
 
-        <h3>Bài PT.6</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.6</span></h3>
         <p>Với mọi số nguyên dương $n$, gọi $x_n$ là số cách lát đôminô một bảng $4 \times n$. Chứng minh rằng với mọi $n \ge 1$ thì
         \[
         x_{n+4} = x_{n+3} + 5x_{n+2} + x_{n+1} - x_n.
@@ -146,7 +146,7 @@
         <p><strong>C. Tính chẵn lẻ của số cách lát</strong></p>
         <p>Trong các bài toán sau, gọi $f(m, n)$ là số cách lát một bảng $m \times n$ bởi các quân đôminô.</p>
 
-        <h3>Bài PT.7</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.7</span></h3>
         <p>Chứng minh rằng với mọi số nguyên dương $n$ thì $f(n, n)$ là một số chẵn.</p>
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
@@ -155,7 +155,7 @@
             </div>
         </details>
 
-        <h3>Bài PT.8</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.8</span></h3>
         <p>Chứng minh rằng với mọi số nguyên dương $k, n$ thì $f(2^k - 1, 2n)$ là một số lẻ.</p>
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
@@ -164,7 +164,7 @@
             </div>
         </details>
 
-        <h3>Bài PT.9</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.9</span></h3>
         <p>a) Ta gọi một bảng $n \times n$ ($n \ge 2$) với một số ô (có thể bằng $0$) của hàng $n$ và một số ô (có thể bằng $0$) của cột $n$ bị khuyết là một <em>bảng tựa vuông</em> cỡ $n$. Một bảng tựa vuông cỡ $n$ được gọi là <em>tốt</em> nếu ô $(n, n)$ bị khuyết và với mọi $1 \le k \le n - 1$, trong số $2$ ô $(n, k)$ và $(k, n)$ có đúng $1$ ô bị khuyết. Chứng minh rằng số cách lát một bảng tựa vuông là lẻ khi và chỉ khi bảng đó là một bảng tựa vuông tốt.<br>
         b) Chứng minh rằng $f(m, n)$ là một số lẻ khi và chỉ khi $m + 1$ và $n + 1$ nguyên tố cùng nhau.</p>
         <details class="igo-hint-clean">
@@ -184,7 +184,7 @@
 
         <p><strong>A. Phương trình nghiệm nguyên Markov và cây Markov</strong></p>
 
-        <h3>Bài PT.1</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.1</span></h3>
         <p>Chứng minh rằng các bộ Markov có hai thành phần bằng nhau chỉ có thể là $(1, 1, 1)$, $(2, 1, 1)$ và các hoán vị của chúng.</p>
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
@@ -193,7 +193,7 @@
             </div>
         </details>
 
-        <h3>Bài PT.2</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.2</span></h3>
         <p>Giả sử $(a, b, c)$ là một bộ Markov. Chứng minh rằng $3bc - a$, $3ac - b$, $3ab - c$ là các số nguyên dương và $(3bc - a, b, c)$, $(a, 3ac - b, c)$, $(a, b, 3ab - c)$ cũng là các bộ Markov.</p>
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
@@ -202,7 +202,7 @@
             </div>
         </details>
 
-        <h3>Bài PT.3</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.3</span></h3>
         <p>Giả sử $(a, b, c)$ là một bộ Markov mà $a > b > c$. Chứng minh rằng $3ac - b > a$, $3ab - c > a$ nhưng $a > 3bc - a$.</p>
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
@@ -213,7 +213,7 @@
 
         <p>Để thuận tiện, ta viết các bộ Markov với thành phần lớn nhất nằm ở giữa: $(t, m, p)$ với $m \ge t, m \ge p$. Ta xây dựng <strong>cây Markov</strong> bằng truy hồi: dòng 1 viết $(1, 1, 1)$, dòng 2 viết $(1, 2, 1)$, dòng 3 viết $(1, 5, 2)$; từ dòng $n \ge 3$, mỗi bộ $(t, m, p)$ sinh ra hai bộ $(t, 3tm - p, m)$ và $(m, 3mp - t, p)$ ở dòng $n+1$.</p>
 
-        <h3>Bài PT.4</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.4</span></h3>
         <p>Tìm công thức xác định bộ Markov nằm ngoài cùng bên trái của dòng thứ $n$ trên cây Markov.</p>
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
@@ -222,7 +222,7 @@
             </div>
         </details>
 
-        <h3>Bài PT.5</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.5</span></h3>
         <p>Chứng minh rằng mỗi bộ Markov có đúng một hoán vị xuất hiện trong cây Markov.</p>
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
@@ -234,7 +234,7 @@
         <p><strong>B. Một số tính chất của các bộ Markov</strong></p>
         <p>Trong các bài tập sau đây, ta cho trước một bộ Markov $(a, b, c)$.</p>
 
-        <h3>Bài PT.6</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.6</span></h3>
         <p>Chứng minh rằng:<br>
         a) Mọi ước nguyên tố lẻ của $c$ đều đồng dư với $1$ modulo $4$.<br>
         b) Nếu $c$ là chẵn thì $c$ đồng dư với $2$ modulo $32$.</p>
@@ -246,7 +246,7 @@
             </div>
         </details>
 
-        <h3>Bài PT.7</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.7</span></h3>
         <p>Chứng minh rằng các số $a, b, c$ đôi một nguyên tố cùng nhau.</p>
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
@@ -255,7 +255,7 @@
             </div>
         </details>
 
-        <h3>Bài PT.8</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.8</span></h3>
         <p>Chứng minh rằng tồn tại một bộ Markov có thành phần lớn nhất bằng $c$.</p>
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
@@ -264,7 +264,7 @@
             </div>
         </details>
 
-        <h3>Bài PT.9</h3>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài PT.9</span></h3>
         <p>a) Ta giả sử $c$ là một số lẻ và giả sử tồn tại một bộ Markov $(a', b', c)$ sao cho $(a', b') \neq (a, b)$ và $(a', b') \neq (b, a)$. Chứng minh rằng tồn tại các số nguyên dương $m, n$ nguyên tố cùng nhau sao cho $c = mn$ và $aa' - bb' \equiv 0 \pmod{m^2}$, $ab' - a'b \equiv 0 \pmod{n^2}$.<br>
         b) Chứng minh rằng với mọi số nguyên tố lẻ $p$ và mọi số nguyên dương $k$ tồn tại không quá một bộ Markov có thành phần lớn nhất bằng $p^k$.</p>
         <details class="igo-hint-clean">
