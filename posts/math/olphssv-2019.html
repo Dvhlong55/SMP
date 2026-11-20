@@ -230,8 +230,7 @@
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Số thứ $304$ trên dòng $2019$ ứng với $s_N$ trong đó $N = 2^{2018} + 303$. Dùng công thức truy hồi ở Bài 4 tính lùi (hoặc nhận xét chỉ số $303$):
-                $s_{2^{2018}+303}$: chia đôi / tách lẻ liên tiếp: $N$ lẻ $\to$ đưa về cặp $(2^{2017}+151, 2^{2017}+152)$, tiếp tục rút gọn số mũ của $2$ (lưu ý $s_{2^m} = 1$, và $s_{2^m + r}$ lặp tuyến tính theo $m$ nếu phân tích: cụ thể $303 = 2^8 + 47$, hoặc viết dạng ma trận $\begin{pmatrix} s_{2k} \\ s_{2k+1} \end{pmatrix}$). Ta tính trực tiếp rất nhanh: $303$ có $9$ bit, sau khi chia $9$ bước đến $2^{2010}$ ta thu được biểu thức tuyến tính theo $2010$!</p>
+                <p>Số thứ $304$ trên dòng $2019$ ứng với $s_{2^{2018} + 303}$. Dùng công thức truy hồi ở Bài 4 rút gọn theo $k$ (với $k \ge 10$): dễ kiểm tra $s_{2^{10}+303} = 87$ và $s_{2^{k+1}+303} = s_{2^k+303} + 32$ (do bước nhảy chia đôi dẫn về nhánh cộng thêm $s_{2^{k-9}} = 1$ với hệ số $32$). Do đó $s_{2^{2018}+303} = 87 + 32 \cdot (2018 - 10) = 64343$.</p>
             </div>
         </details>
 

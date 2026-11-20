@@ -184,7 +184,7 @@
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Đặt $\alpha = \widehat{ACD}, \beta = \widehat{BCD}, x = \widehat{BED}, y = \widehat{AED}$. Áp dụng hệ thức cotangent của đường trung tuyến trong $\triangle ECD$ (vì $DE$ là trung tuyến? Đúng hơn là trong $\triangle CAB$ với $CD$ trung tuyến, hoặc $\triangle ABC$ cho công thức $4\cot x = 3\cot\beta - \cot\alpha$ và $4\cot y = 3\cot\alpha - \cot\beta$). Chuyển sang $\tan\frac{\alpha}{2}$ và $\tan\frac{\beta}{2}$ thấy cả hai điều kiện $\alpha = 2x$ và $2y = 180^\circ + \beta$ đều tương đương $\tan\frac{\alpha}{2} = 3\tan\frac{\beta}{2}$.</p>
+                <p>Đặt $\alpha = \widehat{ACD}, \beta = \widehat{BCD}, x = \widehat{BED}, y = \widehat{AED}$. Áp dụng hệ thức cotangent của đường trung tuyến trong $\triangle ABC$ (với $CD$ là trung tuyến) và $\triangle ECD$, ta có $4\cot x = 3\cot\beta - \cot\alpha$ và $4\cot y = 3\cot\alpha - \cot\beta$. Chuyển sang $\tan\frac{\alpha}{2}$ và $\tan\frac{\beta}{2}$, thấy cả hai điều kiện $\alpha = 2x$ và $2y = 180^\circ + \beta$ đều tương đương với $\tan\frac{\alpha}{2} = 3\tan\frac{\beta}{2}$.</p>
             </div>
         </details>
 
@@ -266,7 +266,7 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 7</span></h3>
         <p>Chứng minh rằng
         \[
-        x_n \le \ell \cdot n < \left\lfloor \log_\varphi(\sqrt{5}n + 1) \right\rfloor \cdot n \quad \text{(hoặc } \lceil\dots\rceil \text{)},
+        x_n \le \ell \cdot n < \left[ \log_\varphi(\sqrt{5}n + 1) \right] \cdot n,
         \]
         trong đó $\ell$ là số nguyên dương lớn nhất sao cho $F_\ell \le n$ và $\varphi = \frac{\sqrt{5} + 1}{2}$.</p>
         <details class="igo-hint-clean">
@@ -284,7 +284,7 @@
         <details class="igo-hint-clean">
             <summary class="igo-hint-trigger"><span class="igo-arrow">▶</span> Gợi ý</summary>
             <div class="igo-hint-content">
-                <p>Lượt 1: $A$ buộc phải ghép thành $\{2, 1, 1, 1, 1\}$. $B$ ghép $1+2$ thành $\{3, 1, 1, 1\}$. Lượt 2: $A$ buộc phải ghép $1+1$ thành $\{3, 2, 1, 1\}$. $B$ ghép $2+3$ thành $\{5, 1, 1\}$? Chú ý còn $2$ số $1$ nếu $n=6$: khi $\{3, 1, 1, 1\} \to \{3, 2, 1\}$ ($4$ số tất cả!), $B$ ghép $2+3$ thành $\{5, 1\}$ và kết thúc, $B$ thắng!</p>
+                <p>Lượt 1: $A$ buộc phải ghép $1+1$ thành $\{2, 1, 1, 1, 1\}$, $B$ ghép $1+2$ thành $\{3, 1, 1, 1\}$. Lượt 2: $A$ buộc phải ghép $1+1$ thành $\{3, 2, 1\}$, $B$ ghép $2+3$ thành $\{5, 1\}$ và trò chơi kết thúc. Người chơi $B$ thắng.</p>
             </div>
         </details>
 
