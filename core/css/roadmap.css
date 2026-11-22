@@ -156,6 +156,14 @@ body.parchment-mode .rm-nav-btn.active {
     padding-bottom: 8px;
 }
 
+.rm-hero-top-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
 .rm-hero-kicker {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
@@ -163,6 +171,20 @@ body.parchment-mode .rm-nav-btn.active {
     text-transform: uppercase;
     color: var(--accent-gold);
     margin-bottom: 10px;
+}
+
+.rm-hero-top-meta .rm-hero-kicker {
+    margin-bottom: 0;
+}
+
+.rm-view-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    white-space: nowrap;
 }
 
 .rm-hero-head {

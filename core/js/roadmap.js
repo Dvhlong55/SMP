@@ -349,7 +349,17 @@
             }
         ];
 
-        const curId = data.id || (window.location.pathname.includes('chuyen-toan') ? 'chuyen-toan' : 'so-hoc');
+        const curId = data.id || (
+            window.location.pathname.includes('chuyen-toan') ? 'chuyen-toan' :
+            (window.location.pathname.includes('to-hop') ? 'to-hop' : 'so-hoc')
+        );
+
+        const ROADMAP_VIEW_CONFIG = {
+            'so-hoc':      { postId: 'RoadmapSoHocOlympic',   base: 1500 },
+            'to-hop':      { postId: 'RoadmapToHopOlympic',   base: 576  },
+            'chuyen-toan': { postId: 'RoadmapChuyenToanTHCS', base: 5598 }
+        };
+        const viewCfg = ROADMAP_VIEW_CONFIG[curId] || { postId: `Roadmap_${curId}`, base: 0 };
 
         const navBarHtml = `
             <div class="rm-nav-wrapper">
@@ -375,7 +385,13 @@
         // Hero Section + Cần gạt chuyển view (ngay dưới dòng mô tả)
         const heroHtml = `
             <header class="rm-hero">
-                <div class="rm-hero-kicker">${esc(kickerText)}</div>
+                <div class="rm-hero-top-meta">
+                    <div class="rm-hero-kicker">${esc(kickerText)}</div>
+                    <span id="roadmap-view-count" class="rm-view-count" title="Lượt xem">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <span id="roadmap-view-number">${viewCfg.base}</span>
+                    </span>
+                </div>
                 <div class="rm-hero-head">
                     <h1 class="rm-hero-title">${esc(data.title || 'Lộ Trình Số Học Olympic')}</h1>
                     <a href="${esc(listUrl)}" class="rm-hero-action">
@@ -461,6 +477,20 @@
 
         bind(container);
         typeset(container);
+
+        // Tăng & đồng bộ lượt xem từ backend cộng dồn với mốc ban đầu
+        const viewNumEl = container.querySelector('#roadmap-view-number');
+        if (viewNumEl && viewCfg.postId) {
+            const apiBase = window.API_BASE || 'https://smp-backend-kcwn.onrender.com';
+            fetch(`${apiBase}/api/views/${viewCfg.postId}`, { method: 'POST' })
+                .then(res => res.json())
+                .then(d => {
+                    if (d && typeof d.views === 'number') {
+                        viewNumEl.textContent = String(viewCfg.base + d.views);
+                    }
+                })
+                .catch(() => {});
+        }
     }
 
     /* ----------------------------------------------------------------------
