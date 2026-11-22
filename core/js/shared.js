@@ -243,6 +243,20 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: 'Tổng Quan Đề Thi Chọn Đội Tuyển Tỉnh HSGQG (2026)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/de-thi-chon-doi-tuyen-tinh.html',
+        tags: ['Đề Thi', 'VMO', 'TST Tỉnh'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Tổng Quan Đề Thi Chuyên Toán Lớp 10 (2025 – 2026)',
+        date: 'November 22, 2026',
+        url: '/posts/math/dethichuyen/de-thi-chuyen-toan-thcs.html',
+        tags: ['Đề Thi', 'THCS', 'Chuyên Toán'],
+        page: '/pages/toanhoc.html?filter=thcs'
+    },
+    {
         title: 'Tổng Quan Đề Thi VMO (2011 – 2026)',
         date: 'November 22, 2026',
         url: '/posts/math/vmo/de-thi-vmo.html',
