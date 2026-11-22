@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Tổng Quan Đề Thi VMO (2011 – 2026)</title>
+
+    <meta name="post-id" content="DeThiVMO">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="VMO">
+    <meta name="subcategory-filter" content="vmo">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Tổng quan hệ thống đề thi chính thức và gợi ý giải Kỳ thi chọn Học sinh Giỏi Quốc gia môn Toán THPT (VMO) từ năm 2011 đến 2026.">
+    <meta property="og:title" content="SMP — Tổng Quan Đề Thi VMO (2011 – 2026)">
+    <meta property="og:description" content="Hệ thống đề thi VMO từ năm 2011 đến 2026 kèm gợi ý giải theo hướng dẫn chấm Bộ GD&ĐT.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/vmo/de-thi-vmo.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <!-- SMP SEO END -->
+
+    <style>
+        .igo-toc-section {
+            margin: 36px 0 48px 0;
+        }
+        .igo-toc-heading {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--exam-bold-color, #111);
+            margin: 0 0 24px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-light, rgba(0,0,0,0.1));
+        }
+        body.dark-mode .igo-toc-heading {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px 48px;
+        }
+        .igo-toc-col {
+            display: flex;
+            flex-direction: column;
+        }
+        .igo-toc-year-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: var(--exam-bold-color, #111);
+            margin: 0 0 10px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08));
+            font-weight: 700;
+        }
+        body.dark-mode .igo-toc-year-name {
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        .igo-toc-items {
+            display: flex;
+            flex-direction: column;
+        }
+        .igo-toc-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 8px 0;
+            text-decoration: none !important;
+            color: var(--exam-text-color, #333);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .igo-toc-row:hover .igo-toc-num,
+        .igo-toc-row:hover .igo-toc-title {
+            color: var(--accent-cyan, #0284c7) !important;
+        }
+        .igo-toc-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted, #888);
+            width: 24px;
+            flex-shrink: 0;
+        }
+        .igo-toc-title {
+            font-size: 0.96rem;
+            color: var(--exam-bold-color, #111);
+            transition: color 0.2s;
+            white-space: nowrap;
+        }
+        .igo-toc-dots {
+            flex: 1;
+            border-bottom: 1px dotted var(--border-light, #cbd5e1);
+            margin: 0 6px;
+            min-width: 20px;
+            position: relative;
+            top: -4px;
+        }
+        body.dark-mode .igo-toc-dots {
+            border-bottom-color: rgba(255,255,255,0.15);
+        }
+        .igo-toc-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.74rem;
+            color: var(--text-muted, #888);
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Tổng Quan Đề Thi VMO (2011 – 2026)</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Bộ Giáo Dục Và Đào Tạo · Kỳ Thi Chọn Học Sinh Giỏi Quốc Gia Môn Toán THPT</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
+        </div>
+
+        <h2 style="color: var(--exam-bold-color, #111); margin-top: 28px; margin-bottom: 14px; font-weight: 700;">Giới Thiệu Kỳ Thi &amp; Cấu Trúc Đề Thi VMO</h2>
+        <p><strong>Kỳ thi chọn Học sinh Giỏi Quốc gia môn Toán THPT (VMO)</strong> do Bộ Giáo dục và Đào tạo tổ chức thường niên nhằm tuyển chọn các học sinh xuất sắc nhất toàn quốc và chọn đội tuyển dự kỳ thi TST (chọn đội tuyển IMO). Mỗi kỳ thi gồm <strong>2 ngày thi liên tiếp</strong> (180 phút/ngày), thang điểm tổng 40 điểm.</p>
+        <p>Từ năm 2011 đến 2024, đề thi gồm 7 bài (Ngày 1: 4 bài × 5 điểm; Ngày 2: 3 bài với thang điểm 6–7–7). Từ năm học 2024–2025 (VMO 2025) theo chương trình giáo dục phổ thông mới, kỳ thi có một số năm đổi mới sang cấu trúc 6 bài (3 bài/ngày) hoặc 7 bài tùy năm, kết hợp thêm các mô hình toán học thực tiễn (như bài toán quỹ đạo vệ tinh ở VMO 2026).</p>
+
+        <!-- MỤC LỤC KIỂU IGO -->
+        <div class="igo-toc-section">
+            <div class="igo-toc-heading">Mục lục các năm (2011 – 2026)</div>
+            <div class="igo-toc-grid">
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2026 · Năm học 2025 – 2026</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2026.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (25/12/2025)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2026.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (26/12/2025)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2025 · Năm học 2024 – 2025</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2025.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (25/12/2024)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2025.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (26/12/2024)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2024 · Năm học 2023 – 2024</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2024.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (05/01/2024)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2024.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (06/01/2024)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2023 · Năm học 2022 – 2023</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2023.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (24/02/2023)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2023.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (25/02/2023)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2022 · Năm học 2021 – 2022</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2022.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (04/03/2022)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2022.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (05/03/2022)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2021 · Năm học 2020 – 2021</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2021.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (25/12/2020)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2021.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (26/12/2020)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2020 · Năm học 2019 – 2020</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2020.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (27/12/2019)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2020.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (28/12/2019)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2019 · Năm học 2018 – 2019</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2019.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (13/01/2019)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2019.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (14/01/2019)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2018 · Năm học 2017 – 2018</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2018.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (11/01/2018)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2018.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (12/01/2018)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2017 · Năm học 2016 – 2017</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2017.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (05/01/2017)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2017.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (06/01/2017)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2016 · Năm học 2015 – 2016</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2016.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (06/01/2016)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2016.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (07/01/2016)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2015 · Năm học 2014 – 2015</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2015.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (08/01/2015)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2015.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (09/01/2015)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2014 · Năm học 2013 – 2014</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2014.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (03/01/2014)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2014.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (04/01/2014)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2013 · Năm học 2012 – 2013</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2013.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (11/01/2013)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2013.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (12/01/2013)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2012 · Năm học 2011 – 2012</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2012.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (11/01/2012)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2012.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (12/01/2012)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="igo-toc-col">
+                    <div class="igo-toc-year-name">VMO 2011 · Năm học 2010 – 2011</div>
+                    <div class="igo-toc-items">
+                        <a href="/posts/math/vmo/vmo-2011.html#ngay-1" class="igo-toc-row">
+                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-title">Ngày 1 (11/01/2011)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">4 bài</span>
+                        </a>
+                        <a href="/posts/math/vmo/vmo-2011.html#ngay-2" class="igo-toc-row">
+                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-title">Ngày 2 (12/01/2011)</span>
+                            <span class="igo-toc-dots" aria-hidden="true"></span>
+                            <span class="igo-toc-status">3 bài</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p style="font-style: italic; color: var(--text-muted, #666);">Lưu ý: Mỗi trang đề thi từng năm đều có phần <strong>Gợi ý</strong> ẩn gọn dưới từng bài toán (tham chiếu trực tiếp hướng dẫn chấm của Bộ GD&amp;ĐT và các bản bình luận chuyên môn), giúp học sinh tự rèn luyện trước khi xem định hướng giải.</p>
+    </div>
+</body>
+</html>

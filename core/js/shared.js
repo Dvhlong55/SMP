@@ -243,6 +243,125 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: 'Tổng Quan Đề Thi VMO (2011 – 2026)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/de-thi-vmo.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2026 (HSG Quốc Gia 2025 – 2026)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2026.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2025 (HSG Quốc Gia 2024 – 2025)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2025.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2024 (HSG Quốc Gia 2023 – 2024)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2024.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2023 (HSG Quốc Gia 2022 – 2023)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2023.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2022 (HSG Quốc Gia 2021 – 2022)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2022.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2021 (HSG Quốc Gia 2020 – 2021)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2021.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2020 (HSG Quốc Gia 2019 – 2020)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2020.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2019 (HSG Quốc Gia 2018 – 2019)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2019.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2018 (HSG Quốc Gia 2017 – 2018)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2018.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2017 (HSG Quốc Gia 2016 – 2017)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2017.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2016 (HSG Quốc Gia 2015 – 2016)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2016.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2015 (HSG Quốc Gia 2014 – 2015)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2015.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2014 (HSG Quốc Gia 2013 – 2014)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2014.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2013 (HSG Quốc Gia 2012 – 2013)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2013.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2012 (HSG Quốc Gia 2011 – 2012)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2012.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
+        title: 'Đề Thi VMO 2011 (HSG Quốc Gia 2010 – 2011)',
+        date: 'November 22, 2026',
+        url: '/posts/math/vmo/vmo-2011.html',
+        tags: ['Đề Thi', 'VMO', 'HSGQG'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: 'Tổng Quan Đề Thi Olympic Toán Sinh Viên (2013 – 2025)',
         date: 'November 22, 2026',
         url: '/posts/math/uni/de-thi-olympic-toan-sinh-vien.html',
