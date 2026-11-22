@@ -19,15 +19,21 @@ const LEFT_TAGS_HTML = `
                 <li><a href="/pages/roadmap-chuyen-toan.html" style="color: var(--accent-cyan); font-weight: 500;">Chuyên Toán (THCS)</a></li>
             </ul>
 
-            <div style="height: 1px; background: rgba(255, 255, 255, 0.08); margin: 22px 0 18px 0;"></div>
+            <div style="height: 1px; background: rgba(255, 255, 255, 0.08); margin: 24px 0 16px 0;"></div>
 
-            <ul class="side-widget-list">
-                <li><a href="/posts/math/vmo/de-thi-vmo.html" style="color: #f59e0b; font-weight: 500;">Đề Thi VMO</a></li>
-                <li><a href="/posts/math/de-thi-igo-2017-2025.html" style="color: #f59e0b; font-weight: 500;">Đề Thi IGO</a></li>
-                <li><a href="/posts/math/de-thi-olympic-toan-hssv-thpt.html" style="color: #f59e0b; font-weight: 500;">Đề Thi HSSV (THPT)</a></li>
-                <li><a href="/posts/math/uni/de-thi-olympic-toan-sinh-vien.html" style="color: #f59e0b; font-weight: 500;">Đề Thi OTSV (ĐH)</a></li>
-                <li><a href="/posts/math/dethichuyen/de-thi-chuyen-toan-thcs.html" style="color: #f59e0b; font-weight: 500;">Đề Thi Chuyên Toán</a></li>
-                <li><a href="/posts/math/vmo/de-thi-chon-doi-tuyen-tinh.html" style="color: #f59e0b; font-weight: 500;">Đề Chọn Đội Tuyển Tỉnh</a></li>
-            </ul>
+            <div style="font-size: 0.8rem; color: var(--widget-link-color); opacity: 0.75; margin-bottom: 10px;">Tuyển tập đề thi:</div>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; font-size: 0.85rem; line-height: 1.6; color: var(--widget-link-color);">
+                <a href="/posts/math/vmo/de-thi-vmo.html" style="color: var(--widget-link-color); text-decoration: none;">VMO</a>
+                <span style="opacity: 0.45;">•</span>
+                <a href="/posts/math/de-thi-igo-2017-2025.html" style="color: var(--widget-link-color); text-decoration: none;">IGO</a>
+                <span style="opacity: 0.45;">•</span>
+                <a href="/posts/math/de-thi-olympic-toan-hssv-thpt.html" style="color: var(--widget-link-color); text-decoration: none;">HSSV (THPT)</a>
+                <span style="opacity: 0.45;">•</span>
+                <a href="/posts/math/uni/de-thi-olympic-toan-sinh-vien.html" style="color: var(--widget-link-color); text-decoration: none;">OTSV</a>
+                <span style="opacity: 0.45;">•</span>
+                <a href="/posts/math/dethichuyen/de-thi-chuyen-toan-thcs.html" style="color: var(--widget-link-color); text-decoration: none;">Chuyên Toán</a>
+                <span style="opacity: 0.45;">•</span>
+                <a href="/posts/math/vmo/de-thi-chon-doi-tuyen-tinh.html" style="color: var(--widget-link-color); text-decoration: none;">TST Tỉnh</a>
+            </div>
         </div>
 `;

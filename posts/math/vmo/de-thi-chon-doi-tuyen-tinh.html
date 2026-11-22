@@ -20,9 +20,9 @@
 
     <script src="/core/js/post-layout.js?v=11"></script>
     <!-- SMP SEO START -->
-    <meta name="description" content="Tổng hợp hệ thống đề thi chọn đội tuyển Học sinh Giỏi Quốc gia môn Toán (TST Tỉnh) các tỉnh thành và trường Chuyên toàn quốc năm 2026.">
+    <meta name="description" content="Tổng hợp hệ thống đề thi chọn đội tuyển Học sinh Giỏi Quốc gia môn Toán (TST Tỉnh) các tỉnh thành và trường Chuyên toàn quốc.">
     <meta property="og:title" content="SMP — Tổng Quan Đề Thi Chọn Đội Tuyển Tỉnh HSGQG (2026)">
-    <meta property="og:description" content="Tổng hợp hệ thống đề thi chọn đội tuyển Học sinh Giỏi Quốc gia môn Toán (TST Tỉnh) các tỉnh thành và trường Chuyên toàn quốc năm 2026.">
+    <meta property="og:description" content="Tổng hợp hệ thống đề thi chọn đội tuyển Học sinh Giỏi Quốc gia môn Toán (TST Tỉnh) các tỉnh thành và trường Chuyên toàn quốc.">
     <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
     <meta property="og:url" content="https://smp-math.com/posts/math/vmo/de-thi-chon-doi-tuyen-tinh.html">
     <meta property="og:type" content="article">
@@ -31,10 +31,14 @@
 
     <style>
         .igo-toc-section { margin: 36px 0 48px 0; }
-        .igo-toc-heading { font-size: 1.45rem; font-weight: 700; color: var(--exam-bold-color, #111); margin: 0 0 24px 0; padding-bottom: 8px; border-bottom: 2px solid var(--border-light, rgba(0,0,0,0.1)); }
+        .igo-toc-heading { font-size: 1.45rem; font-weight: 700; color: var(--exam-bold-color, #111); margin: 0 0 16px 0; padding-bottom: 8px; border-bottom: 2px solid var(--border-light, rgba(0,0,0,0.1)); }
         body.dark-mode .igo-toc-heading { border-bottom-color: rgba(255,255,255,0.12); }
+        .igo-mini-toc { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 0 0 28px 0; padding: 10px 0; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08)); font-size: 0.92rem; }
+        body.dark-mode .igo-mini-toc { border-bottom-color: rgba(255,255,255,0.1); }
+        .igo-mini-toc a { color: var(--exam-bold-color, #111) !important; text-decoration: none !important; font-weight: 600; transition: color 0.2s; }
+        .igo-mini-toc a:hover { color: var(--accent-cyan, #0284c7) !important; }
         .igo-toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px 48px; }
-        .igo-toc-col { display: flex; flex-direction: column; }
+        .igo-toc-col { display: flex; flex-direction: column; scroll-margin-top: 80px; }
         .igo-toc-year-name { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; letter-spacing: 1.6px; text-transform: uppercase; color: var(--exam-bold-color, #111); margin: 0 0 10px 0; padding-bottom: 6px; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08)); font-weight: 700; }
         body.dark-mode .igo-toc-year-name { border-bottom-color: rgba(255,255,255,0.12); }
         .igo-toc-items { display: flex; flex-direction: column; }
@@ -57,13 +61,18 @@
 
         <h2 style="color: var(--exam-bold-color, #111); margin-top: 28px; margin-bottom: 14px; font-weight: 700;">Giới Thiệu Tuyển Tập Đề Chọn Đội Tuyển Tỉnh</h2>
         <p>Trang tổng hợp này tập hợp các đề thi chọn đội tuyển dự thi Học sinh Giỏi Quốc gia môn Toán (TST Tỉnh / Trường Chuyên) trên toàn quốc kèm các bài viết tổng hợp theo từng phân môn (Số học, Tổ hợp, Hình học, Phương trình hàm, Bất đẳng thức, Dãy số, Đa thức).</p>
-        <p>Hiện tại hệ thống đã đầy đủ <strong>35 đề tỉnh/trường chuyên</strong> cùng <strong>8 chuyên đề tổng hợp</strong> cho mùa giải <strong>2026</strong>, sẵn sàng mở rộng cho các năm học tiếp theo.</p>
 
         <div class="igo-toc-section">
-            <div class="igo-toc-heading">Mục lục các tỉnh thành &amp; chuyên đề (2026)</div>
+            <div class="igo-toc-heading">Mục lục các tỉnh thành &amp; chuyên đề</div>
+            <div class="igo-mini-toc">
+                <span style="font-weight: 600; color: var(--text-muted, #666);">Chọn nhanh theo năm:</span>
+                <a href="#nam-2026">Năm 2026</a>
+                <span style="color: var(--text-muted);">·</span>
+                <a href="#tong-hop-2026">Tổng hợp theo phân môn (2026)</a>
+            </div>
             <div class="igo-toc-grid">
-                <div class="igo-toc-col">
-                    <div class="igo-toc-year-name">Năm 2026 · Đề Chọn Đội Tuyển Tỉnh (Phần 1)</div>
+                <div id="nam-2026" class="igo-toc-col">
+                    <div class="igo-toc-year-name">Năm 2026 · Đề Chọn Đội Tuyển Tỉnh</div>
                     <div class="igo-toc-items">
                         <a href="/posts/math/vmo/hue-hsgqg-2026.html" class="igo-toc-row">
                             <span class="igo-toc-num">01</span>
@@ -173,116 +182,111 @@
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
-                    </div>
-                </div>
-                <div class="igo-toc-col">
-                    <div class="igo-toc-year-name">Năm 2026 · Đề Chọn Đội Tuyển Tỉnh (Phần 2)</div>
-                    <div class="igo-toc-items">
                         <a href="/posts/math/vmo/ptnk-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">01</span>
+                            <span class="igo-toc-num">19</span>
                             <span class="igo-toc-title">PTNK</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/hungyen-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">02</span>
+                            <span class="igo-toc-num">20</span>
                             <span class="igo-toc-title">Hưng Yên</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/cantho-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">03</span>
+                            <span class="igo-toc-num">21</span>
                             <span class="igo-toc-title">Cần Thơ</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/langson-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">04</span>
+                            <span class="igo-toc-num">22</span>
                             <span class="igo-toc-title">Lạng Sơn</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/camau-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">05</span>
+                            <span class="igo-toc-num">23</span>
                             <span class="igo-toc-title">Cà Mau</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/phutho-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">06</span>
+                            <span class="igo-toc-num">24</span>
                             <span class="igo-toc-title">Phú Thọ</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/quangngai-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">07</span>
+                            <span class="igo-toc-num">25</span>
                             <span class="igo-toc-title">Quảng Ngãi</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/bacninh-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">08</span>
+                            <span class="igo-toc-num">26</span>
                             <span class="igo-toc-title">Bắc Ninh</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/ninhbinh-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">09</span>
+                            <span class="igo-toc-num">27</span>
                             <span class="igo-toc-title">Ninh Bình</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/laocai-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">10</span>
+                            <span class="igo-toc-num">28</span>
                             <span class="igo-toc-title">Lào Cai</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/hanoi-bangb-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">11</span>
+                            <span class="igo-toc-num">29</span>
                             <span class="igo-toc-title">Hà Nội (Bảng B)</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/haiphong-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">12</span>
+                            <span class="igo-toc-num">30</span>
                             <span class="igo-toc-title">Hải Phòng</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/lamdong-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">13</span>
+                            <span class="igo-toc-num">31</span>
                             <span class="igo-toc-title">Lâm Đồng</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/thanhhoa-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">14</span>
+                            <span class="igo-toc-num">32</span>
                             <span class="igo-toc-title">Thanh Hóa</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/quangninh-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">15</span>
+                            <span class="igo-toc-num">33</span>
                             <span class="igo-toc-title">Quảng Ninh</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/vinhlong-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">16</span>
+                            <span class="igo-toc-num">34</span>
                             <span class="igo-toc-title">Vĩnh Long</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                         <a href="/posts/math/vmo/angiang-hsgqg-2026.html" class="igo-toc-row">
-                            <span class="igo-toc-num">17</span>
+                            <span class="igo-toc-num">35</span>
                             <span class="igo-toc-title">An Giang</span>
                             <span class="igo-toc-dots" aria-hidden="true"></span>
                             <span class="igo-toc-status">Đề & Giải</span>
                         </a>
                     </div>
                 </div>
-                <div class="igo-toc-col">
+                <div id="tong-hop-2026" class="igo-toc-col">
                     <div class="igo-toc-year-name">Năm 2026 · Tổng Hợp Theo Phân Môn</div>
                     <div class="igo-toc-items">
                         <a href="/posts/math/vmo/tong-hop-so-hoc-tst-tinh-2026.html" class="igo-toc-row">
