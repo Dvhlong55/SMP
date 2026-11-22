@@ -41,11 +41,11 @@
             <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật: November 22, 2026</h2>
         </div>
 
-        <p style="font-style: italic; color: var(--text-muted); margin-bottom: 24px;"><b>Lời dẫn.</b> Ngày 20/11/2026, sau 167 năm tồn tại như một trong những bài toán thách thức nhất của lịch sử toán học, <b>Giả thuyết Riemann (RH)</b> và các mở rộng của nó bất ngờ chứng kiến hai công bố chứng minh độc lập chỉ cách nhau vài giờ: một công trình của nhà toán học <b>Levent Alpöge</b> (Anthropic) kết hợp cùng <b>Claude AI</b> được hình thức hóa hoàn toàn trên <b>Lean 4</b>, và một bản thảo dài khoảng 940 trang hoàn toàn do con người thực hiện của <b>Alessandro Maria Masullo</b>. Bài viết này tổng hợp lại bản chất toán học của bài toán, sự khác biệt về phạm vi giữa hai công bố, vai trò thực tế của Claude cùng hệ thống Lean, và diễn biến kiểm chứng tính đến ngày 22/11/2026.</p>
+        <p style="font-style: italic; color: var(--text-muted); margin-bottom: 24px;"><b>Lời dẫn.</b> Ngày 20/11/2026, sau 167 năm tồn tại như một trong những bài toán thách thức nhất của lịch sử toán học, Giả thuyết Riemann (RH) và các mở rộng của nó bất ngờ chứng kiến hai công bố chứng minh độc lập chỉ cách nhau vài giờ: một công trình của nhà toán học Levent Alpöge (Anthropic) kết hợp cùng Claude AI được hình thức hóa hoàn toàn trên Lean 4, và một bản thảo dài khoảng 940 trang hoàn toàn do con người thực hiện của Alessandro Maria Masullo. Bài viết này tổng hợp lại bản chất toán học của bài toán, sự khác biệt về phạm vi giữa hai công bố, vai trò thực tế của Claude cùng hệ thống Lean, và diễn biến kiểm chứng tính đến ngày 22/11/2026.</p>
 
         <div style="text-align: center; margin: 24px 0;">
             <img src="/core/image/claude-riemann-2026.jpg" alt="Levent Alpöge, hàm zeta Riemann và Claude AI" style="max-width: 420px; width: 100%; border-radius: 10px; box-shadow: var(--shadow-soft);">
-            <p style="font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-top: 8px;">Nhà toán học Levent Alpöge (Anthropic) cùng công bố giải quyết Giả thuyết Riemann với sự hỗ trợ của Claude AI và Lean 4.</p>
+            <p style="font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-top: 8px;">Nhà toán học Levent Alpöge cùng công bố giải quyết Giả thuyết Riemann với sự hỗ trợ của Claude AI và Lean 4.</p>
         </div>
 
         <h2 class="smp-section-title">§1. Giả Thuyết Riemann Thực Sự Là Bài Toán Gì?</h2>
@@ -54,11 +54,11 @@
 
         <p>Tuy nhiên, khi quan sát trên trục số, các số nguyên tố xuất hiện không đều đặn: có những cặp số nguyên tố đứng rất gần nhau, nhưng cũng có những khoảng trống dài không có số nguyên tố nào. Càng đi xa trên trục số, các số nguyên tố nhìn chung càng thưa dần.</p>
 
-        <p>Năm 1859, nhà toán học người Đức <b>Bernhard Riemann</b> khảo sát một hàm số đặc biệt trên mặt phẳng phức, ngày nay gọi là <b>hàm zeta Riemann</b>. Khi phần thực của $s$ lớn hơn $1$, hàm số được biểu diễn dưới dạng chuỗi vô hạn:</p>
+        <p>Năm 1859, nhà toán học người Đức Bernhard Riemann khảo sát một hàm số đặc biệt trên mặt phẳng phức, ngày nay gọi là hàm zeta Riemann. Khi phần thực của $s$ lớn hơn $1$, hàm số được biểu diễn dưới dạng chuỗi vô hạn:</p>
         $$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s} = 1 + \frac{1}{2^s} + \frac{1}{3^s} + \frac{1}{4^s} + \dots$$
         <p>và được thác triển giải tích ra toàn mặt phẳng phức (trừ điểm $s = 1$). Dù nhìn qua chỉ là một tổng vô hạn, $\zeta(s)$ lại gắn chặt với quy luật phân bố của các số nguyên tố thông qua tích Euler.</p>
 
-        <p>Riemann nhận thấy rằng để hiểu chính xác mức độ dao động của số lượng số nguyên tố, cần khảo sát những giá trị phức $s$ làm cho $\zeta(s) = 0$ (gọi là các <i>nghiệm không</i> của hàm zeta). Ngoài các nghiệm âm chẵn $s = -2, -4, -6, \dots$ (gọi là các nghiệm tầm thường), các nghiệm còn lại nằm trong dải $0 < \operatorname{Re}(s) < 1$ và được gọi là <b>các nghiệm không tầm thường</b>.</p>
+        <p>Riemann nhận thấy rằng để hiểu chính xác mức độ dao động của số lượng số nguyên tố, cần khảo sát những giá trị phức $s$ làm cho $\zeta(s) = 0$ (gọi là các <i>nghiệm không</i> của hàm zeta). Ngoài các nghiệm âm chẵn $s = -2, -4, -6, \dots$ (gọi là các nghiệm tầm thường), các nghiệm còn lại nằm trong dải $0 < \operatorname{Re}(s) < 1$ và được gọi là các nghiệm không tầm thường.</p>
 
         <div class="smp-graybox">
             <b>Giả thuyết Riemann cổ điển (RH, 1859).</b> Mọi nghiệm không không tầm thường của hàm zeta Riemann $\zeta(s)$ đều có phần thực bằng $\dfrac{1}{2}$ (tức đều nằm trên cùng một đường thẳng đứng $\operatorname{Re}(s) = \dfrac{1}{2}$ trên mặt phẳng phức).
@@ -71,14 +71,14 @@
 
         <div class="smp-graybox">
             <p style="margin: 0; font-style: italic;">“It is very probable that all these roots are real. One would indeed wish for a rigorous proof here; I have however, after several rapid attempts, temporarily laid this search aside…”</p>
-            <p style="margin: 6px 0 0 0; text-align: right; font-size: 0.88rem; color: var(--text-muted);">— <b>Bernhard Riemann</b>, <i>On the Number of Primes Less Than a Given Magnitude</i> (1859)</p>
+            <p style="margin: 6px 0 0 0; text-align: right; font-size: 0.88rem; color: var(--text-muted);">— Bernhard Riemann, <i>On the Number of Primes Less Than a Given Magnitude</i> (1859)</p>
             <p style="margin: 8px 0 0 0; font-size: 0.9rem; border-top: 1px dashed var(--border-color); padding-top: 8px;"><i>(Tạm dịch: "Rất có khả năng tất cả các nghiệm này đều là số thực. Người ta hẳn sẽ mong muốn một chứng minh chặt chẽ ở đây; tuy nhiên, sau vài nỗ lực chớp nhoáng, tôi tạm thời gác cuộc tìm kiếm này sang một bên...")</i></p>
         </div>
 
-        <p>Bên cạnh phát biểu gốc cho $\zeta(s)$, các nhà toán học còn xét <b>Giả thuyết Riemann tổng quát (GRH)</b> cho các họ hàm $L$ rộng hơn. Trong sự kiện ngày 20/11/2026, cần phân biệt rõ phạm vi của hai công trình:</p>
+        <p>Bên cạnh phát biểu gốc cho $\zeta(s)$, các nhà toán học còn xét Giả thuyết Riemann tổng quát (GRH) cho các họ hàm $L$ rộng hơn. Trong sự kiện ngày 20/11/2026, cần phân biệt rõ phạm vi của hai công trình:</p>
         <ul style="padding-left: 20px; line-height: 1.85;">
-            <li><b>Trong công trình của Levent Alpöge & Claude:</b> "GRH" được hiểu theo nghĩa cổ điển cho các <b>hàm $L$ Dirichlet</b> (cùng với Giả thuyết Riemann gốc cho $\zeta(s)$). Đặc biệt, phát biểu được cộng đồng Lean và Mathlib chính thức chứng nhận vào ngày 21/11 là <b>Giả thuyết Riemann gốc (<code>RiemannHypothesis</code>)</b> theo định nghĩa trong thư viện Mathlib.</li>
-            <li><b>Trong bản thảo của Alessandro Maria Masullo:</b> "GRH" hướng tới một phát biểu rộng hơn rất nhiều — bài toán về nghiệm của các <b>hàm $L$ Hecke trên mọi trường số</b>.</li>
+            <li><b>Công trình của Levent Alpöge & Claude:</b> "GRH" được hiểu theo nghĩa cổ điển cho các hàm $L$ Dirichlet (cùng với Giả thuyết Riemann gốc cho $\zeta(s)$). Đặc biệt, phát biểu được cộng đồng Lean và Mathlib chính thức chứng nhận vào ngày 21/11 là Giả thuyết Riemann gốc (<code>RiemannHypothesis</code>) theo định nghĩa trong thư viện Mathlib.</li>
+            <li><b>Bản thảo của Alessandro Maria Masullo:</b> "GRH" hướng tới một phát biểu rộng hơn rất nhiều — bài toán về nghiệm của các hàm $L$ Hecke trên mọi trường số.</li>
         </ul>
 
         <h2 class="smp-section-title">§2. Tại Sao Bài Toán Này Quan Trọng Và Kéo Dài Suốt 167 Năm?</h2>
@@ -92,23 +92,23 @@
         <p>Riemann phát hiện ra rằng dáng điệu của một hàm giải tích phức có thể cho biết quy luật phân bố của các số nguyên tố rời rạc. Suốt hơn một thế kỷ rưỡi, rất nhiều định lý trong lý thuyết số, thuật toán số học và lý thuyết mật mã đã được chứng minh <i>với điều kiện Giả thuyết Riemann đúng</i>. Nếu giả thuyết được xác nhận, hàng loạt kết quả có điều kiện ấy sẽ trở thành định lý vô điều kiện. Ngược lại, nếu giả thuyết sai, toán học hiện đại không sụp đổ nhưng hiểu biết của con người về sự phân bố số nguyên tố và nhiều ước lượng sai số sẽ phải viết lại.</p>
 
         <h3 class="smp-subsection-title">§2.2 Khác biệt giữa kiểm nghiệm máy tính và chứng minh toán học</h3>
-        <p>Khó khăn lớn nhất của Giả thuyết Riemann nằm ở việc phải chứng minh tính chất đúng cho <b>vô hạn</b> nghiệm.</p>
+        <p>Khó khăn lớn nhất của Giả thuyết Riemann nằm ở việc phải chứng minh tính chất đúng cho vô hạn nghiệm.</p>
         <p>Bằng máy tính, các nhà toán học đã kiểm tra hàng nghìn tỷ nghiệm không tầm thường đầu tiên của $\zeta(s)$, và tất cả đều nằm đúng trên đường thẳng $\operatorname{Re}(s) = \frac{1}{2}$. Tuy nhiên, dù kiểm tra được một nghìn tỷ hay một triệu tỷ nghiệm, đó vẫn chỉ là một số hữu hạn trường hợp. Giả thuyết Riemann đòi hỏi một khẳng định không có ngoại lệ cho mọi nghiệm không tầm thường, kể cả ở những vùng xa đến mức không máy tính nào kiểm tra tới được.</p>
         <p>Suốt 167 năm, nhiều nhà toán học xuất sắc đã phát triển các công cụ mới và giải quyết được các bài toán tương tự trên những cấu trúc khác, nhưng vẫn thiếu một phương pháp có thể kết nối các mảnh ghép đã biết thành một lập luận tổng quát hoàn chỉnh cho trường số thông thường.</p>
 
         <h3 class="smp-subsection-title">§2.3 Dự đoán của Terence Tao và "cú sốc 35 ngày"</h3>
-        <p>Để thấy mức độ bất ngờ của sự kiện này đối với giới toán học đỉnh cao, hãy nhìn vào phát biểu của <b>GS. Terence Tao</b> (Huy chương Fields, một trong những nhà toán học vĩ đại nhất đương đại). Chỉ khoảng một tháng trước sự kiện (tháng 10/2026), trong một cuộc trò chuyện trên kênh toán học nổi tiếng <i>Numberphile</i>, khi được hỏi về tương lai của Giả thuyết Riemann, Terence Tao đã dự đoán rằng nhân loại có lẽ phải đợi đến khoảng năm <b>2050</b> mới có cơ hội chứng minh được bài toán này.</p>
+        <p>Để thấy mức độ bất ngờ của sự kiện này đối với giới toán học đỉnh cao, hãy nhìn vào phát biểu của GS. Terence Tao (Huy chương Fields, một trong những nhà toán học đương đại có tầm ảnh hưởng lớn nhất). Chỉ khoảng một tháng trước sự kiện (tháng 10/2026), trong một cuộc trò chuyện trên kênh <i>Numberphile</i>, khi được hỏi về tương lai của Giả thuyết Riemann, Terence Tao đã dự đoán rằng nhân loại có lẽ phải đợi đến khoảng năm 2050 mới có cơ hội chứng minh được bài toán này.</p>
 
         <div style="text-align: center; margin: 24px 0;">
             <img src="/core/image/terry-tao-riemann-prediction.jpg" alt="Terence Tao trên Numberphile dự đoán Giả thuyết Riemann năm 2050" style="max-width: 480px; width: 100%; border-radius: 10px; box-shadow: var(--shadow-soft);">
             <p style="font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-top: 8px;">Terence Tao trên Numberphile từng dự đoán RH sẽ được chứng minh vào khoảng năm 2050. Thực tế chỉ 35 ngày sau, công bố của Alpöge và Claude AI xuất hiện.</p>
         </div>
 
-        <p>Thế nhưng thực tế chỉ mất đúng <b>35 ngày</b> sau buổi phỏng vấn đó để chứng minh hình thức đầu tiên được hoàn tất và công bố. Khoảng cách giữa dự đoán của con người và tốc độ đột phá của mô hình AI kết hợp kiểm chứng hình thức đã tạo nên một cơn địa chấn thực sự trong cộng đồng khoa học.</p>
+        <p>Thế nhưng thực tế chỉ mất đúng 35 ngày sau buổi phỏng vấn đó để chứng minh hình thức đầu tiên được hoàn tất và công bố. Khoảng cách giữa dự đoán của con người và tốc độ đột phá của mô hình AI kết hợp kiểm chứng hình thức đã tạo nên một cơn địa chấn thực sự trong cộng đồng khoa học.</p>
 
         <h2 class="smp-section-title">§3. Phương Pháp Của Levent Alpöge Và Vai Trò Thực Tế Của Claude AI</h2>
 
-        <p><b>Levent Alpöge</b> là một nhà toán học chuyên sâu về lý thuyết số hiện làm việc tại <b>Anthropic</b>, người đã quan tâm đến Giả thuyết Riemann từ thời sinh viên. Đây không phải câu chuyện một người dùng phổ thông nhập câu lệnh yêu cầu AI giải toán, mà là sự phối hợp giữa định hướng chiến lược của một nhà toán học chuyên nghiệp với năng lực triển khai và đề xuất kỹ thuật của AI.</p>
+        <p>Levent Alpöge là một nhà toán học chuyên sâu về lý thuyết số hiện làm việc tại Anthropic, người đã quan tâm đến Giả thuyết Riemann từ thời sinh viên. Đây không phải câu chuyện một người dùng phổ thông nhập câu lệnh yêu cầu AI giải toán, mà là sự phối hợp giữa định hướng chiến lược của một nhà toán học chuyên nghiệp với năng lực triển khai và đề xuất kỹ thuật của AI.</p>
 
         <div style="text-align: center; margin: 24px 0;">
             <img src="/core/image/alpoge-scientific-american-announcement.jpg" alt="Levent Alpöge và bức tâm thư công bố chứng minh cùng Claude AI" style="max-width: 500px; width: 100%; border-radius: 10px; box-shadow: var(--shadow-soft);">
@@ -118,39 +118,39 @@
         <div class="smp-graybox">
             <p style="font-weight: 600; margin-bottom: 8px;">Trích bức tâm thư của Levent Alpöge gửi cộng đồng (Anthropic):</p>
             <p style="font-style: italic; margin-bottom: 8px; line-height: 1.65;">“The Riemann Hypothesis is the classic problem in number theory. It asks for optimal control on the count of prime numbers of a given size. Its shadows have guided mathematicians for 150 years, and its many rhymes and reflections, even reaching physics, taught us the unity of our fields.<br><br>
-            <b>I believe I have, working with Claude, discovered a proof of the Riemann Hypothesis.</b> In fact, the method easily extends much further, resolving the so-called Generalized Riemann Hypothesis, and I expect, with more time, the Extended Riemann Hypothesis too. Claude and I have also formalized the arguments without assumptions. It is natural to feel that this is an end, in my case a loss of a principal guiding light, but what I saw during the course of progress so amazed me that I believe it is one day in across science of something far greater.<br><br>
+            I believe I have, working with Claude, discovered a proof of the Riemann Hypothesis. In fact, the method easily extends much further, resolving the so-called Generalized Riemann Hypothesis, and I expect, with more time, the Extended Riemann Hypothesis too. Claude and I have also formalized the arguments without assumptions. It is natural to feel that this is an end, in my case a loss of a principal guiding light, but what I saw during the course of progress so amazed me that I believe it is one day in across science of something far greater.<br><br>
             It was my secret in my student days that my plans were for this problem in decades, which meant then that I tried to become familiar with all tools that I could possibly recognize in the problem when it was time…”</p>
             <div style="border-top: 1px dashed var(--border-color); padding-top: 8px; font-size: 0.9rem;">
-                <i>(Bản dịch: "Giả thuyết Riemann là bài toán kinh điển của lý thuyết số. Nó đòi hỏi sự kiểm soát tối ưu đối với số lượng số nguyên tố dưới một kích thước cho trước. Cái bóng của nó đã dẫn đường cho các nhà toán học suốt 150 năm... <b>Tôi tin rằng mình, khi làm việc cùng Claude, đã phát hiện ra một chứng minh cho Giả thuyết Riemann.</b> Trên thực tế, phương pháp này mở rộng dễ dàng hơn nhiều, giải quyết cái gọi là Giả thuyết Riemann tổng quát (GRH), và tôi kỳ vọng với thêm thời gian, cả Giả thuyết Riemann mở rộng (ERH) nữa. Claude và tôi cũng đã hình thức hóa các lập luận mà không cần bất kỳ giả định nào. Cảm giác đây là một điểm kết thúc là điều tự nhiên — với tôi, đó là sự mất đi một ngọn hải đăng soi đường chính yếu — nhưng những gì tôi chứng kiến trong suốt quá trình tiến triển đã khiến tôi kinh ngạc đến mức tôi tin rằng đây là một ngày trong toàn thể khoa học về một điều gì đó vĩ đại hơn rất nhiều...")</i>
+                <i>(Bản dịch: "Giả thuyết Riemann là bài toán kinh điển của lý thuyết số. Nó đòi hỏi sự kiểm soát tối ưu đối với số lượng số nguyên tố dưới một kích thước cho trước. Cái bóng của nó đã dẫn đường cho các nhà toán học suốt 150 năm... Tôi tin rằng mình, khi làm việc cùng Claude, đã phát hiện ra một chứng minh cho Giả thuyết Riemann. Trên thực tế, phương pháp này mở rộng dễ dàng hơn nhiều, giải quyết cái gọi là Giả thuyết Riemann tổng quát (GRH), và tôi kỳ vọng với thêm thời gian, cả Giả thuyết Riemann mở rộng (ERH) nữa. Claude và tôi cũng đã hình thức hóa các lập luận mà không cần bất kỳ giả định nào. Cảm giác đây là một điểm kết thúc là điều tự nhiên — với tôi, đó là sự mất đi một ngọn hải đăng soi đường chính yếu — nhưng những gì tôi chứng kiến trong suốt quá trình tiến triển đã khiến tôi kinh ngạc đến mức tôi tin rằng đây là một ngày trong toàn thể khoa học về một điều gì đó vĩ đại hơn rất nhiều...")</i>
             </div>
         </div>
 
         <p>Theo ghi chú gốc <code>remark.pdf</code> của Alpöge công bố ngày 20/11/2026:</p>
         <ol style="padding-left: 20px; line-height: 1.85;">
-            <li><b>Định hướng từ trường hàm sang trường số:</b> Alpöge xây dựng hướng tiếp cận dựa trên <b>phương pháp Stepanov trên trường hàm</b> — một kỹ thuật từng thành công cho bài toán tương tự trong bối cảnh trường hàm — và tìm cách chuyển các ý tưởng đó sang bài toán số nguyên tố thông thường.</li>
-            <li><b>Sự phối hợp giữa Alpöge và Claude trong kỹ thuật nâng theta lặp:</b> Theo mô tả của Alpöge, ý tưởng xâu chuỗi các phép biến đổi <b>nâng theta (theta lifts)</b> xuất hiện từ những ý tưởng giải tích Fourier mới trong một mô hình đơn giản hóa (<i>toy setting</i>) do chính ông định hướng. Trong bước này, đóng góp cụ thể được ông ghi nhận ở Claude là xác định độ dài của chuỗi biến đổi ở cỡ $\sqrt{X}$, bên cạnh hàng loạt bước kỹ thuật và hình thức hóa khác mà ông mô tả chung là đã khiến ông bất ngờ <i>"hàng chục lần"</i> trong suốt quá trình làm việc.</li>
+            <li><b>Định hướng từ trường hàm sang trường số:</b> Alpöge xây dựng hướng tiếp cận dựa trên phương pháp Stepanov trên trường hàm — một kỹ thuật từng thành công cho bài toán tương tự trong bối cảnh trường hàm — và tìm cách chuyển các ý tưởng đó sang bài toán số nguyên tố thông thường.</li>
+            <li><b>Kỹ thuật nâng theta lặp:</b> Theo mô tả của Alpöge, ý tưởng xâu chuỗi các phép biến đổi nâng theta (theta lifts) xuất hiện từ những ý tưởng giải tích Fourier mới trong một mô hình đơn giản hóa (<i>toy setting</i>) do chính ông định hướng. Trong bước này, đóng góp cụ thể được ông ghi nhận ở Claude là xác định độ dài của chuỗi biến đổi ở cỡ $\sqrt{X}$, bên cạnh hàng loạt bước kỹ thuật và hình thức hóa khác mà ông mô tả chung là đã khiến ông bất ngờ <i>"hàng chục lần"</i> trong suốt quá trình làm việc.</li>
         </ol>
 
         <h2 class="smp-section-title">§4. Lean Là Gì Và Vì Sao Đóng Vai Trò Quyết Định?</h2>
 
-        <p>Alpöge cho biết khi thử xuất bản nháp diễn giải chứng minh ra ngôn ngữ toán học thông thường, tài liệu tự động đó dài hơn <b>250.000 trang</b> — vượt xa khả năng đọc duyệt truyền thống của con người. Thay vì công bố bản văn bản khổng lồ này, ông công bố một bản giới thiệu dài <b>4 trang</b> kèm theo <b>14 phần dữ liệu</b> chứa toàn bộ chứng minh được hình thức hóa bằng <b>Lean 4</b>, với quy mô khoảng <b>17 triệu dòng mã</b> chia thành <b>175.187 tệp (mô-đun)</b>.</p>
+        <p>Alpöge cho biết khi thử xuất bản nháp diễn giải chứng minh ra ngôn ngữ toán học thông thường, tài liệu tự động đó dài hơn 250.000 trang — vượt xa khả năng đọc duyệt truyền thống của con người. Thay vì công bố bản văn bản khổng lồ này, ông công bố một bản giới thiệu dài 4 trang kèm theo 14 phần dữ liệu chứa toàn bộ chứng minh được hình thức hóa bằng Lean 4, với quy mô khoảng 17 triệu dòng mã chia thành 175.187 tệp (mô-đun).</p>
 
         <h3 class="smp-subsection-title">§4.1 Vấn đề ảo giác của mô hình ngôn ngữ và lời giải từ Lean</h3>
         <p>Các mô hình ngôn ngữ lớn (như ChatGPT hay Claude) có thể viết ra những lập luận nghe rất thuyết phục nhưng lại ẩn chứa lỗi logic, bỏ sót điều kiện biên hoặc trích dẫn định lý không tồn tại. Trong toán học, chỉ một mắt xích suy luận sai cũng làm sụp đổ toàn bộ chứng minh.</p>
-        <p><b>Lean</b> giải quyết bài toán kiểm chứng này:</p>
+        <p>Hệ thống hỗ trợ chứng minh Lean giải quyết bài toán kiểm chứng này:</p>
         <ul style="padding-left: 20px; line-height: 1.85;">
-            <li>Lean là một ngôn ngữ lập trình kiêm <b>hệ thống hỗ trợ chứng minh toán học (proof assistant)</b>. Mọi định nghĩa, định lý và từng bước biến đổi đều phải được viết dưới dạng biểu thức hình thức chặt chẽ.</li>
+            <li>Lean là một ngôn ngữ lập trình kiêm hệ thống hỗ trợ chứng minh toán học (proof assistant). Mọi định nghĩa, định lý và từng bước biến đổi đều phải được viết dưới dạng biểu thức hình thức chặt chẽ.</li>
             <li>Bộ kiểm tra nhân (<i>kernel</i>) của Lean hoạt động như một giám khảo logic nghiêm ngặt: nếu một bước suy luận dùng sai giả thiết, thiếu điều kiện hoặc kết luận không suy ra được từ tiền đề theo các quy tắc hình thức, Lean sẽ báo lỗi và từ chối biên dịch.</li>
         </ul>
 
         <h3 class="smp-subsection-title">§4.2 Quy trình kết hợp AI + Lean và điều kiện tin cậy</h3>
         <p>Sự kết hợp giữa Claude và Lean tạo nên một vòng lặp nghiên cứu tốc độ cao: AI triển khai lập luận dưới dạng mã Lean $\to$ Lean kiểm tra tính hợp lệ $\to$ nếu bị từ chối, AI dựa trên thông báo lỗi để sửa và thử lại.</p>
-        <p>Tất nhiên, sự bảo chứng của Lean là <b>đúng có điều kiện</b>: tính đúng đắn của kết quả phụ thuộc vào việc phát biểu định lý cùng các định nghĩa nền tảng trong thư viện <b>Mathlib</b> được mã hóa chuẩn xác, bản dựng không sử dụng các tiên đề phi chuẩn hay lỗ hổng môi trường biên dịch, và các bộ kiểm tra nhân (<i>kernels</i>) hoạt động đúng. Chính vì vậy, ngay sau khi mã nguồn được công bố, cộng đồng toán học và khoa học máy tính đã tiến hành biên dịch lại và kiểm tra chéo bằng nhiều bộ kiểm tra độc lập.</p>
+        <p>Tất nhiên, sự bảo chứng của Lean là đúng có điều kiện: tính đúng đắn của kết quả phụ thuộc vào việc phát biểu định lý cùng các định nghĩa nền tảng trong thư viện Mathlib được mã hóa chuẩn xác, bản dựng không sử dụng các tiên đề phi chuẩn hay lỗ hổng môi trường biên dịch, và các bộ kiểm tra nhân (<i>kernels</i>) hoạt động đúng. Chính vì vậy, ngay sau khi mã nguồn được công bố, cộng đồng toán học và khoa học máy tính đã tiến hành biên dịch lại và kiểm tra chéo bằng nhiều bộ kiểm tra độc lập.</p>
 
         <h2 class="smp-section-title">§5. Toàn Cảnh Dòng Thời Gian Ngày 20–21/11/2026: Hai Công Bố Trong Cùng Một Ngày</h2>
 
-        <p>Chỉ vài giờ sau công bố của <b>Levent Alpöge và Claude AI</b> vào ngày 20/11/2026, một công trình thứ hai hoàn toàn độc lập của <b>Alessandro Maria Masullo</b> (không sử dụng AI) cũng được công bố khẩn cấp.</p>
-        <p>Dưới đây là dòng thời gian của sự kiện (các mốc giờ trong ngày 20–21/11 tính theo <b>UTC</b>, tức giờ Việt Nam trừ đi 7 tiếng):</p>
+        <p>Chỉ vài giờ sau công bố của Levent Alpöge và Claude AI vào ngày 20/11/2026, một công trình thứ hai hoàn toàn độc lập của Alessandro Maria Masullo (không sử dụng AI) cũng được công bố khẩn cấp.</p>
+        <p>Dưới đây là dòng thời gian của sự kiện (các mốc giờ trong ngày 20–21/11 tính theo UTC, tức giờ Việt Nam trừ đi 7 tiếng):</p>
 
         <h3 class="smp-subsection-title">§5.1 Trước khi công bố</h3>
         <p style="font-size: 0.92rem; color: var(--text-muted); font-style: italic;">(Lưu ý: Các mốc ngày của Alpöge và Claude trước 20/11 được trích từ bảng dòng thời gian do Claude tổng hợp lại từ lịch sử tìm kiếm; chính Alpöge lưu ý đây là các mốc gần đúng và có thể được hiệu chỉnh thêm.)</p>
@@ -165,9 +165,9 @@
         <h3 class="smp-subsection-title">§5.2 Ngày 20/11/2026 — Hai công trình cùng xuất hiện</h3>
         <ul style="padding-left: 20px; line-height: 1.85;">
             <li><b>Đầu giờ chiều UTC (khoảng 13:41 – 15:29 UTC):</b> Thông tin về công trình của Alpöge lan truyền nhanh trên mạng xã hội X qua các bài đăng của Scott Armstrong và Yifan Zhang. Alpöge công bố ghi chú dài 4 trang kèm 14 phần dữ liệu chứa 175.187 tệp Lean (khoảng 17 triệu dòng mã). Nhà toán học Elliot Glazer xác nhận sơ bộ phát biểu được mã hóa trong Lean, và Thomas Bloom thông báo cộng đồng Lean bắt đầu kiểm tra độc lập.</li>
-            <li><b>16:43 UTC:</b> GS. Andrew Sutherland (MIT) biên dịch thành công toàn bộ <b>175.187 module Lean</b> mà không gặp lỗi.</li>
+            <li><b>16:43 UTC:</b> GS. Andrew Sutherland (MIT) biên dịch thành công toàn bộ 175.187 module Lean mà không gặp lỗi.</li>
             <li><b>18:17 UTC:</b> Toàn bộ các module vượt qua quá trình kiểm tra lại (<i>kernel replay</i>) bằng kernel của Lean.</li>
-            <li><b>18:18 UTC — Bất ngờ thứ hai:</b> GS. Ravi Vakil, Chủ tịch Hội Toán học Hoa Kỳ (AMS), đăng bài trên blog công bố khẩn cấp bản thảo <i>"The Music of the Primes"</i> của Alessandro Maria Masullo. Công trình dài khoảng <b>940 trang</b>, là kết quả của gần 12 năm nghiên cứu và hoàn toàn không sử dụng AI. Trước đó Brian Conrad đã dành nhiều tháng xem xét bản thảo và nhóm dự định hoàn thiện thêm một năm nữa mới công bố, nhưng thông báo của Alpöge đã khiến họ quyết định công khai sớm.</li>
+            <li><b>18:18 UTC — Bất ngờ thứ hai:</b> GS. Ravi Vakil, Chủ tịch Hội Toán học Hoa Kỳ (AMS), đăng bài trên blog công bố khẩn cấp bản thảo <i>"The Music of the Primes"</i> của Alessandro Maria Masullo. Công trình dài khoảng 940 trang, là kết quả của gần 12 năm nghiên cứu và hoàn toàn không sử dụng AI. Trước đó Brian Conrad đã dành nhiều tháng xem xét bản thảo và nhóm dự định hoàn thiện thêm một năm nữa mới công bố, nhưng thông báo của Alpöge đã khiến họ quyết định công khai sớm.</li>
             <li><b>19:05 UTC:</b> Bộ kiểm tra chứng minh độc lập <code>nanoda</code> chấp nhận toàn bộ chứng minh của Alpöge.</li>
             <li><b>21:19 UTC:</b> Hai cuộc kiểm tra bằng <code>con-leche</code> thành công, đồng thời xác nhận cả 5 định lý trong mã khớp với các phát biểu toán học chuẩn cần chứng minh.</li>
             <li><b>21:55 UTC:</b> Bộ kiểm tra độc lập <code>lean4lean</code> hoàn tất xác nhận toàn bộ 175.187 module.</li>
@@ -213,7 +213,7 @@
             <li><b>Công trình của Alessandro Maria Masullo (GRH cho hàm $L$ Hecke trên mọi trường số):</b> Công trình độc lập không sử dụng AI; hiện bị phản ánh có nhiều lỗ hổng và nghi vấn phản ví dụ ở định lý công thức vết nên cần sửa đổi lớn trước khi có thể đánh giá.</li>
         </ul>
 
-        <p><b>Giả thuyết Riemann đã được Viện Toán học Clay trao giải chưa?</b> Xét về mặt <b>kiểm chứng toán học hình thức</b>, chứng minh Giả thuyết Riemann cổ điển của Levent Alpöge và Claude đã nhận được sự xác nhận từ cộng đồng Lean và Mathlib. Tuy nhiên, <b>Viện Toán học Clay (Clay Mathematics Institute)</b> hiện vẫn chưa trao giải thưởng Millennium trị giá 1 triệu USD. Theo quy định của Viện Clay, công trình phải được xuất bản trên một ấn phẩm toán học đủ điều kiện, trải qua ít nhất <b>2 năm</b> thẩm định và được cộng đồng toán học quốc tế chấp nhận rộng rãi.</p>
+        <p>Xét về mặt kiểm chứng toán học hình thức, chứng minh Giả thuyết Riemann cổ điển của Levent Alpöge và Claude đã nhận được sự xác nhận từ cộng đồng Lean và Mathlib. Tuy nhiên, Viện Toán học Clay (Clay Mathematics Institute) hiện vẫn chưa trao giải thưởng Millennium trị giá 1 triệu USD. Theo quy định của Viện Clay, công trình phải được xuất bản trên một ấn phẩm toán học đủ điều kiện, trải qua ít nhất 2 năm thẩm định và được cộng đồng toán học quốc tế chấp nhận rộng rãi.</p>
 
         <div class="smp-longnote">
             <b>Lời kết.</b> Một chi tiết đáng suy ngẫm trong hai ngày 20–21/11/2026: một chứng minh được xây dựng với sự đồng hành của AI đã vượt qua hàng loạt bước kiểm chứng hình thức độc lập, trong khi một bản thảo thuần túy do con người viết suốt 12 năm lại đang được chính các mô hình AI hỗ trợ rà soát và chỉ ra các điểm hở. Sự kiện này vẫn đang tiếp tục được cộng đồng toán học thế giới theo dõi sát sao từng giờ.
