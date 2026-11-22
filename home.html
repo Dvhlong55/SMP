@@ -121,10 +121,41 @@
         .home-challenge-row > div {
             min-width: 0;
         }
+        .mobile-exam-collections {
+            display: none;
+        }
         @media (max-width: 992px) {
             .home-challenge-row {
                 grid-template-columns: 1fr;
                 gap: 28px;
+            }
+            .mobile-exam-collections {
+                display: block;
+                margin: 0 0 24px 0;
+            }
+            .mobile-exam-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.78rem;
+                color: var(--widget-link-color, #78716c);
+                opacity: 0.8;
+                margin-bottom: 8px;
+            }
+            .mobile-exam-links {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 6px 8px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.84rem;
+                line-height: 1.6;
+                color: var(--widget-link-color, #78716c);
+            }
+            .mobile-exam-links a {
+                color: var(--widget-link-color, #78716c);
+                text-decoration: none;
+            }
+            .mobile-exam-links span {
+                opacity: 0.45;
             }
         }
 
@@ -806,6 +837,23 @@
                     </div>
                     
                 </div>
+
+                    <div class="mobile-exam-collections fade-up">
+                        <div class="mobile-exam-label">Tuyển tập đề thi:</div>
+                        <div class="mobile-exam-links">
+                            <a href="/posts/math/vmo/de-thi-vmo.html">VMO</a>
+                            <span>•</span>
+                            <a href="/posts/math/de-thi-igo-2017-2025.html">IGO</a>
+                            <span>•</span>
+                            <a href="/posts/math/de-thi-olympic-toan-hssv-thpt.html">HSSV (THPT)</a>
+                            <span>•</span>
+                            <a href="/posts/math/uni/de-thi-olympic-toan-sinh-vien.html">OTSV</a>
+                            <span>•</span>
+                            <a href="/posts/math/dethichuyen/de-thi-chuyen-toan-thcs.html">Chuyên Toán</a>
+                            <span>•</span>
+                            <a href="/posts/math/vmo/de-thi-chon-doi-tuyen-tinh.html">TST Tỉnh</a>
+                        </div>
+                    </div>
 
                     <div class="home-challenge-row">
                         <!-- Cột Trái: Nổi Bật & 3 Bài Đăng Mới Nhất -->
