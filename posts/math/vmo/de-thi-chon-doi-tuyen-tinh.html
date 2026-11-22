@@ -37,12 +37,12 @@
         body.dark-mode .igo-mini-toc { border-bottom-color: rgba(255,255,255,0.1); }
         .igo-mini-toc a { color: var(--exam-bold-color, #111) !important; text-decoration: none !important; font-weight: 600; transition: color 0.2s; }
         .igo-mini-toc a:hover { color: var(--accent-cyan, #0284c7) !important; }
-        .igo-toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px 48px; }
+        .igo-toc-grid { display: flex; flex-direction: column; gap: 36px; }
         .igo-toc-col { display: flex; flex-direction: column; scroll-margin-top: 80px; }
-        .igo-toc-year-name { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; letter-spacing: 1.6px; text-transform: uppercase; color: var(--exam-bold-color, #111); margin: 0 0 10px 0; padding-bottom: 6px; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08)); font-weight: 700; }
+        .igo-toc-year-name { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; letter-spacing: 1.6px; text-transform: uppercase; color: var(--exam-bold-color, #111); margin: 0 0 12px 0; padding-bottom: 6px; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08)); font-weight: 700; }
         body.dark-mode .igo-toc-year-name { border-bottom-color: rgba(255,255,255,0.12); }
-        .igo-toc-items { display: flex; flex-direction: column; }
-        .igo-toc-row { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; text-decoration: none !important; color: var(--exam-text-color, #333); transition: all 0.2s ease; cursor: pointer; }
+        .igo-toc-items { columns: 300px 2; column-gap: 48px; }
+        .igo-toc-row { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; text-decoration: none !important; color: var(--exam-text-color, #333); transition: all 0.2s ease; cursor: pointer; break-inside: avoid; page-break-inside: avoid; }
         .igo-toc-row:hover .igo-toc-num, .igo-toc-row:hover .igo-toc-title { color: var(--accent-cyan, #0284c7) !important; }
         .igo-toc-num { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 700; color: var(--text-muted, #888); width: 24px; flex-shrink: 0; }
         .igo-toc-title { font-size: 0.96rem; color: var(--exam-bold-color, #111); transition: color 0.2s; white-space: nowrap; }
