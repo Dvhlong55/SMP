@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Đề Thi Olympic Toán Sinh Viên 2024</title>
+    
+    <meta name="post-id" content="OLPSV2024">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="Đại Học">
+    <meta name="subcategory-filter" content="uni">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề thi chính thức và gợi ý giải Kỳ thi Olympic Toán học Sinh viên Toàn quốc năm 2024 (Lần thứ 30 - ĐH Duy Tân, Đà Nẵng): Đại số và Giải tích (Bảng A, B).">
+    <meta property="og:title" content="SMP — Đề Thi Olympic Toán Sinh Viên 2024">
+    <meta property="og:description" content="Đề thi chính thức và gợi ý giải Olympic Toán Sinh viên Toàn quốc 2024.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/uni/olpsv-2024.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <!-- SMP SEO END -->
+
+    <style>
+        details.igo-hint-clean { margin: 8px 0 22px 0; border: none; background: transparent; }
+        summary.igo-hint-trigger { list-style: none; cursor: pointer; display: inline-flex; align-items: center; padding: 3px 6px; user-select: none; color: var(--exam-bold-color, #111); width: fit-content; outline: none; }
+        summary.igo-hint-trigger::-webkit-details-marker, summary.igo-hint-trigger::marker { display: none; }
+        .igo-arrow { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 4.5px 0 4.5px 7.5px; border-color: transparent transparent transparent currentColor; transition: transform 0.2s ease-in-out; margin-right: 8px; flex-shrink: 0; }
+        details.igo-hint-clean[open] .igo-arrow { transform: rotate(90deg); }
+        .igo-hint-content { padding: 8px 0 8px 16px; margin-top: 6px; border-left: 2px solid var(--border-light, #cbd5e1); font-size: 0.98rem; line-height: 1.8; color: var(--exam-text-color, #334155); }
+        body.dark-mode .igo-hint-content { border-left-color: rgba(255, 255, 255, 0.15); }
+        .igo-level-heading { color: var(--exam-bold-color, #111); font-size: 1.35rem; margin-top: 36px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1)); font-weight: 700; }
+        body.dark-mode .igo-level-heading { border-bottom-color: rgba(255,255,255,0.12); }
+        .igo-nav-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--accent-cyan, #0284c7) !important; text-decoration: none !important; margin: 12px 0 20px 0; transition: transform 0.2s ease; }
+        .igo-nav-link:hover { transform: translateX(-3px); }
+        .igo-mini-toc { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 16px 0 24px 0; padding: 10px 0; border-top: 1px solid var(--border-light, rgba(0,0,0,0.08)); border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08)); font-size: 0.9rem; }
+        body.dark-mode .igo-mini-toc { border-color: rgba(255,255,255,0.1); }
+        .igo-mini-toc a { color: var(--exam-bold-color, #111) !important; text-decoration: none !important; transition: color 0.2s; }
+        .igo-mini-toc a:hover { color: var(--accent-cyan, #0284c7) !important; }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Đề Thi Olympic Toán Sinh Viên 2024</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Lần thứ 30 · Đại học Duy Tân (Đà Nẵng) · Hội Toán Học Việt Nam</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
+        </div>
+
+        <div>
+            <a href="/posts/math/uni/de-thi-olympic-toan-sinh-vien.html" class="igo-nav-link">← Tổng quan Olympic Toán Sinh Viên (2013 – 2025)</a>
+        </div>
+
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Môn thi:</span>
+            <a href="#dai-so-a">Đại Số (Bảng A)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#dai-so-b">Đại Số (Bảng B)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#giai-tich-a">Giải Tích (Bảng A)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#giai-tich-b">Giải Tích (Bảng B)</a>
+        </div>
+
+        <h2 id="dai-so-a" class="igo-level-heading">Môn Thi: Đại Số — Bảng A</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Cho $a \in \mathbb{R}$ và ma trận
+        \[
+        A = \begin{pmatrix} 1 & a+1 & a+2 & 0 \\ a+3 & 1 & 0 & a+2 \\ a+2 & 0 & 1 & a+1 \\ 0 & a+2 & a+3 & 1 \end{pmatrix}.
+        \]
+        (a) Tìm hạng của $A$ khi $a = -1$. (b) Tìm $a$ để $\det A > 0$. (c) Biện luận số chiều không gian nghiệm của $AX = 0$ theo $a$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Khử Gauss thu được $\det A = -(a + 1)(a + 3)((a+2)^2 + \dots)$ hoặc phân tích khối đối xứng tâm, rút ra $\det A > 0 \iff -3 < a < -1$. Khi $a = -1$ (hoặc $a = -3$), $\operatorname{rank}(A) = 2$ nên $\dim\ker(A) = 2$; khi $a \notin \{-3, -1\}$, $\det A \neq 0 \implies \dim\ker(A) = 0$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Có $200$ con muỗi trong căn hộ $4$ phòng (chu trình $1-2-3-4-1$, trong đó phòng $1$ nối $2, 4$; phòng $2$ nối $1, 3, 4$...). Mỗi phút, $40\%$ số muỗi ở lại phòng cũ và $60\%$ chia đều sang các phòng kề.<br>
+        (a) Sau $1$ phút số muỗi ở $4$ phòng lần lượt là $24, 50, 52, 74$. Tìm số muỗi ban đầu ở mỗi phòng.<br>
+        (b) Tìm số muỗi ở mỗi phòng tại trạng thái ổn định.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Lập ma trận chuyển $M$, giải $M x_0 = (24, 50, 52, 74)^T$ được $x_0 = (20, 40, 60, 80)$.<br>
+                (b) Giải $M x = x$ với tổng $200$ (hoặc theo bậc đỉnh $\deg(v_i)$), thu được trạng thái ổn định: $(25, 50, 50, 75)$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Cho $P(x) \in \mathbb{R}[x]$ thỏa mãn $(x - 1)P(x + 1) = (x + 2)P(x)$. (a) Chứng minh $P(x)$ có ít nhất $3$ nghiệm thực phân biệt. (b) Tìm tất cả các đa thức $P(x)$ như vậy.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Thay $x = 1 \implies P(1) = 0$; $x = -2 \implies P(-1) = 0$; $x = 0 \implies P(0) = 0$ (nếu $P \not\equiv 0$). Do đó $P(x) = x(x-1)(x+1)Q(x)$, thay lại vào phương trình thu được $Q(x+1) = Q(x) \implies Q(x) = c$ (hằng số). Vậy $P(x) = c x(x-1)(x+1)$ ($c \in \mathbb{R}$).</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Đặt $A(x, y, z) = \det \begin{pmatrix} x & y & z \\ y & z & x \\ z & x & y \end{pmatrix}$. (a) Tìm một không gian con $V \subset \mathbb{R}^3$ với $\dim V = 2$ thỏa mãn $A(x,y,z) = 0$ $\forall (x,y,z) \in V$ và chỉ ra một cơ sở của $V$. (b) Tồn tại hay không các số nguyên $x, y, z$ sao cho $A(x,y,z) = 24$?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) $A(x,y,z) = -(x^3 + y^3 + z^3 - 3xyz) = -(x+y+z)(x^2+y^2+z^2-xy-yz-zx)$. Chọn $V = \{(x,y,z) : x+y+z = 0\}$ có cơ sở $\{(1,-1,0), (1,0,-1)\}$.<br>
+                (b) Không tồn tại? Thực tế xét mod $9$ hoặc $x+y+z$ và $x^2+y^2+z^2-xy-yz-zx$: tích không thể đồng dư $6 \pmod 9$? Kiểm tra $x^3+y^3+z^3 - 3xyz = -24$: thử mod $9$, $x^3 \equiv 0, \pm 1$, nhưng $3xyz$ chia hết cho $3$; chú ý $x+y+z$ và $x^2+y^2+z^2-xy-yz-zx \equiv (x+y+z)^2 \pmod 3$, nên nếu $3 \mid A(x,y,z)$ thì $3 \mid (x+y+z) \implies 9 \mid (x+y+z)^2 \dots \implies 9 \mid A(x,y,z)$, trong khi $9 \nmid 24$! Vậy không tồn tại!</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Cặp ma trận thực vuông cùng cấp $(A, B)$ gọi là <em>tốt</em> nếu cả hai khả nghịch và $AB - BA = B^2 A$.<br>
+        (a) Chứng minh nếu $(A, B)$ tốt thì $B = A^{-1}(B^2 + B)A$.<br>
+        (b) Tìm một cặp ma trận tốt $(A, B)$ cấp $2$.<br>
+        (c) Tìm tất cả các số nguyên dương $n$ sao cho tồn tại cặp ma trận tốt $(A, B)$ cấp $n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) $AB - BA = B^2 A \iff AB = (B^2 + B)A \iff B = A^{-1}(B^2 + B)A$.<br>
+                (b) Chọn ma trận khối dạng $B^2 + B$ đồng dạng với $B$: suy ra $\det(B) = \det(B^2 + B) = \det B \det(B + I) \implies \det(B + I) = 1$, hơn nữa $B$ có vết hoặc giá trị riêng $\lambda \mapsto \lambda^2 + \lambda$, tập giá trị riêng bất biến suy ra phép lặp $\lambda \mapsto \lambda^2 + \lambda$ bảo toàn tập giá trị riêng khác $0$, chỉ có thể là chu kì $2$: $\lambda_1^2 + \lambda_1 = \lambda_2$, $\lambda_2^2 + \lambda_2 = \lambda_1$ (vì $\lambda \neq 0$, phương trình $x^2 + x = x \implies x = 0$ loại!). Do đó mọi giá trị riêng của $B$ đi thành từng cặp (bậc chẵn)!<br>
+                (c) $n$ là số nguyên dương chẵn ($n = 2k$), xây dựng bằng $k$ khối cấp $2$ trên đường chéo.</p>
+            </div>
+        </details>
+
+        <h2 id="dai-so-b" class="igo-level-heading">Môn Thi: Đại Số — Bảng B</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Giống <strong>Bài 1</strong> Bảng A.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 1 Bảng A.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Cho $A = \begin{pmatrix} 0 & 2 \\ 1 & 0 \end{pmatrix}$ và $B = \begin{pmatrix} 0 & -2 \\ -1 & 0 \end{pmatrix}$. (a) Tìm ma trận thực $P$ cấp $2$ sao cho $P^{-1}AP$ chéo. (b) Tìm ma trận thực $R$ cấp $2$, $\det R = 1$, sao cho $R^{-1}AR = B$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Giá trị riêng $\pm \sqrt{2}$, chọn $P = \begin{pmatrix} \sqrt{2} & -\sqrt{2} \\ 1 & 1 \end{pmatrix}$. (b) Đặt $R = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$, từ $AR = RB$ và $ad - bc = 1$, ví dụ chọn $R = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$ có $\det = -1$ (loại!), nên chọn $R = \begin{pmatrix} \sqrt{2} & 0 \\ 0 & -1/\sqrt{2} \end{pmatrix}$? Kiểm tra $AR = RB \iff 2c = -b, a = -2d$, chọn $a = 1, d = -1/2 \implies ad - bc = -\frac{1}{2} + 2c^2 = 1 \implies c = \frac{\sqrt{3}}{2}, b = -\sqrt{3}$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Giống <strong>Bài 2</strong> Bảng A.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ban đầu $(20, 40, 60, 80)$; ổn định $(25, 50, 50, 75)$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Cho bảng xây tường gạch (các hàng so le nhau).<br>
+        (a) Có bao nhiêu cách chọn ra $3$ viên gạch, mỗi viên từ một hàng, sao cho không có $2$ viên nào kề nhau?<br>
+        (b) Có bao nhiêu cách chọn ra $4$ viên gạch, mỗi viên từ một hàng, sao cho không có $2$ viên nào kề nhau?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Mô hình hóa đồ thị kề nhau giữa các hàng (tương ứng bảng $3$ hoặc $4$ hàng xếp so le) và dùng nguyên lý cộng/nhân hoặc hàm sinh / định lý đếm theo hàng để tính chính xác số cách chọn.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Giống <strong>Bài 4</strong> Bảng A.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 4 Bảng A.</p>
+            </div>
+        </details>
+
+        <h2 id="giai-tich-a" class="igo-level-heading">Môn Thi: Giải Tích — Bảng A</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Cho $a_1 = 1$, $a_{n+1} = a_n + \frac{(-1)^n}{n!}$ ($\forall n \ge 1$). (a) Tìm $n$ để $a_n \ge \frac{1}{2}$. (b) Chứng minh $(a_n)$ hội tụ. (c) Giới hạn của $(a_n)$ là hữu tỉ hay vô tỉ?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>$a_n = 1 - \frac{1}{1!} + \frac{1}{2!} - \dots + \frac{(-1)^{n-1}}{(n-1)!} \to e^{-1} \approx 0,3678$. (a) $a_1 = 1, a_2 = 0, a_3 = \frac{1}{2}, a_4 = \frac{1}{3}$, suy ra $a_n \ge \frac{1}{2} \iff n \in \{1, 3\}$. (b, c) Hội tụ về $e^{-1}$, là số vô tỉ (chứng minh tương tự $e$ bằng phản chứng nhân $q!$).</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Cho $f(x) = ax^2 + b$ nếu $x \le 0$ và $f(x) = e^x + cx$ nếu $x > 0$. Tìm $a, b, c$ để $f$: (a) liên tục trên $\mathbb{R}$; (b) khả vi trên $\mathbb{R}$; (c) khả vi cấp hai trên $\mathbb{R}$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) $b = 1$ ($a, c$ tùy ý). (b) $b = 1, c = -1$ ($a$ tùy ý). (c) $b = 1, c = -1, a = \frac{1}{2}$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Cho đường thẳng $(d): y = 2x - 1$ và parabol $(P): y = 3x^2$. (a) $(d)$ và $(P)$ có cắt nhau không? (b) Với $M \in (P)$ và $N \in (d)$, tìm giá trị nhỏ nhất của $MN$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) $3x^2 - 2x + 1 = 0$ vô nghiệm ($\Delta' = -2 < 0$), nên không cắt nhau.<br>
+                (b) Tiếp tuyến của $(P)$ song song với $(d)$ có hệ số góc $6x = 2 \implies x = \frac{1}{3}$, điểm $M_0(\frac{1}{3}, \frac{1}{3})$. Khoảng cách nhỏ nhất $MN = d(M_0, (d)) = \frac{|2(1/3) - 1/3 - 1|}{\sqrt{5}} = \frac{2}{3\sqrt{5}}$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Gọi $\mathcal{F}$ là lớp các hàm $f : \mathbb{R} \to \mathbb{R}$ khả vi cấp hai và $|f''(x)| \le 1$ $\forall x$. Hàm $f$ gọi là có tính chất SAT nếu $f \in \mathcal{F}$ và $|f'(x)|^2 \le 2024|f(x)|$ $\forall x$.<br>
+        (a) Chứng minh nếu $f \in \mathcal{F}$ và $f(x) \ge 0$ $\forall x \in \mathbb{R}$ thì $f$ có tính chất SAT.<br>
+        (b) Tìm một hàm $f \in \mathcal{F}$ nhưng không có tính chất SAT.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Với $x$ bất kỳ, khai triển Taylor $0 \le f(x + h) = f(x) + h f'(x) + \frac{h^2}{2} f''(\xi) \le f(x) + h f'(x) + \frac{h^2}{2}$ $\forall h \in \mathbb{R}$. Biệt thức tam thức bậc hai theo $h$ phải $\le 0 \implies f'(x)^2 \le 2 f(x) \le 2024 f(x)$.<br>
+                (b) Chọn $f(x) = x$ (có $f'' \equiv 0 \in \mathcal{F}$, nhưng tại $x = 0$ thì $f'(0)^2 = 1 > 0 = 2024|f(0)|$).</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Cho $f : [0, +\infty) \to \mathbb{R}$ khả vi sao cho $\lim_{x\to+\infty} \int_0^x f^2(t)\,dt$ tồn tại và hữu hạn.<br>
+        (a) Cho ví dụ một hàm $f$ như vậy. (b) Chứng minh nếu $f'$ bị chặn trên $[0, +\infty)$ thì $\lim_{x\to+\infty} f(x) = 0$. (c) Kết luận còn đúng không nếu bỏ giả thiết $f'$ bị chặn?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) $f(x) = \frac{1}{1 + x}$. (b) Nếu $|f'(x)| \le M$ và $f(x) \not\to 0$ thì có $\varepsilon > 0$ và dãy $x_n \to +\infty$ với $|f(x_n)| \ge \varepsilon$; trên mỗi khoảng $[x_n, x_n + \frac{\varepsilon}{2M}]$, $|f(t)| \ge \frac{\varepsilon}{2}$, làm tích phân $\int_0^\infty f^2$ phân kỳ, vô lý.<br>
+                (c) Không đúng: hàm có các "gai nhọn" ngày càng cao nhưng đáy rất hẹp sao cho tổng diện tích dưới $f^2$ hội tụ.</p>
+            </div>
+        </details>
+
+        <h2 id="giai-tich-b" class="igo-level-heading">Môn Thi: Giải Tích — Bảng B</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Giống <strong>Bài 1</strong> Bảng A (câu a, b).</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 1 Bảng A.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Giống <strong>Bài 2</strong> Bảng A.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 2 Bảng A.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Giống <strong>Bài 3</strong> Bảng A ($\min MN = \frac{2}{3\sqrt{5}}$).</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 3 Bảng A.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Cho $f : [0, 1] \to \mathbb{R}$ liên tục trên $[0, 1]$ và khả vi trong $(0, 1)$.<br>
+        (a) Chứng minh nếu $f(1) = 0$ thì tồn tại $x_0 \in (0, 1)$ sao cho $|f(x_0)| \le 2024|f'(x_0)|$.<br>
+        (b) Chứng minh nếu $f(1) = 0$ và $|f(x)| \ge 2024|f'(x)|$ $\forall x \in (0, 1)$ thì $f$ là hàm hằng.<br>
+        (c) Kết luận ở (b) còn đúng không nếu bỏ giả thiết $f(1) = 0$?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a, b) Xét $g(x) = e^{x/2024} f(x)$ và $h(x) = e^{-x/2024} f(x)$ tương tự Bài 5 Bảng A năm 2023 (với cận $1$ thay cho $0$), kết hợp $f(1) = 0$ suy ra $f \equiv 0$.<br>
+                (c) Không đúng: phản ví dụ $f(x) = e^{x/2024}$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Cho $D = \left\{(x; y) \mid 0 \le x \le \frac{\pi}{2}, \, 0 \le y \le \frac{\cos^4 x}{\sin^4 x + \cos^4 x}\right\}$.<br>
+        (a) Tính diện tích của $D$.<br>
+        (b) Đường thẳng $(d)$ đi qua $(\frac{\pi}{4}; \frac{1}{2})$ và $(0; a)$ ($0 < a < 1$) chia $D$ thành hai phần bằng nhau về diện tích. Tìm $a$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Đổi biến $t = \frac{\pi}{2} - x$ được $2S = \int_0^{\pi/2} 1\,dx = \frac{\pi}{2} \implies S = \frac{\pi}{4}$.<br>
+                (b) Tính tích phân phần trên $(d)$ trên $[0, \pi/4]$ bằng $\frac{\pi}{8}$, rút ra $a = \frac{\sqrt{2}}{\pi}\ln(3 + 2\sqrt{2}) - \frac{1}{2}$.</p>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT ĐỀ THI OLYMPIC TOÁN SINH VIÊN 2024 ───</b></p>
+    </div>
+</body>
+</html>

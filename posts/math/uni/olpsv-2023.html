@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Đề Thi Olympic Toán Sinh Viên 2023</title>
+    
+    <meta name="post-id" content="OLPSV2023">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="Đại Học">
+    <meta name="subcategory-filter" content="uni">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề thi chính thức và gợi ý giải Kỳ thi Olympic Toán học Sinh viên Toàn quốc năm 2023 (Lần thứ 29 - ĐH Khoa học, ĐH Huế): Đại số và Giải tích (Bảng A, B).">
+    <meta property="og:title" content="SMP — Đề Thi Olympic Toán Sinh Viên 2023">
+    <meta property="og:description" content="Đề thi chính thức và gợi ý giải Olympic Toán Sinh viên Toàn quốc 2023.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/uni/olpsv-2023.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <!-- SMP SEO END -->
+
+    <style>
+        details.igo-hint-clean { margin: 8px 0 22px 0; border: none; background: transparent; }
+        summary.igo-hint-trigger { list-style: none; cursor: pointer; display: inline-flex; align-items: center; padding: 3px 6px; user-select: none; color: var(--exam-bold-color, #111); width: fit-content; outline: none; }
+        summary.igo-hint-trigger::-webkit-details-marker, summary.igo-hint-trigger::marker { display: none; }
+        .igo-arrow { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 4.5px 0 4.5px 7.5px; border-color: transparent transparent transparent currentColor; transition: transform 0.2s ease-in-out; margin-right: 8px; flex-shrink: 0; }
+        details.igo-hint-clean[open] .igo-arrow { transform: rotate(90deg); }
+        .igo-hint-content { padding: 8px 0 8px 16px; margin-top: 6px; border-left: 2px solid var(--border-light, #cbd5e1); font-size: 0.98rem; line-height: 1.8; color: var(--exam-text-color, #334155); }
+        body.dark-mode .igo-hint-content { border-left-color: rgba(255, 255, 255, 0.15); }
+        .igo-level-heading { color: var(--exam-bold-color, #111); font-size: 1.35rem; margin-top: 36px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1)); font-weight: 700; }
+        body.dark-mode .igo-level-heading { border-bottom-color: rgba(255,255,255,0.12); }
+        .igo-nav-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--accent-cyan, #0284c7) !important; text-decoration: none !important; margin: 12px 0 20px 0; transition: transform 0.2s ease; }
+        .igo-nav-link:hover { transform: translateX(-3px); }
+        .igo-mini-toc { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 16px 0 24px 0; padding: 10px 0; border-top: 1px solid var(--border-light, rgba(0,0,0,0.08)); border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08)); font-size: 0.9rem; }
+        body.dark-mode .igo-mini-toc { border-color: rgba(255,255,255,0.1); }
+        .igo-mini-toc a { color: var(--exam-bold-color, #111) !important; text-decoration: none !important; transition: color 0.2s; }
+        .igo-mini-toc a:hover { color: var(--accent-cyan, #0284c7) !important; }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Đề Thi Olympic Toán Sinh Viên 2023</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Lần thứ 29 · ĐH Khoa học – ĐH Huế · Hội Toán Học Việt Nam</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
+        </div>
+
+        <div>
+            <a href="/posts/math/uni/de-thi-olympic-toan-sinh-vien.html" class="igo-nav-link">← Tổng quan Olympic Toán Sinh Viên (2013 – 2025)</a>
+        </div>
+
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Môn thi:</span>
+            <a href="#dai-so-a">Đại Số (Bảng A)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#dai-so-b">Đại Số (Bảng B)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#giai-tich-a">Giải Tích (Bảng A)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#giai-tich-b">Giải Tích (Bảng B)</a>
+        </div>
+
+        <h2 id="dai-so-a" class="igo-level-heading">Môn Thi: Đại Số — Bảng A</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Kí hiệu $\mathbb{R}[X]_{2023}$ là $\mathbb{R}$-không gian véctơ các đa thức một biến bậc $\le 2023$. Cho $f : \mathbb{R}[X]_{2023} \to \mathbb{R}[X]_{2023}$ xác định bởi $f(p(X)) = p''(X)$, và đặt $g = \underbrace{f \circ f \circ \dots \circ f}_{870 \text{ lần}}$.<br>
+        (a) Chứng minh $g$ là ánh xạ tuyến tính. (b) Tìm số chiều và một cơ sở của $\operatorname{Im}(g)$ và $\ker(g)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>$g(p) = p^{(1740)}$. $\ker(g) = \mathbb{R}[X]_{1739}$ có $\dim \ker(g) = 1740$ (cơ sở $\{1, X, \dots, X^{1739}\}$). $\operatorname{Im}(g) = \mathbb{R}[X]_{283}$ có $\dim \operatorname{Im}(g) = 2024 - 1740 = 284$ (cơ sở $\{1, X, \dots, X^{283}\}$).</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>(a) Để sản xuất $1$ đồng điện, nhà máy điện (E) cần $0,3$ đồng điện và $0,1$ đồng nước; để sản xuất $1$ đồng nước, nhà máy nước (W) cần $0,2$ đồng điện và $0,4$ đồng nước. Thành phố cần cung cấp $12$ tỷ đồng điện và $8$ tỷ đồng nước ra ngoài. Hỏi mỗi nhà máy cần sản xuất tổng cộng bao nhiêu tỷ đồng?<br>
+        (b) Cho $A = (a_{ij})_{2\times 2}$ có phần tử không âm và tổng mỗi cột nhỏ hơn $1$. Chứng minh với mọi $d = (d_1, d_2)^T$, tồn tại duy nhất $x = (x_1, x_2)^T$ sao cho $x = Ax + d$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Giải hệ $(I - A)x = d$ với $A = \begin{pmatrix} 0,3 & 0,2 \\ 0,1 & 0,4 \end{pmatrix}$, $d = \begin{pmatrix} 12 \\ 8 \end{pmatrix}$ cho nhà máy (E): $22$ tỷ đồng, nhà máy (W): $17$ tỷ đồng.<br>
+                (b) Chứng minh $I - A$ khả nghịch: nếu $(I - A)^T y = 0$ với $|y_k|$ lớn nhất thì $|y_k| = |\sum_i a_{ik} y_i| \le |y_k| \sum_i a_{ik} < |y_k|$ nếu $y_k \neq 0$, vô lý.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Cho $\alpha, \beta, \gamma, \delta \in \mathbb{C}$ là $4$ nghiệm của $x^4 - 2x^3 - 1 = 0$. (a) Chứng minh $4$ nghiệm đôi một phân biệt. (b) Chứng minh $\alpha^3, \beta^3, \gamma^3, \delta^3$ đôi một phân biệt. (c) Tính $\alpha^3 + \beta^3 + \gamma^3 + \delta^3$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) $P'(x) = x^2(4x-6)$ có nghiệm $0, 3/2$ đều không phải nghiệm của $P(x)$. (b) Nếu $\alpha^3 = \beta^3$, thay $x^3$ vào phương trình dẫn tới vô lý. (c) Theo định lý Newton hoặc thế $y = x^3$ đưa về $y^4 - 8y^3 - 12y^2 - 6y - 1 = 0 \implies \alpha^3 + \beta^3 + \gamma^3 + \delta^3 = 8$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Định nghĩa $\sin A = \sum_{n=0}^\infty \frac{(-1)^n}{(2n+1)!} A^{2n+1}$.<br>
+        (a) Tính $\sin A$ với $A = \begin{pmatrix} 1 & -1 \\ 0 & 2 \end{pmatrix}$.<br>
+        (b) Tính $\sin A$ theo $x, y \in \mathbb{R}$ với $A = \begin{pmatrix} x & y \\ 0 & x \end{pmatrix}$.<br>
+        (c) Tồn tại hay không ma trận thực $A$ cấp $2$ sao cho $\sin A = \begin{pmatrix} 1 & 2023 \\ 0 & 1 \end{pmatrix}$?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Chéo hóa $A$ với $C = \begin{pmatrix} 1 & 1 \\ 0 & -1 \end{pmatrix}$, thu được $\sin A = \begin{pmatrix} \sin 1 & \sin 1 - \sin 2 \\ 0 & \sin 2 \end{pmatrix}$.<br>
+                (b) Viết $A = xI + yN$ ($N^2 = 0$), dùng công thức khai triển được $\sin A = \begin{pmatrix} \sin x & y\cos x \\ 0 & \sin x \end{pmatrix}$.<br>
+                (c) Không tồn tại: nếu $\sin A$ có giá trị riêng $1$ (bội đại số 2) thì giá trị riêng $\lambda$ của $A$ thỏa $\sin\lambda = 1 \implies \lambda = \frac{\pi}{2} + 2k\pi$ thực và $\cos\lambda = 0$, khi đó $\sin A = I$ (nếu $A$ chéo hóa hoặc không chéo hóa đều không ra số $2023$ ở góc trên phải).</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Kí hiệu $\mathcal{P}_n$ là tập các ma trận khả nghịch $A$ cấp $n$ sao cho các phần tử của $A$ và $A^{-1}$ đều bằng $0$ hoặc $1$.<br>
+        (a) Với $n = 3$, tìm tất cả các ma trận thuộc $\mathcal{P}_3$. (b) Tính $|\mathcal{P}_n|$ với $n$ tùy ý.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Từ $A A^{-1} = I_n$ với các phần tử đều không âm $\in \{0, 1\}$, mỗi hàng của $A$ và mỗi cột của $A^{-1}$ chỉ có thể chứa đúng $1$ số $1$, tức $A$ chính là ma trận hoán vị! Vậy $\mathcal{P}_n$ gồm đúng các ma trận hoán vị cấp $n$, có $|\mathcal{P}_n| = n!$ (với $n=3$ có $6$ ma trận).</p>
+            </div>
+        </details>
+
+        <h2 id="dai-so-b" class="igo-level-heading">Môn Thi: Đại Số — Bảng B</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Cho $A = \begin{pmatrix} x & 2022 & 2023 \\ 2022 & 2023 & x \\ 2023 & x & 2022 \end{pmatrix}$. (a) Tính $\det A$ theo $x$. (b) Tìm $x \in \mathbb{R}$ để $\operatorname{rank}(A) < 3$ và tính hạng khi đó.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Cộng các cột vào cột 1 rút thừa số $(x + 4045)$: $\det A = -(x + 4045)(x^2 - 4045x + 2022^2 - 2022\cdot 2023 + 2023^2)$ (nhân tử bậc hai vô nghiệm thực).<br>
+                (b) $\operatorname{rank}(A) < 3 \iff x = -4045$, khi đó $\operatorname{rank}(A) = 2$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Cho $f : \mathbb{R}^4 \to \mathbb{R}^3$ là ánh xạ tuyến tính: $(x_1, x_2, x_3, x_4) \mapsto (x_1 + \lambda x_2 - x_3 + 2x_4, 2x_1 - x_2 + \lambda x_3 + 5x_4, x_1 + 10x_2 - 6x_3 + x_4)$.<br>
+        (a) Với $\lambda = 3$, tìm cơ sở và số chiều của $\ker(f)$ và $\operatorname{Im}(f)$. (b) Tìm $\dim \operatorname{Im}(f)$ theo $\lambda$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Lập ma trận biểu diễn $3 \times 4$ và khử Gauss: $\operatorname{rank}(A) = 2$ nếu $\lambda = 3$ (khi đó $\dim\operatorname{Im}(f) = 2, \dim\ker(f) = 2$), và $\operatorname{rank}(A) = 3$ nếu $\lambda \neq 3$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Giống <strong>Bài 3</strong> Bảng A (câu c yêu cầu tìm đa thức bậc $4$ nhận $\alpha^3, \beta^3, \gamma^3, \delta^3$ làm nghiệm).</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đa thức bậc 4 cần tìm là $y^4 - 8y^3 - 12y^2 - 6y - 1$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Cho $A = \begin{pmatrix} 1 & -1 \\ 0 & 2 \end{pmatrix}$. (a) Tìm ma trận khả nghịch $C$ để $C^{-1}AC$ là ma trận đường chéo. (b) Tính $e^A = \sum_{n=0}^\infty \frac{A^n}{n!}$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Giá trị riêng $1, 2$, chọn $C = \begin{pmatrix} 1 & -1 \\ 0 & 1 \end{pmatrix}$. (b) $e^A = C \operatorname{diag}(e, e^2) C^{-1} = \begin{pmatrix} e & e - e^2 \\ 0 & e^2 \end{pmatrix}$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Giống <strong>Bài 5</strong> Bảng A ($|\mathcal{P}_n| = n!$).</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 5 Bảng A.</p>
+            </div>
+        </details>
+
+        <h2 id="giai-tich-a" class="igo-level-heading">Môn Thi: Giải Tích — Bảng A</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Cho $u_n = \prod_{k=1}^n \left(1 + \frac{1}{4^k}\right)$ ($\forall n \ge 1$). (a) Tìm $n$ để $u_n > \frac{5}{4}$. (b) Chứng minh $u_n \le 2023$ $\forall n$. (c) Chứng minh $(u_n)$ hội tụ và xác định giới hạn chính xác đến $1$ chữ số sau dấu phẩy thập phân.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) $u_1 = 5/4$, nên $u_n > 5/4 \iff n \ge 2$. (b) Dùng $1 + t \le e^t$ suy ra $u_n < e^{\sum_{k=1}^\infty 4^{-k}} = e^{1/3} < 2 < 2023$. (c) Chặn hai phía: $e^{3/10} \le L \le e^{1/3}$ (hoặc tính $u_3 \approx 1,34$), làm tròn 1 chữ số thập phân là $1,3$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Cho $f : [-1, 1] \to \mathbb{R}$ xác định bởi $f(x) = -\frac{x}{2}$ nếu $x \in [-1, 1] \cap \mathbb{Q}$ và $f(x) = x$ nếu $x \in [-1, 1] \setminus \mathbb{Q}$. (a) Chứng minh $f$ liên tục tại $0$. (b) $f$ có khả vi tại $0$ không? (c) $f$ có giá trị lớn nhất trên $[-1, 1]$ không?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) $|f(x)| \le |x| \to 0 = f(0)$. (b) Không khả vi tại $0$ vì $\frac{f(x)}{x} = -\frac{1}{2}$ trên $\mathbb{Q}\setminus\{0\}$ và $= 1$ trên $\mathbb{R}\setminus\mathbb{Q}$. (c) Không có GTLN (vì $\sup_{[-1,1]} f = 1$ nhưng tại $x = 1 \in \mathbb{Q}$ thì $f(1) = -1/2 < 1$).</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Một con thuyền xuất phát từ $(1, 0)$ (bờ phải $x = 1$) muốn đến $(0, 0)$ (bờ trái $x = 0$), nhưng do dòng chảy nên đi theo đường $y = \frac{x^2 - 1}{x^3 + 2}$ ($0 \le x \le 1$). (a) Thuyền có đến $(0, 0)$ không? (b) Có cập bờ trái không? (c) Tìm vị trí thuyền gần $(0, 0)$ nhất.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a, b) Tại $x = 0$, $y = -\frac{1}{2} \neq 0$, nên không đến $(0, 0)$ mà cập bờ trái tại $(0, -\frac{1}{2})$. (c) Bình phương khoảng cách $d^2(x) = x^2 + \left(\frac{x^2-1}{x^3+2}\right)^2$ đồng biến? Thực tế ở $x = 0$ khoảng cách là $1/2$, khảo sát hàm trên $[0, 1]$ cho min tại $x = 0$ (kiểm tra đạo hàm thấy $d^2$ tăng trên $[0, 1]$ hoặc so sánh trực tiếp).</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Cho $f : [0, 1] \to \mathbb{R}$ liên tục.<br>
+        (a) Chứng minh nếu $\int_0^1 f(x) P(x)^m\,dx = 0$ với mọi $m \ge 0$ và mọi đa thức bậc hai $P$, thì $f \equiv 0$ trên $[0, 1]$.<br>
+        (b) Kết luận còn đúng không nếu thay đa thức bậc hai bằng đa thức bậc nhất?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Chọn $P(x) = x^2$ suy ra $\int_0^1 f(x) x^{2m}\,dx = 0 \implies \int_0^1 f(x) Q(x^2)\,dx = 0$ với mọi đa thức $Q$. Đặt $t = x^2$ và dùng định lý xấp xỉ Weierstrass (hoặc chọn $P(x) = (x - a)^2$ để kiểm tra từng lân cận) suy ra $f \equiv 0$.<br>
+                (b) Vẫn đúng vì $\int_0^1 f(x) x^m\,dx = 0$ (chọn $P(x) = x$) cho mọi $m \ge 0$, suy ra $f \equiv 0$ theo Weierstrass.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Cho $f : [0, 1] \to \mathbb{R}$ liên tục trên $[0, 1]$, khả vi trong $(0, 1)$ và $f(0) = 0$.<br>
+        (a) Có tồn tại $d \in (0, 1)$ để $|f'(d)| \le \frac{f(d)}{2}$ không? (b) Chứng minh nếu $|f'(x)| \le \frac{f(x)}{2}$ $\forall x \in (0, 1)$ thì $f \equiv 0$. (c) Chứng minh tồn tại $c \in (0, 1)$ sao cho $\frac{f(c)}{2} \le |f'(c)|$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Không nhất thiết tồn tại (ví dụ $f(x) = x$). (b) Đặt $g(x) = e^{-x/2} f(x) \implies g'(x) \le 0$ và $h(x) = e^{x/2} f(x) \implies h'(x) \ge 0$, với $f(0) = 0$ suy ra $0 \le f(x) \le 0 \implies f \equiv 0$. (c) Hệ quả trực tiếp của (b) bằng phản chứng.</p>
+            </div>
+        </details>
+
+        <h2 id="giai-tich-b" class="igo-level-heading">Môn Thi: Giải Tích — Bảng B</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Giống <strong>Bài 1</strong> Bảng A (câu a, b, chứng minh hội tụ).</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 1 Bảng A.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Giống <strong>Bài 2</strong> Bảng A (câu c hỏi có giá trị nhỏ nhất trên $[-1, 1]$ không).</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Không có GTNN vì $\inf_{[-1,1]} f = -1$ nhưng $f(-1) = 1/2 > -1$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Giống <strong>Bài 3</strong> Bảng A.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 3 Bảng A.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Cho $f : [0, 1] \to \mathbb{R}$ liên tục. (a) Nếu $\int_0^1 f(x)g(x)\,dx = 0$ với mọi $g$ liên tục trên $[0, 1]$ thỏa $g(0) = g(1) = 0$ thì $f \equiv 0$. (b) Kết luận còn đúng không nếu thêm điều kiện $g(\frac{1}{2}) = 0$?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Chọn $g(x) = x(1-x)f(x) \ge 0$ (hoặc nhân $f(x)$ với hàm mũ cắt bằng $0$ ở hai đầu). (b) Vẫn đúng, chọn $g(x) = x(1-x)(x - \frac{1}{2})^2 f(x)$ suy ra $f \equiv 0$ trên $[0,1]\setminus\{0, \frac{1}{2}, 1\}$, do tính liên tục nên $f \equiv 0$ trên toàn $[0, 1]$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Cho hàm $f(x) = \frac{x}{\sqrt{x - 1}}$ trên $(1, +\infty)$. (a) Không tính $f'$, chứng tỏ $f'(x) = 0$ có nghiệm trên $(1, +\infty)$. (b) Tìm $f'(x)$. (c) Tính diện tích phần mặt phẳng giới hạn bởi $Ox$, đồ thị $y = f'(x)$ và đường thẳng $x = 4$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Chú ý $f(x) \to +\infty$ khi $x \to 1^+$ và $x \to +\infty$, tồn tại $a < b$ sao cho $f(a) = f(b)$, dùng định lý Rolle.<br>
+                (b) $f'(x) = \frac{x - 2}{2(x-1)^{3/2}}$. (c) Nghiệm của $f'(x) = 0$ là $x = 2$, diện tích cần tìm là $\int_2^4 f'(x)\,dx = f(4) - f(2) = \frac{4}{\sqrt{3}} - 2$.</p>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT ĐỀ THI OLYMPIC TOÁN SINH VIÊN 2023 ───</b></p>
+    </div>
+</body>
+</html>

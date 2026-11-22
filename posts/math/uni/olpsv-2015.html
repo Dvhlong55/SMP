@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Đề Thi Olympic Toán Sinh Viên 2015</title>
+    
+    <meta name="post-id" content="OLPSV2015">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="Đại Học">
+    <meta name="subcategory-filter" content="uni">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề thi chính thức và gợi ý giải Kỳ thi Olympic Toán học Sinh viên Toàn quốc năm 2015 (Lần thứ 23 - ĐH Kinh tế, ĐH Huế): Đại số & Giải tích (Bảng A, B).">
+    <meta property="og:title" content="SMP — Đề Thi Olympic Toán Sinh Viên 2015">
+    <meta property="og:description" content="Đề thi chính thức và gợi ý giải Olympic Toán Sinh viên Toàn quốc 2015.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/uni/olpsv-2015.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <!-- SMP SEO END -->
+
+    <style>
+        details.igo-hint-clean { margin: 8px 0 22px 0; border: none; background: transparent; }
+        summary.igo-hint-trigger { list-style: none; cursor: pointer; display: inline-flex; align-items: center; padding: 3px 6px; user-select: none; color: var(--exam-bold-color, #111); width: fit-content; outline: none; }
+        summary.igo-hint-trigger::-webkit-details-marker, summary.igo-hint-trigger::marker { display: none; }
+        .igo-arrow { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 4.5px 0 4.5px 7.5px; border-color: transparent transparent transparent currentColor; transition: transform 0.2s ease-in-out; margin-right: 8px; flex-shrink: 0; }
+        details.igo-hint-clean[open] .igo-arrow { transform: rotate(90deg); }
+        .igo-hint-content { padding: 8px 0 8px 16px; margin-top: 6px; border-left: 2px solid var(--border-light, #cbd5e1); font-size: 0.98rem; line-height: 1.8; color: var(--exam-text-color, #334155); }
+        body.dark-mode .igo-hint-content { border-left-color: rgba(255, 255, 255, 0.15); }
+        .igo-level-heading { color: var(--exam-bold-color, #111); font-size: 1.35rem; margin-top: 36px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1)); font-weight: 700; }
+        body.dark-mode .igo-level-heading { border-bottom-color: rgba(255,255,255,0.12); }
+        .igo-nav-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--accent-cyan, #0284c7) !important; text-decoration: none !important; margin: 12px 0 20px 0; transition: transform 0.2s ease; }
+        .igo-nav-link:hover { transform: translateX(-3px); }
+        .igo-mini-toc { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 16px 0 24px 0; padding: 10px 0; border-top: 1px solid var(--border-light, rgba(0,0,0,0.08)); border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08)); font-size: 0.9rem; }
+        body.dark-mode .igo-mini-toc { border-color: rgba(255,255,255,0.1); }
+        .igo-mini-toc a { color: var(--exam-bold-color, #111) !important; text-decoration: none !important; transition: color 0.2s; }
+        .igo-mini-toc a:hover { color: var(--accent-cyan, #0284c7) !important; }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Đề Thi Olympic Toán Sinh Viên 2015</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Lần thứ 23 · ĐH Kinh tế – ĐH Huế · Hội Toán Học Việt Nam</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
+        </div>
+
+        <div>
+            <a href="/posts/math/uni/de-thi-olympic-toan-sinh-vien.html" class="igo-nav-link">← Tổng quan Olympic Toán Sinh Viên (2013 – 2025)</a>
+        </div>
+
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Môn thi:</span>
+            <a href="#dai-so">Đại Số (Bảng A & B)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#giai-tich-a">Giải Tích (Bảng A)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#giai-tich-b">Giải Tích (Bảng B)</a>
+        </div>
+
+        <h2 id="dai-so" class="igo-level-heading">Môn Thi: Đại Số (Bảng B: 1–5 · Bảng A: 3–7)</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Cho $\alpha, \beta, \gamma$ là các nghiệm của phương trình $x^3 - 2015x + 4 = 0$. Hãy tìm hạng ma trận sau:
+        \[
+        A = \begin{pmatrix} \alpha & \beta & \gamma \\ \gamma & \alpha & \beta \\ \beta & \gamma & \alpha \end{pmatrix}.
+        \]</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>$\det A = (\alpha+\beta+\gamma)(\alpha^2+\beta^2+\gamma^2-\alpha\beta-\beta\gamma-\gamma\alpha) = 0$ (theo Viète $\alpha+\beta+\gamma = 0$). Xét định thức con cấp $2$: $\alpha^2 - \beta\gamma$. Nhân $\alpha$ ta có $\alpha(\alpha^2 - \beta\gamma) = \alpha^3 - \alpha\beta\gamma = (2015\alpha - 4) + 4 = 2015\alpha$, mà $\alpha \neq 0$ nên $\alpha^2 - \beta\gamma = 2015 \neq 0$. Vậy $\operatorname{rank}(A) = 2$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Cho $V$ là một không gian véc tơ thực có số chiều bằng $2015$ và $W \subset V$ là một không gian con có số chiều bằng $2014$. Chứng minh rằng tồn tại một cơ sở của $V$ mà không có véc tơ nào nằm trong $W$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Lấy cơ sở $(e_1, \dots, e_{2014})$ của $W$ và bổ sung $e_{2015} \notin W$ thành cơ sở của $V$. Đặt $e'_i = e_i + e_{2015}$ ($1 \le i \le 2014$) và $e'_{2015} = e_{2015}$. Hệ mới là cơ sở của $V$ và không có véc tơ nào thuộc $W$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Kí hiệu $\mathbb{R}[X]$ là không gian các đa thức một biến với hệ số thực, $D : \mathbb{R}[X] \to \mathbb{R}[X]$ là toán tử đạo hàm: $D(f(X)) = f'(X)$. Chứng minh rằng không tồn tại một ánh xạ $\mathbb{R}$-tuyến tính $d : \mathbb{R}[X] \to \mathbb{R}[X]$ sao cho $d^2 = D$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xét không gian con $V = \ker D^2$ (các đa thức bậc $\le 1$, $\dim V = 2$). Vì $d$ giao hoán với $D = d^2$, $d$ bảo toàn $V$. Hạn chế $\delta = d|_V$ thỏa mãn $\delta^4 = D^2|_V = 0$, nên $\delta$ lũy linh trên không gian $2$ chiều $\implies \delta^2 = 0 \implies D|_V = 0$, vô lý vì $D(X) = 1 \neq 0$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Giả sử mỗi điểm trong mặt phẳng được tô bằng một trong hai màu, xanh hoặc đỏ. Chứng minh rằng luôn tồn tại một hình chữ nhật có các đỉnh cùng màu.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xét lưới $3 \times 9$ điểm ($3$ hàng ngang, $9$ cột dọc). Mỗi cột có $2^3 = 8$ cách tô màu, nên theo Dirichlet có $2$ cột tô giống hệt nhau. Trên một cột có $3$ điểm mà chỉ có $2$ màu nên có $2$ điểm cùng màu; cùng với $2$ điểm tương ứng ở cột kia tạo thành hình chữ nhật $4$ đỉnh cùng màu.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Với mỗi số tự nhiên $n$ kí hiệu $\binom{x}{n} = \frac{x(x-1)\cdots(x-n+1)}{n!}$; $\binom{x}{0} = 1$.<br>
+        a) Chứng minh rằng với mọi đa thức $P(x)$ bậc $n$ luôn tồn tại các hệ số $c_0, \dots, c_n$ sao cho $P(x) = c_0\binom{x}{n} + c_1\binom{x}{n-1} + \dots + c_{n-1}\binom{x}{1} + c_n$.<br>
+        b) Cho $(a_n)_{n \ge 0}$ là một dãy số thực thỏa mãn $\sum_{i=0}^{2015} (-1)^i \binom{2015}{i} a_{n+i} = 0$ với mọi $n \ge 0$. Chứng minh rằng tồn tại đa thức $P(x)$ thỏa mãn $P(n) = a_n$ với mọi $n \ge 0$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Hệ $\{\binom{x}{0}, \dots, \binom{x}{n}\}$ gồm $n+1$ đa thức có bậc đôi một khác nhau từ $0$ đến $n$ nên là cơ sở của $\mathbb{R}_n[x]$.<br>
+                b) Quy nạp theo bậc sai phân $m$ (toán tử $\Delta a_n = a_{n+1} - a_n$ thỏa $\Delta^{2015} a_n = 0$), hoặc dùng phương trình đặc trưng $(T - 1)^{2015} = 0$ có nghiệm bội $2015$ bằng $1$ nên $a_n$ là đa thức bậc $\le 2014$ theo $n$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 6</span></h3>
+        <p>Bạch Tuyết chia $3$ lít sữa vào cốc của bảy chú lùn. Chú lùn thứ nhất chia đều tất cả sữa của mình vào cốc của sáu chú lùn còn lại. Tiếp theo chú thứ hai, thứ ba, $\dots$, thứ bảy lần lượt làm như vậy. Sau lượt của chú thứ bảy, lượng sữa trong cốc mỗi chú bằng đúng lượng sữa ban đầu Bạch Tuyết chia cho. Hỏi ban đầu mỗi chú lùn được chia bao nhiêu lít sữa?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Gọi $x_k$ là lượng sữa ban đầu của chú $k$, $y_k$ là lượng sữa chú $k$ nhận thêm trước khi chia ($y_1 = 0, x_7 = 0$). Ta có $y_{k+1} = y_k + \frac{1}{6}(x_k + y_k)$ và $x_k = x_{k+1} + \frac{1}{6}(x_{k+1} + y_{k+1})$. Giải ngược suy ra $x_k = \frac{7-k}{6} x_1$, kết hợp $\sum_{k=1}^7 x_k = 3$ cho $x_k = \frac{7-k}{7}$ lít ($k=1,\dots,7$).</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 7</span></h3>
+        <p>Một khóa học có $n$ sinh viên thành lập $m$ câu lạc bộ $C_1, \dots, C_m$ sao cho mỗi CLB có số lẻ thành viên và hai CLB khác nhau luôn có số chẵn thành viên chung. Kí hiệu $A \in M_{m,n}$ với $a_{ij} = 1$ nếu sinh viên $j \in C_i$ và $0$ nếu ngược lại.<br>
+        1. Chứng minh rằng $\det(A A^t)$ là một số nguyên lẻ.<br>
+        2. Chứng minh rằng $m \le n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>1. Phần tử $(i, k)$ của $B = A A^t$ là $|C_i \cap C_k|$, nên đường chéo của $B$ toàn số lẻ và ngoài đường chéo toàn số chẵn. Suy ra $\det B \equiv \det I_m = 1 \pmod 2$.<br>
+                2. Do $\det B \neq 0$ nên $m = \operatorname{rank}(B) = \operatorname{rank}(AA^t) \le \operatorname{rank}(A) \le n$ (Định lý Oddtown).</p>
+            </div>
+        </details>
+
+        <h2 id="giai-tich-a" class="igo-level-heading">Môn Thi: Giải Tích — Bảng A</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Cho dãy số $(a_n)$ xác định bởi $2a_{n+1} - 2a_n + a_n^2 = 0$, $n = 0, 1, 2, \dots$<br>
+        1. Chứng minh rằng $(a_n)$ là một dãy đơn điệu.<br>
+        2. Biết $a_0 = 1$, hãy tìm $\lim_{n\to\infty} a_n$.<br>
+        3. Tìm điều kiện của $a_0$ để dãy $(a_n)$ có giới hạn hữu hạn. Trong trường hợp này, hãy tìm $\lim_{n\to\infty} n a_n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>1. $a_{n+1} - a_n = -\frac{a_n^2}{2} \le 0$ nên dãy không tăng. 2. Với $a_0 = 1$, $0 < a_n \le 1 \implies \lim a_n = 0$. 3. Hội tụ khi và chỉ khi $0 \le a_0 \le 2$ (khi đó $\lim a_n = 0$). Với $a_0 \in \{0, 2\}$ thì $\lim n a_n = 0$; với $0 < a_0 < 2$, áp dụng định lý Stolz cho $\frac{1}{a_n}$: $\lim \frac{1/a_n}{n} = \lim \left(\frac{1}{a_{n+1}} - \frac{1}{a_n}\right) = \lim \frac{a_n}{2a_{n+1}} = \frac{1}{2} \implies \lim n a_n = 2$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Cho $\alpha, \beta$ là hai số thực bất kỳ mà $|\alpha| \neq |\beta|$. Tìm tất cả các hàm $f : \mathbb{R} \to \mathbb{R}$ liên tục tại $0$ và thỏa mãn $f(\alpha x) = f(\beta x) + x^2$ với mọi $x \in \mathbb{R}$. Có tồn tại hàm $f$ thỏa mãn các điều kiện nói trên không nếu $|\alpha| = |\beta|$?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $g(x) = f(x) - \frac{x^2}{\alpha^2 - \beta^2}$, ta được $g(\alpha x) = g(\beta x)$. Với $|\beta| < |\alpha|$ ($k = \beta/\alpha, |k| < 1$), $g(y) = g(k^n y) \to g(0) = f(0)$, nên $f(x) = C + \frac{x^2}{\alpha^2 - \beta^2}$ ($C \in \mathbb{R}$). Nếu $|\alpha| = |\beta|$, không tồn tại hàm $f$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Cho $f$ là một hàm nhận giá trị thực, xác định và liên tục trên $[0, 1]$. Chứng minh rằng tồn tại các số $x_1, x_2, x_3 \in (0, 1)$ sao cho
+        \[
+        \frac{f(x_1)}{4x_1} + \frac{f(x_2)}{6x_2^2} = f(x_3).
+        \]</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $F(x) = \int_0^x f(t)\,dt$. Áp dụng định lý Lagrange cho $F$ trên $[0, 1]$ được $F(1) = f(x_3)$, và áp dụng định lý Cauchy cho $F$ với $g(x) = x^2$ và $h(x) = x^3$ được $F(1) = \frac{f(x_1)}{2x_1} = \frac{f(x_2)}{3x_2^2}$, từ đó $\frac{f(x_1)}{4x_1} + \frac{f(x_2)}{6x_2^2} = \frac{1}{2}F(1) + \frac{1}{2}F(1) = f(x_3)$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Cho $f : [0, \infty) \to [0, \infty)$ là một hàm liên tục. Biết rằng tồn tại giới hạn $\lim_{x \to \infty} f(x) \int_0^x (f(t))^2\,dt = a \in (0, \infty)$, hãy tìm $\lim_{x \to \infty} \sqrt[3]{x}\, f(x)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $G(x) = \int_0^x (f(t))^2\,dt$. Ta có $G'(x) = (f(x))^2$, nên $(G(x)^3)' = 3 G(x)^2 f(x)^2 = 3 (f(x) G(x))^2 \to 3a^2$ khi $x \to \infty$. Theo quy tắc L'Hôpital, $\lim_{x\to\infty} \frac{G(x)^3}{x} = 3a^2 \implies \lim \frac{G(x)}{x^{1/3}} = (3a^2)^{1/3}$, từ đó $\lim_{x\to\infty} x^{1/3} f(x) = \frac{a}{(3a^2)^{1/3}} = \sqrt[3]{\frac{a}{3}}$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Cho $(a_n)$ là một dãy đơn điệu giảm, không âm, sao cho chuỗi $\sum_{n=1}^\infty a_n$ hội tụ. Chứng minh rằng chuỗi $\sum_{n=1}^\infty n(a_n - a_{n+1})$ cũng hội tụ.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Dùng biến đổi Abel cho tổng riêng: $\sum_{k=1}^n k(a_k - a_{k+1}) = \sum_{k=1}^n a_k - n a_{n+1} \le \sum_{k=1}^n a_k$. Vì các số hạng $k(a_k - a_{k+1}) \ge 0$ và tổng riêng bị chặn trên bởi $\sum_{k=1}^\infty a_k$, chuỗi hội tụ.</p>
+            </div>
+        </details>
+
+        <h2 id="giai-tich-b" class="igo-level-heading">Môn Thi: Giải Tích — Bảng B</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Cho dãy số $(a_n)$ xác định bởi $2a_{n+1} - 2a_n + a_n^2 = 0$, $n = 0, 1, 2, \dots$<br>
+        1. Chứng minh rằng $(a_n)$ là một dãy đơn điệu.<br>
+        2. Biết $a_0 = 1$, hãy tìm $\lim_{n\to\infty} a_n$.<br>
+        3. Tìm điều kiện của $a_0$ để dãy $(a_n)$ có giới hạn hữu hạn. Trong trường hợp này, hãy tìm $\lim_{n\to\infty} n a_n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(Cùng đề với Bài 1 Bảng A): Hội tụ khi $0 \le a_0 \le 2$ với giới hạn $0$; $\lim n a_n = 0$ nếu $a_0 \in \{0, 2\}$ và $\lim n a_n = 2$ nếu $0 < a_0 < 2$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Với mỗi số thực $\alpha \neq \pm 1$, tìm tất cả các hàm $f : \mathbb{R} \to \mathbb{R}$ liên tục tại $0$ sao cho $f(\alpha x) = f(x) + x^2$ với mọi $x \in \mathbb{R}$. Có tồn tại hàm $f$ thỏa mãn các điều kiện nói trên không nếu $\alpha = \pm 1$?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Trường hợp riêng $\beta = 1$ của Bài 2 Bảng A: $f(x) = C + \frac{x^2}{\alpha^2 - 1}$ với $|\alpha| \neq 1$, và không tồn tại nếu $\alpha = \pm 1$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Cho $f : [0, 1] \to \mathbb{R}$ là một hàm khả vi liên tục. Chứng minh rằng tồn tại các số $x_1, x_2, x_3 \in (0, 1)$ sao cho
+        \[
+        \frac{f'(x_1)}{4x_1} + \frac{f'(x_2)}{6x_2^2} = f'(x_3).
+        \]</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Áp dụng định lý Lagrange cho $f$ và định lý Cauchy cho $f$ với $x^2, x^3$ trên $[0, 1]$ (tương tự Bài 3 Bảng A với $F$ thay bằng $f$).</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Cho $f : [0, 1] \to (-\infty, 1]$ là một hàm liên tục, thỏa mãn điều kiện $\int_0^1 f(x)\,dx = 0$. Chứng minh rằng
+        \[
+        \int_0^1 (f(x))^3\,dx \le \frac{1}{4}.
+        \]</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Nhận xét $(1 - f(x))(f(x) + \frac{1}{2})^2 \ge 0$ với mọi $f(x) \le 1$, khai triển ra $f(x)^3 \le \frac{1}{4} + \frac{3}{4}f(x)$. Lấy tích phân trên $[0, 1]$ kết hợp $\int_0^1 f(x)\,dx = 0$ suy ra $\int_0^1 f(x)^3\,dx \le \frac{1}{4}$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Cho $f : [0, +\infty) \to (0, +\infty)$ là một hàm liên tục. Đặt
+        \[
+        g(x) = \sqrt[3]{f(x)} \int_0^x \frac{1}{f(t)}\,dt \quad \forall x \ge 0.
+        \]
+        Chứng minh rằng hàm $g$ không thể bị chặn trên $[0, +\infty)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Giả sử $g(x) \le M$ với mọi $x > 0$. Đặt $H(x) = \int_0^x \frac{1}{f(t)}\,dt > 0$, khi đó $H'(x) = \frac{1}{f(x)} \ge \frac{H(x)^3}{M^3} \implies \frac{H'(x)}{H(x)^3} \ge \frac{1}{M^3}$. Tích phân từ $a > 0$ đến $x \to +\infty$ dẫn đến $\frac{1}{2H(a)^2} \ge \frac{x - a}{M^3} \to +\infty$, vô lý.</p>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT ĐỀ THI OLYMPIC TOÁN SINH VIÊN 2015 ───</b></p>
+    </div>
+</body>
+</html>

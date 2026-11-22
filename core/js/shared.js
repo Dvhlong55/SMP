@@ -243,6 +243,97 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: 'Tổng Quan Đề Thi Olympic Toán Sinh Viên (2013 – 2025)',
+        date: 'November 22, 2026',
+        url: '/posts/math/uni/de-thi-olympic-toan-sinh-vien.html',
+        tags: ['Olympic SV', 'Calculus', 'Linear Algebra', 'Đại Học', 'OLPSV'],
+        page: '/pages/toanhoc.html?filter=uni'
+    },
+    {
+        title: 'Đề Thi Olympic Toán Sinh Viên 2025 (Đại Học)',
+        date: 'November 22, 2026',
+        url: '/posts/math/uni/olpsv-2025.html',
+        tags: ['Olympic SV', 'Calculus', 'Linear Algebra', 'Đại Học', 'OLPSV'],
+        page: '/pages/toanhoc.html?filter=uni'
+    },
+    {
+        title: 'Đề Thi Olympic Toán Sinh Viên 2024 (Đại Học)',
+        date: 'November 22, 2026',
+        url: '/posts/math/uni/olpsv-2024.html',
+        tags: ['Olympic SV', 'Calculus', 'Linear Algebra', 'Đại Học', 'OLPSV'],
+        page: '/pages/toanhoc.html?filter=uni'
+    },
+    {
+        title: 'Đề Thi Olympic Toán Sinh Viên 2023 (Đại Học)',
+        date: 'November 22, 2026',
+        url: '/posts/math/uni/olpsv-2023.html',
+        tags: ['Olympic SV', 'Calculus', 'Linear Algebra', 'Đại Học', 'OLPSV'],
+        page: '/pages/toanhoc.html?filter=uni'
+    },
+    {
+        title: 'Đề Thi Olympic Toán Sinh Viên 2022 (Đại Học)',
+        date: 'November 22, 2026',
+        url: '/posts/math/uni/olpsv-2022.html',
+        tags: ['Olympic SV', 'Calculus', 'Linear Algebra', 'Đại Học', 'OLPSV'],
+        page: '/pages/toanhoc.html?filter=uni'
+    },
+    {
+        title: 'Đề Thi Olympic Toán Sinh Viên 2019 (Đại Học)',
+        date: 'November 22, 2026',
+        url: '/posts/math/uni/olpsv-2019.html',
+        tags: ['Olympic SV', 'Calculus', 'Linear Algebra', 'Đại Học', 'OLPSV'],
+        page: '/pages/toanhoc.html?filter=uni'
+    },
+    {
+        title: 'Đề Thi Olympic Toán Sinh Viên 2018 (Đại Học)',
+        date: 'November 22, 2026',
+        url: '/posts/math/uni/olpsv-2018.html',
+        tags: ['Olympic SV', 'Calculus', 'Linear Algebra', 'Đại Học', 'OLPSV'],
+        page: '/pages/toanhoc.html?filter=uni'
+    },
+    {
+        title: 'Đề Thi Olympic Toán Sinh Viên 2017 (Đại Học)',
+        date: 'November 22, 2026',
+        url: '/posts/math/uni/olpsv-2017.html',
+        tags: ['Olympic SV', 'Calculus', 'Linear Algebra', 'Đại Học', 'OLPSV'],
+        page: '/pages/toanhoc.html?filter=uni'
+    },
+    {
+        title: 'Đề Thi Olympic Toán Sinh Viên 2016 (Đại Học)',
+        date: 'November 22, 2026',
+        url: '/posts/math/uni/olpsv-2016.html',
+        tags: ['Olympic SV', 'Calculus', 'Linear Algebra', 'Đại Học', 'OLPSV'],
+        page: '/pages/toanhoc.html?filter=uni'
+    },
+    {
+        title: 'Đề Thi Olympic Toán Sinh Viên 2015 (Đại Học)',
+        date: 'November 22, 2026',
+        url: '/posts/math/uni/olpsv-2015.html',
+        tags: ['Olympic SV', 'Calculus', 'Linear Algebra', 'Đại Học', 'OLPSV'],
+        page: '/pages/toanhoc.html?filter=uni'
+    },
+    {
+        title: 'Đề Thi Olympic Toán Sinh Viên 2014 (Đại Học)',
+        date: 'November 22, 2026',
+        url: '/posts/math/uni/olpsv-2014.html',
+        tags: ['Olympic SV', 'Calculus', 'Linear Algebra', 'Đại Học', 'OLPSV'],
+        page: '/pages/toanhoc.html?filter=uni'
+    },
+    {
+        title: 'Đề Thi Olympic Toán Sinh Viên 2013 (Đại Học)',
+        date: 'November 22, 2026',
+        url: '/posts/math/uni/olpsv-2013.html',
+        tags: ['Olympic SV', 'Calculus', 'Linear Algebra', 'Đại Học', 'OLPSV'],
+        page: '/pages/toanhoc.html?filter=uni'
+    },
+    {
+        title: '§ Claude AI Và Giả Thuyết Riemann: Toàn Cảnh Sự Kiện Ngày 20–21/11/2026',
+        date: 'November 22, 2026',
+        url: '/posts/math/phieuluu/claude-va-gia-thuyet-riemann.html',
+        tags: ['Phiêu Lưu', 'Số Học', 'Riemann', 'Claude AI'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: 'Tổng Quan Đề Thi Olympic Toán HSSV — Khối THPT (2016 – 2025)',
         date: 'November 20, 2026',
         url: '/posts/math/de-thi-olympic-toan-hssv-thpt.html',

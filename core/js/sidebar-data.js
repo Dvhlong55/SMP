@@ -4,8 +4,8 @@ const LEFT_TAGS_HTML = `
                 <li><a href="/pages/toanhoc.html?filter=vmo">VMO <span>119</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=thcs">THCS <span>89</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=thpt">THPT <span>1</span></a></li>
-                <li><a href="/pages/toanhoc.html?filter=uni">Đại Học <span>1</span></a></li>
-                <li><a href="/pages/toanhoc.html?filter=phieu-luu">Phiêu Lưu <span>5</span></a></li>
+                <li><a href="/pages/toanhoc.html?filter=uni">Đại Học <span>13</span></a></li>
+                <li><a href="/pages/toanhoc.html?filter=phieu-luu">Phiêu Lưu <span>6</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=tools">Tool <span>6</span></a></li>
                 <li><a href="/pages/forum.html">Forum</a></li>
                 <li><a href="/pages/nonmath.html">Non Math <span>16</span></a></li>

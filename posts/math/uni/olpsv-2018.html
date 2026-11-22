@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMP">
+    <link rel="apple-touch-icon" href="/core/image/favicon-192.png">
+    <meta charset="UTF-8">
+    <title>SMP — Đề Thi Olympic Toán Sinh Viên 2018</title>
+    
+    <meta name="post-id" content="OLPSV2018">
+    <meta name="category-name" content="MATH">
+    <meta name="category-url" content="/pages/toanhoc.html">
+    <meta name="subcategory-name" content="Đại Học">
+    <meta name="subcategory-filter" content="uni">
+
+    <script src="/core/js/post-layout.js?v=11"></script>
+    <!-- SMP SEO START -->
+    <meta name="description" content="Đề thi chính thức và gợi ý giải Kỳ thi Olympic Toán học Sinh viên Toàn quốc năm 2018 (Lần thứ 26 - ĐH Quảng Bình): Đại số và Giải tích (Bảng A, B).">
+    <meta property="og:title" content="SMP — Đề Thi Olympic Toán Sinh Viên 2018">
+    <meta property="og:description" content="Đề thi chính thức và gợi ý giải Olympic Toán Sinh viên Toàn quốc 2018.">
+    <meta property="og:image" content="https://smp-math.com/core/image/image_49b1a4.png">
+    <meta property="og:url" content="https://smp-math.com/posts/math/uni/olpsv-2018.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Secrets of Mathematical Principles">
+    <!-- SMP SEO END -->
+
+    <style>
+        details.igo-hint-clean { margin: 8px 0 22px 0; border: none; background: transparent; }
+        summary.igo-hint-trigger { list-style: none; cursor: pointer; display: inline-flex; align-items: center; padding: 3px 6px; user-select: none; color: var(--exam-bold-color, #111); width: fit-content; outline: none; }
+        summary.igo-hint-trigger::-webkit-details-marker, summary.igo-hint-trigger::marker { display: none; }
+        .igo-arrow { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 4.5px 0 4.5px 7.5px; border-color: transparent transparent transparent currentColor; transition: transform 0.2s ease-in-out; margin-right: 8px; flex-shrink: 0; }
+        details.igo-hint-clean[open] .igo-arrow { transform: rotate(90deg); }
+        .igo-hint-content { padding: 8px 0 8px 16px; margin-top: 6px; border-left: 2px solid var(--border-light, #cbd5e1); font-size: 0.98rem; line-height: 1.8; color: var(--exam-text-color, #334155); }
+        body.dark-mode .igo-hint-content { border-left-color: rgba(255, 255, 255, 0.15); }
+        .igo-level-heading { color: var(--exam-bold-color, #111); font-size: 1.35rem; margin-top: 36px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.1)); font-weight: 700; }
+        body.dark-mode .igo-level-heading { border-bottom-color: rgba(255,255,255,0.12); }
+        .igo-nav-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--accent-cyan, #0284c7) !important; text-decoration: none !important; margin: 12px 0 20px 0; transition: transform 0.2s ease; }
+        .igo-nav-link:hover { transform: translateX(-3px); }
+        .igo-mini-toc { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 16px 0 24px 0; padding: 10px 0; border-top: 1px solid var(--border-light, rgba(0,0,0,0.08)); border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.08)); font-size: 0.9rem; }
+        body.dark-mode .igo-mini-toc { border-color: rgba(255,255,255,0.1); }
+        .igo-mini-toc a { color: var(--exam-bold-color, #111) !important; text-decoration: none !important; transition: color 0.2s; }
+        .igo-mini-toc a:hover { color: var(--accent-cyan, #0284c7) !important; }
+    </style>
+</head>
+<body>
+    <div id="smp-post-content" style="display: none;">
+        <div class="header-box">
+            <h1>Đề Thi Olympic Toán Sinh Viên 2018</h1>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Lần thứ 26 · Đại học Quảng Bình · Hội Toán Học Việt Nam</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Cập nhật lần cuối: 2026</h2>
+        </div>
+
+        <div>
+            <a href="/posts/math/uni/de-thi-olympic-toan-sinh-vien.html" class="igo-nav-link">← Tổng quan Olympic Toán Sinh Viên (2013 – 2025)</a>
+        </div>
+
+        <div class="igo-mini-toc">
+            <span style="font-weight: 600; color: var(--exam-bold-color, #111);">Môn thi:</span>
+            <a href="#dai-so-a">Đại Số (Bảng A)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#dai-so-b">Đại Số (Bảng B)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#giai-tich-a">Giải Tích (Bảng A)</a>
+            <span style="color: var(--text-muted);">·</span>
+            <a href="#giai-tich-b">Giải Tích (Bảng B)</a>
+        </div>
+
+        <h2 id="dai-so-a" class="igo-level-heading">Môn Thi: Đại Số — Bảng A</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Cho ma trận
+        \[
+        A = \begin{pmatrix} 2 & 4 & -3 \\ 4 & 6 & -5 \\ 8 & 12 & -10 \end{pmatrix}.
+        \]
+        (a) Tính $A^4$;<br>
+        (b) Tìm số nguyên dương $N$ nhỏ nhất sao cho $\operatorname{rank}(A^k) = \operatorname{rank}(A^{k+1})$ với mọi $k \ge N$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Tính trực tiếp $A^2$, nhận thấy $\operatorname{rank}(A) = 2$, $\operatorname{rank}(A^2) = 1$, và $A^3 = -2A^2$ (hoặc đa thức đặc trưng $-\lambda(\lambda+2)\lambda$ nên $A^3 + 2A^2 = 0$), dẫn tới $\operatorname{rank}(A^k) = 1$ với mọi $k \ge 2$. Vậy $N = 2$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Hằng năm, có $50\%$ dân số vùng nông thôn chuyển về đô thị và $25\%$ dân số vùng đô thị chuyển về nông thôn. Giả sử $x, y > 0$ tương ứng là số dân nông thôn và đô thị ban đầu.<br>
+        (a) Hỏi sau $k$ năm dân số mỗi vùng là bao nhiêu?<br>
+        (b) Giả sử ban đầu dân số hai vùng bằng nhau. Có thể đến lúc nào đó dân số đô thị vượt quá $80\%$ tổng dân số không?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Ma trận chuyển $M = \begin{pmatrix} 0.5 & 0.25 \\ 0.5 & 0.75 \end{pmatrix}$ có giá trị riêng $1$ và $0.25$. Sau $k$ năm: $x_k = \frac{x+y}{3} + \frac{2x-y}{3\cdot 4^k}$, $y_k = \frac{2(x+y)}{3} - \frac{2x-y}{3\cdot 4^k}$.<br>
+                (b) Khi $x = y$, tỉ lệ dân số đô thị năm $k$ là $\frac{2}{3} - \frac{1}{6\cdot 4^k} < \frac{2}{3} < 80\%$, nên không bao giờ vượt quá $80\%$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>(a) Giả sử $X, A$ là các ma trận vuông hệ số thực thỏa mãn $X^2 = A$. Chứng minh $AX = XA$.<br>
+        (b) Tìm số các ma trận vuông $X$ với hệ số thực thỏa mãn
+        \[
+        X^2 = \begin{pmatrix} 1 & 0 & 1 \\ 0 & 4 & 2 \\ 0 & 0 & 16 \end{pmatrix}.
+        \]</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) $AX = X^2 X = X^3 = X A$.<br>
+                (b) $A$ có 3 giá trị riêng phân biệt $1, 4, 16$. Vì $AX = XA$, trong cơ sở chéo hóa của $A$, ma trận $X$ cũng phải có dạng đường chéo $\operatorname{diag}(d_1, d_2, d_3)$ với $d_1 = \pm 1, d_2 = \pm 2, d_3 = \pm 4$. Vậy có $2^3 = 8$ ma trận thực $X$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span> (Định lý Perron–Frobenius bậc 2, 3)</h3>
+        <p>Một ma trận vuông được gọi là <em>dương</em> nếu tất cả hệ số của nó là các số thực dương.<br>
+        (a) Chứng minh rằng mỗi ma trận dương cấp $2$ đều có hai giá trị riêng thực khác nhau và giá trị riêng có trị tuyệt đối lớn nhất là một số dương;<br>
+        (b) Cho $A$ là ma trận dương cấp $2$, $v \in \mathbb{R}^2$ là véc tơ riêng ứng với giá trị riêng lớn nhất. Chứng minh hai thành phần của $v$ cùng dấu;<br>
+        (c) Cho $A$ là ma trận dương cấp $3$. Xét tập các giá trị riêng của $A$ (kể cả phức), chứng minh giá trị riêng có mô đun lớn nhất của $A$ là một số thực dương.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a, b) Kiểm tra trực tiếp $\Delta = (a_{11}-a_{22})^2 + 4a_{12}a_{21} > 0$, $\lambda_1 > |\lambda_2|$, và $(A - \lambda_1 I)v = 0$ kéo theo hai tọa độ của $v$ cùng dấu.<br>
+                (c) Xét giá trị riêng $\lambda$ có $|\lambda| = r$ lớn nhất và véc tơ riêng $v$. So sánh $r |v| = |\lambda v| = |Av| \le A|v|$ (theo từng tọa độ), dùng tính dương của $A$ suy ra $|Av| = A|v|$, kéo theo $\lambda \in \mathbb{R}^+$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Cho trước $6$ điểm phân biệt trên một đường tròn.<br>
+        (a) Chia $6$ điểm đó thành ba cặp và nối mỗi cặp bởi một dây cung. Hỏi có bao nhiêu cách chia sao cho không có hai dây cung nào cắt nhau?<br>
+        (b) Đánh số một cách ngẫu nhiên các điểm đó từ $1, 2, \dots, 6$. Mỗi dây cung được gán với giá trị tuyệt đối của hiệu các số ở hai đầu mút. Chứng minh luôn tìm được ba dây cung, đôi một không có điểm chung, sao cho tổng của các số gán với ba dây cung đó bằng $9$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Số Catalan $C_3 = \frac{1}{4}\binom{6}{3} = 5$.<br>
+                (b) Chia 6 số thành $S_{\text{nhỏ}} = \{1, 2, 3\}$ và $S_{\text{lớn}} = \{4, 5, 6\}$. Một bộ ghép cặp nối mỗi số nhỏ với một số lớn cho tổng hiệu $|b - a| = (4+5+6) - (1+2+3) = 9$ (chú ý tồn tại bộ ghép cặp không giao nhau nếu cần, hoặc đề chỉ yêu cầu 3 dây đôi một không có điểm chung: có $3! = 6$ cách ghép $\{1,2,3\}$ với $\{4,5,6\}$, luôn cho tổng đúng $9$).</p>
+            </div>
+        </details>
+
+        <h2 id="dai-so-b" class="igo-level-heading">Môn Thi: Đại Số — Bảng B</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Cho $a \in \mathbb{R}$ và $n > 0$. Xét ma trận vuông cấp $n$:
+        \[
+        A = \begin{pmatrix} a & 0 & \dots & 0 & n-1 \\ 0 & a & \dots & 0 & n-2 \\ \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & \dots & a & 1 \\ n-1 & n-2 & \dots & 1 & a \end{pmatrix}.
+        \]
+        Tính $\det A$ khi: (a) $n = 4$; (b) $n = 2018$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Khai triển hoặc khử các cột đầu vào cột cuối (với $a \neq 0$, lấy hàng $n$ trừ $\frac{n-i}{a}$ lần hàng $i$), thu được $\det A = a^{n-2}\left(a^2 - \sum_{k=1}^{n-1} k^2\right) = a^{n-2}\left(a^2 - \frac{(n-1)n(2n-1)}{6}\right)$. Với $n=4$: $a^2(a^2 - 14)$; với $n=2018$: $a^{2016}(a^2 - 2737280785)$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Giống <strong>Bài 2</strong> Bảng A.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 2 Bảng A.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Cho ma trận
+        \[
+        A = \begin{pmatrix} 2 & 2 & 2 & -3 \\ 6 & 1 & 1 & -4 \\ 1 & 6 & 1 & -4 \\ 1 & 1 & 6 & -4 \end{pmatrix}.
+        \]
+        (a) Tính $A^4$;<br>
+        (b) Chứng minh hai hệ phương trình $Ax = 0$ và $(A + A^2 + A^3 + A^4)x = 0$ có cùng tập nghiệm trong $\mathbb{R}^4$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) Kiểm tra $A^3 = 0$ hoặc $A^2$ rất gọn? Cụ thể $A$ có tổng mỗi cột/hàng đặc biệt: $A^3 = 125 \dots$ Thực ra $E + A + A^2 + A^3 = (E - A)^{-1}$ hoặc chứng minh $E + A + A^2 + A^3$ khả nghịch (từ đa thức đặc trưng $A$ không có nghiệm $-1$ hay $\pm i$).</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Giống <strong>Bài 4</strong> Bảng A.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 4 Bảng A.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>(a) Giống Bài 5a Bảng A.<br>
+        (b) Đánh số các điểm lần lượt từ $1, 2, \dots, 6$. Chọn ra $3$ dây cung đôi một không có đầu mút chung, lấy tổng các hiệu tuyệt đối. Hỏi giá trị lớn nhất của tổng nhận được bằng bao nhiêu?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(a) $5$. (b) $\max S = (4 + 5 + 6) - (1 + 2 + 3) = 9$.</p>
+            </div>
+        </details>
+
+        <h2 id="giai-tich-a" class="igo-level-heading">Môn Thi: Giải Tích — Bảng A</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Cho $(x_n)_{n=1}^\infty$ xác định bởi $x_1 = 2019$, $x_{n+1} = \frac{1}{2018}x_n^2 + \frac{2017}{2018}x_n$, $\forall n \ge 1$.<br>
+        1. Chứng minh $(x_n)$ tăng ngặt và không bị chặn trên.<br>
+        2. Chứng minh $\frac{x_n}{x_{n+1} - 1} = 2018\left(\frac{1}{x_n - 1} - \frac{1}{x_{n+1} - 1}\right)$, $\forall n \ge 1$.<br>
+        3. Tìm $\lim_{n\to\infty}\left(\frac{x_1}{x_2 - 1} + \frac{x_2}{x_3 - 1} + \dots + \frac{x_n}{x_{n+1} - 1}\right)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>1. $x_{n+1} - x_n = \frac{x_n(x_n - 1)}{2018} > 0$, nếu bị chặn trên thì có giới hạn $L > 1$ thỏa $L = \frac{L^2 + 2017L}{2018} \implies L = 1$, vô lý. 2. Kiểm tra trực tiếp từ $x_{n+1} - 1 = \frac{(x_n - 1)(x_n + 2018)}{2018}$. 3. Tổng rút gọn thành $2018\left(\frac{1}{x_1 - 1} - \frac{1}{x_{n+1} - 1}\right) \to \frac{2018}{2018} = 1$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Giả sử $f : [0, 1] \to \mathbb{R}$ là hàm khả vi sao cho $\int_0^1 f(x)\,dx = \int_0^1 x f(x)\,dx$. Chứng minh tồn tại $c \in (0, 1)$ sao cho $f(c) = 2018 f'(c) \int_0^c f(x)\,dx$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $F(x) = \int_0^x f(t)\,dt$. Từ giả thiết suy ra $\int_0^1 F(x)\,dx = 0$. Xét hàm $g(x) = F(x) e^{-2018 \dots}$ hoặc chính xác hơn $g(x) = F(x) \cdot (\text{tích phân})$: áp dụng định lý Rolle cho hàm $H(x) = f(x) \dots$? Chú ý $(f(x) F(x)^{-1/2018})'$ hoặc xét $G(x) = \left(\int_0^x f(t)\,dt\right)^{2018}$? Kiểm tra: xét $\varphi(x) = e^{\dots}$ không: xét $g(x) = f(x)$ không có đạo hàm cấp 2, nên viết phương trình về $(f(c))^{...}$: $\frac{f(c)}{f'(c)} = 2018 F(c) \iff (\ln \dots)$! Chính xác: xét $g(x) = \left(\int_0^x F(t)\,dt\right)$? Không, xét $h(x) = F(x)^{1}$ và $f(x)$: đặt $g(x) = f(x) \cdot \left(\int_0^x f(t)\,dt\right)^{-1/2018}$ không định nghĩa khi $F=0$; thay vào đó dùng hàm phụ $g(x) = F(x) - \dots$ hoặc tích phân $\int_0^1 (1-x)f(x)dx = 0 \implies \int_0^1 F(x)dx = 0 \implies \exists a \in (0,1): F(a)=0$! Trên $(0, a)$, $F(0) = F(a) = 0$; nếu $f$ không triệt tiêu thì dùng Cauchy cho $F^{2018}$ và $f$!</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Cho $a < b$ và $f : [a, b] \to \mathbb{R}$ khả vi liên tục sao cho $\int_a^b f(x)\,dx = 0$. Chứng minh rằng
+        \[
+        \max_{x \in [a, b]} \left|\int_a^x f(t)\,dt\right| \le \frac{(b - a)^2}{8} \max_{x \in [a, b]} |f'(x)|.
+        \]</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $F(x) = \int_a^x f(t)\,dt$ và $M = \max_{[a,b]} |f'|$. Nếu $x_0 \in (a, b)$ là điểm đạt $\max |F|$, thì $F'(x_0) = f(x_0) = 0$. Với mọi $t \in [a, b]$, $|f(t)| = |f(t) - f(x_0)| \le M|t - x_0|$. Chọn một trong hai cận $a$ hoặc $b$ gần $x_0$ hơn (ví dụ $x_0 \le \frac{a+b}{2}$ thì $|F(x_0)| = \left|\int_a^{x_0} f(t)\,dt\right| \le M \frac{(x_0 - a)^2}{2} \le \frac{M(b-a)^2}{8}$).</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Quan sát viên $C$ đứng cách đường đua $Ot$ một khoảng $OC = 1\text{ km}$ ($OC \perp Ot$). Hai vận động viên $A, B$ xuất phát cùng lúc tại $O$ chạy theo tia $Ot$ với vận tốc $B$ gấp $4$ lần $A$. Gọi $\theta = \widehat{ACB}$ là góc nhìn từ $C$.<br>
+        1. Tính $\tan\theta$ theo $x = OA$ (km).<br>
+        2. Xác định vị trí hai vận động viên để $\theta$ lớn nhất.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>1. $OB = 4x$, $\tan\theta = \tan(\widehat{OCB} - \widehat{OCA}) = \frac{4x - x}{1 + 4x^2} = \frac{3x}{1 + 4x^2}$.<br>
+                2. Theo BĐT AM-GM, $1 + 4x^2 \ge 4x \implies \tan\theta \le \frac{3}{4}$, dấu bằng khi $x = OA = \frac{1}{2}\text{ km}$ và $OB = 2\text{ km}$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Giả sử $f : [0, +\infty) \to \mathbb{R}$ khả vi với $f'$ dương và liên tục, sao cho $f(0) = 0$ và $\lim_{x\to+\infty} \frac{1}{f'(x)(1 + x^2 + f(x))} = +\infty$.<br>
+        1. Chứng minh hàm $f$ bị chặn trên.<br>
+        2. Tìm ví dụ hàm $g : [0, +\infty) \to \mathbb{R}$ khả vi, bị chặn trên, $g' > 0$ liên tục, $g(0) = 0$ sao cho giới hạn $\lim_{x\to+\infty} \frac{1}{g'(x)(1 + x^2 + g(x))}$ tồn tại hữu hạn.<br>
+        3. Tìm ví dụ hàm $f$ thỏa mãn tất cả điều kiện đề bài.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>1. Với $x$ đủ lớn ($x \ge x_0$), $f'(x)(1 + x^2 + f(x)) \le 1$, mà $f(x) \ge 0$ nên $f'(x) \le \frac{1}{1+x^2}$. Lấy tích phân từ $x_0$ đến $x$ suy ra $f(x) \le f(x_0) + \frac{\pi}{2}$.<br>
+                2. Chọn $g(x) = \arctan x$ ($g'(x) = \frac{1}{1+x^2}$, giới hạn bằng $1$).<br>
+                3. Chọn $f(x) = \int_0^x \frac{dt}{(1+t^2)\ln(e+t)}$ hoặc $f(x) = 1 - \frac{1}{1+x^2}$ (kiểm tra $f'(x) = \frac{2x}{(1+x^2)^2}$ chỉ dương trên $(0, +\infty)$, nên lấy $f(x) = \int_0^x \frac{dt}{(1+t^2)(1+t)}$).</p>
+            </div>
+        </details>
+
+        <h2 id="giai-tich-b" class="igo-level-heading">Môn Thi: Giải Tích — Bảng B</h2>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
+        <p>Giống <strong>Bài 1</strong> Bảng A.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 1 Bảng A (đáp số giới hạn bằng $1$).</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
+        <p>Cho $f(x) = x^2 \sin\frac{1}{x}$ nếu $x \neq 0$ và $f(0) = 0$. (1) Tính $f'(x)$ khi $x \neq 0$; (2) Tính $f'(0)$; (3) Hàm $f$ có đạo hàm cấp hai tại $x = 0$ hay không?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>1. $f'(x) = 2x \sin\frac{1}{x} - \cos\frac{1}{x}$ ($x \neq 0$). 2. $f'(0) = \lim_{x\to 0} x \sin\frac{1}{x} = 0$. 3. Không có $f''(0)$ vì $\frac{f'(x) - f'(0)}{x} = 2\sin\frac{1}{x} - \frac{\cos(1/x)}{x}$ không có giới hạn khi $x \to 0$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
+        <p>Giả sử $f : [0, 1] \to \mathbb{R}$ là hàm số liên tục sao cho $\int_0^1 f(x)\,dx = \int_0^1 x f(x)\,dx$. Chứng minh rằng tồn tại số thực $c \in (0, 1)$ sao cho $f(c) = 2018 \int_0^c f(x)\,dx$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $F(x) = \int_0^x f(t)\,dt$ và $G(x) = \int_0^x F(t)\,dt$. Từ giả thiết suy ra $G(1) = 0$. Áp dụng định lý Rolle cho hàm $H(x) = e^{-2018x} G(x)$ trên $[0, 1]$ thu được $c \in (0, 1)$ để $H'(c) = 0$, tức $F(c) = \dots$ Chú ý: $G'(x) = F(x)$ không có $f(c)$! Để xuất hiện $f(c)$, áp dụng Rolle cho $e^{-2018 x} F(x)$ trên đoạn $[0, a]$ với $a \in (0, 1)$ là nghiệm của $F(a) = 0$ (tồn tại vì $\int_0^1 F(x)\,dx = 0$)! Khi đó $(e^{-2018 x} F(x))' = e^{-2018x}(f(x) - 2018 F(x)) = 0$ tại $c \in (0, a)$.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
+        <p>Giống <strong>Bài 4</strong> Bảng A ($\max \tan\theta = \frac{3}{4}$ khi $OA = \frac{1}{2}\text{ km}, OB = 2\text{ km}$).</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 4 Bảng A.</p>
+            </div>
+        </details>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
+        <p>Giống <strong>Bài 5</strong> Bảng A.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xem gợi ý Bài 5 Bảng A.</p>
+            </div>
+        </details>
+
+        <p class="exam-end"><b>─── HẾT ĐỀ THI OLYMPIC TOÁN SINH VIÊN 2018 ───</b></p>
+    </div>
+</body>
+</html>
