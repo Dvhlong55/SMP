@@ -64,6 +64,17 @@
             <b>Giả thuyết Riemann cổ điển (RH, 1859).</b> Mọi nghiệm không không tầm thường của hàm zeta Riemann $\zeta(s)$ đều có phần thực bằng $\dfrac{1}{2}$ (tức đều nằm trên cùng một đường thẳng đứng $\operatorname{Re}(s) = \dfrac{1}{2}$ trên mặt phẳng phức).
         </div>
 
+        <div style="text-align: center; margin: 24px 0;">
+            <img src="/core/image/riemann-1859-zeros-quote.jpg" alt="Bernhard Riemann (1859) và quỹ đạo nghiệm của hàm zeta" style="max-width: 480px; width: 100%; border-radius: 10px; box-shadow: var(--shadow-soft);">
+            <p style="font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-top: 8px;">Bernhard Riemann (1826–1866) và sơ đồ các nghiệm không tầm thường trên trục $\operatorname{Re}(s) = \frac{1}{2}$.</p>
+        </div>
+
+        <div class="smp-graybox">
+            <p style="margin: 0; font-style: italic;">“It is very probable that all these roots are real. One would indeed wish for a rigorous proof here; I have however, after several rapid attempts, temporarily laid this search aside…”</p>
+            <p style="margin: 6px 0 0 0; text-align: right; font-size: 0.88rem; color: var(--text-muted);">— <b>Bernhard Riemann</b>, <i>On the Number of Primes Less Than a Given Magnitude</i> (1859)</p>
+            <p style="margin: 8px 0 0 0; font-size: 0.9rem; border-top: 1px dashed var(--border-color); padding-top: 8px;"><i>(Tạm dịch: "Rất có khả năng tất cả các nghiệm này đều là số thực. Người ta hẳn sẽ mong muốn một chứng minh chặt chẽ ở đây; tuy nhiên, sau vài nỗ lực chớp nhoáng, tôi tạm thời gác cuộc tìm kiếm này sang một bên...")</i></p>
+        </div>
+
         <p>Bên cạnh phát biểu gốc cho $\zeta(s)$, các nhà toán học còn xét <b>Giả thuyết Riemann tổng quát (GRH)</b> cho các họ hàm $L$ rộng hơn. Trong sự kiện ngày 20/11/2026, cần phân biệt rõ phạm vi của hai công trình:</p>
         <ul style="padding-left: 20px; line-height: 1.85;">
             <li><b>Trong công trình của Levent Alpöge & Claude:</b> "GRH" được hiểu theo nghĩa cổ điển cho các <b>hàm $L$ Dirichlet</b> (cùng với Giả thuyết Riemann gốc cho $\zeta(s)$). Đặc biệt, phát biểu được cộng đồng Lean và Mathlib chính thức chứng nhận vào ngày 21/11 là <b>Giả thuyết Riemann gốc (<code>RiemannHypothesis</code>)</b> theo định nghĩa trong thư viện Mathlib.</li>
@@ -85,9 +96,34 @@
         <p>Bằng máy tính, các nhà toán học đã kiểm tra hàng nghìn tỷ nghiệm không tầm thường đầu tiên của $\zeta(s)$, và tất cả đều nằm đúng trên đường thẳng $\operatorname{Re}(s) = \frac{1}{2}$. Tuy nhiên, dù kiểm tra được một nghìn tỷ hay một triệu tỷ nghiệm, đó vẫn chỉ là một số hữu hạn trường hợp. Giả thuyết Riemann đòi hỏi một khẳng định không có ngoại lệ cho mọi nghiệm không tầm thường, kể cả ở những vùng xa đến mức không máy tính nào kiểm tra tới được.</p>
         <p>Suốt 167 năm, nhiều nhà toán học xuất sắc đã phát triển các công cụ mới và giải quyết được các bài toán tương tự trên những cấu trúc khác, nhưng vẫn thiếu một phương pháp có thể kết nối các mảnh ghép đã biết thành một lập luận tổng quát hoàn chỉnh cho trường số thông thường.</p>
 
+        <h3 class="smp-subsection-title">§2.3 Dự đoán của Terence Tao và "cú sốc 35 ngày"</h3>
+        <p>Để thấy mức độ bất ngờ của sự kiện này đối với giới toán học đỉnh cao, hãy nhìn vào phát biểu của <b>GS. Terence Tao</b> (Huy chương Fields, một trong những nhà toán học vĩ đại nhất đương đại). Chỉ khoảng một tháng trước sự kiện (tháng 10/2026), trong một cuộc trò chuyện trên kênh toán học nổi tiếng <i>Numberphile</i>, khi được hỏi về tương lai của Giả thuyết Riemann, Terence Tao đã dự đoán rằng nhân loại có lẽ phải đợi đến khoảng năm <b>2050</b> mới có cơ hội chứng minh được bài toán này.</p>
+
+        <div style="text-align: center; margin: 24px 0;">
+            <img src="/core/image/terry-tao-riemann-prediction.jpg" alt="Terence Tao trên Numberphile dự đoán Giả thuyết Riemann năm 2050" style="max-width: 480px; width: 100%; border-radius: 10px; box-shadow: var(--shadow-soft);">
+            <p style="font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-top: 8px;">Terence Tao trên Numberphile từng dự đoán RH sẽ được chứng minh vào khoảng năm 2050. Thực tế chỉ 35 ngày sau, công bố của Alpöge và Claude AI xuất hiện.</p>
+        </div>
+
+        <p>Thế nhưng thực tế chỉ mất đúng <b>35 ngày</b> sau buổi phỏng vấn đó để chứng minh hình thức đầu tiên được hoàn tất và công bố. Khoảng cách giữa dự đoán của con người và tốc độ đột phá của mô hình AI kết hợp kiểm chứng hình thức đã tạo nên một cơn địa chấn thực sự trong cộng đồng khoa học.</p>
+
         <h2 class="smp-section-title">§3. Phương Pháp Của Levent Alpöge Và Vai Trò Thực Tế Của Claude AI</h2>
 
         <p><b>Levent Alpöge</b> là một nhà toán học chuyên sâu về lý thuyết số hiện làm việc tại <b>Anthropic</b>, người đã quan tâm đến Giả thuyết Riemann từ thời sinh viên. Đây không phải câu chuyện một người dùng phổ thông nhập câu lệnh yêu cầu AI giải toán, mà là sự phối hợp giữa định hướng chiến lược của một nhà toán học chuyên nghiệp với năng lực triển khai và đề xuất kỹ thuật của AI.</p>
+
+        <div style="text-align: center; margin: 24px 0;">
+            <img src="/core/image/alpoge-scientific-american-announcement.jpg" alt="Levent Alpöge và bức tâm thư công bố chứng minh cùng Claude AI" style="max-width: 500px; width: 100%; border-radius: 10px; box-shadow: var(--shadow-soft);">
+            <p style="font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-top: 8px;">Bài đăng trên Scientific American trích dẫn bức tâm thư của Levent Alpöge: "i think im an old school mathematician", ảnh thời trung học của ông và lời khẳng định giải quyết Giả thuyết Riemann cùng Claude.</p>
+        </div>
+
+        <div class="smp-graybox">
+            <p style="font-weight: 600; margin-bottom: 8px;">Trích bức tâm thư của Levent Alpöge gửi cộng đồng (Anthropic):</p>
+            <p style="font-style: italic; margin-bottom: 8px; line-height: 1.65;">“The Riemann Hypothesis is the classic problem in number theory. It asks for optimal control on the count of prime numbers of a given size. Its shadows have guided mathematicians for 150 years, and its many rhymes and reflections, even reaching physics, taught us the unity of our fields.<br><br>
+            <b>I believe I have, working with Claude, discovered a proof of the Riemann Hypothesis.</b> In fact, the method easily extends much further, resolving the so-called Generalized Riemann Hypothesis, and I expect, with more time, the Extended Riemann Hypothesis too. Claude and I have also formalized the arguments without assumptions. It is natural to feel that this is an end, in my case a loss of a principal guiding light, but what I saw during the course of progress so amazed me that I believe it is one day in across science of something far greater.<br><br>
+            It was my secret in my student days that my plans were for this problem in decades, which meant then that I tried to become familiar with all tools that I could possibly recognize in the problem when it was time…”</p>
+            <div style="border-top: 1px dashed var(--border-color); padding-top: 8px; font-size: 0.9rem;">
+                <i>(Bản dịch: "Giả thuyết Riemann là bài toán kinh điển của lý thuyết số. Nó đòi hỏi sự kiểm soát tối ưu đối với số lượng số nguyên tố dưới một kích thước cho trước. Cái bóng của nó đã dẫn đường cho các nhà toán học suốt 150 năm... <b>Tôi tin rằng mình, khi làm việc cùng Claude, đã phát hiện ra một chứng minh cho Giả thuyết Riemann.</b> Trên thực tế, phương pháp này mở rộng dễ dàng hơn nhiều, giải quyết cái gọi là Giả thuyết Riemann tổng quát (GRH), và tôi kỳ vọng với thêm thời gian, cả Giả thuyết Riemann mở rộng (ERH) nữa. Claude và tôi cũng đã hình thức hóa các lập luận mà không cần bất kỳ giả định nào. Cảm giác đây là một điểm kết thúc là điều tự nhiên — với tôi, đó là sự mất đi một ngọn hải đăng soi đường chính yếu — nhưng những gì tôi chứng kiến trong suốt quá trình tiến triển đã khiến tôi kinh ngạc đến mức tôi tin rằng đây là một ngày trong toàn thể khoa học về một điều gì đó vĩ đại hơn rất nhiều...")</i>
+            </div>
+        </div>
 
         <p>Theo ghi chú gốc <code>remark.pdf</code> của Alpöge công bố ngày 20/11/2026:</p>
         <ol style="padding-left: 20px; line-height: 1.85;">
@@ -146,12 +182,20 @@
                 </ul>
             </li>
             <li><b>Báo cáo kiểm chứng tại MIT:</b> GS. Andrew Sutherland cập nhật trang nhật ký xác nhận chứng minh của Alpöge đã vượt qua các bộ kiểm tra độc lập (<code>nanoda</code>, <code>con-leche</code>, <code>lean4lean</code>) và chỉ phụ thuộc vào các tiên đề tiêu chuẩn của Lean cùng các định nghĩa của Mathlib (ông cũng lưu ý bản dựng ban đầu chạy trên máy chủ đám mây chưa đóng hộp sandbox hoàn toàn, nhưng quá trình kiểm tra lại các tệp đầu ra bởi nhiều kernel độc lập đã hoàn tất).</li>
-            <li><b>Tuyên bố chung từ cộng đồng Lean và Mathlib (21/11/2026):</b> Cộng đồng Lean và Mathlib ra thông cáo chính thức xác nhận tính đúng đắn hình thức cho Giả thuyết Riemann cổ điển (<code>RiemannHypothesis</code> trong Mathlib).</li>
+            <li><b>Tuyên bố chung từ cộng đồng Lean và Mathlib (21/11/2026):</b> Cộng đồng Lean FRO (Formal Reasoning Organization) và Mathlib Initiative ra thông cáo chính thức xác nhận tính đúng đắn hình thức cho Giả thuyết Riemann cổ điển (<code>RiemannHypothesis</code> trong Mathlib).</li>
         </ul>
 
+        <div style="text-align: center; margin: 24px 0;">
+            <img src="/core/image/lean-mathlib-statement-tweet.jpg" alt="Thông cáo chính thức của Lean FRO và Mathlib Initiative trên X" style="max-width: 480px; width: 100%; border-radius: 10px; box-shadow: var(--shadow-soft);">
+            <p style="font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-top: 8px;">Thông cáo chính thức từ tài khoản Lean (@leanprover) về việc kiểm chứng thành công thư viện Lean 17 triệu dòng mã của Alpöge.</p>
+        </div>
+
         <div class="smp-graybox">
-            <b>Tuyên bố chung của Cộng đồng Lean & Mathlib (21/11/2026):</b><br>
-            <i>"We have full confidence that Alpöge's proof of the Riemann Hypothesis is correct."</i><br>
+            <b>Tuyên bố chung của Lean FRO & Mathlib Initiative (21/11/2026):</b><br>
+            <p style="margin: 8px 0; font-style: italic;">“The Lean FRO and Mathlib Initiative have released a joint statement on the Lean verification of the Riemann Hypothesis.<br>
+            On November 20, Levent Alpöge released a proof of the Riemann Hypothesis as a Lean library of 17 million lines of code. Over the past day, the Lean and Mathlib communities worked together to verify it. The statement certifies the proof as correct and describes how it meets all necessary verification criteria.<br>
+            Congratulations to Levent on this achievement, and thank you to everyone in the community who contributed to the verification.”</p>
+            <p style="margin: 8px 0; font-weight: 600; color: #10b981;">“We have full confidence that Alpöge's proof of the Riemann Hypothesis is correct.”</p>
             (Tạm dịch: Chúng tôi hoàn toàn tin tưởng rằng chứng minh Giả thuyết Riemann của Alpöge là đúng.)<br><br>
             <b>Bốn tiêu chí kiểm chứng độc lập cho phát biểu <code>RiemannHypothesis</code> trong Mathlib đều đã được đáp ứng:</b>
             <ol style="margin-top: 6px; margin-bottom: 0; padding-left: 20px;">
