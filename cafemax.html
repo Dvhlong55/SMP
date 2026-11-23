@@ -352,10 +352,12 @@ async function loadData(forceFresh = false){
   const syncDot = document.getElementById('sync-dot');
   const syncText = document.getElementById('sync-text');
   refreshBtn.classList.add('refresh-spin');
+  syncText.textContent = 'SYNCING...';
 
   try {
-    const url = forceFresh ? `${API_URL}?fresh=true` : API_URL;
-    const res = await fetch(url);
+    const ts = Date.now();
+    const url = `${API_URL}?_t=${ts}${forceFresh ? '&fresh=true' : ''}`;
+    const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     render(data);
