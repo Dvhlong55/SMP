@@ -208,8 +208,7 @@ function inline(s){
 }
 function renderRadar(md){
   if(!md) return '<div class="empty">No analysis available.</div>';
-  var lines = esc(md).split(/\\\\r?\\
-/);
+  var lines = esc(md).split(/\r?\n/);
   var sections=[], cur={title:'',html:'',list:false};
   function closeList(){ if(cur.list){cur.html+='</ul>';cur.list=false;} }
   function push(){ closeList(); if(cur.title||cur.html) sections.push(cur); }
