@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0E1116">
-<title>CafeMax OS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fira&#43;Code:wght@400;500;600&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -120,9 +119,8 @@ details.sec[open] summary::after{content:'\\\\2212'}
 <body>
 <main class="wrap">
   <header class="top">
-    <span class="brand serif">CafeMax</span>
+    <span class="mono" style="color:var(--muted);font-size:12.5px"><span id="date-str">--</span> <span id="clock">--:--</span></span>
     <div class="top-r">
-      <span class="mono"><span id="date-str">--</span> <span id="clock">--:--</span></span>
       <button class="icon-btn" id="theme-btn" aria-label="Toggle Light/Dark mode">☾</button>
     </div>
   </header>
@@ -167,7 +165,7 @@ details.sec[open] summary::after{content:'\\\\2212'}
 </nav>
 
 <script>
-var DATA = {"dateStr":"Mon, 23 Nov","readiness":78,"sleep":"7 hr 16 min","curfew":"14:00","bedtime":"22:30","timeline":[{"startTime":"06:30","endTime":"07:15","startMs":1795390200000,"endMs":1795392900000,"title":"IELTS Daily","meta":"06:30 \\u2013 07:15","type":"event"},{"startTime":"07:30","endTime":"12:45","startMs":1795393800000,"endMs":1795412700000,"title":"Deep Work Window","meta":"Uninterrupted Execution / Problem Solving","type":"gap"},{"startTime":"12:45","endTime":"13:05","startMs":1795412700000,"endMs":1795413900000,"title":"☕ CafeMax: Pre-Class Espresso + 15m Rest","meta":"12:45 \\u2013 13:05","type":"caffeine"},{"startTime":"13:30","endTime":"16:30","startMs":1795415400000,"endMs":1795426200000,"title":"Probability & Statistics (Proofs & Derivations)","meta":"13:30 \\u2013 16:30","type":"event"},{"startTime":"16:30","endTime":"23:30","startMs":1795426200000,"endMs":1795451400000,"title":"Deep Work Window","meta":"Uninterrupted Execution / Problem Solving","type":"gap"},{"startTime":"23:30","endTime":"00:00","startMs":1795451400000,"endMs":1795453200000,"title":"🌙 CafeMax: Hard Stop & Wind-Down","meta":"23:30 \\u2013 00:00","type":"event"}],"tasks":[{"title":"Install the SOS Security and Order app of the Ho Chi Minh City Police Department and send photos to Ms. Nhan.","due":"23 Oct","urgent":true,"dueMs":1792713600000},{"title":"Study IELTS Speaking 2026 (NgocBach)","due":"01 Nov","urgent":true,"dueMs":1793491200000},{"title":"Complete the SHCD-SV assignment, Topic A.","due":"23 Nov","urgent":true,"dueMs":1795392000000},{"title":"Fill out the form reporting the reason for not yet having a VNeID Level 2 temporary residence permit (Third health check-up).","due":"29 Nov","urgent":false,"dueMs":1795910400000},{"title":"Deadline for submitting the SHCD-SV assignment, Topic A.","due":"30 Nov","urgent":false,"dueMs":1795996800000}],"aiBrief":"### 🎯 Strategic Directive\\
+var DATA = {"dateStr":"Mon, 23 Nov","readiness":78,"sleep":"7 hr 16 min","curfew":"14:00","bedtime":"22:30","timeline":[{"startTime":"06:30","endTime":"07:15","startMs":1795390200000,"endMs":1795392900000,"title":"IELTS Daily","meta":"06:30 \\u2013 07:15","type":"event"},{"startTime":"07:30","endTime":"13:30","startMs":1795393800000,"endMs":1795415400000,"title":"Deep Work Window","meta":"Uninterrupted Execution / Problem Solving","type":"gap"},{"startTime":"13:30","endTime":"16:30","startMs":1795415400000,"endMs":1795426200000,"title":"Probability & Statistics (Proofs & Derivations)","meta":"13:30 \\u2013 16:30","type":"event"},{"startTime":"16:30","endTime":"21:30","startMs":1795426200000,"endMs":1795444200000,"title":"Evening Open Block","meta":"Light Review & Low-Friction Prep","type":"gap"}],"tasks":[{"title":"Install the SOS Security and Order app of the Ho Chi Minh City Police Department and send photos to Ms. Nhan.","due":"23 Oct","urgent":true,"dueMs":1792713600000},{"title":"Study IELTS Speaking 2026 (NgocBach)","due":"01 Nov","urgent":true,"dueMs":1793491200000},{"title":"Complete the SHCD-SV assignment, Topic A.","due":"23 Nov","urgent":true,"dueMs":1795392000000},{"title":"Fill out the form reporting the reason for not yet having a VNeID Level 2 temporary residence permit (Third health check-up).","due":"29 Nov","urgent":false,"dueMs":1795910400000},{"title":"Deadline for submitting the SHCD-SV assignment, Topic A.","due":"30 Nov","urgent":false,"dueMs":1795996800000}],"aiBrief":"### 🎯 Strategic Directive\\
 - **State & Posture:** **Push Full Power** \\u2013 leverage today\\u2019s two free windows to eliminate the only hard\\u2011deadline that will otherwise spill into tomorrow\\u2019s high\\u2011cognitive load.\\
 - **Primary Bottleneck:** **Complete \\u201cDo the SHCD\\u2011SV Topic A harvest\\u201d (due today)** \\u2013 this is the single task whose delay will erode tomorrow\\u2019s RSA/cryptography deep\\u2011dive and force a costly mental shift late at night.\\
 \\
@@ -361,8 +359,8 @@ initTheme(); render(DATA); tick();
 setInterval(tick,10000);
 setInterval(function(){renderNow(DATA.timeline||[]);},60000);
 
-// Sync latest data from backend proxy
-async function syncLatest() {
+// Auto-sync live data from backend proxy
+async function autoSync() {
   try {
     const res = await fetch('https://smp-backend-kcwn.onrender.com/api/cafemax?_t=' + Date.now(), { cache: 'no-store' });
     if (res.ok) {
@@ -376,8 +374,7 @@ async function syncLatest() {
     console.debug('CafeMax sync offline:', e);
   }
 }
-syncLatest();
-setInterval(syncLatest, 60000);
+setInterval(autoSync, 60000);
 
 </script>
 </body>
