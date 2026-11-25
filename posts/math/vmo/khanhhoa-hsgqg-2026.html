@@ -43,21 +43,51 @@
         <p>a) Giải phương trình $4x^4 + 8x^3 - 3x^2 - \dfrac{13}{2}x - 1 = 0$.</p>
         <p>b) Cho tam giác $ABC$ không cân có các góc $A, B, C$ đo bằng radian và độ dài các cạnh đối diện với các góc $A, B, C$ lần lượt là $a, b, c$. Chứng minh rằng:</p>
         <p>$$\frac{A\sin A + B\sin B}{\sin A + \sin B} + \frac{B\sin B + C\sin C}{\sin B + \sin C} + \frac{C\sin C + A\sin A}{\sin C + \sin A} &gt; \pi.$$</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Nhẩm nghiệm $x = -2$, phân tích thành $(x+2)(8x^3 - 6x - 1) = 0$; với $8x^3 - 6x - 1 = 0$, đặt $x = \cos\theta$ để đưa về $\cos 3\theta = \frac{1}{2}$, thu được tập nghiệm $\left\{-2,\; \cos\frac{\pi}{9},\; -\cos\frac{2\pi}{9},\; -\cos\frac{4\pi}{9}\right\}$. b) Dùng định lý sin thay $\sin A, \sin B, \sin C$ bởi $a, b, c$; từ $(a-b)(A-B) \ge 0$ (có dấu bằng không đồng thời xảy ra vì $\triangle ABC$ không cân) suy ra $\frac{aA+bB}{a+b} \ge \frac{A+B}{2}$, cộng ba bất đẳng thức tương tự được tổng lớn hơn $A+B+C = \pi$.</p>
+            </div>
+        </details>
 
         <h3>Câu 2. (4,0 điểm)</h3>
         <p>Tìm tất cả các giá trị thực của tham số $m$ sao cho tồn tại duy nhất cặp số thực $(x; y)$ thỏa mãn hệ điều kiện:</p>
         <p>$$\begin{cases} x^2 + y^2 - 4x + 2y + 4 = 0 \\ \log_{x^2 + y^2 + 2}(4x + 4y - 6 + m^2) \ge 1. \end{cases}$$</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Phương trình đầu là đường tròn $(C_1): (x-2)^2 + (y+1)^2 = 1$ tâm $I(2, -1)$, bán kính $R=1$. Vì $x^2+y^2+2 \ge 2 &gt; 1$, bất phương trình thứ hai tương đương $(x-2)^2 + (y-2)^2 \le m^2$ (hình tròn $(D_2)$ tâm $J(2, 2)$, bán kính $|m|$). Do $IJ = 3$, để giao của $(C_1)$ và $(D_2)$ có đúng một điểm thì chúng phải tiếp xúc ngoài, tức $|m| = IJ - R = 2$, suy ra $m = \pm 2$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (4,0 điểm)</h3>
         <p>Với $x, y, z$ là các số thực dương thỏa mãn $x \ge \max\{y, z\}$, tìm giá trị nhỏ nhất của biểu thức</p>
         <p>$$P(x, y, z) = \frac{x}{y} + 2\sqrt{1 + \frac{y}{z}} + 3\sqrt[3]{1 + \frac{z}{x}}.$$</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $a = \frac{x}{y} \ge 1, b = \frac{y}{z} &gt; 0, c = \frac{z}{x} \in (0, 1]$ ($abc = 1$). Dùng bất đẳng thức $\sqrt{1+b} \ge \sqrt{2}b^{1/4}$ và $\sqrt[3]{1+c} \ge \sqrt[3]{2}c^{1/6}$ để có $P \ge \left(1 - \frac{\sqrt{2}}{2}\right)a + \frac{\sqrt{2}}{2}a + 2\sqrt{2}b^{1/4} + 3\sqrt[3]{2}c^{1/6}$. Áp dụng AM-GM cho $5$ số $\frac{\sqrt{2}}{2}a$ và bốn số $\frac{\sqrt{2}}{2}b^{1/4}$, rồi khảo sát hàm nghịch biến $g(c) = \frac{5\sqrt{2}}{2}c^{-1/5} + 3\sqrt[3]{2}c^{1/6}$ trên $(0, 1]$ để thu được $\min P = 1 + 2\sqrt{2} + 3\sqrt[3]{2}$ tại $x = y = z$.</p>
+            </div>
+        </details>
 
         <h3>Câu 4. (4,0 điểm)</h3>
         <p>Cho tam giác $ABC$. Gọi $D, E, F$ lần lượt là trung điểm của các cạnh $AB, BC, CA$. Đường phân giác của góc $\widehat{ADC}$ cắt cạnh $AC$ tại $N$; đường phân giác của góc $\widehat{BDC}$ cắt cạnh $BC$ tại $M$. Gọi $O$ là giao điểm của $MN$ và $CD$. Đường thẳng $OE$ cắt $AC$ tại $P$, đường thẳng $OF$ cắt $BC$ tại $Q$. Chứng minh rằng:</p>
         <p>$$\frac{1}{EF} + \frac{1}{DC} = \frac{2}{MN} \quad \text{và} \quad CD = PQ.$$</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Theo tính chất phân giác và $DA = DB$ suy ra $MN \parallel AB$; đặt $k = \frac{CN}{CA} = \frac{CM}{CB}$ thì $O$ là trung điểm $MN$, $MN = 2k \cdot EF$ và $OD = (1-k)CD$. Do $\widehat{MDN} = 90^\circ$ nên $OD = \frac{1}{2}MN = k \cdot EF$, từ đó suy ra $\frac{1}{EF} + \frac{1}{DC} = \frac{2}{MN}$. Kẻ đường thẳng qua $O$ song song $BC$ cắt $AC$ tại $U$, dùng định lý Thales tính được $\frac{CP}{CA} = \frac{CQ}{CB} = \frac{k}{2(1-k)}$, dẫn đến $PQ = \frac{k}{1-k}EF = CD$.</p>
+            </div>
+        </details>
 
         <h3>Câu 5. (4,0 điểm)</h3>
         <p>Cho dãy số nguyên dương $(u_n)$ không hằng số thỏa mãn $(m - n) \mid (u_m - u_n)$ với mọi số nguyên dương $m \neq n$. Chứng minh rằng tập hợp tất cả các ước nguyên tố của các số hạng trong dãy $(u_n)$ là vô hạn.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Giả sử phản chứng tập ước nguyên tố của dãy chỉ gồm hữu hạn số $p_1, \dots, p_k$, đặt $M = p_1\cdots p_k$. Xét các chỉ số $n = 1 + t u_1 M$ ($t \in \mathbb{N}^*$): vì $(u_n)$ không hằng nên tồn tại $t$ sao cho $u_n \neq u_1$ (nếu không, $(m - 1 - tu_1 M) \mid (u_m - u_1)$ với mọi $t$ kéo theo $u_m = u_1$). Khi đó $u_1 M \mid u_n - u_1 \implies u_n = u_1(1 + qM)$ với $1 + qM \ge 2$ và $\gcd(1 + qM, M) = 1$, mâu thuẫn.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Vòng 2 (Ngày 23/09/2026)</h2>
 
@@ -65,18 +95,42 @@
         <p>Cho dãy số $(u_n)$ xác định bởi $u_1 = -2$ và $u_{n+1} = \dfrac{u_n}{1 - u_n}$ với mọi $n \in \mathbb{N}^*$.</p>
         <p>a) Chứng minh rằng $u_n &lt; 0$ với mọi $n \in \mathbb{N}^*$.</p>
         <p>b) Chứng minh dãy số $(v_n)$ xác định bởi $v_n = \dfrac{u_n + 1}{u_n}$ ($\forall n \in \mathbb{N}^*$) là một cấp số cộng và tính giới hạn $\lim u_n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chứng minh bằng quy nạp từ $u_1 = -2 &lt; 0$ và $1 - u_n &gt; 0$. b) Biến đổi $\frac{1}{u_{n+1}} = \frac{1}{u_n} - 1$ để suy ra $v_{n+1} - v_n = -1$, nên $(v_n)$ là cấp số cộng với $v_1 = \frac{1}{2}$, công sai $-1$. Từ $v_n = \frac{3}{2} - n$ tìm được $u_n = \frac{2}{1 - 2n}$ và $\lim u_n = 0$.</p>
+            </div>
+        </details>
 
         <h3>Câu 7. (5,0 điểm)</h3>
         <p>Tìm tất cả các hàm số $f : \mathbb{R} \to \mathbb{R}$ thỏa mãn điều kiện:</p>
         <p>$$f\bigl(xy + f(x^2) - x^2\bigr) = x f(y), \quad \forall x, y \in \mathbb{R}.$$</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $g(x) = f(x^2) - x^2$. Thay $y = 0$ rồi đổi $x \mapsto -x$ suy ra $f(0) = 0$. Nếu $f \not\equiv 0$ thì $f$ toàn ánh; thay $x = \pm 1$ chứng minh $f$ là hàm lẻ, từ đó $f(u + g(x)) = f(u - g(x))$ với mọi $u, x$, tức $f$ tuần hoàn chu kỳ $2g(x)$. Nếu tồn tại $x_0$ có $g(x_0) \neq 0$ thì $f\left(y + \frac{2g(x_0)}{x}\right) = f(y)$ với mọi $x \neq 0$, kéo theo $f$ hằng (vô lí). Vậy $g(x) \equiv 0$, kết hợp $f$ lẻ cho nghiệm $f(x) = x$ (cùng với $f(x) \equiv 0$).</p>
+            </div>
+        </details>
 
         <h3>Câu 8. (5,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn không cân có trực tâm $H$ và nội tiếp đường tròn $(O)$. Gọi $R$ là một điểm trên cung lớn $BC$ của $(O)$ sao cho đường thẳng $AR$ không song song với đường thẳng $BC$. Các điểm $S$ và $T$ nằm trên đường thẳng $BC$ sao cho các đường tròn $(ARS)$ và $(ART)$ đều tiếp xúc với đường thẳng $BC$. Các đường thẳng đi qua $H$ và vuông góc với $AS, AT$ cắt lại đường tròn $(HBC)$ lần lượt tại $M$ và $N$.</p>
         <p>a) Chứng minh rằng đường thẳng $MN$ luôn đi qua một điểm cố định khi $R$ thay đổi trên cung lớn $BC$.</p>
         <p>b) Chứng minh rằng tâm đường tròn ngoại tiếp tam giác $RST$ luôn nằm trên một đường thẳng cố định khi $R$ thay đổi trên cung lớn $BC$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Gọi $X = AR \cap BC$; từ $XS^2 = XT^2 = XA \cdot XR = XB \cdot XC$ suy ra $(S, T; B, C) = -1$. a) Gọi $A^*$ đối xứng với $A$ qua trung điểm $D$ của $BC$; chứng minh $HA^*$ là đường kính của $(HBC)$ và $A^*M \parallel AS, A^*N \parallel AT$. Khi đó $A^*(M, N; C, B) = (S, T; B, C) = -1$, nên $MN$ đi qua cực của $BC$ đối với $(HBC)$. b) Gọi $A_1$ đối xứng với $A$ qua $BC$, chứng minh $A_1 \in (RST)$. Từ $DS \cdot DT = DB^2$ suy ra $ZD^2 - ZA_1^2 = DB^2$ (với $Z$ là tâm $(RST)$), nên $Z$ thuộc đường thẳng cố định vuông góc với $DA_1$.</p>
+            </div>
+        </details>
 
         <h3>Câu 9. (5,0 điểm)</h3>
         <p>Một công ty có $250$ công nhân cùng thực hiện $5$ nhiệm vụ, biết rằng mỗi nhiệm vụ có ít nhất $170$ công nhân hoàn thành. Chứng minh rằng luôn chọn được hai công nhân mà nếu xét chung cả hai người đó thì cả $5$ nhiệm vụ đều có ít nhất một người hoàn thành.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Giả sử phản chứng mọi cặp công nhân đều cùng không hoàn thành ít nhất một nhiệm vụ. Với mỗi nhiệm vụ, có tối đa $250 - 170 = 80$ công nhân không hoàn thành, nên có tối đa $\binom{80}{2} = 3160$ cặp cùng không hoàn thành nhiệm vụ đó. Tổng số cặp bị loại qua cả $5$ nhiệm vụ tối đa là $5 \cdot 3160 = 15800$, nhỏ hơn tổng số cặp $\binom{250}{2} = 31125$, mâu thuẫn.</p>
+            </div>
+        </details>
     </div>
 </body>
 </html>

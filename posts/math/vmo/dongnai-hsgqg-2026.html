@@ -49,11 +49,24 @@
         <p>Tìm tất cả các hàm số $f: \mathbb{Z} \to \mathbb{Z}$ thỏa mãn</p>
         \[ f(m + f(n)) = f(m) + 9n, \]
         <p>với mọi số nguyên $m, n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Thay $m = 0$ suy ra $f(f(n)) = f(0) + 9n$, nên $f$ đơn ánh; từ $f(m + f(0)) = f(m)$ suy ra $f(0) = 0$ và $f(f(n)) = 9n$. Đặt $a = f(1)$, ta có $f(x + a) = f(x) + 9$, $f(a) = 9$ và $f(9) = f(f(a)) = 9a$. Thay $n = a$ vào phương trình ban đầu được $f(x + 9) = f(x) + 9a$, suy ra $f(9a) = 9a^2$; mặt khác $f(9a) = f(f(9)) = 81$, dẫn tới $a = \pm 3$. Từ đó tìm được $f(n) = 3n$ và $f(n) = -3n$.</p>
+            </div>
+        </details>
 
         <h3>Câu 2. (6,0 điểm)</h3>
         <p>Cho dãy số $(u_n)$ xác định bởi $u_1 = 1$ và $u_{n+1} = \dfrac{u_n + 4}{u_n + 1}, \; \forall n \in \mathbb{N}^*$.</p>
         <p>a) Chứng minh dãy số đã cho có giới hạn hữu hạn và tính giới hạn đó.</p>
         <p>b) Chứng minh tồn tại hàm phân thức $f(x) = \dfrac{x + a}{x + b}$ ($a \neq b$) sao cho dãy $(f(u_n))$ lập thành một cấp số nhân.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Với $n \ge 2$ ta có $u_n &gt; 1$; từ $u_{n+1} - 2 = \frac{2 - u_n}{u_n + 1}$ suy ra $|u_{n+1} - 2| \le \frac{1}{2}|u_n - 2|$, nên $\lim u_n = 2$.</p>
+                <p>b) Chia hai đẳng thức $u_{n+1} - 2 = -\frac{u_n - 2}{u_n + 1}$ và $u_{n+1} + 2 = \frac{3(u_n + 2)}{u_n + 1}$ cho nhau thu được $\frac{u_{n+1} - 2}{u_{n+1} + 2} = -\frac{1}{3}\cdot\frac{u_n - 2}{u_n + 2}$. Vậy chọn $f(x) = \frac{x - 2}{x + 2}$ ($a = -2, b = 2$) thì $(f(u_n))$ là cấp số nhân công bội $-\frac{1}{3}$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (5,0 điểm)</h3>
         <p>Đặt $A = 2026! + 1$ và xét đa thức</p>
@@ -61,6 +74,12 @@
         <p>trong đó $b_1, b_2, \dots, b_{2024}$ là các số nguyên. Chứng minh $P(x)$ không có nghiệm hữu tỉ trong mỗi trường hợp sau:</p>
         <p>a) $b_1 + b_2 + b_3 + \dots + b_{2024} = 2025$.</p>
         <p>b) $b_1 + b_3 + \dots + b_{2023} = 2025$ và $b_2 + b_4 + \dots + b_{2024} = 1$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Giả sử $P(x)$ có nghiệm hữu tỉ $\frac{p}{q}$ ($\gcd(p,q)=1$), khi đó $p \mid A$ và $q \mid A$. Vì $A = 2026! + 1 \equiv 1 \pmod{8}$ nên $p, q$ đều lẻ, suy ra $p^2 \equiv q^2 \equiv 1 \pmod{8}$. Nhân hai vế $P(p/q) = 0$ với $q^{4050}$ rồi xét modulo $2$ (cho câu a: $2 + 2025 \equiv 1 \pmod{2}$) và modulo $8$ (cho câu b: $2 + 2026 \equiv 4 \not\equiv 0 \pmod{8}$) đều dẫn đến mâu thuẫn.</p>
+            </div>
+        </details>
 
         <h3>Câu 4. (5,0 điểm)</h3>
         <p>Xét tập hợp $A$ gồm $n$ số tự nhiên $x_1, x_2, \dots, x_n$ thỏa mãn cả hai điều kiện sau:</p>
@@ -68,6 +87,13 @@
         ii) Với mọi $k \in \{2, 3, \dots, n\}$, luôn tồn tại $i, j \in \mathbb{N}^*$ với $i < k, j < k$ sao cho $x_k = x_i + x_j$ ($x_i$ có thể bằng $x_j$).</p>
         <p>a) Chỉ ra một tập hợp $A$ với $n = 15$.</p>
         <p>b) Chứng minh $n \ge 13$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Có thể chọn dãy 15 số: $1, 2, 3, 5, 10, 15, 30, 60, 63, 126, 252, 504, 1008, 1013, 2026$.</p>
+                <p>b) Nếu $n \le 12$: khi mọi bước đều là phép nhân đôi ($x_k = 2x_{k-1}$) thì $x_n = 2^{n-1} \neq 2026$; nếu có ít nhất một bước không phải nhân đôi thì $x_k \le x_{k-1} + x_{k-2} \le \frac{3}{2}x_{k-1}$, kéo theo $x_n \le \frac{3}{2}\cdot 2^{n-2} \le 1536 &lt; 2026$, vô lý. Vậy $n \ge 13$.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 40px;">2. Ngày thi thứ hai</h2>
         <p style="text-align: center; font-style: italic;">Ngày thi: 28/08/2026</p>
@@ -76,11 +102,25 @@
         <p>Với mỗi số nguyên dương $n$, ta đặt $T_n = 2027^n - 2026^n$.</p>
         <p>a) Chứng minh tồn tại vô hạn số nguyên dương $n$ thỏa mãn $n$ là ước của $T_n - 1$.</p>
         <p>b) Tìm tất cả số nguyên dương $n$ sao cho tồn tại số nguyên $m$ thỏa mãn $T_n$ là ước của $m^2 + 4053^2$ (trong đó $4053 = 3 \times 7 \times 193$).</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Với mọi số nguyên tố $p$, theo định lý Fermat nhỏ ta có $T_p - 1 = 2027^p - 2026^p - 1 \equiv 2027 - 2026 - 1 = 0 \pmod{p}$.</p>
+                <p>b) Nếu $n$ có ước lẻ $d \ge 3$ thì $T_d \mid T_n$; chú ý $T_d \equiv 3 \pmod{4}$ và $3 \nmid T_d, 7 \nmid T_d$ nên $T_d$ có ước nguyên tố $p \equiv 3 \pmod{4}$ không chia hết $4053$, loại. Với $n = 2^a$ ($a \in \mathbb{N}$), mọi ước nguyên tố của $\frac{T_{2^a}}{4053}$ đều $\equiv 1 \pmod{4}$ (và nguyên tố cùng nhau với $4053$), nên tồn tại $m$ thỏa mãn theo định lý thặng dư Trung Hoa. Đáp số: $n = 2^a$ ($a \in \mathbb{N}$).</p>
+            </div>
+        </details>
 
         <h3>Câu 6. (6,0 điểm)</h3>
         <p>Cho tam giác $ABC$ không cân. Đường tròn bàng tiếp góc $A$ của tam giác $ABC$ tiếp xúc với các đường thẳng $BC, CA, AB$ lần lượt tại $D, E, F$. Gọi $M$ là trung điểm của đoạn thẳng $EF$, đường thẳng $MB$ cắt đường thẳng $DE$ tại $S$ và đường thẳng $MC$ cắt đường thẳng $DF$ tại $R$.</p>
         <p>a) Chứng minh ba điểm $A, R, S$ thẳng hàng.</p>
         <p>b) Gọi $d$ là đường thẳng đối xứng với đường thẳng $AD$ qua đường phân giác trong góc $\widehat{BAC}$. Chứng minh các đường thẳng $RE, SF$ và $d$ đồng quy.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Gọi $(J)$ là đường tròn bàng tiếp góc $A$ và $K$ là giao điểm thứ hai của $DM$ với $(J)$. Áp dụng định lý Pascal cho bộ điểm $DKE / EFD$ và $DKF / FDE$ suy ra $R \in KE$, $S \in KF$; tiếp tục áp dụng định lý Pascal cho bộ $EKF / FDE$ thu được $S, A, R$ thẳng hàng.</p>
+                <p>b) Ta có $MD \cdot MK = ME \cdot MF = MA \cdot MJ$, nên $A, D, J, K$ đồng viên; kết hợp $JD = JK$ suy ra $d \equiv AK$. Từ đó xét giao điểm $RE \cap SF$ hoặc dùng định lý Pascal/Desargues để chỉ ra $RE, SF, AK$ đồng quy.</p>
+            </div>
+        </details>
 
         <h3>Câu 7. (7,0 điểm)</h3>
         <p>Cho số nguyên dương lẻ $n \ge 2$ và một số nguyên tố lẻ $p$. Xét một bảng vuông $n \times n$, tại mỗi ô vuông đơn vị ta điền một số nguyên thuộc tập $\{1, 2, \dots, p-1\}$. Một bảng được gọi là “TPĐN” nếu thỏa mãn đồng thời hai điều kiện sau:</p>
@@ -109,6 +149,13 @@
         </div>
 
         <p>b) Tính số lượng bảng “TPĐN” theo $n$ và $p$ (hai bảng được gọi là khác nhau nếu tồn tại ô vuông đơn vị ở hàng $i$ và cột $j$ trong hai bảng chứa hai số khác nhau).</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Từ điều kiện (i) xác định được hàng 2 là $(3, 2, 1)$; đặt ô $(3, 1)$ là $z$ thì hàng 3 là $(z, z^{-1}, 3z) \pmod{5}$, từ điều kiện (ii) suy ra $z = 2$, nên hàng 3 là $(2, 3, 1)$.</p>
+                <p>b) Mỗi bảng thỏa (i) được xác định duy nhất bởi $2n - 1$ số ở hàng 1 và cột 1. Vì $n$ lẻ nên bảng con $(n-1) \times (n-1)$ ở góc dưới phải chia hết thành các khối $2 \times 2$ rời nhau (mỗi khối có tích $\equiv 1 \pmod{p}$), do đó tích toàn bảng đồng dư với tích của $2n - 1$ ô ở hàng 1 và cột 1. Chọn tùy ý $2n - 2$ ô đầu trong $\{1, \dots, p-1\}$ thì ô cuối xác định duy nhất, vậy có $(p - 1)^{2n - 2}$ bảng.</p>
+            </div>
+        </details>
 
     </div>
 </body>

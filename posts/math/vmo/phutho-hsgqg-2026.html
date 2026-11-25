@@ -50,15 +50,36 @@
         <p>a) Với $n = 4$, chứng minh rằng đạo hàm $P_4'(x)$ của đa thức $P_4(x)$ có 3 nghiệm thực phân biệt lập thành một cấp số cộng.</p>
         <p>b) Chứng minh rằng đa thức $P_n(x)$ luôn phân tích được thành tích của hai đa thức hệ số nguyên với bậc lớn hơn hoặc bằng 1.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), bốn nghiệm đối xứng qua $m = \frac{x_1+x_4}{2} = \frac{x_2+x_3}{2}$; dùng $\frac{P_4'(x)}{P_4(x)} = \sum_{i=1}^4 \frac{1}{x-x_i}$ suy ra $P_4'(m) = 0$, kết hợp định lý Viète $y_1+y_2+y_3 = \frac{3}{4}\sum x_i = 3m$ để thấy $y_1, y_2, y_3$ lập thành cấp số cộng. Ở câu b), đặt tâm cấp số cộng là $a$ và công sai là $d$ (hoặc $2d$ khi $n = 2k$); từ $\sum r_i \in \mathbb{Z}$ và $\sum r_i^2 \in \mathbb{Z}$ suy ra $a, d^2 \in \mathbb{Q}$. Ghép các cặp nghiệm đối xứng qua $a$ cho nhân tử $(x-a)^2 - c_i d^2 \in \mathbb{Q}[x]$, từ đó theo bổ đề Gauss đa thức $P_n(x)$ khả quy trên $\mathbb{Z}[x]$.</p>
+            </div>
+        </details>
+
         <h3>Câu 2. (7,0 điểm)</h3>
         <p>Một số nguyên dương $n$ được gọi là số $n$–tốt nếu tồn tại số $a \in \{1; 2; \dots; 2026\}$ sao cho số $k$ là số nguyên dương nhỏ nhất thỏa mãn $\frac{10^k - 1}{n \cdot a}$ là một số thập phân hữu hạn. Ký hiệu $S(n)$ là tập hợp các số $n$–tốt.</p>
         <p>a) Chứng minh rằng số $k = 6$ là một số 18–tốt.</p>
         <p>b) Tìm giá trị lớn nhất của $|S(n)|$ khi $n$ thay đổi.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Phân số $\frac{10^k-1}{na}$ là số thập phân hữu hạn khi và chỉ khi $mc \mid 10^k - 1$, trong đó $m, c$ là phần nguyên tố cùng nhau với $10$ của $n, a$; do đó $k = \operatorname{ord}_{mc}(10)$. Ở câu a), chọn $a = 7$ và tính $\operatorname{ord}_{63}(10) = 6$. Ở câu b), vì $1 \le c \le 2026$ và $\gcd(c, 10) = 1$ nên $|S(n)| \le 2026 - \lfloor\frac{2026}{2}\rfloor - \lfloor\frac{2026}{5}\rfloor + \lfloor\frac{2026}{10}\rfloor = 810$. Giá trị $810$ đạt được khi chọn $n = 10^T - 1$ với $T = \operatorname{lcm}\{p-1 : p \le 2026, p \neq 2, 5 \text{ nguyên tố}\}$ và dùng bổ đề LTE chứng minh $\operatorname{ord}_{cn}(10) = cT$.</p>
+            </div>
+        </details>
+
         <h3>Câu 3. (6,0 điểm)</h3>
         <p>Cho tứ giác lồi $ABCD$ có các cạnh $AD$ và $BC$ không song song. Các đường tròn đường kính $AB$ và $CD$ cắt nhau tại hai điểm phân biệt $E, F$. Đường tròn $\omega_E$ đi qua các chân đường vuông góc kẻ từ $E$ đến các đường thẳng $AB, BC, CD$; đường tròn $\omega_F$ đi qua các chân đường vuông góc kẻ từ $F$ đến các đường thẳng $CD, DA, AB$.</p>
         <p>a) Chứng minh rằng đường tròn $\omega_E$ đi qua chân đường vuông góc kẻ từ $E$ đến đường thẳng $DA$.</p>
         <p>b) Chứng minh rằng trung điểm của đoạn thẳng $EF$ nằm trên đường thẳng đi qua hai giao điểm của các đường tròn $\omega_E$ và $\omega_F$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), gọi $H_1, H_2, H_3, H_4$ là hình chiếu của $E$ lên $AB, BC, CD, DA$; cộng góc từ các tứ giác nội tiếp $EH_1BH_2, EH_2CH_3, EH_1AH_4, EH_4DH_3$ suy ra $\widehat{H_1H_2H_3} + \widehat{H_1H_4H_3} = 180^\circ$. Ở câu b), dựng $R, R' \in AD$ và $S, S' \in BC$ sao cho $ER, FR' \perp BC$ và $ES, FS' \perp AD$; khi đó $\omega_E, \omega_F$ lần lượt có đường kính là $RS$ và $R'S'$. Dùng công thức đường trung tuyến và tính chất trục đẳng phương để chứng minh trung điểm $M$ của $EF$ có cùng phương tích đối với $\omega_E$ và $\omega_F$.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Bài thi thứ hai</h2>
         <p style="text-align: center; font-style: italic;">Ngày thi: 19 tháng 09 năm 2026 — Thời gian làm bài: 180 phút</p>
@@ -67,6 +88,13 @@
         <p>Cho tam giác $ABC$ nhọn, không cân và nội tiếp đường tròn $(O)$, có đường phân giác $AD$ ($D \in BC$). Lấy điểm $P$ thuộc đoạn thẳng $AD$ ($P$ khác $A$ và $D$). Gọi $X, Y, Z$ lần lượt là hình chiếu vuông góc của $P$ lên các cạnh $BC, CA, AB$. Đường tròn ngoại tiếp tam giác $XYZ$ cắt cạnh $BC$ tại điểm thứ hai $X'$ ($X' \neq X$).</p>
         <p>a) Chứng minh rằng ba đường thẳng $AX', BY, CZ$ đồng quy.</p>
         <p>b) Đường thẳng $YZ$ cắt đường tròn $(O)$ tại hai điểm $M, N$ sao cho $M, Y, Z, N$ theo thứ tự nằm trên đường thẳng $YZ$. Hai tiếp tuyến tại $B, C$ của $(O)$ cắt nhau tại $S$. Đường thẳng $AP$ cắt lại $(O)$ tại điểm thứ hai $T$. Chứng minh rằng hai tia $SP$ và $ST$ đẳng giác trong góc $\widehat{MSN}$ và đường thẳng $SP$ đi qua tâm đường tròn ngoại tiếp tam giác $PMN$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), gọi $Q$ là điểm liên hợp đẳng giác của $P$ trong $\triangle ABC$ thì hình chiếu $X', Y', Z'$ của $Q$ cũng nằm trên $(XYZ)$; biến đổi tỉ số $\frac{X'B}{X'C}$ theo định lý Ceva dạng sin của $AP, BP, CP$ để suy ra $AX', BY, CZ$ đồng quy. Ở câu b), kẻ đường kính $TL$ của $(O)$ và chứng minh $\widehat{UMT} = \widehat{NMP}$ (với $U$ là trung điểm $BC$) kết hợp $MS$ là đối trung của $\triangle MBC$ để thấy $MT, MP$ đẳng giác trong $\widehat{NMS}$ (tương tự cho $NT, NP$); suy ra $P, T$ liên hợp đẳng giác trong $\triangle NSM$ (tức $SP, ST$ đẳng giác trong $\widehat{MSN}$) và $PT, PS$ đẳng giác trong $\widehat{NPM}$ với $PT$ là đường cao $\triangle NPM$.</p>
+            </div>
+        </details>
 
         <h3>Câu 5. (7,0 điểm)</h3>
         <p>Cho tập hợp $S = \{1; 2; \dots; 2026\}$.</p>
@@ -77,9 +105,23 @@
         (iii) $|S_i| \neq |S_j|$ với mọi $i, j \in \{1; 2; \dots; n\}, i \neq j$.</p>
         <p>Tìm giá trị lớn nhất của $n$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), phân hoạch các tập con của $S$ thành các bộ bốn $\{T, T\cup\{1\}, T\cup\{2\}, T\cup\{1,2\}\}$ với $T \subseteq \{3,\dots,2026\}$; mỗi bộ bốn có đúng một tập có tổng phần tử chia hết cho $4$, trừ đi tập rỗng ta được $2^{2024} - 1$. Ở câu b), điều kiện (ii) nghĩa là $S_i \not\subset S_j$; với $n = 2025$ thì các kích thước phải nhận đủ $1, \dots, 2025$, xét các tập có kích thước $1, 2, 2025$ dẫn tới mâu thuẫn, nên $n \le 2024$. Xây dựng quy nạp họ $\mathcal{F}_{m+2} = \{A \cup \{m+1\} : A \in \mathcal{F}_m\} \cup \{[m], \{m+2\}\}$ từ $\mathcal{F}_4 = \{\{1\}, \{2, 3\}\}$ cho $n_{\max} = 2024$.</p>
+            </div>
+        </details>
+
         <h3>Câu 6. (6,0 điểm)</h3>
         <p>Tìm tất cả các số thực $k$ sao cho tồn tại hàm số $f: \mathbb{R} \to \mathbb{R}$ thỏa mãn:
         $$f(f(x) + y) = kx + f(x + f(f(y))), \quad \forall x, y \in \mathbb{R}.$$</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $a = f(f(0))$; từ $P(0, 0), P(x, 0)$ và $P(x, a)$ suy ra $f(a) = a$, $f(f(x)+a) = f(f(x))$ và $ka = 0$. Với $k = 0$, mọi hàm hằng đều thỏa mãn. Với $k \neq 0$, ta có $a = 0$, $f(y) = f(f(f(y)))$ và $f(f(x)) = kx + f(x)$; thay $x$ bởi $f(x)$ thu được $k(f(x) + x) = 0 \Rightarrow f(x) = -x$, thử lại cho $k = 2$. Vậy $k \in \{0, 2\}$.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

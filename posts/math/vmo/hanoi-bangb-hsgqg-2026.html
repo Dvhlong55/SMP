@@ -48,18 +48,42 @@
         <h3>Bài 1. (5,0 điểm)</h3>
         <p>Cho dãy số $(u_n)$ xác định bởi $u_1 = \dfrac{1}{2}$ và $u_{n+1} = \dfrac{3 - u_n^2}{2}$ với mọi số nguyên dương $n$.</p>
         <p>Chứng minh rằng $(u_n)$ có giới hạn hữu hạn và tìm giới hạn đó.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Chứng minh bằng quy nạp $0 &lt; u_{2n-1} &lt; 1 &lt; u_{2n} &lt; \frac{3}{2}$ với mọi $n \ge 1$. Từ $u_{n+2} - u_n = \frac{(1 - u_n)^3(u_n + 3)}{8}$ suy ra dãy $(u_{2n-1})$ tăng và bị chặn trên bởi $1$, còn $(u_{2n})$ giảm và bị chặn dưới bởi $1$. Chuyển qua giới hạn được $\lim u_{2n-1} = \lim u_{2n} = 1$, nên $\lim u_n = 1$.</p>
+            </div>
+        </details>
 
         <h3>Bài 2. (5,0 điểm)</h3>
         <p>Tìm tất cả các cặp số nguyên tố lẻ $(p, q)$, với $p < q$, thỏa mãn $p^{q^2} + (p+2)^{p^2}$ chia hết cho $q$ và $C_{3pq}^{pq}$ chia hết cho $pq$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(Lưu ý: trong đề gốc, điều kiện đầu là $p^{p^2} + (p+2)^{p^2}$ chia hết cho $q$). Từ $q \mid C_{3pq}^{pq}$ suy ra $q \le 3p$. Đặt $a \equiv (p+2)p^{-1} \pmod q$ thì $a^{p^2} \equiv -1 \pmod q$, xét $d = \operatorname{ord}_q(a) \mid 2p^2$ (với $d \nmid p^2$) và loại $d=2$ để suy ra $d = 2p \mid q-1$, kéo theo $q = 2p + 1$. Khi đó $v_p(C_{3pq}^{pq}) = v_p(C_{6p+3}^{2p+1}) &gt; 0$ buộc $p \in \{3, 5\}$, thử lại thu được cặp duy nhất $(p, q) = (5, 11)$.</p>
+            </div>
+        </details>
 
         <h3>Bài 3. (4,0 điểm)</h3>
         <p>Cho số nguyên $n$ lớn hơn 3 và một đa giác đều $P$ có $2n$ đỉnh. Một tam giác được gọi là <i>phủ đa giác $P$</i> nếu tất cả các đỉnh của $P$ đều nằm trong tam giác hoặc nằm trên cạnh của tam giác.</p>
         <p>Tính số tam giác phủ đa giác $P$ tạo bởi ba đường thẳng chứa ba cạnh của đa giác $P$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xét đường tròn nội tiếp $(I)$ của đa giác đều $P$; ba cạnh của tam giác tiếp xúc với $(I)$ tại $A, B, C$ chia đường tròn thành ba cung chứa lần lượt $x, y, z$ cung đơn vị ($x, y, z \in \mathbb{N}^*, x + y + z = 2n$). Điều kiện cần và đủ để tam giác tạo bởi ba tiếp tuyến phủ $P$ là ba góc của tam giác đều dương, tức $x, y, z &lt; n$. Đặt $x' = n-x, y' = n-y, z' = n-z$ rồi đếm theo bài toán chia kẹo Euler và chia $3$ (do vai trò $A, B, C$ như nhau) thu được kết quả $\frac{n(n-1)(n-2)}{3}$.</p>
+            </div>
+        </details>
 
         <h3>Bài 4. (6,0 điểm)</h3>
         <p>Cho tam giác $ABC$ ($AB < AC < BC$) nội tiếp đường tròn $(O)$. Ba đường cao $AA_1, BB_1, CC_1$ của tam giác $ABC$ cắt nhau tại trực tâm $H$.</p>
         <p>a) Gọi $A_0, B_0, C_0$ tương ứng là trung điểm của các cạnh $BC, CA, AB$. Gọi $X$ là giao điểm của hai đường thẳng $B_0 O$ và $C_0 A_0$, $Y$ là giao điểm của hai đường thẳng $C_0 O$ và $A_0 B_0$. Hai đường thẳng $XY$ và $B_0 C_0$ cắt nhau tại điểm $Z$. Chứng minh đường thẳng $A_0 H$ vuông góc với đường thẳng $A_0 Z$.</p>
         <p>b) Kẻ đường kính $AK$ của đường tròn $(O)$. Gọi $M, N$ tương ứng là trung điểm của các đoạn thẳng $BB_1, CC_1$. Chứng minh đường thẳng $MN$ đi qua tâm đường tròn ngoại tiếp của tam giác $A_1 HK$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Do $O$ là trực tâm $\triangle A_0 B_0 C_0$ nên $A_0(O, Z; B_0, C_0) = -1$; kẻ $Hx \parallel BC$ thì $H(x, A_0; B, C) = -1$. Hai chùm này có các tia tương ứng vuông góc nên $A_0 H \perp A_0 Z$. b) Gọi $L = AO \cap B_1 C_1$ (thì $AO \perp B_1 C_1$). Dùng đường thẳng Gauss–Steiner của tứ giác toàn phần $(AB, AC, BC, B_1 C_1)$ chứng minh $MN$ là trung trực của $A_1 L$; đồng thời từ $AH \cdot AA_1 = AB_1 \cdot AC = AL \cdot AK$ suy ra $A_1, H, K, L$ đồng viên, nên tâm $(A_1 HK)$ nằm trên trung trực của $A_1 L$ tức $MN$.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Bài thi thứ hai</h2>
         <p style="text-align: center; font-style: italic;">Ngày thi: 15 tháng 09 năm 2026 — Thời gian làm bài: 180 phút</p>
@@ -70,21 +94,45 @@
         <p>với mọi số thực $a, b, c, d$ thỏa mãn $ad - bc = 1$.</p>
         <p>a) Chứng minh $f(xy) = f(x)f(y)$ với mọi số thực $x$ và $y$.</p>
         <p>b) Chứng minh $f(x) = x$ với mọi số thực $x$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chọn $(a, b, c, d) = (1, 0, c, 1)$ suy ra $f(0) = 0$ và $f(1) = 1$. Chọn $(a, b, c, d) = (t+1, t, 1, 1)$ được $f(t+1) - f(t) = 1$, rồi thay $(a, b, c, d) = (x, xy-1, 1, y)$ để thu được $f(xy) = f(x)f(y)$. b) Từ $f(x^2) = [f(x)]^2$ và $f(1) = 1$ suy ra $f(x) &gt; 0$ với $x &gt; 0$, kết hợp $f(x+1) = f(x)+1$ cho thấy $f$ tăng ngặt trên $(0, +\infty)$. Tính được $f(q) = q$ với mọi $q \in \mathbb{Q}^+$ nên $f(x) = x$ với $x &gt; 0$, rồi dùng $f(-1) = -1$ để suy ra $f(x) = x$ với mọi $x \in \mathbb{R}$.</p>
+            </div>
+        </details>
 
         <h3>Bài 6. (5,0 điểm)</h3>
         <p>Cho $P(x)$ là một đa thức với hệ số nguyên có bậc bằng 5 sao cho có vô hạn cặp số nguyên $(x, y)$ thỏa mãn $xP(x) = yP(y)$ và $x \neq y$.</p>
         <p>a) Chứng minh tồn tại số nguyên $C$ có tính chất: Nếu $(x, y)$ là cặp số nguyên thỏa mãn $x \neq y$ và $xP(x) = yP(y)$ thì $|x + y| \leq C$.</p>
         <p>b) Chứng minh $P(x)$ có nghiệm nguyên.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Đặt $P(x) = ax^5 + bx^4 + cx^3 + dx^2 + ex + f$ ($a \neq 0$) và rút gọn $\frac{xP(x) - yP(y)}{x - y} = 0$. Nhóm các hạng tử chẵn bậc theo $x^2 + y^2$ và dùng đánh giá $x^4 + x^2y^2 + y^4 \ge \frac{3}{4}(x^2+y^2)^2$ để chặn $|x+y|$ khi $x^2+y^2$ đủ lớn. b) Do $x+y$ nguyên và bị chặn nên tồn tại $t \in \mathbb{Z}$ sao cho $x+y=t$ với vô hạn cặp $(x, y)$, suy ra đồng nhất thức đa thức $xP(x) = (t-x)P(t-x)$. Thay $x=0$ được $tP(t)=0$ (nếu $t=0$ thì $P(x)+P(-x)=0 \implies P(0)=0$), nên $P$ luôn có nghiệm nguyên.</p>
+            </div>
+        </details>
 
         <h3>Bài 7. (5,0 điểm)</h3>
         <p>Cho số nguyên dương lẻ $n$. Một số nguyên dương $m$ được gọi là <i>số tốt</i> nếu $m^x + x^m$ chia hết cho $n^x + x^n$ với mọi số nguyên dương $x$.</p>
         <p>a) Chứng minh nếu $m$ là một số tốt thì $m$ chia hết cho $n$.</p>
         <p>b) Tìm tất cả các số tốt.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Với mỗi ước nguyên tố $p \mid n$, chọn $x = n$ suy ra $p \mid m$, rồi chọn $x = p(mn+1)$ để so sánh $v_p(m^x + x^m) \ge v_p(n^x + x^n)$ và thu được $v_p(m) \ge v_p(n)$. b) Đặt $m = kn$; nếu $k &gt; 1$, theo định lý Schur tồn tại $x_0 \in \mathbb{Z}^+$ và số nguyên tố $p &gt; kn + n^k$ sao cho $p \mid n + x_0^n$. Dùng định lý thặng dư Trung Hoa chọn $x \equiv 1 \pmod{p-1}$ và $x \equiv x_0 \pmod p$ để suy ra $p \mid kn + (-n)^k$, vô lí vì $0 &lt; |kn + (-n)^k| &lt; p$. Vậy $m = n$ là số tốt duy nhất.</p>
+            </div>
+        </details>
 
         <h3>Bài 8. (5,0 điểm)</h3>
         <p>Cho 9 số thực $a_1, a_2, \dots, a_9$. Khởi đầu với bộ 9 số thực $(a_1, a_2, \dots, a_9)$.</p>
         <p>Ở mỗi bước, từ bộ vừa được tạo $(x_1, x_2, \dots, x_9)$, ta tạo ra một bộ mới $(y_1, y_2, \dots, y_9)$ theo quy tắc sau: chọn các số $\epsilon_1, \dots, \epsilon_9 \in \{-1; 1\}$ sao cho biểu thức $\left| \sum_{i=1}^9 \epsilon_i x_i \sqrt{i} \right|$ đạt giá trị nhỏ nhất (nếu có nhiều cách chọn, lấy một cách tùy ý), sau đó đặt $y_i = x_i + \epsilon_i \sqrt{i}$ với mọi $i = 1, 2, \dots, 9$.</p>
         <p>Chứng minh sau hữu hạn bước, sẽ xuất hiện một bộ $(u_1, u_2, \dots, u_9)$ sao cho tồn tại chỉ số $i$ để $|u_i| \geq \dfrac{15}{2}$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Chứng minh bổ đề: với mọi số thực $c_1, \dots, c_9$, tồn tại $\delta_i \in \{-1, 1\}$ sao cho $\left|\sum_{i=1}^9 \delta_i c_i\right| \le \max_{1 \le i \le 9} |c_i|$. Giả sử phản chứng mọi số hạng luôn có trị tuyệt đối $&lt; \frac{15}{2}$; áp dụng bổ đề cho $c_i = x_i\sqrt{i}$ suy ra $\left|\sum_{i=1}^9 \epsilon_i x_i\sqrt{i}\right| &lt; \frac{45}{2}$. Khi đó $\sum_{i=1}^9 y_i^2 - \sum_{i=1}^9 x_i^2 = 2\sum_{i=1}^9 \epsilon_i x_i\sqrt{i} + 45 &gt; 0$, nên tổng bình phương tăng ngặt, mâu thuẫn với việc chỉ có hữu hạn bộ có thể đạt được.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

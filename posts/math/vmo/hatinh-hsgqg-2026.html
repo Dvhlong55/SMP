@@ -49,17 +49,41 @@
         <p>Cho dãy số $(x_n)$, với $x_1 = a > 1$ và $x_{n+1} = x_n - \ln x_n, \; \forall n \in \mathbb{N}^*$.</p>
         <p>a) Chứng minh dãy $(x_n)$ có giới hạn hữu hạn. Tìm giới hạn đó.</p>
         <p>b) Đặt $S_n = \sum_{k=1}^{n-1} (n - k)\ln \sqrt{x_k}, \; \forall n = 2, 3, \dots$ Tính $\lim_{n \to +\infty} \dfrac{S_n}{n}$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Dùng bất đẳng thức $0 &lt; \ln x &lt; x - 1$ với $x &gt; 1$ để chứng minh bằng quy nạp $1 &lt; x_{n+1} &lt; x_n$, suy ra dãy giảm và bị chặn dưới bởi $1$; chuyển qua giới hạn được $\lim x_n = 1$. b) Thay $\ln \sqrt{x_k} = \frac{1}{2}(x_k - x_{k+1})$ để rút gọn $S_n = \frac{1}{2}\left((n-1)a - \sum_{k=2}^n x_k\right)$, rồi áp dụng định lý trung bình Cesàro thu được $\lim \frac{S_n}{n} = \frac{a-1}{2}$.</p>
+            </div>
+        </details>
 
         <h3>Bài 2. (5 điểm)</h3>
         <p>Xét đa thức $P(x) = a_n x^n + a_{n-1}x^{n-1} + \dots + a_1 x + a_0$ với các hệ số nguyên, $n$ là số nguyên dương thay đổi thỏa mãn $n \ge 4, a_n \neq 0$. Biết rằng đa thức $P(x)$ chia hết cho đa thức $x^2 - 2x - 1$. Tìm giá trị nhỏ nhất của $\max \{|a_0|, |a_1|, \dots, |a_{n-1}|\}$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xét nghiệm dương $\alpha = 1 + \sqrt{2}$ của $x^2 - 2x - 1$. Nếu $\max_{0 \le k \le n-1} |a_k| \le 1$, từ $P(\alpha) = 0$ và $|a_n| \ge 1$ suy ra $\alpha^n \le |a_n|\alpha^n = \left|\sum_{k=0}^{n-1} a_k \alpha^k\right| \le \frac{\alpha^n - 1}{\alpha - 1} &lt; \alpha^n$ (vì $\alpha - 1 = \sqrt{2} &gt; 1$), vô lí. Chỉ ra $P(x) = x^{n-2}(x^2 - 2x - 1)$ đạt giá trị nhỏ nhất bằng $2$.</p>
+            </div>
+        </details>
 
         <h3>Bài 3. (5 điểm)</h3>
         <p>Cho đường tròn $(O)$ và $BC$ là một dây cung không đi qua tâm. Điểm $M$ thuộc đường tròn $(O)$ sao cho tam giác $MBC$ nhọn. Tiếp tuyến tại $M$ và $B$ của $(O)$ cắt nhau ở $D$. Đường thẳng $CD$ cắt $(O)$ tại điểm thứ hai là $E$. Lấy điểm $F$ thuộc đoạn thẳng $CE$ sao cho $\widehat{CMF} = \widehat{BCD}$. Gọi $I$ là giao điểm thứ hai của $MF$ và đường tròn $(BEF)$, $J$ là giao điểm thứ hai của $BF$ và đường tròn $(MCF)$.</p>
         <p>a) Chứng minh $I, J, O, F$ cùng thuộc một đường tròn.</p>
         <p>b) Gọi $P$ là tâm đường tròn ngoại tiếp tam giác $MBD$. Chứng minh $IJ \perp CP$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Nhận xét $F$ là điểm Dumpty của $\triangle BCM$ nên $O, F, B, D, M$ đồng viên (trên $(OD)$), $BI \parallel CM$ và $MJ \parallel CB$. Gọi $G = BI \cap JM$ thì $BCMG$ là hình bình hành và $CMGI$ là hình thang cân, suy ra $OG = OI = OJ$; kết hợp $FO$ là phân giác ngoài $\widehat{IFJ}$ để được $I, J, O, F$ đồng viên. b) Dựng hình bình hành $SCDP$, chứng minh $\triangle SCI = \triangle PBC$ để suy ra $S$ là tâm $(OFIJ)$, từ đó $OS \perp IJ$ và $CP \parallel OS$ nên $IJ \perp CP$.</p>
+            </div>
+        </details>
 
         <h3>Bài 4. (5 điểm)</h3>
         <p>Tìm tất cả các số nguyên dương $n$ sao cho $\dfrac{10^n}{n^3 + n^2 + n + 1}$ là một số nguyên.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Phân tích $n^3 + n^2 + n + 1 = (n+1)(n^2+1)$, suy ra $n+1$ và $n^2+1$ chỉ có ước nguyên tố là $2$ hoặc $5$. Loại trường hợp $n$ chẵn (do $5 \mid n+1 \implies n^2+1 \equiv 2 \pmod 5$); với $n$ lẻ thì $n^2+1 = 2 \cdot 5^b$ và $n+1 = 2^a$ (nếu $5 \mid n+1$ lại mâu thuẫn mod $5$), thu được $5^b = 2^{2a-1} - 2^a + 1$. Với $a \ge 4$, dùng bổ đề LTE cho $v_2(5^b - 1) = 2 + v_2(b) \ge a$ và so sánh $5^b &lt; 2^{2a-1}$ để suy ra $a \le 3$; thử trực tiếp được nghiệm $n \in \{3, 7\}$.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 40px;">2. Ngày thi thứ hai</h2>
         <p style="text-align: center; font-style: italic;">Ngày thi: 20/08/2026</p>
@@ -68,17 +92,35 @@
         <p>Với mỗi số nguyên dương $n$, đặt $\tau(n)$ là số các ước nguyên dương của $n$.</p>
         <p>a) Chứng minh rằng $\tau(n) \le 2\sqrt{n}$, với mọi số nguyên dương $n$.</p>
         <p>b) Tìm tất cả số nguyên dương $n$ sao cho dãy số $\tau(n), \tau(\tau(n)), \tau(\tau(\tau(n))), \dots$ không chứa bất kì số chính phương nào.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Ghép cặp các ước $(d, n/d)$ nằm ở hai phía của $\sqrt{n}$ để suy ra $\tau(n) &lt; 2\sqrt{n}$. b) Chứng minh dãy $\tau(m), \tau(\tau(m)), \dots$ không chứa số chính phương khi và chỉ khi $m$ là số nguyên tố (vì nếu $m \ge 4$ là hợp số thì $\tau(m)$ không chính phương nên là hợp số và $\tau(m) &lt; 2\sqrt{m} \le m$, tạo thành dãy hợp số giảm ngặt, vô lí). Áp dụng với $m = \tau(n)$ suy ra $\tau(n)$ nguyên tố, tức $n = q^{p-1}$ với $p, q$ là các số nguyên tố.</p>
+            </div>
+        </details>
 
         <h3>Bài 6. (7 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn có $H$ là chân đường cao kẻ từ $A$. Lấy điểm $P$ sao cho hai đường phân giác trong của góc $\widehat{PBC}$ và $\widehat{PCB}$ cắt nhau tại điểm $I$ thuộc đoạn thẳng $AH$. Gọi $E$ là giao điểm của $BI$ và $AC$, $F$ là giao điểm của $CI$ và $AB$, $Q$ là giao điểm của $EF$ và $AH$. Lấy lần lượt hai đường thẳng đối xứng với $BC$ qua $AB$ và $AC$, hai đường thẳng này cắt nhau tại $K$.</p>
         <p>a) Chứng minh đường tròn bàng tiếp góc $P$ của tam giác $PBC$ và đường tròn nội tiếp tam giác $KBC$ tiếp xúc với cạnh $BC$ tại cùng một điểm.</p>
         <p>b) Chứng minh $P, Q, K$ thẳng hàng.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Gọi $L$ là tâm nội tiếp $\triangle KBC$; từ đối xứng qua $AB, AC$ thấy $\widehat{LBA} = \widehat{LCA} = 90^\circ$ nên $AL$ là đường kính của $(ABC)$, suy ra hình chiếu $G$ của $L$ trên $BC$ đối xứng với $H$ qua trung điểm $BC$. Mà $H$ là tiếp điểm của đường tròn nội tiếp $\triangle PBC$ trên $BC$, nên $G$ là tiếp điểm đường tròn bàng tiếp góc $P$ trên $BC$. b) Dùng hàng điểm điều hòa phân giác và tứ giác toàn phần chứng minh $IL, RH, KQ$ và $AJ, LI, HG, QR$ đồng quy tại một điểm $S$, rồi chiếu xuyên tâm $S$ từ hàng điểm điều hòa $(PNIJ) = -1$ để suy ra $P, Q, K$ thẳng hàng.</p>
+            </div>
+        </details>
 
         <h3>Bài 7. (7 điểm)</h3>
         <p>Một khu vườn trồng cam có dạng bảng ô vuông kích thước $2025 \times 2026$ được chia thành các ô vuông đơn vị. Để chiếu sáng khu vườn về ban đêm, ta đặt các bóng điện ở các đỉnh của các ô vuông đơn vị, mỗi đỉnh đặt không quá một bóng điện. Biết rằng mỗi bóng điện chỉ có thể chiếu sáng toàn bộ các ô vuông đơn vị có chung đỉnh có đặt bóng điện đó.</p>
         <p>a) Hỏi cần dùng ít nhất bao nhiêu bóng điện để có thể chiếu sáng toàn bộ khu vườn, trong trường hợp các bóng điện hoạt động bình thường?</p>
         <p>b) Hỏi cần dùng ít nhất bao nhiêu bóng điện để có thể chiếu sáng toàn bộ khu vườn, kể cả trong trường hợp không may có một bóng điện bất kì bị cháy (mà ta không biết cụ thể là bóng nào)?</p>
         <p>c) Trong quá trình trồng cam, chủ vườn quyết định mở rộng khu vườn thành bảng ô vuông có kích thước $2026 \times 2026$. Hỏi cần dùng ít nhất bao nhiêu bóng điện để điều kiện ở câu b) vẫn được thỏa mãn?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Đáp số: $1013^2$ (chọn $1013^2$ ô vuông $(2i-1, 2j-1)$ đôi một không chung đỉnh để chặn dưới, và đặt bóng tại các đỉnh có cả hai tọa độ chẵn để đạt dấu bằng). b), c) Điều kiện tương đương mỗi ô $1 \times 1$ có ít nhất $2$ đỉnh đặt bóng. Chứng minh bổ đề cho bảng nhị phân $r \times s$ có mọi bảng con $2 \times 2$ tổng $\ge 2$ thì có ít nhất $\min\left\{s\lfloor r/2\rfloor, r\lfloor s/2\rfloor\right\}$ số $1$. Áp dụng cho lưới đỉnh $2026 \times 2027$ ở câu b) được đáp số $2026 \cdot 1013 = 2 \cdot 1013^2$, và lưới đỉnh $2027 \times 2027$ ở câu c) được đáp số $2027 \cdot 1013$.</p>
+            </div>
+        </details>
 
     </div>
 </body>

@@ -49,14 +49,36 @@
         $$x_n = \dfrac{P(n-1)x_{n-1}}{P(n) + P(n-1)x_{n-1}}, \quad \forall n \ge 1.$$
         <p>Chứng minh rằng dãy $(y_n)$ được xác định bởi $y_n = x_1 + x_2 + \dots + x_n$ có giới hạn hữu hạn khi $n \to +\infty$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Lấy nghịch đảo hai vế của hệ thức truy hồi rồi chia cho $P(n)$, ta được $\frac{1}{P(n)x_n} = \frac{1}{P(n-1)x_{n-1}} + \frac{1}{P(n)}$. Suy ra $\frac{1}{P(n)x_n} = 1 + \sum_{k=1}^n \frac{1}{P(k)} &gt; 1$, nên $0 &lt; x_n &lt; \frac{1}{P(n)}$. Vì $P(x)$ có bậc $d \ge 2$, chuỗi $\sum_{n=1}^{\infty} \frac{1}{P(n)}$ hội tụ, do đó dãy $(y_n)$ tăng và bị chặn trên nên có giới hạn hữu hạn.</p>
+            </div>
+        </details>
+
         <h3>Bài 2.</h3>
         <p>Cho số nguyên dương $n$. Chứng minh rằng:</p>
         <p>a) $(n+1)C_{n^2}^n \mid (2n-1)C_{2n}^n C_{2n^2}^{2n}$.</p>
         <p>b) $\dfrac{(2n-1)C_{2n}^n C_{2n^2}^{2n}}{(n+1)C_{n^2}^n}$ là số nguyên lẻ khi và chỉ khi $n+1$ là lũy thừa của 2.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Nhận xét $\frac{1}{n+1}C_{2n}^n$ là số Catalan thứ $n$ (số nguyên), và so sánh số mũ $v_p$ của từng số nguyên tố $p$ ở tử và mẫu dựa vào định lý Legendre/Kummer.</p>
+                <p>b) Với $p = 2$, bằng cách tách các thừa số chẵn và lẻ trong $C_{2n^2}^{2n}$, chứng minh được $v_2\left(C_{2n^2}^{2n}\right) = v_2\left(C_{n^2}^n\right)$. Vì $2n-1$ lẻ nên thương đã cho lẻ khi và chỉ khi số Catalan $\frac{1}{n+1}C_{2n}^n$ lẻ, tức $s_2(n) = v_2(n+1)$, xảy ra khi và chỉ khi $n+1$ là lũy thừa của $2$.</p>
+            </div>
+        </details>
+
         <h3>Bài 3.</h3>
         <p>Cho đa thức $P(x) = x^{2027} + 2026x + 2025$. Tìm tất cả các cặp hàm số $f, g: \mathbb{R} \to \mathbb{R}$ thỏa mãn:</p>
         $$f(P(x) + x + 25y) + f(x + y) = g(x + 26y), \quad \forall x, y \in \mathbb{R}.$$
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $u = x + y$ và $v = x + 26y$ để viết lại phương trình thành $f\!\left(P\!\left(\frac{26u-v}{25}\right) + u\right) + f(u) = g(v)$. Khai thác tính tăng ngặt và toàn ánh của đa thức bậc lẻ $P$ (tạo các bộ $(u_i, v_j)$ khử $g(v)$) để chứng minh $f$ là hàm hằng $f(x) \equiv C$, từ đó $g(x) \equiv 2C$.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Ngày thi thứ hai</h2>
 
@@ -65,8 +87,22 @@
         $$a_n = |a_{n-1} - a_{n-2}| + |a_{n-2} - a_{n-3}|, \quad \forall n \ge 4.$$
         <p>Tính giá trị của $a_{27^{27}}$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Chứng minh bộ ba $\max(a_n, a_{n-1}, a_{n-2})$ giảm dần (tương tự thuật toán Euclid) nên dãy bị chặn và phải rơi vào chu kỳ có dạng $(0, c, 2c, 2c, c, c, c)$ với độ dài $7$. Theo dõi bất biến ước chung và tính chẵn lẻ theo chu kỳ $7$ của chỉ số $n$ (xác định $27^{27} \bmod 7$) để tìm $a_{27^{27}}$.</p>
+            </div>
+        </details>
+
         <h3>Bài 5.</h3>
         <p>Cho tam giác $ABC$ có đường tròn nội tiếp $(I)$ tiếp xúc với các cạnh $BC, CA, AB$ lần lượt tại $D, E, F$, và đường tròn ngoại tiếp là $(O)$. Các đường thẳng $BE, CF$ cắt lại $(I)$ lần lượt tại $P, Q$. Tiếp tuyến của $(I)$ tại $P, Q$ cắt đường thẳng $BC$ lần lượt tại $M, N$. Gọi $T$ là trung điểm cung $BC$ của $(O)$ không chứa $A$. Đường thẳng $TD$ cắt lại $(O)$ tại $K$. Chứng minh rằng đường tròn $(KMN)$ tiếp xúc với $(O)$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xét trường hợp $AB \neq AC$, đặt $G = EF \cap BC$ và $H = PM \cap QN$. Dùng định lý Pascal suy biến cho lục giác $FFQPEE$ và tứ giác $EPFQ$ để suy ra $G \in PQ$ và $H \in AD$. Do $AD$ là đường đối cực của $G$ đối với $(I)$, ta có $(G, R; P, Q) = -1$ (với $R = AD \cap PQ$); chiếu từ $H$ lên $BC$ cho $(G, D; M, N) = -1$. Kết hợp với $(G, D; B, C) = -1$ và trung điểm $S$ của $GD$, chứng minh $SK$ là tiếp tuyến chung của $(O)$ và $(KMN)$.</p>
+            </div>
+        </details>
 
         <h3>Bài 6.</h3>
         <p>Cho một bảng ô vuông vô hạn, mỗi ô được điền một số thực. Giả sử $m, n \ge 2$ là hai số nguyên dương phân biệt sao cho:</p>
@@ -76,6 +112,13 @@
             3. Tồn tại hai ô của bảng được điền hai số thực khác nhau.
         </p>
         <p>Gọi $S$ là tập hợp các số thực phân biệt để điền vào sao cho thỏa mãn các điều kiện trên. Hãy xác định giá trị nhỏ nhất của $|S|$ theo $m, n$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Nếu $d = \gcd(m, n) &gt; 1$, có thể đạt $|S| = 2$ bằng cách điền $1$ tại các ô $(i, j)$ có $d \mid i, d \mid j$ và $0$ tại các ô còn lại. Nếu $\gcd(m, n) = 1$, giả sử $|S| = 2$ (quy về $\{0, 1\}$), xét một hình vuông $mn \times mn$ phủ bởi $n^2$ bảng $m \times m$ và $m^2$ bảng $n \times n$ để có $n^2 A = m^2 B \implies m^2 \mid A$, vô lý vì $0 &lt; A &lt; m^2$; do đó khi $\gcd(m, n) = 1$ thì $|S|_{\min} \ge 3$.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

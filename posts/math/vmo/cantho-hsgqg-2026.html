@@ -45,25 +45,63 @@
 <h3>Câu 1. (3,0 điểm)</h3>
         <p>Cho các số thực dương $a, b, c$ thỏa mãn $a + b + c = 1$. Chứng minh rằng</p>
         \[ 9(a^3b + b^3c + c^3a) + 1 \ge 4(ab + bc + ca) \]
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đồng bậc hóa bằng cách thay $1 = (a+b+c)^4$ và $4(ab+bc+ca) = 4(ab+bc+ca)(a+b+c)^2$. Sử dụng hằng đẳng thức $(a+b+c)^4 - 4(ab+bc+ca)(a+b+c)^2 = (a^2+b^2+c^2)^2 - 4(ab+bc+ca)^2$ để đưa bất đẳng thức về dạng $9(a^3b + b^3c + c^3a) + (a^2+b^2+c^2)^2 \ge 4(ab+bc+ca)^2$, rồi áp dụng bất đẳng thức Cauchy-Schwarz / SOS hoặc chuẩn hóa $p, q, r$ để kết thúc. Dấu bằng xảy ra tại $a = b = c = \frac{1}{3}$.</p>
+            </div>
+        </details>
 
         <h3>Câu 2. (3,0 điểm)</h3>
         <p>Cho dãy số $(x_n)$ xác định bởi: $x_0 = 0, x_1 = 1$ và $x_{n+2} = 5x_{n+1} - x_n, \; \forall n \in \mathbb{N}$.</p>
         <p>a) Chứng minh rằng biểu thức $\dfrac{x_{2n}}{x_n}$ là một số nguyên với mọi $n \in \mathbb{N}^*$ và $21x_n^2 + 4$ là một số chính phương với mọi số tự nhiên $n$.</p>
         <p>b) Tìm tất cả các số nguyên $n \ge 0$ sao cho biểu thức $B_n = 21x_n^2 + 3$ là một số nguyên tố.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Từ phương trình đặc trưng $t^2 - 5t + 1 = 0$ có hai nghiệm $\alpha, \beta = \frac{5 \pm \sqrt{21}}{2}$, biểu diễn $x_n = \frac{\alpha^n - \beta^n}{\alpha - \beta}$. Đặt $y_n = \alpha^n + \beta^n \in \mathbb{Z}$, ta có $\frac{x_{2n}}{x_n} = y_n \in \mathbb{Z}$ và $21x_n^2 + 4 = (\alpha^n - \beta^n)^2 + 4\alpha^n\beta^n = (\alpha^n + \beta^n)^2 = y_n^2$.</p>
+                <p>b) Ta có $B_n = y_n^2 - 1 = (y_n - 1)(y_n + 1)$. Với $n \ge 1$, $y_n \ge 5$ nên $B_n$ là hợp số; thử $n = 0$ được $B_0 = 3$ là số nguyên tố. Vậy chỉ có $n = 0$ thỏa mãn.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (3,0 điểm)</h3>
         <p>Cho đa thức $P(x) = x^n + a_1 x^{n-1} + \dots + a_{n-1}x + a_n$, với $a_1, a_2, \dots, a_n$ là các số thực và $n$ là số nguyên dương lẻ. Biết rằng $P(0) + P(1) = 0$ và $P(x)$ có $n$ nghiệm thực $r_1, r_2, \dots, r_n$ thuộc $[0, 1]$. Tìm giá trị lớn nhất của $Q = \prod_{i=1}^n r_i$ theo $n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Phân tích $P(x) = \prod_{i=1}^n (x - r_i)$. Vì $n$ lẻ nên $P(0) = -\prod_{i=1}^n r_i = -Q$ và $P(1) = \prod_{i=1}^n (1 - r_i)$; điều kiện $P(0) + P(1) = 0$ suy ra $Q = \prod_{i=1}^n (1 - r_i)$. Nhân hai biểu thức rồi dùng $r_i(1 - r_i) \le \frac{1}{4}$ thu được $Q^2 = \prod_{i=1}^n r_i(1 - r_i) \le \frac{1}{4^n}$, suy ra $Q_{\max} = \frac{1}{2^n}$ (đạt được khi $r_1 = \dots = r_n = \frac{1}{2}$).</p>
+            </div>
+        </details>
 
         <h3>Câu 4. (3,0 điểm)</h3>
         <p>Cho số nguyên dương $a > 1$ thỏa mãn $(a-1)^3 + a^3 + (a+1)^3$ là lập phương một số nguyên. Chứng minh rằng $a$ chia hết cho 4.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Rút gọn giả thiết thành $3a(a^2 + 2) = b^3$. Nếu $a \equiv 2 \pmod{4}$ thì $v_2(3a(a^2+2)) = 2 \not\equiv 0 \pmod{3}$, loại. Nếu $a$ lẻ thì $\gcd(a, a^2+2) = 1$: khi $3 \mid a$ suy ra $a^2 + 2 = y^3$ với $9 \mid a^2$, dẫn tới $y^3 \equiv 2 \pmod{9}$ (vô nghiệm); khi $3 \nmid a$ suy ra $a = x^3$ và $x^6 + 2 = 9z^3$, nhưng $x^6 + 2 \equiv 3 \pmod{9}$ (vô lý). Vậy $4 \mid a$.</p>
+            </div>
+        </details>
 
         <h3>Câu 5. (3,0 điểm)</h3>
         <p>Sau khi thi tốt nghiệp trung học phổ thông, các em học sinh khối 12 của trường trung học phổ thông A đã hẹn nhau mỗi năm họp mặt một lần vào ngày hội trại của trường. Tuy nhiên qua 10 lần họp mặt thì nhận thấy mỗi lần họp mặt chỉ có đúng 20 thành viên tham dự và 2 lần họp mặt bất kỳ trong 10 lần họp mặt không có chung quá 2 thành viên. Hỏi khối 12 năm học đó của trường trung học phổ thông A có ít nhất bao nhiêu học sinh?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Gọi $n$ là số học sinh và $d_i$ là số lần họp mặt mà học sinh thứ $i$ tham gia. Ta có $\sum_{i=1}^n d_i = 200$ và đếm số cặp lần họp mặt có chung học sinh cho $\sum_{i=1}^n \binom{d_i}{2} \le 2\binom{10}{2} = 90$. Áp dụng bất đẳng thức $\binom{d_i}{2} \ge d_i - 1$ (đúng với mọi $d_i \in \mathbb{N}$) suy ra $90 \ge 200 - n \implies n \ge 110$. Dấu bằng đạt được bằng cách chọn $2$ học sinh riêng cho mỗi cặp trong $\binom{10}{2} = 45$ cặp buổi họp mặt ($90$ học sinh) và thêm $2$ học sinh chỉ dự $1$ buổi cho mỗi buổi ($20$ học sinh).</p>
+            </div>
+        </details>
 
         <h3>Câu 6. (5,0 điểm)</h3>
         <p>Cho nửa đường tròn $(O)$, đường kính $AB$. $C$ là điểm trên nửa đường tròn sao cho $CA < CB$. Tiếp tuyến $Ax$ của $(O)$ cắt $BC$ tại $M$. Tiếp tuyến của $(O)$ tại $B, C$ cắt nhau tại $N$. Gọi $F$ là giao điểm của $AN$ và $BM$, $D$ là giao điểm thứ hai của $AN$ và $(O)$. Đường thẳng $d$ đi qua $M$, song song với $AB$, cắt $OC$ tại $I$. Đường thẳng $d'$ đi qua $N$, song song với $AB$, cắt $OD$ tại $J$. Gọi $E$ là giao điểm của $MN$ và $OF$.</p>
         <p>a) Chứng minh rằng $MD$ là tiếp tuyến của $(O)$ và ba điểm $I, J, E$ thẳng hàng.</p>
         <p>b) Chứng minh rằng $C, D, E, F$ cùng thuộc một đường tròn. Xác định tâm của đường tròn đó.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Tứ giác $ACDB$ điều hòa nên tiếp tuyến tại $A$ ($Ax$) cắt $BC$ tại $M$ đồng thời là giao của tiếp tuyến tại $D$, tức $MD$ tiếp xúc với $(O)$. Lấy $K, L$ là trung điểm $AD, BC$, biến đổi tỉ số $\frac{EM}{EN} = -\frac{KM}{KO}\cdot\frac{LO}{LN} = \frac{MI}{NJ}$ để suy ra $I, E, J$ thẳng hàng.</p>
+                <p>b) $F$ là trực tâm $\triangle OMN$ nên $OF \perp MN$ tại $E$. Gọi $H = AC \cap BD$; theo định lý Pascal thì $M, N, H$ thẳng hàng. Từ đó $H, E, C, F, D$ cùng thuộc đường tròn đường kính $HF$, tâm là trung điểm của $HF$.</p>
+            </div>
+        </details>
 
     </div>
 </body>

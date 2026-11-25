@@ -44,18 +44,49 @@
         <p>a) Chứng minh dãy số $(u_n)$ hội tụ và tìm $\lim u_n$.</p>
         <p>b) Đặt $T_n = \sum_{k=1}^n \dfrac{1}{u_k - 3}$. Tính $\lim \dfrac{T_n}{2n + 3}$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Bằng quy nạp chứng minh $0 \le u_n &lt; 1$ và $u_{n+1} - u_n = \frac{u_n^2 - 4u_n + 3}{5 - u_n} &gt; 0$, nên dãy tăng và bị chặn trên, suy ra hội tụ về $\lim u_n = 1$.</p>
+                <p>b) Vì $\lim u_n = 1$, ta có $\lim \frac{1}{u_k - 3} = -\frac{1}{2}$. Áp dụng định lý Stolz-Cesàro (hoặc trung bình Cesàro), thu được $\lim \frac{T_n}{n} = -\frac{1}{2}$, từ đó $\lim \frac{T_n}{2n+3} = -\frac{1}{4}$.</p>
+            </div>
+        </details>
+
         <h3>Câu 2. (5,0 điểm)</h3>
         <p>Tìm tất cả các hàm số $f : \mathbb{R} \to \mathbb{R}$ thỏa mãn</p>
         <p>$$f(x f(y)) + f(f(x) + f(y)) = y f(x) + f(x + f(y)), \quad \forall x, y \in \mathbb{R}.$$</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Thay $x = 0$ để chứng minh nếu $f(0) \neq 0$ thì $f$ đơn ánh, kết hợp $y = 0$ để suy ra $f(0) = 0$. Khi $f(0) = 0$, thay $y = 0$ cho $f(f(x)) = f(x)$; sau đó thay $y$ bởi $f(y)$ vào phương trình ban đầu để thu được $(y - f(y))f(x) = 0$ với mọi $x, y \in \mathbb{R}$, dẫn đến hai nghiệm $f(x) \equiv 0$ và $f(x) = x$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (5,0 điểm)</h3>
         <p>a) Cho $p &gt; 3$ là số nguyên tố thỏa mãn $\gcd(p - 1, 2023) = 1$. Chứng minh rằng $\sum_{i=1}^{p-1} i^{2026} \equiv 0 \pmod{p}$.</p>
         <p>b) Cho $p &gt; 3$ là số nguyên tố và $x$ là số nguyên dương thỏa mãn $x^3 - 1 \equiv 0 \pmod{p}$ và $x^2 - 1 \not\equiv 0 \pmod{p}$. Chứng minh rằng $p \equiv 1 \pmod{3}$ và $(x + 1)^p \equiv x^p + 1 \pmod{p^2}$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Gọi $g$ là căn nguyên thủy modulo $p$, khi đó $\sum_{i=1}^{p-1} i^{2026} \equiv \sum_{k=0}^{p-2} (g^{2026})^k \pmod p$; tổng cấp số nhân này chia hết cho $p$ khi $(p-1) \nmid 2026$ (lưu ý nếu có ngoại lệ $p = 2027$ do $(p-1) \mid 2026$ và $\gcd(2026, 2023) = 1$ thì tổng $\equiv -1 \pmod p$).</p>
+                <p>b) Do $x \not\equiv 1 \pmod p$ và $x^3 \equiv 1 \pmod p$, cấp của $x$ modulo $p$ là $3$, nên $3 \mid p - 1$. Đặt $u = x^p$: ta có $u^3 = (x^3)^p \equiv 1 \pmod{p^2}$ và $p \nmid (u - 1)$, suy ra $u^2 + u + 1 \equiv 0 \pmod{p^2}$; mặt khác $x + 1 \equiv -x^2 \pmod p$ nên $(x+1)^p \equiv -x^{2p} \equiv x^p + 1 \pmod{p^2}$.</p>
+            </div>
+        </details>
+
         <h3>Câu 4. (5,0 điểm)</h3>
         <p>Có $10$ học sinh tham gia một bài kiểm tra trắc nghiệm gồm $n$ câu hỏi, mỗi câu hỏi có $4$ phương án trả lời là A, B, C và D. Biết rằng mọi học sinh đều trả lời hết tất cả các câu hỏi và hai học sinh bất kỳ có nhiều nhất $1$ câu hỏi có cùng phương án trả lời.</p>
         <p>a) Với $n = 3$, hãy chỉ ra một ví dụ về cách trả lời của $10$ học sinh thỏa mãn yêu cầu bài toán.</p>
         <p>b) Tìm giá trị lớn nhất của $n$ để có thể xảy ra tình huống trên.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chọn $10$ bộ trong $16$ bộ dạng $(i, j, (i+j) \bmod 4)$ với $i, j \in \{0, 1, 2, 3\}$ (tương ứng $4$ chữ cái A, B, C, D).</p>
+                <p>b) Có $\binom{10}{2} = 45$ cặp học sinh, mỗi cặp trùng nhau ở tối đa $1$ câu. Ở mỗi câu hỏi, chia $10$ học sinh vào $4$ phương án tạo ít nhất $\binom{3}{2} + \binom{3}{2} + \binom{2}{2} + \binom{2}{2} = 8$ cặp trùng nhau. Suy ra $8n \le 45 \implies n \le 5$; giá trị $n_{\max} = 5$ đạt được bằng cách xây dựng trực tiếp.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Ngày thi thứ hai</h2>
 
@@ -64,15 +95,39 @@
         <p>a) Tính giá trị của biểu thức $P(0) + P(100) - 100!$.</p>
         <p>b) Cho $P(100) = 199$. Xét đa thức $Q(x) = P(x) - 2x + 1 + p$, với $p &gt; 100^{100}$ là một số nguyên tố. Chứng minh rằng $Q(x)$ bất khả quy trên $\mathbb{Z}[x]$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Viết $P(x) - (2x - 1) = (x - c)\prod_{i=1}^{99}(x - i)$, thay $x = 0$ và $x = 100$ để khử $c$ và thu được $P(0) + P(100) - 100! = 198$.</p>
+                <p>b) Khi $P(100) = 199$, ta có $Q(x) = \prod_{i=1}^{100}(x - i) + p$. Nếu $Q(x) = A(x)B(x)$ khả quy trên $\mathbb{Z}[x]$, vì $A(i)B(i) = p$ nguyên tố với mọi $i \in \{1, \dots, 100\}$ nên có ít nhất một $i_0$ mà $|A(i_0)| = 1$. Khi đó $A$ có một nghiệm phức $z_0$ thỏa $|z_0 - i_0| \le 1$, suy ra $p = \prod_{i=1}^{100} |z_0 - i| \le 100! &lt; 100^{100}$, mâu thuẫn.</p>
+            </div>
+        </details>
+
         <h3>Câu 6. (7,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn ($AB &lt; AC$) có đường cao $AD$. Gọi $M, N$ lần lượt là trung điểm của các cạnh $AB, AC$. Dựng các hình bình hành $ABCB'$, $ABA'C$, $ACBC'$. Gọi $K$ là giao điểm thứ hai của hai đường tròn $(BDN)$ và $(CDM)$.</p>
         <p>a) Đường thẳng $MN$ cắt $BC'$ tại $X$ và cắt $CB'$ tại $Y$. Chứng minh rằng $X \in (BDN)$, $Y \in (CDM)$ và đường thẳng $DK$ đi qua trung điểm $Q$ của đoạn thẳng $MN$.</p>
         <p>b) Chứng minh rằng đường tròn $(KMC')$ cắt đường tròn $(KNB')$ tại một điểm nằm trên đường thẳng $B'C'$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chứng minh $X, M, N, Y$ thẳng hàng với $XM = MN = NY$. Dùng $DN = CN$ và tính chất song song để có $(NX, XB) = (ND, DB) \implies X \in (BDN)$; tương tự $Y \in (CDM)$. Do $Q$ là trung điểm $MN$ và $XY$ nên $P_{(BDN)}(Q) = QX \cdot QN = QM \cdot QY = P_{(CDM)}(Q)$, tức $Q \in DK$.</p>
+                <p>b) Đặt $T = DK \cap B'C'$. Sử dụng các bộ ba thẳng hàng $C, M, C'$, $B, N, B'$ và $B'C' \parallel BC$ kết hợp cộng góc định hướng trên $(KDMC)$ và $(KDNB)$ để chứng minh $T$ thuộc cả $(KMC')$ lẫn $(KNB')$.</p>
+            </div>
+        </details>
+
         <h3>Câu 7. (7,0 điểm)</h3>
         <p>Số nguyên dương $n$ được gọi là <em>số đẹp</em> nếu tập hợp $\{1, 2, \dots, n\}$ có thể phân hoạch thành các tập con đôi một rời nhau sao cho trong mỗi tập con, trung bình cộng của các phần tử bằng đúng số lượng phần tử của tập con đó. (Ví dụ: $4$ là số đẹp vì $\{1, 2, 3, 4\} = \{1\} \cup \{2, 3, 4\}$).</p>
         <p>a) Chứng minh rằng $9$ và $13$ là các số đẹp.</p>
         <p>b) Chứng minh rằng mọi số chính phương đều là số đẹp.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Với $n = 9$: $\{1, 3, 5\} \cup \{2, 4, 6, 7, 8, 9\}$; với $n = 13$: $\{1\} \cup \{2, 3, 4\} \cup \{5, 6, \dots, 13\}$.</p>
+                <p>b) Với $n = k^2$ ($k \ge 2$), đặt $b = \frac{k^2 - k}{2}$ và $a = \frac{k^2 + k}{2}$, ta có $a + b = k^2$ và $a^2 + b^2 = \frac{k^2(k^2+1)}{2}$. Vì tổng $b$ số nhỏ nhất $\le b^2$ và tổng $b$ số lớn nhất $\ge b^2$, có thể chọn tập $B$ gồm $b$ phần tử có tổng bằng $b^2$; khi đó phần bù $A$ có $a$ phần tử và tổng bằng $a^2$.</p>
+            </div>
+        </details>
     </div>
 </body>
 </html>

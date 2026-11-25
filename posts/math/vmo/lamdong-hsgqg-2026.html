@@ -47,25 +47,60 @@
         <p>a) Chứng minh rằng $u_n \geq \sqrt{2026}$ với mọi $n \geq 1$.</p>
         <p>b) Chứng minh rằng dãy số $(u_n)$ có giới hạn hữu hạn và tìm giới hạn đó.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), chứng minh $u_n &gt; 0$ bằng quy nạp rồi áp dụng trực tiếp bất đẳng thức AM-GM cho $u_n = \frac{1}{2}\left(u_{n-1} + \frac{2026}{u_{n-1}}\right)$. Ở câu b), xét hiệu $u_n - u_{n-1} = \frac{2026 - u_{n-1}^2}{2u_{n-1}} \le 0$ để suy ra dãy $(u_n)$ giảm và bị chặn dưới bởi $\sqrt{2026}$, từ đó hội tụ về $L = \sqrt{2026}$.</p>
+            </div>
+        </details>
+
         <h3>Câu 2. (4,0 điểm)</h3>
         <p>Cho đa thức $P(x)$ có các hệ số nguyên, biết rằng tồn tại ba số nguyên $x_1, x_2, x_3$ sao cho $P(x_1) = 2025, P(x_2) = 2026$ và $P(x_3) = 2027$.</p>
         <p>a) Chứng minh rằng $x_2$ là nghiệm nguyên duy nhất của phương trình $P(x) = 2026$.</p>
         <p>b) Chứng minh rằng phương trình $P(x) = 2029$ có không quá một nghiệm nguyên.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Sử dụng tính chất $a - b \mid P(a) - P(b)$ với mọi $a \neq b \in \mathbb{Z}$. Ở câu a), từ $x_2 - x_1 \mid 1$ và $x_2 - x_3 \mid 1$ với $x_1 \neq x_3$ suy ra $x_2 = \frac{x_1 + x_3}{2}$, dẫn tới nghiệm nguyên $x_2$ là duy nhất. Ở câu b), nếu $P(a) = 2029$ thì $a - x_1 \mid 4$, $a - x_2 \mid 3$ và $a - x_3 \mid 2$; vì $x_1, x_2, x_3$ là ba số nguyên liên tiếp nên bằng cách xét thứ tự $x_1 &lt; x_2 &lt; x_3$ hoặc $x_1 &gt; x_2 &gt; x_3$, ta thu được tối đa một giá trị nguyên của $a$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (4,0 điểm)</h3>
         <p>Cho $A(n) = 10^{10^n} - 9^{9^n}$ với $n \in \mathbb{N}^*$.</p>
         <p>a) Tìm một giá trị của $n$ sao cho $A(n)$ có hai chữ số tận cùng giống nhau.</p>
         <p>b) Chứng minh rằng nếu $A(n)$ có $k$ chữ số tận cùng giống nhau thì $k \leq 4$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Nhận xét $A(n) \equiv 0 - 9 \equiv 1 \pmod{10}$, nên các chữ số tận cùng giống nhau bắt buộc phải bằng $1$. Ở câu a), thử $n = 1$ ta có $9^9 \equiv -11 \pmod{100}$ nên $A(1) \equiv 11 \pmod{100}$. Ở câu b), giả sử $k \ge 5$ thì $A(n) \equiv 11111 \pmod{10^5}$; vì $10^n &gt; 5$ nên suy ra $9^{9^n} \equiv -11111 \equiv 25 \pmod{32}$, kéo theo $9^n \equiv 3 \pmod 4$, mâu thuẫn với $9^n \equiv 1 \pmod 4$.</p>
+            </div>
+        </details>
+
         <h3>Câu 4. (4,0 điểm)</h3>
         <p>Cho tam giác nhọn $ABC$ ($AB < AC$) ngoại tiếp đường tròn $(I)$. Gọi $D, E, F$ lần lượt là tiếp điểm của đường tròn $(I)$ với $BC, CA, AB$. Đường thẳng $AI$ cắt $DE, DF$ lần lượt tại $P, Q$. Đường tròn đường kính $PQ$ cắt $BC$ tại $M, N$.</p>
         <p>a) Chứng minh rằng $BP$ song song với $CQ$.</p>
         <p>b) Chứng minh rằng đường tròn ngoại tiếp tam giác $AMN$ tiếp xúc với đường tròn $(I)$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), biến đổi góc để chứng minh các tứ giác $IDQC$ và $BIPD$ nội tiếp, suy ra $\widehat{IQC} = \widehat{IPB} = 90^\circ$ và do đó $BP \parallel CQ$. Ở câu b), gọi $K = AQ \cap BC$, dùng Thales và tính chất phân giác chứng minh $(AKPQ) = -1$, suy ra $P, Q$ là tâm nội tiếp và tâm bàng tiếp góc $A$ của $\triangle AMN$, nên trung điểm $L$ của $PQ$ là điểm chính giữa cung nhỏ $MN$ của $(AMN)$. Từ $\triangle IDP \sim \triangle IQD$ có $ID^2 = IP \cdot IQ = IL^2 - LP^2$, chứng tỏ $(I)$ trực giao với $(PQ)$; phép nghịch đảo tâm $L$ phương tích $LP^2$ giữ nguyên $(I)$ và biến $BC$ thành $(AMN)$.</p>
+            </div>
+        </details>
+
         <h3>Câu 5. (4,0 điểm)</h3>
         <p>Bạn Hải tô màu $n$ số nguyên dương đầu tiên bởi đúng $k$ màu, mỗi số chỉ tô đúng một màu ($k \leq n$). Tìm giá trị nhỏ nhất của $n$ sao cho với mọi cách tô luôn tồn tại hai số được tô cùng màu mà hiệu của chúng là số chính phương trong mỗi trường hợp sau:</p>
         <p>a) $k = 2$.</p>
         <p>b) $k = 3$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Với $k = 2$, $n = 4$ có phân hoạch $\{1;3\}, \{2;4\}$; với $n = 5$ thì $1, 3, 5$ buộc cùng màu nhưng $5 - 1 = 4 = 2^2$, nên $n_{\min} = 5$. Với $k = 3$, nhận xét các bộ ba $(r, r+9, r+25)$ và $(r, r+16, r+25)$ phải được tô bởi 3 màu khác nhau, suy ra với $r \in \{1, 2, 3, 4\}$ mỗi cặp $(r+9, r+16)$ gồm 2 số cùng màu; khi $n = 29$, nguyên lý Dirichlet cho 4 cặp này dẫn tới mâu thuẫn. Với $n = 28$, chỉ ra phân hoạch 3 màu hợp lệ: $\{1,4,6,9,12,14,19,24,27\}$, $\{2,5,7,10,15,17,20,22,25,28\}$ và $\{3,8,11,13,16,18,21,23,26\}$, nên $n_{\min} = 29$.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

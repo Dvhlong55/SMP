@@ -128,3 +128,51 @@ body:not(.dark-mode):not(.parchment-mode) .smp-longnote {
 body.parchment-mode .smp-longnote {
     border-left-color: #ab3334;
 }
+
+/* 7. Accordion Gợi ý ẩn gọn dưới từng bài toán */
+details.igo-hint-clean {
+    margin: 8px 0 22px 0;
+    border: none;
+    background: transparent;
+}
+summary.igo-hint-trigger {
+    list-style: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 6px;
+    user-select: none;
+    color: var(--exam-bold-color, #111);
+    width: fit-content;
+    outline: none;
+    font-weight: 600;
+}
+summary.igo-hint-trigger::-webkit-details-marker,
+summary.igo-hint-trigger::marker {
+    display: none;
+}
+.igo-arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 4.5px 0 4.5px 7.5px;
+    border-color: transparent transparent transparent currentColor;
+    transition: transform 0.2s ease-in-out;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+details.igo-hint-clean[open] .igo-arrow {
+    transform: rotate(90deg);
+}
+.igo-hint-content {
+    padding: 8px 0 8px 16px;
+    margin-top: 6px;
+    border-left: 2px solid var(--border-light, #cbd5e1);
+    font-size: 0.98rem;
+    line-height: 1.8;
+    color: var(--exam-text-color, #334155);
+}
+body.dark-mode .igo-hint-content {
+    border-left-color: rgba(255, 255, 255, 0.15);
+}

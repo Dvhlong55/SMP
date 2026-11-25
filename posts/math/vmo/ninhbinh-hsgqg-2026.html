@@ -52,6 +52,13 @@
         <p>a) Chứng minh rằng $x_n \geq 2^{n-1}, \forall n \in \mathbb{N}^*$ và dãy số $(y_n)$ có giới hạn hữu hạn.</p>
         <p>b) Chứng minh rằng $\lim_{n \to +\infty} y_n$ là một số vô tỉ.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), từ $x_{n+1} \ge 2x_n$ quy nạp $x_n \ge 2^{n-1}$, suy ra $(y_n)$ tăng và bị chặn trên bởi $2$ nên hội tụ về giới hạn $L$. Ở câu b), giả sử $L = \frac{a}{b} \in \mathbb{Q}$; vì $x_i \mid x_n$ với mọi $i \le n$ nên $A_n = bx_n(L - y_n) \in \mathbb{Z}_{&gt;0}$. Mặt khác $0 &lt; L - y_n = \sum_{j=1}^\infty \frac{1}{x_{n+j}} \le \frac{2}{x_{n+1}}$, dẫn tới $0 &lt; A_n \le \frac{2b}{n^2 + 1} &lt; 1$ khi $n$ đủ lớn, vô lý.</p>
+            </div>
+        </details>
+
         <h3>Bài 2. (5,0 điểm)</h3>
         <p>Cho $n$ là một số nguyên dương lẻ. Xét các hàm $f: \mathbb{R} \to \mathbb{R}$ thỏa mãn:</p>
         $$f(x)f(y+x) = x^n f(f(y)) + (f(x))^2, \quad \forall x, y \in \mathbb{R} \quad (1).$$
@@ -60,13 +67,34 @@
         ii) $f$ là một đơn ánh.</p>
         <p>b) Tìm tất cả các hàm số $f: \mathbb{R} \to \mathbb{R}$ thỏa mãn (1).</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Hàm hằng duy nhất là $f \equiv 0$. Với $f$ không hằng, câu a) dùng $P(0, y), P(a, y)$ và $P(x, a) - P(x, b)$ để suy ra $f(x) = 0 \Leftrightarrow x = 0$ và $f$ đơn ánh. Ở câu b), thay $(x, -x), (-x, x), (x, x), (x, -2x)$ kết hợp $n$ lẻ để chứng minh $f$ là hàm lẻ và $f(f(x)) = \frac{f(x)^2}{x^n}$; từ $P(x, y)$ và $P(y, x)$ suy ra $\frac{f(x)}{x^n} = \frac{f(y)}{y^n}$ với $x, y &gt; 0$, nên $f(x) = cx^n$. Thử lại cho $f(x) = cx$ ($c \in \mathbb{R}$) khi $n = 1$, và chỉ có $f \equiv 0$ khi $n \ge 3$ lẻ.</p>
+            </div>
+        </details>
+
         <h3>Bài 3. (5,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn, không cân, có đường cao $AH$. Gọi $X, Y$ là hai điểm phân biệt thay đổi trên cạnh $BC$ sao cho $\widehat{CAX} = \widehat{BAY}$; $K, S$ tương ứng là hình chiếu vuông góc của $B$ lên $AX, AY$; $T, L$ tương ứng là hình chiếu vuông góc của $C$ lên $AX, AY$.</p>
         <p>a) Chứng minh rằng ba đường thẳng $AH, TL, SK$ đồng quy.</p>
         <p>b) Chứng minh rằng giao điểm của $KL$ và $ST$ thuộc một đường thẳng cố định khi $X, Y$ thay đổi trên cạnh $BC$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), tính $AK \cdot AT = (AB\cos\widehat{BAK})(AC\cos\widehat{TAC}) = AS \cdot AL$ suy ra tứ giác $STKL$ nội tiếp, từ đó $AH, TL, SK$ đồng quy tại tâm đẳng phương của $(STKL), (AB), (AC)$ (tức là giao điểm của các trục đẳng phương của các đường tròn đường kính $AB, AC$ và $(STKL)$). Ở câu b), $HA$ là phân giác $\widehat{THS}$; gọi $N = AH \cap TS, P = TS \cap BC$ thì $H(NPTS) = -1 \Rightarrow (NPTS) = -1$, kết hợp hàng điểm tứ giác toàn phần cho $KL \cap ST$ luôn nằm trên đường thẳng $BC$ cố định.</p>
+            </div>
+        </details>
+
         <h3>Bài 4. (5,0 điểm)</h3>
         <p>Cho các số nguyên dương $m, n$. Xét một bảng ô vuông kích thước $3m \times 6n$ (gồm $3m$ hàng và $6n$ cột). Trên bảng đó một số ô có màu trắng và các ô còn lại màu đỏ. Gọi $T$ là số bộ ba $(C_1, C_2, C_3)$ gồm các ô, trong đó hai ô đầu tiên nằm trên cùng một hàng và hai ô cuối cùng nằm trên cùng một cột, với $C_1$ và $C_3$ là ô trắng còn $C_2$ là ô đỏ. Tìm giá trị lớn nhất của $T$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $R = 3m, C = 6n$; gọi $w_i$ là số ô trắng ở hàng $i$ và $v_j$ là số ô trắng ở cột $j$. Khi đó $T = \sum_{(i,j)\text{ đỏ}} w_i v_j$; áp dụng bất đẳng thức Cauchy-Schwarz có $T^2 \le \left(\sum_{i=1}^R (C - w_i)w_i^2\right)\left(\sum_{j=1}^C (R - v_j)v_j^2\right) \le R \cdot \frac{4C^3}{27} \cdot C \cdot \frac{4R^3}{27}$, suy ra $T \le \frac{4}{27} R^2 C^2 = 48m^2n^2$. Dấu bằng đạt được bằng cách chia bảng thành $3 \times 3$ khối kích thước $m \times 2n$ và tô đỏ $3$ khối trên đường chéo chính.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Bài thi thứ hai</h2>
         <p style="text-align: center; font-style: italic;">Ngày thi: 16 tháng 09 năm 2026 — Thời gian làm bài: 180 phút</p>
@@ -76,14 +104,35 @@
         <p>a) Chứng minh rằng tồn tại các số $p, q \in \{1, 2, \dots, n\}$ (không nhất thiết phân biệt) sao cho $S_p \leq 0$ và $|S_q| \leq \dfrac{2q+1}{4}$.</p>
         <p>b) Khi $n \geq 3$, chứng minh rằng tồn tại các số thực $x_1, x_2, \dots, x_n$ thỏa mãn các điều kiện của bài toán sao cho với mọi $k \in \{1, 2, \dots, n\}$ ta đều có $|S_k| \geq \dfrac{2k+1}{4}$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), đặt $S_0 = 0$ và viết $\sum_{k=1}^n x_k = \sum_{k=1}^n \frac{S_k - S_{k-1}}{k} = \frac{S_n}{n+1} + \sum_{k=1}^n \frac{S_k}{k(k+1)} = 0$, suy ra tồn tại $p$ sao cho $S_p \le 0$. Giả sử $S_1 &gt; 0$ và chọn $k$ nhỏ nhất sao cho $S_k \le 0$, khi đó $|S_k| + |S_{k-1}| = k|x_k| \le k = \frac{2k+1}{4} + \frac{2(k-1)+1}{4}$, nên một trong hai chỉ số $k$ hoặc $k-1$ thỏa mãn $|S_q| \le \frac{2q+1}{4}$. Ở câu b), với $n$ lẻ chọn $x_1 = \frac{3}{4}, x_2 = \frac{1}{4}, x_k = (-1)^k$ ($k \ge 3$); với $n$ chẵn chọn $x_1 = 1, x_2 = \frac{1}{8}, x_3 = -1, x_4 = -\frac{1}{8}, x_k = (-1)^{k+1}$ ($k \ge 5$).</p>
+            </div>
+        </details>
+
         <h3>Bài 6. (7,0 điểm)</h3>
         <p>a) Với mỗi số nguyên dương $n$, gọi $\sigma(n)$ là tổng các ước dương của $n$. Chứng minh rằng tồn tại vô hạn số nguyên dương $n$ sao cho $n$ là ước của $2^{\sigma(n)} - 1$.</p>
         <p>b) Cho dãy số nguyên dương $(a_n)_{n \geq 1}$ và dãy các số nguyên tố $(p_n)_{n \geq 1}$ thoả mãn với mỗi $n \in \mathbb{N}^*$, ta có $p_n \mid a_n$ và $a_{n+1} = \dfrac{a_n}{p_n} (p_n^{1013} - 1)$. Chứng minh rằng tồn tại số nguyên dương $m$ sao cho $a_m$ chia hết cho 2026.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), chọn $p_i$ là ước nguyên tố của $2^{2^i} + 1$ ($0 \le i \le k-1$); các $p_i$ đôi một phân biệt và đặt $n = p_0 p_1 \dots p_{k-1}$ thì $n \mid 2^{2^k} - 1$ trong khi $2^k \mid \sigma(n)$, nên $n \mid 2^{\sigma(n)} - 1$. Ở câu b), đặt $q = 1013$ và giả sử phản chứng $2q \nmid a_m$; chứng minh $p_n \not\equiv 1 \pmod q$, $q \nmid a_n$ ($\forall n \ge 2$) và $p_n \le a_1$ với mọi $n \ge 1$. Do đó tồn tại ước nguyên tố lớn nhất $p$ xuất hiện vô hạn lần trong $(p_n)$, dẫn tới $v_p(a_n)$ giảm nghiêm ngặt vô hạn lần, mâu thuẫn.</p>
+            </div>
+        </details>
 
         <h3>Bài 7. (7,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn, không cân, nội tiếp đường tròn $(O)$, có ba đường cao $AD, BE, CF$ đồng quy tại $H$. Gọi $G$ là trọng tâm tam giác $ABC$. Các đoạn thẳng $AG, BG, CG$ theo thứ tự cắt đường tròn $(DEF)$ tại $I, J, K$. Các đường tròn $(AID), (BJE), (CKF)$ cắt lại đường tròn $(O)$ tại các điểm thứ hai tương ứng là $X, Y, Z$.</p>
         <p>a) Chứng minh rằng ba đường thẳng $AX, BY, CZ$ đồng quy tại một điểm trên đường thẳng $OH$.</p>
         <p>b) Đường thẳng $AC$ cắt đường tròn $(AHB)$ tại điểm thứ hai là $N$; đường thẳng $AB$ cắt đường tròn $(AHC)$ tại điểm thứ hai là $M$. Đường tròn $(HMN)$ cắt lại các đường thẳng $AB, AC$ tại các điểm thứ hai tương ứng là $S, T$. Chứng minh $ST$ vuông góc với $OH$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), gọi $A', B', C'$ là hình chiếu của $H$ lên $EF, DF, DE$; chứng minh $AX$ đi qua $A'$ (và tương tự $BY \ni C', CZ \ni B'$). Vì $\triangle A'B'C'$ và $\triangle ABC$ có các cạnh tương ứng song song nên $AA', BB', CC'$ đồng quy tại tâm vị tự của chúng, điểm này nằm trên đường thẳng $OH$ nối hai tâm ngoại tiếp. Ở câu b), gọi $P = DE \cap AB, Q = DF \cap AC$ thì $PQ$ là trục đẳng phương của $(DEF)$ và $(O)$ nên $PQ \perp OH$; chứng minh $AQ \cdot AN = AP \cdot AM$ để suy ra tứ giác $NQMP$ nội tiếp và $ST \parallel PQ \perp OH$.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

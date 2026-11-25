@@ -50,16 +50,40 @@
         <p>Chứng minh rằng, dãy số $(x_n)$ xác định bởi $x_1 = 2$ và
         $$x_{n+1} = \frac{\sqrt{x_1 + 1} + \sqrt{x_2 + 1} + \dots + \sqrt{x_n + 1}}{n}, \quad \forall n \in \mathbb{N}^*$$
         có giới hạn hữu hạn. Tìm giới hạn đó.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Từ hệ thức truy hồi, với $n \ge 2$ ta có $x_{n+1} = \frac{(n-1)x_n + \sqrt{x_n+1}}{n}$, suy ra $x_{n+1} - x_n = \frac{\sqrt{x_n+1} - x_n}{n}$. Đặt $\phi = \frac{1+\sqrt{5}}{2}$ (nghiệm dương của $t = \sqrt{t+1}$); bằng quy nạp chứng minh được $x_n &gt; \phi$ với mọi $n \ge 1$, từ đó dãy $(x_n)$ giảm nghiêm ngặt và hội tụ về $L \ge \phi$. Áp dụng định lý Stolz–Cesàro (hoặc tính chất trung bình Cesàro) cho $x_{n+1} = \frac{1}{n}\sum_{k=1}^n \sqrt{x_k+1}$ suy ra $L = \sqrt{L+1}$, vậy $\lim x_n = \frac{1+\sqrt{5}}{2}$.</p>
+            </div>
+        </details>
 
         <h3>Câu 2.</h3>
         <p>Cho 99 cái đĩa xếp trên bàn tròn. Tìm số nguyên dương $n$ nhỏ nhất, thoả mãn có thể chia $n$ viên kẹo vào các đĩa sao cho tổng số viên kẹo ở 20 đĩa liên tiếp bất kỳ luôn không ít hơn 25.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Cộng tổng số kẹo của tất cả 99 bộ 20 đĩa liên tiếp, mỗi đĩa được tính đúng 20 lần nên $20n \ge 99 \cdot 25 = 2475$, suy ra $n \ge 124$. Để chỉ ra cách chia đạt $n = 124$, đánh số các đĩa $i = 0, 1, \dots, 98$ và đặt vào đĩa thứ $i$ số kẹo $a_i = \left\lfloor \frac{124(i+1)}{99} \right\rfloor - \left\lfloor \frac{124i}{99} \right\rfloor$; khi đó tổng 20 đĩa liên tiếp bất kỳ bằng $\left\lfloor \frac{124(k+20)}{99} \right\rfloor - \left\lfloor \frac{124k}{99} \right\rfloor \ge \left\lfloor \frac{2480}{99} \right\rfloor = 25$. Vậy $n_{\min} = 124$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3.</h3>
         <p>Cho đường tròn $(O)$ và điểm $M$ nằm ngoài đường tròn $(O)$. Dựng hai tiếp tuyến $MA, MB$ của $(O)$ với $A, B$ là các tiếp điểm. Xét điểm $C$ thuộc $AM$, và điểm $D$ là giao điểm của $BC$ với $(O)$. Chứng minh rằng, nếu $D$ là trung điểm $BC$ thì $MD, MB$ theo thứ tự là tiếp tuyến của các đường tròn $(ACD)$ và $(MOD)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Từ $\triangle CAD \sim \triangle CBA$ và $D$ là trung điểm $BC$, ta có $CA^2 = CD \cdot CB = 2CD^2$. Áp dụng định lý đường trung tuyến cho $\triangle MBC$ với trung tuyến $MD$ và lưu ý $MB = MA$: $MD^2 = \frac{MA^2 + MC^2}{2} - CD^2 = \frac{MA^2 + MC^2 - CA^2}{2} = MA \cdot MC$ (do $C, A, M$ thẳng hàng), suy ra $MD$ tiếp xúc với $(ACD)$. Từ đó biến đổi góc tiếp tuyến – dây cung $\angle MDC = \angle DAC = \angle ABD$ và $\angle MBD = \angle BAD$ để suy ra $(MB, MD) \equiv (OM, OD) \pmod{\pi}$, tức $MB$ tiếp xúc với $(MOD)$.</p>
+            </div>
+        </details>
 
         <h3>Câu 4.</h3>
         <p>Cho số nguyên dương $a$. Chứng minh rằng, dãy số $(x_n)$ xác định bởi các hệ thức sau chỉ có hữu hạn số hạng là hợp số:
-        $$x_1 = a; \quad \forall n \in \mathbb{N}^* : x_{n+1} = \min\{ s \in \mathbb{N}^* \mid s > x_n \land \gcd(s; x_1 \dots x_n) = 1 \}.$$</p>
+        $$x_1 = a; \quad \forall n \in \mathbb{N}^* : x_{n+1} = \min\{ s \in \mathbb{N}^* \mid s &gt; x_n \land \gcd(s; x_1 \dots x_n) = 1 \}.$$</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xét một số hạng $x_n$ với $n \ge 2$ và gọi $q$ là một ước nguyên tố bất kỳ của $x_n$. Vì $\gcd(x_n, x_1 \dots x_{n-1}) = 1$ nên $q$ không chia hết $x_1 \dots x_{n-1}$. Nếu $q &gt; x_1$, gọi $m$ là chỉ số nhỏ nhất sao cho $x_m \ge q$ ($2 \le m \le n$); do $\gcd(q, x_1 \dots x_{m-1}) = 1$ và $q &gt; x_{m-1}$, theo định nghĩa dãy ta phải có $x_m = q$, suy ra $m = n$ và $x_n = q$ là số nguyên tố. Vậy mọi hợp số $x_n$ ($n \ge 2$) chỉ có thể có các ước nguyên tố nhỏ hơn $a$; mà mỗi số nguyên tố xuất hiện tối đa một lần trong $(x_n)_{n \ge 2}$ nên chỉ có hữu hạn hợp số.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Bài thi thứ hai</h2>
         <p style="text-align: center; font-style: italic;">Ngày thi: 14 tháng 08 năm 2026</p>
@@ -67,14 +91,32 @@
         <h3>Câu 5.</h3>
         <p>Tìm tất cả dãy số nguyên dương tăng $(f_n)$, thỏa mãn mệnh đề sau là đúng:
         $$\forall n \in \mathbb{N}^* : (f_{3n} = f_n + 2n) \land (f_n \in \mathbb{P} \Rightarrow n \in \mathbb{P}).$$</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Vì $(f_n)$ là dãy số nguyên tăng nghiêm ngặt, ta có $f_{3n} - f_n \ge 2n$ với mọi $n \ge 1$; kết hợp với $f_{3n} = f_n + 2n$ suy ra dấu bằng phải xảy ra ở mọi bước, tức $f_{k+1} = f_k + 1$ với mọi $k \ge 1$, hay $f_n = n + c$ ($c \ge 0$ nguyên). Nếu $c &gt; 0$, chọn số nguyên tố $r \nmid c$; theo định lý Dirichlet tồn tại số nguyên tố $q &gt; c + r$ sao cho $q \equiv c \pmod{r}$. Khi đó $n = q - c &gt; r$ là hợp số chia hết cho $r$ nhưng $f_n = q \in \mathbb{P}$, mâu thuẫn. Vậy $c = 0$, tức $f_n = n$.</p>
+            </div>
+        </details>
 
         <h3>Câu 6.</h3>
         <p>Cho bảng ô vuông $8 \times 8$. Kanaya, một cô gái thích những trò chơi, sẽ thực hiện các thao tác sau trên bảng ô vuông đó:</p>
         <p style="padding-left: 20px;">"Mỗi một lần thực hiện, cô ta sẽ tìm các ô vuông kề nhau với ít nhất hai ô chưa được tô màu; nếu có ô như thế cô ta chọn một trong các ô vuông thoả mãn điều kiện trên và tô màu nó, nếu không có ô nào như thế cô ta sẽ dừng thao tác."</p>
         <p>Sau khi Kanaya thực hiện các thao tác như trên đến khi dừng, gọi $n$ là số ô vuông chưa tô màu trong bảng. Tìm giá trị lớn nhất và giá trị nhỏ nhất của $n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Khi quá trình dừng, tại bước tô ô cuối cùng, ô đó phải kề ít nhất 2 ô chưa tô nên khi dừng luôn còn ít nhất $2$ ô chưa tô ($n \ge 2$); có thể đạt $n = 2$ bằng cách tô dần từ ngoài vào sao cho còn lại đúng một hình chữ L gồm 3 ô ở góc rồi tô ô đỉnh của chữ L. Với giá trị lớn nhất, khi dừng mỗi ô chưa tô kề tối đa 1 ô chưa tô khác, nên trong mỗi khối $2 \times 2$ có tối đa $2$ ô chưa tô; chia bảng $8 \times 8$ thành 16 khối $2 \times 2$ suy ra $n \le 32$. Đạt $n = 32$ bằng cách tô toàn bộ 32 ô đen của bàn cờ vua (mỗi ô đen luôn kề ít nhất 2 ô trắng chưa tô).</p>
+            </div>
+        </details>
 
         <h3>Câu 7.</h3>
         <p>Cho tam giác nhọn $ABC$ có $BC$ là cạnh lớn nhất trong ba cạnh. Trên đoạn thẳng $BC$ lấy hai điểm $D, E$ thỏa mãn $\angle DAC = \angle ABC$ và $\angle EAB = \angle ACB$. Gọi $M, N$ theo thứ tự là trung điểm của $AD$ và $AE$. Đường tròn $(AMN)$ theo thứ tự cắt lại $AB, AC$ tại $P$ và $Q$. Gọi $T$ là giao điểm của $PM$ và $QN$. Chứng minh rằng, ba đường thẳng $AT, BN, CM$ đồng quy tại một điểm; và hơn nữa điểm này nằm trên đường nối tâm của hai đường tròn $(ABC)$ và $(ADE)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Từ $\triangle ADC \sim \triangle BAC$ và $\triangle AEB \sim \triangle CAB$ suy ra $\angle ADC = \angle AEB = \angle BAC$, dẫn đến $\triangle ADE$ cân tại $A$ ($AD = AE$) và $MN \parallel BC$. Do đó tâm $O_1$ của $(ADE)$ nằm trên đường cao hạ từ $A$, song song với đường trung trực $OM_0$ của $BC$ ($M_0$ là trung điểm $BC$). Gọi $K = BN \cap CM$; từ tính chất hình thang $BCMN$ (hoặc $BCNM$) và định lý Thales, chứng minh được $K$ nằm trên $OO_1$. Cuối cùng, dùng biến đổi tỉ số (Ceva/Menelaus) hoặc định lý Pascal/góc định hướng trên $(AMN)$ để chứng minh $A, T, K$ thẳng hàng.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

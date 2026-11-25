@@ -49,20 +49,44 @@
         <p>Cho $(a_n)$ là dãy số được xác định bởi $a_1 = 2$ và $a_n = 2a_{n-1}^2 - 1, \forall n \in \mathbb{N}, n \geq 2$.</p>
         <p>Tính giới hạn:</p>
         $$\lim_{n \to +\infty} \dfrac{2^{n-1}(a_{n-1} + 1)(a_{n-2} + 1)\cdots(a_1 + 1)}{a_n}.$$
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Từ $a_k - 1 = 2(a_{k-1}^2 - 1) = 2(a_{k-1} - 1)(a_{k-1} + 1)$, truy hồi liên tiếp với $a_1 - 1 = 1$ ta thu được tử thức chính bằng $a_n - 1$. Do $a_n \to +\infty$ nên giới hạn cần tìm bằng $\lim_{n \to +\infty} \left(1 - \frac{1}{a_n}\right) = 1$.</p>
+            </div>
+        </details>
 
         <h3>Câu 2. (5,0 điểm)</h3>
         <p>Với số nguyên dương $n \geq 3$, đa thức $P(x) = x^n + a_1 x^{n-1} + a_2 x^{n-2} + \dots + a_{n-1}x + a_n$ có các hệ số thực sao cho $a_{n-2} = 0, a_n \neq 0$ và $\dfrac{a_{n-1}}{a_n} > n+1$. Giả sử đa thức $P(x)$ có $n$ nghiệm thực.</p>
         <p>Chứng minh rằng $P(x)$ có cả nghiệm dương, nghiệm âm và có nghiệm thuộc khoảng $\left(-\dfrac{1}{2}; \dfrac{1}{n+1}\right)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $y_i = \frac{1}{x_i}$ với $x_1, \dots, x_n$ là các nghiệm của $P(x)$. Theo định lý Viète, $S = \sum y_i = -\frac{a_{n-1}}{a_n} &lt; -(n+1)$ và $\sum_{i &lt; j} y_i y_j = \frac{a_{n-2}}{a_n} = 0$, suy ra $\sum y_i^2 = S^2$ và các nghiệm không thể cùng dấu. Nếu không có nghiệm nào thuộc $\left(-\frac{1}{2}; \frac{1}{n+1}\right)$ thì $-2 \le y_i \le n+1$ với mọi $i$, suy ra $(y_i + 2)(n + 1 - y_i) \ge 0$; cộng lại cho $n$ nghiệm dẫn đến $(S - 2n)(S + n + 1) \le 0$, mâu thuẫn với $S &lt; -(n+1)$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (5,0 điểm)</h3>
         <p>Cho tam giác $ABC$ ($AB < AC$) cố định, nội tiếp đường tròn $(O)$. Một điểm $D$ di chuyển trên cạnh $AB$, khác $A$ và $B$. Đường tròn $(BCD)$ cắt cạnh $AC$ tại điểm $E$ khác $C$. Gọi $P$ là giao điểm khác $A$ của hai đường tròn $(O)$ và $(ADE)$.</p>
         <p>a) Chứng minh rằng đường thẳng $PD$ luôn đi qua một điểm cố định.</p>
         <p>b) Giả sử đường thẳng $PD, PE$ cắt đường tròn $(BCD)$ lần lượt tại điểm $Q, R$ khác $D, E$. Gọi $M$ là trung điểm của đoạn $QR$. Chứng minh rằng điểm $M$ luôn di chuyển trên một đường tròn cố định.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Lấy $K$ đối xứng với $C$ qua $AO$; cộng góc chứng minh $(PK, PA) = (PD, PA)$ nên $PD$ luôn đi qua $K$ cố định (tương tự, $PE$ đi qua $L$ đối xứng với $B$ qua $AO$). b) Kẻ đường kính $AA'$ của $(O)$, chứng minh $A'$ là tâm các đường tròn $(KQC)$ và $(LRB)$, suy ra hai tam giác cân $A'QK$ và $A'RL$ đồng dạng cùng hướng. Phép quay tâm $A'$ biến $Q \mapsto K, R \mapsto L$ sẽ biến trung điểm $M$ của $QR$ thành trung điểm $M'$ của $KL$, nên $M$ nằm trên đường tròn cố định $(A'; A'M')$.</p>
+            </div>
+        </details>
 
         <h3>Câu 4. (5,0 điểm)</h3>
         <p>Một câu lạc bộ có 99 thành viên, trong đó có một số cặp quen biết nhau (quan hệ quen biết có tính hai chiều). Giả sử số lượng người quen của mỗi thành viên trong câu lạc bộ đều từ 81 đến 90.</p>
         <p>a) Chứng minh rằng tồn tại 2 thành viên của câu lạc bộ có ít nhất 67 người quen chung.</p>
         <p>b) Chứng minh rằng tồn tại 10 thành viên của câu lạc bộ cùng quen chung một người và có số lượng người quen bằng nhau.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Đếm số bộ $(w, \{u, v\})$ với $u, v$ cùng quen $w$: tổng số bộ ít nhất là $99\binom{81}{2}$. Chia cho $\binom{99}{2}$ cặp $\{u, v\}$ ta được trung bình $\frac{81 \cdot 80}{98} = 66 + \frac{6}{49} &gt; 66$, nên tồn tại cặp có ít nhất $67$ người quen chung. b) Giả sử phản chứng mọi đỉnh đều quen tối đa $9$ đỉnh cùng bậc. Dùng bổ đề bắt tay loại trường hợp mọi đỉnh bậc $81$ để chọn đỉnh $v$ có $d(v) &gt; 81$; do $d(v) \ge 82 &gt; 9 \cdot 9$ nên $v$ phải quen một đỉnh $w$ bậc $90$. Với $w$, tồn tại $9$ đỉnh cùng bậc $90$ trong $N(w)$ tạo với $w$ thành tập $A$ gồm $10$ đỉnh bậc $90$; mỗi $u \in A$ không kề đúng $9$ đỉnh (kể cả $u$), nên cả $A$ không kề tối đa $10 \cdot 9 = 90$ đỉnh, suy ra có ít nhất $99 - 90 = 9$ đỉnh kề với cả $10$ đỉnh của $A$ (vô lí).</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Bài thi thứ hai</h2>
         <p style="text-align: center; font-style: italic;">Ngày thi: 15 tháng 09 năm 2026 — Thời gian làm bài: 180 phút</p>
@@ -70,9 +94,21 @@
         <h3>Câu 5. (6,0 điểm)</h3>
         <p>Cho các số thực dương $a, b, c$ thỏa mãn $ab + bc + ca = 1$. Chứng minh rằng:</p>
         $$\dfrac{a}{\sqrt{1 + a^2}} + \dfrac{b}{\sqrt{1 + b^2}} + \dfrac{c}{\sqrt{1 + c^2}} \geq \dfrac{3\sqrt{3}}{2(a+b+c)}.$$
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $s = a+b+c \ge \sqrt{3}$. Thay $1 = ab+bc+ca$ và dùng AM-GM: $\sqrt{1+a^2} = \sqrt{(a+b)(a+c)} \le \frac{s+a}{2}$. Khi đó áp dụng Cauchy-Schwarz thu được $\sum \frac{a}{\sqrt{1+a^2}} \ge \sum \frac{2a}{s+a} \ge \frac{2s^2}{s^2 + a^2 + b^2 + c^2} = \frac{s^2}{s^2 - 1}$, và cuối cùng $\frac{s^2}{s^2-1} - \frac{3\sqrt{3}}{2s} = \frac{(s-\sqrt{3})^2(2s+\sqrt{3})}{2s(s^2-1)} \ge 0$.</p>
+            </div>
+        </details>
 
         <h3>Câu 6. (7,0 điểm)</h3>
         <p>Xét dãy số nguyên dương $(a_n)$ thoả mãn $a_1 > 1$ và $(2^n - 1)a_{n+1}$ là số chính phương với mọi $n \in \mathbb{Z}^+$. Chứng minh rằng với mọi $n \in \mathbb{Z}^+$ thì $a_n > 1$ và $g(a_{n+1}) > g(a_n)$, trong đó $g(k)$ là ước nguyên tố lớn nhất của số nguyên dương $k > 1$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(Lưu ý: giả thiết gốc của đề thi là $(2^{a_n} - 1)a_{n+1}$ là số chính phương). Với $x &gt; 1$ và $(2^x - 1)y$ là số chính phương, do $2^x - 1 \equiv 3 \pmod 4$ không chính phương nên $y &gt; 1$. Gọi $q = g(x)$ và viết $x = q^t m$ với $(m, q) = 1$; vì $2^{q^t} - 1 \equiv 3 \pmod 4$ không chính phương nên tồn tại ước nguyên tố $p$ có $v_p(2^{q^t} - 1)$ lẻ. Từ $\operatorname{ord}_p(2) \mid q^t$ suy ra $q \mid p - 1$ nên $p &gt; q$, đồng thời $p \nmid \frac{2^x - 1}{2^{q^t} - 1}$ nên $v_p(2^x - 1)$ lẻ, kéo theo $p \mid y$ và $g(y) \ge p &gt; q = g(x)$.</p>
+            </div>
+        </details>
 
         <h3>Câu 7. (7,0 điểm)</h3>
         <p>Với số nguyên dương $n \geq 2$, một bảng ô vuông $n \times n$ được gọi là bảng <i>tốt</i> nếu trong mỗi ô vuông đơn vị chứa một số nguyên dương thỏa mãn:</p>
@@ -81,6 +117,12 @@
         <p>a) Chứng minh rằng trong mỗi bảng $n \times n$ <i>tốt</i>, luôn có một ô vuông chứa số nguyên dương lớn hơn hoặc bằng $2n^2$.</p>
         <p>b) Một bảng ô vuông $n \times n$ được gọi là <i>tốt tối tiểu</i> nếu tất cả các số nguyên dương trong bảng đều nhỏ hơn hoặc bằng $2n^2$. Chứng minh rằng không tồn tại bảng <i>tốt tối tiểu</i> với $n$ là số lẻ.</p>
         <p>c) Xác định tất cả các giá trị $n \geq 2$ để tồn tại bảng $n \times n$ <i>tốt tối tiểu</i>.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Gọi ƯCLN của hàng/cột là <i>chỉ số</i> của nó; một hàng/cột chỉ số $d$ chứa số $\ge nd$. a) Có $2n$ chỉ số phân biệt nên có chỉ số $d \ge 2n$, suy ra có ô $\ge 2n^2$. b) Tập các chỉ số là $\{1, 2, \dots, 2n\}$; giả sử $2n$ là chỉ số cột, chứng minh $2n-1$ và $2n-2$ cũng là chỉ số cột, rồi xét hàng/cột chỉ số $n$ (khi $n$ lẻ chỉ chứa các bội lẻ của $n$) để suy ra mâu thuẫn. c) Đáp số: $n = 2$ và $n = 4$ (chứng minh $n \ge 8$ không tồn tại qua $2n-3, 2n-4$ và chỉ số $n-1$; loại $n=6$ bằng cách xét chỉ số $10$ và $5$).</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

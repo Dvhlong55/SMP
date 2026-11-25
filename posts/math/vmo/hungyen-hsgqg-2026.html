@@ -47,6 +47,12 @@
         \[ (P(x))^2 \le x^6 + 1, \quad \forall x \in \mathbb{R} \]
         <p>a) Chứng minh rằng đa thức $P(x)$ có nghiệm thực và có bậc nhỏ hơn 4.</p>
         <p>b) Tìm tất cả các đa thức $P(x)$ thỏa mãn đề bài.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Vì $P(1)P(-1) = -2 &lt; 0$ nên $P(x)$ có nghiệm thực trong $(-1, 1)$. Xét $Q(x) = x^6 + 1 - (P(x))^2 \ge 0$; nếu $\deg P \ge 4$ thì $\deg Q \ge 8$ với hệ số cao nhất âm nên $\lim_{x \to \infty} Q(x) = -\infty$, vô lí. b) Đặt $P(x) = ax^3 + bx^2 + cx + d$; do $Q(x) \ge 0$ và $Q(1) = Q(-1) = 0$ nên $1$ và $-1$ là nghiệm bội chẵn của $Q$, suy ra $Q'(1) = Q'(-1) = 0$. Từ đó tính được $P'(1) = P'(-1) = \frac{3\sqrt{2}}{2}$, dẫn đến đa thức duy nhất $P(x) = \frac{\sqrt{2}}{4}(x^3 + 3x)$.</p>
+            </div>
+        </details>
 
         <h3>Câu 2. (4,0 điểm)</h3>
         <p>Cho dãy số nguyên $(u_n)$ được xác định bởi $u_1 = 3, u_2 = 7$ và</p>
@@ -54,17 +60,41 @@
         <p>Cho $N$ là hợp số lẻ không chia hết cho 3 và $u_N \equiv 3 \pmod N$. Đặt $M = \dfrac{u_N}{3}$.</p>
         <p>a) Chứng minh rằng $u_N$ chia hết cho 3 nhưng không chia hết cho 9.</p>
         <p>b) Chứng minh rằng $M \equiv 1 \pmod{4N}$ và $M$ là một hợp số.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Từ $u_{n+2} \equiv -u_n \pmod 3$ suy ra $3 \mid u_n$ với mọi $n$ lẻ. Đặt $v_n = \frac{u_{2n+1}}{3}$ thì $v_0 = 1, v_1 = 6$ và $v_{n+2} = 7v_{n+1} - v_n$; xét mod $3$ thấy $3 \mid v_n \iff n \equiv 1 \pmod 3$, mà $N = 2k+1 \not\equiv 0 \pmod 3$ nên $k \not\equiv 1 \pmod 3$, suy ra $9 \nmid u_N$. b) Từ $u_N \equiv 3 \pmod N$ và $\gcd(N, 3) = 1$ được $M \equiv 1 \pmod N$; xét $v_n \pmod 4$ cho thấy $M = v_k \equiv 1 \pmod 4$, nên $M \equiv 1 \pmod{4N}$. Viết $u_n = \alpha^n + \beta^n$ ($\alpha, \beta = \frac{3 \pm \sqrt{5}}{2}$) và $N = ab$ ($a, b &gt; 1$ lẻ) để có $u_b \mid u_N$, từ đó $M = \frac{u_N}{u_b} \cdot \frac{u_b}{3}$ là hợp số.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (6,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nội tiếp $(O)$. Lấy điểm $X$ cố định nằm trên cung $BC$ không chứa $A$ của $(O)$. Một đường thẳng $d$ chuyển động qua $X$. Các đường thẳng $d_A, d_B, d_C$ lần lượt đối xứng với $d$ qua $BC, CA, AB$. Gọi $A'$ là giao điểm của $d_B$ và $d_C$, $B'$ là giao điểm của $d_A$ và $d_C$, $C'$ là giao điểm của $d_A$ và $d_B$.</p>
         <p>a) Chứng minh rằng $AA', BB', CC'$ đồng quy tại một điểm nằm trên $(O)$.</p>
         <p>b) Chứng minh rằng đường tròn ngoại tiếp của tam giác $A'B'C'$ luôn đi qua một điểm cố định.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Áp dụng định lý Desargues cho hai tam giác $ABC$ và $A'B'C'$ (các giao điểm cặp cạnh tương ứng đều nằm trên $d$) suy ra $AA', BB', CC'$ đồng quy tại $Y$; các điểm đối xứng của $Y$ qua $BC, CA, AB$ thẳng hàng (trên đường thẳng qua $X$ song song với $d$) nên theo định lý Steiner đảo thì $Y \in (O)$. b) Gọi $H$ là trực tâm $\triangle ABC$ và $Q \in (O)$ là điểm Anti-Steiner của $XH$. Chứng minh $Q$ là điểm Miquel của tứ giác toàn phần tạo bởi bốn đường thẳng $A'B', B'C', C'A', s_X$ (đường thẳng Steiner của $X$), suy ra $(A'B'C')$ luôn đi qua $Q$ cố định.</p>
+            </div>
+        </details>
 
         <h3>Câu 4. (2,0 điểm)</h3>
         <p>Cho số nguyên dương $n \ge 3$ và một số nguyên tố lẻ $p$. Với mỗi $S$ là tập hợp gồm $n$ số nguyên dương phân biệt, ta ký hiệu $l_p(S)$ là số các lũy thừa cơ số $p$ có thể biểu diễn dưới dạng tổng của ba phần tử đôi một khác nhau thuộc $S$. Hãy xác định giá trị lớn nhất có thể có của $l_p(S)$ theo $n, p$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đáp số: $n - 2$. Giả sử các lũy thừa của $p$ biểu diễn được là $p^{a_1} &lt; \dots &lt; p^{a_t}$ với $A_i \subset S$ gồm $3$ phần tử có tổng $p^{a_i}$. Chứng minh bằng phản chứng rằng với mọi $i \ge 2$, $A_i \setminus (A_1 \cup \dots \cup A_{i-1}) \neq \emptyset$ (nếu không, tổng $3$ phần tử của $A_i$ nhỏ hơn $3p^{a_i - 1} &lt; p^{a_i}$). Suy ra $n \ge |A_1| + \sum_{i=2}^t |A_i \setminus \bigcup_{j &lt; i} A_j| \ge 3 + (t - 1) = t + 2$, dấu bằng đạt tại $S = \{1, 2, p^2 - 3, p^3 - 3, \dots, p^{n-2} - 3\}$.</p>
+            </div>
+        </details>
 
         <h3>Câu 5. (3,0 điểm)</h3>
         <p>Cho số nguyên dương $n$. Hai bạn $A$ và $B$ cùng tham gia một trò chơi gồm $n$ lượt. Mỗi lượt, họ độc lập giải cùng một câu đố và kết quả là mỗi người chơi hoặc giải được hoặc không giải được. Đặt $c_A(i), c_B(i)$ lần lượt là tổng số câu đố mà $A, B$ giải được trong $i$ lượt đầu tiên. Hỏi có bao nhiêu kịch bản có thể xảy ra để $A$ đạt giải đặc biệt, nghĩa là sau khi kết thúc toàn bộ $n$ lượt chơi, $A$ không chỉ giải được nhiều câu đố hơn $B$ ($c_A(n) > c_B(n)$), mà còn chưa bao giờ để $B$ bỏ xa quá một câu trong suốt quá trình ($\forall i = 1, 2, \dots, n: c_B(i) - c_A(i) \le 1$)?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $d_i = c_A(i) - c_B(i)$ ($d_0 = 0$); ở mỗi lượt, bước đi $d_i - d_{i-1}$ nhận giá trị $+1$, $-1$, hoặc hai loại $0$. Mã hóa mỗi bước thành $2$ bước lên/xuống ($\pm 1$) để thấy số quỹ đạo không ràng buộc độ dài $n$ kết thúc tại $r$ là $U_n(r) = C_{2n}^{n+r}$. Dùng nguyên lý phản xạ qua đường $d = -2$, số quỹ đạo hợp lệ ($d_i \ge -1$) kết thúc tại $r \ge 1$ là $C_{2n}^{n+r} - C_{2n}^{n+r+4}$; cộng theo $r = 1, \dots, n$ thu được đáp số $\sum_{r=1}^{\min\{4, n\}} C_{2n}^{n+r}$.</p>
+            </div>
+        </details>
 
     </div>
 </body>

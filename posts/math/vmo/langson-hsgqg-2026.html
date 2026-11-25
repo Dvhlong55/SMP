@@ -47,9 +47,23 @@
         <p>a) Chứng minh rằng với $a = 4$, dãy số đã cho có giới hạn hữu hạn. Tìm giới hạn đó.</p>
         <p>b) Chứng minh dãy số đã cho có giới hạn hữu hạn với mọi $a > 0; a \neq 2$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Biến đổi công thức truy hồi về dạng $x_{n+1} - 3 = \frac{(x_n - 3)^2}{2(x_n - 2)}$ và $x_{n+1} - 1 = \frac{(x_n - 1)^2}{2(x_n - 2)}$, từ đó $\frac{x_{n+1} - 3}{x_{n+1} - 1} = \left(\frac{x_n - 3}{x_n - 1}\right)^2$. Với $a = 4$, $(x_n)$ giảm và bị chặn dưới bởi $3$ nên $\lim x_n = 3$. Tổng quát với $a &gt; 2$, ta có $x_n \ge 3$ với mọi $n \ge 2$ và dãy hội tụ về $3$; còn với $0 &lt; a &lt; 2$, ta có $x_n \le 1$ với mọi $n \ge 2$ (nên luôn khác $2$) và dãy tăng, hội tụ về $1$.</p>
+            </div>
+        </details>
+
         <h3>Câu 2. (3,0 điểm)</h3>
         <p>Cho các số thực dương $x, y, z$ thỏa mãn $x + y + z \ge 6$. Tìm giá trị nhỏ nhất của biểu thức:</p>
         \[ P = \frac{x^2}{yz + \sqrt{1 + x^3}} + \frac{y^2}{zx + \sqrt{1 + y^3}} + \frac{z^2}{yx + \sqrt{1 + z^3}} \]
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Áp dụng bất đẳng thức AM-GM: $\sqrt{1+x^3} = \sqrt{(1+x)(x^2-x+1)} \le \frac{x^2+2}{2}$, từ đó đánh giá $P \ge \sum_{\text{cyc}} \frac{2x^2}{x^2 + 2yz + 2}$. Dùng bất đẳng thức Cauchy-Schwarz dạng Engel suy ra $P \ge \frac{2(x+y+z)^2}{(x+y+z)^2 + 6} \ge \frac{12}{7}$ (do $x+y+z \ge 6$). Đẳng thức xảy ra khi $x = y = z = 2$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (4,0 điểm)</h3>
         <p>Cho đa thức $S(x) = a_0 x^n + a_1 x^{n-1} + a_2 x^{n-2} + \dots + a_n$ với $n \ge 1, a_0 \neq 0$, có $n$ nghiệm thực $x_1, x_2, \dots, x_n$.</p>
@@ -57,14 +71,35 @@
         \[ \frac{a_1^2 - 2a_0 a_2}{n a_0^2} \ge \sqrt[n]{\left(\frac{a_n}{a_0}\right)^2} \]
         <p>b) Giả sử các hệ số $a_i \in \{-1; 1\}$ với mọi $i = 0, 1, 2, \dots, n$, chứng minh rằng bậc của đa thức $S(x)$ không quá 3, từ đó hãy tìm tất cả các đa thức thỏa mãn khi $n = 3$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), dùng định lý Viète tính $\sum_{i=1}^n x_i^2 = \frac{a_1^2 - 2a_0a_2}{a_0^2}$ rồi áp dụng bất đẳng thức AM-GM cho $x_1^2, \dots, x_n^2$. Ở câu b), khi $a_i \in \{-1; 1\}$, vế phải bằng $1$ còn vế trái không vượt quá $\frac{3}{n}$, suy ra $n \le 3$. Khi $n = 3$, dấu bằng phải xảy ra nên $x_1^2 = x_2^2 = x_3^2 = 1$; thử các tổ hợp nghiệm $\pm 1$ cho ta $4$ đa thức thỏa mãn là $\pm(x^3 - x^2 - x + 1)$ và $\pm(x^3 + x^2 - x - 1)$.</p>
+            </div>
+        </details>
+
         <h3>Câu 4. (5,0 điểm)</h3>
         <p>Cho $(O)$ cố định và dây cung $BC$ của $(O)$ cố định, $BC$ không phải đường kính. Điểm $A$ di chuyển trên cung lớn $BC$ của $(O)$. Gọi $M, N$ lần lượt là các trung điểm của $AC, AB$; gọi $Q, P$ lần lượt là hình chiếu của $M, N$ lên đường phân giác của $\widehat{BAC}$. Gọi $BP \cap AC = Y; CQ \cap AB = Z$.</p>
         <p>a) Chứng minh rằng tứ giác $BZYC$ nội tiếp.</p>
         <p>b) Gọi $X = BP \cap CQ$. Chứng minh rằng $AX$ đi qua điểm cố định khi $A$ di chuyển.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), từ $\triangle ANP \sim \triangle AMQ$ suy ra $\frac{AP}{AQ} = \frac{AN}{AM} = \frac{AB}{AC}$, kéo theo $\triangle ABP \sim \triangle ACQ$ (c.g.c), nên $\widehat{ZBY} = \widehat{YCZ}$ và tứ giác $BZYC$ nội tiếp. Ở câu b), sử dụng $AP = \frac{c}{2}\cos\frac{A}{2}$ và độ dài phân giác $AD_a$ cùng định lý Menelaus để tính được $AY = \frac{c}{3}, AZ = \frac{b}{3}$. Áp dụng định lý Ceva cho $AX, BY, CZ$ ta thu được $\frac{\sin\widehat{BAX}}{\sin\widehat{CAX}} = \frac{3\sin C - \sin B}{3\sin B - \sin C} = \frac{\sin(B+\phi)}{\sin(C+\phi)}$ với $\cot\phi = \frac{3\cos A - 1}{3\sin A}$ không đổi, chứng tỏ $AX$ luôn đi qua điểm $T$ cố định trên đường trung trực của $BC$.</p>
+            </div>
+        </details>
+
         <h3>Câu 5. (3,0 điểm)</h3>
         <p>a) Cho số nguyên dương $m$ thỏa mãn $m = p^\alpha$, với $p$ nguyên tố và $\alpha$ là số nguyên dương. Chứng minh rằng mọi số nguyên $n$ đều có thể biểu diễn dưới dạng $n = a + b$, trong đó $a$ là một số nguyên nguyên tố cùng nhau với $m$ và $b$ là một số nguyên sao cho $b^2 \equiv b \pmod m$.</p>
         <p>b) Chứng minh rằng khẳng định trên vẫn đúng với mọi số nguyên $m > 1$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), vì $b(b-1) \equiv 0 \pmod{p^\alpha}$ và $\gcd(b, b-1) = 1$ nên chỉ cần chọn $b = 0$ nếu $p \nmid n$, hoặc $b = 1$ nếu $p \mid n$ (khi đó $a = n - b$ nguyên tố cùng nhau với $p^\alpha$). Ở câu b), phân tích $m = \prod_{i=1}^k p_i^{\alpha_i}$, chọn $b_i \in \{0, 1\}$ như câu a) cho từng $p_i^{\alpha_i}$ rồi áp dụng định lý Thặng dư Trung Hoa tìm $b$ thỏa mãn $b \equiv b_i \pmod{p_i^{\alpha_i}}$ với mọi $i$.</p>
+            </div>
+        </details>
 
     </div>
 </body>

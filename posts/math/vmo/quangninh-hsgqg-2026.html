@@ -49,21 +49,52 @@
         <p>Cho $a, b, c$ là các số thực dương, chứng minh rằng:</p>
         $$\sqrt{a^4 + b^4 + c^4} + \sqrt{a^2 b^2 + b^2 c^2 + c^2 a^2} \geq \sqrt{a^3 b + b^3 c + c^3 a} + \sqrt{a b^3 + b c^3 + c a^3}.$$
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Bình phương hai vế của bất đẳng thức. Đối với phần không chứa căn, ta có $(a^4+b^4+c^4)+(a^2b^2+b^2c^2+c^2a^2) - \sum_{\text{cyc}}(a^3b+ab^3) = \frac{1}{2}\sum_{\text{cyc}}(a-b)^2(a^2+b^2) \geq 0$. Đối với tích hai căn, áp dụng bất đẳng thức Cauchy-Schwarz cho $(a^4+b^4+c^4)(a^2b^2+b^2c^2+c^2a^2)$ để thấy nó lớn hơn hoặc bằng cả $(a^3b+b^3c+c^3a)^2$ lẫn $(ab^3+bc^3+ca^3)^2$.</p>
+            </div>
+        </details>
+
         <h3>Bài 2. (5,0 điểm)</h3>
         <p>Cho $P(x)$ là đa thức hệ số thực bậc 2026, có hệ số cao nhất bằng 1.</p>
         <p>a) Chứng minh rằng tồn tại số nguyên dương $n_0$ sao cho với mọi số nguyên dương $n \geq n_0$ thì phương trình $P(x) = 2027^n$ có duy nhất một nghiệm thực dương, ký hiệu là $x_n$.</p>
         <p>b) Chứng minh rằng dãy $(y_n): y_n = x_{n+2026} - 2027 \cdot x_n, \forall n \geq n_0$ có giới hạn hữu hạn.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Do $P(x)$ là đa thức monic bậc $2026$, tồn tại $M &gt; 0$ sao cho $P'(x) &gt; 0$ với mọi $x \geq M$ và $\lim_{x \to +\infty} P(x) = +\infty$. Chọn $n_0$ đủ lớn sao cho $2027^{n_0} &gt; \max_{x \in [0, M]} P(x)$, khi đó với $n \geq n_0$ mọi nghiệm dương đều nằm trên $(M, +\infty)$ và tính đơn điệu ngặt đảm bảo tính duy nhất.</p>
+                <p>b) Đặt $P(x) = x^{2026} + a_{2025}x^{2025} + \dots + a_0$. Từ $P(x_n) = 2027^n$, viết $\left(x_n + \frac{a_{2025}}{2026}\right)^{2026} = 2027^n + O(x_n^{2024})$ để suy ra $x_n = 2027^{n/2026} - \frac{a_{2025}}{2026} + O(x_n^{-1})$, từ đó $\lim_{n \to \infty} y_n = a_{2025}$.</p>
+            </div>
+        </details>
 
         <h3>Bài 3. (5,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn, không cân, nội tiếp $(O)$. Một đường tròn $(\omega) \neq (O)$ đi qua $B$ và $C$ cắt các đoạn $AB$ và $AC$ tại các điểm thứ hai lần lượt là $T$ và $S$. Gọi $H$ là giao điểm của $BS$ và $CT$. Một đường thẳng qua $H$ và không đi qua các đỉnh của tam giác $ABC$, cắt các đoạn $AB$ và $AC$ lần lượt tại $L$ và $K$. Đường thẳng qua $K$ và song song với $BS$ cắt đường thẳng $AB$ tại $F$. Đường thẳng qua $L$ và song song với $CT$ cắt đường thẳng $AC$ tại $E$.</p>
         <p>a) Chứng minh rằng $\dfrac{TS}{KL} = \dfrac{BC}{EF}$.</p>
         <p>b) Các đường thẳng $KF$ và $LE$ cắt $BC$ lần lượt tại $R$ và $Q$. $KF$ cắt $LE$ tại $P$. Chứng minh rằng đường tròn ngoại tiếp tam giác $PQR$ tiếp xúc với $(O)$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Từ $BCST$ nội tiếp suy ra $\triangle AST \sim \triangle ABC \implies \frac{TS}{BC} = \frac{AS}{AB}$. Dùng giả thiết song song $KF \parallel BS$ và $LE \parallel CT$ để chỉ ra $K, L, E, F$ đồng viên, từ đó $\frac{KL}{EF} = \frac{AK}{AF} = \frac{AS}{AB}$.</p>
+                <p>b) Từ $\frac{BF}{BL} = \frac{HK}{HL} = \frac{CK}{CE}$, gọi $G \neq A$ là giao điểm của $(ABC)$ và $(AKF)$ thì $G$ là tâm vị tự quay biến $B \mapsto C, F \mapsto K, L \mapsto E$, suy ra $G \in (ALE)$. Bằng các tứ giác toàn phần, chứng minh $G$ là điểm Miquel nên $G \in (PQR)$, rồi cộng góc định hướng để thấy $GR, GQ$ đẳng giác trong $\widehat{BGC}$, suy ra $(PQR)$ tiếp xúc $(O)$ tại $G$.</p>
+            </div>
+        </details>
+
         <h3>Bài 4. (5,0 điểm)</h3>
         <p>Một tập hợp khác rỗng các số nguyên dương được gọi là <i>tốt</i> nếu tập hợp đó không chứa hai số $a$ và $b$ sao cho thương của chúng là một lũy thừa của 3 với số mũ nguyên dương.</p>
         <p>a) Tìm số các tập con <i>tốt</i> của $S = \{1; 2; 3; 4; 5; 6\}$.</p>
         <p>b) Một tập con <i>tốt</i> của $X = \{1; 2; 3; \dots; 2187\}$ có nhiều nhất bao nhiêu phần tử?</p>
         <p>c) Có bao nhiêu tập con của $X = \{1; 2; 3; \dots; 2187\}$ là <i>tốt</i> và có số phần tử nhiều nhất?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Phân hoạch tập đã cho thành các xích dạng $\{m, 3m, 9m, \dots\}$ với $3 \nmid m$; một tập con là tốt khi và chỉ khi nó chứa tối đa $1$ phần tử từ mỗi xích và khác rỗng.</p>
+                <p>a) Với $S$, các xích là $\{1,3\}, \{2,6\}, \{4\}, \{5\}$, nên có $3 \cdot 3 \cdot 2 \cdot 2 - 1 = 35$ tập tốt. b) Với $X$ ($2187 = 3^7$), số xích bằng số các số trong $X$ không chia hết cho $3$, tức $2187 - 729 = 1458$ phần tử tối đa. c) Mỗi xích phải chọn đúng $1$ phần tử, nên số tập tốt cực đại bằng tích độ dài các xích.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Bài thi thứ hai</h2>
         <p style="text-align: center; font-style: italic;">Ngày thi: 12 tháng 09 năm 2026 — Thời gian làm bài: 180 phút</p>
@@ -75,6 +106,14 @@
         <p>a) Chứng minh rằng nếu $f$ không là hàm hằng thì $f(x) > 0$ với mọi $x > 0$.</p>
         <p>b) Tìm tất cả các hàm số $f$ thỏa mãn đề bài.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Từ (1) với $x = y$, ta có $f(\sqrt{2}x) = f(x)^2 \geq 0$ nên $f(z) \geq 0$ với mọi $z &gt; 0$. Nếu có $x_0 &gt; 0$ mà $f(x_0) = 0$ thì từ (1) suy ra $f(y) = 0$ với mọi $y &gt; x_0$, rồi kéo ngược về $(0, x_0)$ bằng cách lấy $\sqrt{n}z &gt; x_0$, dẫn tới $f \equiv 0$ (vô lý).</p>
+                <p>b) Khi $f &gt; 0$, đặt $g(t) = \ln f(\sqrt{t})$ ($t &gt; 0$) thì $g(u+v) = g(u)+g(v)$. Từ (2) suy ra $g(u)+g(v)-g(uv)-g(1) \geq 0$ với mọi $u, v \geq 1$, hay $g((u-1)(v-1)) \leq 0$, tức $g(t) \leq 0$ với mọi $t &gt; 0$. Một hàm cộng tính bị chặn trên phải có dạng $g(t) = ct$ ($c \leq 0$), cho nghiệm $f(x) = e^{cx^2}$ ($c \leq 0$) cùng với hàm hằng $f \equiv 0$.</p>
+            </div>
+        </details>
+
         <h3>Bài 6. (7,0 điểm)</h3>
         <p>Cho hai dãy số nguyên $(x_n)_{n \geq 0}$ và $(y_n)_{n \geq 1}$ được xác định như sau:</p>
         $$x_0 = 0; \quad x_1 = 2; \quad x_{n+1} = 6x_n - x_{n-1}, \quad \forall n \in \mathbb{N}^*;$$
@@ -82,10 +121,26 @@
         <p>a) Chứng minh rằng với mọi số nguyên tố $p$ lẻ thì $p$ là ước của $x_{p-1} \cdot x_{p+1}$.</p>
         <p>b) Cho trước hai số nguyên dương $a, b$ với $b > a + 2$. Chứng minh rằng chỉ tồn tại hữu hạn cặp số nguyên dương $(c; n)$ sao cho $(c+a)(c+b)$ là ước của $y_n$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Tìm công thức tổng quát $x_n = \frac{(3+2\sqrt{2})^n - (3-2\sqrt{2})^n}{2\sqrt{2}}$. Khai triển nhị thức Newton modulo $p$ với $(3 \pm 2\sqrt{2})^p \equiv 3 \pm 2\sqrt{2}\left(\frac{2}{p}\right) \pmod p$ để suy ra $p \mid x_{p-1}$ nếu $\left(\frac{2}{p}\right) = 1$ và $p \mid x_{p+1}$ nếu $\left(\frac{2}{p}\right) = -1$.</p>
+                <p>b) Từ $y_{n+1} = 2y_n^2 - 1$ và $y_1 = 17$, mọi ước nguyên tố lẻ của $y_n$ đều thỏa mãn $\left(\frac{2}{p}\right) = 1$ (tức $p \equiv \pm 1 \pmod 8$), nên mọi ước dương của $y_n$ đều $\equiv \pm 1 \pmod 8$. Kết hợp với $y_n = \frac{(3+2\sqrt{2})^{2^n} + (3-2\sqrt{2})^{2^n}}{2}$ và phân tích đồng dư của $c+a, c+b$ để giới hạn $(c, n)$.</p>
+            </div>
+        </details>
+
         <h3>Bài 7. (6,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn, không cân, nội tiếp đường tròn $(O)$ cố định với $B, C$ cố định, $A$ dịch chuyển trên cung lớn $BC$. Phân giác của góc $\widehat{BAC}$ cắt $BC$ tại $K$. Gọi $H$ là trực tâm tam giác $ABC$; $BH$ và $CH$ cắt $AK$ lần lượt tại $E$ và $F$. Đường tròn ngoại tiếp tam giác $KBE$ cắt $AB$ tại điểm $G$ khác $B$. Đường tròn ngoại tiếp tam giác $KCF$ cắt $AC$ tại $L$ khác $C$.</p>
         <p>a) Chứng minh rằng $AG = AL = \dfrac{AB^2 + AC^2 - BC^2}{AB + AC}$.</p>
         <p>b) Gọi $Q$ là giao điểm của $GL$ và $BC$, $S$ là giao điểm của $BL$ và $CG$. Chứng minh rằng đường thẳng $QS$ luôn đi qua một điểm cố định khi $A$ dịch chuyển trên cung lớn $BC$ thỏa mãn đề bài.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chứng minh $\triangle GAK = \triangle LAK$ nhờ cộng góc nội tiếp, suy ra $AG = AL$. Gọi $R$ là trung điểm $EF$, chứng minh $\triangle HEF$ cân tại $H$ nên $HR \perp EF$, suy ra $AR \cdot AK = AH \cdot AD = AB \cdot AC \cos A$, từ đó $AK(AE+AF) = 2AR \cdot AK = AB^2+AC^2-BC^2$ và kết hợp phương tích $AK \cdot AE = AG \cdot AB$, $AK \cdot AF = AL \cdot AC$.</p>
+                <p>b) Dùng câu a) chứng minh $A, G, S, L$ đồng viên. Vì $BL \cap CG = S$ và $GL \cap BC = Q$ nên $S(A, Q; G, L) = -1$; kết hợp $AG = AL$ suy ra $SA$ là phân giác trong và $SQ$ là phân giác ngoài của $\widehat{GSL} = \widehat{BSC}$. Khi $A$ di chuyển, $S$ chạy trên cung cố định của $(BSC)$ nên phân giác ngoài $SQ$ luôn đi qua điểm chính giữa cung $BC$ chứa $S$ của $(BSC)$.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

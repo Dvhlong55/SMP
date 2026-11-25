@@ -43,19 +43,49 @@
         <p>Giải hệ phương trình sau trên tập số thực:</p>
         <p>$$\begin{cases} x + y = 3\sqrt{y - 5} + 3\sqrt{x + 3} \\ \sqrt{x^2 + 6(y - x)} + 2\sqrt{xy} = 3y. \end{cases}$$</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Điều kiện $x \ge 0, y \ge 5$. Từ phương trình thứ hai, viết lại thành $\sqrt{x^2 + 6(y-x)} - x = 3y - x - 2\sqrt{xy}$, rồi trục căn thức ở vế trái và phân tích vế phải theo nhân tử $(y - x)$ để tách trường hợp $x = y$ (dẫn đến nghiệm $x = y = 6$) và đánh giá vô nghiệm khi $x \neq y$.</p>
+            </div>
+        </details>
+
         <h3>Câu 2. (5,0 điểm)</h3>
         <p>Tìm tất cả các hàm số $f : \mathbb{R} \to \mathbb{R}$ thỏa mãn</p>
         <p>$$f(f(x) + y) = f(x^4 - y) + 8y f(x) \bigl((f(x))^2 + y^2\bigr), \quad \forall x, y \in \mathbb{R}.$$</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Với mỗi $x \in \mathbb{R}$, chọn $y = \frac{x^4 - f(x)}{2}$ để $f(x) + y = x^4 - y$, từ đó thu được $8y f(x)\bigl((f(x))^2 + y^2\bigr) = 0$, suy ra $f(x) \in \{0, x^4\}$ với mọi $x$. Nếu tồn tại $a \neq 0$ mà $f(a) = 0$, thay $x = a$ vào phương trình ban đầu để có $f(y) = f(a^4 - y)$ và suy ra $f \equiv 0$. Vậy nghiệm là $f(x) \equiv 0$ và $f(x) = x^4$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (5,0 điểm)</h3>
         <p>Cho tứ giác lồi $ABCD$ có hai đường chéo $AC$ và $BD$ cắt nhau tại $O$ sao cho hai đường chéo không vuông góc nhau và cũng không vuông góc với bất kỳ cạnh nào của tứ giác. Gọi $d_1, d_2, d_3$ là các đường thẳng đi qua $O$ và lần lượt vuông góc với $AB, AD, BC$. Lấy điểm $G$ di động trên $d_1$ ($G \neq O$). Đường thẳng $GA$ cắt $d_2$ tại $F$ (sao cho $A$ nằm giữa $G$ và $F$), đường thẳng $GB$ cắt $d_3$ tại $H$ (sao cho $B$ nằm giữa $G$ và $H$).</p>
         <p>a) Gọi $K, L$ lần lượt là trực tâm của các tam giác $OAD$ và $OBC$. Gọi $(C_1), (C_2)$ lần lượt là các đường tròn đường kính $AB$ và $CD$. Chứng minh rằng $KL$ là trục đẳng phương của hai đường tròn $(C_1)$ và $(C_2)$.</p>
         <p>b) Chứng minh rằng khi $G$ thay đổi trên $d_1$, đường thẳng $FH$ luôn đi qua một điểm cố định hoặc luôn song song với một đường thẳng cố định.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Trong $\triangle OAD$, kẻ các đường cao $AA'$ ($A' \in OD$) và $DD'$ ($D' \in OA$). Khi đó $A' \in (C_1)$ và $D' \in (C_2)$, đồng thời $A, D, A', D'$ đồng viên nên $KA \cdot KA' = KD \cdot KD'$, tức $K$ thuộc trục đẳng phương $\Delta$ của $(C_1), (C_2)$. Tương tự $L \in \Delta$, suy ra $KL \equiv \Delta$.</p>
+                <p>b) Xét hai tam giác $FAK$ và $HBL$: có $FA \cap HB = G \in d_1$, $FK \cap HL = O \in d_1$, và $AK \cap BL = T$ là trực tâm $\triangle OAB$ nên $T \in d_1$. Theo định lý Desargues đảo, ba đường thẳng $FH, AB, KL$ đồng quy hoặc đôi một song song; vì $AB$ và $KL \equiv \Delta$ cố định nên $FH$ luôn đi qua $AB \cap \Delta$ hoặc song song với $AB$.</p>
+            </div>
+        </details>
+
         <h3>Câu 4. (5,0 điểm)</h3>
         <p>Trên bảng viết $2026$ số nguyên. Ở mỗi bước, ta chọn hai số $a, b$ trên bảng thỏa mãn $|a - b| &gt; 70$, xóa chúng đi và viết lại lên bảng hai số $\left\lfloor \dfrac{a + b}{2} \right\rfloor$ và $\left\lceil \dfrac{a + b}{2} \right\rceil$.</p>
         <p>a) Chứng minh rằng quá trình trên luôn dừng lại sau hữu hạn bước.</p>
         <p>b) Chứng minh rằng khi quá trình dừng lại, trên bảng có ít nhất $29$ số bằng nhau.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Tổng bình phương của các số trên bảng là số nguyên không âm (hoặc dùng bất biến tổng bình phương độ lệch so với trung bình) giảm nghiêm ngặt sau mỗi bước vì $a^2 + b^2 &gt; \left\lfloor \frac{a+b}{2} \right\rfloor^2 + \left\lceil \frac{a+b}{2} \right\rceil^2$ khi $|a-b| &gt; 70$, nên quá trình phải dừng.</p>
+                <p>b) Khi dừng, mọi cặp số đều có hiệu tuyệt đối $\le 70$, nên tất cả $2026$ số nằm trong một tập gồm $71$ số nguyên liên tiếp. Theo nguyên lý Dirichlet, có ít nhất $\left\lceil \frac{2026}{71} \right\rceil = 29$ số bằng nhau.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Buổi thi thứ hai (20/09/2026)</h2>
 
@@ -63,14 +93,38 @@
         <p>a) Cho $u, v \in \mathbb{Z}^+$ thỏa mãn $\gcd(u, v) = 1$. Chứng minh rằng mọi ước nguyên tố $q &gt; 3$ của $A = u^2 - uv + v^2$ đều có dạng $6k + 1$ ($k \in \mathbb{Z}^+$).</p>
         <p>b) Tìm tất cả các cặp số nguyên dương $(x, y)$ thỏa mãn $\gcd(x, 70) = 1$ và $x^6 + 70^6 = 2089^y - 62^y$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Từ $q \mid u^3 + v^3$ và $q \nmid u + v$ (nếu không thì $q \mid 3v^2$, vô lý do $q &gt; 3$), suy ra cấp của $-u/v$ modulo $q$ bằng $3$, nên $3 \mid q - 1$ và $q \equiv 1 \pmod 6$.</p>
+                <p>b) Xét modulo $3$ và modulo $4$ để suy ra $y$ phải là số lẻ ($y \ge 3$). Sau đó xét phương trình modulo $7$: vì $\gcd(x, 70) = 1$ nên $7 \nmid x$, suy ra vế trái $x^6 + 70^6 \equiv 1 \pmod 7$, còn vế phải $2089^y - 62^y \equiv 3^y - (-1)^y \equiv 3^y + 1 \pmod 7$, dẫn đến $7 \mid 3^y$, vô lý. Vậy không có nghiệm.</p>
+            </div>
+        </details>
+
         <h3>Câu 6. (7,0 điểm)</h3>
         <p>Cho dãy số $(u_n)$ xác định bởi $u_1 = 3$ và $u_{n+1} = \dfrac{2(n + 1)u_n - n - 2}{n}$ với mọi $n \in \mathbb{N}^*$.</p>
         <p>a) Tính $\lim \left(\dfrac{u_n}{n} - 2^n\right)$.</p>
         <p>b) Hỏi có tồn tại số nguyên dương $i$ sao cho $u_i u_{i+1} = m \cdot 2027^2$ với $m$ là một số nguyên dương nào đó hay không?</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chia hai vế cho $n+1$ và viết $\frac{n+2}{n(n+1)} = \frac{2}{n} - \frac{1}{n+1}$, suy ra $\frac{u_{n+1}}{n+1} - \frac{1}{n+1} = 2\left(\frac{u_n}{n} - \frac{1}{n}\right) = 2^{n+1}$. Do đó $u_n = n \cdot 2^n + 1$ và giới hạn cần tìm bằng $0$.</p>
+                <p>b) Câu trả lời là có. Chọn $i_0$ sao cho $2027 \mid i_0 \cdot 2^{i_0} + 1$ (chẳng hạn $i_0 \equiv 0 \pmod{2026}$ và $i_0 \equiv -1 \pmod{2027}$), rồi đặt $i = k \cdot 2027 \cdot 2026 + i_0$ và dùng định lý Euler $\varphi(2027^2) = 2027 \cdot 2026$ để chọn $k$ sao cho $2027^2 \mid u_i$.</p>
+            </div>
+        </details>
+
         <h3>Câu 7. (7,0 điểm)</h3>
         <p>a) Điền các số thuộc tập hợp $M = \{-1; 0; 1\}$ vào các ô vuông của bảng $2026 \times 2026$. Hỏi có bao nhiêu cách điền sao cho tổng $4$ số trong mỗi bảng con $2 \times 2$ bất kỳ đều bằng $0$?</p>
         <p>b) Trong mặt phẳng tọa độ $Oxy$, xét tập hợp $S$ gồm $62$ điểm có tọa độ nguyên sao cho không có ba điểm nào thẳng hàng. Với hai điểm $A(x_A, y_A)$ và $B(x_B, y_B)$ thuộc $S$, ta đặt $T(A, B) = (x_A - x_B)^2 + 70(y_A - y_B)^2$. Hai điểm $A, B \in S$ được gọi là <em>liên kết</em> nếu $T(A, B)$ chia hết cho $3$. Chứng minh rằng tồn tại một tam giác có ba đỉnh thuộc $S$, đôi một liên kết với nhau và có diện tích là một số nguyên chia hết cho $9$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Phân tích điều kiện tổng $2 \times 2$ bằng $0$: nếu hai ô đầu một hàng có tổng $0$ thì cả hàng (hoặc cột) bị ràng buộc theo quy luật xen kẽ dấu; đếm theo trạng thái của hàng đầu và cột đầu.</p>
+                <p>b) Vì $70 \equiv 1 \pmod 3$, $3 \mid T(A, B) \iff x_A \equiv x_B \pmod 3$ và $y_A \equiv y_B \pmod 3$. Trong $62$ điểm, theo nguyên lý Dirichlet có ít nhất $\lceil 62/9 \rceil = 7$ điểm cùng số dư modulo $3$ cho cả hoành độ và tung độ (nên đôi một liên kết). Rút thừa số $3$ khỏi hiệu tọa độ, áp dụng Dirichlet một lần nữa theo tính chẵn lẻ modulo $2$ để chọn $2$ điểm cùng tính chẵn lẻ cùng với $1$ điểm thứ ba, cho diện tích là bội của $9$.</p>
+            </div>
+        </details>
     </div>
 </body>
 </html>

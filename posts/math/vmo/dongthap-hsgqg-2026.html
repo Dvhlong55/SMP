@@ -49,19 +49,46 @@
         $$f(x) = -\sqrt{1-x} \cdot f\left(\sqrt{(1-x)^3}\right), \quad \forall x \in [0; 1]$$
         <p>a) Xét dãy số $(u_n)$ xác định bởi công thức $u_0 = a \in (0; 1)$ và $u_{n+1} = \sqrt{(1-u_n)^3}$. Chứng minh rằng $u_n \in (0; 1)$ và $f(a) = (-1)^n \cdot \sqrt[3]{u_1 u_2 \dots u_n} \cdot f(u_n)$ với mọi số nguyên dương $n$.</p>
         <p>b) Chứng minh rằng $f(x) = 0, \forall x \in [0; 1]$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Quy nạp $u_n \in (0; 1)$ và dùng $\sqrt{1 - u_{k-1}} = u_k^{1/3}$ để nhân dồn các đẳng thức $f(u_{k-1}) = -u_k^{1/3} f(u_k)$.</p>
+                <p>b) Thay $x = 1$ và $x = 0$ được $f(1) = f(0) = 0$. Với $a \in (0; 1)$, nhận xét $u_k u_{k+1} &lt; \frac{1}{2}$ với mọi $k \ge 1$ (xét hai trường hợp $u_k \le \frac{1}{2}$ và $u_k &gt; \frac{1}{2}$), suy ra $u_1 u_2 \dots u_{2m} &lt; \frac{1}{2^m} \to 0$; kết hợp $|f(u_n)| \le 2026$ suy ra $f(a) = 0$.</p>
+            </div>
+        </details>
 
         <h3>Bài 2.</h3>
         <p>Cho tam giác $ABC$ ($AC < BC$) và đường phân giác $AD$ ($D \in BC$). Gọi $K$ là trung điểm $AB$, trên tia đối của tia $CB$ lấy $E$ sao cho $\angle ACK = \angle AEC$. Giả sử rằng $CD = CE$.</p>
         <p>a) Chứng minh rằng $DA = DB$.</p>
         <p>b) Gọi $I$ là tâm đường tròn nội tiếp, lấy $J$ thuộc đoạn $BC$ sao cho $CA = CJ$, gọi $L$ là giao điểm của $DK$ và $AJ$, $M$ là giao điểm của $CL$ và đường tròn ngoại tiếp tam giác $BIC$, $G$ là giao điểm của $IM$ và $AB$. Chứng minh rằng 5 điểm $B, L, D, M, G$ cùng thuộc một đường tròn.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Gọi $A'$ là điểm đối xứng của $A$ qua $C$; chứng minh $ADA'E$ là hình bình hành và $CK \parallel A'B$, từ đó $\triangle CA'D \sim \triangle CBA'$ suy ra $CA^2 = CD \cdot CB$, dẫn tới $\triangle CAD \sim \triangle CBA$ và $DA = DB$.</p>
+                <p>b) Chứng minh $L$ là tâm nội tiếp $\triangle ABD$ nên $B, L, I$ thẳng hàng. Biến đổi góc $\angle CDL = 90^\circ + \frac{1}{2}\angle BAC = \angle BIC = \angle BMC$ để suy ra $B, L, D, M$ đồng viên; kết hợp $\angle GML = \angle GBL$ để có $B, L, M, G$ đồng viên.</p>
+            </div>
+        </details>
 
         <h3>Bài 3.</h3>
         <p>Tìm tất cả số nguyên $n \ge 2$ sao cho tồn tại vô hạn bộ $n$ số nguyên dương liên tiếp thỏa mãn tổng của chúng là số chính phương và đồng thời không là lũy thừa của 2.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Tổng $n$ số nguyên dương liên tiếp bắt đầu từ $a$ là $S = \frac{n(2a + n - 1)}{2}$. Đặt $n = 2^t b$ với $b$ lẻ ($t \ge 0$). Nếu $t \ge 2$ chẵn thì $v_2(S) = t - 1$ lẻ nên $S$ không thể là số chính phương. Ngược lại, nếu $t = 0$ hoặc $t$ lẻ: chọn $2a + n - 1 = b m^2$ (khi $t \ge 1$) hoặc $a + \frac{b-1}{2} = b m^2$ (khi $t = 0$) với $m \ge 3$ lẻ đủ lớn thì $S$ là số chính phương chia hết cho số lẻ $b$ hoặc $m \ge 3$, không là lũy thừa của $2$. Đáp số: mọi $n \ge 2$ có $v_2(n) = 0$ hoặc $v_2(n)$ lẻ.</p>
+            </div>
+        </details>
 
         <h3>Bài 4.</h3>
         <p>Có 7 điểm phân biệt được đánh dấu từ 0 đến 6. Một con châu chấu xuất phát từ điểm khác 0 và thực hiện $n-1$ lần nhảy đến $n$ vị trí. Châu chấu có thể nhảy đến ô khác hoặc nhảy lên rồi đáp xuống vị trí mà châu chấu đang đứng, tuy nhiên châu chấu không thể nhảy từ vị trí 2 đến vị trí 0 hoặc từ vị trí 2 đến vị trí 6. Một hành trình được định nghĩa là vị trí của châu chấu qua các bước nhảy. Gọi $u_n$ là số hành trình khác nhau của châu chấu sau $n$ bước nhảy.</p>
         <p>a) Tìm công thức truy hồi của dãy $(u_n)$.</p>
         <p>b) Chứng minh rằng $u_{2026} \cdot u_{2028}$ là tổng của 2 số chính phương.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Gọi $a_n, b_n$ lần lượt là số hành trình độ dài $n$ kết thúc ở điểm khác $2$ và ở điểm $2$ ($u_n = a_n + b_n$). Ta có $a_{n+1} = 6a_n + 4b_n$, $b_{n+1} = a_n + b_n = u_n$, suy ra $u_{n+1} = 7u_n - 2u_{n-1}$ với $u_1 = 6, u_2 = 40$.</p>
+                <p>b) Từ hệ thức truy hồi suy ra $u_n u_{n+2} - u_{n+1}^2 = 2^{n-1}(u_3 u_1 - u_2^2) = 2^{n+2}$. Với $n = 2026$ ta được $u_{2026} u_{2028} = u_{2027}^2 + (2^{1014})^2$.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Ngày thi thứ hai</h2>
 
@@ -69,17 +96,39 @@
         <p>Cho số nguyên $n \ge 2$ và ba đa thức $f(x), g(x), h(x)$ có hệ số thực, mỗi đa thức có bậc không vượt quá $n$. Một số thực $x_0$ được gọi là tốt nếu ba số $f(x_0), g(x_0), h(x_0)$ có thể sắp xếp thành một cấp số cộng theo một thứ tự nào đó. Giả sử chỉ có hữu hạn số thực tốt.</p>
         <p>a) Chứng minh rằng có không quá $3n$ số thực tốt.</p>
         <p>b) Chứng minh rằng dấu bằng có thể xảy ra, nghĩa là tồn tại ba đa thức thỏa mãn các điều kiện trên và có đúng $3n$ số thực tốt.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Số $x_0$ tốt khi và chỉ khi $x_0$ là nghiệm của ít nhất một trong ba đa thức $P_1 = f + g - 2h$, $P_2 = g + h - 2f$, $P_3 = h + f - 2g$. Vì chỉ có hữu hạn số tốt nên $P_1, P_2, P_3 \not\equiv 0$ và mỗi đa thức có bậc $\le n$, suy ra có tối đa $3n$ số tốt.</p>
+                <p>b) Chọn $P_1(x)$ bậc $n$ có $n$ nghiệm thực phân biệt và $P_2(x) = \varepsilon \prod_{k=1}^n (x - s_k)$ với $\varepsilon &gt; 0$ đủ nhỏ sao cho $P_2$ và $P_3 = -(P_1 + P_2)$ đều có $n$ nghiệm thực phân biệt và đôi một không trùng nghiệm; sau đó giải hệ tìm $f, g, h$ (chẳng hạn $h = 0, f = \frac{P_1 - P_2}{3}, g = \frac{2P_1 + P_2}{3}$).</p>
+            </div>
+        </details>
 
         <h3>Bài 6.</h3>
         <p>Cho tam giác $ABC$ có đường tròn nội tiếp $(I)$ tiếp xúc với các cạnh $BC, CA, AB$ lần lượt tại $D, E, F$. Các đường thẳng $BI, CI, DI$ lần lượt cắt $EF$ tại $M, N, K$. Trên các đường thẳng $BM, CN$ lần lượt lấy các điểm $P, Q$ sao cho $CP \parallel BQ \parallel AI$.</p>
         <p>a) Chứng minh rằng ba đường tròn $(IPQ), (IMN), (IBC)$ đồng trục.</p>
         <p>b) Đường thẳng $EF$ cắt $BC$ tại $S$. Hai tiếp tuyến tại $E$ và $F$ của đường tròn $(AEF)$ cắt nhau tại $T$. Chứng minh rằng đường thẳng đi qua $S$ và vuông góc với $TK$ đi qua tâm đường tròn ngoại tiếp tam giác $DMN$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chứng minh $\angle BMC = \angle BNC = 90^\circ$ và $\frac{BM}{BP} = \frac{CN}{CQ}$ (qua trung điểm $J$ của $BC$); từ đó tâm vị tự quay $R \neq I$ của $(IBC)$ và $(IMN)$ biến $P \mapsto Q$ nên cũng thuộc $(IPQ)$ (hoặc tính tỉ số phương tích $\frac{P_{(IPQ)}}{P_{(IBC)}}$ tại $M$ và $N$).</p>
+                <p>b) Theo câu a), $(DMN)$ là đường tròn Euler $(\omega)$ của $\triangle IBC$, đi qua trung điểm $J$ của $BC$. Chứng minh $A, K, J$ thẳng hàng, rồi chiếu hàng điều hòa $(S, D; B, C) = -1$ từ $I$ lên $BC$ để chỉ ra $KT$ là đường đối cực của $S$ đối với $(\omega)$.</p>
+            </div>
+        </details>
 
         <h3>Bài 7.</h3>
         <p>Cho $n$ là một số nguyên dương lẻ. Trên bảng viết các số $0, 1, 2, \dots, n$. An và Bình luân phiên xóa các số trên bảng, mỗi lượt xóa đúng một số. An đi trước. Trò chơi kết thúc khi tất cả các số đã bị xóa. Gọi $A$ là tổng các số do An xóa và $B$ là tổng các số do Bình xóa.</p>
         <p>a) Với $n = 7$, hãy tìm số tập hợp gồm 4 số mà An có thể xóa sao cho $\gcd(A, B) = 1$. Ở đây chỉ xét tập hợp các số An đã xóa, không xét thứ tự xóa.</p>
         <p>b) Chứng minh rằng tồn tại vô hạn số nguyên dương lẻ $n$ sao cho An có chiến lược bảo đảm $\gcd(A, B)$ là một số chẵn, bất kể Bình chơi như thế nào.</p>
         <p>c) Với $n = 81$, An muốn làm cho $\gcd(A, B)$ lớn nhất có thể, còn Bình muốn làm cho $\gcd(A, B)$ nhỏ nhất có thể. Biết cả hai đều chơi tối ưu, hãy xác định giá trị cuối cùng của $\gcd(A, B)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Ta có $A + B = 28 = 4 \cdot 7$ nên $\gcd(A, B) = 1 \iff A$ lẻ và $7 \nmid A$. Có $32$ tập gồm $4$ số có tổng lẻ, loại đi $2$ tập có tổng chia hết cho $7$ là $\{0, 1, 2, 4\}$ và $\{3, 5, 6, 7\}$, còn $30$ tập hợp.</p>
+                <p>b) Chọn $n = 8m + 7$ ($m \in \mathbb{N}$): khi đó $A + B = \frac{n(n+1)}{2}$ chẵn và có $4m + 4$ số lẻ, $4m + 4$ số chẵn. An ghép cặp các số lẻ với nhau và các số chẵn với nhau rồi luôn chọn số cùng cặp với Bình (sau nước đầu tiên), bảo đảm An lấy đúng $2m + 2$ số lẻ nên $A$ chẵn, kéo theo $\gcd(A, B)$ chẵn.</p>
+                <p>c) Với $n = 81$, $A + B = \frac{81 \cdot 82}{2} = 3^4 \cdot 41$ nên $\gcd(A, B) = \gcd(A, 3^4 \cdot 41)$; phân tích chiến lược ghép cặp của hai người chơi theo modulo $3$ và modulo $41$ để xác định ước chung lớn nhất tối ưu.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

@@ -50,11 +50,25 @@
         $$\begin{cases} a_1 = a \in \mathbb{R}, \\ a_{n+1} = a_n + \dfrac{1 - a_n^2}{n a_n}, \quad \forall n \in \mathbb{N}^*. \end{cases}$$
         <p>a) Với $a = 2$, chứng minh rằng dãy $(a_n)$ có giới hạn hữu hạn.</p>
         <p>b) Với $a > 0$, chứng minh rằng $\dfrac{1}{a_1} + \dfrac{1}{a_2} + \dots + \dfrac{1}{a_n} \geq n$ với mọi $n \geq 2, n \in \mathbb{N}$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Tính trực tiếp được $a_3 = \frac{5}{4} &gt; 1$; biến đổi $a_{k+1} - 1 = \frac{(k-1)a_k - 1}{k a_k}(a_k - 1)$ để quy nạp $a_n &gt; 1$ với mọi $n \ge 3$, từ đó $a_{n+1} - a_n = \frac{1 - a_n^2}{n a_n} &lt; 0$ nên dãy giảm từ $a_3$ trở đi và bị chặn dưới bởi $1$.</p>
+                <p>b) Từ $n a_{n+1} = (n-1)a_n + \frac{1}{a_n}$ suy ra $\frac{1}{a_n} = n a_{n+1} - (n-1)a_n$, nên $\sum_{k=1}^n \frac{1}{a_k} = n a_{n+1}$. Sau đó quy nạp $\sum_{k=1}^n \frac{1}{a_k} \ge n$: khi $a_{n+1} \ge 1$ thì tổng mới bằng $n a_{n+1} + \frac{1}{a_{n+1}} \ge n + 1$ theo bất đẳng thức AM-GM.</p>
+            </div>
+        </details>
 
         <h3>Câu 2. (5,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn ($AB < AC$) nội tiếp đường tròn $(O)$ có ba đường cao $AD, BE, CF$ đồng quy tại $H$. Gọi $M$ là trung điểm cạnh $BC$ và $P$ là hình chiếu vuông góc của $H$ lên $EF$. Gọi $Q$ là giao điểm của $EF$ và $BC$.</p>
         <p>a) Gọi $R$ là giao điểm thứ hai của đường thẳng $AP$ và đường tròn $(O)$. Chứng minh rằng đường thẳng $DR$ đi qua điểm đối xứng của $A$ qua đường thẳng $OM$.</p>
         <p>b) Gọi $G$ là trọng tâm tam giác $ABC$ và $X$ là tâm đường tròn ngoại tiếp tam giác $DMR$. Chứng minh rằng đường thẳng $XH$ vuông góc với $QG$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Gọi $A'$ là điểm đối xứng của $A$ qua $OM$ (tức $AA' \parallel BC$). Chứng minh $F, P, R, B$ đồng viên để có $AP \cdot AR = AB \cdot AF = AH \cdot AD$, suy ra 5 điểm $Q, P, H, D, R$ cùng thuộc đường tròn đường kính $HQ$, từ đó $\angle RDQ = \angle RPQ = \angle AA'R$ nên $R, D, A'$ thẳng hàng.</p>
+                <p>b) Chứng minh $D, G, A'$ thẳng hàng theo Thales (qua trung điểm $N$ của $AA'$). Gọi $S$ là giao điểm thứ hai của $QR$ với $(O)$ thì $QR \cdot QS = QD \cdot QM$, suy ra $S \in (DMR)$ và $G \in MS$. Gọi $J$ là điểm Miquel của tứ giác toàn phần $RDMS.QG$ thì $J \in QG$, $XJ \perp QG$ và $J \in (QDR)$ đường kính $QH$, suy ra $X, J, H$ thẳng hàng và $XH \perp QG$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (5,0 điểm)</h3>
         <p>Cho đa thức $P(x) = 4x^3 - 20x^2 + 25x$. Xét dãy các đa thức $(P_n(x))$ xác định bởi:</p>
@@ -62,6 +76,13 @@
         <p>a) Với $P_1(x) = P(x)$, xác định số nghiệm thực phân biệt của $P_n(x)$ theo $n$.</p>
         <p>b) Với $P_1(x) = P(1-x) + 8x^2 - 9$, gọi $a_n$ là nghiệm dương nhỏ nhất của đa thức $P_n(x)$ với mỗi $n \in \mathbb{N}^*$. Chứng minh rằng:</p>
         $$T = \sum_{n=1}^{2026} a_n > \dfrac{3}{4}.$$
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Ta có $P(x) = 0 \iff x = 0$ hoặc $x = \frac{5}{2}$. Khảo sát $P(x)$ trên $(0; 3)$ thấy $P(x) = t$ ($t \in (0; 3)$) có đúng $3$ nghiệm phân biệt trong $(0; 3)$. Quy nạp chứng minh $P_n(x) = t$ ($t \in (0; 3)$) có $3^n$ nghiệm phân biệt, từ đó số nghiệm của $P_n(x) = 0$ thỏa mãn $T_n = T_{n-1} + 3^{n-1}$ với $T_1 = 2$, suy ra $T_n = \frac{3^n + 1}{2}$.</p>
+                <p>b) Rút gọn được $P_1(x) = 3x - 4x^3$. Đặt $x = \sin t$ với $t \in [-\frac{\pi}{2}, \frac{\pi}{2}]$ suy ra $P_n(x) = \sin(3^n t)$ (còn với $|x| &gt; 1$ thì $|P_n(x)| &gt; 1$). Do đó $a_n = \sin\frac{\pi}{3^n}$; dùng bất đẳng thức $\sin x \ge \frac{3}{\pi}x$ trên $[0, \frac{\pi}{3}]$ để đánh giá $T &gt; \frac{3}{4}$.</p>
+            </div>
+        </details>
 
         <h3>Câu 4. (5,0 điểm)</h3>
         <p>Cho hai dãy số $(a_n), (b_n)$ xác định như sau:</p>
@@ -70,6 +91,13 @@
         <p>Chứng minh rằng, với mọi $n \in \mathbb{N}^*$ thì:</p>
         <p>a) $a_n + b_n\sqrt{2} = (1 + \sqrt{2})^n$ và cặp số $a_n, b_n$ nguyên tố cùng nhau.</p>
         <p>b) $\dfrac{b_{4n}}{2}$ là số nguyên nhưng không là số chính phương.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chứng minh công thức $(1+\sqrt{2})^n = a_n + b_n\sqrt{2}$ bằng quy nạp; lấy chuẩn $a_n^2 - 2b_n^2 = (1+\sqrt{2})^n(1-\sqrt{2})^n = (-1)^n$, suy ra $\gcd(a_n, b_n) = 1$.</p>
+                <p>b) Từ công thức tổng quát suy ra $\frac{b_{4n}}{2} = 2 a_{2n} b_{2n}$ là số nguyên. Do $\gcd(a_{2n}, b_{2n}) = 1$, nếu $\frac{b_{4n}}{2}$ là số chính phương thì $a_{2n}$ cũng là số chính phương; tuy nhiên tách $(1+\sqrt{2})^{2n} + (1-\sqrt{2})^{2n}$ cho thấy $a_{2n} = m^2 \pm 1$ (với $m \in \mathbb{Z}$, tùy theo tính chẵn lẻ của $n$), không thể là số chính phương.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Bài thi thứ hai</h2>
         <p style="text-align: center; font-style: italic;">Ngày thi: 16 tháng 09 năm 2026 — Thời gian làm bài: 180 phút</p>
@@ -77,11 +105,24 @@
         <h3>Câu 5. (6,0 điểm)</h3>
         <p>Tìm tất cả các hàm số $f: \mathbb{R} \to \mathbb{R}$ thỏa mãn:</p>
         $$f(x + y f(x)) + f(xy) = f(x) + f(2026y), \quad \forall x, y \in \mathbb{R}.$$
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $c = 2026$ và thay $x = c$ được $f(c + yf(c)) = f(c)$. Nếu $f(c) \neq 0$ thì $f$ là hàm hằng $f(x) \equiv k$ (mọi hằng số $k \in \mathbb{R}$ đều thỏa mãn). Nếu $f(c) = 0$, xét tập $S = \{a \in \mathbb{R} : f(a) = 0\}$: khi $|S| = 1$, thay $y = 1$ suy ra $f(x) = 2026 - x$; khi $|S| &gt; 1$, lấy $a \neq b \in S$ để chứng minh $f$ tuần hoàn rồi suy ra $f \equiv 0$. Đáp số: $f(x) \equiv k$ hoặc $f(x) = 2026 - x$.</p>
+            </div>
+        </details>
 
         <h3>Câu 6. (7,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn, không cân nội tiếp đường tròn $(O)$. Đường tròn nội tiếp $(I)$ của tam giác $ABC$ tiếp xúc với các cạnh $BC, CA, AB$ lần lượt tại $D, E, F$. Gọi $M, N$ lần lượt là trung điểm của $DE, DF$.</p>
         <p>a) Giao điểm thứ hai của đường tròn ngoại tiếp tam giác $BDM$ và đường tròn ngoại tiếp tam giác $CDN$ là $K$. Chứng minh rằng $K$ nằm trên đường tròn $(I)$.</p>
         <p>b) Gọi $P$ là giao điểm thứ hai của đường tròn ngoại tiếp tam giác $BDM$ và đường tròn $(O)$, $Q$ là giao điểm thứ hai của đường tròn ngoại tiếp tam giác $CDN$ và đường tròn $(O)$. Chứng minh rằng bốn điểm $P, Q, M, N$ cùng thuộc một đường tròn.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Gọi $D' = EF \cap BC$ và $X$ là trung điểm $DD'$, đặt $\Gamma$ là đường tròn đường kính $DD'$. Từ $(D'D, BC) = -1$ suy ra $XD^2 = XB \cdot XC$, nên giao điểm thứ hai $K$ của $\Gamma$ và $(I)$ là điểm tiếp xúc của $(I)$ với $(BKC)$ (tức điểm Feuerbach/tiếp điểm hỗn hợp), rồi biến đổi góc chứng minh $K \in (BDM) \cap (CDN)$.</p>
+                <p>b) Xét trục đẳng phương của ba đường tròn $(O), (BDM), (CDN)$ là $BP, CQ, DK$ (đồng quy tại $R$ hoặc đôi một song song). Dùng cực – đối cực (hoặc đối xứng trục) suy ra $X, P, Q$ thẳng hàng; kết hợp $X, M, N$ thẳng hàng và $BNMC$ nội tiếp để có $XP \cdot XQ = XB \cdot XC = XM \cdot XN$.</p>
+            </div>
+        </details>
 
         <h3>Câu 7. (7,0 điểm)</h3>
         <p>Một dàn đèn LED dạng lưới tam giác đều $ABC$ có cạnh bằng $n$ (với $n \in \mathbb{N}^*, n \geq 4$) được chia thành các tam giác đều có cạnh bằng 1, mỗi nút của lưới có một bóng đèn (tham khảo hình vẽ). Mỗi đèn có hai trạng thái: bật và tắt. Ban đầu, tất cả các đèn đều ở trạng thái tắt. Kí hiệu $X_i, Y_j, Z_k$ là các đường thẳng lần lượt song song hoặc trùng với $BC, AB, AC$ chứa đúng $i$ đèn ($i = 1, 2, \dots, n+1$). Với mỗi thao tác, người ta tác động vào một trong các đường thẳng $X_i, Y_j, Z_k$ làm cho trạng thái của tất cả các đèn nằm trên đó thay đổi: đèn đang tắt sẽ bật, đèn đang bật sẽ tắt.</p>
@@ -181,6 +222,14 @@
         <p>a) Chứng minh rằng điều kiện cần và đủ để ba đường thẳng $X_i, Y_j, Z_k$ cùng đi qua một đèn là $i + j + k = 2n + 3$.</p>
         <p>b) Từ trạng thái ban đầu, hãy chỉ ra một dãy thao tác trong đó số lần tác động vào mỗi đường thẳng $X_i, Y_j, Z_k$ nhiều nhất bằng 1, đồng thời mỗi nhóm $(X_1, \dots, X_{n+1})$, $(Y_1, \dots, Y_{n+1})$ và $(Z_1, \dots, Z_{n+1})$ đều có ít nhất một đường thẳng được tác động, để sau dãy thao tác này tất cả các đèn đều tắt.</p>
         <p>c) Với mỗi trạng thái $H$ có thể xảy ra của dàn đèn LED, gọi $s(H)$ là số thao tác ít nhất cần thực hiện để tạo ra $H$ từ trạng thái ban đầu. Tìm giá trị lớn nhất của $s(H)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Gắn tọa độ barycentric/khoảng cách tới các cạnh $BC, AB, AC$ theo số bước lưới từ mỗi đường thẳng: điểm giao của $X_i, Y_j, Z_k$ cách $BC, AB, AC$ lần lượt $(n+1-i), (n+1-j), (n+1-k)$ đơn vị lưới, có tổng bằng $n$ nên $i + j + k = 2n + 3$.</p>
+                <p>b) Tác động vào tất cả các đường thẳng có chỉ số cùng tính chẵn lẻ (chẳng hạn toàn bộ các $X_i, Y_j, Z_k$ có chỉ số chẵn); vì $2n + 3$ lẻ nên mỗi đèn $(i, j, k)$ nằm trên $0$ hoặc $2$ đường thẳng có chỉ số chẵn, do đó đổi trạng thái một số chẵn lần và vẫn tắt.</p>
+                <p>c) Mô hình hóa mỗi tổ hợp thao tác bằng vectơ nhị phân $x \in \mathbb{F}_2^{3(n+1)}$. Chứng minh hạt nhân $K = \ker(f)$ (các tổ hợp đưa về trạng thái tắt hết) có đúng $8$ phần tử (sinh bởi $3$ vectơ cơ sở: toàn bộ $Y, Z$ bật; toàn bộ $X, Y$ bật; và các chỉ số chẵn bật). Do đó mỗi trạng thái $H$ ứng với một lớp ghép gồm $8$ tổ hợp thao tác; đánh giá cực trị trên $8$ phần tử này cho kết quả tối ưu (khi $4 \mid n$, $\max s(H) = \frac{3n}{2} + 1$).</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

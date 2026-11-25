@@ -49,32 +49,68 @@
         \[ x_{n+2} = 3x_{n+1} + 2x_n, \quad \forall n \in \mathbb{N}^*. \]
         <p>a) Tìm các số nguyên dương $n$ sao cho $17x_n^2 - (-2)^{n+2}$ là số chính phương.</p>
         <p>b) Chứng minh rằng tồn tại vô số số nguyên tố $p$ sao cho $p \nmid x_n$ với mọi $n \in \mathbb{N}^*$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $y_n = 2x_{n+1} - 3x_n$ (lẻ); bằng quy nạp theo công thức truy hồi chứng minh đồng nhất thức $y_n^2 - 17x_n^2 = 2(-2)^{n+2}$. a) Nếu $17x_n^2 - (-2)^{n+2} = k^2$ thì $(y_n - k)(y_n + k) = 3(-2)^{n+2}$; do $y_n, k$ lẻ nên một thừa số chỉ chia hết cho $2$ (tối đa bằng $6$ theo trị tuyệt đối), kéo theo $|y_n| \le 3 \cdot 2^n + 1$, chỉ xảy ra khi $n \le 3$. Thử trực tiếp được $n \in \{1, 2\}$. b) Chọn vô số số nguyên tố $p \equiv 3 \pmod 8$ (khi đó $\left(\frac{-1}{p}\right) = \left(\frac{2}{p}\right) = -1$); với mọi $n$, $2(-2)^{n+2}$ là số không chính phương $\pmod p$, nên $p \nmid x_n$.</p>
+            </div>
+        </details>
 
         <h3>Câu 2.</h3>
         <p>Tìm tất cả các hàm số $f: \mathbb{Q}^+ \to \mathbb{Q}^+$ thỏa mãn</p>
         \[ f(xy) + 2026 f(x+y) = f(xf(y) + 2026 f(y)), \quad \forall x, y \in \mathbb{Q}^+. \]
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Từ tính đối xứng của vế trái suy ra $f\bigl((x+2026)f(y)\bigr) = f\bigl((y+2026)f(x)\bigr)$ với mọi $x, y \in \mathbb{Q}^+$. Chứng minh $f$ đơn ánh (bằng phản chứng giả sử $f(a) = f(b)$ với $a \neq b$ để suy ra $f(a+n) = f(b+n)$ và $f(ka) = f(kb)$, từ đó dẫn đến mâu thuẫn). Thay $y = 1$ thu được $(x+2026)f(1) = 2027 f(x)$; thế lại vào phương trình ban đầu tìm được nghiệm duy nhất $f(x) = x + 2026$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3.</h3>
         <p>Cho tam giác $ABC$ nhọn, không cân. Điểm $D$ nằm trên cạnh $BC$ sao cho $AD \not\perp BC$. Lấy hai điểm $E, F$ lần lượt thuộc $AB, AC$ sao cho $EF \parallel BC$. Qua $E, F$, lần lượt kẻ các đường thẳng song song với $AD$, cắt $BC$ tại $H, G$. Gọi $Q$ là giao điểm của $AD$ và đường trung trực của $BC$; điểm $P$ nằm trên tia $AQ$ sao cho</p>
         \[ AP \cdot AQ = AD^2. \]
         <p>a) Chứng minh rằng $Q$ nằm trên trục đẳng phương của $(BHE)$ và $(CGF)$.</p>
         <p>b) Chứng minh rằng $P$ nằm trên trục đẳng phương của $(BHF)$ và $(CGE)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Đặt $k = \frac{AE}{AB} = \frac{AF}{AC}$. Xét hiệu phương tích $f(X) = P_{(BHE)}(X) - P_{(CGF)}(X)$ và $g(X) = XB^2 - XC^2$; cả hai đều là hàm bậc nhất trên $AD$ và trùng nhau tại $A, D$ ($f(A) = k\,g(A), f(D) = k\,g(D)$), nên $f(Q) = k\,g(Q) = 0$. b) Tương tự, có thể dùng tỉ số phương tích hoặc biến đổi hàm bậc nhất $P_{(BHF)} - P_{(CGE)}$ trên $AD$ kết hợp điều kiện $AP \cdot AQ = AD^2$ (với $QB = QC$).</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 40px;">2. Ngày thi thứ hai</h2>
 
         <h3>Câu 1.</h3>
         <p>Tìm tất cả các nghiệm nguyên dương của phương trình</p>
         \[ 2^x \cdot 7^y = 1 + 3^z \cdot 5^t \cdot 13^u. \]
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xét $\pmod 3$ và $\pmod 4$ suy ra $x$ chẵn và $z$ lẻ. Chia trường hợp theo tính chẵn lẻ của $t + u$ khi xét $\pmod 8$: nếu $t + u$ chẵn thì $x = 2$, tiếp tục xét $\pmod 5, \pmod{13}$ được $y \equiv 2 \pmod{12}$, rồi xét $\pmod 9, \pmod{25}$ để chặn $z = t = 1$ và tìm ra nghiệm duy nhất $(x, y, z, t, u) = (2, 2, 1, 1, 1)$ (trường hợp $t+u$ lẻ loại bằng xét đồng dư).</p>
+            </div>
+        </details>
 
         <h3>Câu 2.</h3>
         <p>Cho tam giác nhọn $ABC$ nội tiếp $(O)$, $I$ là tâm đường tròn nội tiếp. Một đường tròn $(J)$ bất kì đi qua $I$ và tiếp xúc với $(O)$ tại $T$. Các đường thẳng $AI, BI, CI$ lần lượt cắt $(J)$ tại $D, E, F$ khác $I$.</p>
         <p>a) $(ATD)$ cắt lại $AC, AB$ lần lượt tại $N, P$. Chứng minh rằng $PN$ đi qua trực tâm tam giác $DEF$.</p>
         <p>b) Gọi $A_1, A_2$ lần lượt là các điểm đối xứng của $A$ qua $DE, DF$; $B_1, B_2$ lần lượt là các điểm đối xứng của $B$ qua $EF, ED$; $C_1, C_2$ lần lượt là các điểm đối xứng của $C$ qua $FD, FE$. Chứng minh rằng $A_1, A_2, B_1, B_2, C_1, C_2$ nằm trên một tiếp tuyến của $(J)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chứng minh $B, P, T, E$ và $C, N, T, F$ đồng viên, từ đó chỉ ra điểm $G$ đối xứng với $P$ qua $DE$ cũng trùng với điểm đối xứng của $N$ qua $DF$ và nằm trên $(J)$ — theo tính chất đường thẳng Steiner của $G$ đối với $\triangle DEF$, $PN$ đi qua trực tâm $\triangle DEF$. b) Dùng phép vị tự tâm $T$ biến $(J) \mapsto (O)$ để chứng minh ảnh của $AB$ qua phép đối xứng trục $DE$ (và tương tự cho $AC$ qua $DF$, $BC$ qua $EF$) đều là tiếp tuyến của $(J)$ tại chính điểm $G$, suy ra cả $6$ điểm cùng thuộc tiếp tuyến này.</p>
+            </div>
+        </details>
 
         <h3>Câu 3.</h3>
         <p>Với $n$ nguyên dương, cho $n$ tập hữu hạn các số thực $S_1, S_2, \dots, S_n$ rời nhau đôi một, thỏa mãn $|S_i| = s_i \ge n + 1, \; 1 \le i \le n$. Một đoạn $[a, b] = \{x \in \mathbb{R} \mid a \le x \le b\}$ được gọi là đoạn chuẩn bậc $i$ nếu $a, b \in S_i$. Chứng minh rằng có tối thiểu</p>
         \[ \prod_{i=1}^n (s_i - n) \]
         <p>cách chọn $n$ đoạn chuẩn đại diện cho $n$ bậc khác nhau và chúng đôi một không giao nhau.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Chứng minh bằng quy nạp theo $\sum_{i=1}^n s_i$ (và $n$). Gọi $x_i$ là phần tử nhỏ thứ hai của $S_i$ và chọn $k$ sao cho $x_k = \min_{1 \le i \le n} x_i$; gọi $a_k$ là phần tử nhỏ nhất của $S_k$. Với mỗi $i \neq k$, có tối đa $1$ phần tử của $S_i$ nằm bên trái $x_k$, nên trên $(x_k, +\infty)$ có ít nhất $\prod_{i \neq k}(s_i - n)$ cách chọn $n-1$ đoạn ghép với $[a_k, x_k]$. Nếu $s_k = n+1$ thì xong; nếu $s_k &gt; n+1$, cộng thêm $(s_k - 1 - n)\prod_{i \neq k}(s_i - n)$ cách không dùng $a_k$ (theo giả thiết quy nạp cho $S_k \setminus \{a_k\}$) sẽ cho đủ $\prod_{i=1}^n (s_i - n)$.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 40px;">3. Ngày thi thứ ba</h2>
 
@@ -83,16 +119,34 @@
         <p style="margin-left: 20px;">i) $u_i \in \{0, 1, 2\}$ với mọi số nguyên $i$ thỏa mãn $1 \le i \le n$;<br>
         ii) Không tồn tại số nguyên $k$ thỏa mãn $1 \le k \le n-2$ và</p>
         \[ (u_k, u_{k+1}, u_{k+2}) \in \{(1, 0, 0), (1, 0, 1), (2, 0, 0), (2, 0, 1)\}. \]
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Gọi $x_n$ là số dãy hợp lệ có $u_n \in \{1, 2\}$, $z_n$ là số dãy có $(u_{n-1}, u_n) \in \{(1,0), (2,0)\}$, và chỉ có $1$ dãy toàn $0$. Từ điều kiện cấm (sau $(1,0)$ hoặc $(2,0)$ bắt buộc là $2$) suy ra $x_{n+1} = 2x_n + x_{n-1} + 2$. Đặt $t_n = x_n + 1$ được $t_{n+1} = 2t_n + t_{n-1}$ với $t_0 = 1, t_1 = 3$; giải truy hồi thu được đáp số $\frac{(1+\sqrt{2})^n(2+\sqrt{2}) + (1-\sqrt{2})^n(2-\sqrt{2})}{2} - 1$.</p>
+            </div>
+        </details>
 
         <h3>Câu 2.</h3>
         <p>Tìm tất cả các cặp số nguyên dương $(m, n)$ thỏa mãn</p>
         \[ \pi(m) - \pi(n) = \frac{(m-2)\varphi(n)}{n}, \]
         <p>trong đó $\pi(k)$ là số các số nguyên tố không vượt quá $k$, còn $\varphi(k)$ là số các số nguyên dương không vượt quá $k$ và nguyên tố cùng nhau với $k$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xét riêng $m \le 2$ (được $(2, 2)$) và $n \in \{1, 2\}$ (được $(4, 1), (5, 1), (4, 2), (6, 2), (8, 2)$). Với $n \ge 3$ và $m &gt; n$, viết $m - n = qn + r$ ($0 \le r &lt; n$); vì mọi số nguyên tố trong $(n, m]$ đều nguyên tố cùng nhau với $n$ nên $\pi(m) - \pi(n)$ luôn nhỏ hơn ngặt $q\varphi(n) + \frac{(n + r - 2)\varphi(n)}{n} = \frac{(m-2)\varphi(n)}{n}$, do đó vô nghiệm.</p>
+            </div>
+        </details>
 
         <h3>Câu 3.</h3>
         <p>Cho tam giác $ABC$ nhọn, không cân, nội tiếp đường tròn $(O)$. Hai điểm $P, Q$ nằm trong tam giác $ABC$ thỏa mãn</p>
         \[ \angle PBA = \angle PCA = \angle QBC = \angle QCB. \]
         <p>Đường thẳng $BP$ cắt $AC$ tại $E$, đường thẳng $CP$ cắt $AB$ tại $F$. Dựng hình bình hành $PEKF$. Đường thẳng $KP$ cắt $BC$ tại $L$. Chứng minh rằng các đường tròn $(AKP), (LKQ)$ và $(O)$ cùng đi qua một điểm.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Từ giả thiết góc suy ra $P, Q$ là hai điểm liên hợp đẳng giác trong $\triangle ABC$. Chứng minh $\triangle AEK \sim \triangle ABP$ để suy ra $A, K, Q$ thẳng hàng. Gọi $R$ là giao điểm thứ hai của $(AKP)$ và $(LKQ)$; khi đó $R$ là tâm phép vị tự quay biến $Q \mapsto A, L \mapsto P$ và biến $B \mapsto M, C \mapsto N$ (với $M, N$ nằm trên đường thẳng qua $P$). Từ góc định hướng chứng minh $A, P, M, B$ và $A, P, N, C$ đồng viên, suy ra $BM \cap CN \in (O)$ và $R \in (O)$.</p>
+            </div>
+        </details>
 
             <h2 style="text-align: center; margin-top: 40px;">4. Ngày thi thứ tư</h2>
 
@@ -102,15 +156,33 @@
         $$f(x + 2026) \le f(x) + 2026, \quad f(x + 2027) \ge f(x) + 2027, \quad \forall x \in \mathbb{R}.$$
         <p>Chứng minh rằng $f(x + 1) = f(x) + 1, \forall x \in \mathbb{R}$.</p>
         <p>b) Tìm tất cả các hàm số $f$ thỏa mãn hai điều kiện ở câu a) và $f(x^2) = [f(x)]^2, \forall x \in \mathbb{R}$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Đặt $g(x) = f(x) - x$ thì $g(x+2026) \le g(x) \le g(x+2027) \le g(x+1)$, kéo theo $g(x) \le g(x+1) \le \dots \le g(x+2026) \le g(x)$, nên $g(x+1) = g(x)$. b) Từ $f(0) = f(0)^2$ loại $f(0) = 1$ (bằng $x = -1$); với $f(0) = 0$, với mọi $x = \frac{p}{q} \in \mathbb{Q}$ ($q \in \mathbb{N}^*$) khai triển $f((x+q)^2) = [f(x)+q]^2$ dùng $f(t+n) = f(t)+n$ suy ra $f(x) = x$ trên $\mathbb{Q}$, rồi dùng tính liên tục để kết luận $f(x) = x$ trên $\mathbb{R}$.</p>
+            </div>
+        </details>
 
         <h3>Câu 2.</h3>
         <p>Một hàm số $a: \mathbb{Z}^+ \to \mathbb{Z}^+$ được gọi là <i>hàm tự đếm</i> nếu với mọi $k \in \mathbb{Z}^+$, giá trị $a(k)$ đúng bằng số các số nguyên dương $n \le k$ thỏa mãn</p>
         $$k \equiv n \pmod{a(n)}.$$
         <p>a) Chứng minh rằng hàm tự đếm như vậy là duy nhất và tính $a(2026)$.</p>
         <p>b) Tìm các cặp số nguyên dương $(k, m)$ thỏa mãn $a(k) = m$ và $m \mid k$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Từ $a(k) = 1 + \#\{1 \le n &lt; k : a(n) \mid k - n\}$ suy ra $a(k)$ xác định duy nhất theo quy nạp mạnh. Chứng minh bằng quy nạp rằng $a(k) = m \iff \frac{m(m-1)}{2} &lt; k \le \frac{m(m+1)}{2}$ (mỗi đoạn $a(n) = d &lt; m$ đóng góp đúng $1$ nghiệm mod $d$); từ $2016 &lt; 2026 \le 2080$ được $a(2026) = 64$. b) Trong khoảng $\left(\frac{m(m-1)}{2}, \frac{m(m+1)}{2}\right]$ có đúng một bội của $m$: $k = \frac{m^2}{2}$ nếu $m$ chẵn, và $k = \frac{m(m+1)}{2}$ nếu $m$ lẻ.</p>
+            </div>
+        </details>
 
         <h3>Câu 3.</h3>
         <p>Cho hình hộp kích thước $7 \times 7 \times 112$, gồm 5488 khối lập phương đơn vị. Mỗi khối lập phương được gán một số nguyên dương. Chứng minh rằng với mọi cách gán, có thể chọn nhiều hơn 2027 hình hộp con (có cấu tạo từ các khối lập phương đơn vị) có độ dài các cạnh lớn hơn 1 sao cho trong mỗi hình, tám khối lập phương ở các góc được gán các số có cùng tính chẵn lẻ.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Trong mỗi lát cắt $7 \times 7$, tô $2$ màu chẵn/lẻ; mỗi hàng có ít nhất $\binom{3}{2} + \binom{4}{2} = 9$ cặp ô cùng màu, suy ra cả lát cắt có ít nhất $63$ cặp ô ngang cùng màu trên $21$ cặp cột, dẫn đến ít nhất $21$ hình chữ nhật (cạnh $\ge 2$) có $4$ góc cùng màu. Với mỗi hình chữ nhật $r \in \{1, \dots, 441\}$, gọi $A_r, B_r$ là số lát cắt mà $r$ có $4$ góc toàn chẵn hoặc toàn lẻ; khi đó $\sum (A_r + B_r) \ge 112 \cdot 21 = 2352$. Theo bất đẳng thức Jensen trên $882$ biến nguyên $A_r, B_r$, số hình hộp thỏa mãn là $\sum \left(\binom{A_r}{2} + \binom{B_r}{2}\right) \ge 588\binom{3}{2} + 294\binom{2}{2} = 2058 &gt; 2027$.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

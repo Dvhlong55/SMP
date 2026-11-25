@@ -49,14 +49,32 @@
         $$u_1 = 2, \quad (u_{n+1} + 1)u_n = u_n\left(\sqrt{u_n} + 1\right)^2 + 1, \quad \forall n \in \mathbb{N}^*.$$
         <p>a) Chứng minh rằng $3n - 1 \le u_n < (n + 1)^2, \forall n \in \mathbb{N}^*$.</p>
         <p>b) Chứng minh rằng $\dfrac{1}{u_1} + \dfrac{2}{u_2} + \dots + \dfrac{n}{u_n} > \ln\dfrac{n + 2}{2} - 1, \forall n \in \mathbb{N}^*$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Biến đổi hệ thức thành $u_{n+1} = u_n + 2\sqrt{u_n} + \frac{1}{u_n}$. Từ $u_n &gt; 1$ suy ra $\sqrt{u_{n+1}} &lt; \sqrt{u_n} + 1$ và $u_{n+1} - u_n &gt; 3$, dùng quy nạp để chứng minh cả hai bất đẳng thức. b) Áp dụng $u_k &lt; (k+1)^2$ để có $\frac{k}{u_k} &gt; \frac{1}{k+1} - \frac{1}{(k+1)^2}$, rồi kết hợp bất đẳng thức $\frac{1}{k+1} &gt; \ln\frac{k+2}{k+1}$ và $\sum_{k=1}^n \frac{1}{(k+1)^2} &lt; \sum_{k=1}^n \frac{1}{k(k+1)} &lt; 1$.</p>
+            </div>
+        </details>
 
         <h3>Câu 2. (6,0 điểm)</h3>
         <p>Cho tam giác $ABC$ không cân có $D, E$ tương ứng là chân đường phân giác trong và phân giác ngoài của góc $\widehat{BAC}$. Đường tròn ngoại tiếp tam giác $ADE$ cắt $AC$ tại $F$ khác $A$. Giả sử $AB$ và $DF$ cắt nhau tại $I$. Gọi $J$ là giao điểm của $AE$ và $DF$; $S$ là giao điểm của $AD$ và $EF$; $Q$ là tâm đường tròn ngoại tiếp tam giác $ABF$.</p>
         <p>a) Chứng minh rằng các điểm $A, B, D, J$ cùng thuộc một đường tròn và $CI$ vuông góc với $SQ$.</p>
         <p>b) Giả sử $AE$ và $BF$ cắt nhau tại $X$. Chứng minh rằng ba điểm $C, I, X$ thẳng hàng.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Do $AD \perp AE$ nên $DE$ là đường kính của $(ADE)$, suy ra $EF \perp DJ$ và $S$ là trực tâm $\triangle JED$. Dùng tính chất đối xứng qua phân giác $DA$ để chứng minh $B$ là chân đường cao từ $J$ của $\triangle JED$, từ đó $A, B, D, J$ đồng viên và $(ABF)$ là đường tròn Euler của $\triangle JED$ (tâm $Q$). Khi đó $SQ$ là đường thẳng Euler qua tâm $O$ của $(JED)$, còn $CI$ là trục đẳng phương của $(O)$ và $(Q)$. b) Chứng minh $J, E, B, F$ đồng viên để suy ra $P_{(O)}(X) = P_{(Q)}(X)$, tức $X$ cũng nằm trên trục đẳng phương $CI$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (7,0 điểm)</h3>
         <p>Chứng minh rằng, có thể sắp tất cả các tập con của tập $S = \{1; 2; 3; \dots; 2027\}$ thành một dãy sao cho mỗi cặp gồm hai tập con kề nhau bất kỳ chỉ sai khác đúng một phần tử (tức là một tập thu được từ tập kia bằng cách thêm hoặc bớt một phần tử nào đó).</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Chứng minh bằng quy nạp theo số phần tử $n$ của tập $S$ (xây dựng mã Gray). Nếu đã có dãy $A_1, A_2, \dots, A_{2^n}$ các tập con của $\{1, \dots, n\}$ thỏa mãn bài toán, thì với $\{1, \dots, n+1\}$ ta nối dãy $(A_1, \dots, A_{2^n})$ với dãy đảo ngược có bổ sung phần tử $n+1$ là $(A_{2^n} \cup \{n+1\}, \dots, A_1 \cup \{n+1\})$.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Ngày thi thứ hai (07/10/2026)</h2>
 
@@ -65,16 +83,34 @@
         $$P(x)\left[P(x^2) - x\right] = P(x^3), \quad \forall x \in \mathbb{R}. \qquad (1)$$
         <p>a) Giả sử $P(x)$ có $\deg P \ge 1$ thỏa mãn $(1)$. Tính $P(0)$.</p>
         <p>b) Tìm tất cả các đa thức $P(x)$ thỏa mãn $(1)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Thay $x=0$ được $P(0) \in \{0, 1\}$. Nếu $P(0) = 0$ và $P \not\equiv 0$, đặt $P(x) = x^k Q(x)$ với $Q(0) \neq 0, k \ge 1$, so sánh bậc thấp nhất ở hai vế của $(1)$ dẫn đến $k + 1 = 3k$ (vô lí); suy ra $P(0) = 1$. b) Từ $P(0) = 1$, xét hệ số bậc thấp nhất khác $0$ của $P(x) - (x + 1)$ để chứng minh $P(x) = x + 1$ là nghiệm khác hằng duy nhất (cùng với $P(x) \equiv 0$).</p>
+            </div>
+        </details>
 
         <h3>Câu 5. (6,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn và không cân. Đường tròn nội tiếp $(I)$ của tam giác $ABC$ theo thứ tự tiếp xúc với $BC, CA, AB$ tại $D, E, F$. Đường thẳng $IE$ cắt đường tròn $(I)$ tại điểm $G$ khác $E$. $BG$ cắt $AC$ tại $K$. Gọi $N$ là trung điểm của $AC$.</p>
         <p>a) Chứng minh rằng $NE = NK$.</p>
         <p>b) Đường tròn $(O)$ ngoại tiếp tam giác $ABC$ theo thứ tự cắt các đường thẳng $BE, BN, BG$ tại $S, P, T$ khác $B$. Gọi $M$ là trung điểm $ST$. Chứng minh rằng các điểm $M, N, O, P$ cùng thuộc một đường tròn.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Dùng phép vị tự tâm $B$ biến $(I)$ thành đường tròn bàng tiếp góc $B$ để chỉ ra $K$ là tiếp điểm của đường tròn bàng tiếp này với $AC$, suy ra $AE = CK$ và $NE = NK$. b) Gọi $U$ là giao điểm thứ hai của đường thẳng qua $B$ song song với $AC$ với $(O)$; từ các chùm điều hòa tâm $B$ suy ra $SPTU$ và $APCU$ là các tứ giác điều hòa. Do đó tiếp tuyến của $(O)$ tại $U$ và $P$ cắt nhau tại $Q$ nằm trên cả $ST$ và $AC$, suy ra $M, N, O, P$ cùng thuộc đường tròn đường kính $OQ$.</p>
+            </div>
+        </details>
 
         <h3>Câu 6. (7,0 điểm)</h3>
         <p>Ký hiệu $(a, b)$ là ước chung lớn nhất của hai số nguyên dương $a$ và $b$; $\delta(n)$ là tổng các ước nguyên dương của số nguyên dương $n$.</p>
         <p>a) Chứng minh rằng $\delta(n)$ là số lẻ khi và chỉ khi tồn tại số tự nhiên $t$ sao cho $\dfrac{n}{2^t}$ là số chính phương.</p>
         <p>b) Cho số nguyên dương $k \ge 6$. Tồn tại hay không số nguyên dương $n$ thỏa mãn $(n + i, \delta(n + i)) = 1, \forall i \in \{1, 2, \dots, k\}$, hãy giải thích?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Dùng tính chất nhân tính $\delta(n) = \prod \delta(p_i^{a_i})$ và xét tính chẵn lẻ của $\delta(p^a) = 1 + p + \dots + p^a$ cho $p=2$ và $p$ lẻ. b) Không tồn tại. Trong $k \ge 6$ số nguyên liên tiếp luôn có $3$ số chẵn liên tiếp $2a, 2a+2, 2a+4$; để $(m, \delta(m)) = 1$ thì $\delta$ của cả $3$ số đều lẻ, kéo theo $a, a+1, a+2$ đều có dạng $2^s u^2$. Nếu $a$ lẻ thì $a, a+2$ đều chính phương (vô lí); nếu $a$ chẵn thì $a+1 = x^2 \equiv 1 \pmod 8$ nên $8 \mid a$, suy ra hoặc $a$ chính phương (mâu thuẫn với $a+1 = x^2$), hoặc $a = 2^{2r+1}u^2$ dẫn đến $a+2 = 2\bigl((2^r u)^2 + 1\bigr)$ không thể có phần lẻ chính phương.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

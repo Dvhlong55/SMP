@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('link[href*="smp-template.css"]')) {
         const linkTemplate = document.createElement('link');
         linkTemplate.rel = 'stylesheet';
-        linkTemplate.href = depthPrefix + 'core/css/smp-template.css?v=1';
+        linkTemplate.href = depthPrefix + 'core/css/smp-template.css?v=2';
         head.appendChild(linkTemplate);
     }
     if (contentHtml.includes('solution-mailbox') && !document.querySelector('link[href*="mailbox.css"]')) {

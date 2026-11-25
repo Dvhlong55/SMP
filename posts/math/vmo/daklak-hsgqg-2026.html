@@ -42,22 +42,48 @@
         <h3>Câu 1. (5,0 điểm)</h3>
         <p>Cho $a, b, c$ là độ dài ba cạnh của một tam giác có chu vi bằng $3$. Tìm giá trị lớn nhất của biểu thức:</p>
         $$P = 4\left(\dfrac{1}{2a + b + c} + \dfrac{1}{a + 2b + c} + \dfrac{1}{a + b + 2c}\right) - \dfrac{a^2 + b^2 + c^2 + 3(ab + bc + ca)}{(a + b)(b + c)(c + a)}$$
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Rút gọn phân thức cuối thành $\frac{1}{a+b} + \frac{1}{b+c} + \frac{1}{c+a}$ nhờ khai triển $(a+b)(b+c)+(b+c)(c+a)+(c+a)(a+b) = a^2+b^2+c^2+3(ab+bc+ca)$. Đặt $x = a+b, y = b+c, z = c+a$ ($x+y+z = 6$), bất đẳng thức $P \le \frac{3}{2}$ tương đương với $\sum_{\text{cyc}} \frac{1}{x} - \frac{3}{2} \le \sum_{\text{cyc}} \frac{(x-y)^2}{xy(x+y)}$, đúng vì vế trái bằng $\sum_{\text{cyc}} \frac{(x-y)^2}{6xy}$ và $x+y &lt; 6$. Vậy $\max P = \frac{3}{2}$ tại $a=b=c=1$.</p>
+            </div>
+        </details>
 
         <h3>Câu 2. (5,0 điểm)</h3>
         <p>Cho hàm số $f : \mathbb{N}^* \to \mathbb{Z}$ thỏa mãn đồng thời hai điều kiện:</p>
         <p>i) $f(p) = 1$, với mọi $p$ nguyên tố;</p>
         <p>ii) $f(xy) = y f(x) + x f(y)$, $\forall x, y \in \mathbb{N}^*$.</p>
         <p>Tìm số tự nhiên $n$ nhỏ nhất sao cho $n \ge 2026$ và $f(n) = n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Từ tính chất đạo hàm số học $f(xy) = yf(x) + xf(y)$ và $f(p) = 1$, phân tích $n = \prod_{j=1}^k p_j^{\alpha_j}$ ta có $\frac{f(n)}{n} = \sum_{j=1}^k \frac{\alpha_j}{p_j}$. Để $f(n) = n$, ta cần $\sum_{j=1}^k \frac{\alpha_j}{p_j} = 1$; xét $k \ge 2$ quy đồng mẫu chứng minh không thể xảy ra (hoặc loại dần), suy ra $k = 1$ và $n = p^p$. Với $n \ge 2026$ thì giá trị nhỏ nhất là $n = 5^5 = 3125$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (5,0 điểm)</h3>
         <p>Cho tam giác $ABC$ ($AB &lt; AC$), một đường tròn $(O)$ thay đổi luôn đi qua $B, C$ và lần lượt cắt các đoạn thẳng $AB, AC$ tại $F, E$ ($F \neq A, B$; $E \neq A, C$). Gọi $I$ là giao điểm của $BE$ và $CF$, đường thẳng $EF$ cắt đường thẳng $BC$ tại $P$.</p>
         <p>a) Gọi $X, Y$ lần lượt là hình chiếu vuông góc của $I$ lên $AB$ và $AC$; đường thẳng $PO$ cắt $AB$ và $AC$ lần lượt tại $K, L$. Chứng minh rằng $X, Y, K, L$ cùng nằm trên một đường tròn.</p>
         <p>b) Gọi $D$ là giao điểm của $AI$ và $BC$. Đường thẳng qua $D$ song song với $EF$ cắt $AB, AC$ lần lượt tại $Q$ và $R$. Chứng minh rằng đường tròn ngoại tiếp tam giác $PQR$ luôn đi qua một điểm cố định khi đường tròn $(O)$ thay đổi.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Theo định lý Brocard ta có $AI \perp PO$, kết hợp $IX \perp AB$ và $IY \perp AC$ nên $\angle AKL = \angle AIX = \angle AYX$, suy ra $X, Y, K, L$ đồng viên.</p>
+                <p>b) Gọi $M$ là trung điểm $BC$. Từ $QBRC$ nội tiếp và hàng điều hòa $(PDBC) = -1$ suy ra $DP \cdot DM = DB \cdot DC = DQ \cdot DR$, nên $(PQR)$ luôn đi qua điểm $M$ cố định.</p>
+            </div>
+        </details>
 
         <h3>Câu 4. (5,0 điểm)</h3>
         <p>Một số nguyên dương $n \ge 3$ được gọi là <em>số cân bằng</em> nếu như tồn tại một tập hợp $S$ gồm $n$ số nguyên dương sao cho nếu ta bỏ đi bất kì một phần tử nào của $S$ thì tất cả các phần tử còn lại có thể chia ra làm hai tập mà tổng các phần tử trong mỗi tập bằng nhau (số các số trong các tập có thể khác nhau).</p>
         <p>a) Chứng minh rằng nếu $n$ là số cân bằng thì $n$ lẻ và $n \ge 7$.</p>
         <p>b) Hãy tìm tất cả các số cân bằng.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Khi bỏ một phần tử bất kỳ thì tổng $n-1$ phần tử còn lại chẵn, nên mọi phần tử của $S$ cùng tính chẵn lẻ; chia cho $2^k$ (hoặc xét tổng) dẫn tới $n$ phải lẻ. Với $n = 3$ dễ thấy vô lý; với $n = 5$ ($a_1 &lt; \dots &lt; a_5$), xét các phân hoạch dạng $(2,2)$ và $(1,3)$ khi bỏ từng phần tử sẽ dẫn đến mâu thuẫn, nên $n \ge 7$.</p>
+                <p>b) Mọi số lẻ $n \ge 7$ đều là số cân bằng: chọn $S = \{1, 3, 5, \dots, 2n - 1\}$ (tổng $n^2$), khi bỏ $2k - 1$ cần tìm tập con có tổng $\frac{n^2+1}{2} - k$, luôn tồn tại bằng cách xét các tập con gồm $\frac{n-1}{2}$ phần tử.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Ngày thi thứ hai (23/09/2026)</h2>
 
@@ -65,18 +91,43 @@
         <p>Cho dãy số $(x_n)$ xác định bởi
         $$\begin{cases} x_1 = \dfrac{9}{8} \\ 3(n + 3)^2 x_n = 3n^2 x_{n+1} - (2n + 3) x_{n+1} x_n, \; \forall n \ge 1 \end{cases}$$
         Tìm $\lim x_n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Chia hai vế hệ thức truy hồi cho $3n^2 x_n x_{n+1}$ để tách biến: $1 + \frac{9}{x_{n+1}} = \left(\frac{n}{n+3}\right)^2\left(1 + \frac{9}{x_n}\right)$. Nhân dồn từ $k=1$ đến $n-1$ được $1 + \frac{9}{x_n} = 9\prod_{k=1}^{n-1}\left(\frac{k}{k+3}\right)^2 \to 0$ khi $n \to +\infty$, suy ra $\lim x_n = -9$.</p>
+            </div>
+        </details>
 
         <h3>Câu 6. (5,0 điểm)</h3>
         <p>Cho $P(x)$ là đa thức bậc $n$ (với $n \in \mathbb{N}^*$) có hệ số cao nhất bằng $1$ và có đúng $n$ nghiệm thực phân biệt. Biết rằng tồn tại duy nhất số thực $a$ mà $P(4a^2 + 4a + 2026) = 0$. Chứng minh đa thức $P(4x^2 + 4x + 2026)$ chia hết cho đa thức $(2x + 1)^2$ và $P(2026) \ge 1$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Viết $P(x) = \prod_{i=1}^n (x - x_i)$ với $x_1 &lt; \dots &lt; x_n$. Xét biệt thức của $4x^2 + 4x + 2026 - x_i = 0$ là $\Delta_i = 16(x_i - 2025)$; vì $P(4x^2+4x+2026)$ có duy nhất một nghiệm thực nên $x_n = 2025$ và $x_i &lt; 2025$ với mọi $i &lt; n$. Khi đó thừa số ứng với $x_n$ là $4x^2 + 4x + 1 = (2x+1)^2$, còn $P(2026) = (2026 - 2025)\prod_{i=1}^{n-1}(2026 - x_i) \ge 1$.</p>
+            </div>
+        </details>
 
         <h3>Câu 7. (5,0 điểm)</h3>
         <p>Tìm tất cả các số nguyên dương $a, b, c, p$ sao cho $p$ và $p + 2$ đều là các số nguyên tố lẻ thỏa mãn:</p>
         $$2a p^b = (p + 2)^c - 1.$$
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xét theo modulo $3$ để loại $p \equiv 1, 2 \pmod{3}$, suy ra $p = 3$ và phương trình trở thành $2a \cdot 3^b = 5^c - 1$ (trong đề gốc là $2^a p^b = (p+2)^c - 1$, khi đó $2^a \cdot 3^b = 5^c - 1$, với $c = 2k$ chẵn dùng định lý LTE tại $2$ và $3$ để đánh giá $5^{2k} - 1 \le 24k^2$, thu được nghiệm $(a, b, c, p) = (3, 1, 2, 3)$).</p>
+            </div>
+        </details>
 
         <h3>Câu 8. (5,0 điểm)</h3>
         <p>Cho tam giác $ABC$ ($AB &lt; AC$) nhọn và nội tiếp đường tròn $(O)$ có tâm $O$, bán kính $R$. Đường thẳng vuông góc với $BC$ tại trung điểm $M$ của $BC$ cắt các đường thẳng $AB, AC$ lần lượt tại $Y$ và $X$.</p>
         <p>a) Gọi $I, r'$ lần lượt là tâm và bán kính đường tròn đường kính $XY$. Chứng minh rằng $OI^2 = R^2 + r'^2$.</p>
         <p>b) Tiếp tuyến tại $B$ của đường tròn $(O)$ cắt đường thẳng $OM$ tại $P$. Qua $I$ kẻ đường thẳng song song với $AO$ cắt đường thẳng qua $P$ song song với $BC$ tại $Z$. Gọi $H$ là trực tâm của tam giác $ABC$. Chứng minh rằng $H, M, Z$ thẳng hàng.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chứng minh $\triangle OAX \sim \triangle OYA$ (g.g) suy ra $OA^2 = OX \cdot OY = P_{(I)}(O) = OI^2 - r'^2$, từ đó $OI^2 = R^2 + r'^2$.</p>
+                <p>b) Kẻ đường kính $AT$ của $(O)$ và gọi $G = HT \cap (O)$. Dùng chùm điều hòa $A(RIXY) = -1$ (với $R = AH \cap (O)$) và $A(GHBC) = -1$ chứng minh $I, G, A$ thẳng hàng, rồi sử dụng phép đồng dạng / tâm vị tự để chỉ ra giao điểm của $HT$ với đường thẳng qua $P$ song song $BC$ trùng với $Z$.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

@@ -44,11 +44,23 @@
         <p>$$x_{n+1} = \frac{x_n + y_n}{2}, \quad y_{n+1} = \frac{y_n + z_n}{2}, \quad z_{n+1} = \frac{z_n + x_n}{2}, \quad \forall n \ge 1.$$</p>
         <p>(1) Chứng minh rằng với mọi $n \ge 1$, $x_n, y_n, z_n$ là độ dài ba cạnh của một tam giác có chu vi bằng $12$.</p>
         <p>(2) Xét dãy số $(d_n)$ được xác định bởi $d_n = (x_n - y_n)^2 + (y_n - z_n)^2 + (z_n - x_n)^2$ với mọi $n \ge 1$. Chứng minh rằng dãy số $(d_n)$ hội tụ và tính giới hạn của dãy số này.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(1) Chứng minh $x_{n+1} + y_{n+1} + z_{n+1} = x_n + y_n + z_n = 12$ và quy nạp $3 \le x_n, y_n, z_n \le 5$, suy ra $x_n &lt; 6 = 12 - 6 &lt; y_n + z_n$ (tương tự cho $y_n, z_n$). (2) Từ $x_{n+1} - y_{n+1} = \frac{x_n - z_n}{2}$ (và tương tự) suy ra $d_{n+1} = \frac{1}{4}d_n$, nên $\lim d_n = 0$.</p>
+            </div>
+        </details>
 
         <h3>Bài 2. (5,0 điểm)</h3>
         <p>Cho đa thức $P(x) = a_{2026}x^{2026} + a_{2025}x^{2025} + \cdots + a_1x + a_0$ có các hệ số $a_i \in \{1, 3\}$ với mọi $i \in \{0, 1, \dots, 2026\}$. Gọi $m$ là số lượng hệ số bằng $3$ của $P(x)$.</p>
         <p>(1) Chứng minh rằng nếu $P(x)$ chia hết cho $x^2 + x + 1$ thì $m \neq 0$ và $m \neq 1$.</p>
         <p>(2) Chứng minh rằng nếu $P(x)$ có ít nhất một nghiệm nguyên thì $m$ phải là một số chẵn.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(1) Viết $P(x) = 2(1 + x + \dots + x^{2026}) + \sum_{i \in A} x^i$ với $|A| = m$; sử dụng $x^3 \equiv 1 \pmod{x^2+x+1}$ để rút gọn $1 + x + \dots + x^{2026} \equiv 1 + x \pmod{x^2+x+1}$ và kiểm tra trực tiếp $m = 0, m = 1$. (2) Nếu $r \in \mathbb{Z}$ là nghiệm của $P(x)$ thì $r &lt; 0$ và $r \mid a_0 \in \{1, 3\}$, nên $r \in \{-1, -3\}$. Chặn trên $P(-3)$ (nhóm từng cặp $3a_{2j+1} - a_{2j}$) để loại $r = -3$, chỉ còn $r = -1$; từ $P(-1) \equiv m \pmod 2$ suy ra $m$ chẵn.</p>
+            </div>
+        </details>
 
         <h3>Bài 3. (5,0 điểm)</h3>
         <p>Với mỗi $c \in \mathbb{N}^*$, xét hàm số $g_c : \mathbb{N}^* \to \mathbb{N}^*$ xác định bởi</p>
@@ -56,11 +68,23 @@
         <p>trong đó $\varphi(k)$ là số các số nguyên dương không vượt quá $k$ và nguyên tố cùng nhau với $k$.</p>
         <p>(1) Tìm tất cả các số nguyên dương $n$ sao cho $g_4(n) = 10$.</p>
         <p>(2) Chứng minh rằng với mọi $c \in \mathbb{N}^*$, không tồn tại $T \in \mathbb{N}^*$ sao cho $g_c(n)$ nhận mọi giá trị nguyên dương trong khoảng $(T, +\infty)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(1) Kiểm tra $g_4(1) = 9, g_4(2) = 10$; với $n \ge 3$, trong $4$ số liên tiếp $n+1, \dots, n+4$ có hai số lẻ $\ge 5$ (mỗi số có $\varphi \ge 4$) và hai số chẵn $\ge 4$ (mỗi số có $\varphi \ge 2$), nên $g_4(n) \ge 12 &gt; 10$; vậy $n = 2$ là duy nhất. (2) Với mọi $k \ge 3$ thì $\varphi(k)$ chẵn, nên $g_c(n)$ luôn chẵn với mọi $n \ge 2$; do đó mọi số lẻ $M &gt; \max\{T, g_c(1)\}$ đều không nằm trong tập giá trị của $g_c$.</p>
+            </div>
+        </details>
 
         <h3>Bài 4. (5,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn nội tiếp đường tròn $(O)$ và có đường tròn nội tiếp $(I)$ tiếp xúc với các cạnh $BC, CA, AB$ lần lượt tại $D, E, F$. Đường thẳng qua $A$ song song với $BC$ cắt lại $(O)$ tại $T$. Đường thẳng $TD$ cắt lại $(O)$ tại $J$.</p>
         <p>(1) Gọi $N$ là trung điểm $BC$ và $X$ là giao điểm thứ hai của $AN$ với $(O)$. Chứng minh rằng các đường thẳng $EF, BC, JX$ đồng quy.</p>
         <p>(2) Gọi $P, Q$ lần lượt là giao điểm thứ hai của $JE, JF$ với $(O)$, và $M$ là giao điểm thứ hai của $AI$ với $(O)$. Chứng minh rằng đường thẳng đi qua $A$ và vuông góc với $PQ$ đi qua trung điểm của đoạn thẳng $MN$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(1) Gọi $Y = EF \cap BC$ và $X' = YJ \cap (O)$. Từ $(Y, D; B, C) = -1$ suy ra $YD \cdot YN = YB \cdot YC = YJ \cdot YX'$, nên $DNX'J$ nội tiếp; cộng góc chứng minh $A, N, X'$ thẳng hàng tức $X' \equiv X$. (2) Áp dụng định lý Pascal chứng minh $BP, CQ, YE, AX, DI, EF$ đồng quy tại $K$. Gọi $O'$ là tâm $(BKC)$ và $L$ là trung điểm $MN$; chứng minh $O'K \perp PQ$ và $KO' \parallel AL$ (qua tứ giác nội tiếp $KZND$ với $Z = (O') \cap EF$).</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Ngày thi thứ hai</h2>
 
@@ -68,6 +92,12 @@
         <p>Một đa thức $P(x) \in \mathbb{R}[x]$ được gọi là <em>đa thức tốt</em> nếu với mọi bộ ba số thực $(x, y, z)$ thỏa mãn $x + y + z = 3$, ta có $P(x) + P(y) + P(z) \ge 3P(1)$.</p>
         <p>(1) Tìm tất cả các đa thức tốt có bậc không vượt quá $2$.</p>
         <p>(2) Chứng minh rằng nếu $P(x)$ là đa thức tốt có bậc $n &gt; 2$ thì $n$ là số nguyên dương chẵn.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(1) Với $P(x) = ax^2 + bx + c$, ta có $P(x)+P(y)+P(z)-3P(1) = a(x^2+y^2+z^2-3) \ge 0$ với mọi $x+y+z=3$ khi và chỉ khi $a \ge 0$. (2) Nếu $n &gt; 2$ lẻ, chọn $(x, y, z) = (1+2t, 1-t, 1-t)$ để xét đa thức $Q(t) = P(1+2t) + 2P(1-t) - 3P(1) \ge 0$ với mọi $t \in \mathbb{R}$; hệ số bậc $n$ của $Q(t)$ là $a_n(2^n - 2) \neq 0$ nên $Q(t)$ có bậc lẻ, mâu thuẫn.</p>
+            </div>
+        </details>
 
         <h3>Bài 6. (5,0 điểm)</h3>
         <p>Gọi $S$ là tập hợp tất cả các hàm số $f : \mathbb{R} \to \mathbb{R}$ không hằng thỏa mãn $f(2) \neq 1$ và</p>
@@ -76,16 +106,34 @@
         <p>(1) Chứng minh rằng $0 \notin A$ và $2026 \in A$.</p>
         <p>(2) Chứng minh rằng $A = \{2026\}$.</p>
         <p>(3) Tìm tập hợp $S$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $g(x) = f(x) - 1$ thì $g$ không hằng, $g(2) \neq 0$, $A = \{a \mid g(a)=0\}$ và $g(y + xg(y)) + g(xy) = g(2026x) + g(y)$. (1) Thay $x = 2026$ và $x = 0$ để suy ra $g(2026) = 0$ và $g(0) \neq 0$. (2) Nếu có $a \neq b \in A$, thế $x=a$ và $x=b$ kết hợp $g(2) \neq 0$ để chứng minh $g$ tuần hoàn chu kỳ $T = \frac{2(a-b)}{2026} \neq 0$, từ đó $g((x+T)y) = g(xy)$ dẫn đến $g$ hằng (vô lí). (3) Thay $y = 1$ vào phương trình hàm của $g$ được $x + g(x) \in A = \{2026\}$, nên $f(x) = 2027 - x$.</p>
+            </div>
+        </details>
 
         <h3>Bài 7. (5,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn, không cân nội tiếp đường tròn $(O)$ và có tâm đường tròn nội tiếp là $I$. Gọi $D, T$ lần lượt là điểm chính giữa cung nhỏ $BC$ và cung lớn $BC$ của $(O)$. Đường thẳng qua $I$ song song với $BC$ cắt các đường thẳng $AB, AC, DB, DC$ lần lượt tại $E, F, K, L$ và cắt $(O)$ tại $R, S$ sao cho $R$ nằm cùng phía với $B$ đối với đường thẳng $AO$. Kẻ các tiếp tuyến $DM, DN$ đến đường tròn $(BKE)$ và các tiếp tuyến $DP, DQ$ đến đường tròn $(CLF)$ (với $M, N, P, Q$ là các tiếp điểm).</p>
         <p>(1) Chứng minh rằng sáu điểm $M, N, P, Q, R, S$ cùng nằm trên một đường tròn.</p>
         <p>(2) Gọi $J$ là giao điểm của $MN$ và $PQ$. Chứng minh rằng ba điểm $A, J, T$ thẳng hàng.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(1) Gọi $G = AI \cap BC$; từ $AIBK$ nội tiếp và $\triangle ARD \sim \triangle DIR$ suy ra $DM^2 = DN^2 = DB \cdot DK = DI \cdot DA = DR^2$, và tương tự $DP^2 = DQ^2 = DS^2 = DR^2$, nên $M, N, P, Q, R, S$ cùng thuộc đường tròn tâm $D$ bán kính $DR$. (2) Gọi $O_1, O_2$ là tâm $(BKE), (CLF)$; chứng minh $I, O_1, O_2$ thẳng hàng. Xét cực và đối cực đối với $(D)$: $MN, PQ$ lần lượt là đường đối cực của $O_1, O_2$ nên $O_1 O_2$ là đường đối cực của $J$, kéo theo $J$ thuộc đường đối cực của $I$ (là đường thẳng qua $A$ vuông góc với $AI$, chính là $AT$).</p>
+            </div>
+        </details>
 
         <h3>Bài 8. (5,0 điểm)</h3>
         <p>Một vùng biển gồm $300$ hòn đảo được nối với nhau bởi $m$ cây cầu sao cho giữa hai hòn đảo bất kỳ có tối đa một cây cầu nối trực tiếp giữa chúng.</p>
         <p>(1) Tìm giá trị lớn nhất của $m$ để có thể tồn tại một tuyến du lịch khép kín đi qua tất cả $m$ cây cầu, mỗi cây cầu đúng một lần.</p>
         <p>(2) Giả sử các hòn đảo trong vùng biển đó được quản lý bởi $5$ vương quốc (mỗi hòn đảo thuộc về đúng một vương quốc, mỗi vương quốc có ít nhất một đảo). Một hệ thống $m$ cây cầu được xây dựng sao cho mọi tuyến du lịch khép kín qua tất cả $m$ cây cầu (mỗi cầu đúng một lần) đều phải đi qua đủ cả $5$ vương quốc. Hỏi $m$ có thể lớn hơn $398$ được không? Hãy giải thích chi tiết.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>(1) Đáp số: $m_{\max} = 44700$. Để tồn tại chu trình Euler thì mọi đỉnh có bậc chẵn $\le 298$, suy ra $m \le \frac{300 \cdot 298}{2} = 44700$ (đạt được khi bỏ $150$ cạnh rời nhau khỏi $K_{300}$). (2) Không thể vượt quá $398$. Gọi $A_i$ ($|A_i| = n_i$) là tập đảo của vương quốc thứ $i$; đồ thị $G_i$ thu được khi xóa $A_i$ không chứa chu trình nên có số cạnh $m_i \le (300 - n_i) - 1 = 299 - n_i$. Cộng theo $i=1,\dots,5$ và để ý mỗi cạnh của $G$ xuất hiện ít nhất $3$ lần trong tổng $\sum_{i=1}^5 m_i$, ta được $3m \le 5 \cdot 299 - 300 = 1195 \implies m \le 398$.</p>
+            </div>
+        </details>
     </div>
 </body>
 </html>

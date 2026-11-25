@@ -50,10 +50,26 @@
         <p>a) Chứng minh rằng $n \leq 2a_0$.</p>
         <p>b) Tìm hằng số $C$ nhỏ nhất để $n \leq C a_0 \sum_{i=1}^n \dfrac{1}{a_i}$ với mọi $n \geq 1$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Từ $a_i \leq a_0 + i$, nếu $n \geq 2a_0 + 1$ thì $\sum_{i=1}^n \frac{1}{a_i} \geq \sum_{i=1}^{2a_0+1} \frac{1}{a_0+i} &gt; 1$ (nhờ ghép cặp $\frac{1}{2a_0+1-k} + \frac{1}{2a_0+1+k} &gt; \frac{2}{2a_0+1}$), mâu thuẫn.</p>
+                <p>b) Với $a_0 = 1, n = 2, a_1 = 2, a_2 = 3$, ta cần $C \geq \frac{12}{5}$. Với $a_0 \geq 2$ và $n \leq 2a_0$, dùng Cauchy-Schwarz $\sum_{i=1}^n \frac{1}{a_0+i} \geq \frac{2n}{2a_0+n+1}$ để có $\frac{n}{a_0 \sum_{i=1}^n \frac{1}{a_i}} \leq 1 + \frac{n+1}{2a_0} \leq 2 + \frac{1}{2a_0} \leq \frac{9}{4} &lt; \frac{12}{5}$. Vậy $C_{\min} = \frac{12}{5}$.</p>
+            </div>
+        </details>
+
         <h3>Câu 2. (7,0 điểm)</h3>
         <p>Cho tam giác nhọn $ABC$ ($AB < AC$) nội tiếp đường tròn $(O)$, có tâm đường tròn nội tiếp là $I$. Đường thẳng vuông góc với $AI$ tại $I$ cắt $AB, AC$ lần lượt tại $E$ và $F$. Đường tròn ngoại tiếp tam giác $AEF$ cắt đường tròn $(O)$ và đường thẳng $AI$ tương ứng tại $G, H$ ($G$ khác $A$).</p>
         <p>a) Gọi $(O_1)$ là đường tròn tiếp xúc với các cạnh $AB, AC$ và tiếp xúc trong với đường tròn $(O)$ tại $T$. Chứng minh rằng bốn điểm $G, T, H, I$ cùng thuộc một đường tròn.</p>
         <p>b) Tiếp tuyến tại $G$ của $(O)$ cắt đường thẳng $BC$ tại $J$, đường thẳng $AJ$ cắt đường tròn $(O)$ tại điểm $K$ khác $A$. Gọi $D$ là hình chiếu vuông góc của $I$ lên đường thẳng $BC$. Chứng minh rằng đường tròn ngoại tiếp tam giác $DJK$ và đường tròn ngoại tiếp tam giác $GHI$ tiếp xúc với nhau.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) $(O_1)$ là đường tròn mixtilinear nội góc $A$, tiếp xúc $AB, AC$ tại $E, F$ và có tâm là $H$ (đối xứng $A$ qua $I$ trên $(AEF)$). Xét tâm đẳng phương $Y$ của $(AEF), (O), (O_1)$: $AG, EF$ và tiếp tuyến chung tại $T$ đồng quy tại $Y$, suy ra $Y, G, I, H, T$ cùng thuộc đường tròn đường kính $YH$.</p>
+                <p>b) Chứng minh $T \in (DJK)$ (nhờ $A'A \parallel BC$ với $A' = TD \cap (O)$) và $Y, J, T$ thẳng hàng (nhờ $BGCT$ là tứ giác điều hòa). Gọi $Z$ là giao điểm thứ hai của $TI$ với $(DJKT)$ thì $JZ \parallel YI$; phép vị tự tâm $T$ biến $Z \mapsto I$ sẽ biến $(DJK)$ thành $(GHI)$, nên hai đường tròn tiếp xúc tại $T$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (6,0 điểm)</h3>
         <p>Một điểm lưới là một điểm $(x; y)$ trên mặt phẳng tọa độ sao cho $x, y$ là các số nguyên dương không vượt quá 20. Ta nói điểm $B = (x'; y')$ nằm về phía Đông Bắc của điểm $A = (x; y)$ nếu $x' > x$ và $y' > y$. Ba điểm lưới $A, B, C$ được gọi là một bộ ba Đông Bắc nếu $B$ nằm về phía Đông Bắc của $A$ và $C$ nằm về phía Đông Bắc của $B$.</p>
@@ -61,6 +77,14 @@
         <p>a) Chứng minh rằng trong mỗi tập <i>Lam Sơn</i> luôn tồn tại ba điểm $X, Y, Z$ sao cho:</p>
         $$XY^2 \geq XZ^2 + ZY^2 + 4.$$
         <p>b) Hỏi có bao nhiêu tập <i>Lam Sơn</i>?</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chọn bộ ba Đông Bắc $(A, B, C)$ làm $(X, Z, Y)$. Khi đó $\overrightarrow{BA} \cdot \overrightarrow{BC} = (x_A - x_B)(x_C - x_B) + (y_A - y_B)(y_C - y_B) \leq (-1)\cdot 1 + (-1)\cdot 1 = -2$, nên $AC^2 = AB^2 + BC^2 - 2\overrightarrow{BA}\cdot\overrightarrow{BC} \geq AB^2 + BC^2 + 4$.</p>
+                <p>b) Điều kiện không có hai điểm cùng hàng hay cùng cột tương đương với một hoán vị $\pi \in S_{20}$, và có bộ ba Đông Bắc tương đương với $\pi$ không tránh mẫu $(1, 2, 3)$. Theo kết quả đếm hoán vị tránh mẫu $(1, 2, 3)$ (số Catalan $C_{20}$), số tập Lam Sơn là $20! - \frac{1}{21}\binom{40}{20}$.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Bài thi thứ hai</h2>
         <p style="text-align: center; font-style: italic;">Ngày thi: 12 tháng 09 năm 2026 — Thời gian làm bài: 180 phút</p>
@@ -72,11 +96,33 @@
         <p>a) Chứng minh rằng: nếu tồn tại số thực $x_0$ khác tất cả các số $x_1, x_2, \dots, x_{1013}$ và thỏa mãn $P(x_0) + R(x_0) = 2Q(x_0)$ thì $P(x) + R(x) = 2Q(x)$ với mọi $x \in \mathbb{R}$.</p>
         <p>b) Giả sử $P(x), Q(x), R(x)$ đôi một phân biệt và $R(x)$ có bậc lẻ. Tồn tại hay không đa thức $Q(x)$ sao cho $R(x) - P(x)$ chia hết cho $Q(x)$?</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Vì $R(x) - P(x) \geq 0$ trên $\mathbb{R}$, nó phải có bậc chẵn ($\leq 2026$) và nhận $x_1, \dots, x_{1013}$ làm nghiệm bội ít nhất $2$; tương tự cho $Q(x) - P(x)$ và $R(x) - Q(x)$. Do đó $P(x) + R(x) - 2Q(x)$ có bậc $\leq 2026$ nhưng chia hết cho $\prod_{i=1}^{1013}(x - x_i)^2$ (bậc $2026$) và có thêm nghiệm $x_0$, nên phải đồng nhất bằng $0$.</p>
+                <p>b) Không tồn tại. Từ $\deg(R - P) = 2026$ và $\deg(R - Q) \leq 2026$, kết hợp $\deg R$ lẻ buộc $\deg R = 2027$, kéo theo $\deg Q = 2027 &gt; \deg(R - P)$, nên $Q(x)$ không thể là ước của $R(x) - P(x) \not\equiv 0$.</p>
+            </div>
+        </details>
+
         <h3>Câu 5. (7,0 điểm)</h3>
         <p>Cho $n > 1$ là một số nguyên lẻ, ta viết $n = 2^s d + 1$ trong đó $s \geq 1$ và $d$ là số nguyên dương lẻ. Với mỗi số nguyên $a$ thỏa mãn $\gcd(a, n) = 1$, ta nói $a$ có liên hệ với $n$ nếu $a^d \equiv 1 \pmod n$ hoặc trong dãy $a^d, a^{2d}, a^{4d}, \dots, a^{2^{s-1}d}$ có đúng một số hạng đồng dư với $-1$ theo modulo $n$. Chứng minh rằng $n$ là số nguyên tố khi và chỉ khi với mọi số nguyên $a$ thỏa mãn $\gcd(a, n) = 1$ đều có liên hệ với $n$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Chiều thuận ($n$ nguyên tố): dùng định lý nhỏ Fermat $a^{2^s d} \equiv 1 \pmod n$; nếu $a^d \not\equiv 1 \pmod n$, xét số mũ $k$ nhỏ nhất sao cho $a^{2^k d} \equiv 1 \pmod n$ thì $a^{2^{k-1}d} \equiv -1 \pmod n$ và các số hạng sau đều $\equiv 1 \pmod n$. Chiều đảo: nếu $n$ có dạng $p^k$ ($k \geq 2$), chọn $a = 1 + p^{k-1}$ để thấy $a^{n-1} \not\equiv 1 \pmod n$; nếu $n = uv$ ($\gcd(u, v) = 1$, $u, v &gt; 1$), dùng định lý Thặng dư Trung Hoa chọn $a \equiv -1 \pmod u$ và $a \equiv 1 \pmod v$ để tạo phản ví dụ.</p>
+            </div>
+        </details>
+
         <h3>Câu 6. (7,0 điểm)</h3>
         <p>Tìm số nguyên dương $N$ nhỏ nhất sao cho tồn tại 2026 số nguyên không âm liên tiếp mà tổng tất cả các chữ số của chúng bằng $N$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Xét dãy $0, 1, \dots, 2025$ cho tổng các chữ số bằng $28179$. Để chứng minh đây là giá trị nhỏ nhất, phân tích tổng $S(m) + S(m+1) + \dots + S(m+2025)$ theo từng hàng chữ số hoặc dùng quy nạp theo số chữ số của $m$ để chỉ ra luôn đạt giá trị tối thiểu khi $m = 0$.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

@@ -50,6 +50,13 @@
         <p>a) Xét dãy số $(y_n)_{n \ge 1}$ xác định bởi $y_n = n \left(\dfrac{P(n+1) - P(n)}{P'(n)} - 1\right), \; n \ge 1$. Chứng minh rằng các dãy $(x_n), (y_n)$ đều hội tụ và tìm các giới hạn tương ứng.</p>
         <p>b) Đặt $z_n = x_1 + x_2 + \dots + x_n$. Chứng minh rằng dãy $(z_n)$ hội tụ.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), khai triển Taylor $P(n+1) - P(n) = P'(n) + \frac{P''(n)}{2} + O(n^{d-3})$ để tính được $\lim y_n = \frac{d-1}{2}$; vì $\frac{P(n+1)-P(n)}{P'(n)} &gt; 1 + \frac{1}{n}$ với $n$ đủ lớn nên $(x_n)$ giảm dần về $\lim x_n = 0$. Ở câu b), do $d \ge 5$ nên $\lim y_n = \frac{d-1}{2} \ge 2 &gt; \frac{3}{2}$, suy ra với $n$ đủ lớn ta có $\frac{x_{n+1}}{x_n} &lt; \left(\frac{n}{n+1}\right)^{4/3}$, tức $x_n = O(n^{-4/3})$, từ đó chuỗi $\sum x_n$ hội tụ.</p>
+            </div>
+        </details>
+
         <h3>Câu 2.</h3>
         <p>Cho hàm số $f: \mathbb{R}^+ \to \mathbb{R}^+$ thỏa mãn $f(1) = 1$ và</p>
         \[ f(x) + f(y) + f(z) + f(t) \le f(x+y+z+t) \le 4\max \{f(x), f(y), f(z), f(t)\} \]
@@ -57,15 +64,36 @@
         <p>a) Chứng minh rằng $f$ tăng ngặt và $f(2026) = 2026$.</p>
         <p>b) Tìm tất cả hàm số $f$ thỏa mãn bài toán.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), từ $f(a+b) \ge f(a) + 3f(b/3) &gt; f(a)$ suy ra $f$ tăng ngặt, kéo theo $f(4x) = 4f(x)$ và $f(4^k) = 4^k$ với mọi $k \in \mathbb{Z}$. Dùng $f(2) = f(1 + \frac{1}{2} + \frac{1}{4} + \frac{1}{4})$ và $f(4) = f(2 + 1 + \frac{1}{2} + \frac{1}{2})$ để chặn $f(2) = 2$, rồi quy nạp $f(n+1) \ge f(n) + 1$ kết hợp $f(4^k) = 4^k$ để suy ra $f(n) = n$ với mọi $n \in \mathbb{N}^*$, nên $f(2026) = 2026$. Ở câu b), kẹp $\lfloor 4^m x \rfloor \le 4^m f(x) &lt; \lfloor 4^m x \rfloor + 1$ rồi cho $m \to +\infty$ ta được hàm duy nhất $f(x) = x$.</p>
+            </div>
+        </details>
+
         <h3>Câu 3.</h3>
         <p>Cho tam giác $ABC$ nhọn nội tiếp đường tròn $(O)$, trực tâm $H$. Điểm $P$ di động trên đường thẳng $BC$ và nằm ngoài đoạn $BC$. $OP$ lần lượt cắt $AC, AB$ tại $Q, R$. Dựng $Y, Z$ lần lượt là hình chiếu của $Q, R$ lên $AB, AC$.</p>
         <p>a) Chứng minh rằng $YZ$ luôn đi qua một điểm cố định khi $P$ thay đổi.</p>
         <p>b) Gọi giao điểm của $QY$ và $RZ$ là $S$, $SH$ và $YZ$ là $X$. Chứng minh rằng $XA \perp XP$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), xét phép vị tự quay $f$ tâm $A$ biến $B \mapsto E, C \mapsto F$ (chân các đường cao từ $B, C$); khi đó $f(R) = Z, f(Q) = Y$ và $f(O) = N$ (trung điểm $AH$), nên từ $O, Q, R$ thẳng hàng suy ra $YZ$ luôn đi qua điểm cố định $N$. Ở câu b), $S$ là trực tâm $\triangle AQR$ và $f(P) = T = EF \cap YZ$; chứng minh $\triangle NLT \sim \triangle NXL$ với $L$ là giao điểm thứ hai của $(AEFH)$ và $(AYSZ)$ để suy ra $f^{-1}(X)$ là ảnh nghịch đảo của $P$ qua $(O)$, từ đó $A, X, D, P$ đồng viên và $\widehat{AXP} = \widehat{ADP} = 90^\circ$.</p>
+            </div>
+        </details>
+
         <h3>Câu 4.</h3>
         <p>Cho số nguyên dương $k > 1$. Với mỗi số nguyên dương $n$, gọi $\sigma_k(n)$ là tổng lũy thừa bậc $k$ của các ước nguyên dương của $n$. Gọi $n$ là một số <i>tốt</i> nếu $n \mid \sigma_k(n)$.</p>
         <p>a) Chứng minh rằng $\sigma_k(n)$ là hàm nhân tính và tồn tại một dãy vô hạn các số tốt $n_1 < n_2 < n_3 < \dots$ sao cho $n_i \mid n_{i+1}$ với mọi $i \ge 1$.</p>
         <p>b) Chứng minh rằng với mọi số nguyên dương $r$, tồn tại một số tốt có ít nhất $r$ ước nguyên tố phân biệt.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), khởi đầu với $n_1 = 2p$ ($p$ là ước nguyên tố lẻ của $2^k + 1$); từ mỗi số tốt $m &gt; 1$, nếu có ước nguyên tố $q \mid \sigma_k(m)$ với $q \nmid m$ thì chọn $m' = mq$, ngược lại vì $\sigma_k(m) &gt; m^k$ nên có ước nguyên tố $p_j \mid m$ thỏa $v_{p_j}(\sigma_k(m)) &gt; k v_{p_j}(m) \ge 2 v_{p_j}(m)$, khi đó $m' = p_j^{v_{p_j}(m)+1} m$ cũng là số tốt. Ở câu b), dùng bổ đề LTE chứng minh $v_p(\sigma_k(q^a)) \le C_{p,q} + \log_2(a+1)$, từ đó chỉ có hữu hạn số tốt mà mọi ước nguyên tố thuộc cùng một tập hữu hạn $\mathcal{P}$.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 40px;">2. Ngày thi thứ hai</h2>
 
@@ -74,6 +102,13 @@
         <p>a) $CK, BK$ lần lượt cắt $DE, DF$ tại $S, T$, và $ST$ cắt $EF$ tại $R$. Chứng minh rằng $IR \perp AK$.</p>
         <p>b) Chứng minh rằng $AK, BC$ và đường thẳng Euler của tam giác $KBC$ đồng quy hoặc đôi một song song.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), xét cực – đối cực đối với $(I)$: đường trung bình $HL$ ứng với đỉnh $A$ là đường đối cực của $K$ (với $H \in DE, L \in DF$); từ $(SHED) = (LTFD) = -1$ suy ra $EF, ST, HL$ đồng quy tại $R$, và $AK$ chính là đường đối cực của $R$ nên $IR \perp AK$. Ở câu b), gọi $J$ là tâm bàng tiếp góc $A$ thì $BKCJ$ là hình bình hành có tâm $M$ là trung điểm $IJ$ và $KJ$; gọi $G$ là trọng tâm $\triangle KBC$, dùng định lý Menelaus đảo cho $\triangle AKJ$ để chứng minh đường thẳng Euler $IG$ đi qua giao điểm $U = AK \cap BC$ (hoặc song song nếu $AK \parallel BC$).</p>
+            </div>
+        </details>
+
         <h3>Câu 6.</h3>
         <p>Cho đa thức monic</p>
         \[ P(x) = x^n + a_{n-1}x^{n-1} + \dots + a_1 x + a_0, \]
@@ -81,11 +116,25 @@
         <p>a) Chứng minh rằng $2026 a_k^2 + 2027 a_{k+1}^2 > 0$ với mọi $k = 0, 1, \dots, n-2$.</p>
         <p>b) Hỏi số lượng hệ số khác 0 của đa thức $P(x)$ nhỏ nhất là bao nhiêu?</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Chứng minh bổ đề bằng quy nạp theo bậc $d$ (kết hợp định lý Rolle cho $Q'$ và Viète cho $\sum \frac{1}{r_i^2}$): nếu đa thức bậc $d \ge 2$ có $d$ nghiệm thực và hai hệ số liên tiếp $b_t = b_{t+1} = 0$ thì $b_0 = b_1 = \dots = b_{t+1} = 0$. Từ đó ở câu a), $a_k$ và $a_{k+1}$ không thể đồng thời bằng $0$ vì $P(0) \neq 0$. Ở câu b), chia cặp hệ số liên tiếp suy ra có ít nhất $\left\lceil \frac{n}{2} \right\rceil + 1$ hệ số khác $0$; giá trị này đạt được với $(x^2 - 1)^m$ khi $n = 2m$, và $x\prod_{j=1}^m (x^2 - j^2) + \varepsilon$ ($\varepsilon \neq 0$ đủ nhỏ) khi $n = 2m + 1$.</p>
+            </div>
+        </details>
+
         <h3>Câu 7.</h3>
         <p>Cho hai số nguyên $n, k$ thỏa mãn $2 \le k < n$. Trong một lễ hội, có $n$ ngọn đèn được đặt trên một vòng tròn và đánh số $1, 2, \dots, n$ theo chiều kim đồng hồ. Mỗi ngọn đèn ở một trong hai trạng thái: sáng hoặc tắt.</p>
         <p>Trong mỗi lượt ghi, trạng thái của các ngọn đèn được giữ cố định. Một người đi quanh vòng tròn theo chiều kim đồng hồ. Khi đứng tại ngọn đèn thứ $i$, người đó ghi lại số ngọn đèn đang sáng trong $k$ ngọn đèn liên tiếp theo chiều kim đồng hồ, bắt đầu từ ngọn đèn thứ $i$; sau ngọn đèn thứ $n$ lại đến ngọn đèn thứ 1. Gọi số ghi được tại ngọn đèn thứ $i$ là $s_i$. Sau một vòng, người đó thu được bản ghi $(s_1, s_2, \dots, s_n)$.</p>
         <p>a) Xác định điều kiện của $n, k$ để với mọi cách bố trí trạng thái của các ngọn đèn, bản ghi $(s_1, s_2, \dots, s_n)$ xác định duy nhất cách bố trí đó.</p>
         <p>b) Trong suốt lễ hội, trạng thái của các ngọn đèn có thể được thay đổi tùy ý giữa các lượt ghi. Xác định số bản ghi $(s_1, s_2, \dots, s_n)$ phân biệt có thể thu được.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đặt $x_i \in \{0, 1\}$ là trạng thái đèn $i$, ta có $s_{i+1} - s_i = x_{i+k} - x_i$. Ở câu a), điều kiện cần và đủ là $\gcd(n, k) = 1$ (nếu $d = \gcd(n, k) &gt; 1$ thì đổi các đèn đồng dư $1$ sang $2 \pmod d$ cho cùng bản ghi). Ở câu b), đặt $d = \gcd(n, k), m = \frac{n}{d}$ và chia các đèn thành $d$ đường ray theo lớp đồng dư $\pmod d$; hai cấu hình cho cùng bản ghi khi và chỉ khi tổng hiệu trên $d$ đường ray bằng $0$ và chỉ có thể đổi các đường ray toàn $1$ thành toàn $0$ (và ngược lại), từ đó dùng đồng nhất thức Vandermonde đếm theo trọng số $\frac{1}{|\phi(x)|}$ ra đáp số $(2^{n/d} + d - 1)(2^{n/d} - 1)^{d-1}$.</p>
+            </div>
+        </details>
 
     </div>
 </body>

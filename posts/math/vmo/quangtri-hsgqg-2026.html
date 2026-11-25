@@ -44,19 +44,49 @@
         <p>a) Chứng minh rằng $u_n \ge n$ với mọi $n \ge 2$.</p>
         <p>b) Chứng minh rằng dãy số $\left(\dfrac{u_n}{n}\right)$ có giới hạn hữu hạn và tìm giới hạn đó.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Ta có $u_2 = \alpha + \frac{1}{\alpha} \ge 2$. Quy nạp theo $n \ge 2$, sử dụng tính đồng biến của hàm $g(t) = t + \frac{n}{t}$ trên $[\sqrt{n}, +\infty)$ với $u_n \ge n &gt; \sqrt{n}$.</p>
+                <p>b) Từ $u_{k+1}^2 - u_k^2 = 2k + \frac{k^2}{u_k^2}$ và $u_k \ge k$, suy ra $2k &lt; u_{k+1}^2 - u_k^2 \le 2k + 1$ với $k \ge 2$. Cộng dồn theo $k$ để kẹp $\frac{u_n^2}{n^2}$ giữa $1$ và $1 + O\left(\frac{1}{n}\right)$, thu được $\lim \frac{u_n}{n} = 1$.</p>
+            </div>
+        </details>
+
         <h3>Câu 2. (5,0 điểm)</h3>
         <p>Tìm tất cả các hàm số $f : \mathbb{R} \to \mathbb{R}$ thỏa mãn</p>
         $$f(xy + f(x)) + f(y) = xf(y) + f(x + y) \quad \text{với mọi } x, y \in \mathbb{R}.$$
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Thay $x = 0$ thu được $f(f(0)) = 0$; thay $x = 1$ thu được $f(y + f(1)) = f(y + 1)$ với mọi $y \in \mathbb{R}$. Nếu $f(1) \neq 1$ thì $f$ tuần hoàn khác hằng (hoặc $f \equiv 0$), đối chiếu với hệ số $xf(y)$ ở vế phải khi tịnh tiến $x$ theo chu kỳ sẽ dẫn đến $f \equiv 0$. Khi $f(1) = 1$, kết hợp $y = 0$ cho $f(f(x)) = (x-1)f(0) + f(x)$ để suy ra $f(0) = 0$ và nghiệm còn lại là $f(x) = x$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (5,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn ($AB &lt; AC$) nội tiếp đường tròn $(O)$ với tâm là $O$. Các đường trung trực của các đoạn $AB, AC$ cắt đường phân giác trong của góc $\widehat{BAC}$ theo thứ tự tại $M, N$. Gọi $P$ là giao điểm của đường thẳng $BM$ với $CN$. $H$ là trực tâm của tam giác $OMN$ và $I$ là tâm đường tròn nội tiếp của tam giác $PMN$.</p>
         <p>a) Chứng minh rằng $MHNI$ là hình thoi.</p>
         <p>b) Tiếp tuyến của $(O)$ tại $B, C$ cắt nhau tại $S$. Chứng minh rằng $S, A, I$ thẳng hàng.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Đặt $\theta = \frac{1}{2}\widehat{BAC}$. Do $MA = MB, NA = NC$ nên $\widehat{PMN} = \widehat{PNM} = 2\theta$, suy ra $IM = IN$ và $MI \parallel AB, NI \parallel AC$. Kết hợp với $OM \perp AB, ON \perp AC$ và $H$ là trực tâm $\triangle OMN$ để có $NH \parallel AB, MH \parallel AC$, suy ra $MHNI$ là hình thoi.</p>
+                <p>b) Từ $\triangle AMB \sim \triangle ANC$ và $NH \parallel AB, MH \parallel AC$, tính tỉ số diện tích $\frac{S_{ABH}}{S_{ACH}} = \frac{S_{ABN}}{S_{ACM}} = 1$, chứng tỏ $AH$ là trung tuyến của $\triangle ABC$. Do $H, I$ đối xứng qua phân giác $MN$ nên $AI$ là đường đối trung, trùng với $AS$.</p>
+            </div>
+        </details>
+
         <h3>Câu 4. (5,0 điểm)</h3>
         <p>Một trường hè toán học gồm $3n$ (với $n \ge 2, n \in \mathbb{N}$) học sinh tham gia, trong đó hai học sinh quen nhau bất kỳ có đúng $n$ học sinh quen chung và hai học sinh không quen nhau bất kỳ có đúng $2n$ học sinh quen chung. Nếu ba học sinh đôi một quen nhau thì ta gọi là một nhóm “Bạn bè”.</p>
         <p>a) Xác định số lượng các nhóm “Bạn bè”.</p>
         <p>b) Chứng minh rằng: có thể chia $3n$ học sinh trường hè toán học trên thành ba tổ, mỗi tổ có $n$ học sinh sao cho khi lấy ngẫu nhiên mỗi tổ một học sinh thì ba học sinh này tạo thành một nhóm “Bạn bè”.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Đếm bằng hai cách số đường đi độ dài $2$ xuất phát từ mỗi đỉnh $A$: $\sum_{B \in N(A)} (d(B) - 1) = 2n(3n - 1) - n\,d(A)$ để chứng minh đồ thị đều bậc $2n$. Khi đó hai học sinh không quen nhau có $2n$ bạn chung nên có cùng tập bạn quen, tức quan hệ “không quen nhau” là quan hệ tương đương chia $3n$ học sinh thành $3$ lớp kích thước $n$ (đồ thị đẳng cấu với $K_{n,n,n}$). Từ đó số nhóm “Bạn bè” ở câu a) là $n^3$, và $3$ lớp này chính là $3$ tổ cần tìm ở câu b).</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Vòng 2</h2>
 
@@ -64,15 +94,39 @@
         <p>a) Cho $n = 2026^{2027} + 2027^{2026} + 30$. Chứng minh rằng tổng tất cả các ước số nguyên dương của $n$ chia hết cho $24$.</p>
         <p>b) Tìm tất cả các số nguyên dương $x, y$ và số nguyên tố $p$ thỏa mãn $\dfrac{xy^3}{x + y} = p$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Kiểm tra đồng dư: $n \equiv 2 \pmod 3$ và $n \equiv -1 \pmod 8$. Khi ghép cặp các ước $(d, n/d)$, ta có $d + \frac{n}{d} \equiv 0 \pmod 3$ và $d + \frac{n}{d} \equiv 0 \pmod 8$ với mọi ước $d$, suy ra $24 \mid \sigma(n)$.</p>
+                <p>b) Đặt $d = \gcd(x, y)$ với $x = da, y = db$ ($\gcd(a, b) = 1$). Phương trình thành $d^3 a b^3 = p(a+b)$. Vì $\gcd(ab^3, a+b) = 1$ nên $ab^3 \mid p$; do $p$ nguyên tố, buộc $b = 1, a = p$, từ đó $d^3 = p + 1$, cho nghiệm duy nhất $(x, y, p) = (14, 2, 7)$.</p>
+            </div>
+        </details>
+
         <h3>Câu 6. (7,0 điểm)</h3>
         <p>Cho đa giác lồi $2026$ đỉnh $A_1 A_2 \dots A_{2026}$. Tô màu tất cả các đỉnh của đa giác bởi một trong hai màu đỏ hoặc xanh, mỗi đỉnh chỉ được tô bởi một màu.</p>
         <p>a) Tính số cách tô màu sao cho không có $2$ đỉnh nào kề nhau đều được tô màu xanh.</p>
         <p>b) Tính số cách tô màu sao cho với mọi $k \in \{1; 2; \dots; 2026\}$, trong $k$ đỉnh $A_1, A_2, \dots, A_k$, số đỉnh được tô màu đỏ không ít hơn số đỉnh được tô màu xanh.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Gọi $L_n$ là số cách tô màu vòng tròn $n$ đỉnh không có hai đỉnh xanh kề nhau (dãy Lucas: $L_1 = 1, L_2 = 3, L_{n+1} = L_n + L_{n-1}$). Đáp số là $L_{2026} = \left(\frac{1+\sqrt{5}}{2}\right)^{2026} + \left(\frac{1-\sqrt{5}}{2}\right)^{2026}$.</p>
+                <p>b) Với $r$ đỉnh đỏ ($1013 \le r \le 2026$), số dãy thỏa mãn theo nguyên lý phản xạ là $\binom{2026}{r} - \binom{2026}{r+1}$. Lấy tổng sai phân rút gọn theo $r$ từ $1013$ đến $2026$ thu được đáp số $\binom{2026}{1013}$.</p>
+            </div>
+        </details>
+
         <h3>Câu 7. (7,0 điểm)</h3>
         <p>Trên đường tròn $(O)$ cố định, cho dây cung $BC$ cố định khác đường kính và điểm $A$ di động trên đường tròn $(O)$ sao cho tam giác $ABC$ nhọn và không cân. Gọi $D, E$ lần lượt là điểm chính giữa cung nhỏ $\widehat{AB}, \widehat{AC}$ của đường tròn $(O)$. Đoạn thẳng $DE$ cắt $AB, AC$ lần lượt tại $X, Y$. Giả sử các đường tròn $(BDX), (CEY)$ cắt nhau tại hai điểm $I, K$ phân biệt và các đường tròn $(BEX), (CDY)$ cắt nhau tại hai điểm $R, S$ phân biệt.</p>
         <p>a) Chứng minh rằng $\widehat{BAC} \neq 60^\circ$ và đường thẳng $IK$ luôn đi qua một điểm cố định.</p>
         <p>b) Chứng minh rằng đường thẳng $RS$ đi qua trung điểm của đoạn thẳng $BC$ và trung điểm $RS$ di động trên một đường tròn cố định.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Tâm nội tiếp $I'$ của $\triangle ABC$ thuộc cả $(BDX)$ và $(CEY)$ (gọi $I \equiv I'$). Nếu $\widehat{BAC} = 60^\circ$ thì hai đường tròn này tiếp xúc nhau tại $I$, vô lý. Đường thẳng qua $I$ song song $BC$ cắt $(BDX), (CEY)$ tại $M, N$; giao điểm $T = BM \cap CN$ chính là giao điểm hai tiếp tuyến tại $B, C$ của $(O)$ (cố định) và có cùng phương tích với hai đường tròn nên $T \in IK$.</p>
+                <p>b) Gọi $P, Q$ là giao điểm thứ hai của $(CDY), (BEX)$ với $BC$. Chứng minh $CP = BQ = \frac{BE \cdot CD}{DE}$ nên trung điểm $L$ của $BC$ có cùng phương tích tới hai đường tròn, suy ra $L \in RS$. Gọi $J$ là điểm chính giữa cung nhỏ $BC$, $U, V$ là tâm của $(CDY), (BEX)$ thì $JUOV$ là hình bình hành nên trung điểm $W$ của $UV$ là trung điểm $OJ$ (cố định); do đó trung điểm $H$ của $RS$ thỏa $\widehat{WHL} = 90^\circ$ và chạy trên đường tròn đường kính $WL$.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

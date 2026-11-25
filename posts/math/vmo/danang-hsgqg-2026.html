@@ -43,6 +43,13 @@
         <p>Cho dãy số thực dương $(a_n)$ thỏa mãn điều kiện $a_n(a_{n+1}^2 - 1) = a_{n+1}(a_n^2 + 1)$, $\forall n \in \mathbb{N}^*$.</p>
         <p>a) Chứng minh $\lim a_n = +\infty$.</p>
         <p>b) Tính $\lim \dfrac{1}{\sqrt{n}}\left(\sum_{i=1}^n \dfrac{1}{a_i}\right)$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Chia hai vế cho $a_n a_{n+1}$ được $a_{n+1} - \frac{1}{a_{n+1}} = a_n + \frac{1}{a_n} \ge 2$, suy ra $a_{n+1} &gt; 1$ với mọi $n \ge 1$. Bình phương hai vế thu được $a_{n+1}^2 + \frac{1}{a_{n+1}^2} = a_n^2 + \frac{1}{a_n^2} + 4$, nên $a_n^2 + \frac{1}{a_n^2} = a_1^2 + \frac{1}{a_1^2} + 4(n-1) \to +\infty$, kéo theo $\lim a_n = +\infty$.</p>
+                <p>b) Từ hệ thức trên suy ra $\lim \frac{a_n}{\sqrt{n}} = 2$. Áp dụng định lý Stolz–Cesàro cho $\frac{\sum_{i=1}^n \frac{1}{a_i}}{\sqrt{n}}$: xét $\frac{1/a_n}{\sqrt{n} - \sqrt{n-1}} = \frac{\sqrt{n} + \sqrt{n-1}}{a_n} \to 1$, vậy giới hạn cần tìm bằng $1$.</p>
+            </div>
+        </details>
 
         <h3>Câu 2. (5,0 điểm)</h3>
         <p>Xét hàm số $f : \mathbb{N}^* \to \mathbb{N}^*$ thỏa mãn đồng thời các điều kiện sau với mọi số nguyên dương $m, n, a$:</p>
@@ -50,22 +57,49 @@
         <p>(ii) $f(2027a + 1) = 2027a + 1$.</p>
         <p>a) Tính $f(1)$.</p>
         <p>b) Tìm tất cả hàm số $f$ thỏa mãn điều kiện bài toán. (Cho biết $2027$ là một số nguyên tố).</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Từ (i) suy ra $f$ là song ánh; đặt $k = f(1)$ thì $f(k^2) = 1$, thay $m = n = k^2$ vào (i) được $f(1) = k^4 \implies k = 1$, vậy $f(1) = 1$.</p>
+                <p>b) Thay $n = 1$ vào (i) suy ra $f(f(m)) = m$ và $f(mn) = f(m)f(n)$, tức $f$ là phép hoán vị nhân tính trên tập số nguyên tố. Với mọi số nguyên tố $p \neq 2027$, chọn $a \in \mathbb{N}^*$ sao cho $2027a + 1 \equiv p \pmod{p^2}$ và $2027a + 1 \not\equiv 0 \pmod{q}$ (với $q = f(p)$ nếu $q \notin \{p, 2027\}$), suy ra $f(p) = p$ với mọi $p$, do đó $f(n) = n$ với mọi $n \in \mathbb{N}^*$.</p>
+            </div>
+        </details>
 
         <h3>Câu 3. (5,0 điểm)</h3>
         <p>Xét phương trình $\varphi(\varphi(n) + k) = n - k$ với $n, k$ nguyên dương.</p>
         <p>a) Chứng minh với mỗi số nguyên dương $k$ cố định, chỉ có hữu hạn số $n$ là hợp số thỏa mãn phương trình.</p>
         <p>b) Tìm tất cả các số nguyên dương $k$ sao cho phương trình có vô số nghiệm nguyên dương $n$.</p>
         <p><em>(Với $m$ nguyên dương, ký hiệu $\varphi(m)$ là số các số nguyên dương không vượt quá $m$ và nguyên tố cùng nhau với $m$).</em></p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Với $n$ là hợp số ta có $\varphi(n) \le n - \sqrt{n}$, suy ra $n - k = \varphi(\varphi(n) + k) \le \varphi(n) + k - 1 \le n - \sqrt{n} + k - 1$, dẫn tới $\sqrt{n} \le 2k - 1$, nên chỉ có hữu hạn hợp số $n$.</p>
+                <p>b) Với $n = p$ nguyên tố đủ lớn, đặt $m = p + k - 1$ thì $\varphi(m) = m - (2k - 1)$. Nếu $k = 1$ thì $m = p$ thỏa mãn với mọi số nguyên tố $p$. Nếu $k \ge 2$, xét tính chẵn lẻ và ước nguyên tố nhỏ nhất của $m$ (khi $m$ là hợp số thì $m - \varphi(m) \ge \sqrt{m}$) suy ra chỉ có hữu hạn nghiệm. Vậy chỉ có $k = 1$.</p>
+            </div>
+        </details>
 
         <h3>Câu 4. (5,0 điểm)</h3>
         <p>Cho tam giác $ABC$ nhọn, không cân ($AB &lt; AC$) nội tiếp đường tròn $(O)$. Dựng hai đường kính $AA'$, $BB'$ của đường tròn $(O)$ và điểm $D$ sao cho $A'CB'D$ là hình bình hành. Gọi $M$ là trung điểm của cạnh $BC$, $E$ là giao điểm của $BD$ và $AC$, $F$ là giao điểm của $CD$ và $AB$. Gọi $H_1, H_2$ lần lượt là trực tâm của hai tam giác $BEC$ và $BFC$.</p>
         <p>a) Chứng minh hai tam giác $ABC$ và $MH_1H_2$ có cùng trực tâm.</p>
         <p>b) Đường thẳng $BC$ cắt hai đường thẳng $A'D, H_1H_2$ lần lượt tại $K, T$. Gọi $S, G, I$ lần lượt là giao điểm của các cặp đường thẳng $(MH_2, KH_1)$, $(KH_2, MH_1)$ và $(SG, H_1H_2)$. Gọi $X$ là hình chiếu vuông góc của $G$ lên $ST$. Chứng minh bốn điểm $S, X, I$ và trung điểm của đoạn thẳng $H_1H_2$ cùng nằm trên một đường tròn.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Gọi $H$ là trực tâm $\triangle ABC$ và $N, P$ là trung điểm $AC, AB$. Chứng minh $H$ là trực tâm $\triangle CNH_1$ suy ra $M, N, H_1$ thẳng hàng (tương tự $M, P, H_2$ thẳng hàng), từ đó $HH_1 \perp AC \parallel MH_2$ và $HH_2 \perp AB \parallel MH_1$, nên $H$ cũng là trực tâm $\triangle MH_1H_2$.</p>
+                <p>b) Gọi $J$ là trung điểm $H_1H_2$ và $L$ đối xứng $H$ qua $J$. Chứng minh $H_1, H_2, M, K$ cùng thuộc đường tròn $(O_1)$ đường kính $LM$. Theo định lý Brocard, $O_1$ là trực tâm $\triangle GTS$; kết hợp các tứ giác nội tiếp suy ra $TI \cdot TJ = TX \cdot TS$, nên $S, X, I, J$ đồng viên.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Ngày thi thứ hai (24/09/2026)</h2>
 
         <h3>Câu 5. (6,0 điểm)</h3>
         <p>Cho đường tròn $(O)$ cố định và điểm $I$ cố định nằm trong đường tròn đó ($I \neq O$). Một đường thẳng $d$ thay đổi đi qua $I$ nhưng không qua $O$ và cắt $(O)$ tại $A, B$ sao cho $I$ không trùng với trung điểm $H$ của đoạn thẳng $AB$. Các tiếp tuyến tại $O$ của đường tròn $(OAH)$ và đường tròn $(OBH)$ cắt đường trung trực của đoạn thẳng $OI$ lần lượt tại $O_1$ và $O_2$. Đường tròn $(O_1; O_1O)$ cắt đường tròn $(OAH)$ tại $C$ ($C \neq O$) và đường tròn $(O_2; O_2O)$ cắt đường tròn $(OBH)$ tại $D$ ($D \neq O$). Chứng minh đường tròn $(OCD)$ đi qua một điểm cố định khác $O$ khi $d$ thay đổi nhưng luôn đi qua $I$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Thực hiện phép nghịch đảo cực $O$, phương tích $R^2$ (với $R$ là bán kính của $(O)$): đường tròn $(OCD)$ biến thành đường thẳng $C'D'$, còn $(O_1; O_1O) = (OIC)$ trực giao với $(OAH)$ tại $O$. Gọi $E$ là ảnh nghịch đảo của $I$ ($E$ cố định, $OE = \frac{R^2}{OI}$). Chứng minh $C'D'$ luôn đi qua trung điểm $J$ cố định của $IE$, từ đó $(OCD)$ luôn đi qua ảnh nghịch đảo $J' \neq O$ của $J$.</p>
+            </div>
+        </details>
 
         <h3>Câu 6. (7,0 điểm)</h3>
         <p>Gọi $A$ là tập hợp gồm $2026$ số nguyên dương đầu tiên. Nếu hoán vị $(a_1, a_2, \dots, a_{2026})$ của các phần tử thuộc $A$ thỏa mãn $a_i &gt; a_{i+1}$ với $i \in \{1; 2; \dots; 2025\}$ thì $a_i$ được gọi là <em>điểm giảm</em> của hoán vị đó.</p>
@@ -73,11 +107,25 @@
         (i) $(a_1, a_2, \dots, a_{2026})$ có duy nhất một điểm giảm là $a_i = 2026$;<br>
         (ii) Điểm giảm $a_i$ chia hoán vị thành hai phần $a_1, a_2, \dots, a_{i-1}$ và $a_{i+1}, a_{i+2}, \dots, a_{2026}$, trong đó tập hợp $X = \{a_{i+1}; \dots; a_{2026}\}$ chứa ít nhất một số chẵn và ít nhất một số lẻ?</p>
         <p>b) Có bao nhiêu hoán vị $(a_1, a_2, \dots, a_{2026})$ của các phần tử thuộc $A$ có duy nhất một điểm giảm?</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Tập $X$ xác định duy nhất hoán vị thỏa mãn (vì các phần tử trước và sau $2026$ đều phải xếp tăng dần). Trong $\{1, \dots, 2025\}$ có $1013$ số lẻ và $1012$ số chẵn, nên số tập $X$ chứa ít nhất một số chẵn và một số lẻ là $(2^{1013} - 1)(2^{1012} - 1)$.</p>
+                <p>b) Mỗi hoán vị có đúng một điểm giảm tương ứng duy nhất với việc chọn tập con $S$ ($\emptyset \neq S \subsetneq A$) làm phần tăng đầu tiên, trừ đi $2025$ trường hợp $S = \{1, \dots, i\}$ không tạo ra điểm giảm. Đáp số là $2^{2026} - 2027$.</p>
+            </div>
+        </details>
 
         <h3>Câu 7. (7,0 điểm)</h3>
         <p>Cho $c_1, c_2, \dots, c_k$ là các số nguyên dương và $P(x)$ là đa thức khác hằng có hệ số nguyên.</p>
         <p>a) Chứng minh tập hợp các số nguyên tố là ước của ít nhất một giá trị của đa thức $P(x)$ tại các số nguyên là một tập hợp vô hạn.</p>
         <p>b) Chứng minh tồn tại một tập hợp vô hạn $S$ gồm các số nguyên tố sao cho với mọi $p \in S$, số $c_1^n + c_2^n + \cdots + c_k^n + P(n)$ chia hết cho $p$ với vô số số nguyên dương $n$.</p>
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>a) Định lý Schur: giả sử chỉ có hữu hạn ước nguyên tố $p_1, \dots, p_r$; nếu $P(0) = c \neq 0$, xét giá trị $\frac{P(c m p_1 \dots p_r)}{c} \equiv 1 \pmod{p_1 \dots p_r}$ với $m$ đủ lớn để thu được ước nguyên tố mới.</p>
+                <p>b) Áp dụng câu a) cho đa thức $Q(x) = P(x) + k$ để thu được vô hạn số nguyên tố $p \nmid c_1 \dots c_k$ mà tồn tại $x_0 \in \mathbb{Z}$ sao cho $p \mid (P(x_0) + k)$. Theo định lý thặng dư Trung Hoa, chọn vô số $n \in \mathbb{N}^*$ thỏa mãn $n \equiv 0 \pmod{p-1}$ và $n \equiv x_0 \pmod{p}$; khi đó $c_1^n + \dots + c_k^n + P(n) \equiv k + P(x_0) \equiv 0 \pmod{p}$.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>

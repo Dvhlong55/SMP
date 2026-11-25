@@ -51,15 +51,36 @@
         <p>a) Chứng minh rằng $abc$ là nghiệm của đa thức $g(x) = x^4 + 4x^3 - 4x^2 - 16x - 8$.</p>
         <p>b) Chứng minh rằng $ab$ là nghiệm của đa thức $h(x) = x^6 - 2x^5 - 14x^4 + 8x^3 + 28x^2 - 8x - 8$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Gọi $d$ là nghiệm thứ tư của $f(x)$. Theo định lý Viète, $abcd = -2$ nên $d = -\frac{2}{abc}$; thay vào $f(d) = 0$ và quy đồng ta thu được ngay $g(abc) = 0$. Ở câu b), đặt $u = ab + cd$, $v = a+b$, $w = c+d$; từ hệ thức Viète suy ra $(ab-cd)^2 = u^2+8$, $(v-w)^2 = 4u+8$ và $(ab-cd)(v-w) = 4u+8$. Bình phương hai vế cho $(u+2)u(u-4) = 0$; thay $u = y - \frac{2}{y}$ với $y = ab$ ta thu được $(y^2+2y-2)(y^2-2)(y^2-4y-2) = h(y) = 0$.</p>
+            </div>
+        </details>
+
         <h3>Câu 2. (7,0 điểm)</h3>
         <p>Cho tam giác $ABC$ ($AB < AC$) có đường tròn nội tiếp $(I)$ tiếp xúc với $BC, CA, AB$ lần lượt tại $D, E, F$. Gọi $H$ là giao điểm của $AI$ và $BC$; $K, L$ lần lượt là hình chiếu vuông góc của $H$ trên $IB$ và $IC$. Qua $D$ kẻ đường thẳng vuông góc với $AI$ cắt $IB, IC$ lần lượt tại $X$ và $Y$. Gọi $M, N, P$ lần lượt là trung điểm của $DE, DF$ và $EF$.</p>
         <p>a) Chứng minh rằng $KL \parallel BC$ và bốn điểm $K, L, X, Y$ cùng thuộc một đường tròn.</p>
         <p>b) Gọi $O_1, O_2$ lần lượt là tâm của hai đường tròn $(MKL)$ và $(DIP)$. Chứng minh rằng giao điểm của $(MKL)$ và $(DIP)$ thuộc đường tròn đường kính $O_1 O_2$.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), tứ giác $IKHL$ nội tiếp đường tròn đường kính $IH$ cho $\widehat{IKL} = \widehat{IHL} = \widehat{IBC}$ nên $KL \parallel BC$; gọi $T = XY \cap AH$, xét các tứ giác nội tiếp $XKTH, YLTH$ suy ra $IK \cdot IX = IT \cdot IH = IL \cdot IY$ nên $K, L, X, Y$ đồng viên. Ở câu b), chứng minh $IK \cdot IX = IL \cdot IY = ID^2$ và thực hiện phép nghịch đảo tâm $I$ phương tích $r^2$: nó biến $(MKL) = (MNKL)$ thành $(BCXY)$ (tâm $S$) và biến $(DIP)$ thành $AD$; dùng cực – đối cực với $(I)$ và định lý Brocard cho $(BCXY)$ suy ra $A, D, S$ thẳng hàng, tức $(MKL) \perp (DIP)$.</p>
+            </div>
+        </details>
+
         <h3>Câu 3. (6,0 điểm)</h3>
         <p>Với mỗi số nguyên dương $n$, ta gọi một hoán vị $(a_0, a_1, \dots, a_{n-1})$ của các số $0, 1, \dots, n-1$ là <i>tốt</i> nếu $a_i + i$ là số chính phương với mọi $i = 0, 1, \dots, n-1$.</p>
         <p>a) Chứng minh rằng với $n = 2026$, trong một hoán vị <i>tốt</i> $(a_0, a_1, \dots, a_{2025})$, luôn tồn tại ít nhất một chỉ số $i$ sao cho $a_i + i$ chia hết cho 9.</p>
         <p>b) Chứng minh rằng với mọi số nguyên dương $n$, luôn tồn tại ít nhất một hoán vị <i>tốt</i>.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), nếu không có số nào chia hết cho $9$ thì mọi $a_i + i$ đều không chia hết cho $3$, suy ra $a_i + i \equiv 1 \pmod 3$ với mọi $i$; lấy tổng theo $i$ từ $0$ đến $2025$ cho $2025 \cdot 2026 \equiv 2026 \pmod 3$, vô lý. Ở câu b), chứng minh bằng quy nạp mạnh theo $n$: với mọi $n \ge 1$ luôn tồn tại số nguyên $k$ sao cho $n - 1 \le k^2 \le 2n - 2$; đặt $a_i = k^2 - i$ với $k^2 - n + 1 \le i \le n - 1$ rồi áp dụng giả thiết quy nạp cho $n' = k^2 - n + 1 &lt; n$ số đầu tiên.</p>
+            </div>
+        </details>
 
         <h2 style="text-align: center; margin-top: 45px;">Bài thi thứ hai</h2>
         <p style="text-align: center; font-style: italic;">Ngày thi: 16 tháng 09 năm 2026 — Thời gian làm bài: 180 phút</p>
@@ -68,16 +89,37 @@
         <p>Tìm tất cả các hàm số $f: \mathbb{R} \to \mathbb{R}$ thỏa mãn:</p>
         $$xf(2x + xy) = xf(x) + f(x^2)f(y+1), \quad \forall x, y \in \mathbb{R}.$$
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ngoài nghiệm $f \equiv 0$, xét $f \not\equiv 0$: từ $x=1$ suy ra $c = f(1) \neq 0$ và $f(t+1) = cf(t) + c$, đồng thời $f(0) = 0, f(-1) = -1$. Thay $y = -2$ vào phương trình ban đầu cho $f(x^2) = xf(x)$; tính $f(4)$ theo hai cách ($f(2^2) = 2f(2)$ và truy hồi từ $f(1)$) suy ra $c \in \{-1, 1\}$. Loại $c = -1$ (do $f$ tuần hoàn chu kỳ $2$ dẫn tới $f(9) = f(1) = -1 \neq 3f(3)$); với $c = 1$ suy ra $f$ nhân tính và cộng tính nên $f(x) = x$.</p>
+            </div>
+        </details>
+
         <h3>Câu 5. (7,0 điểm)</h3>
         <p>Xét dãy số $(a_n)$ xác định bởi: $a_0 = 0, a_1 = 1, a_2 = 2, a_3 = 6$ và</p>
         $$a_{n+4} = 2a_{n+3} + a_{n+2} - 2a_{n+1} - a_n, \quad \text{với mọi } n \geq 0.$$
         <p>a) Chứng minh rằng $a_n$ chia hết cho $n$ với mọi số nguyên dương $n$.</p>
         <p>b) Với mỗi số nguyên dương $m$, kí hiệu $\varphi(m)$ là số các số nguyên dương không vượt quá $m$ và nguyên tố cùng nhau với $m$. Chứng minh rằng $\varphi\left(\dfrac{a_{2027}}{2027}\right)$ là một số chia hết cho 4.</p>
 
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Phương trình đặc trưng $(x^2 - x - 1)^2 = 0$ kết hợp điều kiện ban đầu cho công thức tổng quát $a_n = n F_n$ với $(F_n)$ là dãy Fibonacci ($F_0 = 0, F_1 = 1$), từ đó suy ra ngay câu a). Ở câu b), $\frac{a_{2027}}{2027} = F_{2027} = F_{1013}^2 + F_{1014}^2$; vì $\gcd(F_{1013}, F_{1014}) = 1$ và $F_{2027} &gt; 1$ lẻ nên mọi ước nguyên tố $p$ của $F_{2027}$ đều thỏa $p \equiv 1 \pmod 4$, kéo theo $4 \mid (p-1) \mid \varphi(F_{2027})$.</p>
+            </div>
+        </details>
+
         <h3>Câu 6. (7,0 điểm)</h3>
         <p>Cho tứ giác $ABCD$ không phải hình thang, nội tiếp đường tròn tâm $O$. Gọi $M$ là trung điểm của $CD$; $F$ là giao điểm của $AD$ và $BC$. Các tiếp tuyến tại $C$ và $D$ của đường tròn $(FCD)$ cắt nhau tại $S$. Gọi $P$ là giao điểm của $SF$ và $CD$; $E$ là giao điểm của $AC$ và $BD$; $H$ là hình chiếu của $E$ trên $SF$; $K$ là giao điểm thứ hai của hai đường tròn $(ABE)$ và $(CDE)$.</p>
         <p>a) Chứng minh rằng các điểm $K, P, M, H$ cùng nằm trên một đường tròn, kí hiệu là $(\omega)$.</p>
         <p>b) Tiếp tuyến tại $P$ của đường tròn $(\omega)$ cắt đường tròn $(CDE)$ tại $X, Y$. Gọi $Q$ là giao điểm thứ hai của $KP$ với đường tròn $(CDE)$. Chứng minh rằng $EQ$ là tia phân giác của góc $\widehat{XEY}$.</p>
+
+        <details class="igo-hint-clean">
+            <summary class="igo-hint-trigger"><span class="igo-arrow" aria-hidden="true"></span> Gợi ý</summary>
+            <div class="igo-hint-content">
+                <p>Ở câu a), gọi $G = AB \cap CD$; $G$ nằm trên trục đẳng phương $KE$ của $(ABE)$ và $(CDE)$. Dùng góc nội tiếp và định lý Brocard cho tứ giác $ABCD$ suy ra $O, K, F$ thẳng hàng và $OK \perp KE$, từ đó $F, E, H, K$ và $G, K, O, M$ đồng viên; biến đổi góc định hướng thu được $(HP, HK) = (MP, MK)$. Ở câu b), chứng minh $KP$ là đường đối trung của $\triangle KCD$ nên $(\omega)$ và $(CDE)$ tiếp xúc nhau tại $K$; phép vị tự tâm $K$ biến $P \mapsto Q$ cho tiếp tuyến tại $Q$ song song với $XY$, suy ra $Q$ là điểm chính giữa cung $XY$.</p>
+            </div>
+        </details>
 
         <p class="exam-end"><b>─── HẾT ───</b></p>
     </div>
