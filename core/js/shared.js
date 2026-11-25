@@ -824,13 +824,6 @@ const ALL_POSTS = [
         page: '/pages/toanhoc.html'
     },
     {
-        title: '[Sơn La] Đề thi chọn đội tuyển HSGQG tỉnh Sơn La năm 2026',
-        date: 'September 29, 2026',
-        url: '/posts/math/vmo/sonla-hsgqg-2026.html',
-        tags: ['Đề Thi', 'VMO'],
-        page: '/pages/toanhoc.html'
-    },
-    {
         title: '[Đồng Tháp] Đề thi chọn đội tuyển thi HSGQG tỉnh Đồng Tháp năm 2026',
         date: 'September 29, 2026',
         url: '/posts/math/vmo/dongthap-hsgqg-2026.html',
