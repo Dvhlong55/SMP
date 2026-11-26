@@ -1312,8 +1312,8 @@ body.dark-mode .modal-expand-btn {
 /* Overrides for tighter content */
 .main-content-layout {
     display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 100px;
+    grid-template-columns: 205px 1fr;
+    gap: 44px;
     margin-top: 20px;
 }
 
@@ -1324,9 +1324,9 @@ body.dark-mode .modal-expand-btn {
 .tags-comment-sidebar {
     display: flex;
     flex-direction: column;
-    gap: 36px;
+    gap: 22px;
     position: sticky;
-    top: 100px;
+    top: 92px;
     height: fit-content;
     z-index: 1; 
 }

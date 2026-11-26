@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smp-cache-v120';
+const CACHE_NAME = 'smp-cache-v121';
 const urlsToCache = [
   '/',
   '/index.html',

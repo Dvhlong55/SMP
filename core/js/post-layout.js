@@ -88,13 +88,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('link[href*="shared.css"]')) {
         const linkShared = document.createElement('link');
         linkShared.rel = 'stylesheet';
-        linkShared.href = depthPrefix + 'core/css/shared.css?v=100';
+        linkShared.href = depthPrefix + 'core/css/shared.css?v=101';
         head.appendChild(linkShared);
     }
     if (!document.querySelector('link[href*="post.css"]')) {
         const linkPost = document.createElement('link');
         linkPost.rel = 'stylesheet';
-        linkPost.href = depthPrefix + 'core/css/post.css?v=38';
+        linkPost.href = depthPrefix + 'core/css/post.css?v=39';
         head.appendChild(linkPost);
     }
     if (!document.querySelector('link[href*="smp-template.css"]')) {
@@ -281,8 +281,8 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // 6. Nhúng các script giao diện theo thứ tự tuần tự để tránh race condition
     const scriptsToLoad = [
-        depthPrefix + "core/js/sidebar-data.js?v=99",
-        depthPrefix + "core/js/layout.js?v=101",
+        depthPrefix + "core/js/sidebar-data.js?v=100",
+        depthPrefix + "core/js/layout.js?v=102",
         depthPrefix + "core/js/shared.js?v=53",
         depthPrefix + "core/js/saved.js?v=35",
         depthPrefix + "core/js/comment.js?v=35"

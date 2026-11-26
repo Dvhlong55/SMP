@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v115') caches.delete(name);
+                if (name !== 'smp-cache-v121') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -740,6 +740,124 @@
     if (sidebarEl) sidebarEl.outerHTML = SIDEBAR_HTML;
     if (topbarEl)  topbarEl.outerHTML  = TOPBAR_HTML;
     if (leftTagsEl && typeof LEFT_TAGS_HTML !== 'undefined') leftTagsEl.outerHTML = LEFT_TAGS_HTML;
+
+    // ── Auto-generate Left Table of Contents (Mục lục bài viết) ─────────
+    function initPostTOC() {
+        const sidebar = document.querySelector('.tags-comment-sidebar');
+        const paper = document.querySelector('.exam-paper');
+        if (!sidebar || !paper || document.getElementById('post-toc-widget')) return;
+
+        const headings = Array.from(paper.querySelectorAll('h2, h3, h4')).filter(h => {
+            if (h.closest('.header-box')) return false;
+            return h.textContent.trim().length > 0;
+        });
+        if (headings.length < 2) return;
+
+        const minLevel = Math.min(...headings.map(h => parseInt(h.tagName[1], 10)));
+
+        const widget = document.createElement('nav');
+        widget.id = 'post-toc-widget';
+        widget.className = 'post-toc-widget fade-up';
+        widget.setAttribute('aria-label', 'Mục lục bài viết');
+
+        const titleEl = document.createElement('div');
+        titleEl.className = 'post-toc-title';
+        titleEl.textContent = 'Mục lục';
+        widget.appendChild(titleEl);
+
+        const listEl = document.createElement('div');
+        listEl.className = 'post-toc-list';
+
+        const tocItems = [];
+        headings.forEach((h, idx) => {
+            if (!h.id) h.id = `smp-toc-${idx + 1}`;
+            h.classList.add('smp-toc-target');
+
+            const level = parseInt(h.tagName[1], 10);
+            const depth = Math.min(2, Math.max(0, level - minLevel));
+
+            const link = document.createElement('a');
+            link.href = `#${h.id}`;
+            link.className = `post-toc-link toc-depth-${depth}`;
+
+            // Giữ lại text và LaTeX inline, loại bỏ button/input nếu có
+            const clone = h.cloneNode(true);
+            clone.querySelectorAll('button, input, .smp-progress-checkbox').forEach(el => el.remove());
+            link.innerHTML = clone.innerHTML.trim();
+
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setActiveToc(idx);
+                if (history.replaceState) {
+                    history.replaceState(null, '', `#${h.id}`);
+                }
+            });
+
+            listEl.appendChild(link);
+            tocItems.push({ heading: h, link });
+        });
+
+        widget.appendChild(listEl);
+        sidebar.prepend(widget);
+
+        if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+            window.MathJax.typesetPromise([widget]).catch(() => {});
+        }
+
+        let currentActive = -1;
+        function setActiveToc(idx) {
+            if (idx === currentActive || idx < 0 || idx >= tocItems.length) return;
+            if (currentActive >= 0 && tocItems[currentActive]) {
+                tocItems[currentActive].link.classList.remove('active');
+            }
+            currentActive = idx;
+            const activeLink = tocItems[idx].link;
+            activeLink.classList.add('active');
+
+            // Giữ mục đang đọc luôn nằm trong vùng nhìn thấy của TOC list
+            if (listEl.scrollHeight > listEl.clientHeight) {
+                const linkTop = activeLink.offsetTop;
+                const linkBottom = linkTop + activeLink.offsetHeight;
+                if (linkTop < listEl.scrollTop + 12) {
+                    listEl.scrollTo({ top: Math.max(0, linkTop - 16), behavior: 'smooth' });
+                } else if (linkBottom > listEl.scrollTop + listEl.clientHeight - 12) {
+                    listEl.scrollTo({ top: linkBottom - listEl.clientHeight + 16, behavior: 'smooth' });
+                }
+            }
+        }
+
+        let tocTicking = false;
+        function updateTocOnScroll() {
+            tocTicking = false;
+            const threshold = 135;
+            let activeIdx = 0;
+
+            if ((window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 40)) {
+                activeIdx = tocItems.length - 1;
+            } else {
+                for (let i = 0; i < tocItems.length; i++) {
+                    const rect = tocItems[i].heading.getBoundingClientRect();
+                    if (rect.top <= threshold) {
+                        activeIdx = i;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            setActiveToc(activeIdx);
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!tocTicking) {
+                tocTicking = true;
+                requestAnimationFrame(updateTocOnScroll);
+            }
+        }, { passive: true });
+
+        updateTocOnScroll();
+    }
+    initPostTOC();
     if (mainEl && !document.querySelector('.site-footer')) mainEl.insertAdjacentHTML('beforeend', FOOTER_HTML);
 
     if (!document.querySelector('.mobile-bottom-nav')) {

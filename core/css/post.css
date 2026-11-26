@@ -52,27 +52,121 @@ body.parchment-mode .exam-tag {
 
 .main-content-layout {
     display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 100px;
-    margin-top: 20px;
+    grid-template-columns: 205px 1fr;
+    gap: 44px;
+    margin-top: 16px;
+}
+
+@media (max-width: 1280px) and (min-width: 1101px) {
+    .main-content-layout {
+        grid-template-columns: 190px 1fr;
+        gap: 30px;
+    }
 }
 
 .tags-comment-sidebar {
     display: flex;
     flex-direction: column;
-    gap: 36px;
+    gap: 22px;
     position: sticky;
-    top: 100px;
+    top: 92px;
     height: fit-content;
     z-index: 1;
 }
 
+/* === MỤC LỤC BÀI VIẾT (CONTENTS OF THE UNIT STYLE) === */
+.post-toc-widget {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-toc-title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--widget-title-color);
+    margin: 0 0 10px 0;
+    letter-spacing: 0.1px;
+}
+
+.post-toc-list {
+    display: flex;
+    flex-direction: column;
+    border-left: 1.5px solid var(--exam-divider-color, rgba(128, 128, 128, 0.22));
+    max-height: 52vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+}
+
+.post-toc-list::-webkit-scrollbar {
+    width: 3px;
+}
+
+.post-toc-list::-webkit-scrollbar-thumb {
+    background: rgba(128, 128, 128, 0.25);
+    border-radius: 3px;
+}
+
+.post-toc-link {
+    display: block;
+    position: relative;
+    padding: 5px 6px 5px 13px;
+    font-size: 0.81rem;
+    line-height: 1.42;
+    color: var(--widget-link-color);
+    text-decoration: none !important;
+    transition: color 0.18s ease, opacity 0.18s ease;
+    word-break: break-word;
+}
+
+.post-toc-link:hover {
+    color: var(--text-dark);
+}
+
+.post-toc-link.toc-depth-1 {
+    padding-left: 24px;
+    font-size: 0.76rem;
+    opacity: 0.9;
+}
+
+.post-toc-link.toc-depth-2 {
+    padding-left: 34px;
+    font-size: 0.73rem;
+    opacity: 0.85;
+}
+
+.post-toc-link.active {
+    color: var(--accent-cyan) !important;
+    font-weight: 600;
+    opacity: 1;
+}
+
+.post-toc-link.active::before {
+    content: "";
+    position: absolute;
+    left: -1.5px;
+    top: 3px;
+    bottom: 3px;
+    width: 2.5px;
+    border-radius: 2px;
+    background: var(--accent-cyan);
+}
+
+.post-toc-link mjx-container {
+    font-size: 0.92em !important;
+    vertical-align: middle;
+}
+
+.smp-toc-target {
+    scroll-margin-top: 90px;
+}
+
 .side-widget-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--widget-title-color);
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     transition: color 0.3s ease;
 }
@@ -81,22 +175,28 @@ body.light-mode .side-widget-title {
     border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 
+.side-widget-divider {
+    height: 1px;
+    background: var(--exam-divider-color, rgba(255, 255, 255, 0.08));
+    margin: 14px 0 12px 0;
+}
+
 .side-widget-list {
     list-style: none; padding: 0; margin: 0;
-    display: flex; flex-direction: column; gap: 12px;
+    display: flex; flex-direction: column; gap: 7px;
 }
 
 .side-widget-list a {
     display: flex; justify-content: space-between; align-items: center;
-    color: var(--widget-link-color); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    color: var(--widget-link-color); text-decoration: none; font-size: 0.78rem; transition: all 0.2s;
 }
 
-.side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(4px); }
+.side-widget-list a:hover { color: var(--accent-cyan); transform: translateX(3px); }
 
 .side-widget-list a span {
-    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
-    background: var(--widget-badge-bg); padding: 2px 8px;
-    border-radius: 12px; color: var(--widget-badge-color);
+    font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+    background: var(--widget-badge-bg); padding: 1px 6px;
+    border-radius: 10px; color: var(--widget-badge-color);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 

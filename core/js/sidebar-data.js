@@ -1,5 +1,5 @@
 const LEFT_TAGS_HTML = `
-        <div class="side-widget fade-up">
+        <div class="side-widget side-widget-compact fade-up">
             <ul class="side-widget-list">
                 <li><a href="/pages/toanhoc.html?filter=vmo">VMO <span>137</span></a></li>
                 <li><a href="/pages/toanhoc.html?filter=thcs">THCS <span>90</span></a></li>
@@ -11,7 +11,7 @@ const LEFT_TAGS_HTML = `
                 <li><a href="/pages/nonmath.html">Non Math <span>16</span></a></li>
             </ul>
             
-            <div style="height: 1px; background: rgba(255, 255, 255, 0.08); margin: 32px 0 20px 0;"></div>
+            <div class="side-widget-divider"></div>
             
             <ul class="side-widget-list">
                 <li><a href="/pages/roadmap.html" style="color: var(--accent-cyan); font-weight: 500;">Số Học Olympic (VMO)</a></li>
@@ -19,10 +19,10 @@ const LEFT_TAGS_HTML = `
                 <li><a href="/pages/roadmap-chuyen-toan.html" style="color: var(--accent-cyan); font-weight: 500;">Chuyên Toán (THCS)</a></li>
             </ul>
 
-            <div style="height: 1px; background: rgba(255, 255, 255, 0.08); margin: 24px 0 16px 0;"></div>
+            <div class="side-widget-divider"></div>
 
-            <div style="font-size: 0.8rem; color: var(--widget-link-color); opacity: 0.75; margin-bottom: 10px;">Tuyển tập đề thi:</div>
-            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; font-size: 0.85rem; line-height: 1.6; color: var(--widget-link-color);">
+            <div style="font-size: 0.72rem; color: var(--widget-link-color); opacity: 0.75; margin-bottom: 6px;">Tuyển tập đề thi:</div>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; font-size: 0.75rem; line-height: 1.5; color: var(--widget-link-color);">
                 <a href="/posts/math/vmo/de-thi-vmo.html" style="color: var(--widget-link-color); text-decoration: none;">VMO</a>
                 <span style="opacity: 0.45;">•</span>
                 <a href="/posts/math/de-thi-igo-2017-2025.html" style="color: var(--widget-link-color); text-decoration: none;">IGO</a>
