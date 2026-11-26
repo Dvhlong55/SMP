@@ -38,7 +38,7 @@
         <div class="header-box">
             <h1><b>$\S$ Bài Toán Chia Kẹo Euler Và Phương Pháp Vách Ngăn</b></h1>
             <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">Secrets of Mathematical Principles</h2>
-            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">November 26, 2026</h2>
+            <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">26 tháng 11, 2026</h2>
         </div>
 
         <p style="font-style: italic; color: var(--text-muted); margin-bottom: 24px;"><b>Lời dẫn.</b> Từ câu hỏi đơn giản <i>"Có 5 viên kẹo màu hồng giống nhau chia cho 3 bạn, hỏi có bao nhiêu cách?"</i>, bài toán chia kẹo Euler (hay phương pháp vách ngăn) mở ra cách giải quyết tự nhiên cho nhiều bài toán đếm trong các kỳ thi Toán và Học sinh giỏi Quốc gia (VMO). Bài viết trình bày đầy đủ cơ sở lý thuyết từ bản chất tổ hợp lặp, phép tương ứng song ánh, nguyên lý bù trừ, bổ đề Burnside cho đến mô hình đường đi trên lưới nguyên, kèm theo các ví dụ giải chi tiết và bài tập rèn luyện.</p>
@@ -173,14 +173,15 @@
             là $\dbinom{n + k - 1}{k - 1} = \dbinom{n + k - 1}{n}$.
         </div>
 
-        <p>Từ Định lý 2 suy ra số tổ hợp lặp chập $n$ của $k$ phần tử (với $x_i \ge 0$ là số lần phần tử loại $i$ xuất hiện) cũng chính là $\dbinom{n + k - 1}{k - 1} = \dbinom{n + k - 1}{n}$.</p>
+        <p>Từ Định lý 2 suy ra số <b>tổ hợp lặp chập $r$ của $k$ phần tử</b> (chọn $r$ phần tử từ $k$ loại phần tử có lặp lại, với $x_i \ge 0$ là số lần phần tử loại $i$ được chọn và $x_1 + \dots + x_k = r$) là $\dbinom{r + k - 1}{k - 1} = \dbinom{r + k - 1}{r}$ (khớp với ký hiệu tổ hợp lặp $\overline{C}_k^r = C_{k + r - 1}^r$ trong sách giáo khoa Việt Nam).</p>
+        <p style="font-size: 0.94em; opacity: 0.88;"><i>Ghi chú tên gọi:</i> Trong tài liệu tiếng Việt, bài toán này thường được gọi là "bài toán chia kẹo Euler" hoặc "phương pháp vách ngăn"; trong tài liệu quốc tế, kỹ thuật này thường được gọi là <i>stars and bars</i> (gắn với trình bày kinh điển của William Feller).</p>
 
         <h3 class="smp-subsection-title">§1.3 Ánh xạ, đơn ánh, toàn ánh và song ánh</h3>
-        <p>Khi muốn chứng minh hai tập hợp hữu hạn $A$ và $B$ có cùng số phần tử ($|A| = |B|$), ta thường xây dựng một ánh xạ $f : A \to B$ và kiểm tra các tính chất sau:</p>
+        <p>Khi muốn chứng minh hai <b>tập hợp hữu hạn</b> $A$ và $B$ có cùng số phần tử ($|A| = |B|$), ta thường xây dựng một ánh xạ $f : A \to B$ và kiểm tra các tính chất sau:</p>
         <ul style="padding-left: 20px; line-height: 1.85;">
-            <li><b>Đơn ánh:</b> với mọi $x_1, x_2 \in A$, nếu $x_1 \ne x_2$ thì $f(x_1) \ne f(x_2)$ (hai phần tử khác nhau không cùng cho một ảnh). Nếu $f : A \to B$ là đơn ánh thì $|A| \le |B|$. Chẳng hạn, hàm $f(x) = x^2$ trên $\mathbb{R}$ không phải đơn ánh vì $f(1) = f(-1) = 1$.</li>
-            <li><b>Toàn ánh:</b> với mọi $y \in B$, tồn tại ít nhất một $x \in A$ sao cho $f(x) = y$. Nếu $f : A \to B$ là toàn ánh thì $|A| \ge |B|$. Chẳng hạn, trên $\mathbb{R}$, $f(x) = x^2$ không toàn ánh vì không có $x$ để $f(x) = -1$, hay $f(x) = \frac{1}{x}$ không đạt giá trị $0$.</li>
-            <li><b>Song ánh:</b> ánh xạ vừa là đơn ánh, vừa là toàn ánh (mỗi phần tử của $A$ tương ứng 1–1 với đúng một phần tử của $B$). Khi $f : A \to B$ là song ánh thì $|A| \le |B|$ và $|A| \ge |B|$, suy ra $|A| = |B|$.</li>
+            <li><b>Đơn ánh:</b> với mọi $x_1, x_2 \in A$, nếu $x_1 \ne x_2$ thì $f(x_1) \ne f(x_2)$ (hai phần tử khác nhau không cùng cho một ảnh). Với $A, B$ hữu hạn, nếu $f : A \to B$ là đơn ánh thì $|A| \le |B|$. Chẳng hạn, với $A = \{-1, 0, 1\}$ và $B = \{0, 1, 2\}$, hàm $f(x) = x^2$ không phải đơn ánh vì $f(1) = f(-1) = 1$.</li>
+            <li><b>Toàn ánh:</b> với mọi $y \in B$, tồn tại ít nhất một $x \in A$ sao cho $f(x) = y$. Với $A, B$ hữu hạn, nếu $f : A \to B$ là toàn ánh thì $|A| \ge |B|$. Chẳng hạn, vẫn với $A = \{-1, 0, 1\}$, $B = \{0, 1, 2\}$ và $f(x) = x^2$, ánh xạ này không toàn ánh vì không có $x \in A$ để $f(x) = 2$ (tương tự, trên tập số thực, $f : \mathbb{R} \setminus \{0\} \to \mathbb{R}$ cho bởi $f(x) = \frac{1}{x}$ không đạt giá trị $0$).</li>
+            <li><b>Song ánh:</b> ánh xạ vừa là đơn ánh, vừa là toàn ánh (mỗi phần tử của $A$ tương ứng 1–1 với đúng một phần tử của $B$). Khi $f : A \to B$ là song ánh giữa hai tập hữu hạn thì $|A| \le |B|$ và $|A| \ge |B|$, suy ra $|A| = |B|$ (như ta sẽ dùng trực tiếp ở Ví dụ 4 và Ví dụ 8).</li>
         </ul>
         <div style="margin: 18px 0; text-align: center;">
             <svg viewBox="0 0 540 190" style="max-width: 600px; width: 100%; height: auto; font-family: 'JetBrains Mono', 'Segoe UI', sans-serif;">
@@ -274,6 +275,13 @@
             <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 4.</i> Biểu đồ Venn giải thích nguyên lý bù trừ cho 2 tập hợp và 3 tập hợp.</div>
         </div>
 
+        <div class="smp-graybox">
+            <b>Định lý 3 (Số nghiệm nguyên không âm bị chặn trên).</b> Cho các số nguyên dương $k$, $M$ và số nguyên không âm $n$. Số nghiệm nguyên của phương trình $x_1 + x_2 + \dots + x_k = n$ thỏa mãn $0 \le x_i \le M$ với mọi $i = 1, \dots, k$ là:
+            $$\sum_{j=0}^{k} (-1)^j \binom{k}{j} \binom{n - j(M + 1) + k - 1}{k - 1}$$
+            (trong đó quy ước $\dbinom{a}{b} = 0$ nếu $a < b$, tức các số hạng có $n - j(M + 1) < 0$ đều bằng $0$).<br>
+            <span style="display: block; margin-top: 6px;"><i>Chứng minh nhanh:</i> Đặt $\Omega$ là tập các nghiệm nguyên không âm và $E_i = \{x \in \Omega \mid x_i \ge M + 1\}$. Với mọi $j$-tập chỉ số $I \subseteq \{1, \dots, k\}$, chuyển biến $y_i = x_i - (M + 1) \ge 0$ cho $i \in I$ cho thấy giao của $j$ tập $E_i$ có $\dbinom{n - j(M + 1) + k - 1}{k - 1}$ phần tử; áp dụng nguyên lý bù trừ suy ra điều phải chứng minh.</span>
+        </div>
+
         <h3 class="smp-subsection-title">§1.5 Các biến đổi thường gặp và bổ đề Burnside</h3>
         <ol style="padding-left: 20px; line-height: 1.85;">
             <li><b>Hạ cận dưới về dạng chuẩn ($x_i \ge c_i$):</b> Để đưa phương trình $x_1 + \dots + x_k = n$ với $x_i \ge c_i$ về dạng không âm ($\ge 0$) hoặc nguyên dương ($\ge 1$), ta đổi biến $y_i = x_i - c_i \ge 0$ (hoặc $y_i = x_i - c_i + 1 \ge 1$; biến nào đã $\ge 1$ sẵn thì giữ nguyên). Tương tự, với điều kiện chia hết hoặc đồng dư $x_i \equiv r_i \pmod d$ ($0 \le r_i < d$, $x_i \ge r_i$), ta đặt $x_i = d y_i + r_i$ với $y_i \in \mathbb{N}$.</li>
@@ -287,8 +295,12 @@
         </div>
 
         <div class="smp-graybox">
-            <b>Bổ đề Burnside.</b> Cho nhóm hữu hạn $\Phi$ gồm các phép biến đổi tác động lên tập hữu hạn $X$. Với mỗi $\varphi \in \Phi$, ký hiệu $X^\varphi = \{x \in X \mid \varphi(x) = x\}$ là tập các phần tử bất biến qua $\varphi$ và đặt $\nu(\varphi) = |X^\varphi|$. Khi đó số quỹ đạo (số cấu hình khác nhau qua tác động của $\Phi$) là:
+            <b>Bổ đề Burnside.</b> Cho nhóm hữu hạn $\Phi$ gồm các phép biến đổi (ví dụ các phép quay quanh tâm) tác động lên tập hữu hạn $X$ các cấu hình ban đầu. Hai cấu hình được xem là <i>cùng một quỹ đạo</i> (như nhau) nếu có một phép $\varphi \in \Phi$ biến cấu hình này thành cấu hình kia. Với mỗi $\varphi \in \Phi$, ký hiệu $X^\varphi = \{x \in X \mid \varphi(x) = x\}$ là tập các cấu hình bất biến qua $\varphi$ và đặt $\nu(\varphi) = |X^\varphi|$. Khi đó số quỹ đạo (số cấu hình thực sự khác nhau qua tác động của $\Phi$) là:
             $$|X / \Phi| = \frac{1}{|\Phi|} \sum_{\varphi \in \Phi} \nu(\varphi).$$
+        </div>
+        <div class="smp-longnote">
+            <b>Ví dụ áp dụng trực tiếp Bổ đề Burnside.</b> Có bao nhiêu cách tô 5 đỉnh của một ngũ giác đều bằng 2 màu đỏ và xanh, biết hai cách tô thu được từ nhau qua phép quay quanh tâm là như nhau?<br>
+            Nhóm phép quay có $|\Phi| = 5$ phần tử: phép đồng nhất (quay $0^\circ$) giữ nguyên tất cả $2^5 = 32$ cách tô; 4 phép quay còn lại (góc $\frac{2\pi r}{5}$ với $r = 1, 2, 3, 4$) đều tạo thành một chu trình độ dài 5 trên 5 đỉnh nên chỉ giữ nguyên 2 cách tô đồng màu (cả 5 đỉnh đỏ hoặc cả 5 đỉnh xanh). Theo Bổ đề Burnside, số cách tô khác nhau là $\dfrac{1}{5}(32 + 4 \times 2) = 8$.
         </div>
 
         <h3 class="smp-subsection-title">§1.6 Bài toán chia kẹo và đường đi trên lưới nguyên</h3>
@@ -493,35 +505,26 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 7</span></h3>
         <p>Có 17 cây cau trồng xung quanh một cái ao hình tròn. Người ta muốn chặt đi 4 cây. Hỏi có mấy cách chặt sao cho không có 2 cây kề nhau bị chặt?</p>
         <p><b>Lời giải.</b></p>
-        <p>Đánh số 17 vị trí cây theo chiều kim đồng hồ là $C_1, C_2, \dots, C_{17}$. Vì các cây trồng thành vòng tròn khép kín (cây $C_1$ kề với cả $C_2$ và $C_{17}$), ta chia thành hai trường hợp theo cây $C_1$ để cắt vòng tròn thành hàng ngang một cách chặt chẽ:</p>
-        <ul style="padding-left: 20px; line-height: 1.85;">
-            <li><b>Trường hợp 1 ($C_1$ bị chặt):</b> Khi đó hai cây kề nó là $C_2$ và $C_{17}$ không được chặt. Cần chọn thêm 3 cây không kề nhau từ 14 cây $C_3, \dots, C_{16}$ xếp thành hàng ngang. Tương tự Ví dụ 6, với 4 khoảng cây còn lại có $x_1 + x_2 + x_3 + x_4 = 14 - 3 = 11$ ($x_1, x_4 \ge 0; x_2, x_3 \ge 1$), đặt $y_1 = x_1 + 1 \ge 1, y_4 = x_4 + 1 \ge 1$ đưa về tổng 4 biến nguyên dương bằng 13, có $\dbinom{13 - 1}{4 - 1} = \dbinom{12}{3} = 220$ cách.</li>
-            <li><b>Trường hợp 2 ($C_1$ không bị chặt):</b> Cần chọn 4 cây không kề nhau từ 16 cây $C_2, \dots, C_{17}$ xếp thành hàng ngang. Tương tự, với 5 khoảng cây còn lại có $x_1 + \dots + x_5 = 16 - 4 = 12$ ($x_1, x_5 \ge 0; x_2, x_3, x_4 \ge 1$), nâng hai đầu lên $\ge 1$ đưa về tổng 5 biến nguyên dương bằng 14, có $\dbinom{14 - 1}{5 - 1} = \dbinom{13}{4} = 715$ cách.</li>
-        </ul>
-        <p>Vậy có tất cả $\dbinom{12}{3} + \dbinom{13}{4} = 220 + 715 = 935$ cách chặt thỏa mãn. $\square$</p>
-
+        <p>Đánh số 17 vị trí cây theo chiều kim đồng hồ là $C_1, C_2, \dots, C_{17}$. Để đếm trực tiếp trên vòng tròn, ta dùng phép đánh dấu: chọn trước một trong 4 cây bị chặt làm cây đánh dấu (có 17 cách chọn vị trí). Khi đã cố định 1 cây đánh dấu, 3 cây bị chặt còn lại chia 13 cây không bị chặt còn lại thành 4 khoảng giữa chúng trên vòng tròn khép kín: $x_1 + x_2 + x_3 + x_4 = 13$ với $x_i \ge 1$ (để không có hai cây bị chặt nào kề nhau). Theo Định lý 1 có $\dbinom{13 - 1}{4 - 1} = \dbinom{12}{3} = 220$ cách chia.</p>
+        <p>Vì mỗi cách chặt 4 cây bị đếm lặp đúng 4 lần (tương ứng với 4 cách chọn cây đánh dấu trong 4 cây bị chặt), số cách chặt thỏa mãn là $\dfrac{17}{4}\dbinom{12}{3} = 935$ cách. $\square$</p>
         <div class="smp-longnote">
-            <b>Chú ý (Bẫy khi mở vòng tròn ra hàng ngang).</b> Nếu cắt vòng tròn tại một điểm rồi viết 5 khoảng $x_1 + \dots + x_5 = 13$ ($x_i \ge 1$) giống bài toán hàng ngang sẽ ra $\binom{12}{4} = 495$ — kết quả này sai vì trên vòng tròn nếu chọn cây mốc $C_1$ làm một cây bị chặt thì giữa 4 cây bị chặt chỉ có 4 khoảng chứ không phải 5 khoảng, còn nếu điểm cắt không là cây bị chặt thì hai phần cây ở đầu và cuối hàng gộp lại thành một khoảng. Nếu đếm trực tiếp trên vòng tròn bằng cách đánh dấu trước một trong 4 cây bị chặt: chọn vị trí cây được đánh dấu (17 cách), rồi chia 13 cây còn lại vào 4 khoảng ($\binom{12}{3}$ cách), mỗi cách chặt bị đếm lặp 4 lần theo 4 cách chọn cây đánh dấu nên đáp số là $\frac{17}{4}\binom{12}{3} = 935$.
+            <b>Tổng quát và bẫy vòng tròn.</b> Với cùng lập luận đánh dấu trên, số cách chọn $k$ phần tử không kề nhau trên một vòng tròn $n$ phần tử ($n \ge 2k$) luôn bằng $\dfrac{n}{k}\dbinom{n - k - 1}{k - 1}$. Lưu ý không được cắt vòng tròn ra hàng ngang rồi viết 5 khoảng $x_1 + \dots + x_5 = 13$ ($x_i \ge 1$) ra $\binom{12}{4} = 495$, bởi trên vòng tròn hai phần cây ở đầu và cuối hàng ngang bị gộp làm một khoảng nên thực chất chỉ có 4 khoảng giữa 4 cây bị chặt chứ không phải 5 khoảng. (Nếu vẫn muốn cắt vòng tròn theo cây mốc $C_1$, phải chia làm 2 trường hợp: $C_1$ bị chặt có $\binom{12}{3} = 220$ cách, và $C_1$ không bị chặt có $\binom{13}{4} = 715$ cách, tổng vẫn là $220 + 715 = 935$.)
         </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 8</span></h3>
         <p>Vé xe buýt có dạng $\overline{abcdef}$ với $a, b, c, d, e, f \in \{0, 1, 2, \dots, 9\}$. Một vé thỏa mãn $a + b + c = d + e + f$ được gọi là <i>vé hạnh phúc</i>. Tính số vé như thế.</p>
         <p><b>Lời giải.</b></p>
-        <p>Gọi $A$ là tập nghiệm của $a + b + c = d + e + f$ và $B$ là tập nghiệm của $a + b + c + x + y + z = 27$ trên $\{0, 1, \dots, 9\}^6$. Ta thiết lập ánh xạ $f : A \to B$ cho bởi $f(a, b, c, d, e, f) = (a, b, c, 9 - d, 9 - e, 9 - f)$. Đặt $x = 9 - d$, $y = 9 - e$, $z = 9 - f$:</p>
+        <p>Gọi $A$ là tập nghiệm của $a + b + c = d + e + f$ và $B$ là tập nghiệm của $a + b + c + x + y + z = 27$ trên $\{0, 1, \dots, 9\}^6$. Ta thiết lập ánh xạ $\Phi : A \to B$ cho bởi $\Phi(a, b, c, d, e, f) = (a, b, c, 9 - d, 9 - e, 9 - f)$. Đặt $x = 9 - d$, $y = 9 - e$, $z = 9 - f$:</p>
         <ul style="padding-left: 20px; line-height: 1.8;">
             <li>Vì $0 \le d, e, f \le 9 \iff 0 \le x, y, z \le 9$ và $a + b + c + x + y + z = a + b + c + 27 - (d + e + f) = 27$, nên ảnh của mọi phần tử thuộc $A$ đều nằm trong $B$.</li>
-            <li>Phép biến đổi $t \mapsto 9 - t$ là tự nghịch đảo trên $\{0, 1, \dots, 9\}$ (vì $9 - (9 - t) = t$), nên $f$ vừa là đơn ánh, vừa là toàn ánh, tức $f$ là một song ánh. Do đó $|A| = |B|$.</li>
+            <li>Phép biến đổi $t \mapsto 9 - t$ là tự nghịch đảo trên $\{0, 1, \dots, 9\}$ (vì $9 - (9 - t) = t$), nên $\Phi$ vừa là đơn ánh, vừa là toàn ánh, tức $\Phi$ là một song ánh. Do đó $|A| = |B|$.</li>
         </ul>
-        <p>Để tính $|B|$, gọi $C$ là tập tất cả các nghiệm nguyên không âm của $a + b + c + x + y + z = 27$, có $|C| = \dbinom{32}{5} = 201\,376$. Gọi $A_1, \dots, A_6 \subseteq C$ là các tập nghiệm có ẩn thứ $i$ thỏa mãn $\ge 10$:</p>
-        <ul style="padding-left: 20px; line-height: 1.85;">
-            <li>Mỗi $|A_i| = \dbinom{17 + 6 - 1}{5} = \dbinom{22}{5}$, nên $\displaystyle\sum_{i=1}^6 |A_i| = 6\dbinom{22}{5} = 158\,004$.</li>
-            <li>Mỗi $|A_i \cap A_j| = \dbinom{7 + 6 - 1}{5} = \dbinom{12}{5}$ ($i < j$), nên $\displaystyle\sum_{1 \le i < j \le 6} |A_i \cap A_j| = \binom{6}{2}\binom{12}{5} = 15\binom{12}{5} = 11\,880$.</li>
-            <li>Giao của từ 3 tập trở lên bằng rỗng vì $3 \times 10 = 30 > 27$.</li>
-        </ul>
-        <p>Theo nguyên lý bù trừ, số vé hạnh phúc là $\dbinom{32}{5} - \left(6\dbinom{22}{5} - 15\dbinom{12}{5}\right) = 55\,252$. $\square$</p>
+        <p>Để tính $|B|$, áp dụng Định lý 3 cho $k = 6$, $n = 27$, $M = 9$ (cận vi phạm $M + 1 = 10$, nên $j$ chỉ chạy tới $2$ vì $3 \times 10 = 30 > 27$):</p>
+        $$|B| = \binom{27 + 6 - 1}{5} - \binom{6}{1}\binom{17 + 6 - 1}{5} + \binom{6}{2}\binom{7 + 6 - 1}{5} = \binom{32}{5} - 6\binom{22}{5} + 15\binom{12}{5} = 201\,376 - 158\,004 + 11\,880 = 55\,252.$$
+        <p>Vậy có $55\,252$ vé hạnh phúc. $\square$</p>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 9</span></h3>
-        <p>Tìm số cách chọn ra 4 số nguyên phân biệt từ 24 số nguyên dương đầu tiên $\{1, 2, \dots, 24\}$ sao cho trong lựa chọn đó, không có hai số liên tiếp đồng dư với nhau theo modulo 3.</p>
+        <p>Tìm số cách chọn ra 4 số nguyên phân biệt từ 24 số nguyên dương đầu tiên $\{1, 2, \dots, 24\}$ sao cho khi xếp 4 số đó theo thứ tự tăng dần, không có hai số kề nhau nào đồng dư với nhau theo modulo 3.</p>
         <p><b>Lời giải.</b></p>
         <p>Gọi 4 số được chọn theo thứ tự tăng dần là $1 \le a_1 < a_2 < a_3 < a_4 \le 24$. Gọi $x_1, x_2, x_3, x_4, x_5 \in \mathbb{N}$ lần lượt là số các phần tử không được chọn nằm trước $a_1$, giữa $a_1$ và $a_2$, giữa $a_2$ và $a_3$, giữa $a_3$ và $a_4$, và sau $a_4$. Khi đó $x_1 + x_2 + x_3 + x_4 + x_5 = 24 - 4 = 20$.</p>
         <p>Ta thấy $a_{i+1} - a_i = x_{i+1} + 1$ ($i = 1, 2, 3$); chẳng hạn nếu $x_2 = 0$ thì $a_2 = a_1 + 1$, còn nếu $x_2 = 2$ thì ở giữa có 2 số nên $a_2 = a_1 + 3 \equiv a_1 \pmod 3$. Do đó điều kiện không có hai số liên tiếp đồng dư theo modulo 3 tương đương với $x_2, x_3, x_4 \not\equiv 2 \pmod 3$.</p>
@@ -709,7 +712,8 @@
             </svg>
             <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 9.</i> Gom các đỉnh cùng màu liên tiếp thành $k$ cụm đỏ và $k$ cụm xanh xen kẽ trên vòng tròn.</div>
         </div>
-        <p><b>b)</b> Với $B = 14 \implies k = 10$ cụm xanh và 10 cụm đỏ xen kẽ. Nếu cố định tên 103 đỉnh của đa giác và đánh dấu một cụm xanh làm cụm mở đầu, theo Định lý 1 có $\dbinom{23}{9}$ cách chia độ dài 10 cụm xanh và $\dbinom{78}{9}$ cách chia độ dài 10 cụm đỏ. Tuy nhiên khi xoay vòng tròn qua 10 vị trí cụm mở đầu thì 10 cấu hình này trùng nhau hoàn toàn và thực chất chỉ là một cách tô; mặt khác vì 79 là số nguyên tố (tức $\gcd(10, 79) = 1$) nên không tồn tại cấu hình nào tuần hoàn với chu kỳ nhỏ hơn 10 (hoặc nói theo Bổ đề Burnside với nhóm 103 phép quay: $\gcd(r, 103) = 1$ với $1 \le r < 103$ nên chỉ phép đồng nhất giữ nguyên cách tô, và đánh dấu cụm mở đầu dẫn tới $10M = 103\binom{23}{9}\binom{78}{9}$). Vậy số cách tô màu cần tìm là $\dfrac{1}{10}\dbinom{23}{9}\dbinom{78}{9}$. $\square$</p>
+        <p><b>b)</b> Với $B = 14 \implies k = 10$ cụm xanh và 10 cụm đỏ xen kẽ. Cố định tên 103 đỉnh của đa giác đều trên vòng tròn; ta đếm số cặp gồm (một cách tô có nhãn, một cụm xanh được đánh dấu mở đầu): chọn đỉnh bắt đầu cho cụm xanh mở đầu (103 cách), rồi theo Định lý 1 chia độ dài 10 cụm xanh ($\dbinom{23}{9}$ cách) và chia độ dài 10 cụm đỏ ($\dbinom{78}{9}$ cách), được $103\dbinom{23}{9}\dbinom{78}{9}$ cặp. Vì mỗi cách tô có đúng 10 cụm xanh nên số cách tô có nhãn đỉnh là $\dfrac{103}{10}\dbinom{23}{9}\dbinom{78}{9}$.</p>
+        <p>Xét nhóm 103 phép quay quanh tâm đa giác: nếu một cách tô bất biến qua phép quay khác đồng nhất (có đối xứng quay cấp $t > 1$) thì 103 đỉnh phải chia đều thành $t$ chu kỳ giống hệt nhau, kéo theo $t \mid 103$. Vì $103$ là số nguyên tố nên chỉ có $t = 103$ (khi đó tất cả các đỉnh phải cùng màu, vô lý vì có 79 đỏ và 24 xanh; hơn nữa $t$ cũng phải là ước chung của $79$ và $24$). Do đó mọi quỹ đạo dưới nhóm 103 phép quay đều có đúng 103 phần tử. Chia cho 103 ta được số cách tô cần tìm là $\dfrac{1}{10}\dbinom{23}{9}\dbinom{78}{9}$. $\square$</p>
 
         <h2 class="smp-section-title">§3. Bài Tập Luyện Tập</h2>
 
@@ -734,7 +738,7 @@
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
         <p>Cho đa giác đều $n$ đỉnh ($n \ge 4$) nội tiếp đường tròn $(O)$. Có bao nhiêu hình thang (không phải hình chữ nhật) mà 4 đỉnh là các đỉnh của đa giác đều đã cho?</p>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Đánh số các đỉnh là $0, 1, \dots, n - 1$; hai dây cung $(u, v)$ và $(w, t)$ song song nhau khi và chỉ khi $u + v \equiv w + t \pmod n$. Đếm theo từng lớp đồng dư $s \equiv u + v \pmod n$: với $n = 2m + 1$ lẻ, đáp số là $n\dbinom{m}{2} = \dfrac{n(n - 1)(n - 3)}{8}$; với $n = 2m$ chẵn, trừ đi các cặp dây song song tạo thành hình chữ nhật ở mỗi lớp $s$ chẵn và $s$ lẻ, đáp số là $\dfrac{n(n - 2)(n - 4)}{8}$.
+            <b>Gợi ý.</b> Đánh số các đỉnh là $0, 1, \dots, n - 1$; hai dây cung $(u, v)$ và $(w, t)$ song song nhau khi và chỉ khi $u + v \equiv w + t \pmod n$. Đếm theo từng lớp tổng $s \equiv u + v \pmod n$: nếu $n = 2m + 1$ lẻ, mỗi trong $n$ lớp có đúng $m$ dây cung đôi một không cắt nhau nên đáp số là $n\dbinom{m}{2} = \dfrac{n(n - 1)(n - 3)}{8}$. Nếu $n = 2m$ chẵn: trong $m$ lớp $s$ lẻ mỗi lớp có $m$ dây (không có đường kính), cho $m\dbinom{m}{2}$ cặp; trong $m$ lớp $s$ chẵn mỗi lớp có $m - 1$ dây không là đường kính (nếu lấy cả đường kính sẽ tạo hình thang cân hoặc hình chữ nhật — thực chất hai dây đối xứng nhau qua tâm cùng thuộc một lớp $s$ chẵn và hợp thành hình chữ nhật có $2$ đường kính), nên đếm các cặp dây trong từng lớp rồi trừ đi số hình chữ nhật là $\dbinom{m}{2}$ (mỗi hình chữ nhật chọn 2 đường kính từ $m$ đường kính) cho $m\dbinom{m - 1}{2} + m\dbinom{m}{2} - 2\dbinom{m}{2} = \dfrac{n(n - 2)(n - 4)}{8}$ (vì mỗi hình chữ nhật bị đếm 2 lần theo 2 cặp cạnh đối song song).
         </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
@@ -798,16 +802,16 @@
             <b>Gợi ý.</b> Tổ hợp lặp chập 7 của 10 chữ số $\{0, 1, \dots, 9\}$ trừ trường hợp tất cả chữ số bằng 0. Đáp số: $\dbinom{16}{7} - 1 = 11\,439$.
         </div>
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 8</span> (AIME 1986)</h3>
-        <p>Có bao nhiêu xâu nhị phân chứa đúng 4 cặp <code>01</code>, 3 cặp <code>10</code>, 5 cặp <code>11</code> và 2 cặp <code>00</code> đứng cạnh nhau?</p>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 8</span> (Lấy ý tưởng từ AIME 1986)</h3>
+        <p>Có bao nhiêu xâu nhị phân độ dài 15 chứa đúng 4 cặp <code>01</code>, 3 cặp <code>10</code>, 5 cặp <code>11</code> và 2 cặp <code>00</code> đứng cạnh nhau?</p>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Xâu gồm 4 cụm chữ số <code>0</code> và 4 cụm chữ số <code>1</code> xen kẽ bắt đầu bằng <code>0</code>; áp dụng quy luật cụm $t$ chữ số tạo $t - 1$ cặp giống nhau. Đáp số: $\dbinom{5}{3}\dbinom{8}{3} = 560$.
+            <b>Gợi ý.</b> Tổng số cặp kề nhau là $4 + 3 + 5 + 2 = 14$ nên xâu có độ dài 15. Vì số cặp <code>01</code> (4) hơn số cặp <code>10</code> (3) đúng 1, xâu bắt buộc phải bắt đầu bằng <code>0</code> và kết thúc bằng <code>1</code>, gồm 4 cụm chữ số <code>0</code> và 4 cụm chữ số <code>1</code> xen kẽ nhau; áp dụng quy luật cụm $t$ chữ số tạo $t - 1$ cặp giống nhau để lập phương trình nghiệm nguyên dương cho độ dài các cụm. Đáp số: $\dbinom{5}{3}\dbinom{8}{3} = 560$.
         </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 9</span> (Ấn Độ 2012)</h3>
         <p>Cho tam giác $ABC$. Điểm $P$ nằm trong tam giác gọi là <i>tốt</i> nếu tồn tại 27 tia chung gốc $P$ chia tam giác $ABC$ thành 27 tam giác con có diện tích bằng nhau. Đếm số điểm tốt trong tam giác $ABC$.</p>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Ba tia $PA, PB, PC$ bắt buộc thuộc 27 tia đó; chuẩn hóa $S_{ABC} = 27$ và xét bộ ba diện tích nguyên dương $S_{PBC} + S_{PCA} + S_{PAB} = 27$. Đáp số: $\dbinom{26}{2} = 325$.
+            <b>Gợi ý.</b> Chuẩn hóa $S_{ABC} = 27$. Chiều thuận: ba tia $PA, PB, PC$ bắt buộc phải thuộc 27 tia đó (nếu không một tam giác con bị cạnh tam giác hoặc tia khác cắt qua), nên $S_{PBC}, S_{PCA}, S_{PAB}$ phải là các số nguyên dương có tổng bằng 27. Chiều đảo: với mỗi bộ ba số nguyên dương $(a, b, c)$ có tổng 27, tồn tại duy nhất điểm $P$ trong tam giác sao cho $(S_{PBC}, S_{PCA}, S_{PAB}) = (a, b, c)$ (lấy $P$ theo tọa độ tỉ cự $aA + bB + cC = 27P$), và chỉ cần chia các cạnh $BC, CA, AB$ lần lượt thành $a, b, c$ phần bằng nhau rồi nối với $P$ sẽ thu được 27 tam giác con bằng diện tích nhau. Đáp số: $\dbinom{26}{2} = 325$.
         </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 10</span></h3>
@@ -817,7 +821,15 @@
         </div>
 
         <div class="smp-longnote">
-            <b>Lời kết.</b> Điểm mấu chốt của phương pháp vách ngăn là nhận ra khi nào đối tượng hoàn toàn giống nhau để chuyển từ bài toán sắp xếp sang phương trình đếm nghiệm nguyên, kết hợp chặt chẽ cùng phép biến đổi cận dưới, song ánh, nguyên lý bù trừ và phân tích chu kỳ khi làm việc trên vòng tròn.
+            <b>Lời kết.</b> Tóm tắt quy trình nhận diện nhanh (Dấu hiệu $\to$ Phép biến đổi $\to$ Công thức):
+            <ul style="padding-left: 20px; margin-top: 6px; line-height: 1.8;">
+                <li><b>Nghiệm nguyên dương ($x_i \ge 1$):</b> đặt $k - 1$ vách ngăn vào $n - 1$ khoảng trống $\to \dbinom{n - 1}{k - 1}$ (Định lý 1).</li>
+                <li><b>Nghiệm nguyên không âm ($x_i \ge 0$):</b> mượn $k$ đơn vị (hoặc $y_i = x_i + 1$) $\to \dbinom{n + k - 1}{k - 1}$ (Định lý 2).</li>
+                <li><b>Cận dưới tùy ý ($x_i \ge c_i$):</b> tịnh tiến $y_i = x_i - c_i \ge 0 \to$ đưa về Định lý 2.</li>
+                <li><b>Bất phương trình ($\sum x_i \le N, x_i \ge 0$):</b> thêm biến phụ $a = N - \sum x_i \ge 0 \to \dbinom{N + k}{k}$.</li>
+                <li><b>Chặn trên ($0 \le x_i \le M$):</b> dùng Định lý 3 (nguyên lý bù trừ với các tập vi phạm $x_i \ge M + 1$).</li>
+                <li><b>Trên vòng tròn / bất biến quay:</b> dùng phép đánh dấu kết hợp chia chu kỳ hoặc Bổ đề Burnside.</li>
+            </ul>
         </div>
     </div>
 </body>
