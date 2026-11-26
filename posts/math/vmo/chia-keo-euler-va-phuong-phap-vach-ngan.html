@@ -58,6 +58,45 @@
             <li><b>Khi các đối tượng phân biệt:</b> Xét 5 người được đánh số từ 1 đến 5. Nếu chọn ra 3 người đầu là $\{1, 2, 3\}$ thì hoàn toàn khác với việc chọn 3 người cuối là $\{3, 4, 5\}$. Vì từng người có thể phân biệt được nên ta dùng công thức tổ hợp $C_5^3$ (nếu không xét thứ tự) hoặc chỉnh hợp $A_5^3$ (nếu có xét thứ tự).</li>
             <li><b>Khi các đối tượng giống hệt nhau:</b> Xét 5 viên kẹo màu hồng giống hệt nhau. Nếu lấy 3 viên đầu tiên hay lấy 3 viên cuối cùng, vì các viên kẹo không thể phân biệt viên nào với viên nào nên hai cách lấy này hoàn toàn như nhau. Thứ duy nhất tạo nên sự khác nhau giữa các cách chia không phải là "lấy viên nào", mà là <i>số lượng viên kẹo</i> mỗi người nhận được.</li>
         </ul>
+        <div style="margin: 18px 0; text-align: center;">
+            <svg viewBox="0 0 540 205" style="max-width: 600px; width: 100%; height: auto; font-family: 'JetBrains Mono', 'Segoe UI', sans-serif;">
+                <rect x="8" y="8" width="252" height="186" rx="10" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-opacity="0.2" stroke-width="1.2"/>
+                <rect x="280" y="8" width="252" height="186" rx="10" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-opacity="0.2" stroke-width="1.2"/>
+                <text x="134" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="#0284c7">Đối tượng phân biệt (Người)</text>
+                <text x="406" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="#ec4899">Đối tượng giống nhau (Kẹo)</text>
+                <circle cx="44" cy="64" r="14" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="44" y="69" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text>
+                <circle cx="89" cy="64" r="14" fill="#10b981" fill-opacity="0.88"/>
+                <text x="89" y="69" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text>
+                <circle cx="134" cy="64" r="14" fill="#d97706" fill-opacity="0.88"/>
+                <text x="134" y="69" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text>
+                <circle cx="179" cy="64" r="14" fill="#8b5cf6" fill-opacity="0.88"/>
+                <text x="179" y="69" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text>
+                <circle cx="224" cy="64" r="14" fill="#e11d48" fill-opacity="0.88"/>
+                <text x="224" y="69" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text>
+                <rect x="24" y="45" width="130" height="38" rx="8" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="4,3"/>
+                <text x="134" y="106" text-anchor="middle" font-size="12" fill="currentColor">Chọn 3 đầu: {1, 2, 3}</text>
+                <text x="134" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#e11d48">≠</text>
+                <text x="134" y="150" text-anchor="middle" font-size="12" fill="currentColor">Chọn 3 cuối: {3, 4, 5}</text>
+                <text x="134" y="178" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0284c7">→ Dùng tổ hợp C(5, 3) = 10</text>
+                <circle cx="316" cy="64" r="13" fill="#ec4899" fill-opacity="0.88" stroke="#fff" stroke-width="1.2"/>
+                <ellipse cx="312" cy="60" rx="3.5" ry="2" fill="#fff" fill-opacity="0.45"/>
+                <circle cx="361" cy="64" r="13" fill="#ec4899" fill-opacity="0.88" stroke="#fff" stroke-width="1.2"/>
+                <ellipse cx="357" cy="60" rx="3.5" ry="2" fill="#fff" fill-opacity="0.45"/>
+                <circle cx="406" cy="64" r="13" fill="#ec4899" fill-opacity="0.88" stroke="#fff" stroke-width="1.2"/>
+                <ellipse cx="402" cy="60" rx="3.5" ry="2" fill="#fff" fill-opacity="0.45"/>
+                <circle cx="451" cy="64" r="13" fill="#ec4899" fill-opacity="0.88" stroke="#fff" stroke-width="1.2"/>
+                <ellipse cx="447" cy="60" rx="3.5" ry="2" fill="#fff" fill-opacity="0.45"/>
+                <circle cx="496" cy="64" r="13" fill="#ec4899" fill-opacity="0.88" stroke="#fff" stroke-width="1.2"/>
+                <ellipse cx="492" cy="60" rx="3.5" ry="2" fill="#fff" fill-opacity="0.45"/>
+                <rect x="296" y="45" width="130" height="38" rx="8" fill="none" stroke="#ec4899" stroke-width="2" stroke-dasharray="4,3"/>
+                <text x="406" y="106" text-anchor="middle" font-size="12" fill="currentColor">Lấy 3 viên đầu: ● ● ●</text>
+                <text x="406" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#10b981">=</text>
+                <text x="406" y="150" text-anchor="middle" font-size="12" fill="currentColor">Lấy 3 viên cuối: ● ● ●</text>
+                <text x="406" y="178" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ec4899">→ Chỉ tính bằng số lượng!</text>
+            </svg>
+            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 1.</i> Sự khác biệt giữa chọn phần tử phân biệt (tổ hợp thông thường) và chia vật giống hệt nhau.</div>
+        </div>
 
         <p>Tương tự, nếu xét bài toán với 7 viên bi và 5 chiếc hộp:</p>
         <ul style="padding-left: 20px; line-height: 1.85;">
@@ -82,6 +121,43 @@
         <p><b>2. Chia $n$ viên kẹo cho $k$ bạn sao cho không nhất thiết bạn nào cũng có kẹo ($x_i \ge 0$).</b></p>
         <p>Xét vẫn 7 viên kẹo hồng chia cho Nam, Minh, Hoa nhưng cho phép có bạn nhận 0 viên (chẳng hạn hộp của Nam đang có 0 viên, Minh có 3 viên, Hoa có 4 viên). Để đưa về trường hợp trên, ta mượn thêm và tặng trước vào hộp của mỗi bạn đúng 1 viên kẹo mới (tổng cộng thêm 3 viên cho 3 bạn). Lúc này hộp của bạn nào cũng chắc chắn có từ 1 viên trở lên, và bài toán quy thẳng về trường hợp trước với $7 + 3 = 10$ viên kẹo (tạo ra 9 khoảng trống) và 2 vách ngăn, nên số cách chia là $\dbinom{9}{2} = 36$ cách.</p>
         <p>Tổng quát với $n$ viên kẹo và $k$ bạn, sau khi phát trước cho mỗi bạn 1 viên, tổng số kẹo trở thành $n + k$ viên và số vách ngăn vẫn giữ nguyên là $k - 1$, nên có $\dbinom{n + k - 1}{k - 1}$ cách. (Ta cũng có thể nhìn trực tiếp bằng cách xếp $n$ viên kẹo và $k - 1$ vách ngăn lên $n + k - 1$ vị trí rồi chọn $k - 1$ vị trí cho vách ngăn, cho phép hai vách ngăn đứng cạnh nhau hoặc ở hai đầu khi có bạn nhận 0 viên.)</p>
+        <div style="margin: 18px 0; text-align: center;">
+            <svg viewBox="0 0 540 215" style="max-width: 600px; width: 100%; height: auto; font-family: 'JetBrains Mono', 'Segoe UI', sans-serif;">
+                <text x="270" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">7 viên kẹo giống nhau và 6 khoảng trống ở giữa (x₁, x₂, x₃ ≥ 1)</text>
+                <circle cx="75" cy="66" r="14" fill="#ec4899" fill-opacity="0.9" stroke="#fff" stroke-width="1.3"/>
+                <ellipse cx="71" cy="62" rx="4" ry="2.2" fill="#fff" fill-opacity="0.45"/>
+                <text x="107.5" y="102" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.65">(1)</text>
+                <circle cx="140" cy="66" r="14" fill="#ec4899" fill-opacity="0.9" stroke="#fff" stroke-width="1.3"/>
+                <ellipse cx="136" cy="62" rx="4" ry="2.2" fill="#fff" fill-opacity="0.45"/>
+                <text x="172.5" y="102" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.65">(2)</text>
+                <circle cx="205" cy="66" r="14" fill="#ec4899" fill-opacity="0.9" stroke="#fff" stroke-width="1.3"/>
+                <ellipse cx="201" cy="62" rx="4" ry="2.2" fill="#fff" fill-opacity="0.45"/>
+                <text x="237.5" y="102" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.65">(3)</text>
+                <circle cx="270" cy="66" r="14" fill="#ec4899" fill-opacity="0.9" stroke="#fff" stroke-width="1.3"/>
+                <ellipse cx="266" cy="62" rx="4" ry="2.2" fill="#fff" fill-opacity="0.45"/>
+                <text x="302.5" y="102" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.65">(4)</text>
+                <circle cx="335" cy="66" r="14" fill="#ec4899" fill-opacity="0.9" stroke="#fff" stroke-width="1.3"/>
+                <ellipse cx="331" cy="62" rx="4" ry="2.2" fill="#fff" fill-opacity="0.45"/>
+                <text x="367.5" y="102" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.65">(5)</text>
+                <circle cx="400" cy="66" r="14" fill="#ec4899" fill-opacity="0.9" stroke="#fff" stroke-width="1.3"/>
+                <ellipse cx="396" cy="62" rx="4" ry="2.2" fill="#fff" fill-opacity="0.45"/>
+                <text x="432.5" y="102" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.65">(6)</text>
+                <circle cx="465" cy="66" r="14" fill="#ec4899" fill-opacity="0.9" stroke="#fff" stroke-width="1.3"/>
+                <ellipse cx="461" cy="62" rx="4" ry="2.2" fill="#fff" fill-opacity="0.45"/>
+                <line x1="172.5" y1="40" x2="172.5" y2="88" stroke="#e11d48" stroke-width="4" stroke-linecap="round"/>
+                <line x1="367.5" y1="40" x2="367.5" y2="88" stroke="#e11d48" stroke-width="4" stroke-linecap="round"/>
+                <path d="M58,112 L58,118 L156,118 L156,112" fill="none" stroke="#0284c7" stroke-width="1.6"/>
+                <text x="107" y="134" text-anchor="middle" font-size="12" font-weight="700" fill="#0284c7">Nam: 2</text>
+                <path d="M188,112 L188,118 L352,118 L352,112" fill="none" stroke="#10b981" stroke-width="1.6"/>
+                <text x="270" y="134" text-anchor="middle" font-size="12" font-weight="700" fill="#10b981">Minh: 3</text>
+                <path d="M384,112 L384,118 L482,118 L482,112" fill="none" stroke="#d97706" stroke-width="1.6"/>
+                <text x="433" y="134" text-anchor="middle" font-size="12" font-weight="700" fill="#d97706">Hoa: 2</text>
+                <rect x="24" y="152" width="492" height="54" rx="8" fill="currentColor" fill-opacity="0.05" stroke="currentColor" stroke-opacity="0.2" stroke-width="1.2"/>
+                <text x="270" y="172" text-anchor="middle" font-size="12" font-weight="700" fill="#d97706">Khi cho phép nhận 0 viên (xᵢ ≥ 0): Mượn thêm mỗi bạn 1 viên!</text>
+                <text x="270" y="193" text-anchor="middle" font-size="11.5" fill="currentColor" opacity="0.85">7 + 3 = 10 viên (9 khoảng trống) → đặt 2 vách ngăn → C(9, 2) = 36 cách</text>
+            </svg>
+            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 2.</i> Đặt 2 vách ngăn vào 2 trong 6 khoảng trống giữa 7 viên kẹo và mẹo quy đổi về nghiệm dương.</div>
+        </div>
 
         <p><b>3. Chuyển sang phương trình nghiệm nguyên.</b> Gọi $x_1, x_2, \dots, x_k$ lần lượt là số kẹo nằm trong các phần do $k - 1$ vách ngăn tạo thành (ví dụ với 7 viên kẹo, $x_1 + x_2 + x_3 = 7$). Mỗi cách chia kẹo tương ứng một – một với một bộ nghiệm nguyên $(x_1, x_2, \dots, x_k)$ của phương trình $x_1 + x_2 + \dots + x_k = n$. Từ đó ta có hai định lý cơ bản:</p>
 
@@ -106,6 +182,61 @@
             <li><b>Toàn ánh:</b> với mọi $y \in B$, tồn tại ít nhất một $x \in A$ sao cho $f(x) = y$. Nếu $f : A \to B$ là toàn ánh thì $|A| \ge |B|$. Chẳng hạn, trên $\mathbb{R}$, $f(x) = x^2$ không toàn ánh vì không có $x$ để $f(x) = -1$, hay $f(x) = \frac{1}{x}$ không đạt giá trị $0$.</li>
             <li><b>Song ánh:</b> ánh xạ vừa là đơn ánh, vừa là toàn ánh (mỗi phần tử của $A$ tương ứng 1–1 với đúng một phần tử của $B$). Khi $f : A \to B$ là song ánh thì $|A| \le |B|$ và $|A| \ge |B|$, suy ra $|A| = |B|$.</li>
         </ul>
+        <div style="margin: 18px 0; text-align: center;">
+            <svg viewBox="0 0 540 190" style="max-width: 600px; width: 100%; height: auto; font-family: 'JetBrains Mono', 'Segoe UI', sans-serif;">
+                <defs>
+                    <marker id="arr-map" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+                        <path d="M0,1 L6,3.5 L0,6 Z" fill="#0284c7"/>
+                    </marker>
+                </defs>
+                <text x="90" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#0284c7">Đơn ánh (|A| ≤ |B|)</text>
+                <ellipse cx="48" cy="92" rx="22" ry="62" fill="#0284c7" fill-opacity="0.08" stroke="#0284c7" stroke-opacity="0.5" stroke-width="1.4"/>
+                <ellipse cx="132" cy="92" rx="22" ry="62" fill="#0284c7" fill-opacity="0.08" stroke="#0284c7" stroke-opacity="0.5" stroke-width="1.4"/>
+                <text x="48" y="172" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">A</text>
+                <text x="132" y="172" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">B</text>
+                <line x1="54" y1="45" x2="124" y2="40" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arr-map)"/>
+                <line x1="54" y1="80" x2="124" y2="72" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arr-map)"/>
+                <line x1="54" y1="115" x2="124" y2="136" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arr-map)"/>
+                <circle cx="48" cy="45" r="4.2" fill="#0284c7"/>
+                <circle cx="48" cy="80" r="4.2" fill="#0284c7"/>
+                <circle cx="48" cy="115" r="4.2" fill="#0284c7"/>
+                <circle cx="132" cy="40" r="4.2" fill="currentColor" opacity="0.75"/>
+                <circle cx="132" cy="72" r="4.2" fill="currentColor" opacity="0.75"/>
+                <circle cx="132" cy="104" r="4.2" fill="currentColor" opacity="0.75"/>
+                <circle cx="132" cy="136" r="4.2" fill="currentColor" opacity="0.75"/>
+                <text x="270" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#10b981">Toàn ánh (|A| ≥ |B|)</text>
+                <ellipse cx="228" cy="92" rx="22" ry="62" fill="#10b981" fill-opacity="0.08" stroke="#10b981" stroke-opacity="0.5" stroke-width="1.4"/>
+                <ellipse cx="312" cy="92" rx="22" ry="62" fill="#10b981" fill-opacity="0.08" stroke="#10b981" stroke-opacity="0.5" stroke-width="1.4"/>
+                <text x="228" y="172" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">A</text>
+                <text x="312" y="172" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">B</text>
+                <line x1="234" y1="40" x2="304" y2="52" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arr-map)"/>
+                <line x1="234" y1="72" x2="304" y2="52" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arr-map)"/>
+                <line x1="234" y1="104" x2="304" y2="92" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arr-map)"/>
+                <line x1="234" y1="136" x2="304" y2="132" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arr-map)"/>
+                <circle cx="228" cy="40" r="4.2" fill="#10b981"/>
+                <circle cx="228" cy="72" r="4.2" fill="#10b981"/>
+                <circle cx="228" cy="104" r="4.2" fill="#10b981"/>
+                <circle cx="228" cy="136" r="4.2" fill="#10b981"/>
+                <circle cx="312" cy="52" r="4.2" fill="currentColor" opacity="0.75"/>
+                <circle cx="312" cy="92" r="4.2" fill="currentColor" opacity="0.75"/>
+                <circle cx="312" cy="132" r="4.2" fill="currentColor" opacity="0.75"/>
+                <text x="450" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#d97706">Song ánh (|A| = |B|)</text>
+                <ellipse cx="408" cy="92" rx="22" ry="62" fill="#d97706" fill-opacity="0.08" stroke="#d97706" stroke-opacity="0.5" stroke-width="1.4"/>
+                <ellipse cx="492" cy="92" rx="22" ry="62" fill="#d97706" fill-opacity="0.08" stroke="#d97706" stroke-opacity="0.5" stroke-width="1.4"/>
+                <text x="408" y="172" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">A</text>
+                <text x="492" y="172" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">B</text>
+                <line x1="414" y1="48" x2="484" y2="48" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arr-map)"/>
+                <line x1="414" y1="88" x2="484" y2="88" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arr-map)"/>
+                <line x1="414" y1="128" x2="484" y2="128" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arr-map)"/>
+                <circle cx="408" cy="48" r="4.2" fill="#d97706"/>
+                <circle cx="408" cy="88" r="4.2" fill="#d97706"/>
+                <circle cx="408" cy="128" r="4.2" fill="#d97706"/>
+                <circle cx="492" cy="48" r="4.2" fill="currentColor" opacity="0.75"/>
+                <circle cx="492" cy="88" r="4.2" fill="currentColor" opacity="0.75"/>
+                <circle cx="492" cy="128" r="4.2" fill="currentColor" opacity="0.75"/>
+            </svg>
+            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 3.</i> Minh họa trực quan ba loại ánh xạ: đơn ánh, toàn ánh và song ánh.</div>
+        </div>
 
         <h3 class="smp-subsection-title">§1.4 Nguyên lý bù trừ</h3>
         <p>Nguyên lý bù trừ là công cụ chính để xử lý các bài toán có điều kiện chặn trên ($x_i \le M_i$) hoặc điều kiện loại trừ:</p>
@@ -119,6 +250,29 @@
             Và nếu $\Omega$ là tập các phần tử không xét điều kiện ràng buộc còn $A_i \subseteq \Omega$ là tập các phần tử vi phạm điều kiện thứ $i$, thì số phần tử không vi phạm bất kỳ điều kiện nào là:
             $$\left|\Omega \setminus \bigcup_{i=1}^{n} A_i\right| = |\Omega| - \left|\bigcup_{i=1}^{n} A_i\right|.$$</li>
         </ul>
+        <div style="margin: 18px 0; text-align: center;">
+            <svg viewBox="0 0 540 215" style="max-width: 600px; width: 100%; height: auto; font-family: 'JetBrains Mono', 'Segoe UI', sans-serif;">
+                <text x="130" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">2 tập hợp: A ∪ B</text>
+                <circle cx="102" cy="105" r="56" fill="#0284c7" fill-opacity="0.22" stroke="#0284c7" stroke-width="2"/>
+                <circle cx="158" cy="105" r="56" fill="#e11d48" fill-opacity="0.22" stroke="#e11d48" stroke-width="2"/>
+                <text x="78" y="108" text-anchor="middle" font-size="14" font-weight="700" fill="#0284c7">A</text>
+                <text x="182" y="108" text-anchor="middle" font-size="14" font-weight="700" fill="#e11d48">B</text>
+                <text x="130" y="109" text-anchor="middle" font-size="11.5" font-weight="700" fill="#d97706">A∩B</text>
+                <text x="130" y="185" text-anchor="middle" font-size="11.5" fill="currentColor" opacity="0.85">Giao A∩B đếm 2 lần → trừ 1 lần</text>
+                <line x1="262" y1="15" x2="262" y2="198" stroke="currentColor" stroke-opacity="0.18" stroke-width="1.2" stroke-dasharray="4,4"/>
+                <text x="405" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">3 tập hợp: A ∪ B ∪ C</text>
+                <circle cx="380" cy="88" r="50" fill="#0284c7" fill-opacity="0.18" stroke="#0284c7" stroke-width="2"/>
+                <circle cx="430" cy="88" r="50" fill="#e11d48" fill-opacity="0.18" stroke="#e11d48" stroke-width="2"/>
+                <circle cx="405" cy="130" r="50" fill="#10b981" fill-opacity="0.18" stroke="#10b981" stroke-width="2"/>
+                <text x="352" y="75" text-anchor="middle" font-size="13" font-weight="700" fill="#0284c7">A</text>
+                <text x="458" y="75" text-anchor="middle" font-size="13" font-weight="700" fill="#e11d48">B</text>
+                <text x="405" y="168" text-anchor="middle" font-size="13" font-weight="700" fill="#10b981">C</text>
+                <circle cx="405" cy="103" r="14" fill="#d97706" fill-opacity="0.35" stroke="#d97706" stroke-width="1.5"/>
+                <text x="405" y="107" text-anchor="middle" font-size="10.5" font-weight="700" fill="currentColor">+1</text>
+                <text x="405" y="198" text-anchor="middle" font-size="11.5" fill="currentColor" opacity="0.85">Tâm A∩B∩C: +3 − 3 = 0 → cộng bù 1</text>
+            </svg>
+            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 4.</i> Biểu đồ Venn giải thích nguyên lý bù trừ cho 2 tập hợp và 3 tập hợp.</div>
+        </div>
 
         <h3 class="smp-subsection-title">§1.5 Các biến đổi thường gặp và bổ đề Burnside</h3>
         <ol style="padding-left: 20px; line-height: 1.85;">
@@ -190,7 +344,7 @@
                 <text x="355" y="47" text-anchor="start" font-size="13" font-weight="700" fill="currentColor">B(5, 3)</text>
                 <text x="215" y="264" text-anchor="middle" font-size="12" fill="currentColor" opacity="0.8">Đường đi minh họa: 00101001 (5 bước sang phải, 3 bước lên trên)</text>
             </svg>
-            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 1.</i> Đường đi ngắn nhất trên lưới nguyên từ $A(0, 0)$ đến $B(m, n)$ với $m = 5, n = 3$.</div>
+            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 5.</i> Đường đi ngắn nhất trên lưới nguyên từ $A(0, 0)$ đến $B(m, n)$ với $m = 5, n = 3$.</div>
         </div>
         <p>Mở rộng trong không gian ba chiều: cho hình hộp chữ nhật $ABCDA'B'C'D'$ kích thước $m \times n \times k$ ($m, n, k \in \mathbb{N}^*$) chia thành lưới các khối lập phương đơn vị. Mỗi đường đi ngắn nhất dọc theo các cạnh lưới từ $A$ đến $C'$ tương ứng một – một với một hoán vị của chuỗi gồm $m$ chữ $x$, $n$ chữ $y$ và $k$ chữ $z$, nên số cách di chuyển bằng $\dfrac{(m + n + k)!}{m!\, n!\, k!}$.</p>
         <div style="margin: 18px 0; text-align: center;">
@@ -255,7 +409,7 @@
                 <text x="87" y="175" text-anchor="end" font-size="12" fill="currentColor" opacity="0.75">k = 2 (hướng z)</text>
                 <text x="245" y="285" text-anchor="middle" font-size="12" fill="currentColor" opacity="0.8">Đường đi minh họa: x x z y x z y (tổng 3 + 2 + 2 = 7 bước)</text>
             </svg>
-            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 2.</i> Hình hộp chữ nhật $ABCDA'B'C'D'$ kích thước $m \times n \times k$ và một đường đi ngắn nhất từ $A$ đến $C'$.</div>
+            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 6.</i> Hình hộp chữ nhật $ABCDA'B'C'D'$ kích thước $m \times n \times k$ và một đường đi ngắn nhất từ $A$ đến $C'$.</div>
         </div>
 
         <h2 class="smp-section-title">§2. Các Ví Dụ Minh Họa</h2>
@@ -407,6 +561,27 @@
         <p>Số cách chọn 3 điểm bất kỳ là $\dbinom{4041}{3}$. Để tạo thành tam giác, ba điểm được chọn không được thẳng hàng. Ba điểm phân biệt trên $(C)$ có hoành độ $m, n, p \in S$ thẳng hàng khi và chỉ khi tồn tại đường thẳng $(d) : y = ax + b$ sao cho $m, n, p$ là 3 nghiệm của phương trình hoành độ giao điểm:</p>
         $$f(x) - (ax + b) = 0 \iff x^3 - 2020x^2 + (2019 - a)x - (2018 + b) = 0.$$
         <p>Theo định lý Viète, điều kiện cần là $m + n + p = 2020$. Ngược lại, với mọi bộ ba số thực $m, n, p$ đôi một phân biệt thỏa mãn $m + n + p = 2020$, chọn $a = 2019 - (mn + np + pm)$ và $b = mnp - 2018$ thì $f(x) - (ax + b) = (x - m)(x - n)(x - p)$, tức là ba điểm $(m, f(m))$, $(n, f(n))$, $(p, f(p))$ thẳng hàng.</p>
+        <div style="margin: 16px 0; text-align: center;">
+            <svg viewBox="0 0 460 220" style="max-width: 520px; width: 100%; height: auto; font-family: 'JetBrains Mono', 'Segoe UI', sans-serif;">
+                <line x1="35" y1="185" x2="430" y2="185" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.2"/>
+                <line x1="65" y1="200" x2="65" y2="20" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.2"/>
+                <path d="M 85,178 C 145,25 225,205 280,105 C 320,32 365,25 395,22" fill="none" stroke="#0284c7" stroke-width="2.6" stroke-linecap="round"/>
+                <line x1="75" y1="158" x2="405" y2="48" stroke="#e11d48" stroke-width="2" stroke-dasharray="6,4"/>
+                <text x="408" y="44" font-size="11.5" font-weight="700" fill="#e11d48">d: y = ax + b</text>
+                <text x="398" y="20" font-size="11.5" font-weight="700" fill="#0284c7">(C): bậc 3</text>
+                <line x1="106" y1="148" x2="106" y2="185" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.1" stroke-dasharray="3,3"/>
+                <circle cx="106" cy="148" r="4.8" fill="#d97706" stroke="#fff" stroke-width="1.3"/>
+                <text x="106" y="201" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">m</text>
+                <line x1="247" y1="101" x2="247" y2="185" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.1" stroke-dasharray="3,3"/>
+                <circle cx="247" cy="101" r="4.8" fill="#d97706" stroke="#fff" stroke-width="1.3"/>
+                <text x="247" y="201" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">n</text>
+                <line x1="358" y1="64" x2="358" y2="185" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.1" stroke-dasharray="3,3"/>
+                <circle cx="358" cy="64" r="4.8" fill="#d97706" stroke="#fff" stroke-width="1.3"/>
+                <text x="358" y="201" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">p</text>
+                <text x="250" y="216" text-anchor="middle" font-size="11.5" fill="currentColor" opacity="0.85">3 điểm thẳng hàng ⇔ m + n + p = 2020 (theo định lý Viète)</text>
+            </svg>
+            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 7.</i> Đường thẳng cắt đồ thị hàm bậc ba $(C)$ tại 3 điểm phân biệt có hoành độ $m, n, p$.</div>
+        </div>
         <p>Đặt $m = 2020 - a'$, $n = 2020 - b'$, $p = 2020 - c'$. Điều kiện $m, n, p \in S$ và $m + n + p = 2020$ trở thành $a' + b' + c' = 4040$ với $0 \le a', b', c' \le 4040$ (cận trên tự động thỏa mãn khi $a', b', c' \ge 0$). Số nghiệm nguyên không âm có thứ tự của $a' + b' + c' = 4040$ là $\dbinom{4042}{2}$. Loại các bộ không đôi một phân biệt:</p>
         <ul style="padding-left: 20px; line-height: 1.8;">
             <li>Cả 3 số bằng nhau: $3a' = 4040$ vô nghiệm nguyên vì 4040 không chia hết cho 3.</li>
@@ -418,6 +593,59 @@
         <p>Cho một nhóm gồm 5 cô gái $G_1, G_2, G_3, G_4, G_5$ và 12 chàng trai cùng ngồi vào 17 chiếc ghế xếp thành hàng ngang thỏa mãn: mỗi ghế có đúng một người ngồi; thứ tự ngồi của các cô gái từ trái qua phải là $G_1, G_2, G_3, G_4, G_5$; giữa $G_1$ và $G_2$ có ít nhất 3 chàng trai; giữa $G_4$ và $G_5$ có ít nhất 1 chàng trai và nhiều nhất 4 chàng trai. Hỏi có tất cả bao nhiêu cách xếp?</p>
         <p><b>Lời giải.</b></p>
         <p>Xếp 5 cô gái $G_1, \dots, G_5$ theo thứ tự từ trái sang phải, gọi $a_1, a_2, a_3, a_4, a_5, a_6 \in \mathbb{N}$ lần lượt là số chàng trai ngồi trước $G_1$, giữa hai cô gái liên tiếp, và sau $G_5$. Chẳng hạn, bộ $(a_1, \dots, a_6) = (1, 3, 2, 2, 2, 2)$ xác định duy nhất một hàng 17 ghế: $\text{N}\, G_1\, \text{N}\,\text{N}\,\text{N}\, G_2\, \text{N}\,\text{N}\, G_3\, \text{N}\,\text{N}\, G_4\, \text{N}\,\text{N}\, G_5\, \text{N}\,\text{N}$. Như vậy mỗi bộ $(a_1, \dots, a_6)$ tương ứng song ánh với đúng một cách chọn vị trí ghế cho 5 cô gái.</p>
+        <div style="margin: 16px 0; text-align: center;">
+            <svg viewBox="0 0 560 145" style="max-width: 620px; width: 100%; height: auto; font-family: 'JetBrains Mono', 'Segoe UI', sans-serif;">
+                <text x="280" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Mô hình 17 ghế: đặt 5 cô gái G₁…G₅ làm vách ngăn chia 12 chàng trai (N)</text>
+                <rect x="18" y="38" width="27" height="32" rx="5" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="31.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">N</text>
+                <rect x="49" y="38" width="27" height="32" rx="5" fill="#ec4899" fill-opacity="0.88"/>
+                <text x="62.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">G1</text>
+                <rect x="80" y="38" width="27" height="32" rx="5" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="93.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">N</text>
+                <rect x="111" y="38" width="27" height="32" rx="5" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="124.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">N</text>
+                <rect x="142" y="38" width="27" height="32" rx="5" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="155.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">N</text>
+                <rect x="173" y="38" width="27" height="32" rx="5" fill="#ec4899" fill-opacity="0.88"/>
+                <text x="186.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">G2</text>
+                <rect x="204" y="38" width="27" height="32" rx="5" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="217.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">N</text>
+                <rect x="235" y="38" width="27" height="32" rx="5" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="248.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">N</text>
+                <rect x="266" y="38" width="27" height="32" rx="5" fill="#ec4899" fill-opacity="0.88"/>
+                <text x="279.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">G3</text>
+                <rect x="297" y="38" width="27" height="32" rx="5" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="310.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">N</text>
+                <rect x="328" y="38" width="27" height="32" rx="5" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="341.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">N</text>
+                <rect x="359" y="38" width="27" height="32" rx="5" fill="#ec4899" fill-opacity="0.88"/>
+                <text x="372.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">G4</text>
+                <rect x="390" y="38" width="27" height="32" rx="5" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="403.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">N</text>
+                <rect x="421" y="38" width="27" height="32" rx="5" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="434.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">N</text>
+                <rect x="452" y="38" width="27" height="32" rx="5" fill="#ec4899" fill-opacity="0.88"/>
+                <text x="465.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">G5</text>
+                <rect x="483" y="38" width="27" height="32" rx="5" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="496.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">N</text>
+                <rect x="514" y="38" width="27" height="32" rx="5" fill="#0284c7" fill-opacity="0.88"/>
+                <text x="527.5" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">N</text>
+                <path d="M20,76 L20,83 L43,83 L43,76" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <text x="31.5" y="99" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">a₁≥0</text>
+                <path d="M82,76 L82,83 L167,83 L167,76" fill="none" stroke="#e11d48" stroke-width="1.5"/>
+                <text x="124.5" y="99" text-anchor="middle" font-size="11" font-weight="700" fill="#e11d48">a₂≥3</text>
+                <path d="M206,76 L206,83 L260,83 L260,76" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <text x="233.0" y="99" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">a₃≥0</text>
+                <path d="M299,76 L299,83 L353,83 L353,76" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <text x="326.0" y="99" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">a₄≥0</text>
+                <path d="M392,76 L392,83 L446,83 L446,76" fill="none" stroke="#d97706" stroke-width="1.5"/>
+                <text x="419.0" y="99" text-anchor="middle" font-size="11" font-weight="700" fill="#d97706">1≤a₅≤4</text>
+                <path d="M485,76 L485,83 L539,83 L539,76" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <text x="512.0" y="99" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">a₆≥0</text>
+                <text x="280" y="128" text-anchor="middle" font-size="11.5" fill="currentColor" opacity="0.85">a₁ + a₂ + a₃ + a₄ + a₅ + a₆ = 12 (mỗi bộ xác định duy nhất vị trí 5 ghế nữ)</text>
+            </svg>
+            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 8.</i> Mã hóa vị trí 5 cô gái và 12 chàng trai trên hàng 17 ghế bằng 6 khoảng cách $a_1, \dots, a_6$.</div>
+        </div>
         <p>Chuyển các dữ kiện đề bài thành hệ điều kiện đại số:</p>
         $$\begin{cases} a_1 + a_2 + a_3 + a_4 + a_5 + a_6 = 12, \\ a_2 \ge 3, \quad 1 \le a_5 \le 4, \quad a_1, a_3, a_4, a_6 \ge 0. \end{cases}$$
         <p>Đặt $b = a_2 - 3 \ge 0$, phương trình trở thành $a_1 + b + a_3 + a_4 + a_6 = 9 - a_5$. Với mỗi $a_5 \in \{1, 2, 3, 4\}$, phương trình 5 ẩn không âm trên có $\dbinom{(9 - a_5) + 5 - 1}{4} = \dbinom{13 - a_5}{4}$ nghiệm. Cộng cả 4 trường hợp được $\dbinom{12}{4} + \dbinom{11}{4} + \dbinom{10}{4} + \dbinom{9}{4} = 495 + 330 + 210 + 126 = 1161$ cách chọn vị trí ghế cho 5 cô gái (hoặc dùng bù trừ $\binom{13}{5} - \binom{9}{5} = 1161$). Cuối cùng, với mỗi cách chọn vị trí, có $12!$ cách xếp 12 chàng trai khác nhau vào 12 ghế nam, nên đáp số là $12! \times 1161$. $\square$</p>
@@ -430,6 +658,57 @@
         </ol>
         <p><b>Lời giải.</b></p>
         <p><b>a)</b> Gom các đỉnh đứng liên tiếp cùng màu trên vòng tròn thành từng cụm. Vì có cả hai màu nên trên vòng tròn khép kín, giữa hai cụm đỏ luôn bị ngăn bởi một cụm xanh và ngược lại; do đó số cụm đỏ bằng số cụm xanh, gọi chung là $k$ ($1 \le k \le 24$). Một cụm có $t$ đỉnh liên tiếp tạo đúng $t - 1$ cặp đỉnh kề nhau cùng màu. Gọi $a_1, \dots, a_k \ge 1$ và $b_1, \dots, b_k \ge 1$ lần lượt là số đỉnh trong $k$ cụm xanh và $k$ cụm đỏ, ta có $\sum a_i = 24$ và $\sum b_i = 79$, suy ra $B = \sum_{i=1}^k (a_i - 1) = 24 - k$ và $A = \sum_{i=1}^k (b_i - 1) = 79 - k$. Đảo lại, với mỗi $k \in \{1, \dots, 24\}$ đều chọn được cấu hình thỏa mãn, nên $(A, B) = (79 - k, 24 - k)$ với $k \in \{1, \dots, 24\}$.</p>
+        <div style="margin: 16px 0; text-align: center;">
+            <svg viewBox="0 0 540 230" style="max-width: 600px; width: 100%; height: auto; font-family: 'JetBrains Mono', 'Segoe UI', sans-serif;">
+                <circle cx="135" cy="115" r="76" fill="none" stroke="currentColor" stroke-opacity="0.28" stroke-width="2"/>
+                <path d="M 224.6,124.0 A 90,90 0 0,0 202.2,55.1" fill="none" stroke="#e11d48" stroke-width="3.2" stroke-linecap="round"/>
+                <path d="M 144.0,25.4 A 90,90 0 0,0 57.3,69.6" fill="none" stroke="#e11d48" stroke-width="3.2" stroke-linecap="round"/>
+                <path d="M 45.4,106.0 A 90,90 0 0,0 67.8,174.9" fill="none" stroke="#e11d48" stroke-width="3.2" stroke-linecap="round"/>
+                <path d="M 126.0,204.6 A 90,90 0 0,0 194.9,182.2" fill="none" stroke="#e11d48" stroke-width="3.2" stroke-linecap="round"/>
+                <circle cx="211.0" cy="115.0" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="207.3" cy="91.5" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="196.5" cy="70.3" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="179.7" cy="53.5" r="5.5" fill="#0284c7" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="158.5" cy="42.7" r="5.5" fill="#0284c7" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="135.0" cy="39.0" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="111.5" cy="42.7" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="90.3" cy="53.5" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="73.5" cy="70.3" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="62.7" cy="91.5" r="5.5" fill="#0284c7" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="59.0" cy="115.0" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="62.7" cy="138.5" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="73.5" cy="159.7" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="90.3" cy="176.5" r="5.5" fill="#0284c7" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="111.5" cy="187.3" r="5.5" fill="#0284c7" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="135.0" cy="191.0" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="158.5" cy="187.3" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="179.7" cy="176.5" r="5.5" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="196.5" cy="159.7" r="5.5" fill="#0284c7" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="207.3" cy="138.5" r="5.5" fill="#0284c7" stroke="#fff" stroke-width="1.2"/>
+                <text x="135" y="111" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">k cụm đỏ</text>
+                <text x="135" y="128" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">k cụm xanh</text>
+                <text x="135" y="218" text-anchor="middle" font-size="11.5" fill="currentColor" opacity="0.85">Xen kẽ khép kín trên vòng tròn</text>
+                <rect x="265" y="18" width="260" height="192" rx="10" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-opacity="0.2" stroke-width="1.2"/>
+                <text x="395" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Quy tắc đếm cặp kề nhau</text>
+                <line x1="295" y1="74" x2="327" y2="74" stroke="#d97706" stroke-width="3.5"/>
+                <circle cx="295" cy="74" r="6" fill="#0284c7" stroke="#fff" stroke-width="1.2"/>
+                <line x1="327" y1="74" x2="359" y2="74" stroke="#d97706" stroke-width="3.5"/>
+                <circle cx="327" cy="74" r="6" fill="#0284c7" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="359" cy="74" r="6" fill="#0284c7" stroke="#fff" stroke-width="1.2"/>
+                <text x="394" y="78" text-anchor="start" font-size="11.5" font-weight="700" fill="currentColor">3 đỉnh → 2 cặp</text>
+                <line x1="282" y1="120" x2="310" y2="120" stroke="#d97706" stroke-width="3.5"/>
+                <circle cx="282" cy="120" r="6" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <line x1="310" y1="120" x2="338" y2="120" stroke="#d97706" stroke-width="3.5"/>
+                <circle cx="310" cy="120" r="6" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <line x1="338" y1="120" x2="366" y2="120" stroke="#d97706" stroke-width="3.5"/>
+                <circle cx="338" cy="120" r="6" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="366" cy="120" r="6" fill="#e11d48" stroke="#fff" stroke-width="1.2"/>
+                <text x="394" y="124" text-anchor="start" font-size="11.5" font-weight="700" fill="currentColor">4 đỉnh → 3 cặp</text>
+                <text x="395" y="162" text-anchor="middle" font-size="12" font-weight="700" fill="#d97706">Cụm t đỉnh → (t − 1) cặp kề</text>
+                <text x="395" y="186" text-anchor="middle" font-size="11.5" fill="currentColor" opacity="0.85">⇒ A = 79 − k, B = 24 − k</text>
+            </svg>
+            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 9.</i> Gom các đỉnh cùng màu liên tiếp thành $k$ cụm đỏ và $k$ cụm xanh xen kẽ trên vòng tròn.</div>
+        </div>
         <p><b>b)</b> Với $B = 14 \implies k = 10$ cụm xanh và 10 cụm đỏ xen kẽ. Nếu cố định tên 103 đỉnh của đa giác và đánh dấu một cụm xanh làm cụm mở đầu, theo Định lý 1 có $\dbinom{23}{9}$ cách chia độ dài 10 cụm xanh và $\dbinom{78}{9}$ cách chia độ dài 10 cụm đỏ. Tuy nhiên khi xoay vòng tròn qua 10 vị trí cụm mở đầu thì 10 cấu hình này trùng nhau hoàn toàn và thực chất chỉ là một cách tô; mặt khác vì 79 là số nguyên tố (tức $\gcd(10, 79) = 1$) nên không tồn tại cấu hình nào tuần hoàn với chu kỳ nhỏ hơn 10 (hoặc nói theo Bổ đề Burnside với nhóm 103 phép quay: $\gcd(r, 103) = 1$ với $1 \le r < 103$ nên chỉ phép đồng nhất giữ nguyên cách tô, và đánh dấu cụm mở đầu dẫn tới $10M = 103\binom{23}{9}\binom{78}{9}$). Vậy số cách tô màu cần tìm là $\dfrac{1}{10}\dbinom{23}{9}\dbinom{78}{9}$. $\square$</p>
 
         <h2 class="smp-section-title">§3. Bài Tập Luyện Tập</h2>
@@ -495,7 +774,7 @@
                 <text x="355" y="39" text-anchor="start" font-size="13" font-weight="700" fill="currentColor">B(m, n)</text>
                 <text x="215" y="250" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.8">Chia 2 chặng độc lập: A → O (p × q) và O → B ((m−p) × (n−q))</text>
             </svg>
-            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 3.</i> Đường đi ngắn nhất từ $A(0, 0)$ đến $B(m, n)$ đi qua điểm nút $O(p, q)$.</div>
+            <div style="font-size: 0.9em; opacity: 0.85; margin-top: 4px;"><i>Hình 10.</i> Đường đi ngắn nhất từ $A(0, 0)$ đến $B(m, n)$ đi qua điểm nút $O(p, q)$.</div>
         </div>
         <div class="smp-longnote">
             <b>Gợi ý.</b> Tách thành hai chặng $A \to O$ ($\dbinom{p + q}{p}$ cách) và $O \to B$ ($\dbinom{m + n - p - q}{m - p}$ cách). Đáp số: $\dbinom{p + q}{p}\dbinom{m + n - p - q}{m - p}$.
