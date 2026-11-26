@@ -220,9 +220,11 @@ mjx-container:not([display="true"]) {
 
 mjx-container[display="true"] {
     display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     overflow-x: auto !important;
     overflow-y: hidden !important;
-    max-width: 100%;
     padding: 0.45em 0 !important;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x pan-y;
@@ -239,8 +241,8 @@ mjx-container[display="true"]::-webkit-scrollbar-thumb {
 }
 
 mjx-container[display="true"].mjx-no-overflow {
-    overflow-x: visible !important;
-    overflow-y: visible !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
     padding: 0.2em 0 !important;
 }
 
@@ -1312,9 +1314,13 @@ body.dark-mode .modal-expand-btn {
 /* Overrides for tighter content */
 .main-content-layout {
     display: grid;
-    grid-template-columns: 205px 1fr;
+    grid-template-columns: 205px minmax(0, 1fr);
     gap: 44px;
     margin-top: 20px;
+}
+
+.main-content-layout > * {
+    min-width: 0;
 }
 
 .main-articles-body {

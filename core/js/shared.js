@@ -1542,11 +1542,13 @@ window.fixMathJaxOverflow = function() {
     });
 
     document.querySelectorAll('mjx-container[display="true"]').forEach(mjx => {
-        if (mjx.scrollWidth > mjx.clientWidth + 2) {
-            mjx.classList.remove('mjx-no-overflow');
-        } else {
-            mjx.classList.add('mjx-no-overflow');
-        }
+        mjx.classList.remove('mjx-no-overflow');
+        mjx.style.overflowX = 'auto';
+        mjx.style.overflowY = 'hidden';
+        mjx.style.maxWidth = '100%';
+        mjx.style.minWidth = '0';
+        mjx.style.touchAction = 'pan-x pan-y';
+        mjx.style.webkitOverflowScrolling = 'touch';
     });
 };
 setInterval(window.fixMathJaxOverflow, 1000);
