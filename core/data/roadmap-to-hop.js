@@ -128,7 +128,7 @@ window.SMP_ROADMAP_TOHOP = {
             tiles: [
                 {
                     title: '§ Bài toán chia kẹo Euler & Phương pháp vách ngăn',
-                    desc: 'Lý thuyết nền tảng về vách ngăn, phương trình nghiệm nguyên, tổ hợp lặp, kết hợp thiết lập song ánh và nguyên lý bù trừ kèm lời giải chi tiết.',
+                    desc: 'Phương pháp vách ngăn, đơn ánh/toàn ánh/song ánh, nguyên lý bù trừ, bổ đề Burnside, lưới nguyên cùng 14 ví dụ chi tiết và 10 bài tập rèn luyện.',
                     url: '/posts/math/vmo/chia-keo-euler-va-phuong-phap-vach-ngan.html'
                 },
                 {

@@ -20,16 +20,16 @@
 
     <script src="/core/js/post-layout.js?v=11"></script>
     <!-- SMP SEO START -->
-    <meta name="description" content="Chuyên đề Tổ hợp Olympiad VMO: Bài toán chia kẹo Euler, phương pháp vách ngăn, tổ hợp lặp, kết hợp song ánh và nguyên lý bù trừ qua các ví dụ chi tiết và đề thi HSG Quốc gia.">
+    <meta name="description" content="Chuyên đề Tổ hợp VMO: Bài toán chia kẹo Euler, phương pháp vách ngăn, tổ hợp lặp, ánh xạ và song ánh, nguyên lý bù trừ, bổ đề Burnside và bài toán đường đi trên lưới nguyên.">
     <meta property="og:title" content="SMP — Bài Toán Chia Kẹo Euler Và Phương Pháp Vách Ngăn">
-    <meta property="og:description" content="Chuyên đề Tổ hợp Olympiad VMO: Bài toán chia kẹo Euler, phương pháp vách ngăn, tổ hợp lặp, kết hợp song ánh và nguyên lý bù trừ qua các ví dụ chi tiết và đề thi HSG Quốc gia.">
+    <meta property="og:description" content="Chuyên đề Tổ hợp VMO: Bài toán chia kẹo Euler, phương pháp vách ngăn, tổ hợp lặp, ánh xạ và song ánh, nguyên lý bù trừ, bổ đề Burnside và bài toán đường đi trên lưới nguyên.">
     <meta property="og:image" content="https://smp-math.com/core/image/leonhard-euler.jpg">
     <meta property="og:url" content="https://smp-math.com/posts/math/vmo/chia-keo-euler-va-phuong-phap-vach-ngan.html">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Secrets of Mathematical Principles">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SMP — Bài Toán Chia Kẹo Euler Và Phương Pháp Vách Ngăn">
-    <meta name="twitter:description" content="Chuyên đề Tổ hợp Olympiad VMO: Bài toán chia kẹo Euler, phương pháp vách ngăn, tổ hợp lặp, kết hợp song ánh và nguyên lý bù trừ qua các ví dụ chi tiết và đề thi HSG Quốc gia.">
+    <meta name="twitter:description" content="Chuyên đề Tổ hợp VMO: Bài toán chia kẹo Euler, phương pháp vách ngăn, tổ hợp lặp, ánh xạ và song ánh, nguyên lý bù trừ, bổ đề Burnside và bài toán đường đi trên lưới nguyên.">
     <meta name="twitter:image" content="https://smp-math.com/core/image/leonhard-euler.jpg">
     <!-- SMP SEO END -->
 </head>
@@ -41,7 +41,7 @@
             <h2 style="text-align: center; color: var(--exam-text-color); opacity: 0.8; font-style: italic;">November 26, 2026</h2>
         </div>
 
-        <p style="font-style: italic; color: var(--text-muted); margin-bottom: 24px;"><b>Lời dẫn.</b> Bài toán chia kẹo Euler (còn gọi là phương pháp vách ngăn) xuất phát từ việc đếm số cách chia các vật giống nhau vào các nhóm phân biệt, hay tương đương là đếm nghiệm nguyên của phương trình tuyến tính $x_1 + x_2 + \dots + x_k = n$. Trong các kỳ thi học sinh giỏi và VMO, kết quả cơ bản này thường không xuất hiện đơn lẻ mà gắn liền với việc thiết lập song ánh, tách đoạn phần tử liên tiếp và áp dụng nguyên lý bù trừ.</p>
+        <p style="font-style: italic; color: var(--text-muted); margin-bottom: 24px;"><b>Lời dẫn.</b> Từ câu hỏi đơn giản <i>"Có 5 viên kẹo màu hồng giống nhau chia cho 3 bạn, hỏi có bao nhiêu cách?"</i>, bài toán chia kẹo Euler (hay phương pháp vách ngăn) mở ra cách giải quyết tự nhiên cho nhiều bài toán đếm trong các kỳ thi Toán và Học sinh giỏi Quốc gia (VMO). Bài viết trình bày đầy đủ cơ sở lý thuyết từ bản chất tổ hợp lặp, phép tương ứng song ánh, nguyên lý bù trừ, bổ đề Burnside cho đến mô hình đường đi trên lưới nguyên, kèm theo các ví dụ giải chi tiết và bài tập rèn luyện.</p>
 
         <div style="text-align: center; margin: 24px 0;">
             <img src="/core/image/leonhard-euler.jpg" alt="Leonhard Euler (1707–1783)" style="max-width: 300px; width: 100%; border-radius: 10px; box-shadow: var(--shadow-soft);">
@@ -50,201 +50,342 @@
 
         <h2 class="smp-section-title">§1. Kiến Thức Cơ Bản</h2>
 
-        <h3 class="smp-subsection-title">§1.1 Phương pháp vách ngăn và phương trình nghiệm nguyên</h3>
-        <p>Khi chia $n$ vật đôi một khác nhau cho $k$ người, mỗi vật có $k$ lựa chọn độc lập. Tuy nhiên, khi chia $n$ viên kẹo hoàn toàn giống nhau cho $k$ người phân biệt, bản thân các viên kẹo không phân biệt được với nhau; hai cách chia chỉ khác nhau khi có ít nhất một người nhận số lượng kẹo khác nhau ở hai cách. Nếu gọi $x_i$ là số kẹo người thứ $i$ nhận được ($i = 1, 2, \dots, k$), thì mỗi cách chia tương ứng một – một với một bộ nghiệm nguyên $(x_1, x_2, \dots, x_k)$ của phương trình:</p>
-        $$x_1 + x_2 + \dots + x_k = n.$$
+        <h3 class="smp-subsection-title">§1.1 Vì sao tổ hợp và chỉnh hợp thông thường không áp dụng trực tiếp được?</h3>
+        <p>Với tập hợp $A = \{a_1, a_2, \dots, a_n\}$ gồm $n$ phần tử đôi một khác nhau, số tập con gồm $k$ phần tử của $A$ (tức số tổ hợp không lặp chập $k$ của $n$) là $\dbinom{n}{k} = \dfrac{n!}{k!(n - k)!}$. Phép chọn này có ba đặc điểm: chọn $k$ phần tử từ $n$ phần tử, các phần tử đôi một khác nhau, và không xét thứ tự.</p>
 
-        <p><b>1. Trường hợp nghiệm nguyên dương ($x_i \ge 1$).</b> Xét các số nguyên dương $n, k$. Nếu $n < k$ thì $x_1 + \dots + x_k \ge k > n$ nên phương trình vô nghiệm. Với $n \ge k$, xếp $n$ viên kẹo thành một hàng ngang. Giữa các viên kẹo kề nhau có đúng $n - 1$ khoảng trống:</p>
+        <p>Để thấy rõ ranh giới khi các đối tượng giống nhau xuất hiện, ta so sánh hai tình huống:</p>
+        <ul style="padding-left: 20px; line-height: 1.85;">
+            <li><b>Khi các đối tượng phân biệt:</b> Xét 5 người được đánh số từ 1 đến 5. Nếu chọn ra 3 người đầu là $\{1, 2, 3\}$ thì hoàn toàn khác với việc chọn 3 người cuối là $\{3, 4, 5\}$. Vì từng người có thể phân biệt được nên ta dùng công thức tổ hợp $C_5^3$ (nếu không xét thứ tự) hoặc chỉnh hợp $A_5^3$ (nếu có xét thứ tự).</li>
+            <li><b>Khi các đối tượng giống hệt nhau:</b> Xét 5 viên kẹo màu hồng giống hệt nhau. Nếu lấy 3 viên đầu tiên hay lấy 3 viên cuối cùng, vì các viên kẹo không thể phân biệt viên nào với viên nào nên hai cách lấy này hoàn toàn như nhau. Thứ duy nhất tạo nên sự khác nhau giữa các cách chia không phải là "lấy viên nào", mà là <i>số lượng viên kẹo</i> mỗi người nhận được.</li>
+        </ul>
+
+        <p>Tương tự, nếu xét bài toán với 7 viên bi và 5 chiếc hộp:</p>
+        <ul style="padding-left: 20px; line-height: 1.85;">
+            <li>Chọn 5 viên bi từ 7 viên bi giống nhau: chỉ có 1 cách.</li>
+            <li>Chọn 5 viên bi từ 7 viên bi khác nhau: có $\dbinom{7}{5}$ cách; nếu đem chia cho 5 người (mỗi người 1 viên) thì có $A_7^5$ cách; còn nếu bỏ vào 5 chiếc hộp giống nhau sao cho mỗi hộp có đúng 1 viên thì vì các hộp không phân biệt thứ tự nên thực chất vẫn là chọn 5 trong 7 viên, tức có $\dbinom{7}{5}$ cách.</li>
+            <li>Ngược lại, khi chia 7 viên bi giống nhau vào 5 chiếc hộp phân biệt (mỗi hộp có thể nhận nhiều viên), có thể hình dung ta đi gán nhãn cho từng viên bi (có 5 loại nhãn ứng với 5 chiếc hộp, và một loại nhãn được phép gán lặp lại nhiều lần). Phép chọn $n$ phần tử từ $k$ loại phần tử không kể thứ tự và được phép lặp lại như vậy gọi là <b>tổ hợp lặp</b>. (Ta không xét 5 hộp giống nhau ở đây vì khi đó việc đổi vai trò các hộp không tạo ra cách mới — đó là bài toán phân hoạch số nguyên.)</li>
+        </ul>
+
+        <p>Để xây dựng công thức, ta liên hệ với một bài toán quen thuộc: <i>Có 6 học sinh và 2 thầy giáo xếp thành hàng ngang sao cho 2 thầy giáo không đứng cạnh nhau.</i> Ta xếp 6 học sinh trước để tạo ra 7 khoảng trống (gồm 5 khoảng ở giữa và 2 khoảng ở hai đầu hàng), rồi chọn 2 khoảng trống xếp 2 thầy giáo vào (có $\dbinom{7}{2}$ cách chọn vị trí, và nhân thêm $2!$ nếu phân biệt hai thầy giáo). Bây giờ hãy bỏ đi thứ tự giữa các học sinh (biến chúng thành $n$ viên bi giống nhau) và chỉ cho phép đặt $k - 1$ thầy giáo vào các khoảng trống <i>nằm giữa</i> các viên bi (không đứng ở hai đầu và không đứng sát nhau): khi đó các thầy giáo trở thành các vách ngăn chia $n$ viên bi thành $k$ phần khác rỗng liên tiếp từ trái sang phải.</p>
+
+        <h3 class="smp-subsection-title">§1.2 Phương pháp vách ngăn và phương trình nghiệm nguyên</h3>
+        <p><b>1. Chia $n$ viên kẹo cho $k$ bạn sao cho bạn nào cũng có kẹo ($x_i \ge 1$).</b></p>
+        <p>Trước hết, xét 7 viên kẹo hồng xếp thành hàng ngang. Đếm từ trái sang phải, giữa 7 viên kẹo có đúng 6 khoảng trống ở giữa (từ khoảng trống số 1 đến số 6). Tổng quát, $n$ viên kẹo xếp thành hàng ngang luôn có đúng $n - 1$ khoảng trống ở giữa:</p>
         $$\bullet \;\underbrace{\;}_{1}\; \bullet \;\underbrace{\;}_{2}\; \bullet \;\cdots\; \bullet \;\underbrace{\;}_{n-1}\; \bullet$$
-        <p>Để chia hàng kẹo thành $k$ phần liên tiếp khác rỗng theo thứ tự từ trái sang phải, ta chọn $k - 1$ khoảng trống phân biệt trong $n - 1$ khoảng trống này để đặt vào mỗi chỗ một vách ngăn (không đặt vách ngăn ở hai đầu hàng và không đặt hai vách ngăn vào cùng một khoảng trống vì mỗi phần phải có ít nhất 1 viên kẹo). Ngược lại, mỗi bộ nghiệm nguyên dương $(x_1, \dots, x_k)$ có tổng bằng $n$ xác định duy nhất vị trí của $k - 1$ vách ngăn (đặt ngay sau viên kẹo thứ $x_1$, thứ $x_1 + x_2$, ..., và thứ $x_1 + \dots + x_{k-1}$). Do đó số cách chia bằng $\dbinom{n - 1}{k - 1}$.</p>
+        <p>Bây giờ ta chia 7 viên kẹo cho 3 bạn Nam, Minh và Hoa sao cho mỗi bạn nhận ít nhất 1 viên bằng cách đặt 2 vách ngăn vào các khoảng trống (phần từ đầu đến vách ngăn thứ nhất là của Nam, phần giữa hai vách ngăn là của Minh, phần sau vách ngăn thứ hai là của Hoa):</p>
+        <ul style="padding-left: 20px; line-height: 1.85;">
+            <li>Nếu đặt 2 vách ngăn vào khoảng trống số 2 và số 5: $\circ\;\circ \mid \circ\;\circ\;\circ \mid \circ\;\circ$, ta được cách chia Nam 2 viên, Minh 3 viên, Hoa 2 viên.</li>
+            <li>Nếu chuyển 2 vách ngăn sang khoảng trống số 1 và số 3: $\circ \mid \circ\;\circ \mid \circ\;\circ\;\circ\;\circ$, ta được cách chia mới: Nam 1 viên, Minh 2 viên, Hoa 4 viên.</li>
+        </ul>
+        <p>Lưu ý có hai vị trí bị cấm khi đặt vách ngăn: (i) không được đặt vách ngăn ra ngoài biên trái hoặc biên phải (vì chẳng hạn nếu đặt ra ngoài biên trái $\mid \circ\;\circ\;\circ \mid \circ\;\circ\;\circ\;\circ$ thì Nam bị 0 viên); và (ii) không được đặt hai vách ngăn sát nhau trong cùng một khoảng trống (vì chẳng hạn $\circ\;\circ \mid\mid \circ\;\circ\;\circ\;\circ\;\circ$ làm Minh bị 0 viên). Như vậy 2 vách ngăn bắt buộc phải đặt vào 2 khoảng trống khác nhau trong 6 khoảng trống ở giữa, nên số cách chia là $\dbinom{6}{2} = 15$ cách. Tổng quát với $n$ viên kẹo và $k$ bạn ($n \ge k$), ta có $n - 1$ khoảng trống và cần đặt $k - 1$ vách ngăn, nên có $\dbinom{n - 1}{k - 1}$ cách.</p>
+
+        <p><b>2. Chia $n$ viên kẹo cho $k$ bạn sao cho không nhất thiết bạn nào cũng có kẹo ($x_i \ge 0$).</b></p>
+        <p>Xét vẫn 7 viên kẹo hồng chia cho Nam, Minh, Hoa nhưng cho phép có bạn nhận 0 viên (chẳng hạn hộp của Nam đang có 0 viên, Minh có 3 viên, Hoa có 4 viên). Để đưa về trường hợp trên, ta mượn thêm và tặng trước vào hộp của mỗi bạn đúng 1 viên kẹo mới (tổng cộng thêm 3 viên cho 3 bạn). Lúc này hộp của bạn nào cũng chắc chắn có từ 1 viên trở lên, và bài toán quy thẳng về trường hợp trước với $7 + 3 = 10$ viên kẹo (tạo ra 9 khoảng trống) và 2 vách ngăn, nên số cách chia là $\dbinom{9}{2} = 36$ cách.</p>
+        <p>Tổng quát với $n$ viên kẹo và $k$ bạn, sau khi phát trước cho mỗi bạn 1 viên, tổng số kẹo trở thành $n + k$ viên và số vách ngăn vẫn giữ nguyên là $k - 1$, nên có $\dbinom{n + k - 1}{k - 1}$ cách. (Ta cũng có thể nhìn trực tiếp bằng cách xếp $n$ viên kẹo và $k - 1$ vách ngăn lên $n + k - 1$ vị trí rồi chọn $k - 1$ vị trí cho vách ngăn, cho phép hai vách ngăn đứng cạnh nhau hoặc ở hai đầu khi có bạn nhận 0 viên.)</p>
+
+        <p><b>3. Chuyển sang phương trình nghiệm nguyên.</b> Gọi $x_1, x_2, \dots, x_k$ lần lượt là số kẹo nằm trong các phần do $k - 1$ vách ngăn tạo thành (ví dụ với 7 viên kẹo, $x_1 + x_2 + x_3 = 7$). Mỗi cách chia kẹo tương ứng một – một với một bộ nghiệm nguyên $(x_1, x_2, \dots, x_k)$ của phương trình $x_1 + x_2 + \dots + x_k = n$. Từ đó ta có hai định lý cơ bản:</p>
 
         <div class="smp-graybox">
-            <b>Định lý 1.</b> Cho các số nguyên dương $n, k$ với $n \ge k$. Số nghiệm nguyên dương của phương trình
+            <b>Định lý 1 (Số nghiệm nguyên dương).</b> Cho các số nguyên dương $n, k$ với $n \ge k$. Số nghiệm nguyên dương của phương trình
             $$x_1 + x_2 + \dots + x_k = n \quad (x_i \ge 1, \; \forall i = 1, 2, \dots, k)$$
             là $\dbinom{n - 1}{k - 1}$. (Nếu $n < k$ thì phương trình vô nghiệm.)
         </div>
 
-        <p><b>2. Trường hợp nghiệm nguyên không âm ($x_i \ge 0$).</b> Cho số nguyên không âm $n$ và số nguyên dương $k$. Đặt $y_i = x_i + 1$ với mọi $i = 1, 2, \dots, k$. Khi đó điều kiện $x_i \ge 0$ tương đương với $y_i \ge 1$, và phương trình trở thành:</p>
-        $$y_1 + y_2 + \dots + y_k = n + k.$$
-        <p>Vì $n \ge 0$ nên $n + k \ge k \ge 1$. Áp dụng Định lý 1 cho bộ $(y_1, \dots, y_k)$, số nghiệm nguyên không âm là $\dbinom{n + k - 1}{k - 1} = \dbinom{n + k - 1}{n}$.</p>
-
-        <p>Ta cũng có thể nhìn trực tiếp bằng vách ngăn: mỗi bộ nghiệm nguyên không âm $(x_1, \dots, x_k)$ tương ứng một – một với một dãy gồm $n$ viên kẹo và $k - 1$ vách ngăn xếp trên $n + k - 1$ vị trí (phần thứ $i$ gồm các viên kẹo nằm giữa vách ngăn thứ $i - 1$ và thứ $i$, cho phép hai vách ngăn đứng sát nhau khi $x_i = 0$). Số cách chọn $k - 1$ vị trí đặt vách ngăn (hoặc $n$ vị trí đặt kẹo) trong $n + k - 1$ vị trí là $\dbinom{n + k - 1}{k - 1} = \dbinom{n + k - 1}{n}$.</p>
-
         <div class="smp-graybox">
-            <b>Định lý 2.</b> Cho số nguyên không âm $n$ và số nguyên dương $k$. Số nghiệm nguyên không âm của phương trình
+            <b>Định lý 2 (Số nghiệm nguyên không âm).</b> Cho số nguyên không âm $n$ và số nguyên dương $k$. Số nghiệm nguyên không âm của phương trình
             $$x_1 + x_2 + \dots + x_k = n \quad (x_i \ge 0, \; \forall i = 1, 2, \dots, k)$$
             là $\dbinom{n + k - 1}{k - 1} = \dbinom{n + k - 1}{n}$.
         </div>
 
-        <p><b>Liên hệ với tổ hợp lặp.</b> Khi chọn $n$ phần tử từ $k$ loại phần tử đã cho (không phân biệt thứ tự và mỗi loại có thể được chọn lặp lại tùy ý), nếu gọi $x_i \ge 0$ là số lần phần tử loại $i$ được chọn thì $x_1 + x_2 + \dots + x_k = n$. Vì vậy, số tổ hợp lặp chập $n$ của $k$ phần tử bằng $\dbinom{n + k - 1}{n}$.</p>
+        <p>Từ Định lý 2 suy ra số tổ hợp lặp chập $n$ của $k$ phần tử (với $x_i \ge 0$ là số lần phần tử loại $i$ xuất hiện) cũng chính là $\dbinom{n + k - 1}{k - 1} = \dbinom{n + k - 1}{n}$.</p>
 
-        <h3 class="smp-subsection-title">§1.2 Một số biến đổi thường gặp</h3>
+        <h3 class="smp-subsection-title">§1.3 Ánh xạ, đơn ánh, toàn ánh và song ánh</h3>
+        <p>Khi muốn chứng minh hai tập hợp hữu hạn $A$ và $B$ có cùng số phần tử ($|A| = |B|$), ta thường xây dựng một ánh xạ $f : A \to B$ và kiểm tra các tính chất sau:</p>
+        <ul style="padding-left: 20px; line-height: 1.85;">
+            <li><b>Đơn ánh:</b> với mọi $x_1, x_2 \in A$, nếu $x_1 \ne x_2$ thì $f(x_1) \ne f(x_2)$ (hai phần tử khác nhau không cùng cho một ảnh). Nếu $f : A \to B$ là đơn ánh thì $|A| \le |B|$. Chẳng hạn, hàm $f(x) = x^2$ trên $\mathbb{R}$ không phải đơn ánh vì $f(1) = f(-1) = 1$.</li>
+            <li><b>Toàn ánh:</b> với mọi $y \in B$, tồn tại ít nhất một $x \in A$ sao cho $f(x) = y$. Nếu $f : A \to B$ là toàn ánh thì $|A| \ge |B|$. Chẳng hạn, trên $\mathbb{R}$, $f(x) = x^2$ không toàn ánh vì không có $x$ để $f(x) = -1$, hay $f(x) = \frac{1}{x}$ không đạt giá trị $0$.</li>
+            <li><b>Song ánh:</b> ánh xạ vừa là đơn ánh, vừa là toàn ánh (mỗi phần tử của $A$ tương ứng 1–1 với đúng một phần tử của $B$). Khi $f : A \to B$ là song ánh thì $|A| \le |B|$ và $|A| \ge |B|$, suy ra $|A| = |B|$.</li>
+        </ul>
+
+        <h3 class="smp-subsection-title">§1.4 Nguyên lý bù trừ</h3>
+        <p>Nguyên lý bù trừ là công cụ chính để xử lý các bài toán có điều kiện chặn trên ($x_i \le M_i$) hoặc điều kiện loại trừ:</p>
+        <ul style="padding-left: 20px; line-height: 1.85;">
+            <li><b>Trường hợp 2 tập $A, B$:</b> Khi cộng $|A| + |B|$, phần giao $A \cap B$ bị đếm lặp 2 lần nên ta phải trừ đi 1 lần:
+            $$|A \cup B| = |A| + |B| - |A \cap B|.$$</li>
+            <li><b>Trường hợp 3 tập $A, B, C$:</b> Khi tính $|A| + |B| + |C| - (|A \cap B| + |B \cap C| + |C \cap A|)$, phần giao chung $A \cap B \cap C$ nằm trong cả 3 tập đơn nên được cộng 3 lần, rồi nằm trong cả 3 giao đôi nên bị trừ đi 3 lần, tổng số lần đếm còn $3 - 3 = 0$. Do đó ta phải cộng bù lại 1 lần $|A \cap B \cap C|$:
+            $$|A \cup B \cup C| = |A| + |B| + |C| - (|A \cap B| + |B \cap C| + |C \cap A|) + |A \cap B \cap C|.$$</li>
+            <li><b>Trường hợp tổng quát ($n$ tập $A_1, \dots, A_n$):</b> Cộng trừ đan dấu theo số tập giao tăng dần từ 1 đến $n$:
+            $$\left|\bigcup_{i=1}^{n} A_i\right| = \sum_{1 \le i \le n} |A_i| - \sum_{1 \le i < j \le n} |A_i \cap A_j| + \dots + (-1)^{n-1} |A_1 \cap A_2 \cap \dots \cap A_n|.$$
+            Và nếu $\Omega$ là tập các phần tử không xét điều kiện ràng buộc còn $A_i \subseteq \Omega$ là tập các phần tử vi phạm điều kiện thứ $i$, thì số phần tử không vi phạm bất kỳ điều kiện nào là:
+            $$\left|\Omega \setminus \bigcup_{i=1}^{n} A_i\right| = |\Omega| - \left|\bigcup_{i=1}^{n} A_i\right|.$$</li>
+        </ul>
+
+        <h3 class="smp-subsection-title">§1.5 Các biến đổi thường gặp và bổ đề Burnside</h3>
         <ol style="padding-left: 20px; line-height: 1.85;">
-            <li><b>Điều kiện chặn dưới $x_i \ge c_i$:</b> Với các số nguyên $c_1, c_2, \dots, c_k$, đặt $y_i = x_i - c_i \ge 0$ để đưa phương trình $x_1 + \dots + x_k = n$ về dạng $y_1 + \dots + y_k = n - \sum_{i=1}^k c_i$. Nếu $n \ge \sum_{i=1}^k c_i$, theo Định lý 2 số nghiệm là $\dbinom{n - \sum_{i=1}^k c_i + k - 1}{k - 1}$; nếu $n < \sum_{i=1}^k c_i$ thì phương trình vô nghiệm. Tương tự, nếu có điều kiện đồng dư $x_i \equiv r_i \pmod d$ ($0 \le r_i < d$, $x_i \ge r_i$), ta đặt $x_i = d y_i + r_i$ với $y_i \in \mathbb{N}$.</li>
-            <li><b>Bất phương trình $x_1 + x_2 + \dots + x_k \le N$ ($x_i \ge 0$):</b> Với số nguyên không âm $N$, đặt thêm biến phụ $x_{k+1} = N - (x_1 + \dots + x_k) \ge 0$. Mỗi bộ nghiệm nguyên không âm $(x_1, \dots, x_k)$ của bất phương trình tương ứng một – một với một bộ nghiệm nguyên không âm $(x_1, \dots, x_k, x_{k+1})$ của phương trình $x_1 + \dots + x_k + x_{k+1} = N$.</li>
+            <li><b>Hạ cận dưới về dạng chuẩn ($x_i \ge c_i$):</b> Để đưa phương trình $x_1 + \dots + x_k = n$ với $x_i \ge c_i$ về dạng không âm ($\ge 0$) hoặc nguyên dương ($\ge 1$), ta đổi biến $y_i = x_i - c_i \ge 0$ (hoặc $y_i = x_i - c_i + 1 \ge 1$; biến nào đã $\ge 1$ sẵn thì giữ nguyên). Tương tự, với điều kiện chia hết hoặc đồng dư $x_i \equiv r_i \pmod d$ ($0 \le r_i < d$, $x_i \ge r_i$), ta đặt $x_i = d y_i + r_i$ với $y_i \in \mathbb{N}$.</li>
+            <li><b>Thêm biến phụ cho bất phương trình ($x_1 + x_2 + \dots + x_k \le N$):</b> Với $x_i \ge 0$ và số nguyên không âm $N$, ta đặt lượng còn thiếu so với $N$ làm biến phụ $a = N - (x_1 + \dots + x_k) \ge 0$. Khi đó bất phương trình biến thành phương trình $x_1 + \dots + x_k + a = N$ với $k + 1$ biến không âm.</li>
         </ol>
 
         <div class="smp-graybox">
             <b>Hệ quả.</b> Với số nguyên không âm $N$ và số nguyên dương $k$, số nghiệm nguyên không âm của bất phương trình $x_1 + x_2 + \dots + x_k \le N$ là $\dbinom{N + k}{k}$.<br>
-            <span style="display: block; margin-top: 6px;">Mặt khác, nếu chia tập nghiệm theo từng giá trị tổng $m = x_1 + \dots + x_k \in \{0, 1, \dots, N\}$, phép đếm bằng hai cách cho đẳng thức:</span>
+            <span style="display: block; margin-top: 6px;">Đếm riêng theo từng giá trị tổng $m = x_1 + \dots + x_k \in \{0, 1, \dots, N\}$, ta đồng thời thu được đẳng thức:</span>
             $$\sum_{m=0}^{N} \binom{m + k - 1}{k - 1} = \binom{N + k}{k}.$$
         </div>
 
-        <p><b>3. Điều kiện chặn trên $x_i \le M_i$ và nguyên lý bù trừ.</b> Khi phương trình $x_1 + \dots + x_k = n$ ($x_i \ge 0$) đi kèm các điều kiện chặn trên $x_i \le M_i$, phép đổi biến trực tiếp không làm mất cận trên. Khi đó ta gọi $\Omega$ là tập tất cả các nghiệm nguyên không âm của phương trình, và với mỗi $i \in \{1, \dots, k\}$, đặt $A_i = \{(x_1, \dots, x_k) \in \Omega \mid x_i \ge M_i + 1\}$ là tập các nghiệm vi phạm điều kiện thứ $i$. Vì các ràng buộc trong giao $A_{i_1} \cap \dots \cap A_{i_r}$ đều là điều kiện chặn dưới nên lực lượng của chúng tính được ngay nhờ phép đổi biến ở mục 1. Theo nguyên lý bù trừ, số nghiệm thỏa mãn là:</p>
-        $$\left|\Omega \setminus \bigcup_{i=1}^{k} A_i\right| = |\Omega| - \sum_{1 \le i \le k} |A_i| + \sum_{1 \le i < j \le k} |A_i \cap A_j| - \dots + (-1)^k |A_1 \cap A_2 \cap \dots \cap A_k|.$$
+        <div class="smp-graybox">
+            <b>Bổ đề Burnside.</b> Cho nhóm hữu hạn $\Phi$ gồm các phép biến đổi tác động lên tập hữu hạn $X$. Với mỗi $\varphi \in \Phi$, ký hiệu $X^\varphi = \{x \in X \mid \varphi(x) = x\}$ là tập các phần tử bất biến qua $\varphi$ và đặt $\nu(\varphi) = |X^\varphi|$. Khi đó số quỹ đạo (số cấu hình khác nhau qua tác động của $\Phi$) là:
+            $$|X / \Phi| = \frac{1}{|\Phi|} \sum_{\varphi \in \Phi} \nu(\varphi).$$
+        </div>
+
+        <h3 class="smp-subsection-title">§1.6 Bài toán chia kẹo và đường đi trên lưới nguyên</h3>
+        <p><b>Lưới nguyên</b> là tập hợp tất cả các điểm có tọa độ nguyên trong mặt phẳng $\mathbb{Z}^2 = \{(x, y) \mid x \in \mathbb{Z}, y \in \mathbb{Z}\}$, các điểm nằm cách nhau 1 đơn vị theo phương ngang hoặc dọc tạo thành mạng lưới các ô vuông kích thước $1 \times 1$.</p>
+        <p>Xét đường đi ngắn nhất trên lưới nguyên từ $(0, 0)$ đến $(m, n)$ ($m, n \in \mathbb{N}$), trong đó mỗi bước chỉ được đi lên trên (tăng $y$ thêm 1) hoặc đi sang phải (tăng $x$ thêm 1). Mọi đường đi như vậy đều có độ dài bằng $m + n$, gồm đúng $n$ bước đi lên và $m$ bước sang phải. Quy ước đi lên mã hóa là số 1 và đi sang phải mã hóa là số 0, ta cần chọn $n$ vị trí đặt số 1 trong $m + n$ vị trí, nên có $\dbinom{m + n}{n} = \dbinom{m + n}{m}$ đường đi ngắn nhất. Điều này tương đương hoàn toàn với bài toán chia $m$ viên kẹo (số 0) cho $n + 1$ người bằng $n$ vách ngăn (số 1).</p>
+        <p>Mở rộng trong không gian ba chiều: cho hình hộp chữ nhật $ABCDA'B'C'D'$ kích thước $m \times n \times k$ ($m, n, k \in \mathbb{N}^*$) chia thành lưới các khối lập phương đơn vị. Mỗi đường đi ngắn nhất dọc theo các cạnh lưới từ $A$ đến $C'$ tương ứng một – một với một hoán vị của chuỗi gồm $m$ chữ $x$, $n$ chữ $y$ và $k$ chữ $z$, nên số cách di chuyển bằng $\dfrac{(m + n + k)!}{m!\, n!\, k!}$.</p>
 
         <h2 class="smp-section-title">§2. Các Ví Dụ Minh Họa</h2>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 1</span></h3>
         <ol type="a" style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
-            <li>Tìm số nghiệm nguyên của phương trình $x_1 + x_2 + x_3 + x_4 + x_5 = 2016$ thỏa mãn $x_1 \ge 5$, $x_2 \ge 4$, $x_3 \ge 3$, $x_4 \ge 2$, $x_5 \ge 1$.</li>
-            <li>Tìm số nghiệm nguyên không âm của bất phương trình kép $100 \le x_1 + x_2 + x_3 + x_4 + x_5 + x_6 \le 200$.</li>
+            <li>Tìm số nghiệm nguyên không âm của phương trình $x_1 + x_2 + x_3 + x_4 = 3$.</li>
+            <li>Tìm số nghiệm nguyên của phương trình $x_1 + x_2 + x_3 + x_4 + x_5 = 2016$ với $x_1 \ge 5$, $x_2 \ge 4$, $x_3 \ge 3$, $x_4 \ge 2$, $x_5 \ge 1$.</li>
+            <li>Tìm số nghiệm nguyên không âm của phương trình $x_1 + x_2 + x_3 + x_4 + x_5 + x_6 = 100$ biết $x_i$ chia hết cho 5 với mọi $i = 1, \dots, 6$.</li>
+            <li>Tìm số nghiệm nguyên không âm của bất phương trình $x_1 + x_2 + x_3 + x_4 \le 50$ và bất phương trình $100 \le x_1 + x_2 + \dots + x_6 \le 200$.</li>
+            <li>Tìm số nghiệm nguyên dương của phương trình $x_1 + x_2 + x_3 + x_4 = 20$ thỏa mãn $x_1 \le 4$ và $x_2 \le 7$.</li>
         </ol>
         <p><b>Lời giải.</b></p>
-        <p><b>a)</b> Đặt $y_1 = x_1 - 5$, $y_2 = x_2 - 4$, $y_3 = x_3 - 3$, $y_4 = x_4 - 2$, $y_5 = x_5 - 1$. Điều kiện đề bài tương đương với $y_i \ge 0$ ($\forall i = 1, \dots, 5$) và:</p>
-        $$y_1 + y_2 + y_3 + y_4 + y_5 = 2016 - (5 + 4 + 3 + 2 + 1) = 2001.$$
-        <p>Theo Định lý 2 (với $n = 2001, k = 5$), số nghiệm cần tìm là $\dbinom{2001 + 5 - 1}{5 - 1} = \dbinom{2005}{4}$.</p>
-        <p><b>b)</b> Xét trên tập các bộ 6 số nguyên không âm $(x_1, \dots, x_6)$, tập nghiệm của $100 \le x_1 + \dots + x_6 \le 200$ nhận được bằng cách lấy tập nghiệm của $x_1 + \dots + x_6 \le 200$ bỏ đi tập nghiệm của $x_1 + \dots + x_6 \le 99$. Áp dụng Hệ quả ở §1.2 với $k = 6$, số nghiệm cần tìm là:</p>
-        $$\binom{200 + 6}{6} - \binom{99 + 6}{6} = \binom{206}{6} - \binom{105}{6}. \quad \square$$
+        <p><b>a)</b> Đối chiếu Định lý 2 với tổng $n = 3$ và số biến $k = 4$, số nghiệm nguyên không âm bằng $\dbinom{3 + 4 - 1}{4 - 1} = \dbinom{6}{3} = 20$.</p>
+        <p><b>b)</b> Các biến có cận dưới khác nhau nên ta đổi biến để cùng đưa về điều kiện $\ge 1$: đặt $y_1 = x_1 - 4 \ge 1$, $y_2 = x_2 - 3 \ge 1$, $y_3 = x_3 - 2 \ge 1$, $y_4 = x_4 - 1 \ge 1$, còn $x_5 \ge 1$ đã đúng dạng nên giữ nguyên. Khi đó vế phải trừ đi $4 + 3 + 2 + 1 = 10$ còn $2006$, phương trình trở thành:</p>
+        $$y_1 + y_2 + y_3 + y_4 + x_5 = 2006 \quad (y_1, y_2, y_3, y_4, x_5 \ge 1).$$
+        <p>Theo Định lý 1, số nghiệm là $\dbinom{2006 - 1}{5 - 1} = \dbinom{2005}{4}$.</p>
+        <p><b>c)</b> Do $x_i \ge 0$ chia hết cho 5, đặt $x_i = 5y_i$ với $y_i \ge 0$. Chia hai vế cho 5 được $y_1 + \dots + y_6 = 20$. Theo Định lý 2, số nghiệm là $\dbinom{20 + 6 - 1}{6 - 1} = \dbinom{25}{5}$.</p>
+        <p><b>d)</b> Với $x_1 + x_2 + x_3 + x_4 \le 50$, đặt biến phụ $a = 50 - (x_1 + x_2 + x_3 + x_4) \ge 0$ để thu được phương trình 5 biến $x_1 + x_2 + x_3 + x_4 + a = 50$, có $\dbinom{54}{4}$ nghiệm. Với $100 \le x_1 + \dots + x_6 \le 200$, ta lấy số nghiệm nguyên không âm có tổng $\le 200$ trừ đi số nghiệm vi phạm có tổng $< 100$ (tức $\le 99$). Theo Hệ quả ở §1.5, số nghiệm bằng $\dbinom{206}{6} - \dbinom{105}{6}$.</p>
+        <p><b>e)</b> Gọi $\Omega$ là tập các nghiệm nguyên dương của $x_1 + x_2 + x_3 + x_4 = 20$, ta có $|\Omega| = \dbinom{19}{3} = 969$. Gọi $A = \{x_1 \ge 5\} \subset \Omega$ và $B = \{x_2 \ge 8\} \subset \Omega$. Khi đó $|A| = \dbinom{15}{3} = 455$ (đặt $y_1 = x_1 - 4 \ge 1$), $|B| = \dbinom{12}{3} = 220$ (đặt $y_2 = x_2 - 7 \ge 1$), và $|A \cap B| = \dbinom{8}{3} = 56$. Theo nguyên lý bù trừ, số nghiệm cần tìm là $969 - (455 + 220 - 56) = 350$. $\square$</p>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 2</span></h3>
-        <p>Có bao nhiêu cách chọn ra 10 số từ 2016 số nguyên dương đầu tiên $\{1, 2, \dots, 2016\}$ sao cho không có hai số nào liên tiếp (tức $|a_i - a_j| > 1$ với mọi $i \ne j$)?</p>
+        <p>Có bao nhiêu số tự nhiên nhỏ hơn $10^6$ mà tổng các chữ số của nó bằng 23?</p>
         <p><b>Lời giải.</b></p>
-        <p>Giả sử 10 số được chọn sắp theo thứ tự tăng dần là $1 \le a_1 < a_2 < \dots < a_{10} \le 2016$. Điều kiện không có hai số nào liên tiếp tương đương với $a_i - a_{i-1} \ge 2$ với mọi $i = 2, 3, \dots, 10$.</p>
-        <p><b>Cách 1 (Đếm qua số phần tử nằm giữa các số được chọn).</b> Đặt $x_1 = a_1 - 1$, $x_i = a_i - a_{i-1} - 1$ ($2 \le i \le 10$) và $x_{11} = 2016 - a_{10}$ (lần lượt là số các phần tử không được chọn nằm ở 11 khoảng do $a_1, \dots, a_{10}$ chia ra). Khi đó:</p>
-        $$x_1 + x_2 + \dots + x_{10} + x_{11} = 2016 - 10 = 2006,$$
-        <p>với điều kiện $x_1, x_{11} \ge 0$ và $x_2, x_3, \dots, x_{10} \ge 1$. Ngược lại, mỗi bộ nguyên $(x_1, \dots, x_{11})$ thỏa mãn hệ điều kiện trên xác định duy nhất bộ $(a_1, \dots, a_{10})$ qua công thức $a_i = i + \sum_{j=1}^i x_j$ ($1 \le i \le 10$). Đặt $y_i = x_i - 1 \ge 0$ với $2 \le i \le 10$, phương trình trở thành:</p>
-        $$x_1 + y_2 + \dots + y_{10} + x_{11} = 2006 - 9 = 1997.$$
-        <p>Theo Định lý 2 (với $n = 1997, k = 11$), số cách chọn là $\dbinom{1997 + 11 - 1}{11 - 1} = \dbinom{2007}{10}$.</p>
-        <p><b>Cách 2 (Đổi biến làm trơn khoảng cách).</b> Đặt $b_i = a_i - (i - 1)$ với mỗi $i = 1, 2, \dots, 10$. Vì $a_{i+1} - a_i \ge 2$ nên $b_{i+1} - b_i = a_{i+1} - a_i - 1 \ge 1$. Do đó dãy $(b_1, \dots, b_{10})$ thỏa mãn:</p>
-        $$1 \le b_1 < b_2 < \dots < b_{10} \le 2016 - 9 = 2007.$$
-        <p>Ánh xạ $(a_1, \dots, a_{10}) \mapsto (b_1, \dots, b_{10})$ là một song ánh từ tập các cách chọn thỏa mãn đề bài lên tập các tập con gồm 10 phần tử của $\{1, 2, \dots, 2007\}$, nên số cách chọn bằng $\dbinom{2007}{10}$. $\square$</p>
-
-        <div class="smp-longnote">
-            <b>Nhận xét.</b> Hoàn toàn tương tự, số cách chọn $k$ phần tử không kề nhau từ $\{1, 2, \dots, n\}$ (với $1 \le k \le n + 1$) bằng $\dbinom{n - k + 1}{k}$ (quy ước $\dbinom{m}{k} = 0$ nếu $m < k$, tức khi $n < 2k - 1$).
-        </div>
+        <p>Mỗi số tự nhiên nhỏ hơn $10^6$ đều viết được duy nhất thành dãy 6 chữ số $\overline{a_1 a_2 a_3 a_4 a_5 a_6}$ bằng cách điền thêm các chữ số 0 ở đầu (ví dụ $599$ viết thành $000599$ mà tổng chữ số không đổi). Khi đó bài toán tương đương đếm nghiệm nguyên của:</p>
+        $$a_1 + a_2 + a_3 + a_4 + a_5 + a_6 = 23 \quad (0 \le a_i \le 9, \; \forall i = 1, \dots, 6).$$
+        <p>Nếu bỏ qua điều kiện $a_i \le 9$, số nghiệm nguyên không âm là $|\Omega| = \dbinom{23 + 6 - 1}{6 - 1} = \dbinom{28}{5} = 98\,280$. Tuy nhiên trong $\Omega$ có lẫn những bộ vi phạm như $(12, 5, 6, 0, 0, 0)$ (vì $12 > 9$ không phải chữ số). Gọi $A_i \subseteq \Omega$ là tập các bộ nghiệm mà $a_i \ge 10$ ($i = 1, \dots, 6$):</p>
+        <ul style="padding-left: 20px; line-height: 1.85;">
+            <li>Với $A_1$: đặt $b_1 = a_1 - 10 \ge 0$, tổng 6 ẩn không âm còn 13, nên $|A_1| = \dbinom{13 + 6 - 1}{5} = \dbinom{18}{5}$. Suy ra $\displaystyle\sum_{i=1}^6 |A_i| = 6\dbinom{18}{5} = 51\,408$.</li>
+            <li>Với $A_i \cap A_j$ ($i < j$), chẳng hạn bộ $(10, 11, 2, 0, 0, 0) \in A_1 \cap A_2$: bớt đi 20 từ hai biến lớn hơn hoặc bằng 10 thì tổng còn 3, nên $|A_1 \cap A_2| = \dbinom{3 + 6 - 1}{5} = \dbinom{8}{5}$. Có $\dbinom{6}{2}$ cặp nên $\displaystyle\sum_{1 \le i < j \le 6} |A_i \cap A_j| = \binom{6}{2}\binom{8}{5} = 840$.</li>
+            <li>Giao của từ 3 tập trở lên bằng rỗng vì tổng 3 biến ít nhất là $30 > 23$.</li>
+        </ul>
+        <p>Theo nguyên lý bù trừ, số các số tự nhiên thỏa mãn là $98\,280 - (51\,408 - 840) = 47\,712$. $\square$</p>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 3</span></h3>
-        <p>Một vé xe buýt gồm 6 chữ số có dạng $\overline{abcdef}$ với $a, b, c, d, e, f \in \{0, 1, \dots, 9\}$ được gọi là <i>vé hạnh phúc</i> nếu $a + b + c = d + e + f$.</p>
-        <ol type="a" style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
-            <li>Chứng minh rằng số vé hạnh phúc bằng số nghiệm nguyên của phương trình $x_1 + x_2 + x_3 + x_4 + x_5 + x_6 = 27$ với $0 \le x_i \le 9$ ($\forall i = 1, \dots, 6$).</li>
-            <li>Tính số vé hạnh phúc.</li>
-        </ol>
+        <p>Có 5 con xúc xắc được đánh số thứ tự $1, 2, 3, 4, 5$. Gieo đồng thời cả 5 xúc xắc đó. Tính xác suất để tổng số chấm trên mặt xuất hiện của 5 xúc xắc bằng 14.</p>
         <p><b>Lời giải.</b></p>
-        <p><b>a)</b> Gọi $S_1$ là tập các bộ $(a, b, c, d, e, f) \in \{0, 1, \dots, 9\}^6$ thỏa mãn $a + b + c = d + e + f$, và $S_2$ là tập các bộ $(x_1, \dots, x_6) \in \{0, 1, \dots, 9\}^6$ thỏa mãn $x_1 + \dots + x_6 = 27$. Xét ánh xạ $\Phi : S_1 \to S_2$ xác định bởi:</p>
-        $$\Phi(a, b, c, d, e, f) = (a, b, c, 9 - d, 9 - e, 9 - f).$$
-        <p>Vì $d, e, f \in \{0, 1, \dots, 9\}$ khi và chỉ khi $9 - d, 9 - e, 9 - f \in \{0, 1, \dots, 9\}$, đồng thời:</p>
-        $$a + b + c = d + e + f \iff a + b + c + (9 - d) + (9 - e) + (9 - f) = 27,$$
-        <p>nên $\Phi$ xác định tốt và có ánh xạ ngược chính là công thức cùng dạng $(x_1, \dots, x_6) \mapsto (x_1, x_2, x_3, 9 - x_4, 9 - x_5, 9 - x_6)$. Vậy $\Phi$ là một song ánh, suy ra $|S_1| = |S_2|$.</p>
-        <p><b>b)</b> Gọi $\Omega$ là tập tất cả các nghiệm nguyên không âm của $x_1 + x_2 + x_3 + x_4 + x_5 + x_6 = 27$, và $A_i = \{(x_1, \dots, x_6) \in \Omega \mid x_i \ge 10\}$ với $i = 1, \dots, 6$. Ta có:</p>
-        <ul style="padding-left: 20px; line-height: 1.85;">
-            <li>Theo Định lý 2: $|\Omega| = \dbinom{27 + 6 - 1}{6 - 1} = \dbinom{32}{5} = 201\,376$.</li>
-            <li>Với mỗi $i$, đặt $y_i = x_i - 10 \ge 0$ đưa phương trình về tổng 6 ẩn không âm bằng 17, nên $|A_i| = \dbinom{17 + 6 - 1}{5} = \dbinom{22}{5}$ và $\displaystyle\sum_{i=1}^6 |A_i| = 6\dbinom{22}{5} = 6 \times 26\,334 = 158\,004$.</li>
-            <li>Với mỗi cặp $1 \le i < j \le 6$, đặt $y_i = x_i - 10 \ge 0$, $y_j = x_j - 10 \ge 0$ đưa về tổng 6 ẩn không âm bằng 7, nên $|A_i \cap A_j| = \dbinom{7 + 6 - 1}{5} = \dbinom{12}{5}$ và $\displaystyle\sum_{1 \le i < j \le 6} |A_i \cap A_j| = \dbinom{6}{2}\dbinom{12}{5} = 15 \times 792 = 11\,880$.</li>
-            <li>Giao của từ 3 tập trở lên đều bằng rỗng vì nếu có 3 biến lớn hơn hoặc bằng 10 thì tổng vế trái ít nhất bằng $30 > 27$.</li>
-        </ul>
-        <p>Theo nguyên lý bù trừ, số vé hạnh phúc là:</p>
-        $$|S_2| = \binom{32}{5} - 6\binom{22}{5} + 15\binom{12}{5} = 201\,376 - 158\,004 + 11\,880 = 55\,252. \quad \square$$
+        <p>Không gian mẫu có kích thước $|\Omega| = 6^5 = 7776$. Gọi $x_i$ là số chấm xuất hiện trên con xúc xắc thứ $i$ ($i = 1, 2, 3, 4, 5$). Ta cần đếm số bộ nghiệm nguyên thỏa mãn:</p>
+        $$x_1 + x_2 + x_3 + x_4 + x_5 = 14 \quad \text{và} \quad 1 \le x_i \le 6 \; (\forall i = 1, \dots, 5).$$
+        <p>Số nghiệm nguyên dương khi chưa xét cận trên $x_i \le 6$ là $\dbinom{14 - 1}{5 - 1} = \dbinom{13}{4} = 715$. Gọi $A_i$ là tập các bộ nghiệm nguyên dương trong đó $x_i \ge 7$ ($i = 1, \dots, 5$). Với mọi $1 \le i < j \le 5$, nếu một bộ thuộc $A_i \cap A_j$ thì $x_i + x_j \ge 14$, kéo theo 3 biến còn lại đều bằng 0 (vô lý vì $x_t \ge 1$). Suy ra $|A_i \cap A_j| = 0$ và $\left|\bigcup_{i=1}^5 A_i\right| = 5|A_1|$.</p>
+        <p>Với $A_1$, viết $(x_1 - 6) + x_2 + x_3 + x_4 + x_5 = 8$ (các ẩn đều $\ge 1$), theo Định lý 1 thì $|A_1| = \dbinom{8 - 1}{5 - 1} = \dbinom{7}{4} = 35$. Do đó có $\dbinom{13}{4} - 5\dbinom{7}{4} = 540$ kết quả thuận lợi, và xác suất cần tìm là:</p>
+        $$P = \frac{\dbinom{13}{4} - 5\dbinom{7}{4}}{6^5} = \frac{540}{7776} = \frac{5}{72}. \quad \square$$
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 4</span> (VMO 2012)</h3>
-        <p>Cho một nhóm gồm 5 cô gái $G_1, G_2, G_3, G_4, G_5$ và 12 chàng trai cùng ngồi vào 17 chiếc ghế xếp thành hàng ngang sao cho các điều kiện sau đồng thời được thỏa mãn:</p>
-        <ol style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
-            <li>Mỗi ghế có đúng một người ngồi;</li>
-            <li>Thứ tự ngồi của các cô gái xét từ trái sang phải là $G_1, G_2, G_3, G_4, G_5$;</li>
-            <li>Giữa $G_1$ và $G_2$ có ít nhất 3 chàng trai;</li>
-            <li>Giữa $G_4$ và $G_5$ có ít nhất 1 chàng trai và nhiều nhất 4 chàng trai.</li>
-        </ol>
-        <p>Hỏi có tất cả bao nhiêu cách xếp? (Hai cách xếp được coi là khác nhau nếu tồn tại ít nhất một chiếc ghế mà người ngồi ở ghế đó trong hai cách xếp là khác nhau.)</p>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 4</span></h3>
+        <p>Tìm số bộ nguyên dương $(a_1, a_2, \dots, a_{15})$ thỏa mãn đồng thời hai điều kiện:</p>
+        $$1 \le a_1 < a_2 < \dots < a_{15} \le 2020 \quad \text{và} \quad a_i \equiv i^2 \pmod 5, \; \forall i = 1, 2, \dots, 15.$$
         <p><b>Lời giải.</b></p>
-        <p>Do thứ tự từ trái sang phải của 5 cô gái đã cố định là $G_1, G_2, G_3, G_4, G_5$, mỗi cách xếp chỗ ngồi được xác định duy nhất qua hai bước độc lập:</p>
-        <ul style="padding-left: 20px; line-height: 1.85;">
-            <li><b>Bước 1:</b> Chọn vị trí 5 chiếc ghế cho $G_1, \dots, G_5$ (qua đó xác định luôn 12 chiếc ghế còn lại dành cho nam). Gọi $a_1, a_2, a_3, a_4, a_5, a_6$ lần lượt là số ghế dành cho nam nằm ở bên trái $G_1$, giữa $G_1$ và $G_2$, giữa $G_2$ và $G_3$, giữa $G_3$ và $G_4$, giữa $G_4$ và $G_5$, và bên phải $G_5$. Mỗi cách chọn vị trí cho 5 cô gái tương ứng một – một với một bộ nghiệm nguyên của hệ:
-            $$\begin{cases} a_1 + a_2 + a_3 + a_4 + a_5 + a_6 = 12, \\ a_2 \ge 3, \quad 1 \le a_5 \le 4, \quad a_1, a_3, a_4, a_6 \ge 0. \end{cases}$$
-            Đặt $b_2 = a_2 - 3 \ge 0$ và $b_5 = a_5 - 1$, hệ trở thành $a_1 + b_2 + a_3 + a_4 + b_5 + a_6 = 8$ với các ẩn nguyên không âm và $b_5 \le 3$. Nếu bỏ điều kiện $b_5 \le 3$ thì phương trình có $\dbinom{8 + 6 - 1}{5} = \dbinom{13}{5}$ nghiệm; số nghiệm vi phạm $b_5 \ge 4$ (đặt $b'_5 = b_5 - 4 \ge 0$ đưa tổng về 4) là $\dbinom{4 + 6 - 1}{5} = \dbinom{9}{5}$. Do đó số cách chọn vị trí ghế cho 5 cô gái là:
-            $$\binom{13}{5} - \binom{9}{5} = 1287 - 126 = 1161$$
-            (cũng có thể tính trực tiếp bằng cách cho $a_5$ nhận lần lượt $1, 2, 3, 4$: $\dbinom{12}{4} + \dbinom{11}{4} + \dbinom{10}{4} + \dbinom{9}{4} = 495 + 330 + 210 + 126 = 1161$).</li>
-            <li><b>Bước 2:</b> Xếp 12 chàng trai đôi một phân biệt vào 12 chiếc ghế nam đã xác định ở Bước 1, có $12!$ cách.</li>
+        <p><b>Cách 1 (Xét thương và số dư theo modulo 5).</b> Với mỗi $i \in \{1, 2, \dots, 15\}$, viết $a_i = 5q_i + r_i$ với $q_i \in \mathbb{N}$ và $r_i \in \{0, 1, 2, 3, 4\}$ là số dư của $i^2$ khi chia cho 5. Dãy số dư $(r_i)$ lặp lại theo chu kỳ 5 là $(1, 4, 4, 1, 0)$.</p>
+        <p>So sánh điều kiện $a_i < a_{i+1}$ trong mỗi chu kỳ:</p>
+        <ul style="padding-left: 20px; line-height: 1.8;">
+            <li>Khi $i \equiv 1$ hoặc $0 \pmod 5$: $r_i < r_{i+1}$ (vì $1 < 4$ và $0 < 1$), nên $a_i < a_{i+1} \iff q_i \le q_{i+1}$.</li>
+            <li>Khi $i \equiv 2, 3, 4 \pmod 5$: $r_i \ge r_{i+1}$ (vì $4 = 4$, $4 > 1$, $1 > 0$), nên $a_i < a_{i+1} \iff q_i < q_{i+1}$.</li>
         </ul>
-        <p>Theo quy tắc nhân, tổng số cách xếp thỏa mãn đề bài là $1161 \times 12!$. $\square$</p>
+        <p>Ngoài ra $a_1 \ge 1 \iff q_1 \ge 0$, và vì $r_{15} = 0$ nên $a_{15} = 5q_{15} \le 2020 \iff q_{15} \le 404$. Hệ điều kiện trở thành:</p>
+        $$0 \le q_1 \le q_2 < q_3 < q_4 < q_5 \le q_6 \le q_7 < q_8 < q_9 < q_{10} \le q_{11} \le q_{12} < q_{13} < q_{14} < q_{15} \le 404.$$
+        <p>Để chuyển toàn bộ dấu $\le$ giữa các $q_i$ thành dấu $<$, ta giữ $q'_1 = q_1$ và cộng thêm 1 mỗi khi đi qua một dấu $\le$: $q'_2 = q_2 + 1$, $\dots$, $q'_5 = q_5 + 1$, $q'_6 = q_6 + 2$, $q'_7 = q_7 + 3$, $\dots$, $q'_{10} = q_{10} + 3$, $q'_{11} = q_{11} + 4$, $q'_{12} = q_{12} + 5$, $\dots$, $q'_{15} = q_{15} + 5$. Điều kiện tương đương với:</p>
+        $$0 \le q'_1 < q'_2 < \dots < q'_{15} \le 409.$$
+        <p>Mỗi bộ tương ứng 1–1 với một tập con 15 phần tử của $\{0, 1, \dots, 409\}$, nên số bộ cần tìm là $\dbinom{410}{15}$.</p>
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 5</span> (VMO 2014)</h3>
-        <p>Cho đa giác đều 103 cạnh. Tô màu đỏ 79 đỉnh của đa giác và tô màu xanh 24 đỉnh còn lại. Gọi $A$ là số cặp đỉnh đỏ kề nhau và $B$ là số cặp đỉnh xanh kề nhau.</p>
+        <p><b>Cách 2 (Chia kẹo theo các hiệu liên tiếp).</b> Ta có $a_1 \equiv 1 \pmod 5$ và $a_{i+1} - a_i \equiv (i + 1)^2 - i^2 = 2i + 1 \pmod 5$ với $i = 1, \dots, 14$. Chú ý khi $i \in \{2, 7, 12\}$ thì $2i + 1 \equiv 0 \pmod 5$, mà $a_{i+1} - a_i > 0$ nên số dư dương nhỏ nhất chia hết cho 5 phải là 5. Do đó ta viết $a_1 = 5q_1 + 1$, $a_{i+1} - a_i = 5q_{i+1} + d_i$ với $(d_1, \dots, d_5) = (3, 5, 2, 4, 1)$ lặp theo chu kỳ 5, và $2020 - a_{15} = 5q_{16}$, trong đó $q_1, \dots, q_{16} \in \mathbb{N}$. Cộng cả 16 phương trình vế theo vế:</p>
+        $$2020 = 5\sum_{i=1}^{16} q_i + 1 + 2(3 + 5 + 2 + 4 + 1) + (3 + 5 + 2 + 4) = 5\sum_{i=1}^{16} q_i + 45 \iff \sum_{i=1}^{16} q_i = 395.$$
+        <p>Theo Định lý 2 ($n = 395, k = 16$), số bộ thỏa mãn là $\dbinom{395 + 16 - 1}{16 - 1} = \dbinom{410}{15}$. $\square$</p>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 5</span> (Saudi Arabia)</h3>
+        <p>Có bao nhiêu cách điền một hoặc nhiều dấu $+$ vào giữa 30 chữ số 1 trong dãy $\underbrace{111\dots 1}_{30 \text{ chữ số } 1}$ sao cho tổng thu được chia hết cho 30?</p>
+        <p><b>Lời giải.</b></p>
+        <p>Giả sử ta điền $n$ dấu $+$ ($1 \le n \le 29$), chia dãy thành $n + 1$ số hạng $a_1, a_2, \dots, a_{n+1}$ chỉ gồm các chữ số 1. Vì tổng các chữ số của tất cả các số hạng luôn bằng 30 (chia hết cho 3) nên tổng $S = a_1 + \dots + a_{n+1}$ luôn chia hết cho 3 với mọi cách điền dấu $+$. Do $\gcd(3, 10) = 1$, $30 \mid S \iff 10 \mid S$. Mặt khác mỗi $a_i$ đều tận cùng bằng 1 nên:</p>
+        $$S = a_1 + a_2 + \dots + a_{n+1} \equiv \underbrace{1 + 1 + \dots + 1}_{n + 1} = n + 1 \pmod{10}.$$
+        <p>Do đó $10 \mid (n + 1)$. Với $1 \le n \le 29$, ta được $n + 1 \in \{10, 20, 30\}$, tức $n \in \{9, 19, 29\}$.</p>
+        <p>Với mỗi $n$, gọi $b_i \ge 1$ là số chữ số 1 của $a_i$ ($i = 1, \dots, n + 1$). Số cách điền $n$ dấu $+$ chính là số nghiệm nguyên dương của $b_1 + \dots + b_{n+1} = 30$, bằng $\dbinom{29}{n}$. Vậy tổng số cách điền thỏa mãn là:</p>
+        $$\binom{29}{9} + \binom{29}{19} + \binom{29}{29}. \quad \square$$
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 6</span></h3>
+        <p>Có bao nhiêu cách chọn từ 2016 số nguyên dương đầu tiên $\{1, 2, \dots, 2016\}$ ra 10 số sao cho $|a_i - a_j| > 1$ với mọi $i \ne j$?</p>
+        <p><b>Lời giải.</b></p>
+        <p>Giả sử 10 số được chọn theo thứ tự tăng dần là $1 \le a_1 < a_2 < \dots < a_{10} \le 2016$. Chẳng hạn, nếu chọn $a_1 = 7$ và $a_2 = 10$ thì từ 1 đến trước 7 có 6 số ($1, 2, 3, 4, 5, 6$), còn giữa 7 và 10 có 2 số ($8, 9$). Tổng quát, gọi $x_1$ là số các số đứng trước $a_1$ ($x_1 = a_1 - 1$); $x_i$ ($2 \le i \le 10$) là số các số nằm giữa $a_{i-1}$ và $a_i$ ($x_i = a_i - a_{i-1} - 1$); và $x_{11}$ là số các số đứng sau $a_{10}$ ($x_{11} = 2016 - a_{10}$).</p>
+        <p><b>Lưu ý sai lầm thường gặp:</b> Không thể viết $x_1 + x_2 + \dots + x_{11} = 2016$, vì $x_1, \dots, x_{11}$ chỉ đếm các số <i>không được chọn</i>! Phải trừ đi 10 số $a_1, \dots, a_{10}$ đã chọn, tức $x_1 + x_2 + \dots + x_{11} = 2016 - 10 = 2006$. Hơn nữa, vì không có hai số nào đứng cạnh nhau nên 9 khoảng ở giữa $x_2, \dots, x_{10}$ đều đã lớn hơn hoặc bằng 1 sẵn rồi (không cần đổi biến nữa), chỉ có hai khoảng ở hai đầu là $x_1, x_{11} \ge 0$. Đặt $y_1 = x_1 + 1 \ge 1$ và $y_{11} = x_{11} + 1 \ge 1$, tổng vế phải tăng thêm 2 thành:</p>
+        $$y_1 + x_2 + \dots + x_{10} + y_{11} = 2006 + 2 = 2008.$$
+        <p>Mỗi nghiệm nguyên dương của phương trình này xác định duy nhất 10 số $a_1, \dots, a_{10}$ và ngược lại. Theo Định lý 1, số cách chọn là $\dbinom{2008 - 1}{11 - 1} = \dbinom{2007}{10}$. (Cách khác: đặt $b_i = a_i - i + 1$ với $1 \le i \le 10$ cũng đưa về chọn 10 số phân biệt từ $\{1, 2, \dots, 2007\}$, cho cùng đáp số $\dbinom{2007}{10}$.) $\square$</p>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 7</span></h3>
+        <p>Có 17 cây cau trồng xung quanh một cái ao hình tròn. Người ta muốn chặt đi 4 cây. Hỏi có mấy cách chặt sao cho không có 2 cây kề nhau bị chặt?</p>
+        <p><b>Lời giải.</b></p>
+        <p>Đánh số 17 vị trí cây theo chiều kim đồng hồ là $C_1, C_2, \dots, C_{17}$. Vì các cây trồng thành vòng tròn khép kín (cây $C_1$ kề với cả $C_2$ và $C_{17}$), ta chia thành hai trường hợp theo cây $C_1$ để cắt vòng tròn thành hàng ngang một cách chặt chẽ:</p>
+        <ul style="padding-left: 20px; line-height: 1.85;">
+            <li><b>Trường hợp 1 ($C_1$ bị chặt):</b> Khi đó hai cây kề nó là $C_2$ và $C_{17}$ không được chặt. Cần chọn thêm 3 cây không kề nhau từ 14 cây $C_3, \dots, C_{16}$ xếp thành hàng ngang. Tương tự Ví dụ 6, với 4 khoảng cây còn lại có $x_1 + x_2 + x_3 + x_4 = 14 - 3 = 11$ ($x_1, x_4 \ge 0; x_2, x_3 \ge 1$), đặt $y_1 = x_1 + 1 \ge 1, y_4 = x_4 + 1 \ge 1$ đưa về tổng 4 biến nguyên dương bằng 13, có $\dbinom{13 - 1}{4 - 1} = \dbinom{12}{3} = 220$ cách.</li>
+            <li><b>Trường hợp 2 ($C_1$ không bị chặt):</b> Cần chọn 4 cây không kề nhau từ 16 cây $C_2, \dots, C_{17}$ xếp thành hàng ngang. Tương tự, với 5 khoảng cây còn lại có $x_1 + \dots + x_5 = 16 - 4 = 12$ ($x_1, x_5 \ge 0; x_2, x_3, x_4 \ge 1$), nâng hai đầu lên $\ge 1$ đưa về tổng 5 biến nguyên dương bằng 14, có $\dbinom{14 - 1}{5 - 1} = \dbinom{13}{4} = 715$ cách.</li>
+        </ul>
+        <p>Vậy có tất cả $\dbinom{12}{3} + \dbinom{13}{4} = 220 + 715 = 935$ cách chặt thỏa mãn. $\square$</p>
+
+        <div class="smp-longnote">
+            <b>Chú ý (Bẫy khi mở vòng tròn ra hàng ngang).</b> Nếu cắt vòng tròn tại một điểm rồi viết 5 khoảng $x_1 + \dots + x_5 = 13$ ($x_i \ge 1$) giống bài toán hàng ngang sẽ ra $\binom{12}{4} = 495$ — kết quả này sai vì trên vòng tròn nếu chọn cây mốc $C_1$ làm một cây bị chặt thì giữa 4 cây bị chặt chỉ có 4 khoảng chứ không phải 5 khoảng, còn nếu điểm cắt không là cây bị chặt thì hai phần cây ở đầu và cuối hàng gộp lại thành một khoảng. Nếu đếm trực tiếp trên vòng tròn bằng cách đánh dấu trước một trong 4 cây bị chặt: chọn vị trí cây được đánh dấu (17 cách), rồi chia 13 cây còn lại vào 4 khoảng ($\binom{12}{3}$ cách), mỗi cách chặt bị đếm lặp 4 lần theo 4 cách chọn cây đánh dấu nên đáp số là $\frac{17}{4}\binom{12}{3} = 935$.
+        </div>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 8</span></h3>
+        <p>Vé xe buýt có dạng $\overline{abcdef}$ với $a, b, c, d, e, f \in \{0, 1, 2, \dots, 9\}$. Một vé thỏa mãn $a + b + c = d + e + f$ được gọi là <i>vé hạnh phúc</i>. Tính số vé như thế.</p>
+        <p><b>Lời giải.</b></p>
+        <p>Gọi $A$ là tập nghiệm của $a + b + c = d + e + f$ và $B$ là tập nghiệm của $a + b + c + x + y + z = 27$ trên $\{0, 1, \dots, 9\}^6$. Ta thiết lập ánh xạ $f : A \to B$ cho bởi $f(a, b, c, d, e, f) = (a, b, c, 9 - d, 9 - e, 9 - f)$. Đặt $x = 9 - d$, $y = 9 - e$, $z = 9 - f$:</p>
+        <ul style="padding-left: 20px; line-height: 1.8;">
+            <li>Vì $0 \le d, e, f \le 9 \iff 0 \le x, y, z \le 9$ và $a + b + c + x + y + z = a + b + c + 27 - (d + e + f) = 27$, nên ảnh của mọi phần tử thuộc $A$ đều nằm trong $B$.</li>
+            <li>Phép biến đổi $t \mapsto 9 - t$ là tự nghịch đảo trên $\{0, 1, \dots, 9\}$ (vì $9 - (9 - t) = t$), nên $f$ vừa là đơn ánh, vừa là toàn ánh, tức $f$ là một song ánh. Do đó $|A| = |B|$.</li>
+        </ul>
+        <p>Để tính $|B|$, gọi $C$ là tập tất cả các nghiệm nguyên không âm của $a + b + c + x + y + z = 27$, có $|C| = \dbinom{32}{5} = 201\,376$. Gọi $A_1, \dots, A_6 \subseteq C$ là các tập nghiệm có ẩn thứ $i$ thỏa mãn $\ge 10$:</p>
+        <ul style="padding-left: 20px; line-height: 1.85;">
+            <li>Mỗi $|A_i| = \dbinom{17 + 6 - 1}{5} = \dbinom{22}{5}$, nên $\displaystyle\sum_{i=1}^6 |A_i| = 6\dbinom{22}{5} = 158\,004$.</li>
+            <li>Mỗi $|A_i \cap A_j| = \dbinom{7 + 6 - 1}{5} = \dbinom{12}{5}$ ($i < j$), nên $\displaystyle\sum_{1 \le i < j \le 6} |A_i \cap A_j| = \binom{6}{2}\binom{12}{5} = 15\binom{12}{5} = 11\,880$.</li>
+            <li>Giao của từ 3 tập trở lên bằng rỗng vì $3 \times 10 = 30 > 27$.</li>
+        </ul>
+        <p>Theo nguyên lý bù trừ, số vé hạnh phúc là $\dbinom{32}{5} - \left(6\dbinom{22}{5} - 15\dbinom{12}{5}\right) = 55\,252$. $\square$</p>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 9</span></h3>
+        <p>Tìm số cách chọn ra 4 số nguyên phân biệt từ 24 số nguyên dương đầu tiên $\{1, 2, \dots, 24\}$ sao cho trong lựa chọn đó, không có hai số liên tiếp đồng dư với nhau theo modulo 3.</p>
+        <p><b>Lời giải.</b></p>
+        <p>Gọi 4 số được chọn theo thứ tự tăng dần là $1 \le a_1 < a_2 < a_3 < a_4 \le 24$. Gọi $x_1, x_2, x_3, x_4, x_5 \in \mathbb{N}$ lần lượt là số các phần tử không được chọn nằm trước $a_1$, giữa $a_1$ và $a_2$, giữa $a_2$ và $a_3$, giữa $a_3$ và $a_4$, và sau $a_4$. Khi đó $x_1 + x_2 + x_3 + x_4 + x_5 = 24 - 4 = 20$.</p>
+        <p>Ta thấy $a_{i+1} - a_i = x_{i+1} + 1$ ($i = 1, 2, 3$); chẳng hạn nếu $x_2 = 0$ thì $a_2 = a_1 + 1$, còn nếu $x_2 = 2$ thì ở giữa có 2 số nên $a_2 = a_1 + 3 \equiv a_1 \pmod 3$. Do đó điều kiện không có hai số liên tiếp đồng dư theo modulo 3 tương đương với $x_2, x_3, x_4 \not\equiv 2 \pmod 3$.</p>
+        <p>Viết $x_i = 3q_i + r_i$ với $q_i \in \mathbb{N}$ ($i = 1, \dots, 5$), trong đó $r_1, r_5 \in \{0, 1, 2\}$ còn $r_2, r_3, r_4 \in \{0, 1\}$. Ta có:</p>
+        $$3(q_1 + q_2 + q_3 + q_4 + q_5) + (r_1 + r_2 + r_3 + r_4 + r_5) = 20.$$
+        <p>Vì $0 \le r_1 + r_2 + r_3 + r_4 + r_5 \le 2 + 1 + 1 + 1 + 2 = 7$ và $20 \equiv 2 \pmod 3$, tổng $S_r = r_1 + r_2 + r_3 + r_4 + r_5$ chỉ có thể bằng 2 hoặc 5:</p>
+        <ul style="padding-left: 20px; line-height: 1.85;">
+            <li>Nếu $S_r = 2$: phương trình $r_1 + \dots + r_5 = 2$ có $\dbinom{6}{4} - 3 = 12$ bộ thỏa mãn (trừ 3 bộ làm một trong các biến $r_2, r_3, r_4$ bằng 2). Khi đó $q_1 + \dots + q_5 = 6$ có $\dbinom{10}{4} = 210$ bộ, cho $12 \times 210 = 2520$ cách.</li>
+            <li>Nếu $S_r = 5$: qua song ánh $(r_1, r_2, r_3, r_4, r_5) \leftrightarrow (2 - r_1, 1 - r_2, 1 - r_3, 1 - r_4, 2 - r_5)$ đưa về trường hợp tổng bằng 2, cũng có 12 bộ $(r_1, \dots, r_5)$. Khi đó $q_1 + \dots + q_5 = 5$ có $\dbinom{9}{4} = 126$ bộ, cho $12 \times 126 = 1512$ cách.</li>
+        </ul>
+        <p>Vậy có tất cả $2520 + 1512 = 4032$ cách chọn thỏa mãn. $\square$</p>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 10</span></h3>
+        <p>Cho $m, n$ là các số nguyên dương. Xét $2n$ quả táo, $2n$ quả đào, $2n$ quả cam, $3m$ quả xoài, $3m$ quả nho và các quả cùng loại thì giống nhau. Gọi $s_n$ là số cách chia số quả táo, đào, cam cho 2 người mà mỗi người nhận được $3n$ quả; $t_m$ là số cách chia số quả xoài, nho cho 1 người và sử dụng ít hơn $3m$ quả. Chứng minh rằng $s_n \ne t_m$ với mọi $m, n$ nguyên dương.</p>
+        <p><b>Lời giải.</b></p>
+        <p>Tính $s_n$: gọi $x, y, z$ lần lượt là số quả táo, đào, cam chia cho người thứ nhất, với $0 \le x, y, z \le 2n$ và $x + y + z = 3n$. Khi đó người thứ hai nhận phần còn lại gồm $a = 2n - x$ táo, $b = 2n - y$ đào, $c = 2n - z$ cam; bộ $(a, b, c)$ hoàn toàn xác định duy nhất và tự động thỏa mãn $0 \le a, b, c \le 2n$, $a + b + c = 6n - 3n = 3n$. Do đó chỉ cần đếm số cách chia cho người thứ nhất.</p>
+        <p>Bằng nguyên lý bù trừ trên $x + y + z = 3n$ ($x, y, z \ge 0$), tập hợp các bộ có tổng bằng $3n$ có $\dbinom{3n + 2}{2}$ phần tử; đặt $A_1 = \{x \ge 2n + 1\}$, $A_2 = \{y \ge 2n + 1\}$, $A_3 = \{z \ge 2n + 1\}$ thì giao hai tập bất kỳ bằng rỗng (vì $4n + 2 > 3n$) và $|A_i| = \dbinom{(3n - 2n - 1) + 2}{2} = \dbinom{n + 1}{2}$, suy ra:</p>
+        $$s_n = \binom{3n + 2}{2} - 3\binom{n + 1}{2} = \frac{(3n + 2)(3n + 1) - 3n(n + 1)}{2} = 3n^2 + 3n + 1.$$
+        <p>Tính $t_m$: gọi $x, y \in \mathbb{N}$ là số quả xoài và nho chia cho người đó, ta cần $x, y \le 3m$ và $x + y \le 3m - 1$. Với $x, y \ge 0$, bất phương trình $x + y \le 3m - 1$ kéo theo sẵn $x, y \le 3m - 1 < 3m$. Theo Hệ quả ở §1.5:</p>
+        $$t_m = \binom{3m - 1 + 2}{2} = \binom{3m + 1}{2} = \frac{3m(3m + 1)}{2}.$$
+        <p>Nếu $s_n = t_m$ thì $6n^2 + 6n + 2 = 3m(3m + 1)$, vô lý vì vế phải chia hết cho 3 còn vế trái chia cho 3 dư 2. Vậy $s_n \ne t_m$ với mọi $m, n$ nguyên dương. $\square$</p>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 11</span></h3>
+        <p>Cho $\mathcal{A}$ là họ các đa thức bậc ba, monic và có đúng 3 nghiệm (không nhất thiết phân biệt) thuộc tập hợp $\{1, 2, \dots, 6\}$. Xác định số cặp đa thức khác nhau lấy từ $\mathcal{A}$, không tính thứ tự, sao cho cặp đa thức không có nghiệm chung.</p>
+        <p><b>Lời giải.</b></p>
+        <p>Mỗi đa thức $P(x) \in \mathcal{A}$ có dạng $(x - a)(x - b)(x - c)$ với $a, b, c \in \{1, \dots, 6\}$ chọn không kể thứ tự và có thể lặp lại. Đó là tổ hợp lặp chập 3 của 6 phần tử (ứng với $x_1 + \dots + x_6 = 3, x_i \ge 0$), nên $|\mathcal{A}| = \dbinom{3 + 6 - 1}{6 - 1} = \dbinom{8}{5} = 56$, và tổng số cặp đa thức khác nhau là $\dbinom{56}{2} = 1540$.</p>
+        <p>Nhận xét rằng hai đa thức khác nhau $P, Q \in \mathcal{A}$ không thể cùng có 3 nghiệm chung phân biệt (vì khi đó hiệu $R(x) = P(x) - Q(x)$ có bậc $\le 2$ lại có 3 nghiệm phân biệt, suy ra $R(x) \equiv 0$, mâu thuẫn). Gọi $A_k$ ($k \in \{1, \dots, 6\}$) là tập các cặp $\{P, Q\}$ có nghiệm chung là $k$. Do không có 3 nghiệm chung phân biệt nên $|A_i \cap A_j \cap A_t| = 0$ ($\forall 1 \le i < j < t \le 6$):</p>
+        <ul style="padding-left: 20px; line-height: 1.85;">
+            <li>Số đa thức trong $\mathcal{A}$ <i>không</i> nhận $k$ làm nghiệm bằng $\dbinom{3 + 5 - 1}{5 - 1} = \dbinom{7}{4} = 35$, nên số đa thức có nghiệm $k$ là $56 - 35 = 21$. Suy ra $|A_k| = \dbinom{21}{2} = 210$ và $\displaystyle\sum_{k=1}^6 |A_k| = 6 \times 210 = 1260$.</li>
+            <li>Xét $A_1 \cap A_2$: các cặp có chung hai nghiệm $1, 2$ có dạng $P(x) = (x - 1)(x - 2)(x - x_0)$ và $Q(x) = (x - 1)(x - 2)(x - y_0)$ với $x_0 \ne y_0 \in \{1, \dots, 6\}$, nên $|A_1 \cap A_2| = \dbinom{6}{2} = 15$. Do đó $\displaystyle\sum_{1 \le i < j \le 6} |A_i \cap A_j| = \binom{6}{2}\binom{6}{2} = 225$.</li>
+        </ul>
+        <p>Số cặp đa thức có ít nhất một nghiệm chung là $1260 - 225 = 1035$, suy ra số cặp không có nghiệm chung bằng $\dbinom{56}{2} - 1035 = 505$. $\square$</p>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 12</span></h3>
+        <p>Cho hàm số $f(x) = x^3 - 2020x^2 + 2019x - 2018$ có đồ thị $(C)$. Xét 4041 điểm nằm trên $(C)$ có hoành độ thuộc $S = \{-2020, -2019, \dots, -1, 0, 1, \dots, 2020\}$. Hỏi có bao nhiêu tam giác được tạo ra từ ba điểm nào đó trong các điểm trên?</p>
+        <p><b>Lời giải.</b></p>
+        <p>Số cách chọn 3 điểm bất kỳ là $\dbinom{4041}{3}$. Để tạo thành tam giác, ba điểm được chọn không được thẳng hàng. Ba điểm phân biệt trên $(C)$ có hoành độ $m, n, p \in S$ thẳng hàng khi và chỉ khi tồn tại đường thẳng $(d) : y = ax + b$ sao cho $m, n, p$ là 3 nghiệm của phương trình hoành độ giao điểm:</p>
+        $$f(x) - (ax + b) = 0 \iff x^3 - 2020x^2 + (2019 - a)x - (2018 + b) = 0.$$
+        <p>Theo định lý Viète, điều kiện cần là $m + n + p = 2020$. Ngược lại, với mọi bộ ba số thực $m, n, p$ đôi một phân biệt thỏa mãn $m + n + p = 2020$, chọn $a = 2019 - (mn + np + pm)$ và $b = mnp - 2018$ thì $f(x) - (ax + b) = (x - m)(x - n)(x - p)$, tức là ba điểm $(m, f(m))$, $(n, f(n))$, $(p, f(p))$ thẳng hàng.</p>
+        <p>Đặt $m = 2020 - a'$, $n = 2020 - b'$, $p = 2020 - c'$. Điều kiện $m, n, p \in S$ và $m + n + p = 2020$ trở thành $a' + b' + c' = 4040$ với $0 \le a', b', c' \le 4040$ (cận trên tự động thỏa mãn khi $a', b', c' \ge 0$). Số nghiệm nguyên không âm có thứ tự của $a' + b' + c' = 4040$ là $\dbinom{4042}{2}$. Loại các bộ không đôi một phân biệt:</p>
+        <ul style="padding-left: 20px; line-height: 1.8;">
+            <li>Cả 3 số bằng nhau: $3a' = 4040$ vô nghiệm nguyên vì 4040 không chia hết cho 3.</li>
+            <li>Có đúng 2 số bằng nhau ($2u + v = 4040$): $u$ nhận 2021 giá trị từ $0$ đến $2020$; hoán vị vị trí của $v$ cho $3 \times 2021 = 6063$ bộ có thứ tự.</li>
+        </ul>
+        <p>Suy ra có $\dfrac{\binom{4042}{2} - 6063}{6}$ bộ 3 điểm thẳng hàng, nên số tam giác tạo thành là $\dbinom{4041}{3} - \dfrac{\binom{4042}{2} - 6063}{6}$. $\square$</p>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 13</span> (VMO 2012)</h3>
+        <p>Cho một nhóm gồm 5 cô gái $G_1, G_2, G_3, G_4, G_5$ và 12 chàng trai cùng ngồi vào 17 chiếc ghế xếp thành hàng ngang thỏa mãn: mỗi ghế có đúng một người ngồi; thứ tự ngồi của các cô gái từ trái qua phải là $G_1, G_2, G_3, G_4, G_5$; giữa $G_1$ và $G_2$ có ít nhất 3 chàng trai; giữa $G_4$ và $G_5$ có ít nhất 1 chàng trai và nhiều nhất 4 chàng trai. Hỏi có tất cả bao nhiêu cách xếp?</p>
+        <p><b>Lời giải.</b></p>
+        <p>Xếp 5 cô gái $G_1, \dots, G_5$ theo thứ tự từ trái sang phải, gọi $a_1, a_2, a_3, a_4, a_5, a_6 \in \mathbb{N}$ lần lượt là số chàng trai ngồi trước $G_1$, giữa hai cô gái liên tiếp, và sau $G_5$. Chẳng hạn, bộ $(a_1, \dots, a_6) = (1, 3, 2, 2, 2, 2)$ xác định duy nhất một hàng 17 ghế: $\text{N}\, G_1\, \text{N}\,\text{N}\,\text{N}\, G_2\, \text{N}\,\text{N}\, G_3\, \text{N}\,\text{N}\, G_4\, \text{N}\,\text{N}\, G_5\, \text{N}\,\text{N}$. Như vậy mỗi bộ $(a_1, \dots, a_6)$ tương ứng song ánh với đúng một cách chọn vị trí ghế cho 5 cô gái.</p>
+        <p>Chuyển các dữ kiện đề bài thành hệ điều kiện đại số:</p>
+        $$\begin{cases} a_1 + a_2 + a_3 + a_4 + a_5 + a_6 = 12, \\ a_2 \ge 3, \quad 1 \le a_5 \le 4, \quad a_1, a_3, a_4, a_6 \ge 0. \end{cases}$$
+        <p>Đặt $b = a_2 - 3 \ge 0$, phương trình trở thành $a_1 + b + a_3 + a_4 + a_6 = 9 - a_5$. Với mỗi $a_5 \in \{1, 2, 3, 4\}$, phương trình 5 ẩn không âm trên có $\dbinom{(9 - a_5) + 5 - 1}{4} = \dbinom{13 - a_5}{4}$ nghiệm. Cộng cả 4 trường hợp được $\dbinom{12}{4} + \dbinom{11}{4} + \dbinom{10}{4} + \dbinom{9}{4} = 495 + 330 + 210 + 126 = 1161$ cách chọn vị trí ghế cho 5 cô gái (hoặc dùng bù trừ $\binom{13}{5} - \binom{9}{5} = 1161$). Cuối cùng, với mỗi cách chọn vị trí, có $12!$ cách xếp 12 chàng trai khác nhau vào 12 ghế nam, nên đáp số là $12! \times 1161$. $\square$</p>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Ví dụ 14</span> (VMO 2014)</h3>
+        <p>Cho đa giác đều 103 cạnh. Tô màu đỏ 79 đỉnh và tô màu xanh 24 đỉnh còn lại. Gọi $A$ là số cặp đỉnh đỏ kề nhau và $B$ là số cặp đỉnh xanh kề nhau.</p>
         <ol type="a" style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
             <li>Tìm tất cả các giá trị có thể nhận được của cặp $(A, B)$.</li>
-            <li>Xác định số cách tô màu các đỉnh của đa giác để $B = 14$, biết rằng hai cách tô màu được xem là như nhau nếu chúng có thể nhận được từ nhau qua một phép quay quanh tâm đường tròn ngoại tiếp đa giác.</li>
+            <li>Tìm số cách tô màu để $B = 14$, biết hai cách tô qua phép quay quanh tâm đường tròn ngoại tiếp là như nhau.</li>
         </ol>
         <p><b>Lời giải.</b></p>
-        <p><b>a)</b> Xét các đoạn cực đại gồm những đỉnh liên tiếp cùng màu trên vòng tròn ngoại tiếp đa giác. Vì có cả đỉnh đỏ ($79 > 0$) lẫn đỉnh xanh ($24 > 0$), các đoạn đỏ và đoạn xanh phải nằm xen kẽ nhau trên vòng tròn, nên số đoạn đỏ bằng số đoạn xanh; gọi số lượng chung này là $k$. Do mỗi đoạn xanh chứa ít nhất 1 đỉnh và tổng số đỉnh xanh là 24 nên $1 \le k \le 24$.</p>
-        <p>Giả sử độ dài các đoạn xanh và đoạn đỏ (đọc theo chiều kim đồng hồ) lần lượt là $a_1, \dots, a_k \ge 1$ và $b_1, \dots, b_k \ge 1$, với $\sum_{i=1}^k a_i = 24$ và $\sum_{i=1}^k b_i = 79$. Vì $k \ge 1$ nên không có đoạn nào khép kín toàn bộ vòng tròn; một đoạn gồm $t$ đỉnh liên tiếp cùng màu tạo ra đúng $t - 1$ cặp đỉnh kề nhau cùng màu đó. Suy ra:</p>
-        $$B = \sum_{i=1}^{k} (a_i - 1) = 24 - k, \qquad A = \sum_{i=1}^{k} (b_i - 1) = 79 - k.$$
-        <p>Đảo lại, với mỗi $k \in \{1, 2, \dots, 24\}$, chỉ cần chọn $a_1 = \dots = a_{k-1} = 1, a_k = 25 - k$ và $b_1 = \dots = b_{k-1} = 1, b_k = 80 - k$ thì cấu hình xen kẽ tương ứng cho đúng $(A, B) = (79 - k, 24 - k)$. Vậy có 24 cặp giá trị có thể nhận được là $(A, B) = (79 - k, 24 - k)$ với $k \in \{1, 2, \dots, 24\}$.</p>
-        <p><b>b)</b> Khi $B = 14$, từ $24 - k = 14$ ta có $k = 10$, tức mỗi cách tô màu gồm đúng 10 đoạn xanh và 10 đoạn đỏ xen kẽ nhau.</p>
-        <p>Trước hết, cố định tên 103 đỉnh của đa giác là $V_1, V_2, \dots, V_{103}$ theo chiều kim đồng hồ và gọi $M$ là số cách tô màu thỏa mãn $B = 14$ trên đa giác đã đánh số đỉnh. Ta đếm bằng hai cách số cặp $(\mathcal{C}, \mathcal{X})$, trong đó $\mathcal{C}$ là một cách tô màu hợp lệ trên $V_1, \dots, V_{103}$ và $\mathcal{X}$ là một trong 10 đoạn xanh của $\mathcal{C}$ được đánh dấu làm đoạn mở đầu:</p>
-        <ul style="padding-left: 20px; line-height: 1.85;">
-            <li>Một mặt, mỗi cách tô $\mathcal{C}$ có đúng 10 đoạn xanh để chọn làm $\mathcal{X}$, nên có $10M$ cặp.</li>
-            <li>Mặt khác, để xác định một cặp $(\mathcal{C}, \mathcal{X})$, ta chọn đỉnh đầu tiên (theo chiều kim đồng hồ) của đoạn $\mathcal{X}$ trong 103 đỉnh (có 103 cách), rồi chọn bộ độ dài nguyên dương $(a_1, \dots, a_{10})$ có tổng bằng 24 cho 10 đoạn xanh và bộ độ dài nguyên dương $(b_1, \dots, b_{10})$ có tổng bằng 79 cho 10 đoạn đỏ tính từ đỉnh đó. Theo Định lý 1, có $\dbinom{23}{9}$ cách chọn $(a_1, \dots, a_{10})$ và $\dbinom{78}{9}$ cách chọn $(b_1, \dots, b_{10})$.</li>
-        </ul>
-        <p>Suy ra $10M = 103\dbinom{23}{9}\dbinom{78}{9}$, hay $M = \dfrac{103}{10}\dbinom{23}{9}\dbinom{78}{9}$.</p>
-        <p>Bây giờ xét tác động của nhóm 103 phép quay quanh tâm đa giác lên tập $M$ cách tô màu này. Nếu một cách tô màu bất biến qua phép quay đi $r$ đỉnh ($1 \le r < 103$), thì do 103 là số nguyên tố nên $\gcd(r, 103) = 1$, phép quay lặp lại đi $r$ đỉnh sẽ quét qua toàn bộ 103 đỉnh và buộc cả 103 đỉnh phải có cùng một màu — vô lý vì có 79 đỉnh đỏ và 24 đỉnh xanh. Do đó, mọi lớp tương đương qua phép quay đều gồm đúng 103 cách tô màu phân biệt trên đa giác cố định đỉnh. Vậy số cách tô màu cần tìm là:</p>
-        $$\frac{M}{103} = \frac{1}{10}\binom{23}{9}\binom{78}{9}. \quad \square$$
+        <p><b>a)</b> Gom các đỉnh đứng liên tiếp cùng màu trên vòng tròn thành từng cụm. Vì có cả hai màu nên trên vòng tròn khép kín, giữa hai cụm đỏ luôn bị ngăn bởi một cụm xanh và ngược lại; do đó số cụm đỏ bằng số cụm xanh, gọi chung là $k$ ($1 \le k \le 24$). Một cụm có $t$ đỉnh liên tiếp tạo đúng $t - 1$ cặp đỉnh kề nhau cùng màu. Gọi $a_1, \dots, a_k \ge 1$ và $b_1, \dots, b_k \ge 1$ lần lượt là số đỉnh trong $k$ cụm xanh và $k$ cụm đỏ, ta có $\sum a_i = 24$ và $\sum b_i = 79$, suy ra $B = \sum_{i=1}^k (a_i - 1) = 24 - k$ và $A = \sum_{i=1}^k (b_i - 1) = 79 - k$. Đảo lại, với mỗi $k \in \{1, \dots, 24\}$ đều chọn được cấu hình thỏa mãn, nên $(A, B) = (79 - k, 24 - k)$ với $k \in \{1, \dots, 24\}$.</p>
+        <p><b>b)</b> Với $B = 14 \implies k = 10$ cụm xanh và 10 cụm đỏ xen kẽ. Nếu cố định tên 103 đỉnh của đa giác và đánh dấu một cụm xanh làm cụm mở đầu, theo Định lý 1 có $\dbinom{23}{9}$ cách chia độ dài 10 cụm xanh và $\dbinom{78}{9}$ cách chia độ dài 10 cụm đỏ. Tuy nhiên khi xoay vòng tròn qua 10 vị trí cụm mở đầu thì 10 cấu hình này trùng nhau hoàn toàn và thực chất chỉ là một cách tô; mặt khác vì 79 là số nguyên tố (tức $\gcd(10, 79) = 1$) nên không tồn tại cấu hình nào tuần hoàn với chu kỳ nhỏ hơn 10 (hoặc nói theo Bổ đề Burnside với nhóm 103 phép quay: $\gcd(r, 103) = 1$ với $1 \le r < 103$ nên chỉ phép đồng nhất giữ nguyên cách tô, và đánh dấu cụm mở đầu dẫn tới $10M = 103\binom{23}{9}\binom{78}{9}$). Vậy số cách tô màu cần tìm là $\dfrac{1}{10}\dbinom{23}{9}\dbinom{78}{9}$. $\square$</p>
 
         <h2 class="smp-section-title">§3. Bài Tập Luyện Tập</h2>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 1</span></h3>
-        <p>Tìm số nghiệm tự nhiên của phương trình $x_1 + x_2 + x_3 + x_4 + x_5 = 2016$ thỏa mãn $x_i$ không chia hết cho 3 với mọi $i = 1, 2, 3, 4, 5$.</p>
+        <p>Đếm số nghiệm nguyên không âm của các phương trình sau:</p>
+        <ol type="a" style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
+            <li>$x_1 + x_2 + \dots + x_9 = 2025$ với $x_i \ge 7$ với mọi $i = 1, 2, \dots, 9$.</li>
+            <li>$x_1 + x_2 + \dots + x_9 = 2025$ với $x_i \ge 7$ với mọi $i = 2, \dots, 9$ và $x_1 < 3$.</li>
+            <li>$x_1 + x_2 + \dots + x_9 = 2025$ với $x_i \ge 7$ với mọi $i = 3, \dots, 9$ và $x_1 < 3$, $x_2 < 2$.</li>
+            <li>$x_1 + x_2 + \dots + x_9 = 2025$ với $x_i \le 2025$ với mọi $i = 1, 2, \dots, 9$.</li>
+        </ol>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Viết $x_i = 3y_i + r_i$ với $y_i \in \mathbb{N}$ và $r_i \in \{1, 2\}$. Vì $3 \mid 2016$ và $5 \le r_1 + \dots + r_5 \le 10$ nên tổng số dư chỉ có thể nhận hai giá trị $\sum_{i=1}^5 r_i = 6$ (có $\binom{5}{1} = 5$ bộ số dư, đưa về $\sum y_i = 670$) hoặc $\sum_{i=1}^5 r_i = 9$ (có $\binom{5}{4} = 5$ bộ số dư, đưa về $\sum y_i = 669$). Đáp số: $5\dbinom{674}{4} + 5\dbinom{673}{4}$.
+            <b>Gợi ý.</b> Câu a) Đặt $y_i = x_i - 7 \ge 0$, đáp số $\dbinom{1970}{8}$. Câu b) Xét 3 giá trị $x_1 \in \{0, 1, 2\}$, đáp số $\dbinom{1976}{7} + \dbinom{1975}{7} + \dbinom{1974}{7}$. Câu c) Xét 6 cặp $(x_1, x_2) \in \{0, 1, 2\} \times \{0, 1\}$, đáp số $\dbinom{1982}{6} + 2\dbinom{1981}{6} + 2\dbinom{1980}{6} + \dbinom{1979}{6}$. Câu d) Cận trên $x_i \le 2025$ tự động đúng với mọi nghiệm không âm, đáp số $\dbinom{2033}{8}$.
         </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 2</span></h3>
-        <p>Có bao nhiêu số tự nhiên nhỏ hơn $10^6$ mà tổng các chữ số của nó bằng 23?</p>
+        <p>Có bao nhiêu bộ số nguyên dương $(a, b, c)$ thỏa mãn $a < b < c$ và $a + b + c = 222$?</p>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Viết mỗi số tự nhiên nhỏ hơn $10^6$ dưới dạng $\overline{a_1 a_2 a_3 a_4 a_5 a_6}$ (cho phép các chữ số 0 ở đầu), đưa bài toán về đếm nghiệm nguyên của $a_1 + \dots + a_6 = 23$ với $0 \le a_i \le 9$. Áp dụng nguyên lý bù trừ cho các tập $A_i = \{a_i \ge 10\}$ tương tự Ví dụ 3b (giao của từ 3 tập trở lên bằng rỗng vì $30 > 23$), thu được $\dbinom{28}{5} - 6\dbinom{18}{5} + \dbinom{6}{2}\dbinom{8}{5} = 47\,712$.
+            <b>Gợi ý.</b> Theo Định lý 1, phương trình $a + b + c = 222$ có $\dbinom{221}{2}$ nghiệm nguyên dương có thứ tự. Loại trừ các trường hợp có đúng 2 số bằng nhau ($2u + v = 222, u \ne v$ cho $3 \times 109$ bộ có thứ tự) và cả 3 số đều bằng nhau ($(74, 74, 74)$ có 1 bộ), rồi chia cho $3! = 6$ được 3997 bộ.
         </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 3</span></h3>
-        <p>Có bao nhiêu số tự nhiên gồm 7 chữ số $\overline{a_1 a_2 a_3 a_4 a_5 a_6 a_7}$ thỏa mãn $a_1 \ge a_2 \ge a_3 \ge a_4 \ge a_5 \ge a_6 \ge a_7$?</p>
+        <p>Cho đa giác đều $n$ đỉnh ($n \ge 4$) nội tiếp đường tròn $(O)$. Có bao nhiêu hình thang (không phải hình chữ nhật) mà 4 đỉnh là các đỉnh của đa giác đều đã cho?</p>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Mỗi bộ 7 chữ số không tăng $(a_1, \dots, a_7)$ lấy từ $\{0, 1, \dots, 9\}$ hoàn toàn được xác định bởi số lần xuất hiện $x_d \ge 0$ của từng chữ số $d \in \{0, 1, \dots, 9\}$ thỏa mãn $x_0 + x_1 + \dots + x_9 = 7$, có $\dbinom{7 + 10 - 1}{9} = \dbinom{16}{7}$ bộ. Loại duy nhất bộ $(0, 0, \dots, 0)$ vi phạm $a_1 \ge 1$, ta được $\dbinom{16}{7} - 1 = 11\,439$ số.
+            <b>Gợi ý.</b> Đánh số các đỉnh là $0, 1, \dots, n - 1$; hai dây cung $(u, v)$ và $(w, t)$ song song nhau khi và chỉ khi $u + v \equiv w + t \pmod n$. Đếm theo từng lớp đồng dư $s \equiv u + v \pmod n$: với $n = 2m + 1$ lẻ, đáp số là $n\dbinom{m}{2} = \dfrac{n(n - 1)(n - 3)}{8}$; với $n = 2m$ chẵn, trừ đi các cặp dây song song tạo thành hình chữ nhật ở mỗi lớp $s$ chẵn và $s$ lẻ, đáp số là $\dfrac{n(n - 2)(n - 4)}{8}$.
         </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 4</span></h3>
-        <p>Có 17 cây cau trồng tại 17 vị trí cố định phân biệt xung quanh một cái ao hình tròn. Người ta muốn chặt đi 4 cây sao cho không có hai cây kề nhau nào cùng bị chặt. Hỏi có bao nhiêu cách chọn 4 cây để chặt?</p>
+        <p>Trên lưới ô vuông $m \times n$ (điểm xuất phát $A(0, 0)$, điểm đích $B(m, n)$), một con kiến chỉ đi sang phải hoặc lên trên theo đường đi ngắn nhất. Cho điểm nút lưới $O(p, q)$ với $0 \le p \le m$ và $0 \le q \le n$. Hỏi có bao nhiêu đường đi ngắn nhất từ $A$ đến $B$ phải đi qua điểm $O$?</p>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Đánh số các cây theo vòng tròn là $C_1, C_2, \dots, C_{17}$ rồi xét hai trường hợp: nếu chặt $C_1$ thì $C_2, C_{17}$ không bị chặt, quy về chọn 3 cây không kề nhau trên hàng ngang 14 cây $C_3, \dots, C_{16}$ (có $\dbinom{14 - 3 + 1}{3} = \dbinom{12}{3}$ cách); nếu không chặt $C_1$ thì chọn 4 cây không kề nhau trên hàng ngang 16 cây $C_2, \dots, C_{17}$ (có $\dbinom{16 - 4 + 1}{4} = \dbinom{13}{4}$ cách). Đáp số: $\dbinom{12}{3} + \dbinom{13}{4} = 935$.
+            <b>Gợi ý.</b> Tách thành hai chặng $A \to O$ ($\dbinom{p + q}{p}$ cách) và $O \to B$ ($\dbinom{m + n - p - q}{m - p}$ cách). Đáp số: $\dbinom{p + q}{p}\dbinom{m + n - p - q}{m - p}$.
         </div>
 
         <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 5</span></h3>
-        <p>Tìm số các bộ nguyên dương $(a_1, a_2, \dots, a_{15})$ thỏa mãn đồng thời hai điều kiện:</p>
-        $$1 \le a_1 < a_2 < \dots < a_{15} \le 2020 \quad \text{và} \quad a_i \equiv i^2 \pmod 5, \; \forall i = 1, 2, \dots, 15.$$
+        <p>Tìm số nghiệm nguyên không âm của phương trình $x + y + z = 10$ với điều kiện $y \ge 2$.</p>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Dãy số dư $r_i = i^2 \bmod 5 \in \{0, 1, 4\}$ lặp lại theo chu kỳ $(1, 4, 4, 1, 0)$. Viết $a_i = 5q_i + r_i$ ($q_i \in \mathbb{N}$). Kiểm tra trực tiếp điều kiện $a_i < a_{i+1}$ cho thấy trong mỗi chu kỳ 5 chỉ số có đúng 3 bất đẳng thức ngặt ($q_{5t+1} \le q_{5t+2} < q_{5t+3} < q_{5t+4} < q_{5t+5}$), giữa hai chu kỳ là $q_{5t} \le q_{5t+1}$, và ở cuối có $5q_{15} \le 2020 \iff q_{15} \le 404$. Như vậy trên dãy $0 \le q_1, \dots, q_{15} \le 404$ có đúng 9 dấu $ < $ và 5 dấu $\le$; xét các hiệu liên tiếp đưa bài toán về phương trình 16 ẩn nguyên không âm có tổng bằng $404 - 9 = 395$, thu được $\dbinom{395 + 16 - 1}{15} = \dbinom{410}{15}$ bộ.
+            <b>Gợi ý.</b> Đặt $y' = y - 2 \ge 0$, đưa về $x + y' + z = 8$. Đáp số: $\dbinom{10}{2} = 45$.
         </div>
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 6</span> (AIME 1986)</h3>
-        <p>Có bao nhiêu xâu nhị phân gồm các chữ số 0 và 1 chứa đúng 4 cặp <code>01</code>, 3 cặp <code>10</code>, 5 cặp <code>11</code> và 2 cặp <code>00</code> ở hai vị trí liên tiếp?</p>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 6</span></h3>
+        <p>Tìm số nghiệm tự nhiên của phương trình $x_1 + x_2 + x_3 + x_4 + x_5 = 2016$ thỏa mãn $x_i$ không chia hết cho 3 với mọi $i = 1, 2, 3, 4, 5$.</p>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Xét các đoạn cực đại gồm các chữ số giống nhau liên tiếp. Vì có 4 lần chuyển <code>01</code> và 3 lần chuyển <code>10</code>, xâu phải mở đầu bằng <code>0</code>, kết thúc bằng <code>1</code>, gồm đúng 4 đoạn chữ số <code>0</code> (độ dài $u_1, u_2, u_3, u_4 \ge 1$) xen kẽ với 4 đoạn chữ số <code>1</code> (độ dài $v_1, v_2, v_3, v_4 \ge 1$). Một đoạn độ dài $t$ đóng góp $t - 1$ cặp hai chữ số giống nhau liên tiếp, nên $\sum_{i=1}^4 (u_i - 1) = 2$ và $\sum_{i=1}^4 (v_i - 1) = 5$. Theo Định lý 2, số xâu thỏa mãn là $\dbinom{5}{3}\dbinom{8}{3} = 560$.
+            <b>Gợi ý.</b> Viết $x_i = 3y_i + r_i$ với $y_i \in \mathbb{N}, r_i \in \{1, 2\}$. Tổng số dư $\sum_{i=1}^5 r_i$ chia hết cho 3 nên bằng 6 hoặc 9. Đáp số: $5\dbinom{674}{4} + 5\dbinom{673}{4}$.
         </div>
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 7</span> (Ấn Độ 2012)</h3>
-        <p>Cho tam giác $ABC$. Một điểm $P$ nằm trong tam giác được gọi là <i>tốt</i> nếu tồn tại 27 tia chung gốc $P$ chia tam giác $ABC$ thành 27 tam giác con có diện tích bằng nhau. Hãy đếm số điểm tốt trong tam giác $ABC$.</p>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 7</span></h3>
+        <p>Có bao nhiêu số tự nhiên gồm 7 chữ số $\overline{a_1 a_2 a_3 a_4 a_5 a_6 a_7}$ thỏa mãn $a_1 \ge a_2 \ge a_3 \ge a_4 \ge a_5 \ge a_6 \ge a_7$?</p>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Ba tia $PA, PB, PC$ bắt buộc phải thuộc 27 tia đó, vì nếu chẳng hạn tia $PA$ không xuất hiện thì miền chứa đỉnh $A$ nằm giữa hai tia liên tiếp sẽ là một tứ giác chứ không phải tam giác. Chuẩn hóa $S_{ABC} = 27$ (mỗi tam giác con có diện tích bằng 1), khi đó $S_{PBC} = x$, $S_{PCA} = y$, $S_{PAB} = z$ phải là các số nguyên dương thỏa mãn $x + y + z = 27$. Ngược lại, mỗi bộ nguyên dương $(x, y, z)$ có tổng bằng 27 xác định duy nhất một điểm $P$ nằm trong tam giác $ABC$ (qua tỉ số diện tích / tọa độ tỉ cự), và bằng cách chia các cạnh $BC, CA, AB$ lần lượt thành $x, y, z$ đoạn bằng nhau ta luôn dựng được 27 tia thỏa mãn. Theo Định lý 1, số điểm tốt là $\dbinom{26}{2} = 325$.
+            <b>Gợi ý.</b> Tổ hợp lặp chập 7 của 10 chữ số $\{0, 1, \dots, 9\}$ trừ trường hợp tất cả chữ số bằng 0. Đáp số: $\dbinom{16}{7} - 1 = 11\,439$.
         </div>
 
-        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 8</span></h3>
-        <p>Cho số nguyên dương $n \ge 2$. Xét các đường đi ngắn nhất trên lưới nguyên từ điểm $A(0, 0)$ đến điểm $B(n, n)$, mỗi đường đi tương ứng với một dãy gồm $n$ bước lên trên ($T$) và $n$ bước sang phải ($P$). Một cặp hai bước liên tiếp có dạng $(T, P)$ (bước $T$ đứng ngay trước bước $P$) được gọi là một <i>bước chuyển</i>. Tìm số đường đi từ $A$ đến $B$ có:</p>
-        <ol type="a" style="margin-top: 8px; padding-left: 20px; line-height: 1.8;">
-            <li>đúng 1 bước chuyển;</li>
-            <li>đúng 2 bước chuyển.</li>
-        </ol>
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 8</span> (AIME 1986)</h3>
+        <p>Có bao nhiêu xâu nhị phân chứa đúng 4 cặp <code>01</code>, 3 cặp <code>10</code>, 5 cặp <code>11</code> và 2 cặp <code>00</code> đứng cạnh nhau?</p>
         <div class="smp-longnote">
-            <b>Gợi ý.</b> Tổng quát, một dãy có đúng $r$ bước chuyển $(T, P)$ ($1 \le r \le n$) biểu diễn duy nhất dưới dạng $P^{x_0} (T^{y_1} P^{x_1}) \dots (T^{y_r} P^{x_r}) T^{y_{r+1}}$ với $x_0, y_{r+1} \ge 0$ và $x_1, \dots, x_r, y_1, \dots, y_r \ge 1$. Phương trình $x_0 + x_1 + \dots + x_r = n$ (đặt $x'_0 = x_0 + 1 \ge 1$ đưa về tổng $r + 1$ số nguyên dương bằng $n + 1$) có $\dbinom{n}{r}$ nghiệm, và phương trình cho các $y_j$ cũng có $\dbinom{n}{r}$ nghiệm, nên có tất cả $\dbinom{n}{r}^2$ đường đi. Thay $r = 1$ và $r = 2$, đáp số hai câu lần lượt là $n^2$ và $\left[\dfrac{n(n-1)}{2}\right]^2$.
+            <b>Gợi ý.</b> Xâu gồm 4 cụm chữ số <code>0</code> và 4 cụm chữ số <code>1</code> xen kẽ bắt đầu bằng <code>0</code>; áp dụng quy luật cụm $t$ chữ số tạo $t - 1$ cặp giống nhau. Đáp số: $\dbinom{5}{3}\dbinom{8}{3} = 560$.
+        </div>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 9</span> (Ấn Độ 2012)</h3>
+        <p>Cho tam giác $ABC$. Điểm $P$ nằm trong tam giác gọi là <i>tốt</i> nếu tồn tại 27 tia chung gốc $P$ chia tam giác $ABC$ thành 27 tam giác con có diện tích bằng nhau. Đếm số điểm tốt trong tam giác $ABC$.</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Ba tia $PA, PB, PC$ bắt buộc thuộc 27 tia đó; chuẩn hóa $S_{ABC} = 27$ và xét bộ ba diện tích nguyên dương $S_{PBC} + S_{PCA} + S_{PAB} = 27$. Đáp số: $\dbinom{26}{2} = 325$.
+        </div>
+
+        <h3 class="smp-problem-header"><span class="smp-problem-badge">Bài 10</span></h3>
+        <p>Cho số nguyên dương $n \ge 2$. Xét tập hợp các đường đi ngắn nhất trên lưới nguyên từ $A(0, 0)$ đến $B(n, n)$ gồm $n$ bước lên trên ($T$) và $n$ bước sang phải ($P$). Một cặp $(T, P)$ kề nhau gọi là một <i>bước chuyển</i> (cặp $(P, T)$ không gọi là bước chuyển). Tìm số đường đi có đúng: a) 1 bước chuyển; b) 2 bước chuyển.</p>
+        <div class="smp-longnote">
+            <b>Gợi ý.</b> Đường đi có đúng $r$ bước chuyển $(T, P)$ có dạng $P^{x_0} (T^{y_1} P^{x_1}) \dots (T^{y_r} P^{x_r}) T^{y_{r+1}}$ ($x_0, y_{r+1} \ge 0$, các biến còn lại $\ge 1$). Số cách chọn là $\dbinom{n}{r}^2$; đáp số lần lượt là $n^2$ và $\left[\dfrac{n(n - 1)}{2}\right]^2$.
         </div>
 
         <div class="smp-longnote">
-            <b>Lời kết.</b> Bản chất của bài toán chia kẹo Euler nằm ở việc chuyển một cấu hình rời rạc về phương trình tổng các đại lượng nguyên. Khi giải toán tổ hợp ở bậc VMO, bước quyết định thường nằm ở việc chọn đúng đại lượng để đặt ẩn — chẳng hạn số phần tử không được chọn ở các khoảng trống hay độ dài các đoạn cùng tính chất liên tiếp — trước khi áp dụng công thức đếm nghiệm hoặc nguyên lý bù trừ.
+            <b>Lời kết.</b> Điểm mấu chốt của phương pháp vách ngăn là nhận ra khi nào đối tượng hoàn toàn giống nhau để chuyển từ bài toán sắp xếp sang phương trình đếm nghiệm nguyên, kết hợp chặt chẽ cùng phép biến đổi cận dưới, song ánh, nguyên lý bù trừ và phân tích chu kỳ khi làm việc trên vòng tròn.
         </div>
     </div>
 </body>
