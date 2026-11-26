@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('link[href*="post.css"]')) {
         const linkPost = document.createElement('link');
         linkPost.rel = 'stylesheet';
-        linkPost.href = depthPrefix + 'core/css/post.css?v=42';
+        linkPost.href = depthPrefix + 'core/css/post.css?v=43';
         head.appendChild(linkPost);
     }
     if (!document.querySelector('link[href*="smp-template.css"]')) {
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 6. Nhúng các script giao diện theo thứ tự tuần tự để tránh race condition
     const scriptsToLoad = [
         depthPrefix + "core/js/sidebar-data.js?v=101",
-        depthPrefix + "core/js/layout.js?v=104",
+        depthPrefix + "core/js/layout.js?v=105",
         depthPrefix + "core/js/shared.js?v=53",
         depthPrefix + "core/js/saved.js?v=35",
         depthPrefix + "core/js/comment.js?v=35"

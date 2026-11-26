@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v127') caches.delete(name);
+                if (name !== 'smp-cache-v128') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -800,7 +800,13 @@
             tocItems.push({ heading: h, link });
         });
 
-        widget.appendChild(listEl);
+        const collapseWrap = document.createElement('div');
+        collapseWrap.className = 'post-toc-collapse';
+        const collapseInner = document.createElement('div');
+        collapseInner.className = 'post-toc-collapse-inner';
+        collapseInner.appendChild(listEl);
+        collapseWrap.appendChild(collapseInner);
+        widget.appendChild(collapseWrap);
 
         // Bọc .exam-paper vào .post-article-row nằm ngay dưới .exam-meta
         const articleRow = document.createElement('div');
@@ -837,7 +843,18 @@
                 tocItems[currentActive].link.classList.remove('active');
             }
             currentActive = idx;
-            tocItems[idx].link.classList.add('active');
+            const activeLink = tocItems[idx].link;
+            activeLink.classList.add('active');
+
+            if (listEl.scrollHeight > listEl.clientHeight) {
+                const linkTop = activeLink.offsetTop;
+                const linkBottom = linkTop + activeLink.offsetHeight;
+                if (linkTop < listEl.scrollTop + 12) {
+                    listEl.scrollTo({ top: Math.max(0, linkTop - 16), behavior: 'smooth' });
+                } else if (linkBottom > listEl.scrollTop + listEl.clientHeight - 12) {
+                    listEl.scrollTo({ top: linkBottom - listEl.clientHeight + 16, behavior: 'smooth' });
+                }
+            }
         }
 
         let tocTicking = false;
