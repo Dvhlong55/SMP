@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v125') caches.delete(name);
+                if (name !== 'smp-cache-v127') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -741,11 +741,11 @@
     if (topbarEl)  topbarEl.outerHTML  = TOPBAR_HTML;
     if (leftTagsEl && typeof LEFT_TAGS_HTML !== 'undefined') leftTagsEl.outerHTML = LEFT_TAGS_HTML;
 
-    // ── Auto-generate Left Table of Contents (Mục lục bài viết) ─────────
+    // ── Auto-generate Table of Contents (Mục lục bài viết) ──────────────
     function initPostTOC() {
-        const sidebar = document.querySelector('.tags-comment-sidebar');
+        const mainBody = document.querySelector('.main-articles-body');
         const paper = document.querySelector('.exam-paper');
-        if (!sidebar || !paper || document.getElementById('post-toc-widget')) return;
+        if (!mainBody || !paper || document.getElementById('post-toc-widget')) return;
 
         const headings = Array.from(paper.querySelectorAll('h2, h3, h4')).filter(h => {
             if (h.closest('.header-box')) return false;
@@ -760,10 +760,12 @@
         widget.className = 'post-toc-widget fade-up';
         widget.setAttribute('aria-label', 'Mục lục bài viết');
 
-        const titleEl = document.createElement('div');
-        titleEl.className = 'post-toc-title';
-        titleEl.textContent = 'Mục lục';
-        widget.appendChild(titleEl);
+        const toggleBtn = document.createElement('button');
+        toggleBtn.type = 'button';
+        toggleBtn.className = 'post-toc-toggle';
+        toggleBtn.title = 'Thu gọn / Mở rộng mục lục';
+        toggleBtn.innerHTML = `<span class="post-toc-equiv" aria-hidden="true">&equiv;</span><span class="post-toc-title-text">Mục lục</span>`;
+        widget.appendChild(toggleBtn);
 
         const listEl = document.createElement('div');
         listEl.className = 'post-toc-list';
@@ -799,12 +801,30 @@
         });
 
         widget.appendChild(listEl);
-        const layoutContainer = document.querySelector('.main-content-layout');
+
+        // Bọc .exam-paper vào .post-article-row nằm ngay dưới .exam-meta
+        const articleRow = document.createElement('div');
+        articleRow.className = 'post-article-row has-post-toc';
+        if (window.innerWidth <= 1100) {
+            articleRow.classList.add('toc-collapsed');
+        }
+        toggleBtn.setAttribute('aria-expanded', articleRow.classList.contains('toc-collapsed') ? 'false' : 'true');
+
+        toggleBtn.addEventListener('click', () => {
+            const collapsed = articleRow.classList.toggle('toc-collapsed');
+            toggleBtn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+            if (typeof window.fixMathJaxOverflow === 'function') {
+                requestAnimationFrame(window.fixMathJaxOverflow);
+            }
+        });
+
         const tocAside = document.createElement('aside');
         tocAside.className = 'post-toc-sidebar';
         tocAside.appendChild(widget);
-        sidebar.insertAdjacentElement('afterend', tocAside);
-        if (layoutContainer) layoutContainer.classList.add('has-post-toc');
+
+        paper.parentNode.insertBefore(articleRow, paper);
+        articleRow.appendChild(tocAside);
+        articleRow.appendChild(paper);
 
         if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
             window.MathJax.typesetPromise([widget]).catch(() => {});
@@ -817,19 +837,7 @@
                 tocItems[currentActive].link.classList.remove('active');
             }
             currentActive = idx;
-            const activeLink = tocItems[idx].link;
-            activeLink.classList.add('active');
-
-            // Giữ mục đang đọc luôn nằm trong vùng nhìn thấy của TOC list
-            if (listEl.scrollHeight > listEl.clientHeight) {
-                const linkTop = activeLink.offsetTop;
-                const linkBottom = linkTop + activeLink.offsetHeight;
-                if (linkTop < listEl.scrollTop + 12) {
-                    listEl.scrollTo({ top: Math.max(0, linkTop - 16), behavior: 'smooth' });
-                } else if (linkBottom > listEl.scrollTop + listEl.clientHeight - 12) {
-                    listEl.scrollTo({ top: linkBottom - listEl.clientHeight + 16, behavior: 'smooth' });
-                }
-            }
+            tocItems[idx].link.classList.add('active');
         }
 
         let tocTicking = false;
