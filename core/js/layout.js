@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v123') caches.delete(name);
+                if (name !== 'smp-cache-v125') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -799,7 +799,12 @@
         });
 
         widget.appendChild(listEl);
-        sidebar.prepend(widget);
+        const layoutContainer = document.querySelector('.main-content-layout');
+        const tocAside = document.createElement('aside');
+        tocAside.className = 'post-toc-sidebar';
+        tocAside.appendChild(widget);
+        sidebar.insertAdjacentElement('afterend', tocAside);
+        if (layoutContainer) layoutContainer.classList.add('has-post-toc');
 
         if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
             window.MathJax.typesetPromise([widget]).catch(() => {});
