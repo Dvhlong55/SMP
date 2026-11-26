@@ -243,6 +243,13 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '§ Bài Toán Chia Kẹo Euler Và Phương Pháp Vách Ngăn',
+        date: 'November 26, 2026',
+        url: '/posts/math/vmo/chia-keo-euler-va-phuong-phap-vach-ngan.html',
+        tags: ['Tổ Hợp', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: 'Tổng Quan Đề Thi Chọn Đội Tuyển Tỉnh HSGQG (2026)',
         date: 'November 22, 2026',
         url: '/posts/math/vmo/de-thi-chon-doi-tuyen-tinh.html',

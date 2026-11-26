@@ -127,6 +127,11 @@ window.SMP_ROADMAP_TOHOP = {
             title: 'Bài toán chia kẹo Euler & Phân hoạch',
             tiles: [
                 {
+                    title: '§ Bài toán chia kẹo Euler & Phương pháp vách ngăn',
+                    desc: 'Lý thuyết nền tảng về vách ngăn, phương trình nghiệm nguyên, tổ hợp lặp, kết hợp thiết lập song ánh và nguyên lý bù trừ kèm lời giải chi tiết.',
+                    url: '/posts/math/vmo/chia-keo-euler-va-phuong-phap-vach-ngan.html'
+                },
+                {
                     title: 'Chia kẹo Euler (Phần 1)',
                     desc: 'Phương pháp vách ngăn cơ bản, số nghiệm nguyên thỏa mãn cận dưới và bài toán chọn phần tử không kề nhau.',
                     url: '/posts/math/vmo/chia-keo-euler-phan-1.html'
