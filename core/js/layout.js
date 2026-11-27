@@ -760,6 +760,19 @@
         widget.className = 'post-toc-widget fade-up';
         widget.setAttribute('aria-label', 'Mục lục bài viết');
 
+        const ytMeta = document.querySelector('meta[name="youtube-url"]');
+        const ytUrl = ytMeta ? ytMeta.getAttribute('content').trim() : '';
+        if (ytUrl) {
+            const videoBtn = document.createElement('a');
+            videoBtn.className = 'post-toc-video-btn';
+            videoBtn.href = ytUrl;
+            videoBtn.target = '_blank';
+            videoBtn.rel = 'noopener noreferrer';
+            videoBtn.title = 'Xem video bài giảng trên YouTube';
+            videoBtn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="#ff0033" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg><span>Video bài giảng</span>`;
+            widget.appendChild(videoBtn);
+        }
+
         const toggleBtn = document.createElement('button');
         toggleBtn.type = 'button';
         toggleBtn.className = 'post-toc-toggle';
