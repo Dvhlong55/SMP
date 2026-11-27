@@ -1809,23 +1809,32 @@ function initCustomCursor() {
     cursor.className = 'custom-cursor';
     document.body.appendChild(cursor);
 
+    let cursorX = -100, cursorY = -100, cursorVisible = false, cursorRaf = 0;
+
+    function updateCursorFrame() {
+        cursorRaf = 0;
+        cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+        cursor.style.opacity = cursorVisible ? '1' : '0';
+    }
+
     document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-        if (e.clientX <= 1 || e.clientY <= 1 || e.clientX >= window.innerWidth - 1 || e.clientY >= window.innerHeight - 1) {
-            cursor.style.opacity = '0';
-        } else {
-            cursor.style.opacity = '1';
+        cursorX = e.clientX;
+        cursorY = e.clientY;
+        cursorVisible = !(e.clientX <= 1 || e.clientY <= 1 || e.clientX >= window.innerWidth - 1 || e.clientY >= window.innerHeight - 1);
+        if (!cursorRaf) {
+            cursorRaf = requestAnimationFrame(updateCursorFrame);
         }
-    });
+    }, { passive: true });
 
     document.addEventListener('mouseleave', () => {
-        cursor.style.opacity = '0';
-    });
+        cursorVisible = false;
+        if (!cursorRaf) cursorRaf = requestAnimationFrame(updateCursorFrame);
+    }, { passive: true });
 
     document.addEventListener('mouseenter', () => {
-        cursor.style.opacity = '1';
-    });
+        cursorVisible = true;
+        if (!cursorRaf) cursorRaf = requestAnimationFrame(updateCursorFrame);
+    }, { passive: true });
 
     // Dùng Event Delegation thay cho MutationObserver toàn trang (tránh lag khi MathJax render DOM)
     const INTERACTIVE_SEL = 'a, button, input, textarea, select, .sidebar-toggle, .post-card, .custom-cursor-hover, .thread-item';

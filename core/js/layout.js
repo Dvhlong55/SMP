@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v130') caches.delete(name);
+                if (name !== 'smp-cache-v131') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -964,45 +964,44 @@
     // ── Auto-Hide Topbar, Bottom Nav, Exit Focus Button & Reading Progress Bar on Scroll ─────────
     let lastScrollY = Math.max(0, window.pageYOffset || document.documentElement.scrollTop || 0);
     let scrollTicking = false;
+    const cachedProgressBar = document.getElementById('reading-progress-bar');
+    const cachedTopbar = document.querySelector('.topbar');
+    const cachedBottomNav = document.querySelector('.mobile-bottom-nav');
+    const cachedExitFocus = document.getElementById('exit-focus-btn');
+    const cachedNotifDropdown = document.getElementById('notif-dropdown');
 
     window.addEventListener('scroll', () => {
         if (!scrollTicking) {
             window.requestAnimationFrame(() => {
                 const currentScrollY = Math.max(0, window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
 
-                // 1. Update thin teal reading progress bar
-                const progressBar = document.getElementById('reading-progress-bar');
-                if (progressBar) {
+                // 1. Update thin reading progress bar
+                if (cachedProgressBar) {
                     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
                     const progress = docHeight > 0 ? (currentScrollY / docHeight) * 100 : 0;
-                    progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+                    cachedProgressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
                 }
 
                 // 2. Headroom Auto-Hide on Scroll Down, Reveal on Scroll Up
-                const tb = document.querySelector('.topbar');
-                const bottomNav = document.querySelector('.mobile-bottom-nav');
-                const exitFocus = document.getElementById('exit-focus-btn');
-
                 const delta = currentScrollY - lastScrollY;
                 if (currentScrollY <= 40) {
-                    if (tb) tb.classList.remove('topbar-hidden');
-                    if (bottomNav) bottomNav.classList.remove('bottom-nav-hidden');
-                    if (exitFocus) exitFocus.classList.remove('focus-btn-hidden');
+                    if (cachedTopbar) cachedTopbar.classList.remove('topbar-hidden');
+                    if (cachedBottomNav) cachedBottomNav.classList.remove('bottom-nav-hidden');
+                    if (cachedExitFocus) cachedExitFocus.classList.remove('focus-btn-hidden');
                     lastScrollY = currentScrollY;
                 } else if (delta > 7 && currentScrollY > 60) {
                     const searchOpen = document.querySelector('.search-wrapper.mobile-active, .search-wrapper-article.mobile-active');
-                    const notifDropdown = document.getElementById('notif-dropdown');
-                    const notifOpen = notifDropdown && notifDropdown.style.display === 'block';
+                    const notifOpen = cachedNotifDropdown && cachedNotifDropdown.style.display === 'block';
                     if (!searchOpen && !notifOpen) {
-                        if (tb) tb.classList.add('topbar-hidden');
-                        if (bottomNav) bottomNav.classList.add('bottom-nav-hidden');
-                        if (exitFocus) exitFocus.classList.add('focus-btn-hidden');
+                        if (cachedTopbar) cachedTopbar.classList.add('topbar-hidden');
+                        if (cachedBottomNav) cachedBottomNav.classList.add('bottom-nav-hidden');
+                        if (cachedExitFocus) cachedExitFocus.classList.add('focus-btn-hidden');
                     }
                     lastScrollY = currentScrollY;
                 } else if (delta < -4) {
-                    if (tb) tb.classList.remove('topbar-hidden');
-                    if (bottomNav) bottomNav.classList.remove('bottom-nav-hidden');
-                    if (exitFocus) exitFocus.classList.remove('focus-btn-hidden');
+                    if (cachedTopbar) cachedTopbar.classList.remove('topbar-hidden');
+                    if (cachedBottomNav) cachedBottomNav.classList.remove('bottom-nav-hidden');
+                    if (cachedExitFocus) cachedExitFocus.classList.remove('focus-btn-hidden');
                     lastScrollY = currentScrollY;
                 }
 

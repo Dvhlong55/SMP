@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('link[href*="shared.css"]')) {
         const linkShared = document.createElement('link');
         linkShared.rel = 'stylesheet';
-        linkShared.href = depthPrefix + 'core/css/shared.css?v=103';
+        linkShared.href = depthPrefix + 'core/css/shared.css?v=104';
         head.appendChild(linkShared);
     }
     if (!document.querySelector('link[href*="post.css"]')) {
@@ -282,8 +282,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // 6. Tải song song toàn bộ script nhưng giữ nguyên thứ tự thực thi (async = false)
     const scriptsToLoad = [
         depthPrefix + "core/js/sidebar-data.js?v=101",
-        depthPrefix + "core/js/layout.js?v=106",
-        depthPrefix + "core/js/shared.js?v=54",
+        depthPrefix + "core/js/layout.js?v=107",
+        depthPrefix + "core/js/shared.js?v=55",
         depthPrefix + "core/js/saved.js?v=35",
         depthPrefix + "core/js/comment.js?v=35"
     ];
