@@ -279,11 +279,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     })(document.querySelector('.exam-paper'));
     
-    // 6. Nhúng các script giao diện theo thứ tự tuần tự để tránh race condition
+    // 6. Tải song song toàn bộ script nhưng giữ nguyên thứ tự thực thi (async = false)
     const scriptsToLoad = [
         depthPrefix + "core/js/sidebar-data.js?v=101",
-        depthPrefix + "core/js/layout.js?v=105",
-        depthPrefix + "core/js/shared.js?v=53",
+        depthPrefix + "core/js/layout.js?v=106",
+        depthPrefix + "core/js/shared.js?v=54",
         depthPrefix + "core/js/saved.js?v=35",
         depthPrefix + "core/js/comment.js?v=35"
     ];
@@ -309,26 +309,28 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 50);
     }
 
-    function loadScriptSequentially(index) {
-        if (index >= scriptsToLoad.length) {
+    function loadScriptsParallelInOrder() {
+        let remaining = scriptsToLoad.length;
+        const onAllLoaded = () => {
             document.body.style.display = '';
             if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
                 window.MathJax.typesetPromise().then(function() {
                     if (typeof window.fixMathJaxOverflow === 'function') window.fixMathJaxOverflow();
                 }).catch(function(e) { console.warn('MathJax:', e); });
             }
-            return;
-        }
-        const script = document.createElement('script');
-        script.src = scriptsToLoad[index];
-        script.onload = () => loadScriptSequentially(index + 1);
-        script.onerror = () => {
-            console.warn('Failed to load:', scriptsToLoad[index]);
-            loadScriptSequentially(index + 1);
         };
-        document.body.appendChild(script);
+        scriptsToLoad.forEach((src) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.async = false;
+            script.onload = script.onerror = () => {
+                remaining--;
+                if (remaining <= 0) onAllLoaded();
+            };
+            document.body.appendChild(script);
+        });
     }
-    
-    loadScriptSequentially(0);
+
+    loadScriptsParallelInOrder();
 });
 

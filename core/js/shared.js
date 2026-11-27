@@ -1509,15 +1509,46 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 // === MATHJAX OVERFLOW FIXER ===
-// Chỉ kích hoạt trượt trái-phải cho những công thức thực sự vượt quá chiều ngang, tuyệt đối không trượt dọc
+// Chỉ chạy khi cần (sau typeset / resize), tách pha ĐỌC - GHI để tránh Layout Thrashing gây giật lag
 window.fixMathJaxOverflow = function() {
-    document.querySelectorAll('mjx-container:not([display="true"])').forEach(mjx => {
-        const blockContainer = mjx.closest('p, li, dd, dt, div, td, th, blockquote, .exam-paper');
-        if (blockContainer && blockContainer.clientWidth > 50) {
-            const cs = getComputedStyle(blockContainer);
-            const availWidth = blockContainer.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+    const inlineNodes = document.querySelectorAll('mjx-container:not([display="true"])');
+    if (inlineNodes.length > 0) {
+        const widthCache = new WeakMap();
+        const updates = [];
+
+        // Pha 1: Đọc kích thước (Read-only)
+        inlineNodes.forEach(mjx => {
+            const blockContainer = mjx.closest('p, li, dd, dt, div, td, th, blockquote, .exam-paper');
+            if (!blockContainer) return;
+
+            let availWidth = widthCache.get(blockContainer);
+            if (availWidth === undefined) {
+                const cw = blockContainer.clientWidth;
+                if (cw <= 50) {
+                    widthCache.set(blockContainer, -1);
+                    return;
+                }
+                const cs = getComputedStyle(blockContainer);
+                availWidth = cw - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+                widthCache.set(blockContainer, availWidth);
+            }
+            if (availWidth <= 50) return;
+
             const naturalWidth = Math.max(mjx.scrollWidth, mjx.getBoundingClientRect().width);
-            if (naturalWidth > availWidth + 2) {
+            const needOverflow = naturalWidth > availWidth + 2;
+            const isActive = mjx.dataset.overflowActive === '1';
+
+            if (needOverflow && !isActive) {
+                updates.push({ mjx, enable: true });
+            } else if (!needOverflow && (isActive || mjx.style.display === 'block' || mjx.style.display === 'inline-block')) {
+                updates.push({ mjx, enable: false });
+            }
+        });
+
+        // Pha 2: Ghi style (Write-only)
+        updates.forEach(({ mjx, enable }) => {
+            if (enable) {
+                mjx.dataset.overflowActive = '1';
                 mjx.style.display = 'inline-block';
                 mjx.style.verticalAlign = 'middle';
                 mjx.style.overflowX = 'auto';
@@ -1527,7 +1558,8 @@ window.fixMathJaxOverflow = function() {
                 mjx.style.padding = '5px 0';
                 mjx.style.touchAction = 'pan-x pan-y';
                 mjx.style.webkitOverflowScrolling = 'touch';
-            } else if (mjx.style.display === 'block' || mjx.style.display === 'inline-block') {
+            } else {
+                delete mjx.dataset.overflowActive;
                 mjx.style.display = '';
                 mjx.style.verticalAlign = '';
                 mjx.style.overflowX = '';
@@ -1538,21 +1570,22 @@ window.fixMathJaxOverflow = function() {
                 mjx.style.touchAction = '';
                 mjx.style.webkitOverflowScrolling = '';
             }
-        }
-    });
-
-    document.querySelectorAll('mjx-container[display="true"]').forEach(mjx => {
-        mjx.classList.remove('mjx-no-overflow');
-        mjx.style.overflowX = 'auto';
-        mjx.style.overflowY = 'hidden';
-        mjx.style.maxWidth = '100%';
-        mjx.style.minWidth = '0';
-        mjx.style.touchAction = 'pan-x pan-y';
-        mjx.style.webkitOverflowScrolling = 'touch';
-    });
+        });
+    }
 };
-setInterval(window.fixMathJaxOverflow, 1000);
-window.addEventListener('resize', window.fixMathJaxOverflow);
+
+(function() {
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(window.fixMathJaxOverflow, 180);
+    }, { passive: true });
+    if (document.readyState === 'complete') {
+        setTimeout(window.fixMathJaxOverflow, 150);
+    } else {
+        window.addEventListener('load', () => setTimeout(window.fixMathJaxOverflow, 150), { once: true });
+    }
+})();
 
 
 // === HIGHLIGHT ACTIVE NAV LINK ===
@@ -1794,28 +1827,15 @@ function initCustomCursor() {
         cursor.style.opacity = '1';
     });
 
-    const attachHoverEvents = () => {
-        const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .sidebar-toggle, .post-card, .custom-cursor-hover, .thread-item');
-        interactiveElements.forEach(el => {
-            if (!el.dataset.cursorAttached) {
-                el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-                el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
-                el.dataset.cursorAttached = 'true';
-            }
-        });
-    };
-
-    attachHoverEvents();
-
-    // Re-attach hover events when DOM changes (e.g., loading posts dynamically)
-    const observer = new MutationObserver((mutations) => {
-        let shouldReattach = false;
-        mutations.forEach(mutation => {
-            if (mutation.addedNodes.length > 0) shouldReattach = true;
-        });
-        if (shouldReattach) attachHoverEvents();
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
+    // Dùng Event Delegation thay cho MutationObserver toàn trang (tránh lag khi MathJax render DOM)
+    const INTERACTIVE_SEL = 'a, button, input, textarea, select, .sidebar-toggle, .post-card, .custom-cursor-hover, .thread-item';
+    document.addEventListener('mouseover', (e) => {
+        if (e.target && typeof e.target.closest === 'function' && e.target.closest(INTERACTIVE_SEL)) {
+            cursor.classList.add('hovering');
+        } else {
+            cursor.classList.remove('hovering');
+        }
+    }, { passive: true });
 }
 
 // === FADE-UP ANIMATION ===
@@ -1841,13 +1861,17 @@ function initFadeUpAnimation() {
 
     observeFadeElements();
 
-    // Re-observe when DOM changes
+    // Debounce MutationObserver và bỏ qua các node MathJax để tránh giật khi render công thức
+    let fadeTimer = null;
     const mutObserver = new MutationObserver((mutations) => {
-        let shouldReobserve = false;
-        mutations.forEach(mutation => {
-            if (mutation.addedNodes.length > 0) shouldReobserve = true;
-        });
-        if (shouldReobserve) observeFadeElements();
+        for (let i = 0; i < mutations.length; i++) {
+            const m = mutations[i];
+            if (m.addedNodes.length > 0 && !(m.target && m.target.nodeName && m.target.nodeName.startsWith('MJX-'))) {
+                clearTimeout(fadeTimer);
+                fadeTimer = setTimeout(observeFadeElements, 120);
+                break;
+            }
+        }
     });
     mutObserver.observe(document.body, { childList: true, subtree: true });
 }
