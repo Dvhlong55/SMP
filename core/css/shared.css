@@ -1533,7 +1533,7 @@ body.embed-mode .main-content-layout {
     /* 3. LÀM PHẲNG VÀ XÓA PADDING CỦA TẤT CẢ CÁC WRAPPER */
     /* Đã bổ sung .exam-paper và các class trong bài post */
     .main-content-layout, .main-wrapper, main, 
-    .main-articles-body, .exam-content, .article-content,
+    .main-articles-body, .post-article-row, .post-article-row.has-post-toc, .exam-content, .article-content,
     .exam-paper, .post-container, .modal-content, .modal-body, .card {
         display: block !important;
         width: 100% !important;

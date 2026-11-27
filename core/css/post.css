@@ -601,8 +601,10 @@ body.focus-mode main {
     margin: 0 auto !important;
 }
 
-body.focus-mode .main-content-layout {
-    grid-template-columns: 1fr !important;
+body.focus-mode .main-content-layout,
+body.focus-mode .post-article-row,
+body.focus-mode .post-article-row.has-post-toc {
+    grid-template-columns: minmax(0, 1fr) !important;
     gap: 0 !important;
     margin-top: 0 !important;
 }

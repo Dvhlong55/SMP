@@ -88,13 +88,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('link[href*="shared.css"]')) {
         const linkShared = document.createElement('link');
         linkShared.rel = 'stylesheet';
-        linkShared.href = depthPrefix + 'core/css/shared.css?v=102';
+        linkShared.href = depthPrefix + 'core/css/shared.css?v=103';
         head.appendChild(linkShared);
     }
     if (!document.querySelector('link[href*="post.css"]')) {
         const linkPost = document.createElement('link');
         linkPost.rel = 'stylesheet';
-        linkPost.href = depthPrefix + 'core/css/post.css?v=43';
+        linkPost.href = depthPrefix + 'core/css/post.css?v=44';
         head.appendChild(linkPost);
     }
     if (!document.querySelector('link[href*="smp-template.css"]')) {
