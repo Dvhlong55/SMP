@@ -113,6 +113,9 @@
         if (uploadInterval) { clearInterval(uploadInterval); uploadInterval = null; }
     }
 
+    const BELL_ON_SVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/><path d="M22 8c0-2.3-.8-4.3-2-6"/></svg>`;
+    const BELL_OFF_SVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.7 3A6 6 0 0 1 18 8a21.3 21.3 0 0 0 .6 5"/><path d="M17 17H3s3-2 3-9a4.67 4.67 0 0 1 .3-1.7"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><line x1="2" y1="2" x2="22" y2="22"/></svg>`;
+
     function renderTopNav() {
         return `
         <div class="r2v-topbar-strip">
@@ -232,17 +235,12 @@
             </div>
 
             <aside class="r2v-card r2v-proctor-panel">
-                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.75; text-align: center;">
-                    ${st.mode === "strict" ? "Giám Thị Đếm Ngược" : "Đồng Hồ Tự Luyện"}
-                </div>
-                <div class="r2v-timer-display" id="r2v-clock">--:--:--</div>
-
-                <div class="r2v-audio-row">
-                    <span>Chuông báo mốc giờ</span>
-                    <button type="button" class="r2v-mini-btn" id="r2v-sound-toggle">
-                        ${soundEnabled ? "Đang bật" : "Đã tắt"}
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 4px;">
+                    <button type="button" class="r2v-mini-btn" id="r2v-sound-toggle" title="${soundEnabled ? "Tắt chuông báo mốc giờ" : "Bật chuông báo mốc giờ"}" aria-label="Chuông báo mốc giờ" style="display: inline-flex; align-items: center; justify-content: center; padding: 6px 8px;">
+                        ${soundEnabled ? BELL_ON_SVG : BELL_OFF_SVG}
                     </button>
                 </div>
+                <div class="r2v-timer-display" id="r2v-clock" style="margin-top: 4px;">--:--:--</div>
 
                 <button type="button" class="r2v-btn-danger" id="r2v-finish-btn">
                     Kết thúc &amp; Nộp bài
@@ -272,7 +270,9 @@
         });
         document.getElementById("r2v-sound-toggle").addEventListener("click", (e) => {
             soundEnabled = !soundEnabled;
-            e.target.textContent = soundEnabled ? "Đang bật" : "Đã tắt";
+            const btn = e.currentTarget;
+            btn.innerHTML = soundEnabled ? BELL_ON_SVG : BELL_OFF_SVG;
+            btn.title = soundEnabled ? "Tắt chuông báo mốc giờ" : "Bật chuông báo mốc giờ";
         });
         document.getElementById("r2v-finish-btn").addEventListener("click", () => {
             if (confirm("Xác nhận kết thúc giờ làm bài và chuyển sang cổng nộp bài & Certificate?")) {
