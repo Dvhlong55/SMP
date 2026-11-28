@@ -133,6 +133,7 @@
 
     const BELL_ON_SVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/><path d="M22 8c0-2.3-.8-4.3-2-6"/></svg>`;
     const BELL_OFF_SVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.7 3A6 6 0 0 1 18 8a21.3 21.3 0 0 0 .6 5"/><path d="M17 17H3s3-2 3-9a4.67 4.67 0 0 1 .3-1.7"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><line x1="2" y1="2" x2="22" y2="22"/></svg>`;
+    const LOCK_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 5px;" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`;
 
     function renderTopNav() {
         return `
@@ -415,7 +416,7 @@
                     </div>
                 ` : `
                     <div class="r2v-locked-box">
-                        <div style="font-weight: 700; margin-bottom: 6px;">&#x1F512; Barem &amp; Đáp án đang tạm khóa</div>
+                        <div style="font-weight: 700; margin-bottom: 6px;">${LOCK_SVG}Barem &amp; Đáp án đang tạm khóa</div>
                         <div>${exam.solutionReleaseNote}</div>
                     </div>
                 `}
@@ -441,7 +442,7 @@
                 </div>
             ` : `
                 <div class="r2v-locked-box">
-                    <div style="font-weight: 700; margin-bottom: 6px;">&#x1F512; Certificate chỉ được cấp khi hoàn thành cả 2 ngày thi</div>
+                    <div style="font-weight: 700; margin-bottom: 6px;">${LOCK_SVG}Certificate chỉ được cấp khi hoàn thành cả 2 ngày thi</div>
                     <div>Bạn đã hoàn thành <b>${sess.label}</b>. Vui lòng hoàn thành nốt <b>${otherLabel}</b> của ${exam.title} để mở khóa Certificate.</div>
                     <div style="margin-top: 12px;">
                         <a href="/pages/road2vmo-exam.html?test=${currentRound}&amp;session=${otherSession}" class="r2v-btn-primary">
@@ -628,7 +629,7 @@
             root.innerHTML = `
             ${renderTopNav()}
             <div class="r2v-card fade-up" style="max-width: 620px; margin: 18px auto; text-align: center;">
-                <span class="r2v-badge-gold">&#x1F512; Chưa Mở Đề</span>
+                <span class="r2v-badge-gold">${LOCK_SVG}Chưa Mở Đề</span>
                 <h1 class="r2v-lobby-title" style="font-size: 1.7rem;">${exam.title}</h1>
                 <p style="font-size: 0.95rem; line-height: 1.7; opacity: 0.88; margin: 12px 0 22px;">
                     Đợt thi này hiện đang khóa và chưa tới thời gian mở đề. Vui lòng quay lại khi có thông báo mở thi.
