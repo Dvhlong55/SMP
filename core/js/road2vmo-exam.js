@@ -256,6 +256,7 @@
         stopTimers();
         const exam = EXAMS[currentRound];
         const sess = exam.sessions[currentSession];
+        const maxTotal = sess.problems.reduce((s, p) => s + p.maxScore, 0);
         const hasStatements = sess.problems.some(p => (p.statement || "").trim().length > 0);
         const timerLabel = st.mode === "strict" ? "Thời gian còn lại" : "Thời gian đã làm";
 
@@ -266,7 +267,7 @@
                     <div>
                         <span class="r2v-badge-gold" style="margin-bottom: 0;">${exam.title} &bull; ${sess.label}</span>
                         <div style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; opacity: 0.72; margin-top: 6px;">
-                            ${sess.vmoMinutes} phút &bull; ${sess.problems.length} bài (7 điểm/bài)
+                            ${sess.vmoMinutes} phút &bull; ${sess.problems.length} bài (tổng ${maxTotal} điểm)
                         </div>
                     </div>
                     <div class="r2v-font-controls">
@@ -387,7 +388,7 @@
             <div class="r2v-card" style="margin-bottom: 0;">
                 <div class="r2v-step-head">
                     <span class="r2v-step-num">1</span>
-                    <h2>Nộp bài (${exam.title} &bull; ${sess.label})</h2>
+                    <h2>Nộp bài &mdash; Học sinh lớp SMP (${exam.title} &bull; ${sess.label})</h2>
                 </div>
                 <div id="r2v-upload-status" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 12px;">
                     Thời gian scan &amp; nộp bài còn lại: <b id="r2v-upload-clock" style="color: #f0c040; font-size: 1rem;">15:00</b>
@@ -397,7 +398,7 @@
                         Mở Google Classroom (${exam.title}) &rarr;
                     </a>
                     <span style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; opacity: 0.72;">
-                        Tên file: <code>${exam.fileNamingRule}</code>
+                        Tên file: <code>${exam.fileNamingRule}</code> &bull; Thí sinh tự do bỏ qua bước này.
                     </span>
                 </div>
             </div>
@@ -429,7 +430,7 @@
                     </div>
                 ` : `
                     <div style="font-size: 0.92rem; opacity: 0.82; line-height: 1.6;">
-                        ${LOCK_SVG}Mở khóa sau buổi sửa bài trực tiếp.
+                        ${LOCK_SVG}Mở khóa sau buổi sửa bài trên lớp SMP (nếu có).
                     </div>
                 `}
             </div>
