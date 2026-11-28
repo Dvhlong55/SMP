@@ -62,7 +62,24 @@
             font-weight: bold; border: none; cursor: pointer; transition: transform 0.2s, background 0.2s;
             font-size: 0.85rem;
         }
-        .btn-primary:hover { transform: translateY(-2px); background: var(--accent-gold); }
+        body.parchment-mode .btn-primary,
+        body:not(.dark-mode):not(.parchment-mode) .btn-primary {
+            color: #ffffff;
+        }
+        .btn-primary:hover { transform: translateY(-2px); background: var(--accent-gold); color: #ffffff; }
+        .forum-create-btn {
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.45rem;
+            line-height: 1;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
         .btn-secondary {
             background: transparent; color: var(--text-muted); padding: 8px 16px;
             border-radius: 6px; font-family: 'JetBrains Mono', monospace;
@@ -174,18 +191,116 @@
             --accent-purple: #8e44ad;
         }
 
-        /* Tags and Mentions */
-        .forum-tag { display: inline-block; padding: 3px 8px; background: rgba(92,225,230,0.1); color: var(--accent-cyan); border: 1px solid rgba(92,225,230,0.3); border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; margin-right: 6px; margin-top: 6px; }
+        /* Tags and Mentions (Unified with Math & Parchment theme) */
+        .forum-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 9px;
+            background: rgba(128, 128, 128, 0.06);
+            color: var(--text-muted);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            font-size: 0.74rem;
+            font-family: 'JetBrains Mono', monospace;
+            margin-right: 6px;
+            margin-top: 6px;
+            line-height: 1.3;
+        }
+        .forum-tag mjx-container,
+        .nav-filter-btn mjx-container {
+            font-size: 0.95em !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            vertical-align: middle;
+        }
+        .forum-tag-lvl1 {
+            color: var(--accent-cyan);
+            border-color: rgba(171, 51, 52, 0.25);
+            background: var(--accent-cyan-dim);
+            font-weight: 600;
+        }
+        body.dark-mode .forum-tag-lvl1 {
+            border-color: rgba(92, 225, 230, 0.3);
+        }
         .forum-mention { color: var(--accent-gold); font-weight: bold; padding: 0 2px; background: rgba(243, 156, 18, 0.1); border-radius: 3px; }
         
-        .nav-filter-bar { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; scrollbar-width: none; }
+        .nav-filter-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; overflow-x: auto; scrollbar-width: none; flex-wrap: wrap; }
         .nav-filter-bar::-webkit-scrollbar { display: none; }
-        .nav-filter-btn { background: transparent; border: 1px solid transparent; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; padding: 6px 14px; cursor: pointer; border-radius: 6px; white-space: nowrap; transition: all 0.3s; }
-        .nav-filter-btn:hover { color: var(--accent-cyan); background: rgba(92,225,230,0.1); }
-        .nav-filter-btn.active { color: var(--accent-cyan); background: rgba(92,225,230,0.1); border: 1px solid var(--accent-cyan); font-weight: bold; }
-        .nav-filter-btn.active.lvl1 { color: var(--accent-cyan); background: rgba(92,225,230,0.1); border: 1px solid var(--accent-cyan); font-weight: bold; }
-        .nav-filter-btn.active.lvl2 { color: var(--accent-gold); background: rgba(201,169,110,0.1); border: 1px solid var(--accent-gold); font-weight: bold; }
-        .nav-filter-btn.active.lvl3 { color: var(--accent-purple); background: rgba(185,117,255,0.1); border: 1px solid var(--accent-purple); font-weight: bold; }
+        .nav-filter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            white-space: nowrap;
+            transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+        }
+        .nav-filter-btn:hover { color: var(--accent-cyan); border-color: var(--accent-cyan); }
+        .nav-filter-btn.active {
+            color: #ffffff !important;
+            background: var(--accent-cyan) !important;
+            border-color: var(--accent-cyan) !important;
+            font-weight: 600;
+        }
+        body.dark-mode .nav-filter-btn.active {
+            color: #111111 !important;
+        }
+        .nav-filter-btn.active *,
+        body.parchment-mode .nav-filter-btn.active *,
+        body:not(.dark-mode):not(.parchment-mode) .nav-filter-btn.active * {
+            color: inherit !important;
+            stroke: currentColor !important;
+        }
+        .nav-filter-btn.chip-mode:not(.active) .chip-label {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 14px 0 32px !important;
+            }
+            .forum-container {
+                margin: 4px auto 24px;
+                padding: 0 18px;
+            }
+            .forum-header {
+                margin-bottom: 16px;
+                padding-bottom: 12px;
+                gap: 10px;
+            }
+            .forum-title {
+                font-size: 1.45rem;
+                margin: 0;
+            }
+            .thread-list {
+                gap: 0;
+            }
+            .thread-item {
+                background: transparent !important;
+                border: none !important;
+                border-bottom: 1px solid var(--border-light) !important;
+                border-radius: 0 !important;
+                padding: 16px 0 !important;
+            }
+            .thread-item:hover {
+                transform: none;
+            }
+            .post-card {
+                background: transparent !important;
+                border: none !important;
+                border-bottom: 1px solid var(--border-light) !important;
+                border-radius: 0 !important;
+                padding: 16px 0 !important;
+                box-shadow: none !important;
+            }
+        }
         
         .tag-checkboxes { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
         .tag-checkbox-label { display: flex; align-items: center; gap: 5px; font-size: 0.85rem; color: var(--text-main); cursor: pointer; transition: all 0.2s; }
@@ -233,16 +348,16 @@
                 <div id="thread-list-view">
                     <div class="forum-header">
                         <h1 class="forum-title">⧉ Diễn Đàn Toán Học</h1>
-                        <button class="btn-primary" id="btn-show-create">+ Tạo chủ đề mới</button>
+                        <button class="btn-primary forum-create-btn" id="btn-show-create" title="Tạo chủ đề mới" aria-label="Tạo chủ đề mới">+</button>
                     </div>
 
                     <div id="cascading-filter-container" class="fade-up">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
                             <div class="nav-filter-bar" id="filter-level1" style="flex: 1;"></div>
-                            <button id="btn-toggle-advanced-search" class="btn-secondary" style="color: var(--accent-purple); border-color: var(--accent-purple); white-space: nowrap; font-size: 0.75rem; padding: 6px 10px; margin-top: 0px;" onclick="const c = document.getElementById('advanced-search-container'); c.style.display = c.style.display === 'none' ? 'block' : 'none';"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> Tìm kiếm nâng cao</button>
+                            <button id="btn-toggle-advanced-search" class="btn-secondary" style="display: none;" onclick="const c = document.getElementById('advanced-search-container'); c.style.display = c.style.display === 'none' ? 'block' : 'none';"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> Tìm kiếm nâng cao</button>
                         </div>
-                        <div class="nav-filter-bar" id="filter-level2" style="display:none; margin-top:-10px;"></div>
-                        <div class="nav-filter-bar" id="filter-level3" style="display:none; margin-top:-10px;"></div>
+                        <div class="nav-filter-bar" id="filter-level2" style="display:none; margin-top:-6px;"></div>
+                        <div class="nav-filter-bar" id="filter-level3" style="display:none; margin-top:-6px;"></div>
                     </div>
 
                     <div id="advanced-search-container" class="fade-up" style="display: none; background: rgba(185,117,255,0.05); border: 1px solid var(--accent-purple); border-radius: 8px; padding: 15px; margin-bottom: 20px;">
@@ -253,9 +368,9 @@
                         <div id="advanced-search-status" style="font-size: 0.85rem; color: var(--accent-purple); margin-top: 8px; display: none; font-family: 'JetBrains Mono', monospace;">Đang phân tích ngữ nghĩa...</div>
                     </div>
 
-                    <div class="forum-search-bar fade-up" style="margin-bottom:20px;">
+                    <div class="forum-search-bar fade-up" style="margin-bottom:18px;">
                         <div style="display: flex; gap: 10px;">
-                            <input type="text" id="forum-search-input" class="form-control" placeholder="⌕ Tìm kiếm cơ bản (từ khóa, tiêu đề, thẻ)...">
+                            <input type="text" id="forum-search-input" class="form-control" placeholder="⌕ Tìm kiếm chủ đề...">
                         </div>
                     </div>
 
@@ -387,11 +502,11 @@
 
 
 
-    <script src="/core/js/layout.js?v=99"></script>
-    <script src="/core/js/shared.js?v=50"></script>
+    <script src="/core/js/layout.js?v=110"></script>
+    <script src="/core/js/shared.js?v=55"></script>
     <script src="/core/js/saved.js?v=36"></script>
     <script src="/core/js/vector-search.js?v=1"></script>
-    <script src="/core/js/forum.js?v=9"></script>
+    <script src="/core/js/forum.js?v=10"></script>
 </body>
 </html>
 

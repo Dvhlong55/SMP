@@ -239,17 +239,93 @@ function getTagLevel(tag) {
     return 4;
 }
 
-function getTagStyle(tag) {
-    const lvl = getTagLevel(tag);
-    if (lvl === 1) {
-        return 'background: rgba(92,225,230,0.1); color: var(--accent-cyan); border-color: rgba(92,225,230,0.3);';
-    } else if (lvl === 2) {
-        return 'background: rgba(201,169,110,0.1); color: var(--accent-gold); border-color: rgba(201,169,110,0.3);';
-    } else if (lvl === 3) {
-        return 'background: rgba(185,117,255,0.1); color: var(--accent-purple); border-color: rgba(185,117,255,0.3);';
-    } else {
-        return 'background: rgba(231,76,60,0.1); color: #e74c3c; border-color: rgba(231,76,60,0.3);';
+const FORUM_GEOMETRY_SVG = `<svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;display:inline-block;"><circle cx="10" cy="10" r="7.5"/><polygon points="8,2.8 3.8,14.3 16.5,13.8" fill="none"/></svg>`;
+const FORUM_EXAM_SVG = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;display:inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`;
+
+function getForumTagIcon(tag) {
+    if (!tag) return '<span class="chip-latex">\\(\\cdot\\)</span>';
+    const map = {
+        'all': '<span class="chip-latex">\\(\\sum\\)</span>',
+        'THCS': '<span class="chip-latex">\\(\\mathbb{N}\\)</span>',
+        'THPT': '<span class="chip-latex">\\(\\Delta\\)</span>',
+        'VMO': '<span class="chip-latex">\\(\\mathbb{Z}\\)</span>',
+        'Đại Học': '<span class="chip-latex">\\(\\nabla\\)</span>',
+        'Dai-So': '<span class="chip-latex">\\(P(x)\\)</span>',
+        'Đại Số': '<span class="chip-latex">\\(P(x)\\)</span>',
+        'Dai-So-Giai-Tich': '<span class="chip-latex">\\(P(x)\\)</span>',
+        'Đại Số Tuyến Tính': '<span class="chip-latex">\\(A\\)</span>',
+        'Đại Số Đại Cương': '<span class="chip-latex">\\(G\\)</span>',
+        'Da-Thuc': '<span class="chip-latex">\\(P(x)\\)</span>',
+        'Bat-Dang-Thuc': '<span class="chip-latex">\\(\\ge\\)</span>',
+        'Bất Đẳng Thức': '<span class="chip-latex">\\(\\ge\\)</span>',
+        'Phuong-Trinh-Ham': '<span class="chip-latex">\\(f(x)\\)</span>',
+        'Tinh-Chat-Ham-So': '<span class="chip-latex">\\(f(x)\\)</span>',
+        'Ham-So-Do-Thi': '<span class="chip-latex">\\(f(x)\\)</span>',
+        'Phuong-Trinh-Bat-PT': '<span class="chip-latex">\\(=\\)</span>',
+        'Phương Trình / Hệ Phương Trình': '<span class="chip-latex">\\(=\\)</span>',
+        'Luong-Giac': '<span class="chip-latex">\\(\\sin\\)</span>',
+        'Mu-Logarit': '<span class="chip-latex">\\(\\log\\)</span>',
+        'So-Phuc': '<span class="chip-latex">\\(\\mathbb{C}\\)</span>',
+        'Giai-Tich': '<span class="chip-latex">\\(\\int\\)</span>',
+        'Giải Tích': '<span class="chip-latex">\\(\\int\\)</span>',
+        'Dao-Ham-Tich-Phan': '<span class="chip-latex">\\(\\int\\)</span>',
+        'Day-So': '<span class="chip-latex">\\((a_n)\\)</span>',
+        'Day-So-Gioi-Han': '<span class="chip-latex">\\((a_n)\\)</span>',
+        'So-Hoc': '<span class="chip-latex">\\(\\varphi(n)\\)</span>',
+        'Số Học': '<span class="chip-latex">\\(\\varphi(n)\\)</span>',
+        'Chia-Het-Dong-Du': '<span class="chip-latex">\\(\\equiv\\)</span>',
+        'Phuong-Trinh-Nghiem-Nguyen': '<span class="chip-latex">\\(\\mathbb{Z}\\)</span>',
+        'Cap-Can-Nguyen-Thuy': '<span class="chip-latex">\\(\\text{ord}\\)</span>',
+        'Ham-So-Hoc': '<span class="chip-latex">\\(\\varphi(n)\\)</span>',
+        'To-Hop': '<span class="chip-latex">\\(C_n^k\\)</span>',
+        'Tổ Hợp / Rời Rạc': '<span class="chip-latex">\\(C_n^k\\)</span>',
+        'To-Hop-Xac-Suat': '<span class="chip-latex">\\(C_n^k\\)</span>',
+        'Toán Rời Rạc': '<span class="chip-latex">\\(C_n^k\\)</span>',
+        'Bai-Toan-Dem': '<span class="chip-latex">\\(C_n^k\\)</span>',
+        'Dai-So-To-Hop': '<span class="chip-latex">\\(C_n^k\\)</span>',
+        'Nhi-Thuc-Newton': '<span class="chip-latex">\\(\\binom{n}{k}\\)</span>',
+        'Ly-Thuyet-Do-Thi': '<span class="chip-latex">\\(G(V,E)\\)</span>',
+        'Bat-Bien-Nua-Bat-Bien': '<span class="chip-latex">\\(\\Delta\\)</span>',
+        'Cuc-Han-Dirichlet': '<span class="chip-latex">\\(\\max\\)</span>',
+        'Tro-Choi-Toan-Hoc': '<span class="chip-latex">\\(\\star\\)</span>',
+        'Xac-Suat': '<span class="chip-latex">\\(\\mathbb{P}\\)</span>',
+        'Xác Suất Thống Kê': '<span class="chip-latex">\\(\\mathbb{P}\\)</span>',
+        'Thong-Ke': '<span class="chip-latex">\\(\\mu\\)</span>',
+        'Hinh-Hoc': FORUM_GEOMETRY_SVG,
+        'Hình Học': FORUM_GEOMETRY_SVG,
+        'Toa-Do-Phong-Oxy': FORUM_GEOMETRY_SVG,
+        'Hinh-Khong-Gian': FORUM_GEOMETRY_SVG,
+        'Khoi-Da-Dien-Tron-Xoay': FORUM_GEOMETRY_SVG,
+        'Toa-Do-Khong-Gian-Oxyz': FORUM_GEOMETRY_SVG,
+        'Dong-Quy-Thang-Hang': FORUM_GEOMETRY_SVG,
+        'Hang-Diem-Cuc-Doi-Cuc': FORUM_GEOMETRY_SVG,
+        'Phep-Bien-Hinh': FORUM_GEOMETRY_SVG,
+        'Mo-hinh': FORUM_GEOMETRY_SVG,
+        'Mo-Hinh': FORUM_GEOMETRY_SVG,
+        'De-Thi': FORUM_EXAM_SVG,
+        'Đề Thi': FORUM_EXAM_SVG,
+        'Thi-Tot-Nghiep-THPT': FORUM_EXAM_SVG,
+        'Danh-Gia-Nang-Luc': FORUM_EXAM_SVG,
+        'De-Kiem-Tra-Truong-So': FORUM_EXAM_SVG,
+        'VMO-Chinh-Thuc': FORUM_EXAM_SVG,
+        'TST-Chon-Doi-Tuyen': FORUM_EXAM_SVG,
+        'Tap-Huan-Trai-He': FORUM_EXAM_SVG
+    };
+    return map[tag] || '<span class="chip-latex">\\(\\cdot\\)</span>';
+}
+
+function typesetForumEl(el) {
+    if (el && window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+        window.MathJax.typesetPromise([el]).catch(() => {});
     }
+}
+
+function getTagStyle(tag) {
+    return '';
+}
+
+function getTagClass(tag) {
+    return getTagLevel(tag) === 1 ? 'forum-tag forum-tag-lvl1' : 'forum-tag';
 }
 
 async function loadTagsConfig() {
@@ -308,23 +384,26 @@ function renderMainFilterLevel(level, items) {
     if (level === 1) {
         const c = document.getElementById('filter-level1');
         if (!c) return;
-        c.innerHTML = '<button class="nav-filter-btn active lvl1" onclick="selectMainFilter(1, \'all\')">Tất Cả</button>' + 
-                      items.map(i => `<button class="nav-filter-btn lvl1" data-val="${i}" onclick="selectMainFilter(1, '${i}')">${getDisplayName(i)}</button>`).join('');
+        c.innerHTML = `<button class="nav-filter-btn active lvl1" data-val="all" onclick="selectMainFilter(1, 'all')"><span class="chip-icon">${getForumTagIcon('all')}</span><span class="chip-label">Tất Cả</span></button>` + 
+                      items.map(i => `<button class="nav-filter-btn lvl1" data-val="${i}" onclick="selectMainFilter(1, '${i}')"><span class="chip-icon">${getForumTagIcon(i)}</span><span class="chip-label">${getDisplayName(i)}</span></button>`).join('');
         document.getElementById('filter-level2').style.display = 'none';
         document.getElementById('filter-level3').style.display = 'none';
+        typesetForumEl(c);
     } else if (level === 2) {
         const c = document.getElementById('filter-level2');
         if (!c) return;
         if (!items || items.length === 0) { c.style.display = 'none'; return; }
         c.style.display = 'flex';
-        c.innerHTML = items.map(i => `<button class="nav-filter-btn lvl2" data-val="${i}" onclick="selectMainFilter(2, '${i}')">${getDisplayName(i)}</button>`).join('');
+        c.innerHTML = items.map(i => `<button class="nav-filter-btn chip-mode lvl2" data-val="${i}" title="${getDisplayName(i)}" onclick="selectMainFilter(2, '${i}')"><span class="chip-icon">${getForumTagIcon(i)}</span><span class="chip-label">${getDisplayName(i)}</span></button>`).join('');
         document.getElementById('filter-level3').style.display = 'none';
+        typesetForumEl(c);
     } else if (level === 3) {
         const c = document.getElementById('filter-level3');
         if (!c) return;
         if (!items || items.length === 0) { c.style.display = 'none'; return; }
         c.style.display = 'flex';
-        c.innerHTML = items.map(i => `<button class="nav-filter-btn lvl3" data-val="${i}" onclick="selectMainFilter(3, '${i}')">${getDisplayName(i)}</button>`).join('');
+        c.innerHTML = items.map(i => `<button class="nav-filter-btn chip-mode lvl3" data-val="${i}" title="${getDisplayName(i)}" onclick="selectMainFilter(3, '${i}')"><span class="chip-icon">${getForumTagIcon(i)}</span><span class="chip-label">${getDisplayName(i)}</span></button>`).join('');
+        typesetForumEl(c);
     }
 }
 
@@ -334,7 +413,7 @@ window.selectMainFilter = function(level, val) {
         if (c) {
             c.querySelectorAll('.nav-filter-btn').forEach(b => {
                 b.classList.remove('active');
-                if ((val === 'all' && b.innerText === 'Tất Cả') || b.getAttribute('data-val') === val) b.classList.add('active');
+                if (b.getAttribute('data-val') === val) b.classList.add('active');
             });
         }
     };
@@ -479,21 +558,20 @@ function applyFilters() {
         let tagsHtml = '';
         const tags = parseTagsFromContent(t.content);
         if (tags.length > 0) {
-            tagsHtml = '<div style="margin-top: 8px;">' + tags.map(tag => `<span class="forum-tag" style="${getTagStyle(tag)}">${escapeHTML(getDisplayName(tag))}</span>`).join('') + '</div>';
+            tagsHtml = '<div style="margin-top: 8px; display: flex; flex-wrap: wrap; align-items: center;">' + tags.map(tag => `<span class="${getTagClass(tag)}" title="${escapeHTML(getDisplayName(tag))}">${getForumTagIcon(tag)}<span>${escapeHTML(getDisplayName(tag))}</span></span>`).join('') + '</div>';
         }
         return `
         <div class="thread-item" onclick="openThread('${t.id}')">
             <div class="thread-item-title">${escapeHTML(t.title)}${t.editedAt ? '<span class="edit-badge">(đã chỉnh sửa)</span>' : ''}</div>
             <div class="thread-item-meta">
-                <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>${escapeHTML(t.author_name)}</span>
-                <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg>${t.viewCount} lượt xem</span>
-                <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>${t.replyCount} phản hồi</span>
-                <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${formatDate(t.createdAt)}</span>
+                <span title="Lượt xem"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg>${t.viewCount}</span>
+                <span title="Phản hồi"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg>${t.replyCount}</span>
             </div>
             ${tagsHtml}
         </div>
         `;
     }).join('');
+    typesetForumEl(container);
 }
 
 // ─── Thread Detail ────────────────────────────────────────────────────────
