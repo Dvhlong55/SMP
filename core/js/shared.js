@@ -243,6 +243,13 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '§ Kỳ Thi Thử Road2VMO Test',
+        date: 'November 28, 2026',
+        url: '/posts/math/vmo/road2vmo-test.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '§ Bài Toán Chia Kẹo Euler Và Phương Pháp Vách Ngăn',
         date: 'November 26, 2026',
         url: '/posts/math/vmo/chia-keo-euler-va-phuong-phap-vach-ngan.html',
