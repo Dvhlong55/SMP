@@ -1760,9 +1760,11 @@ window.toggleSavePost = async function(postId, postTitle, postUrl, btnElement) {
     }
     
     const isPageBtn = btnElement.id === 'save-post-btn';
+    const isIconOnlyBtn = isPageBtn || btnElement.id === 'save-thread-btn' || /^[☆★\s]+$/.test((btnElement.textContent || '').trim());
     const originalHtml = btnElement.innerHTML;
     btnElement.disabled = true;
-    if (!isPageBtn) {
+    if (!isIconOnlyBtn) {
+        btnElement.style.fontFamily = "'JetBrains Mono', monospace";
         btnElement.innerText = 'Đang xử lý...';
     } else {
         btnElement.style.opacity = '0.5';
