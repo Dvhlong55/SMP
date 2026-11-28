@@ -112,14 +112,16 @@ let tagsConfig = {};
 let allPostsCache = [];
 let currentFilters = { level1: 'all', level2: null, level3: null, keyword: '' };
 
+const FORUM_VIEW_OFFSET = 1000;
+
 const SMP_CURATED_FORUM_THREADS = [
     {
         id: 'smp-daily-floor-poly-2026',
         title: 'Đẳng thức phần nguyên của hai đa thức',
         author_name: 'SMP',
         createdAt: '2026-11-28T09:00:00Z',
-        baseViewCount: 128,
-        viewCount: 128,
+        baseViewCount: 128 + FORUM_VIEW_OFFSET,
+        viewCount: 128 + FORUM_VIEW_OFFSET,
         replyCount: 2,
         likeCount: 0,
         likedByMe: false,
@@ -528,7 +530,10 @@ async function loadThreadList() {
                 if (res && res.ok) apiThreads = await res.json();
             } catch (e) {}
             const curatedIds = new Set(SMP_CURATED_FORUM_THREADS.map(t => t.id));
-            allPostsCache = [...SMP_CURATED_FORUM_THREADS, ...apiThreads.filter(t => !curatedIds.has(t.id))];
+            const normalizedApiThreads = apiThreads
+                .filter(t => !curatedIds.has(t.id))
+                .map(t => ({ ...t, viewCount: (t.viewCount || 0) + FORUM_VIEW_OFFSET }));
+            allPostsCache = [...SMP_CURATED_FORUM_THREADS, ...normalizedApiThreads];
         }
         applyFilters();
     } catch (err) {
@@ -641,6 +646,7 @@ async function openThread(threadId, skipPushState = false) {
                 fetch(`${API_BASE}/api/forum/threads/${threadId}/replies?viewer_id=${encodeURIComponent(viewerId)}`)
             ]);
             thread = await threadRes.json();
+            thread.viewCount = (thread.viewCount || 0) + FORUM_VIEW_OFFSET;
             replies = await repliesRes.json();
         }
         const currentUser = getUsername();
