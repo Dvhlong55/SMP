@@ -585,7 +585,7 @@
                     <span>Home</span>
                 </a>
                 <a href="/pages/toanhoc.html">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M19 4H5l7 8-7 8h14"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;" aria-hidden="true"><path d="M18.6 3.5H5.2c-.3 0-.5.3-.3.6l6.7 7.9-6.9 8.1c-.2.3 0 .7.4.7h13.7l.7-4.3h-.7c-.4 1.6-1.2 2.4-3.1 2.4H7.6l5.9-7a.5.5 0 0 0 0-.7L7.9 5h7.6c1.8 0 2.5.7 2.9 2.2h.7l-.5-3.7z"/></svg>
                     <span>Math</span>
                 </a>
                 <a href="/pages/toanhoc.html?filter=tools">
@@ -648,7 +648,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                 </a>
                 <a href="/pages/toanhoc.html" class="topbar-nav-btn" title="Toán học">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 4H5l7 8-7 8h14"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.6 3.5H5.2c-.3 0-.5.3-.3.6l6.7 7.9-6.9 8.1c-.2.3 0 .7.4.7h13.7l.7-4.3h-.7c-.4 1.6-1.2 2.4-3.1 2.4H7.6l5.9-7a.5.5 0 0 0 0-.7L7.9 5h7.6c1.8 0 2.5.7 2.9 2.2h.7l-.5-3.7z"/></svg>
                 </a>
                 <a href="/pages/toanhoc.html?filter=tools" class="topbar-nav-btn" title="Công cụ">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
@@ -712,7 +712,9 @@
             <span class="icon">&#x2302;</span>
         </a>
         <a href="/pages/toanhoc.html" title="Toán học">
-            <span class="icon" style="font-family:'JetBrains Mono',monospace; font-weight:700;">∑</span>
+            <span class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block; vertical-align:middle;" aria-hidden="true"><path d="M18.6 3.5H5.2c-.3 0-.5.3-.3.6l6.7 7.9-6.9 8.1c-.2.3 0 .7.4.7h13.7l.7-4.3h-.7c-.4 1.6-1.2 2.4-3.1 2.4H7.6l5.9-7a.5.5 0 0 0 0-.7L7.9 5h7.6c1.8 0 2.5.7 2.9 2.2h.7l-.5-3.7z"/></svg>
+            </span>
         </a>
         <a href="/pages/toanhoc.html?filter=tools" title="Công cụ">
             <span class="icon">
