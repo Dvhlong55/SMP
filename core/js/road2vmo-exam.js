@@ -29,6 +29,16 @@
         return null;
     }
 
+    const RESET_EPOCH = "2026-11-28-v2";
+    try {
+        if (localStorage.getItem("smp_r2v_reset_epoch") !== RESET_EPOCH || params.get("reset") === "1") {
+            Object.keys(localStorage).forEach(k => {
+                if (k.startsWith("smp_r2v_state_")) localStorage.removeItem(k);
+            });
+            localStorage.setItem("smp_r2v_reset_epoch", RESET_EPOCH);
+        }
+    } catch (e) {}
+
     function stateKey(sessionOverride) {
         const s = sessionOverride || currentSession;
         return `smp_r2v_state_r${currentRound}_${s}`;
@@ -453,7 +463,21 @@
                     </div>
                 `}
             </div>
+
+            <div style="text-align: center; padding-top: 4px;">
+                <button type="button" class="r2v-btn-link-muted" id="r2v-reset-day-btn">Thi lại ${sess.label} từ đầu</button>
+            </div>
         </div>`;
+
+        const resetDayBtn = document.getElementById("r2v-reset-day-btn");
+        if (resetDayBtn) {
+            resetDayBtn.addEventListener("click", () => {
+                if (confirm(`Xóa trạng thái đã thi ${sess.label} để làm lại từ sảnh chờ?`)) {
+                    clearState();
+                    boot();
+                }
+            });
+        }
 
         const uploadEnd = (st.finishedAt || Date.now()) + 15 * 60 * 1000;
         function updateUploadClock() {
