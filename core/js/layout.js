@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v152') caches.delete(name);
+                if (name !== 'smp-cache-v156') caches.delete(name);
             }
         }).catch(function(){});
     }

@@ -578,8 +578,15 @@ function applyFilters() {
 }
 
 // ─── Thread Detail ────────────────────────────────────────────────────────
-async function openThread(threadId) {
+async function openThread(threadId, skipPushState = false) {
     currentThreadId = threadId;
+    if (!skipPushState && window.history && window.history.pushState) {
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('threadId') !== String(threadId)) {
+            url.searchParams.set('threadId', threadId);
+            window.history.pushState({ threadId }, '', url.pathname + url.search);
+        }
+    }
     document.getElementById('thread-list-view').style.display = 'none';
     document.getElementById('thread-detail-view').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -613,6 +620,9 @@ async function openThread(threadId) {
         }
         const currentUser = getUsername();
         const isAuthor = currentUser && currentUser === thread.author_name;
+        if (thread.title) {
+            document.title = `${thread.title} — Diễn Đàn SMP`;
+        }
 
         let displayContent = thread.content;
         let tagsHtml = '';
@@ -903,16 +913,35 @@ async function deleteReply(replyId, threadId) {
     }
 }
 
+function showForumList(skipPushState = false) {
+    document.getElementById('thread-detail-view').style.display = 'none';
+    document.getElementById('thread-list-view').style.display = 'block';
+    document.getElementById('edit-thread-form-container').style.display = 'none';
+    currentThreadId = null;
+    document.title = 'Diễn Đàn Toán Học - SMP';
+    if (!skipPushState && window.history && window.history.pushState) {
+        const url = new URL(window.location.href);
+        if (url.searchParams.has('threadId')) {
+            url.searchParams.delete('threadId');
+            window.history.pushState({}, '', url.pathname + url.search);
+        }
+    }
+    loadThreadList();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // ─── Form Handlers ────────────────────────────────────────────────────────
 function setupFormHandlers() {
     // Back button
-    document.getElementById('btn-back-to-list').addEventListener('click', () => {
-        document.getElementById('thread-detail-view').style.display = 'none';
-        document.getElementById('thread-list-view').style.display = 'block';
-        document.getElementById('edit-thread-form-container').style.display = 'none';
-        currentThreadId = null;
-        loadThreadList();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('btn-back-to-list').addEventListener('click', () => showForumList(false));
+
+    window.addEventListener('popstate', () => {
+        const tId = new URLSearchParams(window.location.search).get('threadId');
+        if (tId) {
+            openThread(tId, true);
+        } else {
+            showForumList(true);
+        }
     });
 
     // Show create form
