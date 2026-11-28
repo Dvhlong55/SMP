@@ -118,6 +118,7 @@ const SMP_CURATED_FORUM_THREADS = [
         title: 'Đẳng thức phần nguyên của hai đa thức',
         author_name: 'SMP',
         createdAt: '2026-11-28T09:00:00Z',
+        baseViewCount: 128,
         viewCount: 128,
         replyCount: 2,
         likeCount: 0,
@@ -509,9 +510,22 @@ async function loadThreadList() {
     try {
         if (allPostsCache.length === 0) {
             let apiThreads = [];
+            const curatedViewPromises = SMP_CURATED_FORUM_THREADS.map(t =>
+                fetch(`${API_BASE}/api/views/${t.id}`)
+                    .then(r => r.ok ? r.json() : null)
+                    .then(d => {
+                        if (d && typeof d.views === 'number') {
+                            t.viewCount = (t.baseViewCount || 0) + d.views;
+                        }
+                    })
+                    .catch(() => {})
+            );
             try {
-                const res = await fetch(`${API_BASE}/api/forum/threads`);
-                if (res.ok) apiThreads = await res.json();
+                const [res] = await Promise.all([
+                    fetch(`${API_BASE}/api/forum/threads`),
+                    ...curatedViewPromises
+                ]);
+                if (res && res.ok) apiThreads = await res.json();
             } catch (e) {}
             const curatedIds = new Set(SMP_CURATED_FORUM_THREADS.map(t => t.id));
             allPostsCache = [...SMP_CURATED_FORUM_THREADS, ...apiThreads.filter(t => !curatedIds.has(t.id))];
@@ -609,6 +623,17 @@ async function openThread(threadId, skipPushState = false) {
             try {
                 replies = JSON.parse(localStorage.getItem(`smp_curated_replies_${threadId}`) || '[]');
             } catch (e) { replies = []; }
+            // Tăng lượt xem thật trên backend và cộng dồn vào mốc baseViewCount
+            fetch(`${API_BASE}/api/views/${threadId}`, { method: 'POST' })
+                .then(r => r.ok ? r.json() : null)
+                .then(d => {
+                    if (d && typeof d.views === 'number') {
+                        curated.viewCount = (curated.baseViewCount || 0) + d.views;
+                        const viewEl = document.getElementById('thread-detail-view-num');
+                        if (viewEl) viewEl.textContent = String(curated.viewCount);
+                    }
+                })
+                .catch(() => {});
         } else {
             const viewerId = (window.getUserId && window.getUserId()) || '';
             const [threadRes, repliesRes] = await Promise.all([
@@ -644,7 +669,7 @@ async function openThread(threadId, skipPushState = false) {
                     <div>
                         <span class="post-author"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${escapeHTML(thread.author_name)}</span>
                         <span class="post-date" style="margin-left:12px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${formatDate(thread.createdAt)}</span>
-                        <span class="post-date" style="margin-left:12px;" title="Lượt xem"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg>${thread.viewCount}</span>
+                        <span class="post-date" style="margin-left:12px;" title="Lượt xem"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block; margin-right: 4px; margin-top: -2px;"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg><span id="thread-detail-view-num">${thread.viewCount}</span></span>
                     </div>
                     <div class="post-actions">
                         ${!isAuthor && token ? `
