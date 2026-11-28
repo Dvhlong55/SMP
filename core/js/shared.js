@@ -1654,7 +1654,9 @@ function addSaveButtonsToCards() {
 
         const saveBtn = document.createElement('button');
         saveBtn.className = 'card-save-btn';
-        saveBtn.innerHTML = '&#x2606; Lưu bài';
+        saveBtn.title = 'Lưu bài viết';
+        saveBtn.setAttribute('aria-label', 'Lưu bài viết');
+        saveBtn.innerHTML = '&#x2606;';
         Object.assign(saveBtn.style, {
             background: 'none',
             border: '1px solid var(--border-light)',
@@ -1784,7 +1786,8 @@ window.toggleSavePost = async function(postId, postTitle, postUrl, btnElement) {
                     btnElement.style.color = 'var(--accent-gold)';
                     btnElement.title = 'Đã lưu bài viết';
                 } else {
-                    btnElement.innerHTML = '&#x2605; Đã lưu';
+                    btnElement.innerHTML = '&#x2605;';
+                    btnElement.title = 'Đã lưu bài viết';
                     btnElement.classList.add('saved-active');
                     btnElement.style.color = 'var(--accent-gold)';
                     btnElement.style.borderColor = 'var(--accent-gold)';
@@ -1796,7 +1799,8 @@ window.toggleSavePost = async function(postId, postTitle, postUrl, btnElement) {
                     btnElement.style.color = 'var(--text-muted)';
                     btnElement.title = 'Lưu bài viết';
                 } else {
-                    btnElement.innerHTML = '&#x2606; Lưu bài';
+                    btnElement.innerHTML = '&#x2606;';
+                    btnElement.title = 'Lưu bài viết';
                     btnElement.classList.remove('saved-active');
                     btnElement.style.color = 'var(--text-muted)';
                     btnElement.style.borderColor = 'var(--border-light)';
@@ -1952,7 +1956,8 @@ async function syncSavedPostsState() {
             if (savedIds.has(postId)) {
                 const btn = card.querySelector('.card-save-btn');
                 if (btn) {
-                    btn.innerHTML = '&#x2605; Đã lưu';
+                    btn.innerHTML = '&#x2605;';
+                    btn.title = 'Đã lưu bài viết';
                     btn.classList.add('saved-active');
                     btn.style.color = 'var(--accent-gold)';
                     btn.style.borderColor = 'var(--accent-gold)';

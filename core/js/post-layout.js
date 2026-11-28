@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const scriptsToLoad = [
         depthPrefix + "core/js/sidebar-data.js?v=101",
         depthPrefix + "core/js/layout.js?v=109",
-        depthPrefix + "core/js/shared.js?v=55",
+        depthPrefix + "core/js/shared.js?v=56",
         depthPrefix + "core/js/saved.js?v=35",
         depthPrefix + "core/js/comment.js?v=36"
     ];
