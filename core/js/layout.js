@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v145') caches.delete(name);
+                if (name !== 'smp-cache-v146') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -408,6 +408,16 @@
             line-height: 1.2 !important;
         }
 
+        .mobile-only-forum-btn {
+            display: none !important;
+        }
+        @media (max-width: 768px) {
+            .mobile-only-forum-btn {
+                display: inline-flex !important;
+                order: 0;
+            }
+        }
+
         /* Search on Mobile Article Topbar */
         .search-wrapper-article {
             flex-shrink: 0 !important;
@@ -670,6 +680,10 @@
                     <div id="search-results" class="search-results"></div>
                 </div>
                 
+                <a href="/pages/forum.html" class="topbar-nav-btn mobile-only-forum-btn" title="Diễn đàn (Forum)" aria-label="Diễn đàn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </a>
+
                 <div class="notif-wrapper" style="position: relative;">
                     <button id="notif-toggle-btn" class="topbar-nav-btn" onclick="if(window.toggleNotificationDropdown) window.toggleNotificationDropdown(event)" title="Thông báo" style="position: relative;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>

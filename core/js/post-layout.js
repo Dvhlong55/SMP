@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 6. Tải song song toàn bộ script nhưng giữ nguyên thứ tự thực thi (async = false)
     const scriptsToLoad = [
         depthPrefix + "core/js/sidebar-data.js?v=101",
-        depthPrefix + "core/js/layout.js?v=108",
+        depthPrefix + "core/js/layout.js?v=109",
         depthPrefix + "core/js/shared.js?v=55",
         depthPrefix + "core/js/saved.js?v=35",
         depthPrefix + "core/js/comment.js?v=36"
