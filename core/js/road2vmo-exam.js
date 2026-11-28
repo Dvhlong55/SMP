@@ -5,10 +5,11 @@
     const EXAMS = window.ROAD2VMO_EXAMS || {};
     const params = new URLSearchParams(window.location.search);
 
-    let currentRound = EXAMS[params.get("test")] ? params.get("test") : "1";
-    let currentSession = params.get("session") === "afternoon" ? "afternoon" : "morning";
-    let currentDurationMin = 120; // Mặc định 2 tiếng/buổi (khuyến khích), có thể chọn 270 phút chuẩn VMO
-    let currentMode = "strict";   // "strict" (đếm ngược) | "stopwatch" (đếm xuôi)
+    const currentRound = EXAMS[params.get("test")] ? params.get("test") : "1";
+    const sessionParam = params.get("session") || params.get("day");
+    const currentSession = (sessionParam === "afternoon" || sessionParam === "2") ? "afternoon" : "morning";
+    const FIXED_DURATION_MIN = 180; // Chuẩn VMO: luôn 180 phút (3 tiếng) mỗi ngày
+    let currentMode = "strict";     // "strict" (đếm ngược) | "stopwatch" (đếm xuôi)
     let soundEnabled = true;
     let paperFontRem = 1.04;
     let tickInterval = null;
@@ -43,13 +44,27 @@
         } catch (e) {}
     }
 
-    function updateUrlParams() {
-        if (history.replaceState) {
-            const u = new URL(window.location.href);
-            u.searchParams.set("test", currentRound);
-            u.searchParams.set("session", currentSession);
-            history.replaceState(null, "", u.toString());
-        }
+    function enterFullscreen() {
+        try {
+            const el = document.documentElement;
+            if (el.requestFullscreen) {
+                el.requestFullscreen().catch(() => {});
+            } else if (el.webkitRequestFullscreen) {
+                el.webkitRequestFullscreen();
+            } else if (el.msRequestFullscreen) {
+                el.msRequestFullscreen();
+            }
+        } catch (e) {}
+    }
+
+    function exitFullscreenIfActive() {
+        try {
+            if (document.fullscreenElement && document.exitFullscreen) {
+                document.exitFullscreen().catch(() => {});
+            } else if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+        } catch (e) {}
     }
 
     function formatHMS(totalSec) {
@@ -102,24 +117,7 @@
         return `
         <div class="r2v-topbar-strip">
             <a class="r2v-back-link" href="/posts/math/vmo/road2vmo-test.html">&larr; Về bài giới thiệu Road2VMO Test</a>
-            <div class="r2v-round-tabs">
-                ${["1", "2", "3"].map(r => `
-                    <button type="button" class="r2v-pill-btn ${currentRound === r ? "active" : ""}" data-switch-round="${r}">
-                        Lần ${r}
-                    </button>
-                `).join("")}
-            </div>
         </div>`;
-    }
-
-    function bindTopNav() {
-        root.querySelectorAll("[data-switch-round]").forEach(btn => {
-            btn.addEventListener("click", () => {
-                currentRound = btn.getAttribute("data-switch-round");
-                updateUrlParams();
-                boot();
-            });
-        });
     }
 
     // ========================================================================
@@ -136,59 +134,24 @@
             <div class="r2v-lobby-header">
                 <span class="r2v-badge-gold">Phòng Thi Thử VMO Trực Tuyến</span>
                 <h1 class="r2v-lobby-title">${exam.title}</h1>
-                <div style="opacity: 0.8; font-size: 0.95rem;">${exam.subtitle} &bull; ${sess.label}</div>
+                <div style="opacity: 0.82; font-size: 0.96rem;">${sess.label} &bull; Thời gian làm bài: 180 phút (3 tiếng)</div>
             </div>
 
-            <div class="r2v-rules-box">
-                <b>Quy chế & Lịch làm bài:</b>
-                <ul style="margin: 6px 0 0 18px; padding: 0;">
-                    <li><b>Cơ cấu 2 buổi:</b> Mỗi đợt thi gồm <b>Buổi Sáng (Ngày 1)</b> và <b>Buổi Chiều (Ngày 2)</b>. Khuyến khích thí sinh làm tối thiểu <b>2 tiếng/buổi (120 phút)</b> hoặc thi đúng chuẩn VMO <b>4 tiếng 30 phút (270 phút)</b>.</li>
-                    <li><b>Học sinh lớp VMO SMP:</b> <b>Bắt buộc</b> hoàn thành và nộp bài vào <b>Thứ 5</b> qua cổng Google Classroom của ${exam.title}.</li>
-                    <li><b>Thí sinh tự do bên ngoài:</b> Tự do chọn thời điểm làm bài phù hợp và nhận <b>Giấy chứng nhận (Certificate)</b> ngay sau khi hoàn thành.</li>
-                </ul>
-            </div>
-
-            <div class="r2v-lobby-grid">
-                <div class="r2v-option-group">
-                    <h4>1. Chọn Buổi Thi</h4>
-                    ${["morning", "afternoon"].map(sk => {
-                        const sObj = exam.sessions[sk];
-                        return `
-                        <button type="button" class="r2v-choice-card ${currentSession === sk ? "selected" : ""}" data-select-session="${sk}">
-                            <div class="r2v-choice-title">${sObj.label}</div>
-                            <div class="r2v-choice-desc">${sObj.problems.length} bài toán tự luận (thang ${sObj.problems.length * 7} điểm)</div>
-                        </button>`;
-                    }).join("")}
-                </div>
-
-                <div class="r2v-option-group">
-                    <h4>2. Chọn Thời Lượng</h4>
-                    <button type="button" class="r2v-choice-card ${currentDurationMin === 120 ? "selected" : ""}" data-select-dur="120">
-                        <div class="r2v-choice-title">120 phút (2 tiếng / buổi) — Khuyến khích</div>
-                        <div class="r2v-choice-desc">Phù hợp chia làm 2 buổi Sáng & Chiều trong ngày (tối thiểu 2 tiếng mỗi buổi).</div>
-                    </button>
-                    <button type="button" class="r2v-choice-card ${currentDurationMin === 270 ? "selected" : ""}" data-select-dur="270">
-                        <div class="r2v-choice-title">270 phút (4 tiếng 30 phút) — Chuẩn VMO</div>
-                        <div class="r2v-choice-desc">Trải nghiệm áp lực thời gian chuẩn phòng thi Học sinh giỏi Quốc gia.</div>
-                    </button>
-                </div>
-
-                <div class="r2v-option-group">
-                    <h4>3. Chế Độ Giám Thị</h4>
-                    <button type="button" class="r2v-choice-card ${currentMode === "strict" ? "selected" : ""}" data-select-mode="strict">
-                        <div class="r2v-choice-title">Thi thật (Strict Mode)</div>
-                        <div class="r2v-choice-desc">Đếm ngược tự động, lưu mốc giờ vào trình duyệt (F5 không bị mất giờ).</div>
-                    </button>
-                    <button type="button" class="r2v-choice-card ${currentMode === "stopwatch" ? "selected" : ""}" data-select-mode="stopwatch">
-                        <div class="r2v-choice-title">Tự luyện (Stopwatch Mode)</div>
-                        <div class="r2v-choice-desc">Đồng hồ bấm giờ đếm xuôi từ 00:00:00 để tự đo tốc độ giải từng bài.</div>
-                    </button>
-                </div>
+            <div class="r2v-option-group" style="max-width: 560px; margin: 0 auto 24px;">
+                <h4>Chọn Chế Độ Giám Thị</h4>
+                <button type="button" class="r2v-choice-card ${currentMode === "strict" ? "selected" : ""}" data-select-mode="strict">
+                    <div class="r2v-choice-title">Thi thật (Strict Mode — 180 phút)</div>
+                    <div class="r2v-choice-desc">Đếm ngược từ 03:00:00, tự động phóng toàn màn hình và lưu mốc giờ vào trình duyệt (F5 không bị mất giờ).</div>
+                </button>
+                <button type="button" class="r2v-choice-card ${currentMode === "stopwatch" ? "selected" : ""}" data-select-mode="stopwatch">
+                    <div class="r2v-choice-title">Tự luyện (Stopwatch Mode)</div>
+                    <div class="r2v-choice-desc">Đồng hồ bấm giờ đếm xuôi từ 00:00:00 để tự đo tốc độ giải từng bài.</div>
+                </button>
             </div>
 
             <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 12px;">
                 <button type="button" class="r2v-btn-primary" id="r2v-start-btn">
-                    Bắt đầu tính giờ &amp; Mở đề (${currentSession === "morning" ? "Buổi Sáng" : "Buổi Chiều"})
+                    Bắt đầu tính giờ &amp; Mở đề (${sess.label})
                 </button>
                 <button type="button" class="r2v-btn-gold" id="r2v-skip-hub-btn">
                     Đã làm xong &rarr; Nộp bài / Barem / Certificate
@@ -196,20 +159,6 @@
             </div>
         </div>`;
 
-        bindTopNav();
-        root.querySelectorAll("[data-select-session]").forEach(btn => {
-            btn.addEventListener("click", () => {
-                currentSession = btn.getAttribute("data-select-session");
-                updateUrlParams();
-                boot();
-            });
-        });
-        root.querySelectorAll("[data-select-dur]").forEach(btn => {
-            btn.addEventListener("click", () => {
-                currentDurationMin = parseInt(btn.getAttribute("data-select-dur"), 10);
-                renderLobby();
-            });
-        });
         root.querySelectorAll("[data-select-mode]").forEach(btn => {
             btn.addEventListener("click", () => {
                 currentMode = btn.getAttribute("data-select-mode");
@@ -217,10 +166,11 @@
             });
         });
         document.getElementById("r2v-start-btn").addEventListener("click", () => {
+            enterFullscreen();
             const st = {
                 phase: "active",
                 mode: currentMode,
-                durationSec: currentDurationMin * 60,
+                durationSec: FIXED_DURATION_MIN * 60,
                 startTime: Date.now(),
                 finishedAt: null
             };
@@ -233,8 +183,8 @@
             const st = {
                 phase: "finished",
                 mode: currentMode,
-                durationSec: currentDurationMin * 60,
-                startTime: Date.now() - currentDurationMin * 60 * 1000,
+                durationSec: FIXED_DURATION_MIN * 60,
+                startTime: Date.now() - FIXED_DURATION_MIN * 60 * 1000,
                 finishedAt: Date.now()
             };
             saveState(st);
@@ -286,9 +236,6 @@
                     ${st.mode === "strict" ? "Giám Thị Đếm Ngược" : "Đồng Hồ Tự Luyện"}
                 </div>
                 <div class="r2v-timer-display" id="r2v-clock">--:--:--</div>
-                <div id="r2v-timer-status" style="text-align: center; font-size: 0.8rem; opacity: 0.8; margin-bottom: 10px;">
-                    Làm bài trên giấy nháp &amp; giấy thi thật
-                </div>
 
                 <div class="r2v-audio-row">
                     <span>Chuông báo mốc giờ</span>
@@ -306,7 +253,6 @@
             </aside>
         </div>`;
 
-        bindTopNav();
         typesetMath(document.getElementById("r2v-paper-card"));
 
         root.querySelectorAll("[data-jump]").forEach(btn => {
@@ -330,6 +276,7 @@
         });
         document.getElementById("r2v-finish-btn").addEventListener("click", () => {
             if (confirm("Xác nhận kết thúc giờ làm bài và chuyển sang cổng nộp bài & Certificate?")) {
+                exitFullscreenIfActive();
                 st.phase = "finished";
                 st.finishedAt = Date.now();
                 saveState(st);
@@ -339,6 +286,7 @@
         });
         document.getElementById("r2v-reset-lobby-btn").addEventListener("click", () => {
             if (confirm("Thoát phòng thi hiện tại để chọn lại chế độ ở sảnh chờ?")) {
+                exitFullscreenIfActive();
                 clearState();
                 renderLobby();
             }
@@ -362,6 +310,7 @@
                 }
                 if (rem <= 0) {
                     if (!firedCues.m0) { firedCues.m0 = true; playChime(1046, 3); }
+                    exitFullscreenIfActive();
                     st.phase = "finished";
                     st.finishedAt = Date.now();
                     saveState(st);
@@ -393,7 +342,7 @@
                 <span class="r2v-badge-gold">Bước 1 &bull; Dành cho HS lớp VMO SMP</span>
                 <h2 style="margin: 6px 0 10px; font-size: 1.35rem;">Cổng Nộp Bài Google Classroom</h2>
                 <p style="font-size: 0.92rem; line-height: 1.65; opacity: 0.9;">
-                    Học sinh lớp VMO SMP bắt buộc làm vào <b>Thứ 5</b>, chụp ảnh/scan bài viết tay thành PDF và nộp vào đúng link của <b>${exam.title}</b>.
+                    Học sinh lớp VMO SMP bắt buộc hoàn thành vào <b>Thứ 5</b>, chụp ảnh hoặc scan bài làm thành file PDF và nộp tại cổng Classroom của <b>${exam.title}</b>.
                 </p>
                 <div style="padding: 10px 14px; border-radius: 8px; background: rgba(92, 225, 230, 0.08); border: 1px solid rgba(92, 225, 230, 0.25); margin: 12px 0; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;">
                     Thời gian scan &amp; nộp bài còn lại: <b id="r2v-upload-clock" style="color: #f0c040; font-size: 1rem;">15:00</b><br>
@@ -403,7 +352,7 @@
                     <a href="${exam.classroomUrl}" target="_blank" rel="noopener noreferrer" class="r2v-btn-primary">
                         Mở Google Classroom (${exam.title}) &rarr;
                     </a>
-                    <button type="button" class="r2v-mini-btn" id="r2v-retake-btn">Làm lại / Đổi buổi</button>
+                    <button type="button" class="r2v-mini-btn" id="r2v-retake-btn">Làm lại</button>
                 </div>
             </div>
 
@@ -413,10 +362,10 @@
                 <h2 style="margin: 6px 0 10px; font-size: 1.35rem;">Barem Chấm Điểm (${sess.label})</h2>
                 ${exam.isSolutionPublished ? `
                     <div id="r2v-rubric-box">
-                        ${sess.problems.map((p, pi) => `
+                        ${sess.problems.map((p) => `
                             <div style="margin-bottom: 12px;">
                                 <div style="font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; color: var(--accent-cyan);">${p.code} (${p.maxScore},0 điểm)</div>
-                                ${p.rubric.map((r, ri) => `
+                                ${p.rubric.map((r) => `
                                     <label class="r2v-rubric-item">
                                         <span><input type="checkbox" class="r2v-rubric-cb" data-pts="${r.points}" style="margin-right: 8px;">${r.step}</span>
                                         <span class="r2v-rubric-score">+${r.points.toFixed(1)}đ</span>
@@ -435,7 +384,7 @@
                         <div style="font-weight: 700; margin-bottom: 6px;">&#x1F512; Barem &amp; Đáp án đang tạm khóa</div>
                         <div>${exam.solutionReleaseNote}</div>
                         <div style="margin-top: 8px; font-size: 0.82rem; opacity: 0.78;">
-                            (Thí sinh tự do có thể trao đổi hướng giải ở khung bình luận bên dưới trong lúc chờ mở đáp án.)
+                            (Thí sinh có thể trao đổi hướng giải ở khung bình luận bên dưới trong lúc chờ mở đáp án.)
                         </div>
                     </div>
                 `}
@@ -447,7 +396,7 @@
             <span class="r2v-badge-gold">Bước 3 &bull; Giấy Chứng Nhận Hoàn Thành</span>
             <h2 style="margin: 6px 0 8px; font-size: 1.45rem;">Certificate — Road2VMO Test</h2>
             <p style="font-size: 0.92rem; opacity: 0.85; margin-bottom: 16px;">
-                Dành cho cả học sinh trong lớp và thí sinh tự do sau khi hoàn thành bài thi. Nhập họ tên của bạn để tạo và tải xuống chứng nhận điện tử.
+                Nhập họ tên của bạn để tạo và tải xuống giấy chứng nhận điện tử.
             </p>
 
             <div class="r2v-cert-controls">
@@ -463,7 +412,7 @@
                     <label for="r2v-cert-scope">Phạm vi ghi nhận</label>
                     <select id="r2v-cert-scope" style="width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--border-light, rgba(255,255,255,0.18)); background:rgba(128,128,128,0.08); color:inherit; font-family:inherit; font-size:0.92rem;">
                         <option value="${sess.label}">${sess.label}</option>
-                        <option value="Hoàn thành trọn vẹn 2 buổi (Sáng &amp; Chiều)">Hoàn thành trọn vẹn 2 buổi (Sáng &amp; Chiều)</option>
+                        <option value="Hoàn thành trọn vẹn Ngày 1 &amp; Ngày 2">Hoàn thành trọn vẹn Ngày 1 &amp; Ngày 2</option>
                     </select>
                 </div>
                 <button type="button" class="r2v-btn-primary" id="r2v-download-cert-btn">Tải Certificate (PNG)</button>
@@ -475,9 +424,6 @@
             </div>
         </div>`;
 
-        bindTopNav();
-
-        // 15-minute scan/upload countdown
         const uploadEnd = (st.finishedAt || Date.now()) + 15 * 60 * 1000;
         function updateUploadClock() {
             const el = document.getElementById("r2v-upload-clock");
@@ -495,7 +441,6 @@
             renderLobby();
         });
 
-        // Interactive Rubric Scoring
         if (exam.isSolutionPublished) {
             const cbs = root.querySelectorAll(".r2v-rubric-cb");
             cbs.forEach(cb => cb.addEventListener("change", () => {
@@ -512,7 +457,6 @@
             }));
         }
 
-        // Certificate Renderer
         const nameInput = document.getElementById("r2v-cert-name");
         const schoolInput = document.getElementById("r2v-cert-school");
         const scopeSelect = document.getElementById("r2v-cert-scope");
@@ -571,7 +515,6 @@
         const W = canvas.width;
         const H = canvas.height;
 
-        // Background gradient (deep academic midnight navy)
         const bg = ctx.createLinearGradient(0, 0, W, H);
         bg.addColorStop(0, "#0b111e");
         bg.addColorStop(0.5, "#111b2e");
@@ -579,7 +522,6 @@
         ctx.fillStyle = bg;
         ctx.fillRect(0, 0, W, H);
 
-        // Subtle radial glow
         const glow = ctx.createRadialGradient(W / 2, H * 0.44, 60, W / 2, H * 0.44, 650);
         glow.addColorStop(0, "rgba(92, 225, 230, 0.09)");
         glow.addColorStop(0.6, "rgba(240, 192, 64, 0.05)");
@@ -587,7 +529,6 @@
         ctx.fillStyle = glow;
         ctx.fillRect(0, 0, W, H);
 
-        // Outer Gold Frame & Inner Cyan Accent Frame
         ctx.strokeStyle = "#f0c040";
         ctx.lineWidth = 6;
         ctx.strokeRect(42, 42, W - 84, H - 84);
@@ -596,7 +537,6 @@
         ctx.lineWidth = 2;
         ctx.strokeRect(60, 60, W - 120, H - 120);
 
-        // Corner ornaments
         const corners = [[42, 42, 1, 1], [W - 42, 42, -1, 1], [42, H - 42, 1, -1], [W - 42, H - 42, -1, -1]];
         ctx.fillStyle = "#f0c040";
         corners.forEach(([cx, cy, sx, sy]) => {
@@ -610,13 +550,11 @@
             ctx.stroke();
         });
 
-        // Header Brand
         ctx.textAlign = "center";
         ctx.fillStyle = "#5ce1e6";
         ctx.font = "700 24px 'JetBrains Mono', monospace";
         ctx.fillText("SECRETS OF MATHEMATICAL PRINCIPLES  •  SMP-MATH", W / 2, 138);
 
-        // Title
         ctx.fillStyle = "#f0c040";
         ctx.font = "700 66px 'Playfair Display', 'Times New Roman', serif";
         ctx.fillText("CERTIFICATE OF PARTICIPATION", W / 2, 232);
@@ -625,7 +563,6 @@
         ctx.font = "italic 28px 'Times New Roman', serif";
         ctx.fillText("Giấy Chứng Nhận Hoàn Thành Kỳ Thi Thử Olympic Toán Quốc Gia", W / 2, 282);
 
-        // Divider line
         ctx.strokeStyle = "rgba(240, 192, 64, 0.55)";
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -633,17 +570,14 @@
         ctx.lineTo(W / 2 + 220, 316);
         ctx.stroke();
 
-        // Intro line
         ctx.fillStyle = "#94a3b8";
         ctx.font = "400 26px 'Times New Roman', serif";
         ctx.fillText("Trân trọng chứng nhận thí sinh", W / 2, 386);
 
-        // Student Name
         ctx.fillStyle = "#ffffff";
         ctx.font = "700 72px 'Playfair Display', 'Times New Roman', serif";
         ctx.fillText(info.studentName.toUpperCase(), W / 2, 476);
 
-        // Name underline
         ctx.strokeStyle = "rgba(92, 225, 230, 0.45)";
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -659,7 +593,6 @@
             yShift = 36;
         }
 
-        // Achievement text
         ctx.fillStyle = "#e2e8f0";
         ctx.font = "400 28px 'Times New Roman', serif";
         ctx.fillText("Đã nghiêm túc hoàn thành bài thi thử theo quy chuẩn VMO:", W / 2, 588 + yShift);
@@ -672,7 +605,6 @@
         ctx.font = "600 25px 'JetBrains Mono', monospace";
         ctx.fillText(`${info.scope}  •  Thời lượng ghi nhận: ${info.elapsedMin} phút`, W / 2, 698 + yShift);
 
-        // Official Seal in bottom-left / center-bottom
         const sealX = 280;
         const sealY = 920;
         ctx.save();
@@ -694,7 +626,6 @@
         ctx.fillText("ROAD2VMO", sealX, sealY + 24);
         ctx.restore();
 
-        // Date & Verification Code (center-bottom)
         const now = new Date();
         const dateStr = `${String(now.getDate()).padStart(2, "0")}/${String(now.getMonth() + 1).padStart(2, "0")}/${now.getFullYear()}`;
         ctx.textAlign = "center";
@@ -703,7 +634,6 @@
         ctx.fillText(`Ngày cấp: ${dateStr}`, W / 2, 905);
         ctx.fillText(`Mã xác thực: ${info.certId}`, W / 2, 940);
 
-        // Signature (bottom-right)
         const sigX = W - 320;
         ctx.fillStyle = "#f0c040";
         ctx.font = "italic 36px 'Playfair Display', 'Times New Roman', serif";

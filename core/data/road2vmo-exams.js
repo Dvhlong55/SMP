@@ -22,9 +22,8 @@ window.ROAD2VMO_EXAMS = {
         sessions: {
             morning: {
                 key: "morning",
-                label: "Buổi Sáng (Ngày 1)",
-                recommendedMinutes: 120,
-                vmoMinutes: 270,
+                label: "Ngày 1",
+                vmoMinutes: 180,
                 solutionPdfUrl: "",
                 problems: [
                     {
@@ -61,9 +60,8 @@ window.ROAD2VMO_EXAMS = {
             },
             afternoon: {
                 key: "afternoon",
-                label: "Buổi Chiều (Ngày 2)",
-                recommendedMinutes: 120,
-                vmoMinutes: 270,
+                label: "Ngày 2",
+                vmoMinutes: 180,
                 solutionPdfUrl: "",
                 problems: [
                     {
@@ -111,9 +109,8 @@ window.ROAD2VMO_EXAMS = {
         sessions: {
             morning: {
                 key: "morning",
-                label: "Buổi Sáng (Ngày 1)",
-                recommendedMinutes: 120,
-                vmoMinutes: 270,
+                label: "Ngày 1",
+                vmoMinutes: 180,
                 solutionPdfUrl: "",
                 problems: [
                     {
@@ -148,9 +145,8 @@ window.ROAD2VMO_EXAMS = {
             },
             afternoon: {
                 key: "afternoon",
-                label: "Buổi Chiều (Ngày 2)",
-                recommendedMinutes: 120,
-                vmoMinutes: 270,
+                label: "Ngày 2",
+                vmoMinutes: 180,
                 solutionPdfUrl: "",
                 problems: [
                     {
@@ -197,9 +193,8 @@ window.ROAD2VMO_EXAMS = {
         sessions: {
             morning: {
                 key: "morning",
-                label: "Buổi Sáng (Ngày 1)",
-                recommendedMinutes: 120,
-                vmoMinutes: 270,
+                label: "Ngày 1",
+                vmoMinutes: 180,
                 solutionPdfUrl: "",
                 problems: [
                     {
@@ -234,9 +229,8 @@ window.ROAD2VMO_EXAMS = {
             },
             afternoon: {
                 key: "afternoon",
-                label: "Buổi Chiều (Ngày 2)",
-                recommendedMinutes: 120,
-                vmoMinutes: 270,
+                label: "Ngày 2",
+                vmoMinutes: 180,
                 solutionPdfUrl: "",
                 problems: [
                     {
