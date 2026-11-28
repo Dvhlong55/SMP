@@ -455,3 +455,24 @@ body:not(.dark-mode) .r2v-timer-display {
         padding: 20px 16px;
     }
 }
+
+/* ── DISTRACTION-FREE ACTIVE EXAM (Ẩn topbar, sidebar, footer khi đang thi) ── */
+body.r2v-exam-active #main-sidebar,
+body.r2v-exam-active .sidebar,
+body.r2v-exam-active .topbar,
+body.r2v-exam-active header.topbar,
+body.r2v-exam-active .sidebar-overlay,
+body.r2v-exam-active .mobile-bottom-nav,
+body.r2v-exam-active .site-footer {
+    display: none !important;
+}
+
+body.r2v-exam-active .main-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+body.r2v-exam-active main {
+    padding-top: 22px !important;
+}

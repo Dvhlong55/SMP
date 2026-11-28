@@ -145,6 +145,7 @@
     //  CỔNG YÊU CẦU ĐĂNG NHẬP TÀI KHOẢN SMP
     // ========================================================================
     function renderAuthGate() {
+        document.body.classList.remove("r2v-exam-active");
         stopTimers();
         const exam = EXAMS[currentRound];
         const sess = exam.sessions[currentSession];
@@ -181,6 +182,7 @@
     //  GIAI ĐOẠN 1: SẢNH CHỜ (PRE-EXAM LOBBY)
     // ========================================================================
     function renderLobby(user) {
+        document.body.classList.remove("r2v-exam-active");
         stopTimers();
         const exam = EXAMS[currentRound];
         const sess = exam.sessions[currentSession];
@@ -239,6 +241,7 @@
     //  GIAI ĐOẠN 2: PHÒNG THI TRỰC TUYẾN (ACTIVE EXAM ROOM)
     // ========================================================================
     function renderActiveExam(st, user) {
+        document.body.classList.add("r2v-exam-active");
         stopTimers();
         const exam = EXAMS[currentRound];
         const sess = exam.sessions[currentSession];
@@ -357,6 +360,7 @@
     //  GIAI ĐOẠN 3: MÀN HÌNH SAU GIỜ THI (CLASSROOM + BAREM + CERTIFICATE)
     // ========================================================================
     function renderPostHub(st, user) {
+        document.body.classList.remove("r2v-exam-active");
         stopTimers();
         const exam = EXAMS[currentRound];
         const sess = exam.sessions[currentSession];
