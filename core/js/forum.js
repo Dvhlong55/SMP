@@ -107,6 +107,56 @@ let tagsConfig = {};
 let allPostsCache = [];
 let currentFilters = { level1: 'all', level2: null, level3: null, keyword: '' };
 
+const SMP_CURATED_FORUM_THREADS = [
+    {
+        id: 'smp-daily-floor-poly-2026',
+        title: 'Câu đố trong ngày: Đẳng thức phần nguyên của hai đa thức',
+        author_name: 'SMP',
+        createdAt: '2026-11-28T09:00:00Z',
+        viewCount: 128,
+        replyCount: 2,
+        likeCount: 0,
+        likedByMe: false,
+        content: `[TAGS: VMO, Dai-So, Da-Thuc]
+\\textbf{Đề bài.} Cho hai đa thức hệ số thực $P(x), Q(x)$ khác đa thức hằng thỏa mãn:
+$$\\forall x \\in \\mathbb{R}, \\quad \\lfloor P(x) \\rfloor = \\lfloor Q(x) \\rfloor.$$
+Chứng minh rằng $P(x) \\equiv Q(x)$.
+
+---
+
+\\textbf{Cách 1} *(dựa theo lời giải của bạn @hvduyyy)*
+
+Đặt $G(x) = P(x) - Q(x)$.
+
+\\textbf{Trường hợp 1:} $G(x)$ khác đa thức hằng.
+Viết $G(x) = ax^d + H(x)$ với $d \\ge 1$, $a \\ne 0$ và $\\deg H < d$. Không mất tính tổng quát, giả sử $a > 0$ (nếu $a < 0$, ta đổi vai trò của $P$ và $Q$). Khi $x \\to +\\infty$ thì $G(x) \\to +\\infty$, nên tồn tại $x_0 \\in \\mathbb{R}$ sao cho $P(x_0) - Q(x_0) = G(x_0) > 1$.
+Mặt khác, từ $\\lfloor P(x) \\rfloor = \\lfloor Q(x) \\rfloor$ và bất đẳng thức $u - 1 < \\lfloor u \\rfloor \\le u$, ta luôn có $|P(x) - Q(x)| < 1$ với mọi $x \\in \\mathbb{R}$, mâu thuẫn.
+
+\\textbf{Trường hợp 2:} $G(x) \\equiv c$ là hằng số.
+Giả sử $c \\ne 0$. Đổi vai trò $P$ và $Q$ nếu cần, ta có thể giả sử $c > 0$, tức $Q(x) = P(x) + c$ (hoặc $P(x) - c$).
+- Nếu $c \\ge 1$ thì $|P(x) - Q(x)| = c \\ge 1$, mâu thuẫn với $|P(x) - Q(x)| < 1$.
+- Nếu $0 < c < 1$: do $P(x)$ khác đa thức hằng và liên tục trên $\\mathbb{R}$, tập giá trị của $P$ chứa một nửa khoảng dạng $[M, +\\infty)$ hoặc $(-\\infty, M]$. Do đó tồn tại số nguyên $h$ sao cho $h - c$ thuộc miền giá trị của $P(x)$, tức tồn tại $x_0 \\in \\mathbb{R}$ thỏa mãn $P(x_0) = h - c$. Khi đó:
+$$\\lfloor P(x_0) \\rfloor = \\lfloor h - c \\rfloor = h - 1, \\qquad \\lfloor Q(x_0) \\rfloor = \\lfloor P(x_0) + c \\rfloor = \\lfloor h \\rfloor = h,$$
+mâu thuẫn với $\\lfloor P(x_0) \\rfloor = \\lfloor Q(x_0) \\rfloor$. Vậy $c = 0$, suy ra $P(x) \\equiv Q(x)$. $\\square$
+
+---
+
+\\textbf{Cách 2} *(dựa theo lời giải của bạn @skyforlove)*
+
+Đặt $\\deg P = n$ và $\\deg Q = m$ ($n, m \\ge 1$). Không mất tính tổng quát, giả sử $n \\ge m$ và hệ số cao nhất của $P(x)$ dương (trường hợp hệ số cao nhất âm lập luận tương tự khi xét giá trị âm đủ nhỏ).
+
+\\textbf{Bước 1: Chứng minh $n = m$.}
+Giả sử $n > m$. Đặt $H(x) = P(x) - Q(x)$, khi đó $\\deg H = n \\ge 1$ và hệ số cao nhất của $H(x)$ dương. Suy ra tồn tại $a \\in \\mathbb{R}$ đủ lớn sao cho với mọi $x > a$ ta có $H(x) > 0$, tức $P(x) > Q(x)$.
+Vì $\\lim_{x \\to +\\infty} P(x) = +\\infty$ và $P$ liên tục, ta chọn được số nguyên dương $h > \\max_{x \\le a} P(x)$ và tồn tại $x_0 > a$ sao cho $P(x_0) = h$. Khi đó $\\lfloor P(x_0) \\rfloor = h$, còn $Q(x_0) < P(x_0) = h$ dẫn đến $\\lfloor Q(x_0) \\rfloor \\le Q(x_0) < h$, mâu thuẫn. Vậy $n = m$.
+
+\\textbf{Bước 2: Chứng minh các hệ số trùng nhau.}
+Với $n = m$, nếu $\\deg(P - Q) \\ge 1$ thì lập luận tương tự Bước 1 dẫn đến mâu thuẫn. Do đó $P(x)$ và $Q(x)$ trùng nhau toàn bộ các hệ số bậc $\\ge 1$, tức hiệu $P(x) - Q(x) \\equiv d$ là hằng số.
+Giả sử $d \\ne 0$; đổi vai trò $P, Q$ nếu cần để $d > 0$, tức $Q(x) = P(x) - d$. Do $P(x)$ liên tục và $\\lim_{x \\to +\\infty} P(x) = +\\infty$, tồn tại $x_1 \\in \\mathbb{R}$ sao cho $P(x_1) = h \\in \\mathbb{Z}$ (nếu $d \\ge 1$ thì mâu thuẫn hiển nhiên; nếu $0 < d < 1$ thì $Q(x_1) = h - d \\in (h - 1, h)$). Khi ấy:
+$$\\lfloor P(x_1) \\rfloor = h, \\qquad \\lfloor Q(x_1) \\rfloor = h - 1 \\implies \\lfloor P(x_1) \\rfloor - \\lfloor Q(x_1) \\rfloor = 1,$$
+mâu thuẫn. Vậy $d = 0$, hay $P(x) \\equiv Q(x)$. $\\square$`
+    }
+];
+
 // ─── Form Tags State ──────────────────────────────────────────────────────
 let formSelectedTags = { level1: null, level2: null, level3: null };
 let formUserTags = [];
@@ -376,9 +426,13 @@ async function loadThreadList() {
     const container = document.getElementById('thread-list-container');
     try {
         if (allPostsCache.length === 0) {
-            const res = await fetch(`${API_BASE}/api/forum/threads`);
-            if (!res.ok) throw new Error('Không thể tải danh sách chủ đề');
-            allPostsCache = await res.json();
+            let apiThreads = [];
+            try {
+                const res = await fetch(`${API_BASE}/api/forum/threads`);
+                if (res.ok) apiThreads = await res.json();
+            } catch (e) {}
+            const curatedIds = new Set(SMP_CURATED_FORUM_THREADS.map(t => t.id));
+            allPostsCache = [...SMP_CURATED_FORUM_THREADS, ...apiThreads.filter(t => !curatedIds.has(t.id))];
         }
         applyFilters();
     } catch (err) {
@@ -460,13 +514,22 @@ async function openThread(threadId) {
     document.getElementById('create-reply-form').style.display = token ? 'block' : 'none';
 
     try {
-        const viewerId = (window.getUserId && window.getUserId()) || '';
-        const [threadRes, repliesRes] = await Promise.all([
-            fetch(`${API_BASE}/api/forum/threads/${threadId}?viewer_id=${encodeURIComponent(viewerId)}`),
-            fetch(`${API_BASE}/api/forum/threads/${threadId}/replies?viewer_id=${encodeURIComponent(viewerId)}`)
-        ]);
-        const thread = await threadRes.json();
-        const replies = await repliesRes.json();
+        const curated = SMP_CURATED_FORUM_THREADS.find(t => t.id === threadId);
+        let thread, replies;
+        if (curated) {
+            thread = curated;
+            replies = [];
+            document.getElementById('reply-auth-notice').style.display = 'none';
+            document.getElementById('create-reply-form').style.display = 'none';
+        } else {
+            const viewerId = (window.getUserId && window.getUserId()) || '';
+            const [threadRes, repliesRes] = await Promise.all([
+                fetch(`${API_BASE}/api/forum/threads/${threadId}?viewer_id=${encodeURIComponent(viewerId)}`),
+                fetch(`${API_BASE}/api/forum/threads/${threadId}/replies?viewer_id=${encodeURIComponent(viewerId)}`)
+            ]);
+            thread = await threadRes.json();
+            replies = await repliesRes.json();
+        }
         const currentUser = getUsername();
         const isAuthor = currentUser && currentUser === thread.author_name;
 
