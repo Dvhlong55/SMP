@@ -244,7 +244,6 @@
         const sess = exam.sessions[currentSession];
 
         root.innerHTML = `
-        ${renderTopNav()}
         <div class="r2v-exam-layout fade-up">
             <div class="r2v-card" id="r2v-paper-card" style="font-size: ${paperFontRem}rem;">
                 <div class="r2v-exam-toolbar">
@@ -285,9 +284,6 @@
                 <button type="button" class="r2v-btn-danger" id="r2v-finish-btn">
                     Kết thúc &amp; Nộp bài
                 </button>
-                <button type="button" class="r2v-mini-btn" id="r2v-reset-lobby-btn" style="width: 100%; margin-top: 10px; opacity: 0.75;">
-                    &larr; Quay lại sảnh chờ
-                </button>
             </aside>
         </div>`;
 
@@ -322,13 +318,6 @@
                 saveState(st);
                 playChime(1046, 2);
                 renderPostHub(st, user);
-            }
-        });
-        document.getElementById("r2v-reset-lobby-btn").addEventListener("click", () => {
-            if (confirm("Thoát phòng thi hiện tại để chọn lại chế độ ở sảnh chờ?")) {
-                exitFullscreenIfActive();
-                clearState();
-                renderLobby(user);
             }
         });
 
