@@ -60,7 +60,12 @@ function renderLatexText(text) {
     parsed = parsed.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, textVal, urlVal) => {
         return `<a href="${urlVal.trim()}" target="_blank" style="color: var(--accent-cyan); text-decoration: underline; font-weight: 500;">${textVal.trim()}</a>`;
     });
-    
+
+    // Parse SMP problem / theory box: [smp-box]...[/smp-box]
+    parsed = parsed.replace(/\[smp-box\]([\s\S]*?)\[\/smp-box\]/g, (match, inner) => {
+        return `<div class="smp-graybox" style="margin: 12px 0 18px;">${inner.trim()}</div>`;
+    });
+
     return parsed;
 }
 
@@ -110,7 +115,7 @@ let currentFilters = { level1: 'all', level2: null, level3: null, keyword: '' };
 const SMP_CURATED_FORUM_THREADS = [
     {
         id: 'smp-daily-floor-poly-2026',
-        title: 'Câu đố trong ngày: Đẳng thức phần nguyên của hai đa thức',
+        title: 'Đẳng thức phần nguyên của hai đa thức',
         author_name: 'SMP',
         createdAt: '2026-11-28T09:00:00Z',
         viewCount: 128,
@@ -118,11 +123,9 @@ const SMP_CURATED_FORUM_THREADS = [
         likeCount: 0,
         likedByMe: false,
         content: `[TAGS: VMO, Dai-So, Da-Thuc]
-\\textbf{Đề bài.} Cho hai đa thức hệ số thực $P(x), Q(x)$ khác đa thức hằng thỏa mãn:
+[smp-box]\\textbf{Đề bài.} Cho hai đa thức hệ số thực $P(x), Q(x)$ khác đa thức hằng thỏa mãn:
 $$\\forall x \\in \\mathbb{R}, \\quad \\lfloor P(x) \\rfloor = \\lfloor Q(x) \\rfloor.$$
-Chứng minh rằng $P(x) \\equiv Q(x)$.
-
----
+Chứng minh rằng $P(x) \\equiv Q(x)$.[/smp-box]
 
 \\textbf{Cách 1} *(dựa theo lời giải của bạn @hvduyyy)*
 
