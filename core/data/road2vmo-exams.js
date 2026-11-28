@@ -30,7 +30,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 1",
                         maxScore: 7,
-                        statement: "Đề thi <b>Road2VMO Test — Lần 1 (Buổi Sáng)</b> đang được cập nhật trực tiếp tại đây. Học sinh có thể bấm giờ làm bài theo đề đã phát trên lớp hoặc file đề đính kèm của giáo viên, sau đó nộp bài qua cổng Google Classroom.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Thiết lập điều kiện / nhận xét mở đầu", points: 2.0 },
                             { step: "Ý 2: Chứng minh tính chất trung gian", points: 2.5 },
@@ -40,7 +40,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 2",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 2 (Buổi Sáng — Lần 1)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Xây dựng mô hình / biến đổi tương đương", points: 2.0 },
                             { step: "Ý 2: Xử lý trường hợp chính", points: 3.0 },
@@ -50,7 +50,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 3",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 3 (Buổi Sáng — Lần 1)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Phân tích cấu hình / bất biến", points: 2.5 },
                             { step: "Ý 2: Chứng minh chặn trên hoặc đẳng thức đếm", points: 2.5 },
@@ -68,7 +68,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 4",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 4 (Buổi Chiều — Lần 1)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Đánh giá số học / tính chia hết cơ bản", points: 2.0 },
                             { step: "Ý 2: Sử dụng định lý / bổ đề cốt lõi", points: 3.0 },
@@ -78,7 +78,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 5",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 5 (Buổi Chiều — Lần 1)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Chứng minh các điểm cùng thuộc đường tròn / thẳng hàng", points: 3.0 },
                             { step: "Ý 2: Hoàn tất chứng minh tính chất hình học", points: 4.0 }
@@ -87,7 +87,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 6",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 6 (Buổi Chiều — Lần 1)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Tìm cấu hình cực trị / giá trị tới hạn", points: 3.0 },
                             { step: "Ý 2: Chứng minh tính tối ưu", points: 4.0 }
@@ -118,7 +118,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 1",
                         maxScore: 7,
-                        statement: "Đề thi <b>Road2VMO Test — Lần 2 (Buổi Sáng)</b> đang được cập nhật trực tiếp tại đây. Học sinh có thể bấm giờ làm bài theo đề đã phát trên lớp hoặc file đề đính kèm của giáo viên, sau đó nộp bài qua cổng Google Classroom.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Thiết lập phương trình / bất đẳng thức trung gian", points: 2.0 },
                             { step: "Ý 2: Chứng minh phần chính", points: 3.0 },
@@ -128,7 +128,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 2",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 2 (Buổi Sáng — Lần 2)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Nhận xét bước đầu", points: 2.5 },
                             { step: "Ý 2: Chứng minh hoàn chỉnh", points: 4.5 }
@@ -137,7 +137,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 3",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 3 (Buổi Sáng — Lần 2)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Xây dựng song ánh / công thức truy hồi", points: 3.0 },
                             { step: "Ý 2: Tính toán và kết luận", points: 4.0 }
@@ -154,7 +154,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 4",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 4 (Buổi Chiều — Lần 2)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Phân tích điều kiện số học", points: 2.5 },
                             { step: "Ý 2: Hoàn tất chứng minh", points: 4.5 }
@@ -163,7 +163,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 5",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 5 (Buổi Chiều — Lần 2)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Dựng điểm phụ / góc định hướng", points: 3.0 },
                             { step: "Ý 2: Chứng minh tính chất đích", points: 4.0 }
@@ -172,7 +172,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 6",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 6 (Buổi Chiều — Lần 2)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Đánh giá chặn", points: 3.0 },
                             { step: "Ý 2: Xây dựng ví dụ tối ưu", points: 4.0 }
@@ -203,7 +203,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 1",
                         maxScore: 7,
-                        statement: "Đề thi <b>Road2VMO Test — Lần 3 (Buổi Sáng)</b> đang được cập nhật trực tiếp tại đây. Học sinh có thể bấm giờ làm bài theo đề đã phát trên lớp hoặc file đề đính kèm của giáo viên, sau đó nộp bài qua cổng Google Classroom.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Phân tích giả thiết", points: 2.0 },
                             { step: "Ý 2: Chứng minh phần chính", points: 3.0 },
@@ -213,7 +213,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 2",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 2 (Buổi Sáng — Lần 3)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Biến đổi hàm / dãy số", points: 3.0 },
                             { step: "Ý 2: Hoàn tất lập luận", points: 4.0 }
@@ -222,7 +222,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 3",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 3 (Buổi Sáng — Lần 3)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Thiết lập bất biến / đếm", points: 3.0 },
                             { step: "Ý 2: Kết luận", points: 4.0 }
@@ -239,7 +239,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 4",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 4 (Buổi Chiều — Lần 3)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Khảo sát đồng dư / ước nguyên tố", points: 3.0 },
                             { step: "Ý 2: Chứng minh hoàn chỉnh", points: 4.0 }
@@ -248,7 +248,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 5",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 5 (Buổi Chiều — Lần 3)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Chứng minh bổ đề hình học", points: 3.0 },
                             { step: "Ý 2: Suy ra kết quả bài toán", points: 4.0 }
@@ -257,7 +257,7 @@ window.ROAD2VMO_EXAMS = {
                     {
                         code: "Bài 6",
                         maxScore: 7,
-                        statement: "Nội dung <b>Bài 6 (Buổi Chiều — Lần 3)</b> sẽ hiển thị tại đây khi giáo viên cập nhật đề vào <code>core/data/road2vmo-exams.js</code>.",
+                        statement: "",
                         rubric: [
                             { step: "Ý 1: Chỉ ra nghiệm / cấu hình", points: 3.0 },
                             { step: "Ý 2: Chứng minh duy nhất / tối ưu", points: 4.0 }

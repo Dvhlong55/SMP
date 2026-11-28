@@ -246,59 +246,58 @@
         stopTimers();
         const exam = EXAMS[currentRound];
         const sess = exam.sessions[currentSession];
+        const hasStatements = sess.problems.some(p => (p.statement || "").trim().length > 0);
+        const timerLabel = st.mode === "strict" ? "Thời gian còn lại" : "Thời gian đã làm";
 
         root.innerHTML = `
         <div class="r2v-exam-layout fade-up">
             <div class="r2v-card" id="r2v-paper-card" style="font-size: ${paperFontRem}rem;">
                 <div class="r2v-exam-toolbar">
                     <div>
-                        <span class="r2v-badge-gold" style="margin-bottom: 4px;">${exam.title} &bull; ${sess.label}</span>
-                        <div class="r2v-jump-list" style="margin-top: 6px;">
-                            ${sess.problems.map((p, i) => `
-                                <button type="button" class="r2v-mini-btn" data-jump="r2v-prob-${i}">${p.code}</button>
-                            `).join("")}
+                        <span class="r2v-badge-gold" style="margin-bottom: 0;">${exam.title} &bull; ${sess.label}</span>
+                        <div style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; opacity: 0.72; margin-top: 6px;">
+                            ${sess.vmoMinutes} phút &bull; ${sess.problems.length} bài (7 điểm/bài)
                         </div>
                     </div>
                     <div class="r2v-font-controls">
-                        <span style="font-size: 0.78rem; opacity: 0.7;">Cỡ chữ:</span>
+                        <span style="font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; opacity: 0.7;">Cỡ chữ:</span>
                         <button type="button" class="r2v-mini-btn" id="r2v-font-dec">A-</button>
                         <button type="button" class="r2v-mini-btn" id="r2v-font-inc">A+</button>
                     </div>
                 </div>
 
-                ${sess.problems.map((p, i) => `
+                ${hasStatements ? sess.problems.map((p, i) => `
                     <div class="r2v-problem-block" id="r2v-prob-${i}">
                         <h3 class="smp-problem-header" style="margin-top: 4px !important;">
                             <span class="smp-problem-badge">${p.code}</span>
-                            <span style="font-size: 0.85rem; opacity: 0.75;">(${p.maxScore},0 điểm)</span>
                         </h3>
-                        <p>${p.statement}</p>
+                        <p>${p.statement || "Đang cập nhật."}</p>
                     </div>
-                `).join("")}
+                `).join("") : `
+                    <div class="r2v-empty-paper">
+                        Đề thi chưa được cập nhật trực tuyến. Thí sinh làm bài theo đề đã phát và bấm giờ tại đây.
+                    </div>
+                `}
             </div>
 
-            <aside class="r2v-card r2v-proctor-panel">
-                <div style="display: flex; justify-content: flex-end; margin-bottom: 4px;">
-                    <button type="button" class="r2v-mini-btn" id="r2v-sound-toggle" title="${soundEnabled ? "Tắt chuông báo mốc giờ" : "Bật chuông báo mốc giờ"}" aria-label="Chuông báo mốc giờ" style="display: inline-flex; align-items: center; justify-content: center; padding: 6px 8px;">
-                        ${soundEnabled ? BELL_ON_SVG : BELL_OFF_SVG}
-                    </button>
+            <aside class="r2v-proctor-panel">
+                <div class="r2v-timer-box">
+                    <div class="r2v-timer-header">
+                        <span class="r2v-timer-label">${timerLabel}</span>
+                        <button type="button" class="r2v-mini-btn" id="r2v-sound-toggle" title="${soundEnabled ? "Tắt chuông báo mốc giờ" : "Bật chuông báo mốc giờ"}" aria-label="Chuông báo mốc giờ" style="display: inline-flex; align-items: center; justify-content: center; padding: 4px 6px;">
+                            ${soundEnabled ? BELL_ON_SVG : BELL_OFF_SVG}
+                        </button>
+                    </div>
+                    <div class="r2v-timer-display" id="r2v-clock">--:--:--</div>
                 </div>
-                <div class="r2v-timer-display" id="r2v-clock" style="margin-top: 4px;">--:--:--</div>
 
-                <button type="button" class="r2v-btn-danger" id="r2v-finish-btn">
+                <button type="button" class="r2v-btn-danger" id="r2v-finish-btn" style="margin-top: 22px;">
                     Kết thúc &amp; Nộp bài
                 </button>
             </aside>
         </div>`;
 
         typesetMath(document.getElementById("r2v-paper-card"));
-
-        root.querySelectorAll("[data-jump]").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const target = document.getElementById(btn.getAttribute("data-jump"));
-                if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-            });
-        });
 
         document.getElementById("r2v-font-dec").addEventListener("click", () => {
             paperFontRem = Math.max(0.86, +(paperFontRem - 0.06).toFixed(2));
@@ -368,33 +367,37 @@
         const maxTotal = sess.problems.reduce((s, p) => s + p.maxScore, 0);
         const bothDone = isBothDaysFinished();
         const otherSession = currentSession === "morning" ? "afternoon" : "morning";
+        const otherDayNum = otherSession === "morning" ? "1" : "2";
         const otherLabel = otherSession === "morning" ? "Ngày 1" : "Ngày 2";
+        const defaultCertName = user.username && user.username.toUpperCase() !== "SMP" ? user.username : "";
 
         root.innerHTML = `
-        ${renderTopNav()}
-        <div class="r2v-hub-grid fade-up">
-            <!-- KHỐI 1: CỔNG NỘP BÀI CLASSROOM -->
+        <div class="r2v-hub-stack fade-up">
+            <!-- BƯỚC 1: CỔNG NỘP BÀI CLASSROOM -->
             <div class="r2v-card" style="margin-bottom: 0;">
-                <span class="r2v-badge-gold">Bước 1 &bull; Nộp Bài</span>
-                <h2 style="margin: 6px 0 10px; font-size: 1.35rem;">Cổng Nộp Bài Google Classroom</h2>
-                <p style="font-size: 0.92rem; line-height: 1.65; opacity: 0.9;">
-                    Chụp ảnh hoặc scan bài làm thành file PDF và nộp tại cổng Classroom của <b>${exam.title}</b>.
-                </p>
-                <div style="padding: 10px 14px; border-radius: 8px; background: rgba(92, 225, 230, 0.08); border: 1px solid rgba(92, 225, 230, 0.25); margin: 12px 0; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;">
-                    Thời gian scan &amp; nộp bài còn lại: <b id="r2v-upload-clock" style="color: #f0c040; font-size: 1rem;">15:00</b><br>
-                    Tên file: <code>${exam.fileNamingRule}</code>
+                <div class="r2v-step-head">
+                    <span class="r2v-step-num">1</span>
+                    <h2>Nộp bài (${exam.title} &bull; ${sess.label})</h2>
                 </div>
-                <div style="margin-top: 14px;">
-                    <a href="${exam.classroomUrl}" target="_blank" rel="noopener noreferrer" class="r2v-btn-primary">
+                <div id="r2v-upload-status" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 12px;">
+                    Thời gian scan &amp; nộp bài còn lại: <b id="r2v-upload-clock" style="color: #f0c040; font-size: 1rem;">15:00</b>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px;">
+                    <a href="${exam.classroomUrl}" target="_blank" rel="noopener noreferrer" class="r2v-btn-primary" id="r2v-classroom-btn">
                         Mở Google Classroom (${exam.title}) &rarr;
                     </a>
+                    <span style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; opacity: 0.72;">
+                        Tên file: <code>${exam.fileNamingRule}</code>
+                    </span>
                 </div>
             </div>
 
-            <!-- KHỐI 2: BAREM & TỰ CHẤM ĐIỂM -->
+            <!-- BƯỚC 2: BAREM & TỰ CHẤM ĐIỂM -->
             <div class="r2v-card" style="margin-bottom: 0;">
-                <span class="r2v-badge-gold">Bước 2 &bull; Đáp án &amp; Tự chấm</span>
-                <h2 style="margin: 6px 0 10px; font-size: 1.35rem;">Barem Chấm Điểm (${sess.label})</h2>
+                <div class="r2v-step-head">
+                    <span class="r2v-step-num">2</span>
+                    <h2>Barem &amp; Tự chấm (${sess.label})</h2>
+                </div>
                 ${exam.isSolutionPublished ? `
                     <div id="r2v-rubric-box">
                         ${sess.problems.map((p) => `
@@ -415,52 +418,62 @@
                         ${sess.solutionPdfUrl ? `<div style="margin-top: 12px;"><a href="${sess.solutionPdfUrl}" target="_blank" class="r2v-btn-gold">Tải PDF Lời giải chi tiết</a></div>` : ""}
                     </div>
                 ` : `
-                    <div class="r2v-locked-box">
-                        <div style="font-weight: 700; margin-bottom: 6px;">${LOCK_SVG}Barem &amp; Đáp án đang tạm khóa</div>
-                        <div>${exam.solutionReleaseNote}</div>
+                    <div style="font-size: 0.92rem; opacity: 0.82; line-height: 1.6;">
+                        ${LOCK_SVG}Mở khóa sau buổi sửa bài trực tiếp.
                     </div>
                 `}
             </div>
-        </div>
 
-        <!-- KHỐI 3: CERTIFICATE ĐIỆN TỬ (CHỈ TRAO KHI HOÀN THÀNH CẢ 2 NGÀY) -->
-        <div class="r2v-card fade-up" id="r2v-cert-card">
-            <span class="r2v-badge-gold">Bước 3 &bull; Certificate</span>
-            <h2 style="margin: 6px 0 10px; font-size: 1.45rem;">Certificate — ${exam.title}</h2>
-            ${bothDone ? `
-                <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 16px;">
-                    <div style="font-size: 0.92rem; opacity: 0.88;">
-                        Thí sinh: <b>${user.username}</b> &bull; Đã hoàn thành cả Ngày 1 &amp; Ngày 2
-                    </div>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <!-- BƯỚC 3: CERTIFICATE ĐIỆN TỬ -->
+            <div class="r2v-card" id="r2v-cert-card" style="margin-bottom: 0; ${bothDone ? "" : "opacity: 0.86;"}">
+                <div class="r2v-step-head">
+                    <span class="r2v-step-num">3</span>
+                    <h2>Certificate &mdash; ${exam.title}</h2>
+                </div>
+                ${bothDone ? `
+                    <div class="r2v-cert-controls">
+                        <div class="r2v-input-group">
+                            <label for="r2v-cert-name-input">Họ và tên trên Certificate</label>
+                            <input type="text" id="r2v-cert-name-input" value="${defaultCertName}" placeholder="Nhập họ và tên của bạn">
+                        </div>
                         <button type="button" class="r2v-btn-primary" id="r2v-download-cert-btn">Tải Certificate (PNG)</button>
-                        <button type="button" class="r2v-btn-gold" id="r2v-print-cert-btn">In / Lưu PDF</button>
+                        <button type="button" class="r2v-btn-link-muted" id="r2v-print-cert-btn">In / Lưu PDF</button>
                     </div>
-                </div>
-                <div class="r2v-cert-canvas-wrap">
-                    <canvas id="r2v-cert-canvas" width="1600" height="1130"></canvas>
-                </div>
-            ` : `
-                <div class="r2v-locked-box">
-                    <div style="font-weight: 700; margin-bottom: 6px;">${LOCK_SVG}Certificate chỉ được cấp khi hoàn thành cả 2 ngày thi</div>
-                    <div>Bạn đã hoàn thành <b>${sess.label}</b>. Vui lòng hoàn thành nốt <b>${otherLabel}</b> của ${exam.title} để mở khóa Certificate.</div>
+                    <div class="r2v-cert-canvas-wrap">
+                        <canvas id="r2v-cert-canvas" width="1600" height="1130"></canvas>
+                    </div>
+                ` : `
+                    <div style="font-size: 0.92rem; line-height: 1.65; opacity: 0.88;">
+                        ${LOCK_SVG}Hoàn thành thêm <b>${otherLabel}</b> để mở khóa Certificate.
+                    </div>
                     <div style="margin-top: 12px;">
-                        <a href="/pages/road2vmo-exam.html?test=${currentRound}&amp;session=${otherSession}" class="r2v-btn-primary">
-                            Vào phòng thi ${otherLabel} (${exam.title}) &rarr;
+                        <a href="/pages/road2vmo-exam.html?test=${currentRound}&amp;day=${otherDayNum}" class="r2v-btn-primary">
+                            Vào phòng thi ${otherLabel} &rarr;
                         </a>
                     </div>
-                </div>
-            `}
+                `}
+            </div>
         </div>`;
 
         const uploadEnd = (st.finishedAt || Date.now()) + 15 * 60 * 1000;
         function updateUploadClock() {
-            const el = document.getElementById("r2v-upload-clock");
-            if (!el) return;
+            const statusEl = document.getElementById("r2v-upload-status");
+            const clockEl = document.getElementById("r2v-upload-clock");
+            const clsBtn = document.getElementById("r2v-classroom-btn");
+            if (!statusEl) return;
             const rem = Math.max(0, Math.floor((uploadEnd - Date.now()) / 1000));
-            const mm = String(Math.floor(rem / 60)).padStart(2, "0");
-            const ss = String(rem % 60).padStart(2, "0");
-            el.textContent = `${mm}:${ss}`;
+            if (rem <= 0) {
+                statusEl.textContent = "Đã hết thời gian nộp bài.";
+                statusEl.style.opacity = "0.75";
+                if (clsBtn) clsBtn.style.opacity = "0.65";
+                if (uploadInterval) { clearInterval(uploadInterval); uploadInterval = null; }
+                return;
+            }
+            if (clockEl) {
+                const mm = String(Math.floor(rem / 60)).padStart(2, "0");
+                const ss = String(rem % 60).padStart(2, "0");
+                clockEl.textContent = `${mm}:${ss}`;
+            }
         }
         updateUploadClock();
         uploadInterval = setInterval(updateUploadClock, 1000);
@@ -483,14 +496,28 @@
 
         if (bothDone) {
             const canvas = document.getElementById("r2v-cert-canvas");
+            const nameInput = document.getElementById("r2v-cert-name-input");
+            const getCertName = () => {
+                const v = (nameInput ? nameInput.value : "").trim();
+                return v || "THÍ SINH SMP";
+            };
             drawCertificate(canvas, {
-                studentName: user.username,
+                studentName: getCertName(),
                 examTitle: exam.title
             });
 
+            if (nameInput) {
+                nameInput.addEventListener("input", () => {
+                    drawCertificate(canvas, {
+                        studentName: getCertName(),
+                        examTitle: exam.title
+                    });
+                });
+            }
+
             document.getElementById("r2v-download-cert-btn").addEventListener("click", () => {
                 const link = document.createElement("a");
-                const safeName = user.username.replace(/[^a-zA-Z0-9_\u00C0-\u1EF9]+/g, "_");
+                const safeName = getCertName().replace(/[^a-zA-Z0-9_\u00C0-\u1EF9]+/g, "_");
                 link.download = `Certificate_${exam.id}_${safeName}.png`;
                 link.href = canvas.toDataURL("image/png");
                 link.click();
