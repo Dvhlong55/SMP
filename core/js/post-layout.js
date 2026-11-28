@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('link[href*="post.css"]')) {
         const linkPost = document.createElement('link');
         linkPost.rel = 'stylesheet';
-        linkPost.href = depthPrefix + 'core/css/post.css?v=45';
+        linkPost.href = depthPrefix + 'core/css/post.css?v=46';
         head.appendChild(linkPost);
     }
     if (!document.querySelector('link[href*="smp-template.css"]')) {
