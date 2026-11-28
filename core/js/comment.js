@@ -1,5 +1,5 @@
 // --- CONFIGURATION ---
-const COMMENT_API_BASE = 'https://smp-backend-kcwn.onrender.com';
+var COMMENT_API_BASE = window.COMMENT_API_BASE || 'https://smp-backend-kcwn.onrender.com';
 
 function initSmpComments() {
     // Tự động khởi tạo section bình luận nếu có thẻ <main>

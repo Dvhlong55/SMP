@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v131') caches.delete(name);
+                if (name !== 'smp-cache-v144') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -1566,16 +1566,18 @@ function initLayout() {
     }
 
     // Load comments on any page that has the comment container
-    if (document.getElementById('smp-comments-container') || document.getElementById('giscus-container')) {
+    if ((document.getElementById('smp-comments-container') || document.getElementById('giscus-container')) && !document.querySelector('script[src*="comment.js"]')) {
         const script = document.createElement('script');
-        script.src = depthPrefix + 'core/js/comment.js?v=35';
+        script.src = depthPrefix + 'core/js/comment.js?v=36';
         document.body.appendChild(script);
     }
 
     // ── Inject notifications script ──────────────────────────────────────────
-    const notifScript = document.createElement('script');
-    notifScript.src = depthPrefix + 'core/js/notifications.js?v=10';
-    document.body.appendChild(notifScript);
+    if (!document.querySelector('script[src*="notifications.js"]')) {
+        const notifScript = document.createElement('script');
+        notifScript.src = depthPrefix + 'core/js/notifications.js?v=10';
+        document.body.appendChild(notifScript);
+    }
 
     // Close mobile search wrapper when clicking outside
     document.addEventListener('click', (e) => {
