@@ -1661,10 +1661,11 @@ function addSaveButtonsToCards() {
             background: 'none',
             border: '1px solid var(--border-light)',
             color: 'var(--text-muted)',
-            padding: '4px 10px',
+            padding: '2px 8px',
             borderRadius: '4px',
             cursor: 'pointer',
-            fontSize: '0.75rem',
+            fontSize: '1.1rem',
+            lineHeight: '1',
             fontFamily: "'JetBrains Mono', monospace",
             transition: 'all 0.2s',
             marginLeft: 'auto'

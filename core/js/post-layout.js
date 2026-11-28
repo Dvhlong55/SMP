@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('link[href*="post.css"]')) {
         const linkPost = document.createElement('link');
         linkPost.rel = 'stylesheet';
-        linkPost.href = depthPrefix + 'core/css/post.css?v=44';
+        linkPost.href = depthPrefix + 'core/css/post.css?v=45';
         head.appendChild(linkPost);
     }
     if (!document.querySelector('link[href*="smp-template.css"]')) {
@@ -282,8 +282,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // 6. Tải song song toàn bộ script nhưng giữ nguyên thứ tự thực thi (async = false)
     const scriptsToLoad = [
         depthPrefix + "core/js/sidebar-data.js?v=101",
-        depthPrefix + "core/js/layout.js?v=110",
-        depthPrefix + "core/js/shared.js?v=56",
+        depthPrefix + "core/js/layout.js?v=111",
+        depthPrefix + "core/js/shared.js?v=57",
         depthPrefix + "core/js/saved.js?v=35",
         depthPrefix + "core/js/comment.js?v=36"
     ];
