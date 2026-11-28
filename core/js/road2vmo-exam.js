@@ -210,9 +210,6 @@
                 <button type="button" class="r2v-btn-primary" id="r2v-start-btn">
                     Bắt đầu tính giờ &amp; Mở đề (${sess.label})
                 </button>
-                <button type="button" class="r2v-btn-gold" id="r2v-skip-hub-btn">
-                    Đã làm xong &rarr; Nộp bài / Barem / Certificate
-                </button>
             </div>
         </div>`;
 
@@ -235,17 +232,6 @@
             saveState(st);
             playChime(784, 1);
             renderActiveExam(st, user);
-        });
-        document.getElementById("r2v-skip-hub-btn").addEventListener("click", () => {
-            const st = {
-                phase: "finished",
-                mode: currentMode,
-                durationSec: FIXED_DURATION_MIN * 60,
-                startTime: Date.now() - FIXED_DURATION_MIN * 60 * 1000,
-                finishedAt: Date.now()
-            };
-            saveState(st);
-            renderPostHub(st, user);
         });
     }
 
