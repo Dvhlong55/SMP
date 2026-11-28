@@ -132,41 +132,15 @@ window.SMPLatexCore = {
         statusBar.style.color = 'var(--text-muted, #888)';
         statusBar.style.overflow = 'hidden';
         statusBar.style.minWidth = '0';
-        
-        var leftSpan = document.createElement('span');
-        leftSpan.style.display = 'flex';
-        leftSpan.style.alignItems = 'center';
-        leftSpan.style.flexShrink = '0';
-        leftSpan.style.gap = '4px';
-        leftSpan.innerHTML = '<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#5ce1e6;box-shadow:0 0 5px #5ce1e6;"></span> LaTeX Editor v2 Core';
+        statusBar.style.justifyContent = 'flex-end';
         
         var rightSpan = document.createElement('span');
         rightSpan.style.flexShrink = '0';
         rightSpan.style.whiteSpace = 'nowrap';
         rightSpan.textContent = '0 ký tự | 0 từ | 0 dòng';
         
-        statusBar.appendChild(leftSpan);
         statusBar.appendChild(rightSpan);
         wrapper.appendChild(statusBar);
-
-        // Nút mở trình soạn thảo đầy đủ
-        var fullEditorBtn = document.createElement('a');
-        fullEditorBtn.href = '/tools/latex-v2/index.html';
-        fullEditorBtn.target = '_blank';
-        fullEditorBtn.innerHTML = 'Mở Trình Soạn Thảo Đầy Đủ ↗';
-        fullEditorBtn.style.marginLeft = '12px';
-        fullEditorBtn.style.fontSize = '0.75rem';
-        fullEditorBtn.style.background = 'rgba(92,225,230,0.15)';
-        fullEditorBtn.style.border = '1px solid rgba(92,225,230,0.4)';
-        fullEditorBtn.style.color = '#5ce1e6';
-        fullEditorBtn.style.padding = '3px 8px';
-        fullEditorBtn.style.borderRadius = '4px';
-        fullEditorBtn.style.textDecoration = 'none';
-        fullEditorBtn.style.transition = 'all 0.2s';
-        fullEditorBtn.onmouseover = function() { this.style.background = 'rgba(92,225,230,0.25)'; };
-        fullEditorBtn.onmouseout = function() { this.style.background = 'rgba(92,225,230,0.15)'; };
-
-        leftSpan.appendChild(fullEditorBtn);
 
         // Wrapper for CodeMirror
         cmEditor.getWrapperElement().style.borderRadius = '6px 6px 0 0';

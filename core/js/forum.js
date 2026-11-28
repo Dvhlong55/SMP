@@ -599,9 +599,9 @@ async function openThread(threadId) {
         let thread, replies;
         if (curated) {
             thread = curated;
-            replies = [];
-            document.getElementById('reply-auth-notice').style.display = 'none';
-            document.getElementById('create-reply-form').style.display = 'none';
+            try {
+                replies = JSON.parse(localStorage.getItem(`smp_curated_replies_${threadId}`) || '[]');
+            } catch (e) { replies = []; }
         } else {
             const viewerId = (window.getUserId && window.getUserId()) || '';
             const [threadRes, repliesRes] = await Promise.all([
@@ -1006,12 +1006,28 @@ function setupFormHandlers() {
         const btn = document.getElementById('btn-submit-reply');
         btn.disabled = true; btn.innerText = 'Đang gửi...';
         try {
-            const res = await fetch(`${API_BASE}/api/forum/threads/${currentThreadId}/replies`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                body: JSON.stringify({ content })
-            });
-            if (!res.ok) { const d = await res.json(); throw new Error(d.detail || 'Lỗi gửi'); }
+            const isCurated = SMP_CURATED_FORUM_THREADS.some(t => t.id === currentThreadId);
+            if (isCurated) {
+                const key = `smp_curated_replies_${currentThreadId}`;
+                const list = JSON.parse(localStorage.getItem(key) || '[]');
+                list.push({
+                    id: 'local-' + Date.now(),
+                    author_name: getUsername() || 'Thành viên SMP',
+                    content,
+                    createdAt: new Date().toISOString(),
+                    likeCount: 0,
+                    likedByMe: false,
+                    isApproved: false
+                });
+                localStorage.setItem(key, JSON.stringify(list));
+            } else {
+                const res = await fetch(`${API_BASE}/api/forum/threads/${currentThreadId}/replies`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify({ content })
+                });
+                if (!res.ok) { const d = await res.json(); throw new Error(d.detail || 'Lỗi gửi'); }
+            }
             e.target.reset();
             const prev = document.getElementById('reply-preview');
             if (prev) prev.classList.remove('active');
