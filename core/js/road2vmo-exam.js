@@ -9,23 +9,34 @@
     const sessionParam = params.get("session") || params.get("day");
     const currentSession = (sessionParam === "afternoon" || sessionParam === "2") ? "afternoon" : "morning";
     const FIXED_DURATION_MIN = 180; // Chuẩn VMO: luôn 180 phút (3 tiếng) mỗi ngày
-    let currentMode = "strict";     // "strict" (đếm ngược) | "stopwatch" (đếm xuôi)
+    let currentMode = "strict";
     let soundEnabled = true;
     let paperFontRem = 1.04;
     let tickInterval = null;
     let uploadInterval = null;
+    let authPollInterval = null;
     let firedCues = { m60: false, m15: false, m0: false };
 
     const root = document.getElementById("r2v-app");
     if (!root) return;
 
-    function stateKey() {
-        return `smp_r2v_state_r${currentRound}_${currentSession}`;
+    function getAuthUser() {
+        const token = localStorage.getItem("smp_access_token");
+        const username = localStorage.getItem("smp_username");
+        if (token && username && username.trim()) {
+            return { token, username: username.trim() };
+        }
+        return null;
     }
 
-    function loadState() {
+    function stateKey(sessionOverride) {
+        const s = sessionOverride || currentSession;
+        return `smp_r2v_state_r${currentRound}_${s}`;
+    }
+
+    function loadState(sessionOverride) {
         try {
-            const raw = localStorage.getItem(stateKey());
+            const raw = localStorage.getItem(stateKey(sessionOverride));
             return raw ? JSON.parse(raw) : null;
         } catch (e) {
             return null;
@@ -42,6 +53,12 @@
         try {
             localStorage.removeItem(stateKey());
         } catch (e) {}
+    }
+
+    function isBothDaysFinished() {
+        const m = loadState("morning");
+        const a = loadState("afternoon");
+        return Boolean(m && m.phase === "finished" && a && a.phase === "finished");
     }
 
     function enterFullscreen() {
@@ -111,6 +128,7 @@
     function stopTimers() {
         if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
         if (uploadInterval) { clearInterval(uploadInterval); uploadInterval = null; }
+        if (authPollInterval) { clearInterval(authPollInterval); authPollInterval = null; }
     }
 
     const BELL_ON_SVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/><path d="M22 8c0-2.3-.8-4.3-2-6"/></svg>`;
@@ -124,9 +142,45 @@
     }
 
     // ========================================================================
+    //  CỔNG YÊU CẦU ĐĂNG NHẬP TÀI KHOẢN SMP
+    // ========================================================================
+    function renderAuthGate() {
+        stopTimers();
+        const exam = EXAMS[currentRound];
+        const sess = exam.sessions[currentSession];
+
+        root.innerHTML = `
+        ${renderTopNav()}
+        <div class="r2v-card fade-up" style="max-width: 620px; margin: 18px auto; text-align: center;">
+            <span class="r2v-badge-gold">Yêu Cầu Tài Khoản SMP</span>
+            <h1 class="r2v-lobby-title" style="font-size: 1.7rem;">${exam.title} &bull; ${sess.label}</h1>
+            <p style="font-size: 0.95rem; line-height: 1.7; opacity: 0.88; margin: 12px 0 22px;">
+                Vui lòng đăng nhập hoặc đăng ký tài khoản SMP để vào phòng chờ thi thử và tự động cấp Giấy chứng nhận (Certificate) theo tài khoản của bạn.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+                <button type="button" class="r2v-btn-primary" id="r2v-login-btn">Đăng nhập tài khoản SMP</button>
+                <button type="button" class="r2v-btn-gold" id="r2v-register-btn">Đăng ký tài khoản mới</button>
+            </div>
+        </div>`;
+
+        document.getElementById("r2v-login-btn").addEventListener("click", () => {
+            if (window.openAuthModal) window.openAuthModal("login");
+        });
+        document.getElementById("r2v-register-btn").addEventListener("click", () => {
+            if (window.openAuthModal) window.openAuthModal("register");
+        });
+
+        authPollInterval = setInterval(() => {
+            if (getAuthUser()) {
+                boot();
+            }
+        }, 600);
+    }
+
+    // ========================================================================
     //  GIAI ĐOẠN 1: SẢNH CHỜ (PRE-EXAM LOBBY)
     // ========================================================================
-    function renderLobby() {
+    function renderLobby(user) {
         stopTimers();
         const exam = EXAMS[currentRound];
         const sess = exam.sessions[currentSession];
@@ -137,7 +191,7 @@
             <div class="r2v-lobby-header">
                 <span class="r2v-badge-gold">Phòng Thi Thử VMO Trực Tuyến</span>
                 <h1 class="r2v-lobby-title">${exam.title}</h1>
-                <div style="opacity: 0.82; font-size: 0.96rem;">${sess.label} &bull; Thời gian làm bài: 180 phút (3 tiếng)</div>
+                <div style="opacity: 0.85; font-size: 0.96rem;">${sess.label} &bull; 180 phút &bull; Thí sinh: <b>${user.username}</b></div>
             </div>
 
             <div class="r2v-option-group" style="max-width: 560px; margin: 0 auto 24px;">
@@ -165,7 +219,7 @@
         root.querySelectorAll("[data-select-mode]").forEach(btn => {
             btn.addEventListener("click", () => {
                 currentMode = btn.getAttribute("data-select-mode");
-                renderLobby();
+                renderLobby(user);
             });
         });
         document.getElementById("r2v-start-btn").addEventListener("click", () => {
@@ -180,7 +234,7 @@
             firedCues = { m60: false, m15: false, m0: false };
             saveState(st);
             playChime(784, 1);
-            renderActiveExam(st);
+            renderActiveExam(st, user);
         });
         document.getElementById("r2v-skip-hub-btn").addEventListener("click", () => {
             const st = {
@@ -191,14 +245,14 @@
                 finishedAt: Date.now()
             };
             saveState(st);
-            renderPostHub(st);
+            renderPostHub(st, user);
         });
     }
 
     // ========================================================================
     //  GIAI ĐOẠN 2: PHÒNG THI TRỰC TUYẾN (ACTIVE EXAM ROOM)
     // ========================================================================
-    function renderActiveExam(st) {
+    function renderActiveExam(st, user) {
         stopTimers();
         const exam = EXAMS[currentRound];
         const sess = exam.sessions[currentSession];
@@ -281,14 +335,14 @@
                 st.finishedAt = Date.now();
                 saveState(st);
                 playChime(1046, 2);
-                renderPostHub(st);
+                renderPostHub(st, user);
             }
         });
         document.getElementById("r2v-reset-lobby-btn").addEventListener("click", () => {
             if (confirm("Thoát phòng thi hiện tại để chọn lại chế độ ở sảnh chờ?")) {
                 exitFullscreenIfActive();
                 clearState();
-                renderLobby();
+                renderLobby(user);
             }
         });
 
@@ -314,7 +368,7 @@
                     st.phase = "finished";
                     st.finishedAt = Date.now();
                     saveState(st);
-                    renderPostHub(st);
+                    renderPostHub(st, user);
                 }
             } else {
                 clockEl.textContent = formatHMS(elapsed);
@@ -327,32 +381,33 @@
     // ========================================================================
     //  GIAI ĐOẠN 3: MÀN HÌNH SAU GIỜ THI (CLASSROOM + BAREM + CERTIFICATE)
     // ========================================================================
-    function renderPostHub(st) {
+    function renderPostHub(st, user) {
         stopTimers();
         const exam = EXAMS[currentRound];
         const sess = exam.sessions[currentSession];
-        const elapsedMin = Math.max(1, Math.round(((st.finishedAt || Date.now()) - st.startTime) / 60000));
         const maxTotal = sess.problems.reduce((s, p) => s + p.maxScore, 0);
+        const bothDone = isBothDaysFinished();
+        const otherSession = currentSession === "morning" ? "afternoon" : "morning";
+        const otherLabel = otherSession === "morning" ? "Ngày 1" : "Ngày 2";
 
         root.innerHTML = `
         ${renderTopNav()}
         <div class="r2v-hub-grid fade-up">
             <!-- KHỐI 1: CỔNG NỘP BÀI CLASSROOM -->
             <div class="r2v-card" style="margin-bottom: 0;">
-                <span class="r2v-badge-gold">Bước 1 &bull; Dành cho HS lớp VMO SMP</span>
+                <span class="r2v-badge-gold">Bước 1 &bull; Nộp Bài</span>
                 <h2 style="margin: 6px 0 10px; font-size: 1.35rem;">Cổng Nộp Bài Google Classroom</h2>
                 <p style="font-size: 0.92rem; line-height: 1.65; opacity: 0.9;">
-                    Học sinh lớp VMO SMP bắt buộc hoàn thành vào <b>Thứ 5</b>, chụp ảnh hoặc scan bài làm thành file PDF và nộp tại cổng Classroom của <b>${exam.title}</b>.
+                    Chụp ảnh hoặc scan bài làm thành file PDF và nộp tại cổng Classroom của <b>${exam.title}</b>.
                 </p>
                 <div style="padding: 10px 14px; border-radius: 8px; background: rgba(92, 225, 230, 0.08); border: 1px solid rgba(92, 225, 230, 0.25); margin: 12px 0; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;">
                     Thời gian scan &amp; nộp bài còn lại: <b id="r2v-upload-clock" style="color: #f0c040; font-size: 1rem;">15:00</b><br>
-                    Tên file chuẩn: <code>${exam.fileNamingRule}</code>
+                    Tên file: <code>${exam.fileNamingRule}</code>
                 </div>
-                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px;">
+                <div style="margin-top: 14px;">
                     <a href="${exam.classroomUrl}" target="_blank" rel="noopener noreferrer" class="r2v-btn-primary">
                         Mở Google Classroom (${exam.title}) &rarr;
                     </a>
-                    <button type="button" class="r2v-mini-btn" id="r2v-retake-btn">Làm lại</button>
                 </div>
             </div>
 
@@ -383,45 +438,39 @@
                     <div class="r2v-locked-box">
                         <div style="font-weight: 700; margin-bottom: 6px;">&#x1F512; Barem &amp; Đáp án đang tạm khóa</div>
                         <div>${exam.solutionReleaseNote}</div>
-                        <div style="margin-top: 8px; font-size: 0.82rem; opacity: 0.78;">
-                            (Thí sinh có thể trao đổi hướng giải ở khung bình luận bên dưới trong lúc chờ mở đáp án.)
-                        </div>
                     </div>
                 `}
             </div>
         </div>
 
-        <!-- KHỐI 3: CERTIFICATE ĐIỆN TỬ -->
+        <!-- KHỐI 3: CERTIFICATE ĐIỆN TỬ (CHỈ TRAO KHI HOÀN THÀNH CẢ 2 NGÀY) -->
         <div class="r2v-card fade-up" id="r2v-cert-card">
-            <span class="r2v-badge-gold">Bước 3 &bull; Giấy Chứng Nhận Hoàn Thành</span>
-            <h2 style="margin: 6px 0 8px; font-size: 1.45rem;">Certificate — Road2VMO Test</h2>
-            <p style="font-size: 0.92rem; opacity: 0.85; margin-bottom: 16px;">
-                Nhập họ tên của bạn để tạo và tải xuống giấy chứng nhận điện tử.
-            </p>
-
-            <div class="r2v-cert-controls">
-                <div class="r2v-input-group">
-                    <label for="r2v-cert-name">Họ và tên thí sinh</label>
-                    <input type="text" id="r2v-cert-name" placeholder="Ví dụ: Nguyễn Văn A" value="${localStorage.getItem("smp_r2v_cert_name") || ""}">
+            <span class="r2v-badge-gold">Bước 3 &bull; Certificate</span>
+            <h2 style="margin: 6px 0 10px; font-size: 1.45rem;">Certificate — ${exam.title}</h2>
+            ${bothDone ? `
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                    <div style="font-size: 0.92rem; opacity: 0.88;">
+                        Thí sinh: <b>${user.username}</b> &bull; Đã hoàn thành cả Ngày 1 &amp; Ngày 2
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <button type="button" class="r2v-btn-primary" id="r2v-download-cert-btn">Tải Certificate (PNG)</button>
+                        <button type="button" class="r2v-btn-gold" id="r2v-print-cert-btn">In / Lưu PDF</button>
+                    </div>
                 </div>
-                <div class="r2v-input-group">
-                    <label for="r2v-cert-school">Trường / Tỉnh (tùy chọn)</label>
-                    <input type="text" id="r2v-cert-school" placeholder="Ví dụ: THPT Chuyên..." value="${localStorage.getItem("smp_r2v_cert_school") || ""}">
+                <div class="r2v-cert-canvas-wrap">
+                    <canvas id="r2v-cert-canvas" width="1600" height="1130"></canvas>
                 </div>
-                <div class="r2v-input-group">
-                    <label for="r2v-cert-scope">Phạm vi ghi nhận</label>
-                    <select id="r2v-cert-scope" style="width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--border-light, rgba(255,255,255,0.18)); background:rgba(128,128,128,0.08); color:inherit; font-family:inherit; font-size:0.92rem;">
-                        <option value="${sess.label}">${sess.label}</option>
-                        <option value="Hoàn thành trọn vẹn Ngày 1 &amp; Ngày 2">Hoàn thành trọn vẹn Ngày 1 &amp; Ngày 2</option>
-                    </select>
+            ` : `
+                <div class="r2v-locked-box">
+                    <div style="font-weight: 700; margin-bottom: 6px;">&#x1F512; Certificate chỉ được cấp khi hoàn thành cả 2 ngày thi</div>
+                    <div>Bạn đã hoàn thành <b>${sess.label}</b>. Vui lòng hoàn thành nốt <b>${otherLabel}</b> của ${exam.title} để mở khóa Certificate.</div>
+                    <div style="margin-top: 12px;">
+                        <a href="/pages/road2vmo-exam.html?test=${currentRound}&amp;session=${otherSession}" class="r2v-btn-primary">
+                            Vào phòng thi ${otherLabel} (${exam.title}) &rarr;
+                        </a>
+                    </div>
                 </div>
-                <button type="button" class="r2v-btn-primary" id="r2v-download-cert-btn">Tải Certificate (PNG)</button>
-                <button type="button" class="r2v-btn-gold" id="r2v-print-cert-btn">In / Lưu PDF</button>
-            </div>
-
-            <div class="r2v-cert-canvas-wrap">
-                <canvas id="r2v-cert-canvas" width="1600" height="1130"></canvas>
-            </div>
+            `}
         </div>`;
 
         const uploadEnd = (st.finishedAt || Date.now()) + 15 * 60 * 1000;
@@ -435,11 +484,6 @@
         }
         updateUploadClock();
         uploadInterval = setInterval(updateUploadClock, 1000);
-
-        document.getElementById("r2v-retake-btn").addEventListener("click", () => {
-            clearState();
-            renderLobby();
-        });
 
         if (exam.isSolutionPublished) {
             const cbs = root.querySelectorAll(".r2v-rubric-cb");
@@ -457,206 +501,160 @@
             }));
         }
 
-        const nameInput = document.getElementById("r2v-cert-name");
-        const schoolInput = document.getElementById("r2v-cert-school");
-        const scopeSelect = document.getElementById("r2v-cert-scope");
-        const canvas = document.getElementById("r2v-cert-canvas");
-
-        function redrawCert() {
-            const nameVal = nameInput.value.trim() || "THÍ SINH THAM DỰ";
-            const schoolVal = schoolInput.value.trim();
-            localStorage.setItem("smp_r2v_cert_name", nameInput.value);
-            localStorage.setItem("smp_r2v_cert_school", schoolInput.value);
+        if (bothDone) {
+            const canvas = document.getElementById("r2v-cert-canvas");
             drawCertificate(canvas, {
-                studentName: nameVal,
-                school: schoolVal,
-                examTitle: exam.title,
-                scope: scopeSelect.value,
-                elapsedMin: elapsedMin,
-                certId: `SMP-R2V-L${exam.round}-${String(Math.abs(hashCode(nameVal + exam.id))).slice(0, 6).padStart(6, "0")}`
+                studentName: user.username,
+                examTitle: exam.title
+            });
+
+            document.getElementById("r2v-download-cert-btn").addEventListener("click", () => {
+                const link = document.createElement("a");
+                const safeName = user.username.replace(/[^a-zA-Z0-9_\u00C0-\u1EF9]+/g, "_");
+                link.download = `Certificate_${exam.id}_${safeName}.png`;
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            });
+
+            document.getElementById("r2v-print-cert-btn").addEventListener("click", () => {
+                const dataUrl = canvas.toDataURL("image/png");
+                const w = window.open("", "_blank");
+                if (!w) return;
+                w.document.write(`<!DOCTYPE html><html><head><title>Certificate - ${exam.title}</title><style>body{margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#FAF7D8;}img{max-width:100%;height:auto;}@media print{@page{size:landscape;margin:0;}body{margin:0;}}</style></head><body><img src="${dataUrl}" onload="window.print();"></body></html>`);
+                w.document.close();
             });
         }
-
-        nameInput.addEventListener("input", redrawCert);
-        schoolInput.addEventListener("input", redrawCert);
-        scopeSelect.addEventListener("change", redrawCert);
-        redrawCert();
-
-        document.getElementById("r2v-download-cert-btn").addEventListener("click", () => {
-            redrawCert();
-            const link = document.createElement("a");
-            const safeName = (nameInput.value.trim() || "ThiSinh").replace(/[^a-zA-Z0-9_\u00C0-\u1EF9]+/g, "_");
-            link.download = `Certificate_${exam.id}_${safeName}.png`;
-            link.href = canvas.toDataURL("image/png");
-            link.click();
-        });
-
-        document.getElementById("r2v-print-cert-btn").addEventListener("click", () => {
-            redrawCert();
-            const dataUrl = canvas.toDataURL("image/png");
-            const w = window.open("", "_blank");
-            if (!w) return;
-            w.document.write(`<!DOCTYPE html><html><head><title>Certificate - ${exam.title}</title><style>body{margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#fff;}img{max-width:100%;height:auto;}@media print{@page{size:landscape;margin:0;}body{margin:0;}}</style></head><body><img src="${dataUrl}" onload="window.print();"></body></html>`);
-            w.document.close();
-        });
     }
 
-    function hashCode(str) {
-        let h = 0;
-        for (let i = 0; i < str.length; i++) {
-            h = ((h << 5) - h) + str.charCodeAt(i);
-            h |= 0;
-        }
-        return h;
-    }
-
+    // ========================================================================
+    //  CERTIFICATE GENERATOR (SACKS SPIRAL + CREAM / COBALT / RED SMP)
+    // ========================================================================
     function drawCertificate(canvas, info) {
         const ctx = canvas.getContext("2d");
         const W = canvas.width;
         const H = canvas.height;
+        const CREAM = "#FAF7D8";
+        const COBALT = "#1B365D";
+        const RED = "#B93131";
 
-        const bg = ctx.createLinearGradient(0, 0, W, H);
-        bg.addColorStop(0, "#0b111e");
-        bg.addColorStop(0.5, "#111b2e");
-        bg.addColorStop(1, "#090e19");
-        ctx.fillStyle = bg;
+        // Nền kem smpCream
+        ctx.fillStyle = CREAM;
         ctx.fillRect(0, 0, W, H);
 
-        const glow = ctx.createRadialGradient(W / 2, H * 0.44, 60, W / 2, H * 0.44, 650);
-        glow.addColorStop(0, "rgba(92, 225, 230, 0.09)");
-        glow.addColorStop(0.6, "rgba(240, 192, 64, 0.05)");
-        glow.addColorStop(1, "rgba(0, 0, 0, 0)");
-        ctx.fillStyle = glow;
-        ctx.fillRect(0, 0, W, H);
+        // Background Xoắn ốc Sacks ở chính giữa
+        const cx = W / 2;
+        const cy = H / 2 + 10;
+        const scale = 76; // 5.5cm -> ~418px radius
 
-        ctx.strokeStyle = "#f0c040";
-        ctx.lineWidth = 6;
+        ctx.save();
+        ctx.strokeStyle = "rgba(27, 54, 93, 0.16)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 5.5 * scale, 0, Math.PI * 2);
+        ctx.stroke();
+
+        const baseArr = window.SMP_SACKS_BASE || [];
+        ctx.fillStyle = "rgba(27, 54, 93, 0.22)";
+        for (let i = 0; i < baseArr.length; i += 2) {
+            ctx.beginPath();
+            ctx.arc(cx + baseArr[i] * scale, cy - baseArr[i + 1] * scale, 1.5, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        const redArr = window.SMP_SACKS_RED || [];
+        ctx.fillStyle = "rgba(185, 49, 49, 0.28)";
+        for (let i = 0; i < redArr.length; i += 2) {
+            ctx.beginPath();
+            ctx.arc(cx + redArr[i] * scale, cy - redArr[i + 1] * scale, 2.7, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.restore();
+
+        // Khung viền kép Cobalt & Red
+        ctx.strokeStyle = COBALT;
+        ctx.lineWidth = 7;
         ctx.strokeRect(42, 42, W - 84, H - 84);
 
-        ctx.strokeStyle = "rgba(92, 225, 230, 0.55)";
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = RED;
+        ctx.lineWidth = 2.2;
         ctx.strokeRect(60, 60, W - 120, H - 120);
 
         const corners = [[42, 42, 1, 1], [W - 42, 42, -1, 1], [42, H - 42, 1, -1], [W - 42, H - 42, -1, -1]];
-        ctx.fillStyle = "#f0c040";
-        corners.forEach(([cx, cy, sx, sy]) => {
-            ctx.fillRect(cx - 6, cy - 6, 12, 12);
-            ctx.strokeStyle = "#f0c040";
+        corners.forEach(([x, y, sx, sy]) => {
+            ctx.fillStyle = RED;
+            ctx.fillRect(x - 6, y - 6, 12, 12);
+            ctx.strokeStyle = RED;
             ctx.lineWidth = 3;
             ctx.beginPath();
-            ctx.moveTo(cx + sx * 18, cy + sy * 48);
-            ctx.lineTo(cx + sx * 18, cy + sy * 18);
-            ctx.lineTo(cx + sx * 48, cy + sy * 18);
+            ctx.moveTo(x + sx * 18, y + sy * 48);
+            ctx.lineTo(x + sx * 18, y + sy * 18);
+            ctx.lineTo(x + sx * 48, y + sy * 18);
             ctx.stroke();
         });
 
+        // Tiêu đề tinh gọn
         ctx.textAlign = "center";
-        ctx.fillStyle = "#5ce1e6";
-        ctx.font = "700 24px 'JetBrains Mono', monospace";
-        ctx.fillText("SECRETS OF MATHEMATICAL PRINCIPLES  •  SMP-MATH", W / 2, 138);
+        ctx.fillStyle = COBALT;
+        ctx.font = "700 76px 'Playfair Display', 'Times New Roman', serif";
+        ctx.fillText("CERTIFICATE", W / 2, 238);
 
-        ctx.fillStyle = "#f0c040";
-        ctx.font = "700 66px 'Playfair Display', 'Times New Roman', serif";
-        ctx.fillText("CERTIFICATE OF PARTICIPATION", W / 2, 232);
+        ctx.fillStyle = RED;
+        ctx.font = "italic 32px 'Times New Roman', serif";
+        ctx.fillText("Hoàn thành thi thử VMO 2026", W / 2, 294);
 
-        ctx.fillStyle = "#cbd5e1";
-        ctx.font = "italic 28px 'Times New Roman', serif";
-        ctx.fillText("Giấy Chứng Nhận Hoàn Thành Kỳ Thi Thử Olympic Toán Quốc Gia", W / 2, 282);
-
-        ctx.strokeStyle = "rgba(240, 192, 64, 0.55)";
+        ctx.strokeStyle = "rgba(185, 49, 49, 0.55)";
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(W / 2 - 220, 316);
-        ctx.lineTo(W / 2 + 220, 316);
+        ctx.moveTo(W / 2 - 200, 332);
+        ctx.lineTo(W / 2 + 200, 332);
         ctx.stroke();
 
-        ctx.fillStyle = "#94a3b8";
-        ctx.font = "400 26px 'Times New Roman', serif";
-        ctx.fillText("Trân trọng chứng nhận thí sinh", W / 2, 386);
+        // Tên tài khoản thí sinh
+        ctx.fillStyle = COBALT;
+        ctx.font = "700 74px 'Playfair Display', 'Times New Roman', serif";
+        ctx.fillText(info.studentName.toUpperCase(), W / 2, 510);
 
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "700 72px 'Playfair Display', 'Times New Roman', serif";
-        ctx.fillText(info.studentName.toUpperCase(), W / 2, 476);
-
-        ctx.strokeStyle = "rgba(92, 225, 230, 0.45)";
+        ctx.strokeStyle = "rgba(27, 54, 93, 0.38)";
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(W / 2 - 340, 504);
-        ctx.lineTo(W / 2 + 340, 504);
+        ctx.moveTo(W / 2 - 330, 542);
+        ctx.lineTo(W / 2 + 330, 542);
         ctx.stroke();
 
-        let yShift = 0;
-        if (info.school) {
-            ctx.fillStyle = "#cbd5e1";
-            ctx.font = "italic 26px 'Times New Roman', serif";
-            ctx.fillText(info.school, W / 2, 548);
-            yShift = 36;
-        }
+        // Chỉ để lại 1 dòng ở giữa
+        ctx.fillStyle = RED;
+        ctx.font = "700 44px 'Playfair Display', 'Times New Roman', serif";
+        ctx.fillText(info.examTitle, W / 2, 650);
 
-        ctx.fillStyle = "#e2e8f0";
-        ctx.font = "400 28px 'Times New Roman', serif";
-        ctx.fillText("Đã nghiêm túc hoàn thành bài thi thử theo quy chuẩn VMO:", W / 2, 588 + yShift);
-
-        ctx.fillStyle = "#5ce1e6";
-        ctx.font = "700 40px 'Playfair Display', 'Times New Roman', serif";
-        ctx.fillText(info.examTitle, W / 2, 648 + yShift);
-
-        ctx.fillStyle = "#f0c040";
-        ctx.font = "600 25px 'JetBrains Mono', monospace";
-        ctx.fillText(`${info.scope}  •  Thời lượng ghi nhận: ${info.elapsedMin} phút`, W / 2, 698 + yShift);
-
-        const sealX = 280;
-        const sealY = 920;
-        ctx.save();
-        ctx.strokeStyle = "#f0c040";
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.arc(sealX, sealY, 74, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.strokeStyle = "rgba(92, 225, 230, 0.7)";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(sealX, sealY, 62, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.fillStyle = "#f0c040";
-        ctx.font = "700 26px 'Playfair Display', serif";
-        ctx.fillText("SMP", sealX, sealY - 4);
-        ctx.fillStyle = "#5ce1e6";
-        ctx.font = "700 15px 'JetBrains Mono', monospace";
-        ctx.fillText("ROAD2VMO", sealX, sealY + 24);
-        ctx.restore();
-
-        const now = new Date();
-        const dateStr = `${String(now.getDate()).padStart(2, "0")}/${String(now.getMonth() + 1).padStart(2, "0")}/${now.getFullYear()}`;
-        ctx.textAlign = "center";
-        ctx.fillStyle = "#94a3b8";
-        ctx.font = "500 20px 'JetBrains Mono', monospace";
-        ctx.fillText(`Ngày cấp: ${dateStr}`, W / 2, 905);
-        ctx.fillText(`Mã xác thực: ${info.certId}`, W / 2, 940);
-
+        // Góc phải dưới: chỉ để SMP phía trên
         const sigX = W - 320;
-        ctx.fillStyle = "#f0c040";
-        ctx.font = "italic 36px 'Playfair Display', 'Times New Roman', serif";
-        ctx.fillText("SMP Academic Board", sigX, 902);
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.35)";
-        ctx.lineWidth = 1.5;
+        ctx.fillStyle = RED;
+        ctx.font = "700 42px 'Playfair Display', 'Times New Roman', serif";
+        ctx.fillText("SMP", sigX, 912);
+        ctx.strokeStyle = "rgba(27, 54, 93, 0.35)";
+        ctx.lineWidth = 1.6;
         ctx.beginPath();
-        ctx.moveTo(sigX - 150, 920);
-        ctx.lineTo(sigX + 150, 920);
+        ctx.moveTo(sigX - 155, 932);
+        ctx.lineTo(sigX + 155, 932);
         ctx.stroke();
-        ctx.fillStyle = "#cbd5e1";
+        ctx.fillStyle = COBALT;
         ctx.font = "500 19px 'JetBrains Mono', monospace";
-        ctx.fillText("Secrets of Mathematical Principles", sigX, 952);
+        ctx.fillText("Secrets of Mathematical Principles", sigX, 964);
     }
 
     function boot() {
+        const user = getAuthUser();
+        if (!user) {
+            renderAuthGate();
+            return;
+        }
         const st = loadState();
         if (st && st.phase === "active") {
-            renderActiveExam(st);
+            renderActiveExam(st, user);
         } else if (st && st.phase === "finished") {
-            renderPostHub(st);
+            renderPostHub(st, user);
         } else {
-            renderLobby();
+            renderLobby(user);
         }
     }
 
