@@ -41,6 +41,7 @@
             --prof-h2: #7DD3EE;
             --prof-h3: #2BB1E0;
             --prof-h4: #0E8FA3;
+            --prof-h5: #075966;
         }
 
         body.dark-mode {
@@ -55,7 +56,8 @@
             --prof-h1: #0e4d61;
             --prof-h2: #007799;
             --prof-h3: #00a8cc;
-            --prof-h4: #5ce1e6;
+            --prof-h4: #2cd4dc;
+            --prof-h5: #5ce1e6;
         }
 
         html.parchment-mode,
@@ -72,6 +74,7 @@
             --prof-h2: #dfa85a;
             --prof-h3: #c9933e;
             --prof-h4: #ab3334;
+            --prof-h5: #7a1f20;
         }
 
         html.parchment-mode .prof-avatar,
@@ -449,6 +452,7 @@
         .heatmap-cell[data-level="2"] { background-color: var(--prof-h2); }
         .heatmap-cell[data-level="3"] { background-color: var(--prof-h3); }
         .heatmap-cell[data-level="4"] { background-color: var(--prof-h4); }
+        .heatmap-cell[data-level="5"] { background-color: var(--prof-h5); }
 
         .prof-heatmap-legend {
             display: flex;
@@ -471,6 +475,7 @@
         .prof-legend-cell[data-level="2"] { background-color: var(--prof-h2); }
         .prof-legend-cell[data-level="3"] { background-color: var(--prof-h3); }
         .prof-legend-cell[data-level="4"] { background-color: var(--prof-h4); }
+        .prof-legend-cell[data-level="5"] { background-color: var(--prof-h5); }
 
         /* Floating Tooltip */
         .prof-heatmap-tooltip {
@@ -857,9 +862,9 @@
                         <div class="prof-stat-hint" id="stat-streak-hint">Kỷ lục: 0 ngày</div>
                     </div>
                     <div class="prof-stat-box">
-                        <div class="prof-stat-label">bài đã giải</div>
+                        <div class="prof-stat-label">lượt truy cập</div>
                         <div class="prof-stat-num" id="stat-solved">0</div>
-                        <div class="prof-stat-hint" id="stat-solved-hint">Chưa có bài nào</div>
+                        <div class="prof-stat-hint" id="stat-solved-hint">Chưa có lượt nào</div>
                     </div>
                     <div class="prof-stat-box">
                         <div class="prof-stat-label">chuỗi dài nhất</div>
@@ -871,7 +876,7 @@
                 <!-- Heatmap -->
                 <div class="prof-heatmap-section">
                     <div class="prof-heatmap-header">
-                        <div class="prof-heatmap-title" id="heatmap-summary">0 bài trong 12 tháng qua</div>
+                        <div class="prof-heatmap-title" id="heatmap-summary">0 lượt truy cập trong 12 tháng qua</div>
                         <a href="#" onclick="toggleStreakGuide(); return false;" class="prof-guide-link">Hệ thống điểm ?</a>
                     </div>
 
@@ -907,11 +912,12 @@
                     <!-- Chú giải -->
                     <div class="prof-heatmap-legend">
                         <span>Ít</span>
-                        <div class="prof-legend-cell" data-level="0"></div>
-                        <div class="prof-legend-cell" data-level="1"></div>
-                        <div class="prof-legend-cell" data-level="2"></div>
-                        <div class="prof-legend-cell" data-level="3"></div>
-                        <div class="prof-legend-cell" data-level="4"></div>
+                        <div class="prof-legend-cell" data-level="0" title="0 lượt"></div>
+                        <div class="prof-legend-cell" data-level="1" title="1–2 lượt"></div>
+                        <div class="prof-legend-cell" data-level="2" title="3–4 lượt"></div>
+                        <div class="prof-legend-cell" data-level="3" title="5–6 lượt"></div>
+                        <div class="prof-legend-cell" data-level="4" title="7–8 lượt"></div>
+                        <div class="prof-legend-cell" data-level="5" title="9–10+ lượt"></div>
                         <span>Nhiều</span>
                     </div>
                 </div>

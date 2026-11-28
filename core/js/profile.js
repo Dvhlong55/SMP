@@ -201,16 +201,37 @@ function formatDateYMD(d) {
     return `${y}-${m}-${day}`;
 }
 
+function getVisitHeatmapLevel(count) {
+    if (count >= 9) return 5; // 9–10+ lượt (cao nhất)
+    if (count >= 7) return 4; // 7–8 lượt
+    if (count >= 5) return 3; // 5–6 lượt
+    if (count >= 3) return 2; // 3–4 lượt
+    if (count >= 1) return 1; // 1–2 lượt
+    return 0;
+}
+
+function getMergedVisitDict(activities) {
+    const actDict = {};
+    (activities || []).forEach(a => {
+        actDict[a.date] = Math.max(actDict[a.date] || 0, a.solve_count || 0);
+    });
+    try {
+        const u = localStorage.getItem('smp_username') || 'guest';
+        const localVisits = JSON.parse(localStorage.getItem(`smp_web_visits_${u}`) || '{}');
+        Object.keys(localVisits).forEach(dateStr => {
+            actDict[dateStr] = Math.max(actDict[dateStr] || 0, localVisits[dateStr] || 0);
+        });
+    } catch (e) {}
+    return actDict;
+}
+
 function renderHeatmap(activities) {
     const heatmap = document.getElementById('activity-heatmap');
     if (!heatmap) return;
     heatmap.innerHTML = '';
     
-    // Map dates to counts
-    const actDict = {};
-    activities.forEach(a => {
-        actDict[a.date] = a.solve_count;
-    });
+    // Map dates to web visit counts
+    const actDict = getMergedVisitDict(activities);
     
     // 52 weeks * 7 days = 364 cells aligned to Monday..Sunday
     const now = new Date();
@@ -235,12 +256,7 @@ function renderHeatmap(activities) {
         d.setDate(startDate.getDate() + i);
         const dateStr = formatDateYMD(d);
         const count = actDict[dateStr] || 0;
-        
-        let level = 0;
-        if (count >= 5) level = 4;
-        else if (count >= 3) level = 3;
-        else if (count >= 2) level = 2;
-        else if (count >= 1) level = 1;
+        const level = getVisitHeatmapLevel(count);
         
         const cell = document.createElement('div');
         cell.className = 'heatmap-cell';
@@ -250,7 +266,7 @@ function renderHeatmap(activities) {
         
         if (tooltip) {
             cell.addEventListener('mouseenter', (e) => {
-                const countText = count > 0 ? `${count} bài` : '0 bài';
+                const countText = `${count} lượt truy cập`;
                 tooltip.textContent = `${dateStr} · ${countText}`;
                 tooltip.style.display = 'block';
                 positionTooltip(e);
@@ -268,11 +284,10 @@ function renderHeatmap(activities) {
 }
 
 function calculateAndRenderStreaks(activities) {
-    const actDict = {};
+    const actDict = getMergedVisitDict(activities);
     let totalSolved = 0;
-    activities.forEach(a => {
-        actDict[a.date] = a.solve_count;
-        totalSolved += (a.solve_count || 0);
+    Object.values(actDict).forEach(v => {
+        totalSolved += (v || 0);
     });
 
     const now = new Date();
@@ -321,7 +336,7 @@ function calculateAndRenderStreaks(activities) {
 
     // 3. Render into DOM
     const summaryEl = document.getElementById('heatmap-summary');
-    if (summaryEl) summaryEl.textContent = `${totalSolved} bài trong 12 tháng qua`;
+    if (summaryEl) summaryEl.textContent = `${totalSolved} lượt truy cập trong 12 tháng qua`;
 
     const streakEl = document.getElementById('stat-streak');
     if (streakEl) streakEl.textContent = currentStreak;
@@ -712,13 +727,9 @@ window.openUserInspector = async function(userId) {
                 const cell = document.createElement('div');
                 cell.className = 'heatmap-cell';
                 const count = actDict[dateStr] || 0;
-                let level = 0;
-                if (count >= 5) level = 4;
-                else if (count >= 3) level = 3;
-                else if (count >= 2) level = 2;
-                else if (count >= 1) level = 1;
+                const level = getVisitHeatmapLevel(count);
                 cell.setAttribute('data-level', level);
-                cell.setAttribute('title', `${dateStr}: ${count} hoạt động`);
+                cell.setAttribute('title', `${dateStr}: ${count} lượt truy cập`);
                 heatmap.appendChild(cell);
             }
         }

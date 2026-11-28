@@ -2061,3 +2061,23 @@ function initLearningProgressTracker() {
 
     updateOverallProgress();
 }
+
+// === DAILY WEB VISIT TRACKER (HEATMAP 1 -> 10) ===
+(function recordDailyWebVisit() {
+    try {
+        if (sessionStorage.getItem('smp_visit_counted_session') === '1') return;
+        sessionStorage.setItem('smp_visit_counted_session', '1');
+
+        const now = new Date();
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, '0');
+        const d = String(now.getDate()).padStart(2, '0');
+        const today = `${y}-${m}-${d}`;
+
+        const username = localStorage.getItem('smp_username') || 'guest';
+        const storageKey = `smp_web_visits_${username}`;
+        const visits = JSON.parse(localStorage.getItem(storageKey) || '{}');
+        visits[today] = (visits[today] || 0) + 1;
+        localStorage.setItem(storageKey, JSON.stringify(visits));
+    } catch (e) {}
+})();
