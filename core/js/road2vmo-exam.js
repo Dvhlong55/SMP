@@ -618,6 +618,21 @@
     }
 
     function boot() {
+        const exam = EXAMS[currentRound];
+        if (exam && exam.isLocked) {
+            stopTimers();
+            root.innerHTML = `
+            ${renderTopNav()}
+            <div class="r2v-card fade-up" style="max-width: 620px; margin: 18px auto; text-align: center;">
+                <span class="r2v-badge-gold">&#x1F512; Chưa Mở Đề</span>
+                <h1 class="r2v-lobby-title" style="font-size: 1.7rem;">${exam.title}</h1>
+                <p style="font-size: 0.95rem; line-height: 1.7; opacity: 0.88; margin: 12px 0 22px;">
+                    Đợt thi này hiện đang khóa và chưa tới thời gian mở đề. Vui lòng quay lại khi có thông báo mở thi.
+                </p>
+                <a href="/posts/math/vmo/road2vmo-test.html" class="r2v-btn-primary">&larr; Về trang Road2VMO Test</a>
+            </div>`;
+            return;
+        }
         const user = getAuthUser();
         if (!user) {
             renderAuthGate();

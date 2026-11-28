@@ -12,6 +12,7 @@ window.ROAD2VMO_EXAMS = {
     "1": {
         round: 1,
         id: "road2vmo-01",
+        isLocked: false,
         title: "Road2VMO Test — Lần 1",
         subtitle: "Kỳ thi thử VMO trực tuyến (Đợt 1)",
         classroomUrl: "https://classroom.google.com/c/ODYxMTkzMzQwOTYx/a/ODkzODM0Mzc2Mjgy/details",
@@ -99,6 +100,7 @@ window.ROAD2VMO_EXAMS = {
     "2": {
         round: 2,
         id: "road2vmo-02",
+        isLocked: true,
         title: "Road2VMO Test — Lần 2",
         subtitle: "Kỳ thi thử VMO trực tuyến (Đợt 2)",
         classroomUrl: "https://classroom.google.com/c/ODYxMTkzMzQwOTYx/a/OTAxNDA5NTE2MzQy/details",
@@ -183,6 +185,7 @@ window.ROAD2VMO_EXAMS = {
     "3": {
         round: 3,
         id: "road2vmo-03",
+        isLocked: true,
         title: "Road2VMO Test — Lần 3",
         subtitle: "Kỳ thi thử VMO trực tuyến (Đợt 3)",
         classroomUrl: "https://classroom.google.com/c/ODYxMTkzMzQwOTYx/a/ODkzODM0NzI2MjA3/details",
