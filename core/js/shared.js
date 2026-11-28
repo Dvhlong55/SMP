@@ -243,6 +243,13 @@ window.DarkMode = {
 
 const ALL_POSTS = [
     {
+        title: '§ Đề Thi CMO 2026 (Olympic Toán Trung Quốc Lần Thứ 42)',
+        date: 'November 28, 2026',
+        url: '/posts/math/vmo/cmo-2026.html',
+        tags: ['Đề Thi', 'VMO'],
+        page: '/pages/toanhoc.html'
+    },
+    {
         title: '§ Kỳ Thi Thử Road2VMO Test',
         date: 'November 28, 2026',
         url: '/posts/math/vmo/road2vmo-test.html',
