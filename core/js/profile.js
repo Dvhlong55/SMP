@@ -653,18 +653,20 @@ window.openUserInspector = async function(userId) {
         if (!res.ok) throw new Error("Failed to load user details");
         const data = await res.json();
         
-        const user = data.profile;
-        document.getElementById('insp-avatar').textContent = user.username.charAt(0).toUpperCase();
-        document.getElementById('insp-username').textContent = user.username;
+        const user = data.profile || {};
+        document.getElementById('insp-avatar').textContent = user.username ? user.username.charAt(0).toUpperCase() : 'U';
+        document.getElementById('insp-username').textContent = user.username || 'Unknown';
         document.getElementById('insp-email').textContent = user.email || 'No email';
-        document.getElementById('insp-joined').textContent = new Date(user.createdAt).toLocaleDateString('vi-VN');
-        document.getElementById('insp-points').textContent = user.points;
+        document.getElementById('insp-joined').textContent = user.createdAt ? new Date(user.createdAt).toLocaleDateString('vi-VN') : '—';
+        document.getElementById('insp-points').textContent = user.points ?? 0;
         
+        const activitiesList = Array.isArray(data.activities) ? data.activities : [];
+
         // Streak calculation
         let currentStreak = 0;
-        if (data.activities && data.activities.length > 0) {
+        if (activitiesList.length > 0) {
             const actDict = {};
-            data.activities.forEach(a => { actDict[a.date] = a.solve_count; });
+            activitiesList.forEach(a => { actDict[a.date] = a.solve_count; });
             const today = new Date();
             for (let i = 0; i < 365; i++) {
                 const d = new Date(today);
@@ -690,33 +692,35 @@ window.openUserInspector = async function(userId) {
             anomaly.style.display = 'none';
         }
         
-        document.getElementById('insp-flag-chk').checked = user.flagged;
+        document.getElementById('insp-flag-chk').checked = !!user.flagged;
         document.getElementById('insp-flag-reason-container').style.display = user.flagged ? 'block' : 'none';
         document.getElementById('insp-flag-reason').value = user.flagged_reason || '';
-        document.getElementById('insp-suspend-chk').checked = user.is_suspended;
+        document.getElementById('insp-suspend-chk').checked = !!user.is_suspended;
         document.getElementById('insp-adjust-points').value = '';
         
         // Render Heatmap in Inspector
         const heatmap = document.getElementById('insp-heatmap');
-        heatmap.innerHTML = '';
-        const now = new Date();
-        const actDict = {};
-        data.activities.forEach(a => { actDict[a.date] = a.solve_count; });
-        for (let i = 364; i >= 0; i--) {
-            const d = new Date(now);
-            d.setDate(now.getDate() - i);
-            const dateStr = formatDateYMD(d);
-            const cell = document.createElement('div');
-            cell.className = 'heatmap-cell';
-            const count = actDict[dateStr] || 0;
-            let level = 0;
-            if (count >= 5) level = 4;
-            else if (count >= 3) level = 3;
-            else if (count >= 2) level = 2;
-            else if (count >= 1) level = 1;
-            cell.setAttribute('data-level', level);
-            cell.setAttribute('title', `${dateStr}: ${count} hoạt động`);
-            heatmap.appendChild(cell);
+        if (heatmap) {
+            heatmap.innerHTML = '';
+            const now = new Date();
+            const actDict = {};
+            activitiesList.forEach(a => { actDict[a.date] = a.solve_count; });
+            for (let i = 364; i >= 0; i--) {
+                const d = new Date(now);
+                d.setDate(now.getDate() - i);
+                const dateStr = formatDateYMD(d);
+                const cell = document.createElement('div');
+                cell.className = 'heatmap-cell';
+                const count = actDict[dateStr] || 0;
+                let level = 0;
+                if (count >= 5) level = 4;
+                else if (count >= 3) level = 3;
+                else if (count >= 2) level = 2;
+                else if (count >= 1) level = 1;
+                cell.setAttribute('data-level', level);
+                cell.setAttribute('title', `${dateStr}: ${count} hoạt động`);
+                heatmap.appendChild(cell);
+            }
         }
         
         // Render comments
