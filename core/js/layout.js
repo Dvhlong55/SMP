@@ -8,7 +8,7 @@
     if ('caches' in window) {
         caches.keys().then(function(names) {
             for (let name of names) {
-                if (name !== 'smp-cache-v149') caches.delete(name);
+                if (name !== 'smp-cache-v150') caches.delete(name);
             }
         }).catch(function(){});
     }
@@ -416,6 +416,12 @@
                 display: inline-flex !important;
                 order: 0;
             }
+            .mobile-only-forum-btn svg,
+            #notif-toggle-btn svg,
+            .topbar-controls .search-icon svg {
+                width: 20px !important;
+                height: 20px !important;
+            }
         }
 
         /* Search on Mobile Article Topbar */
@@ -530,12 +536,17 @@
             }
 
             .mobile-bottom-nav a .icon {
-                font-size: 1.35rem;
+                font-size: 1.55rem;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 line-height: 1;
                 transition: transform 0.2s ease;
+            }
+
+            .mobile-bottom-nav a .icon svg {
+                width: 22px;
+                height: 22px;
             }
 
             .mobile-bottom-nav a.active {
@@ -723,26 +734,28 @@
     const MOBILE_BOTTOM_NAV_HTML = `
     <nav class="mobile-bottom-nav">
         <a href="/home.html" title="Trang chủ">
-            <span class="icon">&#x2302;</span>
+            <span class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </span>
         </a>
         <a href="/pages/toanhoc.html" title="Toán học">
             <span class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block; vertical-align:middle;" aria-hidden="true"><path d="M18.6 3.5H5.2c-.3 0-.5.3-.3.6l6.7 7.9-6.9 8.1c-.2.3 0 .7.4.7h13.7l.7-4.3h-.7c-.4 1.6-1.2 2.4-3.1 2.4H7.6l5.9-7a.5.5 0 0 0 0-.7L7.9 5h7.6c1.8 0 2.5.7 2.9 2.2h.7l-.5-3.7z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block; vertical-align:middle;" aria-hidden="true"><path d="M18.6 3.5H5.2c-.3 0-.5.3-.3.6l6.7 7.9-6.9 8.1c-.2.3 0 .7.4.7h13.7l.7-4.3h-.7c-.4 1.6-1.2 2.4-3.1 2.4H7.6l5.9-7a.5.5 0 0 0 0-.7L7.9 5h7.6c1.8 0 2.5.7 2.9 2.2h.7l-.5-3.7z"/></svg>
             </span>
         </a>
         <a href="/pages/toanhoc.html?filter=tools" title="Công cụ">
             <span class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
             </span>
         </a>
         <a href="/pages/roadmap.html" title="Lộ trình">
             <span class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
             </span>
         </a>
         <a href="/pages/profile.html" id="mobile-bottom-auth-btn" title="Hồ sơ cá nhân" onclick="if(!localStorage.getItem('smp_access_token')){if(window.openAuthModal){window.openAuthModal('login');return false;}}">
             <span class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </span>
         </a>
     </nav>`;
