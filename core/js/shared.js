@@ -2062,22 +2062,47 @@ function initLearningProgressTracker() {
     updateOverallProgress();
 }
 
-// === DAILY WEB VISIT TRACKER (HEATMAP 1 -> 10) ===
+// === DAILY WEB VISIT & USAGE TRACKER (HEATMAP 1 -> 10) ===
 (function recordDailyWebVisit() {
-    try {
-        if (sessionStorage.getItem('smp_visit_counted_session') === '1') return;
-        sessionStorage.setItem('smp_visit_counted_session', '1');
-
+    function getTodayYMD() {
         const now = new Date();
         const y = now.getFullYear();
         const m = String(now.getMonth() + 1).padStart(2, '0');
         const d = String(now.getDate()).padStart(2, '0');
-        const today = `${y}-${m}-${d}`;
+        return `${y}-${m}-${d}`;
+    }
 
-        const username = localStorage.getItem('smp_username') || 'guest';
-        const storageKey = `smp_web_visits_${username}`;
-        const visits = JSON.parse(localStorage.getItem(storageKey) || '{}');
-        visits[today] = (visits[today] || 0) + 1;
-        localStorage.setItem(storageKey, JSON.stringify(visits));
+    function bumpTodayCount(delta) {
+        try {
+            const today = getTodayYMD();
+            const username = localStorage.getItem('smp_username') || 'guest';
+            const storageKey = `smp_web_visits_${username}`;
+            const visits = JSON.parse(localStorage.getItem(storageKey) || '{}');
+            visits[today] = (visits[today] || 0) + delta;
+            localStorage.setItem(storageKey, JSON.stringify(visits));
+        } catch (e) {}
+    }
+
+    try {
+        if (sessionStorage.getItem('smp_visit_counted_session') !== '1') {
+            sessionStorage.setItem('smp_visit_counted_session', '1');
+            bumpTodayCount(1);
+        }
+
+        // Nếu mở 1 lần và học lâu: mỗi 15 phút tab đang mở hiển thị tính thêm +1 lượt sử dụng
+        setInterval(function () {
+            if (document.visibilityState !== 'visible') return;
+            try {
+                const today = getTodayYMD();
+                const username = localStorage.getItem('smp_username') || 'guest';
+                const minKey = `smp_web_active_mins_${username}_${today}`;
+                let mins = parseInt(localStorage.getItem(minKey) || '0', 10) + 1;
+                if (mins >= 15) {
+                    mins -= 15;
+                    bumpTodayCount(1);
+                }
+                localStorage.setItem(minKey, String(mins));
+            } catch (e) {}
+        }, 60000);
     } catch (e) {}
 })();
